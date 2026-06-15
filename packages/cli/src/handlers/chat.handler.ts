@@ -1,0 +1,792 @@
+/**
+ * @fileoverview Chat command handler for CLI operations
+ * @author Development Team
+ * @since 11.1.0
+ */
+
+import { BaseHandler } from './base.handler';
+import { ChatServiceSdk } from '../services/chat.service.sdk';
+import {
+  ChatSendOptions,
+  ChatListOptions,
+  ChatDeleteOptions,
+  ChatBanOptions,
+  ChatUnbanOptions,
+  ChatKickOptions,
+  ChatUnkickOptions,
+  ChatBannedListOptions,
+  ChatKickedListOptions,
+  ChatServiceConfig,
+  OutputFormat
+} from '../types/chat';
+import { AuthConfig } from '../types/auth';
+import { confirmDeletion } from '../utils/confirmation';
+import { PolyVValidationError } from '../utils/errors';
+
+import type { ChatHistoryPageResponse, ChatMessage, SendAdminMsgResponse } from 'polyv-live-api-sdk';
+
+/**
+ * Handler for chat-related CLI commands
+ */
+export class ChatHandler extends BaseHandler {
+  private readonly chatService: ChatServiceSdk;
+
+  /**
+   * Creates a new ChatHandler instance
+   * @param authConfig Authentication configuration
+   * @param serviceConfig Chat service configuration
+   */
+  constructor(authConfig: AuthConfig, serviceConfig: ChatServiceConfig) {
+    super();
+    this.chatService = new ChatServiceSdk(authConfig, serviceConfig);
+  }
+
+  // ========================================
+  // chat send (AC #1)
+  // ========================================
+
+  /**
+   * Sends an admin message to the channel chat
+   * @param options Chat send options from CLI
+   * @returns Promise that resolves when message is sent
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.sendAdminMessage({
+   *   channelId: '3151318',
+   *   msg: 'Hello World',
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async sendAdminMessage(options: ChatSendOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateSendOptions(options);
+
+      // Call SDK service
+      const result = await this.chatService.sendAdminMessage(options);
+
+      // Display results
+      this.displaySendResult(result, options.output);
+
+    }, 'chat.send');
+  }
+
+  // ========================================
+  // chat list (AC #2)
+  // ========================================
+
+  /**
+   * Lists chat history with pagination support
+   * @param options Chat list options from CLI
+   * @returns Promise that resolves when messages are listed
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.listMessages({
+   *   channelId: '3151318',
+   *   page: 1,
+   *   size: 20,
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async listMessages(options: ChatListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateListOptions(options);
+
+      // Call SDK service
+      const result = await this.chatService.listMessages(options);
+
+      // Display results
+      this.displayListResult(result, options);
+
+    }, 'chat.list');
+  }
+
+  // ========================================
+  // chat delete (AC #3)
+  // ========================================
+
+  /**
+   * Deletes a chat message or clears all messages
+   * @param options Chat delete options from CLI
+   * @returns Promise that resolves when delete is complete
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * // Delete single message
+   * await chatHandler.deleteMessage({
+   *   channelId: '3151318',
+   *   messageId: 'abc123',
+   *   output: 'table'
+   * });
+   *
+   * // Clear all messages
+   * await chatHandler.deleteMessage({
+   *   channelId: '3151318',
+   *   clear: true,
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async deleteMessage(options: ChatDeleteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateDeleteOptions(options);
+
+      // Check if confirmation is needed (skip if force is true)
+      if (!options.force) {
+        if (!options.clear) {
+          const confirmed = await confirmDeletion(
+            `Are you sure you want to delete message "${options.messageId}"? This action cannot be undone.`,
+            'yes'
+          );
+          if (!confirmed) {
+            this.displayInfo('Operation cancelled');
+            return;
+          }
+        } else {
+          const confirmed = await confirmDeletion(
+            'Are you sure you want to clear all chat messages? This action cannot be undone.',
+            'yes'
+          );
+          if (!confirmed) {
+            this.displayInfo('Operation cancelled');
+            return;
+          }
+        }
+      }
+
+      // Call SDK service
+      await this.chatService.deleteMessage(options);
+
+      // Display results
+      this.displayDeleteResult(options);
+
+    }, 'chat.delete');
+  }
+
+  // ===== Private Display Methods =====
+
+  private displaySendResult(result: SendAdminMsgResponse, format?: OutputFormat): void {
+    const data = {
+      success: result.success,
+      message: result.message,
+      data: result.data,
+    };
+
+    if (format === 'json') {
+      this.displayData(data, 'json');
+    } else {
+      this.displaySuccess(`Admin message sent successfully`, data, 'table');
+    }
+  }
+
+  private displayListResult(result: ChatHistoryPageResponse, options: ChatListOptions): void {
+    const messages = result.contents || [];
+    const page = options.page || 1;
+    const size = options.size || 20;
+
+    if (messages.length === 0) {
+      this.displayInfo(`No chat messages found for channel ${options.channelId}`);
+      return;
+    }
+
+    // Display pagination info
+    const fromItem = (page - 1) * size + 1;
+    const toItem = Math.min(fromItem + messages.length - 1, fromItem + size - 1);
+    this.displayInfo(`Showing messages ${fromItem}-${toItem} (page ${page}, size ${size})`);
+
+    if (options.output === 'json') {
+      this.displayData(messages, 'json');
+    } else {
+      this.displayMessagesTable(messages);
+    }
+  }
+
+  private displayMessagesTable(messages: ChatMessage[]): void {
+    const tableData = messages.map((msg) => ({
+      'Message ID': msg.id || '-',
+      'Content': this.truncateContent(msg.content || '', 50),
+      'Time': msg.time ? new Date(msg.time).toLocaleString() : '-',
+      'Sender': msg.user?.nick || '-',
+      'User Type': msg.user?.userType || '-',
+    }));
+
+    this.displayAsTable(tableData);
+  }
+
+  private displayDeleteResult(options: ChatDeleteOptions): void {
+    const data = {
+      channelId: options.channelId,
+      deleted: true,
+      timestamp: new Date().toISOString(),
+      ...(options.clear ? { cleared: 'all messages' } : { messageId: options.messageId }),
+    };
+
+    if (options.output === 'json') {
+      this.displayData(data, 'json');
+    } else {
+      if (options.clear) {
+        this.displaySuccess(`All chat messages cleared successfully`, data, 'table');
+      } else {
+        this.displaySuccess(`Message ${options.messageId} deleted successfully`, data, 'table');
+      }
+    }
+  }
+
+  private truncateContent(content: string, maxLength: number): string {
+    if (content.length <= maxLength) {
+      return content;
+    }
+    return content.substring(0, maxLength - 3) + '...';
+  }
+
+  // ========================================
+  // chat ban/unban commands (Story 11-2)
+  // ========================================
+
+  /**
+   * Bans users at channel or global level
+   * @param options Ban options from CLI
+   * @returns Promise that resolves when users are banned
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.banUser({
+   *   channelId: '3151318',
+   *   userIds: ['user1', 'user2'],
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async banUser(options: ChatBanOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateBanOptions(options);
+
+      let result: any;
+      if (options.global) {
+        // Global ban (account level)
+        result = await this.chatService.updateBannedViewer({
+          viewerIds: options.userIds,
+          banned: 'Y'
+        });
+        this.displayBanResult(options, result, true);
+      } else {
+        // Channel-level ban
+        result = await this.chatService.updateBannedUser({
+          channelId: options.channelId!,
+          userIds: options.userIds.join(','),
+          toBanned: 'Y'
+        });
+        this.displayBanResult(options, result, false);
+      }
+    }, 'chat.ban');
+  }
+
+  /**
+   * Unbans users at channel or global level
+   * @param options Unban options from CLI
+   * @returns Promise that resolves when users are unbanned
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.unbanUser({
+   *   channelId: '3151318',
+   *   userIds: ['user1', 'user2'],
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async unbanUser(options: ChatUnbanOptions): Promise<void>{
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateBanOptions(options);
+
+      let result: any;
+      if (options.global) {
+        // Global unban (account level)
+        result = await this.chatService.updateBannedViewer({
+          viewerIds: options.userIds,
+          banned: 'N'
+        });
+        this.displayUnbanResult(options, result, true);
+      } else {
+        // Channel-level unban
+        result = await this.chatService.updateBannedUser({
+          channelId: options.channelId!,
+          userIds: options.userIds.join(','),
+          toBanned: 'N'
+        });
+        this.displayUnbanResult(options, result, false);
+      }
+    }, 'chat.unban');
+  }
+
+  // ========================================
+  // chat kick/unkick commands (Story 11-2)
+  // ========================================
+
+  /**
+   * Kicks users at channel or global level
+   * @param options Kick options from CLI
+   * @returns Promise that resolves when users are kicked
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.kickUser({
+   *   channelId: '3151318',
+   *   viewerIds: ['viewer1'],
+   *   nickNames: ['Nick1'],
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async kickUser(options: ChatKickOptions): Promise<void>{
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateKickOptions(options);
+
+      let result: any;
+      if (options.global) {
+        // Global kick (platform level)
+        result = await this.chatService.forbidKickUsers({
+          viewerIds: options.viewerIds!,
+          nickNames: options.nickNames!
+        });
+      } else {
+        // Channel-level kick
+        result = await this.chatService.forbidChannelKickUsers({
+          channelId: options.channelId!,
+          viewerIds: options.viewerIds!,
+          nickNames: options.nickNames!
+        });
+      }
+      this.displayKickResult(options, result);
+    }, 'chat.kick');
+  }
+
+  /**
+   * Unkicks users at channel or global level
+   * @param options Unkick options from CLI
+   * @returns Promise that resolves when users are unkicked
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.unkickUser({
+   *   channelId: '3151318',
+   *   viewerIds: ['viewer1'],
+   *   nickNames: ['Nick1'],
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async unkickUser(options: ChatUnkickOptions): Promise<void>{
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateKickOptions(options);
+
+      let result: any;
+      if (options.global) {
+        // Global unkick (platform level)
+        result = await this.chatService.forbidUnkickUsers({
+          viewerIds: options.viewerIds!,
+          nickNames: options.nickNames!
+        });
+      } else {
+        // Channel-level unkick
+        result = await this.chatService.forbidChannelUnkickUsers({
+          channelId: options.channelId!,
+          viewerIds: options.viewerIds!,
+          nickNames: options.nickNames!
+        });
+      }
+      this.displayUnkickResult(options, result);
+    }, 'chat.unkick');
+  }
+
+  // ========================================
+  // chat banned/kicked list commands (Story 11-2)
+  // ========================================
+
+  /**
+   * Lists banned users, IPs, or badwords
+   * @param options Banned list options from CLI
+   * @returns Promise that resolves when list is displayed
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.listBanned({
+   *   channelId: '3151318',
+   *   type: 'userId',
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async listBanned(options: ChatBannedListOptions): Promise<void>{
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateBannedListOptions(options);
+
+      let result: any;
+      if (options.type === 'badword') {
+        result = await this.chatService.getChannelBannedList({
+          channelId: options.channelId,
+          type: 'badword'
+        });
+      } else {
+        result = await this.chatService.getChannelBannedUserList({
+          channelId: options.channelId,
+          type: options.type
+        });
+      }
+      this.displayBannedListResult(options, result);
+    }, 'chat.banned.list');
+  }
+
+  /**
+   * Lists kicked users
+   * @param options Kicked list options from CLI
+   * @returns Promise that resolves when list is displayed
+   *
+   * @throws {PolyVValidationError} When parameters are invalid
+   * @throws {PolyVError} When API call fails
+   *
+   * @example
+   * ```typescript
+   * await chatHandler.listKicked({
+   *   channelId: '3151318',
+   *   output: 'table'
+   * });
+   * ```
+   */
+  async listKicked(options: ChatKickedListOptions): Promise<void>{
+    return this.executeWithErrorHandling(async () => {
+      // Validate input options
+      this.validateKickedListOptions(options);
+
+      const result = await this.chatService.getChannelKickedUserList({
+        channelId: options.channelId
+      });
+      this.displayKickedListResult(options, result);
+    }, 'chat.kicked.list');
+  }
+
+  // ===== Private Validation Methods =====
+
+  private validateSendOptions(options: ChatSendOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (!options.msg && !options.imgUrl) {
+      errors.push('msg or imgUrl is required');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat send options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateListOptions(options: ChatListOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (options.page !== undefined) {
+      if (typeof options.page !== 'number' || !Number.isInteger(options.page) || options.page < 1) {
+        errors.push('page must be a positive integer');
+      }
+    }
+
+    if (options.size !== undefined) {
+      if (typeof options.size !== 'number' || !Number.isInteger(options.size) || options.size < 1 || options.size > 100) {
+        errors.push('pageSize must be an integer between 1 and 100');
+      }
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat list options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateDeleteOptions(options: ChatDeleteOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (!options.clear && !options.messageId) {
+      errors.push('messageId is required when --clear is not specified');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat delete options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateBanOptions(options: ChatBanOptions | ChatUnbanOptions): void {
+    const errors: string[] = [];
+
+    if (!options.global && (!options.channelId || options.channelId.trim() === '')) {
+      errors.push('channelId is required when --global is not specified');
+    }
+
+    if (!options.userIds || options.userIds.length === 0) {
+      errors.push('userIds is required');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat ban options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateKickOptions(options: ChatKickOptions | ChatUnkickOptions): void {
+    const errors: string[] = [];
+
+    if (!options.global && (!options.channelId || options.channelId.trim() === '')) {
+      errors.push('channelId is required when --global is not specified');
+    }
+
+    if (!options.viewerIds && !options.nickNames) {
+      errors.push('viewerIds and nickNames are required');
+    }
+
+    if (options.viewerIds && options.nickNames && options.viewerIds.length !== options.nickNames.length) {
+      errors.push('viewerIds and nickNames must have the same length');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat kick options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateBannedListOptions(options: ChatBannedListOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (!['userId', 'ip', 'badword'].includes(options.type)) {
+      errors.push('type must be one of: userId, ip, badword');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat banned list options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateKickedListOptions(options: ChatKickedListOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Chat kicked list options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  // ===== Display Methods for Ban/Kick (Story 11-2) =====
+
+  private displayBanResult(options: ChatBanOptions, result: any, isGlobal: boolean): void {
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        userIds: options.userIds,
+        global: isGlobal,
+        result
+      }, 'json');
+    } else {
+      const scopeText = isGlobal ? 'globally' : `in channel ${options.channelId}`;
+      this.displaySuccess(`Users ${options.userIds.join(', ')} banned ${scopeText} successfully`);
+    }
+  }
+
+  private displayUnbanResult(options: ChatUnbanOptions, result: any, isGlobal: boolean): void {
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        userIds: options.userIds,
+        global: isGlobal,
+        result
+      }, 'json');
+    } else {
+      const scopeText = isGlobal ? 'globally' : `in channel ${options.channelId}`;
+      this.displaySuccess(`Users ${options.userIds.join(', ')} unbanned ${scopeText} successfully`);
+    }
+  }
+
+  private displayKickResult(options: ChatKickOptions, result: any): void {
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        viewerIds: options.viewerIds,
+        nickNames: options.nickNames,
+        global: options.global,
+        result
+      }, 'json');
+    } else {
+      const scopeText = options.global ? 'globally' : `in channel ${options.channelId}`;
+      this.displaySuccess(`Users kicked ${scopeText} successfully`);
+    }
+  }
+
+  private displayUnkickResult(options: ChatUnkickOptions, result: any): void {
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        viewerIds: options.viewerIds,
+        nickNames: options.nickNames,
+        global: options.global,
+        result
+      }, 'json');
+    } else {
+      const scopeText = options.global ? 'globally' : `in channel ${options.channelId}`;
+      this.displaySuccess(`Users unkicked ${scopeText} successfully`);
+    }
+  }
+
+  private displayBannedListResult(options: ChatBannedListOptions, result: any): void {
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        type: options.type,
+        data: result.data || []
+      }, 'json');
+    } else {
+      const data = result.data || [];
+      if (data.length === 0) {
+        this.displayInfo(`No banned ${options.type} found in channel ${options.channelId}`);
+        return;
+      }
+
+      if (options.type === 'badword') {
+        this.displayAsTable(data.map((word: string) => ({ Badword: word })));
+      } else {
+        this.displayAsTable(data.map((item: string) => ({ [options.type === 'userId' ? 'User ID' : 'IP']: item })));
+      }
+    }
+  }
+
+  private displayKickedListResult(options: ChatKickedListOptions, result: any): void {
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        data: result.data || []
+      }, 'json');
+    } else {
+      const data = result.data || [];
+      if (data.length === 0) {
+        this.displayInfo(`No kicked users found in channel ${options.channelId}`);
+        return;
+      }
+
+      this.displayAsTable(data.map((user: any) => ({
+        'User ID': user.userId || 'N/A',
+        'Nickname': user.nick || 'N/A',
+        'IP': user.clientIp || 'N/A',
+        'User Type': user.userType || 'N/A',
+        'Room ID': user.roomId || 'N/A'
+      })));
+    }
+  }
+}

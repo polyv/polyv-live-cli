@@ -1,0 +1,165 @@
+# Gate Decision - Story 13-2: Callback Settings Management Commands
+# Generated: 2026-03-25
+
+story: "13-2"
+story_name: "Callback Settings Management Commands"
+
+gate_decision:
+  decision: PASS
+  rationale: "P0 coverage is 100%, P1 coverage is 100% (target: 90%), and overall coverage is 100% (minimum: 80%). All acceptance criteria have corresponding tests and all tests pass."
+  decision_date: "2026-03-25"
+
+coverage_statistics:
+  total_requirements: 8
+  fully_covered: 8
+  partially_covered: 0
+  uncovered: 0
+  overall_coverage_percentage: 100
+
+  total_tests: 42
+  tests_passing: 42
+  tests_failing: 0
+
+  priority_breakdown:
+    P0:
+      total: 12
+      covered: 12
+      percentage: 100
+    P1:
+      total: 30
+      covered: 30
+      percentage: 100
+    P2:
+      total: 0
+      covered: 0
+      percentage: 100
+    P3:
+      total: 0
+      covered: 0
+      percentage: 100
+
+gate_criteria:
+  p0_coverage_required: "100%"
+  p0_coverage_actual: "100%"
+  p0_status: MET
+
+  p1_coverage_target_pass: "90%"
+  p1_coverage_minimum: "80%"
+  p1_coverage_actual: "100%"
+  p1_status: MET
+
+  overall_coverage_minimum: "80%"
+  overall_coverage_actual: "100%"
+  overall_status: MET
+
+acceptance_criteria:
+  - id: AC1
+    description: "platform callback get command supports retrieving global callback settings"
+    priority: P0
+    coverage: FULL
+    tests:
+      - HDL-CB-001
+      - HDL-CB-002
+      - SVC-CB-001
+      - CMD-CB-001
+
+  - id: AC2
+    description: "platform callback update command supports updating callback URLs"
+    priority: P0
+    coverage: FULL
+    tests:
+      - HDL-CB-003
+      - HDL-CB-004
+      - HDL-CB-005
+      - SVC-CB-002
+      - SVC-CB-003
+      - SVC-CB-004
+      - CMD-CB-002
+      - CMD-CB-005
+      - CMD-CB-006
+
+  - id: AC3
+    description: "All commands support --output table|json output format"
+    priority: P0
+    coverage: FULL
+    tests:
+      - HDL-CB-001
+      - HDL-CB-002
+      - HDL-CB-006
+      - CMD-CB-003
+      - CMD-CB-004
+
+  - id: AC4
+    description: "Follow ATDD development pattern"
+    priority: P1
+    coverage: FULL
+    evidence:
+      - "ATDD Checklist: _bmad-output/test-artifacts/atdd-checklist-13-2.md"
+
+  - id: AC5
+    description: "Reuse existing SDK V4UserService callback methods"
+    priority: P0
+    coverage: FULL
+    tests:
+      - SVC-CB-001
+      - SVC-CB-002
+      - SVC-CB-003
+      - SVC-CB-004
+
+  - id: AC6
+    description: "Error messages are user-friendly"
+    priority: P1
+    coverage: FULL
+    tests:
+      - HDL-CB-007
+      - HDL-CB-008
+      - HDL-CB-009
+      - SVC-CB-005
+      - SVC-CB-006
+      - SVC-CB-007
+      - CB-MSG-001
+      - CB-MSG-002
+      - CB-MSG-003
+
+  - id: AC7
+    description: "Table output format is clean"
+    priority: P1
+    coverage: FULL
+    tests:
+      - HDL-CB-001
+      - HDL-CB-TBL
+
+  - id: AC8
+    description: "Support multiple callback URL parameters in single update"
+    priority: P0
+    coverage: FULL
+    tests:
+      - HDL-CB-005
+      - SVC-CB-004
+
+gap_analysis:
+  critical_gaps: []
+  high_gaps: []
+  medium_gaps: []
+  low_gaps: []
+
+test_files:
+  - path: "packages/cli/src/handlers/platform.handler.test.ts"
+    tests: 15
+    status: PASS
+  - path: "packages/cli/src/commands/platform.commands.test.ts"
+    tests: 12
+    status: PASS
+  - path: "packages/cli/src/services/platform-service.test.ts"
+    tests: 15
+    status: PASS
+
+execution_evidence:
+  command: "pnpm --filter polyv-live-cli test:unit -- platform"
+  result: |
+    Test Suites: 4 passed, 4 total
+    Tests:       140 passed, 140 total
+    Snapshots:   0 total
+    Time:        0.707 s
+
+recommendations: []

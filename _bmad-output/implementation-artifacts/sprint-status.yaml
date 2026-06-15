@@ -1,0 +1,177 @@
+# generated: 2026-03-22
+# last_updated: 2026-03-26 (14-4 ready-for-dev)
+# project: polyv-cli
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-03-22
+last_updated: 2026-03-25
+project: polyv-cli
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # ===========================================
+  # PHASE 1: MVP (Epic 1-8) - COMPLETED
+  # ===========================================
+
+  # Epic 1: CLI基础与认证
+  epic-1: done
+  1-1-project-setup-cli-structure: done
+  1-2-auth-system: done
+  1-3-md5-signature: done
+  1-4-config-management: done
+  epic-1-retrospective: optional
+
+  # Epic 2: 频道管理命令
+  epic-2: done
+  2-1-channel-create: done
+  2-2-channel-list: done
+  2-3-channel-get: done
+  2-4-channel-update: done
+  2-5-channel-delete: done
+  epic-2-retrospective: optional
+
+  # Epic 3: 流控制命令
+  epic-3: done
+  3-1-stream-get-key: done
+  3-2-stream-start: done
+  3-3-stream-stop: done
+  3-4-stream-status-optional: done
+  epic-3-retrospective: optional
+
+  # Epic 4: 发起推流命令
+  epic-4: done
+  4-1-stream-push-command: done
+  4-2-push-progress-control: done
+  epic-4-retrospective: optional
+
+  # Epic 5: 实时监控界面
+  epic-5: done
+  5-1-monitor-infrastructure: done
+  5-2-stream-monitor-panel: done
+  5-3-channel-status-panel: done
+  5-4-system-resource-panel: done
+  5-5-interactive-navigation: done
+  5-6-alert-notification: done
+  5-7-config-theme-customization: done
+  5-8-performance-optimization: done
+  epic-5-retrospective: optional
+
+  # Epic 6: 多账号管理
+  epic-6: done
+  6-1-account-config-management: done
+  6-2-session-account-switch: done
+  6-3-auth-priority-refactor: done
+  6-4-config-file-security: done
+  epic-6-retrospective: optional
+
+  # Epic 7: 商品管理命令
+  epic-7: done
+  7-1-product-management-commands: done
+  epic-7-retrospective: optional
+
+  # Epic 8: 电商场景快速配置
+  epic-8: done
+  8-1-coupon-commands: done
+  8-2-product-commands-complete: done
+  8-3-e-commerce-setup-skill: done
+  8-4-scene-setup-command: done
+  epic-8-retrospective: optional
+
+  # ===========================================
+  # PHASE 2: MVP EXTENSION (Epic 9-10)
+  # ===========================================
+
+  # Epic 9: 内容管理
+  epic-9: in-progress
+  9-1-playback-list: done
+  9-2-playback-get: done
+  9-3-playback-delete: done
+  9-4-playback-merge: done
+  9-5-document-management: done
+  9-6-session-management: done
+  9-7-record-settings: done
+  epic-9-retrospective: optional
+
+  # Epic 10: 数据统计
+  epic-10: in-progress
+  10-1-statistics-view: done
+  10-2-statistics-concurrency: done
+  10-3-statistics-audience: done
+  10-4-statistics-export: done
+  10-5-player-config: done
+  epic-10-retrospective: optional
+
+  # ===========================================
+  # PHASE 3: GROWTH (Epic 11-12)
+  # ===========================================
+
+  # Epic 11: 观众互动
+  epic-11: in-progress
+  11-1-chat-message-management: done
+  11-2-ban-kick-management: done
+  11-3-checkin-management: done
+  11-4-qa-questionnaire-management: done
+  11-5-lottery-management: done
+  11-6-donate-management: done
+  epic-11-retrospective: optional
+
+  # Epic 12: 观众管理
+  epic-12: in-progress
+  12-1-viewer-query: done
+  12-2-viewer-tag-management: done
+  12-3-watch-condition-config: done
+  12-4-whitelist-management: done
+  epic-12-retrospective: optional
+
+  # ===========================================
+  # PHASE 4: VISION (Epic 13-14)
+  # ===========================================
+
+  # Epic 13: 平台配置
+  epic-13: in-progress
+  13-1-account-info-management: done
+  13-2-callback-settings: done
+  13-3-global-settings: done
+  13-4-label-management: done
+  epic-13-retrospective: optional
+
+  # Epic 14: 高级功能
+  epic-14: in-progress
+  14-1-marketing-promotion: done
+  14-2-card-push: done
+  14-3-transmit-management: done
+  14-4-ai-digital-human: done
+  epic-14-retrospective: optional

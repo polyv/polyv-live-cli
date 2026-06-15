@@ -1,0 +1,79 @@
+{
+  "name": "polyv-live-api-sdk",
+  "version": "1.0.11",
+  "description": "PolyV Live API SDK for TypeScript/Node.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./channel": {
+      "import": "./dist/services/channel.service.js",
+      "types": "./dist/services/channel.service.d.ts"
+    },
+    "./chat": {
+      "import": "./dist/services/chat.service.js",
+      "types": "./dist/services/chat.service.d.ts"
+    },
+    "./account": {
+      "import": "./dist/services/account.service.js",
+      "types": "./dist/services/account.service.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "prebuild": "tsx scripts/generate-types.ts",
+    "build": "tsup && tsc --emitDeclarationOnly --declarationMap",
+    "docs": "typedoc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:unit": "vitest run --config vitest.config.ts",
+    "test:unit:watch": "vitest --config vitest.config.ts",
+    "test:integration": "vitest run --config vitest.config.integration.ts",
+    "test:integration:watch": "vitest --config vitest.config.integration.ts",
+    "cleanup:test-channels": "tsx scripts/cleanup-test-channels.ts",
+    "prepublishOnly": "pnpm test:unit && pnpm build",
+    "publish:sdk": "npm publish --access public"
+  },
+  "keywords": [
+    "polyv",
+    "live",
+    "streaming",
+    "api",
+    "sdk"
+  ],
+  "author": "PolyV",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "crypto-js": "^4.2.0"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.57.6",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^1.2.0",
+    "dotenv": "^17.3.1",
+    "marked": "^17.0.4",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.0",
+    "typedoc": "^0.28.17",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}

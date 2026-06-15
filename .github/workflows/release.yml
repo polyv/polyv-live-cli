@@ -1,0 +1,178 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'      # CLI: v1.2.3
+      - 'sdk-v*'  # SDK: sdk-v1.2.3
+
+jobs:
+  test:
+    name: Test before release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Run tests
+        run: pnpm --filter polyv-live-cli test:unit
+
+  publish:
+    name: Publish to npm
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Verify package contents
+        run: |
+          if [[ $GITHUB_REF == refs/tags/sdk-v* ]]; then
+            cd packages/sdk
+            PKG_NAME="polyv-live-api-sdk"
+          else
+            cd packages/cli
+            PKG_NAME="polyv-live-cli"
+          fi
+          echo "📦 Package: $PKG_NAME"
+          echo "✅ Package ready for publish"
+
+      - name: Publish to npm
+        run: |
+          if [[ $GITHUB_REF == refs/tags/sdk-v* ]]; then
+            cd packages/sdk
+            echo "📦 Publishing SDK..."
+          else
+            cd packages/cli
+            echo "📦 Publishing CLI..."
+          fi
+          pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  github-release:
+    name: Create GitHub Release
+    needs: [test, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for changelog generation
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Get tag version
+        id: get_version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          # Remove sdk- prefix if present
+          CLEAN_VERSION=${VERSION#sdk-}
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "CLEAN_VERSION=$CLEAN_VERSION" >> $GITHUB_OUTPUT
+          if [[ $VERSION == sdk-v* ]]; then
+            echo "PACKAGE=SDK" >> $GITHUB_OUTPUT
+            echo "PKG_NAME=polyv-live-api-sdk" >> $GITHUB_OUTPUT
+          else
+            echo "PACKAGE=CLI" >> $GITHUB_OUTPUT
+            echo "PKG_NAME=polyv-live-cli" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate changelog for this release
+        id: changelog
+        run: |
+          # Get the previous tag for the same package
+          if [[ "${{ steps.get_version.outputs.PACKAGE }}" == "SDK" ]]; then
+            PREVIOUS_TAG=$(git tag --sort=-version:refname | grep "^sdk-v" | grep -A1 "${{ steps.get_version.outputs.VERSION }}" | tail -n1)
+          else
+            PREVIOUS_TAG=$(git tag --sort=-version:refname | grep -v "^sdk-v" | grep -A1 "${{ steps.get_version.outputs.VERSION }}" | tail -n1)
+          fi
+
+          if [ -z "$PREVIOUS_TAG" ] || [ "$PREVIOUS_TAG" = "${{ steps.get_version.outputs.VERSION }}" ]; then
+            PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
+          fi
+
+          # Generate changelog
+          echo "## 🚀 PolyV ${{ steps.get_version.outputs.PACKAGE }} ${{ steps.get_version.outputs.CLEAN_VERSION }}" > release_notes.md
+          echo "" >> release_notes.md
+          echo "### 📋 Changes" >> release_notes.md
+          echo "" >> release_notes.md
+
+          git log --pretty=format:"- %s (%h)" ${PREVIOUS_TAG}..${{ steps.get_version.outputs.VERSION }} --no-merges | sed 's/fix:/🐛 Fixed:/g; s/feat:/✨ Added:/g; s/docs:/📚 Documentation:/g; s/test:/🧪 Tests:/g; s/chore:/🔧 Maintenance:/g; s/refactor:/♻️ Refactored:/g; s/perf:/⚡ Performance:/g' >> release_notes.md
+
+          echo "" >> release_notes.md
+          echo "### 📦 Installation" >> release_notes.md
+          echo '```bash' >> release_notes.md
+          if [[ "${{ steps.get_version.outputs.PACKAGE }}" == "SDK" ]]; then
+            echo 'npm install polyv-live-api-sdk' >> release_notes.md
+          else
+            echo 'npm install -g polyv-live-cli' >> release_notes.md
+          fi
+          echo '```' >> release_notes.md
+
+          cat release_notes.md
+        
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          name: PolyV ${{ steps.get_version.outputs.PACKAGE }} ${{ steps.get_version.outputs.CLEAN_VERSION }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: false

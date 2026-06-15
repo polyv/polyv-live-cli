@@ -1,0 +1,19 @@
+{
+  "name": "polyv-live-cli-skills",
+  "owner": {
+    "name": "polyv"
+  },
+  "metadata": {
+    "description": "PolyV Live CLI Skills collection for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "polyv-live-cli-skills",
+      "source": "./",
+      "description": "PolyV Live CLI skills for e-commerce live streaming setup",
+      "homepage": "https://github.com/terryso/polyv-live-cli",
+      "license": "MIT",
+      "keywords": ["polyv", "live-streaming", "e-commerce", "cli", "skills"]
+    }
+  ]
+}

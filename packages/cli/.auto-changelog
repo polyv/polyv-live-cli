@@ -1,0 +1,29 @@
+{
+  "output": "CHANGELOG.md",
+  "template": "keepachangelog", 
+  "unreleased": true,
+  "commitLimit": false,
+  "backfillLimit": false,
+  "handlebarsSetup": false,
+  "package": true,
+  "includeBranch": [
+    "main",
+    "master",
+    "develop"
+  ],
+  "commitUrl": "https://github.com/terryso/polyv-live-cli/commit/{id}",
+  "compareUrl": "https://github.com/terryso/polyv-live-cli/compare/{from}...{to}",
+  "issueUrl": "https://github.com/terryso/polyv-live-cli/issues/{id}",
+  "replaceText": {
+    "fix:": "🐛 Fixed:",
+    "feat:": "✨ Added:",
+    "docs:": "📚 Documentation:",
+    "test:": "🧪 Tests:",
+    "chore:": "🔧 Maintenance:",
+    "refactor:": "♻️ Refactored:",
+    "perf:": "⚡ Performance:",
+    "style:": "💄 Style:",
+    "ci:": "👷 CI:",
+    "build:": "📦 Build:"
+  }
+}

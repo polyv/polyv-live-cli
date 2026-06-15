@@ -1,0 +1,7 @@
+{
+  "name": "polyv-live-cli-skills",
+  "version": "1.0.0",
+  "description": "PolyV Live CLI Skills collection for Claude Code",
+  "skills": ["./skills/"],
+  "keywords": ["polyv", "live-streaming", "e-commerce", "cli"]
+}

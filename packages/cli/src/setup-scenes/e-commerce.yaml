@@ -1,0 +1,140 @@
+name: e-commerce
+version: "1.0"
+description: 电商直播场景 - 包含频道、商品、优惠券
+
+metadata:
+  icon: 🛒
+  category: business
+  tags:
+    - 电商
+    - 直播带货
+
+resources:
+  - id: channel
+    type: channel
+    description: 电商直播频道
+    params:
+      name: "电商示例频道-{timestamp}"
+      newScene: alone
+      template: portrait_alone
+      channelPasswd: "polyv123456"
+      streamType: client
+      splashImg: "https://s2.videocc.net/watch-theme/spring/v2/assets/common/player-cover.png"
+      splashLargeImg: ""
+      splashImgBackgroundId: 13
+      doubleTeacherType: transmit
+      linkMicLimit: 0
+      pureRtcEnabled: "N"
+      highLatencyEnabled: "N"
+      h5LowLatencyFlvEnabled: "Y"
+      isRecord: "N"
+      ignoreStartTimeVerify: true
+    output:
+      channelId: channelId
+      channelName: name
+
+  - id: watchCondition
+    type: watchCondition
+    description: 设置公开观看条件
+    dependsOn: channel
+    params:
+      channelId: "{channel.channelId}"
+      authSettings:
+        - rank: 1
+          enabled: "Y"
+          authType: public
+        - rank: 2
+          enabled: "N"
+
+  - id: product
+    type: product
+    description: 示例商品
+    dependsOn: channel
+    params:
+      channelId: "{channel.channelId}"
+      cover: "//liveimages.videocc.net/uploaded/images/2026/03/hguwyf1zxx.png"
+      name: "Allowish英国进口香氛沐浴露"
+      productDesc: "Allowish英国进口香氛沐浴露除螨止痒滋润美白保湿去鸡皮全身持久留香男女 【午后伯爵】新式调香"
+      productDetail: "<p><img src=\"//liveimages.videocc.net/uploaded/images/2026/03/hgux644ghf.jpg\" /><img src=\"//liveimages.videocc.net/uploaded/images/2026/03/hgux6jpbu0.jpg\" /></p>"
+      status: 1
+      btnShow: "去购买"
+      linkType: 11
+      link: "https://npcitem.jd.hk/10128409499312.html"
+      mobileLink: "https://npcitem.jd.hk/10128409499312.html"
+      productType: normal
+      priceType: AMOUNT
+      buyType: link
+      realPrice: 179
+      price: 399
+      originalPriceType: AMOUNT
+    output:
+      productId: productId
+
+  - id: productEnabled
+    type: productEnabled
+    description: 开启频道商品库
+    dependsOn: channel
+    params:
+      channelId: "{channel.channelId}"
+      enabled: "Y"
+
+  - id: coupon
+    type: coupon
+    description: 新人优惠券
+    params:
+      availableAmount: 1000
+      dayOfUse: 1
+      name: "满150减50"
+      rule:
+        condition: FULL_REDUCE
+        unconditional:
+          enable: false
+          value: ""
+          unit: MONEY
+        fullReduce:
+          enable: true
+          full: 150
+          reduce: 50
+          unit: MONEY
+        limitPerPerson: 1
+      useTimeType: DAY
+      type: MAX_OUT
+      receiveStartTime: "{now}"
+      receiveEndTime: "{now+30d}"
+    output:
+      couponId: couponId
+
+  - id: couponChannel
+    type: couponChannel
+    description: 将优惠券关联到频道
+    dependsOn:
+      - channel
+      - coupon
+    params:
+      channelId: "{channel.channelId}"
+      couponIds:
+        - "{coupon.couponId}"
+
+  - id: couponEnabled
+    type: couponEnabled
+    description: 开启观看页优惠券展示
+    dependsOn: channel
+    params:
+      channelId: "{channel.channelId}"
+      enabled: "Y"
+
+outputTemplate: |
+  # 🎉 配置完成！
+
+  ## 频道信息
+  - ID: {channel.channelId}
+  - 名称: {channel.channelName}
+
+  ## 商品
+  - ID: {product.productId}
+
+  ## 优惠券
+  - ID: {coupon.couponId}
+
+  ## 下一步操作
+  访问 [直播控制台](https://console.polyv.net/live/index.html#/channel/{channel.channelId}/base-info/channel-info) 开始直播。

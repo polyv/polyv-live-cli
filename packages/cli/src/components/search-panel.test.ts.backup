@@ -1,0 +1,1116 @@
+/**
+ * @fileoverview Unit tests for SearchPanel component
+ * @author Development Team
+ * @since 1.0.0
+ */
+
+import { EventEmitter } from 'events';
+import { SearchPanel, SearchConfig, FilterCriteria } from './search-panel';
+
+// Mock blessed module
+jest.mock('blessed', () => ({
+  textbox: jest.fn(),
+  box: jest.fn(),
+}));
+
+describe('SearchPanel', () => {
+  let searchPanel: SearchPanel;
+  let mockScreen: any;
+  let mockEventBus: EventEmitter;
+  let mockSearchBox: any;
+  let mockResultsBox: any;
+  let mockStatusBox: any;
+
+  const createMockWidget = () => ({
+    focus: jest.fn(),
+    getValue: jest.fn().mockReturnValue(''),
+    clearValue: jest.fn(),
+    setContent: jest.fn(),
+    on: jest.fn(),
+    key: jest.fn(),
+    destroy: jest.fn(),
+  });
+
+  const sampleData = [
+    { id: 'ch001', name: 'Live Stream 1', status: 'live', type: 'channel' },
+    { id: 'ch002', name: 'Live Stream 2', status: 'offline', type: 'channel' },
+    { id: 'ch003', name: 'Test Channel', status: 'live', type: 'channel' },
+    { id: 'sys001', name: 'System Monitor', status: 'active', type: 'system' },
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers(); // 添加假定时器
+
+    mockSearchBox = createMockWidget();
+    mockResultsBox = createMockWidget();
+    mockStatusBox = createMockWidget();
+
+    mockScreen = {
+      width: 80,
+      height: 24,
+      append: jest.fn(),
+      remove: jest.fn(),
+      render: jest.fn(),
+    };
+
+    mockEventBus = new EventEmitter();
+
+    // Mock blessed components
+    const blessed = require('blessed');
+    blessed.textbox.mockReturnValue(mockSearchBox);
+    blessed.box.mockImplementation((options: any) => {
+      if (options.label === ' Results ') {
+        return mockResultsBox;
+      } else if (options.content) {
+        return mockStatusBox;
+      }
+      return mockResultsBox;
+    });
+
+    const config: SearchConfig = {
+      placeholder: 'Search channels...',
+      caseSensitive: false,
+      mode: 'fuzzy',
+      searchFields: ['name', 'id', 'status'],
+      maxHistory: 5,
+      showSuggestions: true,
+      minChars: 1,
+      debounceDelay: 100,
+    };
+
+    searchPanel = new SearchPanel(mockScreen, mockEventBus, config);
+    searchPanel.setDataSource(sampleData);
+  });
+
+  afterEach(() => {
+    searchPanel.destroy();
+    jest.useRealTimers(); // 恢复真实定时器
+  });
+
+  describe('Edge Cases and Error Handling', () => {
+    it('should handle show with creation errors', () => {
+      const blessed = require('blessed');
+      blessed.textbox.mockImplementation(() => {
+        throw new Error('Widget creation failed');
+      });
+
+      expect(() => searchPanel.show()).not.toThrow();
+      expect(searchPanel.isSearchVisible()).toBe(false);
+    });
+
+    it('should handle search with null data source', () => {
+      searchPanel.setDataSource(null as any);
+      
+      expect(() => searchPanel['performSearch']('test')).not.toThrow();
+      expect(searchPanel.getResults()).toHaveLength(0);
+    });
+
+    it('should handle search with undefined field values', () => {
+      const dataWithUndefined = [
+        { id: '1', name: undefined, status: 'active' },
+        { id: '2', name: null, status: 'inactive' },
+        { id: '3', status: 'active' }, // missing name field
+      ];
+
+      searchPanel.setDataSource(dataWithUndefined);
+      
+      expect(() => searchPanel['performSearch']('test')).not.toThrow();
+    });
+
+    it('should handle extremely long search queries', () => {
+      const longQuery = 'a'.repeat(100); // 减少从1000到100
+      
+      expect(() => searchPanel['performSearch'](longQuery)).not.toThrow();
+    });
+
+    it('should handle search with special characters', () => {
+      const specialQuery = '!@#$%^&*()[]{}|\\:";\'<>?,./';
+      
+      expect(() => searchPanel['performSearch'](specialQuery)).not.toThrow();
+    });
+
+    it('should handle malformed filter criteria', () => {
+      const malformedCriteria = {
+        status: null,
+        type: undefined,
+        dateRange: { start: 'invalid-date', end: null },
+        custom: 'not-a-function',
+      } as any;
+
+      expect(() => searchPanel.setFilterCriteria(malformedCriteria)).not.toThrow();
+    });
+
+    it('should handle very large datasets', () => {
+      const largeData = Array(100).fill(0).map((_, i) => ({ // 减少从10000到100
+        id: `item-${i}`,
+        name: `Item ${i}`,
+        status: i % 2 === 0 ? 'active' : 'inactive',
+      }));
+
+      searchPanel.setDataSource(largeData);
+      
+      expect(() => searchPanel['performSearch']('Item 1')).not.toThrow();
+    });
+
+    it('should handle rapid successive searches', () => {
+      const queries = ['a', 'ab', 'abc', 'abcd', 'abcde'];
+      
+      queries.forEach(query => {
+        expect(() => searchPanel['handleSearchInput'](query)).not.toThrow();
+      });
+    });
+
+    it('should handle empty search fields config', () => {
+      const emptyFieldsPanel = new SearchPanel(mockScreen, mockEventBus, {
+        searchFields: [],
+      });
+      
+      emptyFieldsPanel.setDataSource(sampleData);
+      
+      expect(() => emptyFieldsPanel['performSearch']('test')).not.toThrow();
+      expect(emptyFieldsPanel.getResults()).toHaveLength(0);
+    });
+
+    it('should handle navigation with single result', () => {
+      const singleResult = [{ item: { id: '1' }, score: 1, matches: [], index: 0 }];
+      searchPanel['currentResults'] = singleResult;
+      
+      searchPanel.navigateUp();
+      expect(searchPanel['selectedIndex']).toBe(0);
+      
+      searchPanel.navigateDown();
+      expect(searchPanel['selectedIndex']).toBe(0);
+    });
+
+    it('should handle display updates when elements are null', () => {
+      searchPanel['resultsBox'] = null;
+      searchPanel['statusBox'] = null;
+      
+      expect(() => {
+        searchPanel['updateResultsDisplay']();
+        searchPanel['updateStatusDisplay']();
+      }).not.toThrow();
+    });
+
+    it('should handle history operations at limits', () => {
+      // Fill history to max
+      for (let i = 0; i < 10; i++) {
+        searchPanel['addToHistory'](`query-${i}`);
+      }
+      
+      // Add one more to test limit
+      searchPanel['addToHistory']('overflow-query');
+      
+      const history = searchPanel.getSearchHistory();
+      expect(history.length).toBeLessThanOrEqual(5); // maxHistory is 5
+      expect(history[0]).toBe('overflow-query'); // Most recent first
+    });
+
+    it('should handle contains search with empty query', () => {
+      const results = searchPanel['containsSearch']('', sampleData);
+      expect(results).toHaveLength(0);
+    });
+
+    it('should handle fuzzy search with no matches', () => {
+      const results = searchPanel['fuzzySearch']('xyz123nonexistent', sampleData);
+      expect(results).toHaveLength(0);
+    });
+
+    it('should handle field value extraction from arrays', () => {
+      const arrayData = [
+        { tags: ['react', 'javascript', 'frontend'] },
+        { tags: ['vue', 'typescript'] },
+      ];
+      
+      searchPanel.setDataSource(arrayData);
+      searchPanel['config'].searchFields = ['tags'];
+      
+      expect(() => searchPanel['performSearch']('react')).not.toThrow();
+    });
+
+    it('should handle timeout cleanup edge cases', () => {
+      searchPanel['searchTimeout'] = undefined;
+      
+      expect(() => searchPanel.destroy()).not.toThrow();
+      
+      searchPanel['searchTimeout'] = setTimeout(() => {}, 100);
+      searchPanel['searchTimeout'] = undefined; // Simulate race condition
+      
+      expect(() => searchPanel.destroy()).not.toThrow();
+    });
+
+    it('should handle case sensitivity edge cases', () => {
+      searchPanel['config'].caseSensitive = true;
+      
+      const results = searchPanel['fuzzySearch']('LIVE', sampleData);
+      expect(results.length).toBeLessThanOrEqual(sampleData.length);
+    });
+
+    it('should handle highlight with overlapping positions', () => {
+      const positions = [0, 1, 2, 1, 2, 3]; // Overlapping positions
+      const highlighted = searchPanel['highlightMatches']('test', positions);
+      
+      expect(highlighted).toContain('{yellow-fg}');
+      expect(highlighted).toContain('{/yellow-fg}');
+    });
+
+    it('should handle date filter with invalid dates', () => {
+      const dataWithDates = sampleData.map(item => ({
+        ...item,
+        createdAt: 'invalid-date',
+        updatedAt: new Date('invalid'),
+      }));
+
+      searchPanel.setDataSource(dataWithDates);
+      searchPanel.setFilterCriteria({
+        dateRange: {
+          start: new Date('2023-01-01'),
+          end: new Date('2023-12-31'),
+        }
+      });
+      
+      expect(() => searchPanel['performSearch']('test')).not.toThrow();
+    });
+
+    it('should handle custom filter throwing errors', () => {
+      searchPanel.setFilterCriteria({
+        custom: () => {
+          throw new Error('Filter error');
+        }
+      });
+      
+      expect(() => searchPanel['performSearch']('test')).not.toThrow();
+    });
+
+    it('should handle results with null matches', () => {
+      const resultsWithNullMatches = [{
+        item: { id: '1', name: 'Test' },
+        score: 1,
+        matches: null as any,
+        index: 0,
+      }];
+      
+      searchPanel['currentResults'] = resultsWithNullMatches;
+      
+      expect(() => searchPanel['updateResultsDisplay']()).not.toThrow();
+    });
+
+    it('should handle show when screen has null dimensions', () => {
+      mockScreen.width = null;
+      mockScreen.height = undefined;
+      
+      expect(() => searchPanel.show()).not.toThrow();
+    });
+  });
+
+  describe('Constructor', () => {
+    it('should initialize search panel with screen and event bus', () => {
+      expect(searchPanel).toBeInstanceOf(SearchPanel);
+    });
+
+    it('should start with invisible state', () => {
+      expect(searchPanel.isSearchVisible()).toBe(false);
+    });
+
+    it('should initialize with empty results', () => {
+      expect(searchPanel.getResults()).toHaveLength(0);
+    });
+
+    it('should use default config when not provided', () => {
+      const defaultPanel = new SearchPanel(mockScreen, mockEventBus);
+      expect(defaultPanel).toBeInstanceOf(SearchPanel);
+    });
+  });
+
+  describe('show method', () => {
+    it('should show search panel and create interface', () => {
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+
+      searchPanel.show();
+
+      expect(searchPanel.isSearchVisible()).toBe(true);
+      expect(mockScreen.append).toHaveBeenCalledTimes(3); // search, results, status boxes
+      expect(mockSearchBox.focus).toHaveBeenCalled();
+      expect(mockScreen.render).toHaveBeenCalled();
+      expect(eventSpy).toHaveBeenCalledWith('search:shown', {
+        timestamp: expect.any(Date),
+      });
+    });
+
+    it('should hide existing panel before showing new one', () => {
+      searchPanel.show();
+      expect(searchPanel.isSearchVisible()).toBe(true);
+
+      const removeSpy = jest.spyOn(mockScreen, 'remove');
+      searchPanel.show();
+
+      expect(removeSpy).toHaveBeenCalled();
+    });
+
+    it('should handle creation errors gracefully', () => {
+      const blessed = require('blessed');
+      blessed.textbox.mockImplementation(() => {
+        throw new Error('Widget creation failed');
+      });
+
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+
+      searchPanel.show();
+
+      expect(searchPanel.isSearchVisible()).toBe(false);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to create search interface:',
+        expect.any(Error)
+      );
+
+      consoleSpy.mockRestore();
+      // Reset mock
+      blessed.textbox.mockReturnValue(mockSearchBox);
+    });
+  });
+
+  describe('hide method', () => {
+    beforeEach(() => {
+      searchPanel.show();
+    });
+
+    it('should hide search panel and clean up resources', () => {
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+
+      searchPanel.hide();
+
+      expect(searchPanel.isSearchVisible()).toBe(false);
+      expect(mockScreen.remove).toHaveBeenCalledTimes(3);
+      expect(mockScreen.render).toHaveBeenCalled();
+      expect(eventSpy).toHaveBeenCalledWith('search:hidden', {
+        timestamp: expect.any(Date),
+      });
+    });
+
+    it('should reset search state when hiding', () => {
+      // Set some search state
+      searchPanel.setDataSource(sampleData);
+      
+      searchPanel.hide();
+
+      expect(searchPanel.getResults()).toHaveLength(0);
+      expect(searchPanel.getSelectedResult()).toBeNull();
+    });
+
+    it('should do nothing if panel is not visible', () => {
+      searchPanel.hide(); // First hide
+      jest.clearAllMocks();
+
+      searchPanel.hide(); // Second hide
+
+      expect(mockScreen.remove).not.toHaveBeenCalled();
+    });
+
+    it('should handle removal errors gracefully', () => {
+      mockScreen.remove.mockImplementation(() => {
+        throw new Error('Remove failed');
+      });
+
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+
+      searchPanel.hide();
+
+      expect(searchPanel.isSearchVisible()).toBe(false);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to hide search panel:',
+        expect.any(Error)
+      );
+
+      consoleSpy.mockRestore();
+    });
+  });
+
+  describe('setDataSource method', () => {
+    it('should set data source for searching', () => {
+      const newData = [
+        { id: 'new001', name: 'New Item', status: 'active', type: 'new' },
+      ];
+
+      searchPanel.setDataSource(newData);
+
+      // Data source should be updated
+      expect(searchPanel.getResults()).toHaveLength(0); // No current search
+    });
+
+    it('should trigger search if query exists', () => {
+      searchPanel.show();
+      
+      // Set a search query first
+      searchPanel['currentQuery'] = 'test';
+      
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      
+      // Then set data source - this should trigger search
+      searchPanel.setDataSource(sampleData);
+
+      // Fast-forward debounced search
+      jest.advanceTimersByTime(150);
+      
+      expect(eventSpy).toHaveBeenCalledWith('search:results:updated', expect.any(Object));
+    });
+  });
+
+  describe('setFilterCriteria method', () => {
+    it('should set filter criteria', () => {
+      const criteria: FilterCriteria = {
+        status: ['live'],
+        type: ['channel'],
+      };
+
+      expect(() => {
+        searchPanel.setFilterCriteria(criteria);
+      }).not.toThrow();
+    });
+
+    it('should trigger search if query exists', (done) => {
+      searchPanel.show();
+      
+      // Set a search query first
+      searchPanel['currentQuery'] = 'live';
+      
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      
+      const criteria: FilterCriteria = {
+        status: ['live'],
+      };
+
+      searchPanel.setFilterCriteria(criteria);
+
+      setTimeout(() => {
+        expect(eventSpy).toHaveBeenCalledWith('search:results:updated', expect.any(Object));
+        done();
+      }, 150);
+    });
+  });
+
+  describe('fuzzy search functionality', () => {
+    beforeEach(() => {
+      searchPanel.show();
+    });
+
+    it('should perform fuzzy search and return results', (done) => {
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      mockSearchBox.getValue.mockReturnValue('live');
+
+      // Simulate search input
+      searchPanel['handleSearchInput']('live');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        expect(results.length).toBeGreaterThan(0);
+        
+        // Should find items with "live" in name or status
+        expect(results.some(r => r.item.name.includes('Live') || r.item.status.includes('live'))).toBe(true);
+        
+        expect(eventSpy).toHaveBeenCalledWith('search:results:updated', expect.objectContaining({
+          query: 'live',
+          results: expect.any(Array),
+        }));
+        done();
+      }, 150);
+    });
+
+    it('should handle case insensitive search', (done) => {
+      mockSearchBox.getValue.mockReturnValue('LIVE');
+      searchPanel['handleSearchInput']('LIVE');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        expect(results.length).toBeGreaterThan(0);
+        done();
+      }, 150);
+    });
+
+    it('should return empty results for no matches', (done) => {
+      mockSearchBox.getValue.mockReturnValue('nonexistent');
+      searchPanel['handleSearchInput']('nonexistent');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        expect(results).toHaveLength(0);
+        done();
+      }, 150);
+    });
+
+    it('should respect minimum character requirement', (done) => {
+      mockSearchBox.getValue.mockReturnValue('a'); // Single character, but minChars is 1
+      searchPanel['handleSearchInput']('a');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        expect(results.length).toBeGreaterThanOrEqual(0);
+        done();
+      }, 150);
+    });
+
+    it('should not search below minimum characters', (done) => {
+      // Create panel with higher minChars
+      const config: SearchConfig = { minChars: 3 };
+      const restrictivePanel = new SearchPanel(mockScreen, mockEventBus, config);
+      restrictivePanel.setDataSource(sampleData);
+      restrictivePanel.show();
+
+      restrictivePanel['handleSearchInput']('ab'); // Only 2 characters
+
+      setTimeout(() => {
+        const results = restrictivePanel.getResults();
+        expect(results).toHaveLength(0);
+        restrictivePanel.destroy();
+        done();
+      }, 150);
+    });
+  });
+
+  describe('exact search functionality', () => {
+    beforeEach(() => {
+      const config: SearchConfig = { mode: 'exact' };
+      searchPanel.destroy(); // Clean up previous instance
+      searchPanel = new SearchPanel(mockScreen, mockEventBus, config);
+      searchPanel.setDataSource(sampleData);
+      searchPanel.show();
+    });
+
+    it('should perform exact search', (done) => {
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      
+      // Directly call performSearch to avoid async issues
+      searchPanel['performSearch']('Stream');
+      
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        expect(results.length).toBeGreaterThan(0);
+        
+        // All results should contain "Stream"
+        results.forEach(result => {
+          expect(result.matches.some(match => 
+            match.value.includes('Stream')
+          )).toBe(true);
+        });
+        
+        expect(eventSpy).toHaveBeenCalledWith('search:results:updated', expect.any(Object));
+        done();
+      }, 50);
+    });
+  });
+
+  describe('filter functionality', () => {
+    beforeEach(() => {
+      searchPanel.show();
+    });
+
+    it('should filter by status', (done) => {
+      searchPanel.setFilterCriteria({ status: ['live'] });
+      mockSearchBox.getValue.mockReturnValue('stream');
+      searchPanel['handleSearchInput']('stream');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        results.forEach(result => {
+          expect(result.item.status).toBe('live');
+        });
+        done();
+      }, 150);
+    });
+
+    it('should filter by type', (done) => {
+      searchPanel.setFilterCriteria({ type: ['system'] });
+      mockSearchBox.getValue.mockReturnValue('monitor');
+      searchPanel['handleSearchInput']('monitor');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        results.forEach(result => {
+          expect(result.item.type).toBe('system');
+        });
+        done();
+      }, 150);
+    });
+
+    it('should filter by date range', (done) => {
+      const now = new Date();
+      const dataWithDates = sampleData.map(item => ({
+        ...item,
+        createdAt: new Date(now.getTime() - Math.random() * 86400000), // Random date within last day
+      }));
+      
+      searchPanel.setDataSource(dataWithDates);
+      
+      const oneDayAgo = new Date(now.getTime() - 86400000);
+      searchPanel.setFilterCriteria({
+        dateRange: { start: oneDayAgo }
+      });
+      
+      mockSearchBox.getValue.mockReturnValue('stream');
+      searchPanel['handleSearchInput']('stream');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        results.forEach(result => {
+          expect(new Date(result.item.createdAt)).toBeInstanceOf(Date);
+        });
+        done();
+      }, 150);
+    });
+
+    it('should apply custom filter function', (done) => {
+      searchPanel.setFilterCriteria({
+        custom: (item: any) => item.id.startsWith('ch')
+      });
+      
+      mockSearchBox.getValue.mockReturnValue('stream');
+      searchPanel['handleSearchInput']('stream');
+
+      setTimeout(() => {
+        const results = searchPanel.getResults();
+        results.forEach(result => {
+          expect(result.item.id).toMatch(/^ch/);
+        });
+        done();
+      }, 150);
+    });
+  });
+
+  describe('navigation functionality', () => {
+    beforeEach((done) => {
+      searchPanel.show();
+      mockSearchBox.getValue.mockReturnValue('stream');
+      searchPanel['handleSearchInput']('stream');
+      
+      setTimeout(() => {
+        done();
+      }, 150);
+    });
+
+    it('should navigate selection up', () => {
+      const results = searchPanel.getResults();
+      if (results.length > 1) {
+        expect(searchPanel.getSelectedResult()).toBe(results[0]);
+        
+        searchPanel.navigateUp();
+        expect(searchPanel.getSelectedResult()).toBe(results[results.length - 1]); // Wraps to last
+      }
+    });
+
+    it('should navigate selection down', () => {
+      const results = searchPanel.getResults();
+      if (results.length > 1) {
+        expect(searchPanel.getSelectedResult()).toBe(results[0]);
+        
+        searchPanel.navigateDown();
+        expect(searchPanel.getSelectedResult()).toBe(results[1]);
+      }
+    });
+
+    it('should handle navigation with no results', () => {
+      searchPanel.clearSearch();
+      
+      expect(() => {
+        searchPanel.navigateUp();
+        searchPanel.navigateDown();
+      }).not.toThrow();
+    });
+
+    it('should wrap navigation at boundaries', () => {
+      const results = searchPanel.getResults();
+      if (results.length > 0) {
+        // Navigate to last item
+        for (let i = 0; i < results.length - 1; i++) {
+          searchPanel.navigateDown();
+        }
+        expect(searchPanel.getSelectedResult()).toBe(results[results.length - 1]);
+        
+        // Navigate down should wrap to first
+        searchPanel.navigateDown();
+        expect(searchPanel.getSelectedResult()).toBe(results[0]);
+      }
+    });
+  });
+
+  describe('result selection', () => {
+    beforeEach((done) => {
+      searchPanel.show();
+      mockSearchBox.getValue.mockReturnValue('live');
+      searchPanel['handleSearchInput']('live');
+      
+      setTimeout(() => {
+        done();
+      }, 150);
+    });
+
+    it('should select current result and emit event', () => {
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      const selected = searchPanel.getSelectedResult();
+      
+      if (selected) {
+        searchPanel.selectResult();
+        
+        expect(eventSpy).toHaveBeenCalledWith('search:result:selected', {
+          result: selected,
+          query: 'live',
+          timestamp: expect.any(Date),
+        });
+      }
+    });
+
+    it('should add query to history when selecting result', () => {
+      const historyBefore = searchPanel.getSearchHistory();
+      
+      if (searchPanel.getSelectedResult()) {
+        searchPanel.selectResult();
+        
+        const historyAfter = searchPanel.getSearchHistory();
+        expect(historyAfter.length).toBeGreaterThanOrEqual(historyBefore.length);
+        expect(historyAfter).toContain('live');
+      }
+    });
+
+    it('should handle selection with no results', () => {
+      searchPanel.clearSearch();
+      
+      expect(() => {
+        searchPanel.selectResult();
+      }).not.toThrow();
+    });
+  });
+
+  describe('search history management', () => {
+    it('should add items to search history', () => {
+      searchPanel['addToHistory']('test query');
+      
+      const history = searchPanel.getSearchHistory();
+      expect(history).toContain('test query');
+    });
+
+    it('should not add duplicate items to history', () => {
+      searchPanel['addToHistory']('duplicate');
+      searchPanel['addToHistory']('duplicate');
+      
+      const history = searchPanel.getSearchHistory();
+      const duplicateCount = history.filter(item => item === 'duplicate').length;
+      expect(duplicateCount).toBe(1);
+    });
+
+    it('should limit history size', () => {
+      // Add more items than maxHistory (5)
+      for (let i = 0; i < 10; i++) {
+        searchPanel['addToHistory'](`query ${i}`);
+      }
+      
+      const history = searchPanel.getSearchHistory();
+      expect(history.length).toBeLessThanOrEqual(5);
+    });
+
+    it('should clear search history', () => {
+      searchPanel['addToHistory']('test');
+      expect(searchPanel.getSearchHistory().length).toBeGreaterThan(0);
+      
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      searchPanel.clearHistory();
+      
+      expect(searchPanel.getSearchHistory()).toHaveLength(0);
+      expect(eventSpy).toHaveBeenCalledWith('search:history:cleared', {
+        timestamp: expect.any(Date),
+      });
+    });
+
+    it('should emit event when history is updated', () => {
+      const eventSpy = jest.spyOn(mockEventBus, 'emit');
+      
+      searchPanel['addToHistory']('new query');
+      
+      expect(eventSpy).toHaveBeenCalledWith('search:history:updated', {
+        history: expect.arrayContaining(['new query']),
+        timestamp: expect.any(Date),
+      });
+    });
+
+    it('should not add empty queries to history', () => {
+      const historyBefore = searchPanel.getSearchHistory().length;
+      
+      searchPanel['addToHistory']('');
+      searchPanel['addToHistory']('   ');
+      
+      const historyAfter = searchPanel.getSearchHistory().length;
+      expect(historyAfter).toBe(historyBefore);
+    });
+  });
+
+  describe('clearSearch method', () => {
+    beforeEach((done) => {
+      searchPanel.show();
+      mockSearchBox.getValue.mockReturnValue('test');
+      searchPanel['handleSearchInput']('test');
+      
+      setTimeout(() => {
+        done();
+      }, 150);
+    });
+
+    it('should clear search query and results', () => {
+      expect(searchPanel.getResults().length).toBeGreaterThanOrEqual(0);
+      
+      searchPanel.clearSearch();
+      
+      expect(searchPanel.getResults()).toHaveLength(0);
+      expect(searchPanel.getSelectedResult()).toBeNull();
+      expect(mockSearchBox.clearValue).toHaveBeenCalled();
+    });
+  });
+
+  describe('highlighting functionality', () => {
+    it('should highlight matched characters', () => {
+      const text = 'Live Stream';
+      const positions = [0, 1, 2, 3]; // Highlight "Live"
+      
+      const highlighted = searchPanel['highlightMatches'](text, positions);
+      
+      expect(highlighted).toContain('{yellow-fg}');
+      expect(highlighted).toContain('{/yellow-fg}');
+    });
+
+    it('should handle empty positions array', () => {
+      const text = 'No highlights';
+      const positions: number[] = [];
+      
+      const highlighted = searchPanel['highlightMatches'](text, positions);
+      
+      expect(highlighted).toBe(text);
+    });
+
+    it('should handle consecutive positions', () => {
+      const text = 'Stream';
+      const positions = [0, 1, 2, 3, 4, 5]; // Highlight entire word
+      
+      const highlighted = searchPanel['highlightMatches'](text, positions);
+      
+      expect(highlighted).toBe('{yellow-fg}Stream{/yellow-fg}');
+    });
+  });
+
+  describe('field value extraction', () => {
+    it('should extract simple field values', () => {
+      const item = { name: 'Test', id: 'test123' };
+      
+      expect(searchPanel['getFieldValue'](item, 'name')).toBe('Test');
+      expect(searchPanel['getFieldValue'](item, 'id')).toBe('test123');
+    });
+
+    it('should extract nested field values', () => {
+      const item = { 
+        info: { 
+          details: { 
+            title: 'Nested Title' 
+          } 
+        } 
+      };
+      
+      expect(searchPanel['getFieldValue'](item, 'info.details.title')).toBe('Nested Title');
+    });
+
+    it('should handle missing fields gracefully', () => {
+      const item = { name: 'Test' };
+      
+      expect(searchPanel['getFieldValue'](item, 'nonexistent')).toBe('');
+      expect(searchPanel['getFieldValue'](item, 'nested.missing')).toBe('');
+    });
+
+    it('should convert non-string values to strings', () => {
+      const item = { count: 42, active: true };
+      
+      expect(searchPanel['getFieldValue'](item, 'count')).toBe('42');
+      expect(searchPanel['getFieldValue'](item, 'active')).toBe('true');
+    });
+  });
+
+  describe('search event handling', () => {
+    beforeEach(() => {
+      searchPanel.show();
+    });
+
+    it('should set up search box event handlers', () => {
+      expect(mockSearchBox.on).toHaveBeenCalledWith('submit', expect.any(Function));
+      expect(mockSearchBox.key).toHaveBeenCalledWith(['escape'], expect.any(Function));
+      expect(mockSearchBox.key).toHaveBeenCalledWith(['up'], expect.any(Function));
+      expect(mockSearchBox.key).toHaveBeenCalledWith(['down'], expect.any(Function));
+      expect(mockSearchBox.key).toHaveBeenCalledWith(['enter'], expect.any(Function));
+      expect(mockSearchBox.on).toHaveBeenCalledWith('keypress', expect.any(Function));
+    });
+
+    it('should set up results box event handlers', () => {
+      expect(mockResultsBox.key).toHaveBeenCalledWith(['escape'], expect.any(Function));
+      expect(mockResultsBox.key).toHaveBeenCalledWith(['enter'], expect.any(Function));
+      expect(mockResultsBox.on).toHaveBeenCalledWith('click', expect.any(Function));
+    });
+  });
+
+  describe('destroy method', () => {
+    it('should clean up resources when destroyed', () => {
+      searchPanel.show();
+      expect(searchPanel.isSearchVisible()).toBe(true);
+      
+      searchPanel.destroy();
+      
+      expect(searchPanel.isSearchVisible()).toBe(false);
+    });
+
+    it('should clear search timeout when destroyed', () => {
+      // Set up a search that would create a timeout
+      searchPanel.show();
+      searchPanel['handleSearchInput']('test');
+      
+      // Destroy should clear the timeout
+      expect(() => {
+        searchPanel.destroy();
+      }).not.toThrow();
+    });
+
+    it('should be safe to destroy multiple times', () => {
+      expect(() => {
+        searchPanel.destroy();
+        searchPanel.destroy();
+      }).not.toThrow();
+    });
+  });
+
+  describe('additional coverage tests', () => {
+    it('should update status display with query information', () => {
+      searchPanel.show();
+      searchPanel['currentQuery'] = 'test query';
+      searchPanel['currentResults'] = [
+        {
+          item: { id: 'test', name: 'Test Item' },
+          score: 1.0,
+          matches: [],
+          index: 0,
+        }
+      ];
+      searchPanel['selectedIndex'] = 0;
+
+      expect(() => {
+        searchPanel['updateStatusDisplay']();
+      }).not.toThrow();
+    });
+
+    it('should handle setupSearchEvents when widgets are null', () => {
+      searchPanel['searchBox'] = null;
+      searchPanel['resultsBox'] = null;
+
+      expect(() => {
+        searchPanel['setupSearchEvents']();
+      }).not.toThrow();
+    });
+
+    it('should handle complex nested field extraction', () => {
+      const complexItem = {
+        metadata: {
+          info: {
+            details: {
+              title: 'Deep Nested Title',
+              count: 42
+            }
+          }
+        },
+        nullField: null,
+        undefinedField: undefined,
+      };
+
+      expect(searchPanel['getFieldValue'](complexItem, 'metadata.info.details.title')).toBe('Deep Nested Title');
+      expect(searchPanel['getFieldValue'](complexItem, 'metadata.info.details.count')).toBe('42');
+      expect(searchPanel['getFieldValue'](complexItem, 'nullField')).toBe('');
+      expect(searchPanel['getFieldValue'](complexItem, 'undefinedField')).toBe('');
+      expect(searchPanel['getFieldValue'](complexItem, 'nonexistent.deeply.nested')).toBe('');
+    });
+
+    it('should handle status display update errors gracefully', () => {
+      searchPanel.show();
+      searchPanel['statusBox'].setContent = jest.fn().mockImplementation(() => {
+        throw new Error('Status update failed');
+      });
+      
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      
+      searchPanel['updateStatusDisplay']();
+      
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to update status display:', expect.any(Error));
+      
+      consoleSpy.mockRestore();
+    });
+
+    it('should handle calculate exact match properly', () => {
+      const result = searchPanel['calculateExactMatch']('test', 'this is a test string', 'This is a Test String', 'name');
+      
+      expect(result.field).toBe('name');
+      expect(result.value).toBe('This is a Test String');
+      expect(result.score).toBe(1.0);
+      expect(result.positions).toEqual([10, 11, 12, 13]);
+      expect(result.highlighted).toContain('{yellow-fg}');
+    });
+
+    it('should handle calculate fuzzy match with score', () => {
+      const result = searchPanel['calculateFuzzyMatch']('test', 'test string', 'name');
+      
+      expect(result.field).toBe('name');
+      expect(result.score).toBeGreaterThan(0);
+      expect(result.positions).toEqual([0, 1, 2, 3]);
+    });
+  });
+
+  describe('edge cases and error handling', () => {
+    it('should handle empty data source', () => {
+      searchPanel.setDataSource([]);
+      searchPanel.show();
+      
+      expect(() => {
+        searchPanel['handleSearchInput']('test');
+      }).not.toThrow();
+    });
+
+    it('should handle null/undefined data items', () => {
+      const dataWithNulls = [
+        null,
+        undefined,
+        { id: 'valid', name: 'Valid Item' },
+      ];
+      
+      expect(() => {
+        searchPanel.setDataSource(dataWithNulls as any);
+        searchPanel['handleSearchInput']('test');
+      }).not.toThrow();
+    });
+
+    it('should handle search errors gracefully', () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      
+      // Force an error by corrupting the data source
+      searchPanel['dataSource'] = null as any;
+      
+      searchPanel['performSearch']('test');
+      
+      expect(consoleSpy).toHaveBeenCalledWith('Search failed:', expect.any(Error));
+      expect(searchPanel.getResults()).toHaveLength(0);
+      
+      consoleSpy.mockRestore();
+    });
+
+    it('should handle display update errors gracefully', () => {
+      searchPanel.show();
+      mockResultsBox.setContent.mockImplementation(() => {
+        throw new Error('Display update failed');
+      });
+      
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      
+      searchPanel['updateResultsDisplay']();
+      
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to update results display:', expect.any(Error));
+      
+      consoleSpy.mockRestore();
+    });
+  });
+});

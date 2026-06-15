@@ -1,0 +1,36 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "**/tests/**"
+  ],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "githubPages": false,
+  "cleanOutputDir": true,
+  "plugin": [],
+  "theme": "default",
+  "name": "polyv-live-api-sdk",
+  "readme": "./README.md",
+  "categorizeByGroup": true,
+  "sort": ["source-order"],
+  "visibilityFilters": {
+    "protected": true,
+    "private": false,
+    "inherited": true,
+    "external": true
+  },
+  "searchInComments": true,
+  "disableSources": false,
+  "emit": "docs",
+  "logLevel": "Info",
+  "tsconfig": "tsconfig.json",
+  "skipErrorChecking": true
+}
