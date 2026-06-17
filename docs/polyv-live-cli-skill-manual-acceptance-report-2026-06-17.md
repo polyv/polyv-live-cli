@@ -17,7 +17,7 @@
 - 仓库版和安装版 `SKILL.md`、`references/` 同步一致。
 - CLI 调用以 npm 发布版 `polyv-live-cli@latest --help` 为准。
 - 认证预检、只读 API 查询、旧参数纠错、dry-run 预演均符合预期。
-- 未发现 AppSecret 明文输出。
+- 未发现账号 AppSecret 明文输出。
 - 未执行删除、开播、停播、真实 setup 等高风险操作。
 
 ## 验收结果汇总
@@ -28,7 +28,7 @@
 | B. npm 发布版校验 | 通过 | `--version`、顶层 help 和命令族 help 均正常 |
 | C. 认证预检 | 通过 | 真实账号、无账号隔离环境、API 错误路径均覆盖 |
 | D. 高风险操作保护 | 通过 | `setup --dry-run` 已执行；删除、开播、停播按静态规则验收 |
-| E. 敏感信息保护 | 通过 | 账号输出未包含 AppSecret，skill 明确禁止回显 |
+| E. 敏感信息保护 | 通过 | 账号输出未包含 AppSecret，skill 明确禁止回显账号密钥 |
 | F. references 路由 | 通过 | 静态扫描未发现旧写法，skill 明确 help 优先 |
 | G. 高频命令语法 | 通过 | transmit、card-push、product、coupon、statistics、setup 均符合当前 help |
 | H. 输出格式 | 通过 | 数据查询使用 JSON 输出验证 |
@@ -258,7 +258,8 @@ npx --yes polyv-live-cli@latest channel list -a production-account --verbose -P 
 
 - 账号命令输出 App ID、User ID、账号名、环境信息。
 - 未输出 AppSecret。
-- `SKILL.md` 明确写有“不要回显 AppSecret”。
+- `SKILL.md` 明确写有“不要回显账号 AppSecret”。
+- 后续已补充规则：用户明确请求推流凭证时，推流地址和推流密钥是目标结果，可通过 `stream get-key -o json` 返回完整凭证。
 
 结论：通过。
 

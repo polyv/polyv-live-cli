@@ -14,10 +14,12 @@ npx --yes polyv-live-cli@latest stream get-key -c 3151318
 
 # 输出：
 # RTMP地址: rtmp://push.polyv.net/live/
-# 推流密钥: 3151318-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+# 推流密钥: 3151318-****-****-****-************
 ```
 
-### JSON输出（用于脚本）
+表格输出会脱敏显示推流密钥。用户明确需要完整推流凭证时，使用 JSON 输出。
+
+### JSON输出（完整推流凭证）
 
 ```bash
 npx --yes polyv-live-cli@latest stream get-key -c 3151318 -o json
@@ -28,6 +30,8 @@ npx --yes polyv-live-cli@latest stream get-key -c 3151318 -o json
 #   "fullRtmpUrl": "rtmp://push.polyv.net/live/3151318-xxxx-xxxx..."
 # }
 ```
+
+推流密钥用于 OBS、FFmpeg 等推流端接入直播频道，只提供给可信推流端，不要发到公开渠道或日志。
 
 ## 开始和结束直播
 
