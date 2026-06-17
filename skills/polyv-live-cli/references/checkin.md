@@ -8,19 +8,19 @@
 
 ```bash
 # 立即发起签到
-npx polyv-live-cli@latest checkin start -c 3151318
+npx --yes polyv-live-cli@latest checkin start -c 3151318
 
 # 设置签到时长30秒
-npx polyv-live-cli@latest checkin start -c 3151318 --limit-time 30
+npx --yes polyv-live-cli@latest checkin start -c 3151318 --limit-time 30
 
 # 定时签到（13位时间戳）
-npx polyv-live-cli@latest checkin start -c 3151318 --limit-time 60 --delay-time 1700734800000
+npx --yes polyv-live-cli@latest checkin start -c 3151318 --limit-time 60 --delay-time 1700734800000
 
 # 自定义签到提示语
-npx polyv-live-cli@latest checkin start -c 3151318 --message "请各位学员签到"
+npx --yes polyv-live-cli@latest checkin start -c 3151318 --message "请各位学员签到"
 
 # 强制签到模式
-npx polyv-live-cli@latest checkin start -c 3151318 --force
+npx --yes polyv-live-cli@latest checkin start -c 3151318 --force
 ```
 
 ### 签到选项
@@ -37,7 +37,7 @@ npx polyv-live-cli@latest checkin start -c 3151318 --force
 ### JSON输出
 
 ```bash
-npx polyv-live-cli@latest checkin start -c 3151318 -o json
+npx --yes polyv-live-cli@latest checkin start -c 3151318 -o json
 ```
 
 ## 查询签到记录
@@ -46,19 +46,19 @@ npx polyv-live-cli@latest checkin start -c 3151318 -o json
 
 ```bash
 # 查询所有签到记录
-npx polyv-live-cli@latest checkin list -c 3151318
+npx --yes polyv-live-cli@latest checkin list -c 3151318
 
 # 分页查询
-npx polyv-live-cli@latest checkin list -c 3151318 --page 1 --size 20
+npx --yes polyv-live-cli@latest checkin list -c 3151318 --page 1 --size 20
 
 # 按日期筛选
-npx polyv-live-cli@latest checkin list -c 3151318 --date 2024-01-15
+npx --yes polyv-live-cli@latest checkin list -c 3151318 --date 2024-01-15
 
 # 按场次筛选
-npx polyv-live-cli@latest checkin list -c 3151318 --session-id fwly13xczv
+npx --yes polyv-live-cli@latest checkin list -c 3151318 --session-id fwly13xczv
 
 # JSON输出
-npx polyv-live-cli@latest checkin list -c 3151318 -o json
+npx --yes polyv-live-cli@latest checkin list -c 3151318 -o json
 ```
 
 ### 查询选项
@@ -78,10 +78,10 @@ npx polyv-live-cli@latest checkin list -c 3151318 -o json
 
 ```bash
 # 查询签到详情
-npx polyv-live-cli@latest checkin result -c 3151318 --checkin-id db14ef80-81b8-11eb-b114-e7477b
+npx --yes polyv-live-cli@latest checkin result -c 3151318 --checkin-id db14ef80-81b8-11eb-b114-e7477b
 
 # JSON输出
-npx polyv-live-cli@latest checkin result -c 3151318 --checkin-id db14ef80-81b8-11eb-b114-e7477b -o json
+npx --yes polyv-live-cli@latest checkin result -c 3151318 --checkin-id db14ef80-81b8-11eb-b114-e7477b -o json
 ```
 
 ### 详情选项
@@ -98,13 +98,13 @@ npx polyv-live-cli@latest checkin result -c 3151318 --checkin-id db14ef80-81b8-1
 
 ```bash
 # 查询最近7天的签到记录（默认）
-npx polyv-live-cli@latest checkin sessions -c 3151318
+npx --yes polyv-live-cli@latest checkin sessions -c 3151318
 
 # 指定日期范围
-npx polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31
+npx --yes polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31
 
 # JSON输出
-npx polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31 -o json
+npx --yes polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31 -o json
 ```
 
 ### 场次选项
@@ -124,23 +124,23 @@ npx polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --
 
 ```bash
 # 1. 开始直播后发起签到
-npx polyv-live-cli@latest checkin start -c 3151318 --limit-time 60 --message "同学们请签到"
+npx --yes polyv-live-cli@latest checkin start -c 3151318 --limit-time 60 --message "同学们请签到"
 
 # 2. 签到结束后查看结果
-npx polyv-live-cli@latest checkin result -c 3151318 --checkin-id <签到ID>
+npx --yes polyv-live-cli@latest checkin result -c 3151318 --checkin-id <签到ID>
 
 # 3. 导出签到数据
-npx polyv-live-cli@latest checkin result -c 3151318 --checkin-id <签到ID> -o json > checkin-result.json
+npx --yes polyv-live-cli@latest checkin result -c 3151318 --checkin-id <签到ID> -o json > checkin-result.json
 ```
 
 ### 课后统计
 
 ```bash
 # 查询某天的所有签到记录
-npx polyv-live-cli@latest checkin list -c 3151318 --date 2024-01-15 -o json
+npx --yes polyv-live-cli@latest checkin list -c 3151318 --date 2024-01-15 -o json
 
 # 查询某月的签到发起记录
-npx polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31
+npx --yes polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31
 ```
 
 ### 定时签到
@@ -151,7 +151,7 @@ npx polyv-live-cli@latest checkin sessions -c 3151318 --start-date 2024-01-01 --
 date -j -f "%Y-%m-%d %H:%M:%S" "2024-01-15 10:00:00" +%s000
 
 # 发起定时签到
-npx polyv-live-cli@latest checkin start -c 3151318 --limit-time 120 --delay-time 1705287600000
+npx --yes polyv-live-cli@latest checkin start -c 3151318 --limit-time 120 --delay-time 1705287600000
 ```
 
 ## 输出格式

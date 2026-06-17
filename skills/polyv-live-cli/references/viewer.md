@@ -18,7 +18,7 @@
 ### 语法
 
 ```bash
-npx polyv-live-cli@latest viewer get -i <观众ID> [-o table|json]
+npx --yes polyv-live-cli@latest viewer get -i <观众ID> [-o table|json]
 ```
 
 ### 参数
@@ -32,13 +32,13 @@ npx polyv-live-cli@latest viewer get -i <观众ID> [-o table|json]
 
 ```bash
 # 获取观众详情（表格格式）
-npx polyv-live-cli@latest viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
+npx --yes polyv-live-cli@latest viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
 
 # 获取观众详情（JSON格式）
-npx polyv-live-cli@latest viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
+npx --yes polyv-live-cli@latest viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
 
 # 使用完整参数名
-npx polyv-live-cli@latest viewer get --viewer-id "2_v378gn997yovtl3p8h77db9e224t6hg9" --output json
+npx --yes polyv-live-cli@latest viewer get --viewer-id "2_v378gn997yovtl3p8h77db9e224t6hg9" --output json
 ```
 
 ### 输出字段
@@ -63,7 +63,7 @@ npx polyv-live-cli@latest viewer get --viewer-id "2_v378gn997yovtl3p8h77db9e224t
 ### 语法
 
 ```bash
-npx polyv-live-cli@latest viewer list [选项]
+npx --yes polyv-live-cli@latest viewer list [选项]
 ```
 
 ### 参数
@@ -82,30 +82,30 @@ npx polyv-live-cli@latest viewer list [选项]
 
 ```bash
 # 查询所有观众（默认分页）
-npx polyv-live-cli@latest viewer list
+npx --yes polyv-live-cli@latest viewer list
 
 # 分页查询
-npx polyv-live-cli@latest viewer list --page 1 --size 20
+npx --yes polyv-live-cli@latest viewer list --page 1 --size 20
 
 # 按来源过滤
-npx polyv-live-cli@latest viewer list --source IMPORT
-npx polyv-live-cli@latest viewer list --source WX
-npx polyv-live-cli@latest viewer list --source MOBILE
+npx --yes polyv-live-cli@latest viewer list --source IMPORT
+npx --yes polyv-live-cli@latest viewer list --source WX
+npx --yes polyv-live-cli@latest viewer list --source MOBILE
 
 # 按手机号过滤
-npx polyv-live-cli@latest viewer list --mobile "13800138000"
+npx --yes polyv-live-cli@latest viewer list --mobile "13800138000"
 
 # 按邮箱过滤
-npx polyv-live-cli@latest viewer list --email "user@example.com"
+npx --yes polyv-live-cli@latest viewer list --email "user@example.com"
 
 # 按地址过滤
-npx polyv-live-cli@latest viewer list --area "北京"
+npx --yes polyv-live-cli@latest viewer list --area "北京"
 
 # 组合过滤条件
-npx polyv-live-cli@latest viewer list --source IMPORT --page 1 --size 50 -o json
+npx --yes polyv-live-cli@latest viewer list --source IMPORT --page 1 --size 50 -o json
 
 # JSON 格式输出
-npx polyv-live-cli@latest viewer list --source WX -o json
+npx --yes polyv-live-cli@latest viewer list --source WX -o json
 ```
 
 ### 输出字段

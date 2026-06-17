@@ -8,94 +8,94 @@
 
 ```bash
 # 创建无条件抽奖（默认）
-npx polyv-live-cli@latest lottery create -c 3151318 --name "幸运抽奖" --type none --amount 3 --prize "神秘礼品"
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "幸运抽奖" --type none --amount 3 --prize "神秘礼品"
 
 # 创建邀请抽奖（观众邀请3人参与）
-npx polyv-live-cli@latest lottery create -c 3151318 --name "邀请抽奖" --type invite --amount 5 --prize "优惠券" --duration 30 --invite-num 3
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "邀请抽奖" --type invite --amount 5 --prize "优惠券" --duration 30 --invite-num 3
 
 # 创建观看时长抽奖（观看10分钟后可参与）
-npx polyv-live-cli@latest lottery create -c 3151318 --name "时长抽奖" --type duration --amount 2 --prize "红包" --duration 10
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "时长抽奖" --type duration --amount 2 --prize "红包" --duration 10
 
 # 创建评论抽奖（发表评论后可参与）
-npx polyv-live-cli@latest lottery create -c 3151318 --name "评论抽奖" --type comment --amount 3 --prize "积分" --duration 5
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "评论抽奖" --type comment --amount 3 --prize "积分" --duration 5
 
 # 创建答题抽奖（回答问题后可参与）
-npx polyv-live-cli@latest lottery create -c 3151318 --name "答题抽奖" --type question --amount 1 --prize "大奖" --duration 30
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "答题抽奖" --type question --amount 1 --prize "大奖" --duration 30
 
 # JSON输出
-npx polyv-live-cli@latest lottery create -c 3151318 --name "测试抽奖" --type none --amount 3 --prize "奖品" -o json
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "测试抽奖" --type none --amount 3 --prize "奖品" -o json
 ```
 
 ## 查询抽奖列表
 
 ```bash
 # 查询频道所有抽奖活动
-npx polyv-live-cli@latest lottery list -c 3151318
+npx --yes polyv-live-cli@latest lottery list -c 3151318
 
 # 分页查询
-npx polyv-live-cli@latest lottery list -c 3151318 --page 1 --size 20
+npx --yes polyv-live-cli@latest lottery list -c 3151318 --page 1 --size 20
 
 # JSON输出
-npx polyv-live-cli@latest lottery list -c 3151318 -o json
+npx --yes polyv-live-cli@latest lottery list -c 3151318 -o json
 ```
 
 ## 查询抽奖详情
 
 ```bash
 # 获取指定抽奖活动详情
-npx polyv-live-cli@latest lottery get -c 3151318 --id 20521
+npx --yes polyv-live-cli@latest lottery get -c 3151318 --id 20521
 
 # JSON输出
-npx polyv-live-cli@latest lottery get -c 3151318 --id 20521 -o json
+npx --yes polyv-live-cli@latest lottery get -c 3151318 --id 20521 -o json
 ```
 
 ## 更新抽奖
 
 ```bash
 # 更新抽奖活动配置
-npx polyv-live-cli@latest lottery update -c 3151318 --id 20521 --name "更新后的抽奖" --amount 5 --prize "新奖品"
+npx --yes polyv-live-cli@latest lottery update -c 3151318 --id 20521 --name "更新后的抽奖" --amount 5 --prize "新奖品"
 
 # JSON输出
-npx polyv-live-cli@latest lottery update -c 3151318 --id 20521 --amount 10 -o json
+npx --yes polyv-live-cli@latest lottery update -c 3151318 --id 20521 --amount 10 -o json
 ```
 
 ## 删除抽奖
 
 ```bash
 # 删除指定抽奖活动
-npx polyv-live-cli@latest lottery delete -c 3151318 --id 20521
+npx --yes polyv-live-cli@latest lottery delete -c 3151318 --id 20521
 ```
 
 ## 查询中奖用户
 
 ```bash
 # 查询中奖用户列表
-npx polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6
+npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6
 
 # 分页查询
-npx polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 --page 1 --limit 20
+npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 --page 1 --limit 20
 
 # JSON输出
-npx polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 -o json
+npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 -o json
 ```
 
 ## 查询抽奖记录
 
 ```bash
 # 查询频道抽奖记录
-npx polyv-live-cli@latest lottery records -c 3151318
+npx --yes polyv-live-cli@latest lottery records -c 3151318
 
 # 按场次筛选
-npx polyv-live-cli@latest lottery records -c 3151318 --session-id fwly13xczv
+npx --yes polyv-live-cli@latest lottery records -c 3151318 --session-id fwly13xczv
 
 # 按时间范围筛选
-npx polyv-live-cli@latest lottery records -c 3151318 --start-time 1615772426000 --end-time 1615773566000
+npx --yes polyv-live-cli@latest lottery records -c 3151318 --start-time 1615772426000 --end-time 1615773566000
 
 # 分页查询
-npx polyv-live-cli@latest lottery records -c 3151318 --page 1 --limit 20
+npx --yes polyv-live-cli@latest lottery records -c 3151318 --page 1 --limit 20
 
 # JSON输出
-npx polyv-live-cli@latest lottery records -c 3151318 -o json
+npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 ```
 
 ## 命令选项

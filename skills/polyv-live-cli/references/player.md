@@ -8,10 +8,10 @@
 
 ```bash
 # 获取频道播放器配置
-npx polyv-live-cli@latest player config get -c 3151318
+npx --yes polyv-live-cli@latest player config get -c 3151318
 
 # JSON输出
-npx polyv-live-cli@latest player config get -c 3151318 -o json
+npx --yes polyv-live-cli@latest player config get -c 3151318 -o json
 ```
 
 ### 输出示例
@@ -36,19 +36,19 @@ npx polyv-live-cli@latest player config get -c 3151318 -o json
 
 ```bash
 # 启用水印
-npx polyv-live-cli@latest player config update -c 3151318 --watermark-enabled Y
+npx --yes polyv-live-cli@latest player config update -c 3151318 --watermark-enabled Y
 
 # 设置水印图片
-npx polyv-live-cli@latest player config update -c 3151318 --watermark-url "http://example.com/logo.png"
+npx --yes polyv-live-cli@latest player config update -c 3151318 --watermark-url "http://example.com/logo.png"
 
 # 设置水印位置
-npx polyv-live-cli@latest player config update -c 3151318 --watermark-position br
+npx --yes polyv-live-cli@latest player config update -c 3151318 --watermark-position br
 
 # 设置水印透明度
-npx polyv-live-cli@latest player config update -c 3151318 --watermark-opacity 0.8
+npx --yes polyv-live-cli@latest player config update -c 3151318 --watermark-opacity 0.8
 
 # 完整水印配置
-npx polyv-live-cli@latest player config update -c 3151318 \
+npx --yes polyv-live-cli@latest player config update -c 3151318 \
   --watermark-enabled Y \
   --watermark-url "http://example.com/logo.png" \
   --watermark-position br \
@@ -75,13 +75,13 @@ npx polyv-live-cli@latest player config update -c 3151318 \
 
 ```bash
 # 启用暖场图片
-npx polyv-live-cli@latest player config update -c 3151318 --warmup-enabled Y
+npx --yes polyv-live-cli@latest player config update -c 3151318 --warmup-enabled Y
 
 # 设置暖场图片
-npx polyv-live-cli@latest player config update -c 3151318 --warmup-image-url "http://example.com/warmup.jpg"
+npx --yes polyv-live-cli@latest player config update -c 3151318 --warmup-image-url "http://example.com/warmup.jpg"
 
 # 完整暖场配置
-npx polyv-live-cli@latest player config update -c 3151318 \
+npx --yes polyv-live-cli@latest player config update -c 3151318 \
   --warmup-enabled Y \
   --warmup-image-url "http://example.com/warmup.jpg"
 ```
@@ -90,7 +90,7 @@ npx polyv-live-cli@latest player config update -c 3151318 \
 
 ```bash
 # 设置基础访问量
-npx polyv-live-cli@latest player config update -c 3151318 --base-pv 1000
+npx --yes polyv-live-cli@latest player config update -c 3151318 --base-pv 1000
 ```
 
 > **说明**: 基础访问量会在实际访问量基础上叠加显示，用于初始化显示数据。
@@ -114,17 +114,17 @@ npx polyv-live-cli@latest player config update -c 3151318 --base-pv 1000
 
 ```bash
 # 1. 获取当前配置
-npx polyv-live-cli@latest player config get -c 3151318
+npx --yes polyv-live-cli@latest player config get -c 3151318
 
 # 2. 配置品牌水印
-npx polyv-live-cli@latest player config update -c 3151318 \
+npx --yes polyv-live-cli@latest player config update -c 3151318 \
   --watermark-enabled Y \
   --watermark-url "https://cdn.example.com/brand-logo.png" \
   --watermark-position br \
   --watermark-opacity 0.7
 
 # 3. 验证配置
-npx polyv-live-cli@latest player config get -c 3151318 -o json
+npx --yes polyv-live-cli@latest player config get -c 3151318 -o json
 ```
 
 ### 配置直播暖场
@@ -134,12 +134,12 @@ npx polyv-live-cli@latest player config get -c 3151318 -o json
 # 2. 上传到CDN获取URL
 
 # 3. 配置暖场图片
-npx polyv-live-cli@latest player config update -c 3151318 \
+npx --yes polyv-live-cli@latest player config update -c 3151318 \
   --warmup-enabled Y \
   --warmup-image-url "https://cdn.example.com/warmup.jpg"
 
 # 4. 直播开始后禁用暖场（可选）
-npx polyv-live-cli@latest player config update -c 3151318 --warmup-enabled N
+npx --yes polyv-live-cli@latest player config update -c 3151318 --warmup-enabled N
 ```
 
 ### 批量配置多个频道
@@ -147,7 +147,7 @@ npx polyv-live-cli@latest player config update -c 3151318 --warmup-enabled N
 ```bash
 # 为多个频道应用相同配置
 for channel in 3151318 3151319 3151320; do
-  npx polyv-live-cli@latest player config update -c $channel \
+  npx --yes polyv-live-cli@latest player config update -c $channel \
     --watermark-enabled Y \
     --watermark-url "https://cdn.example.com/logo.png" \
     --watermark-position br \
@@ -159,7 +159,7 @@ done
 
 ```bash
 # 导出配置
-npx polyv-live-cli@latest player config get -c 3151318 -o json > player-config.json
+npx --yes polyv-live-cli@latest player config get -c 3151318 -o json > player-config.json
 
 # 查看配置
 cat player-config.json

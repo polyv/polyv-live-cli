@@ -1,168 +1,85 @@
 # 优惠券管理
 
-## 概述
-
-优惠券是直播购物时可以使用的折扣码，用于促进销售和提高观众参与度。
+管理账号级优惠券。npm 版当前子命令为 `add`、`list`、`delete`。
 
 ## 创建优惠券
 
-### 基本优惠券
+满减券：
 
 ```bash
-npx polyv-live-cli@latest coupon create \
-  -c 3151318 \
-  -n "夏季特惠" \
-  --discount 10.00
+npx --yes polyv-live-cli@latest coupon add \
+  --name "满100减20" \
+  --type MAX_OUT \
+  --availableAmount 100 \
+  --receiveStart 1704067200000 \
+  --receiveEnd 1704153600000 \
+  --useTimeType RANGE \
+  --useStart 1704067200000 \
+  --useEnd 1704758400000 \
+  --condition FULL_REDUCE \
+  --full 100 \
+  --reduce 20 \
+  --limitPerPerson 1
 ```
 
-### 完整选项
+折扣券：
 
 ```bash
-npx polyv-live-cli@latest coupon create \
-  -c 3151318 \
-  -n "VIP折扣" \
-  --discount 50.00 \
-  --type percentage \
-  --min-purchase 100.00 \
-  --max-usage 1000 \
-  --start-time "2024-06-01T00:00:00Z" \
-  --end-time "2024-06-30T23:59:59Z"
+npx --yes polyv-live-cli@latest coupon add \
+  --name "8折优惠券" \
+  --type DISCOUNT \
+  --availableAmount 200 \
+  --receiveStart 1704067200000 \
+  --receiveEnd 1704153600000 \
+  --useTimeType DAY \
+  --dayOfUse 7 \
+  --condition UNCONDITIONAL \
+  --discount 80 \
+  --limitPerPerson 1
 ```
 
-### 优惠券选项
-
-| 选项 | 说明 | 必填 |
-|------|------|------|
-| `-c, --channelId` | 频道ID | 是 |
-| `-n, --name` | 优惠券名称 | 是 |
-| `--discount` | 折扣金额/比例 | 是 |
-| `--type` | `percentage`（百分比）或 `fixed`（固定金额） | 否（默认：fixed） |
-| `--min-purchase` | 最低消费金额 | 否 |
-| `--max-usage` | 最大使用次数 | 否 |
-| `--start-time` | 生效时间（ISO 8601格式） | 否 |
-| `--end-time` | 失效时间（ISO 8601格式） | 否 |
-
-### 折扣类型
-
-| 类型 | 说明 | 示例 |
-|------|------|------|
-| `fixed` | 固定金额减免 | 减¥10.00 |
-| `percentage` | 百分比折扣 | 打9折 |
-
-## 优惠券列表
+## 查询优惠券
 
 ```bash
-# 基本列表
-npx polyv-live-cli@latest coupon list -c 3151318
-
-# 输出：
-# 优惠券ID | 名称 | 折扣 | 类型 | 使用情况 | 状态
-# cpn001   | 夏季特惠 | ¥10.00 | fixed | 50/100 | 有效
-# cpn002   | VIP9折 | 10% | percentage | 25/- | 有效
+npx --yes polyv-live-cli@latest coupon list
+npx --yes polyv-live-cli@latest coupon list -p 2 -s 20
+npx --yes polyv-live-cli@latest coupon list --status GOING -o json
 ```
 
-### JSON输出
-
-```bash
-npx polyv-live-cli@latest coupon list -c 3151318 -o json
-```
-
-## 获取优惠券详情
-
-```bash
-# 表格格式
-npx polyv-live-cli@latest coupon get -c 3151318 --couponId cpn001
-
-# JSON格式
-npx polyv-live-cli@latest coupon get -c 3151318 --couponId cpn001 -o json
-```
+| 参数 | 说明 |
+| --- | --- |
+| `-p, --page` | 页码 |
+| `-s, --size` | 每页条数 |
+| `--status` | `NOT_START`、`GOING`、`FINISHED`、`INVALID` |
+| `-o, --output` | `table` 或 `json` |
 
 ## 删除优惠券
 
 ```bash
-# 带确认提示
-npx polyv-live-cli@latest coupon delete -c 3151318 --couponId cpn001
-
-# 强制删除
-npx polyv-live-cli@latest coupon delete -c 3151318 --couponId cpn001 -f
+npx --yes polyv-live-cli@latest coupon delete --couponIds coupon001
+npx --yes polyv-live-cli@latest coupon delete --couponIds coupon001 coupon002 coupon003
 ```
 
-## 常用工作流程
+单次最多删除 200 个优惠券 ID。
 
-### 创建限时特卖优惠券
+## 参数说明
 
-```bash
-# 创建限时优惠券
-npx polyv-live-cli@latest coupon create \
-  -c 3151318 \
-  -n "限时8折" \
-  --discount 20 \
-  --type percentage \
-  --max-usage 500 \
-  --start-time "2024-06-15T10:00:00Z" \
-  --end-time "2024-06-15T12:00:00Z"
-```
+| 参数 | 说明 |
+| --- | --- |
+| `--name` | 优惠券名称，最多 50 个字符 |
+| `--type` | `MAX_OUT` 满减券，`DISCOUNT` 折扣券 |
+| `--availableAmount` | 发放数量，`0` 表示按接口规则处理 |
+| `--receiveStart`、`--receiveEnd` | 领取开始和结束时间，13 位毫秒时间戳 |
+| `--useTimeType` | `RANGE` 指定可用时间范围，`DAY` 领取后若干天有效 |
+| `--useStart`、`--useEnd` | `RANGE` 模式下的使用时间范围 |
+| `--dayOfUse` | `DAY` 模式下领取后有效天数 |
+| `--condition` | `UNCONDITIONAL` 无门槛，`FULL_REDUCE` 满减门槛 |
+| `--discount` | 无门槛折扣值 |
+| `--full`、`--reduce` | 满减门槛和减免金额 |
+| `--limitPerPerson` | 每人限领数量，`-1` 表示不限 |
 
-### 创建VIP专属优惠券
+## 使用注意
 
-```bash
-# 高价值VIP优惠券
-npx polyv-live-cli@latest coupon create \
-  -c 3151318 \
-  -n "VIP专属立减50" \
-  --discount 50.00 \
-  --type fixed \
-  --min-purchase 200.00 \
-  --max-usage 100
-```
-
-### 查看有效优惠券
-
-```bash
-# 获取所有优惠券并筛选有效
-npx polyv-live-cli@latest coupon list -c 3151318 -o json | jq '.data[] | select(.status == "active")'
-```
-
-### 批量创建优惠券
-
-```bash
-# 为营销活动创建多张优惠券
-for i in {1..10}; do
-  npx polyv-live-cli@latest coupon create \
-    -c 3151318 \
-    -n "活动优惠券$i" \
-    --discount 10.00 \
-    --max-usage 100
-done
-```
-
-## 优惠券状态
-
-| 状态 | 说明 |
-|------|------|
-| `active` | 优惠券可使用 |
-| `expired` | 优惠券已过期 |
-| `exhausted` | 已达最大使用次数 |
-| `disabled` | 已手动禁用 |
-
-## 故障排除
-
-### "Coupon not found"（优惠券不存在）
-
-- 确认优惠券ID是否正确
-- 检查优惠券是否属于该频道
-
-### "Coupon expired"（优惠券已过期）
-
-- 检查结束时间：`npx polyv-live-cli@latest coupon get -c <频道ID> --couponId <优惠券ID>`
-- 创建新的优惠券并设置有效日期
-
-### "Maximum usage reached"（已达最大使用次数）
-
-- 检查使用次数：`npx polyv-live-cli@latest coupon get -c <频道ID> --couponId <优惠券ID>`
-- 创建新优惠券或增加使用上限
-
-### "Minimum purchase not met"（未达到最低消费）
-
-- 告知用户最低消费要求
-- 最低消费在创建优惠券时设置
+- 优惠券命令不接收频道 ID。
+- 当前 npm 版没有单张优惠券详情查询子命令，详情类需求先使用 `coupon list -o json`。
+- 删除优惠券不可撤销，执行前核对 `--couponIds`。

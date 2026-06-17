@@ -6,10 +6,10 @@
 
 ```bash
 # 问答卡命令
-npx polyv-live-cli@latest qa <子命令> [选项]
+npx --yes polyv-live-cli@latest qa <子命令> [选项]
 
 # 问卷命令
-npx polyv-live-cli@latest questionnaire <子命令> [选项]
+npx --yes polyv-live-cli@latest questionnaire <子命令> [选项]
 ```
 
 ---
@@ -23,7 +23,7 @@ npx polyv-live-cli@latest questionnaire <子命令> [选项]
 向指定频道发送一个问答卡（答题卡）。
 
 ```bash
-npx polyv-live-cli@latest qa send -c <频道ID> --question-id <问题ID> [选项]
+npx --yes polyv-live-cli@latest qa send -c <频道ID> --question-id <问题ID> [选项]
 ```
 
 #### 必需选项
@@ -44,13 +44,13 @@ npx polyv-live-cli@latest qa send -c <频道ID> --question-id <问题ID> [选项
 
 ```bash
 # 发送问答卡
-npx polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7
+npx --yes polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7
 
 # 发送带30秒限时
-npx polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 --duration 30
+npx --yes polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 --duration 30
 
 # JSON 格式输出
-npx polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 -o json
+npx --yes polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 -o json
 ```
 
 ---
@@ -60,7 +60,7 @@ npx polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 -o json
 获取频道的所有问答卡列表。
 
 ```bash
-npx polyv-live-cli@latest qa list -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest qa list -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -79,10 +79,10 @@ npx polyv-live-cli@latest qa list -c <频道ID> [选项]
 
 ```bash
 # 查询问答卡列表
-npx polyv-live-cli@latest qa list -c 3151318
+npx --yes polyv-live-cli@latest qa list -c 3151318
 
 # JSON 格式输出
-npx polyv-live-cli@latest qa list -c 3151318 -o json
+npx --yes polyv-live-cli@latest qa list -c 3151318 -o json
 ```
 
 #### 表格输出字段
@@ -102,7 +102,7 @@ npx polyv-live-cli@latest qa list -c 3151318 -o json
 停止正在进行的问答卡，并获取答题统计结果。
 
 ```bash
-npx polyv-live-cli@latest qa stop -c <频道ID> --question-id <问题ID> [选项]
+npx --yes polyv-live-cli@latest qa stop -c <频道ID> --question-id <问题ID> [选项]
 ```
 
 #### 必需选项
@@ -122,10 +122,10 @@ npx polyv-live-cli@latest qa stop -c <频道ID> --question-id <问题ID> [选项
 
 ```bash
 # 停止问答卡
-npx polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7
+npx --yes polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7
 
 # JSON 格式输出
-npx polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7 -o json
+npx --yes polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7 -o json
 ```
 
 #### 输出信息
@@ -148,7 +148,7 @@ npx polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7 -o json
 为指定频道创建一个新问卷。
 
 ```bash
-npx polyv-live-cli@latest questionnaire create -c <频道ID> --title <标题> --questions '<JSON数组>' [选项]
+npx --yes polyv-live-cli@latest questionnaire create -c <频道ID> --title <标题> --questions '<JSON数组>' [选项]
 ```
 
 #### 必需选项
@@ -200,19 +200,19 @@ npx polyv-live-cli@latest questionnaire create -c <频道ID> --title <标题> --
 
 ```bash
 # 创建简单问卷（单选题）
-npx polyv-live-cli@latest questionnaire create -c 3151318 --title "满意度调查" \
+npx --yes polyv-live-cli@latest questionnaire create -c 3151318 --title "满意度调查" \
   --questions '[{"name":"您的性别?","type":"R","options":["男","女"],"required":"Y"}]'
 
 # 创建带评分题的问卷
-npx polyv-live-cli@latest questionnaire create -c 3151318 --title "服务评价" \
+npx --yes polyv-live-cli@latest questionnaire create -c 3151318 --title "服务评价" \
   --questions '[{"name":"您对我们的服务满意吗?","type":"X","required":"Y"}]'
 
 # 创建带自定义 ID 的问卷
-npx polyv-live-cli@latest questionnaire create -c 3151318 --title "调查问卷" \
+npx --yes polyv-live-cli@latest questionnaire create -c 3151318 --title "调查问卷" \
   --questions '[...]' --custom-questionnaire-id "survey-001"
 
 # JSON 格式输出
-npx polyv-live-cli@latest questionnaire create -c 3151318 --title "调查" \
+npx --yes polyv-live-cli@latest questionnaire create -c 3151318 --title "调查" \
   --questions '[...]' -o json
 ```
 
@@ -223,7 +223,7 @@ npx polyv-live-cli@latest questionnaire create -c 3151318 --title "调查" \
 分页查询频道的问卷列表。
 
 ```bash
-npx polyv-live-cli@latest questionnaire list -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest questionnaire list -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -249,19 +249,19 @@ npx polyv-live-cli@latest questionnaire list -c <频道ID> [选项]
 
 ```bash
 # 查询问卷列表
-npx polyv-live-cli@latest questionnaire list -c 3151318
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318
 
 # 分页查询
-npx polyv-live-cli@latest questionnaire list -c 3151318 --page 1 --size 20
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318 --page 1 --size 20
 
 # 按场次筛选
-npx polyv-live-cli@latest questionnaire list -c 3151318 --session-id fwly13xczv
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318 --session-id fwly13xczv
 
 # 按日期范围筛选
-npx polyv-live-cli@latest questionnaire list -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318 --start-date 2024-01-01 --end-date 2024-01-31
 
 # JSON 格式输出
-npx polyv-live-cli@latest questionnaire list -c 3151318 -o json
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318 -o json
 ```
 
 #### 表格输出字段
@@ -280,7 +280,7 @@ npx polyv-live-cli@latest questionnaire list -c 3151318 -o json
 获取指定问卷的详细信息，包括题目列表。
 
 ```bash
-npx polyv-live-cli@latest questionnaire detail -c <频道ID> --questionnaire-id <问卷ID> [选项]
+npx --yes polyv-live-cli@latest questionnaire detail -c <频道ID> --questionnaire-id <问卷ID> [选项]
 ```
 
 #### 必需选项
@@ -300,10 +300,10 @@ npx polyv-live-cli@latest questionnaire detail -c <频道ID> --questionnaire-id 
 
 ```bash
 # 查询问卷详情
-npx polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id fs9v59nq4u
+npx --yes polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id fs9v59nq4u
 
 # JSON 格式输出
-npx polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id fs9v59nq4u -o json
+npx --yes polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id fs9v59nq4u -o json
 ```
 
 #### 输出信息
@@ -327,37 +327,37 @@ npx polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id fs9
 
 ```bash
 # 1. 查看可用的问答卡
-npx polyv-live-cli@latest qa list -c 3151318
+npx --yes polyv-live-cli@latest qa list -c 3151318
 
 # 2. 发送问答卡
-npx polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 --duration 30
+npx --yes polyv-live-cli@latest qa send -c 3151318 --question-id gv0uf9s5v7 --duration 30
 
 # 3. 停止答题并查看结果
-npx polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7
+npx --yes polyv-live-cli@latest qa stop -c 3151318 --question-id gv0uf9s5v7
 ```
 
 ### 2. 创建并发布问卷
 
 ```bash
 # 1. 创建问卷
-npx polyv-live-cli@latest questionnaire create -c 3151318 --title "课后反馈" \
+npx --yes polyv-live-cli@latest questionnaire create -c 3151318 --title "课后反馈" \
   --questions '[{"name":"课程难度如何?","type":"R","options":["简单","适中","困难"],"required":"Y"}]'
 
 # 2. 查询问卷列表确认创建成功
-npx polyv-live-cli@latest questionnaire list -c 3151318
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318
 
 # 3. 查看问卷详情
-npx polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id <问卷ID>
+npx --yes polyv-live-cli@latest questionnaire detail -c 3151318 --questionnaire-id <问卷ID>
 ```
 
 ### 3. 查看直播场次问卷统计
 
 ```bash
 # 按场次查询问卷
-npx polyv-live-cli@latest questionnaire list -c 3151318 --session-id <场次ID>
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318 --session-id <场次ID>
 
 # 导出为 JSON 便于分析
-npx polyv-live-cli@latest questionnaire list -c 3151318 --session-id <场次ID> -o json > survey_results.json
+npx --yes polyv-live-cli@latest questionnaire list -c 3151318 --session-id <场次ID> -o json > survey_results.json
 ```
 
 ---

@@ -10,7 +10,7 @@
 
 ```bash
 # 获取RTMP地址和推流密钥
-npx polyv-live-cli@latest stream get-key -c 3151318
+npx --yes polyv-live-cli@latest stream get-key -c 3151318
 
 # 输出：
 # RTMP地址: rtmp://push.polyv.net/live/
@@ -20,7 +20,7 @@ npx polyv-live-cli@latest stream get-key -c 3151318
 ### JSON输出（用于脚本）
 
 ```bash
-npx polyv-live-cli@latest stream get-key -c 3151318 -o json
+npx --yes polyv-live-cli@latest stream get-key -c 3151318 -o json
 
 # {
 #   "rtmpUrl": "rtmp://push.polyv.net/live/",
@@ -35,7 +35,7 @@ npx polyv-live-cli@latest stream get-key -c 3151318 -o json
 
 ```bash
 # 开始直播推流
-npx polyv-live-cli@latest stream start -c 3151318
+npx --yes polyv-live-cli@latest stream start -c 3151318
 
 # 输出：
 # ✅ 直播已开始
@@ -47,7 +47,7 @@ npx polyv-live-cli@latest stream start -c 3151318
 
 ```bash
 # 结束直播
-npx polyv-live-cli@latest stream stop -c 3151318
+npx --yes polyv-live-cli@latest stream stop -c 3151318
 
 # 输出：
 # ✅ 直播已结束
@@ -60,7 +60,7 @@ npx polyv-live-cli@latest stream stop -c 3151318
 ### 单次状态查询
 
 ```bash
-npx polyv-live-cli@latest stream status -c 3151318
+npx --yes polyv-live-cli@latest stream status -c 3151318
 
 # 输出包含：
 # 状态: 直播中
@@ -74,7 +74,7 @@ npx polyv-live-cli@latest stream status -c 3151318
 
 ```bash
 # 监控模式（每5秒刷新）
-npx polyv-live-cli@latest stream status -c 3151318 -w
+npx --yes polyv-live-cli@latest stream status -c 3151318 -w
 
 # 按 Ctrl+C 停止
 ```
@@ -82,7 +82,7 @@ npx polyv-live-cli@latest stream status -c 3151318 -w
 ### JSON输出
 
 ```bash
-npx polyv-live-cli@latest stream status -c 3151318 -o json
+npx --yes polyv-live-cli@latest stream status -c 3151318 -o json
 
 # {
 #   "status": "live",
@@ -100,14 +100,14 @@ npx polyv-live-cli@latest stream status -c 3151318 -o json
 ```bash
 # 推送本地视频文件到频道
 # 需要安装 FFmpeg
-npx polyv-live-cli@latest stream push -c 3151318 -f /path/to/video.mp4
+npx --yes polyv-live-cli@latest stream push -c 3151318 -f /path/to/video.mp4
 ```
 
 ### 带质量验证
 
 ```bash
 # 推送并实时验证质量
-npx polyv-live-cli@latest stream push \
+npx --yes polyv-live-cli@latest stream push \
   -c 3151318 \
   -f video.mp4 \
   --verify \
@@ -119,7 +119,7 @@ npx polyv-live-cli@latest stream push \
 
 ```bash
 # 推送时显示观众观看链接
-npx polyv-live-cli@latest stream push -c 3151318 -f video.mp4 --show-viewer-links
+npx --yes polyv-live-cli@latest stream push -c 3151318 -f video.mp4 --show-viewer-links
 ```
 
 ## 直播质量验证
@@ -128,7 +128,7 @@ npx polyv-live-cli@latest stream push -c 3151318 -f video.mp4 --show-viewer-link
 
 ```bash
 # 验证直播质量（60秒）
-npx polyv-live-cli@latest stream verify -c 3151318
+npx --yes polyv-live-cli@latest stream verify -c 3151318
 
 # 输出包含：
 # ✅ 直播质量报告
@@ -142,14 +142,14 @@ npx polyv-live-cli@latest stream verify -c 3151318
 
 ```bash
 # 2分钟验证，每5秒检测一次
-npx polyv-live-cli@latest stream verify -c 3151318 -d 120 -i 5
+npx --yes polyv-live-cli@latest stream verify -c 3151318 -d 120 -i 5
 ```
 
 ### 保存报告
 
 ```bash
 # 保存验证报告到文件
-npx polyv-live-cli@latest stream verify -c 3151318 -s report.json -o json
+npx --yes polyv-live-cli@latest stream verify -c 3151318 -s report.json -o json
 ```
 
 ### 验证选项
@@ -169,7 +169,7 @@ npx polyv-live-cli@latest stream verify -c 3151318 -s report.json -o json
 
 ```bash
 # 实时监控面板
-npx polyv-live-cli@latest stream monitor -c 3151318
+npx --yes polyv-live-cli@latest stream monitor -c 3151318
 
 # 面板显示：
 # ┌─────────────────────────────────────┐
@@ -186,7 +186,7 @@ npx polyv-live-cli@latest stream monitor -c 3151318
 
 ```bash
 # 启用质量告警
-npx polyv-live-cli@latest stream monitor -c 3151318 -r 3 --alerts
+npx --yes polyv-live-cli@latest stream monitor -c 3151318 -r 3 --alerts
 
 # 以下情况会告警：
 # - 帧率低于阈值
@@ -207,7 +207,7 @@ npx polyv-live-cli@latest stream monitor -c 3151318 -r 3 --alerts
 ### 步骤1：获取推流凭证
 
 ```bash
-npx polyv-live-cli@latest stream get-key -c 3151318 -o json
+npx --yes polyv-live-cli@latest stream get-key -c 3151318 -o json
 ```
 
 ### 步骤2：配置 OBS
@@ -223,12 +223,12 @@ npx polyv-live-cli@latest stream get-key -c 3151318 -o json
 
 ```bash
 # 在保利威平台开始直播
-npx polyv-live-cli@latest stream start -c 3151318
+npx --yes polyv-live-cli@latest stream start -c 3151318
 
 # 在 OBS 中点击"开始推流"
 
 # 监控直播状态
-npx polyv-live-cli@latest stream status -c 3151318 -w
+npx --yes polyv-live-cli@latest stream status -c 3151318 -w
 ```
 
 ### 步骤4：结束直播
@@ -237,7 +237,7 @@ npx polyv-live-cli@latest stream status -c 3151318 -w
 # 先在 OBS 中停止推流
 
 # 然后在保利威平台结束直播
-npx polyv-live-cli@latest stream stop -c 3151318
+npx --yes polyv-live-cli@latest stream stop -c 3151318
 ```
 
 ## 配合 FFmpeg 使用
@@ -246,7 +246,7 @@ npx polyv-live-cli@latest stream stop -c 3151318
 
 ```bash
 # 先获取推流凭证
-npx polyv-live-cli@latest stream get-key -c 3151318 -o json
+npx --yes polyv-live-cli@latest stream get-key -c 3151318 -o json
 
 # 使用 FFmpeg 推流
 ffmpeg -re -i video.mp4 \
@@ -258,7 +258,7 @@ ffmpeg -re -i video.mp4 \
 
 ```bash
 # 更简单 - CLI自动处理
-npx polyv-live-cli@latest stream push -c 3151318 -f video.mp4 --verify
+npx --yes polyv-live-cli@latest stream push -c 3151318 -f video.mp4 --verify
 ```
 
 ## 直播状态说明
@@ -288,8 +288,8 @@ sudo apt install ffmpeg
 
 ### "Channel must be in live state"（频道必须处于直播状态）
 
-- 先开始直播：`npx polyv-live-cli@latest stream start -c <频道ID>`
-- 确认频道已激活：`npx polyv-live-cli@latest channel get -c <频道ID>`
+- 先开始直播：`npx --yes polyv-live-cli@latest stream start -c <频道ID>`
+- 确认频道已激活：`npx --yes polyv-live-cli@latest channel get -c <频道ID>`
 
 ### 帧率过低警告
 

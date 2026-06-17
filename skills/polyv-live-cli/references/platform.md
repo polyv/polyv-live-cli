@@ -23,7 +23,7 @@
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform get [选项]
+npx --yes polyv-live-cli@latest platform get [选项]
 ```
 
 ### 选项
@@ -36,10 +36,10 @@ npx polyv-live-cli@latest platform get [选项]
 
 ```bash
 # 获取账号基本信息（表格格式）
-npx polyv-live-cli@latest platform get
+npx --yes polyv-live-cli@latest platform get
 
 # 获取账号基本信息（JSON格式）
-npx polyv-live-cli@latest platform get -o json
+npx --yes polyv-live-cli@latest platform get -o json
 ```
 
 ### 输出字段说明
@@ -77,7 +77,7 @@ npx polyv-live-cli@latest platform get -o json
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform switch get [选项]
+npx --yes polyv-live-cli@latest platform switch get [选项]
 ```
 
 ### 选项
@@ -90,10 +90,10 @@ npx polyv-live-cli@latest platform switch get [选项]
 
 ```bash
 # 获取开关配置（表格格式）
-npx polyv-live-cli@latest platform switch get
+npx --yes polyv-live-cli@latest platform switch get
 
 # 获取开关配置（JSON格式）
-npx polyv-live-cli@latest platform switch get -o json
+npx --yes polyv-live-cli@latest platform switch get -o json
 ```
 
 ### 输出字段说明
@@ -129,7 +129,7 @@ npx polyv-live-cli@latest platform switch get -o json
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform switch update --param <参数名> --enabled <Y|N> [选项]
+npx --yes polyv-live-cli@latest platform switch update --param <参数名> --enabled <Y|N> [选项]
 ```
 
 ### 选项
@@ -154,13 +154,13 @@ npx polyv-live-cli@latest platform switch update --param <参数名> --enabled <
 
 ```bash
 # 启用认证功能
-npx polyv-live-cli@latest platform switch update --param authEnabled --enabled Y
+npx --yes polyv-live-cli@latest platform switch update --param authEnabled --enabled Y
 
 # 禁用录制功能
-npx polyv-live-cli@latest platform switch update --param recordEnabled --enabled N
+npx --yes polyv-live-cli@latest platform switch update --param recordEnabled --enabled N
 
 # 启用弹幕功能（JSON输出）
-npx polyv-live-cli@latest platform switch update --param danmuEnabled --enabled Y -o json
+npx --yes polyv-live-cli@latest platform switch update --param danmuEnabled --enabled Y -o json
 ```
 
 ### 错误处理
@@ -194,7 +194,7 @@ npx polyv-live-cli@latest platform switch update --param danmuEnabled --enabled 
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform callback get [选项]
+npx --yes polyv-live-cli@latest platform callback get [选项]
 ```
 
 ### 选项
@@ -207,10 +207,10 @@ npx polyv-live-cli@latest platform callback get [选项]
 
 ```bash
 # 获取回调设置（表格格式）
-npx polyv-live-cli@latest platform callback get
+npx --yes polyv-live-cli@latest platform callback get
 
 # 获取回调设置（JSON格式）
-npx polyv-live-cli@latest platform callback get -o json
+npx --yes polyv-live-cli@latest platform callback get -o json
 ```
 
 ### 输出字段说明
@@ -238,7 +238,7 @@ npx polyv-live-cli@latest platform callback get -o json
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform callback update [选项]
+npx --yes polyv-live-cli@latest platform callback update [选项]
 ```
 
 ### 选项
@@ -255,19 +255,19 @@ npx polyv-live-cli@latest platform callback update [选项]
 
 ```bash
 # 更新回调URL
-npx polyv-live-cli@latest platform callback update --url https://example.com/callback
+npx --yes polyv-live-cli@latest platform callback update --url https://example.com/callback
 
 # 启用回调
-npx polyv-live-cli@latest platform callback update --enabled Y
+npx --yes polyv-live-cli@latest platform callback update --enabled Y
 
 # 禁用回调
-npx polyv-live-cli@latest platform callback update --enabled N
+npx --yes polyv-live-cli@latest platform callback update --enabled N
 
 # 同时更新URL和启用状态
-npx polyv-live-cli@latest platform callback update --url https://example.com/callback --enabled Y
+npx --yes polyv-live-cli@latest platform callback update --url https://example.com/callback --enabled Y
 
 # JSON格式输出
-npx polyv-live-cli@latest platform callback update --url https://example.com/callback -o json
+npx --yes polyv-live-cli@latest platform callback update --url https://example.com/callback -o json
 ```
 
 ### 错误处理
@@ -287,7 +287,7 @@ npx polyv-live-cli@latest platform callback update --url https://example.com/cal
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform setting get [选项]
+npx --yes polyv-live-cli@latest platform setting get [选项]
 ```
 
 ### 选项
@@ -300,10 +300,10 @@ npx polyv-live-cli@latest platform setting get [选项]
 
 ```bash
 # 获取全局频道设置（表格格式）
-npx polyv-live-cli@latest platform setting get
+npx --yes polyv-live-cli@latest platform setting get
 
 # 获取全局频道设置（JSON格式）
-npx polyv-live-cli@latest platform setting get -o json
+npx --yes polyv-live-cli@latest platform setting get -o json
 ```
 
 ### 输出字段说明
@@ -343,7 +343,7 @@ npx polyv-live-cli@latest platform setting get -o json
 ### 用法
 
 ```bash
-npx polyv-live-cli@latest platform setting update [选项]
+npx --yes polyv-live-cli@latest platform setting update [选项]
 ```
 
 ### 选项
@@ -366,19 +366,19 @@ npx polyv-live-cli@latest platform setting update [选项]
 
 ```bash
 # 更新单个设置
-npx polyv-live-cli@latest platform setting update --channel-concurrences-enabled Y
+npx --yes polyv-live-cli@latest platform setting update --channel-concurrences-enabled Y
 
 # 更新多个设置
-npx polyv-live-cli@latest platform setting update \
+npx --yes polyv-live-cli@latest platform setting update \
   --channel-concurrences-enabled Y \
   --timely-convert-enabled Y \
   --donate-enabled N
 
 # 更新封面图片类型
-npx polyv-live-cli@latest platform setting update --cover-img-type contain
+npx --yes polyv-live-cli@latest platform setting update --cover-img-type contain
 
 # JSON格式输出
-npx polyv-live-cli@latest platform setting update --donate-enabled Y -o json
+npx --yes polyv-live-cli@latest platform setting update --donate-enabled Y -o json
 ```
 
 ### 错误处理

@@ -30,7 +30,7 @@
 ### 语法
 
 ```bash
-npx polyv-live-cli@latest whitelist list --rank <1|2> [options]
+npx --yes polyv-live-cli@latest whitelist list --rank <1|2> [options]
 ```
 
 ### 参数
@@ -48,19 +48,19 @@ npx polyv-live-cli@latest whitelist list --rank <1|2> [options]
 
 ```bash
 # 获取全局白名单
-npx polyv-live-cli@latest whitelist list --rank 1
+npx --yes polyv-live-cli@latest whitelist list --rank 1
 
 # 获取频道白名单
-npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1
+npx --yes polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1
 
 # 分页查询
-npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 --page 1 --page-size 20
+npx --yes polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 --page 1 --page-size 20
 
 # 关键词搜索
-npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 --keyword "张三"
+npx --yes polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 --keyword "张三"
 
 # JSON格式输出
-npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 -o json
+npx --yes polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 -o json
 ```
 
 ### 输出示例
@@ -97,7 +97,7 @@ npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 -o json
 ### 语法
 
 ```bash
-npx polyv-live-cli@latest whitelist add --rank <1|2> --code <会员码> [options]
+npx --yes polyv-live-cli@latest whitelist add --rank <1|2> --code <会员码> [options]
 ```
 
 ### 参数
@@ -114,13 +114,13 @@ npx polyv-live-cli@latest whitelist add --rank <1|2> --code <会员码> [options
 
 ```bash
 # 添加频道白名单
-npx polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "13800138000" --name "张三"
+npx --yes polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "13800138000" --name "张三"
 
 # 添加全局白名单
-npx polyv-live-cli@latest whitelist add --rank 1 --code "13800138000" --name "张三"
+npx --yes polyv-live-cli@latest whitelist add --rank 1 --code "13800138000" --name "张三"
 
 # JSON格式输出
-npx polyv-live-cli@latest whitelist add --rank 1 --code "13800138000" --name "张三" -o json
+npx --yes polyv-live-cli@latest whitelist add --rank 1 --code "13800138000" --name "张三" -o json
 ```
 
 ### 输出示例
@@ -147,7 +147,7 @@ Successfully added whitelist item for channel 3151318
 ### 语法
 
 ```bash
-npx polyv-live-cli@latest whitelist update --rank <1|2> --old-code <原会员码> --code <新会员码> [options]
+npx --yes polyv-live-cli@latest whitelist update --rank <1|2> --old-code <原会员码> --code <新会员码> [options]
 ```
 
 ### 参数
@@ -165,13 +165,13 @@ npx polyv-live-cli@latest whitelist update --rank <1|2> --old-code <原会员码
 
 ```bash
 # 更新频道白名单
-npx polyv-live-cli@latest whitelist update --channel-id 3151318 --rank 1 --old-code "13800138000" --code "13900139000" --name "李四"
+npx --yes polyv-live-cli@latest whitelist update --channel-id 3151318 --rank 1 --old-code "13800138000" --code "13900139000" --name "李四"
 
 # 更新全局白名单
-npx polyv-live-cli@latest whitelist update --rank 1 --old-code "13800138000" --code "13900139000" --name "李四"
+npx --yes polyv-live-cli@latest whitelist update --rank 1 --old-code "13800138000" --code "13900139000" --name "李四"
 
 # JSON格式输出
-npx polyv-live-cli@latest whitelist update --rank 1 --old-code "13800138000" --code "13900139000" -o json
+npx --yes polyv-live-cli@latest whitelist update --rank 1 --old-code "13800138000" --code "13900139000" -o json
 ```
 
 ### 输出示例
@@ -199,7 +199,7 @@ Successfully updated whitelist item for channel 3151318
 ### 语法
 
 ```bash
-npx polyv-live-cli@latest whitelist remove --rank <1|2> [options]
+npx --yes polyv-live-cli@latest whitelist remove --rank <1|2> [options]
 ```
 
 ### 参数
@@ -218,13 +218,13 @@ npx polyv-live-cli@latest whitelist remove --rank <1|2> [options]
 
 ```bash
 # 删除单个白名单
-npx polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --codes "13800138000"
+npx --yes polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --codes "13800138000"
 
 # 清空所有白名单
-npx polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --clear
+npx --yes polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --clear
 
 # JSON格式输出
-npx polyv-live-cli@latest whitelist remove --rank 1 --codes "13800138000" -o json
+npx --yes polyv-live-cli@latest whitelist remove --rank 1 --codes "13800138000" -o json
 ```
 
 ### 输出示例
@@ -272,14 +272,14 @@ Successfully cleared all whitelist items for channel 3151318
 
 ```bash
 # 1. 设置观看条件为白名单模式
-npx polyv-live-cli@latest watch-condition set --channel-id 3151318 --rank 1 --auth-type phone --enabled Y
+npx --yes polyv-live-cli@latest watch-condition set --channel-id 3151318 --rank 1 --auth-type phone --enabled Y
 
 # 2. 添加白名单用户
-npx polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "13800138000" --name "VIP用户1"
-npx polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "13900139000" --name "VIP用户2"
+npx --yes polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "13800138000" --name "VIP用户1"
+npx --yes polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "13900139000" --name "VIP用户2"
 
 # 3. 验证白名单列表
-npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1
+npx --yes polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1
 ```
 
 ### 场景2：批量管理白名单
@@ -287,15 +287,15 @@ npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1
 ```bash
 # 批量添加（需逐个添加）
 for phone in 13800138001 13800138002 13800138003; do
-  npx polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "$phone"
+  npx --yes polyv-live-cli@latest whitelist add --channel-id 3151318 --rank 1 --code "$phone"
 done
 
 # 搜索特定用户
-npx polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 --keyword "138001380"
+npx --yes polyv-live-cli@latest whitelist list --channel-id 3151318 --rank 1 --keyword "138001380"
 
 # 批量删除（需逐个删除）
 for phone in 13800138001 13800138002 13800138003; do
-  npx polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --codes "$phone"
+  npx --yes polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --codes "$phone"
 done
 ```
 
@@ -303,10 +303,10 @@ done
 
 ```bash
 # 清空所有白名单
-npx polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --clear
+npx --yes polyv-live-cli@latest whitelist remove --channel-id 3151318 --rank 1 --clear
 
 # 关闭白名单观看模式
-npx polyv-live-cli@latest watch-condition set --channel-id 3151318 --rank 1 --auth-type none --enabled Y
+npx --yes polyv-live-cli@latest watch-condition set --channel-id 3151318 --rank 1 --auth-type none --enabled Y
 ```
 
 ## 注意事项

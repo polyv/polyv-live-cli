@@ -5,7 +5,7 @@
 ## 命令概览
 
 ```bash
-npx polyv-live-cli@latest chat <子命令> [选项]
+npx --yes polyv-live-cli@latest chat <子命令> [选项]
 ```
 
 ## 子命令
@@ -15,7 +15,7 @@ npx polyv-live-cli@latest chat <子命令> [选项]
 向指定频道发送管理员消息（文本或图片）。
 
 ```bash
-npx polyv-live-cli@latest chat send -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest chat send -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -42,16 +42,16 @@ npx polyv-live-cli@latest chat send -c <频道ID> [选项]
 
 ```bash
 # 发送文本消息
-npx polyv-live-cli@latest chat send -c 3151318 -m "欢迎观看直播！"
+npx --yes polyv-live-cli@latest chat send -c 3151318 -m "欢迎观看直播！"
 
 # 发送图片消息
-npx polyv-live-cli@latest chat send -c 3151318 -i "https://example.com/image.png"
+npx --yes polyv-live-cli@latest chat send -c 3151318 -i "https://example.com/image.png"
 
 # 发送带自定义昵称的消息
-npx polyv-live-cli@latest chat send -c 3151318 -m "大家好" -n "主播" -a "主持人"
+npx --yes polyv-live-cli@latest chat send -c 3151318 -m "大家好" -n "主播" -a "主持人"
 
 # JSON 格式输出
-npx polyv-live-cli@latest chat send -c 3151318 -m "测试消息" -o json
+npx --yes polyv-live-cli@latest chat send -c 3151318 -m "测试消息" -o json
 ```
 
 ---
@@ -61,7 +61,7 @@ npx polyv-live-cli@latest chat send -c 3151318 -m "测试消息" -o json
 获取指定频道的聊天消息历史记录。
 
 ```bash
-npx polyv-live-cli@latest chat list -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest chat list -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -86,16 +86,16 @@ npx polyv-live-cli@latest chat list -c <频道ID> [选项]
 
 ```bash
 # 查看最近聊天消息
-npx polyv-live-cli@latest chat list -c 3151318
+npx --yes polyv-live-cli@latest chat list -c 3151318
 
 # 分页查看
-npx polyv-live-cli@latest chat list -c 3151318 --page 2 --size 50
+npx --yes polyv-live-cli@latest chat list -c 3151318 --page 2 --size 50
 
 # 按日期范围筛选
-npx polyv-live-cli@latest chat list -c 3151318 --start-day 2024-01-01 --end-day 2024-01-31
+npx --yes polyv-live-cli@latest chat list -c 3151318 --start-day 2024-01-01 --end-day 2024-01-31
 
 # JSON 格式输出
-npx polyv-live-cli@latest chat list -c 3151318 -o json
+npx --yes polyv-live-cli@latest chat list -c 3151318 -o json
 ```
 
 #### 表格输出字段
@@ -115,7 +115,7 @@ npx polyv-live-cli@latest chat list -c 3151318 -o json
 删除单条消息或清空频道所有聊天消息。
 
 ```bash
-npx polyv-live-cli@latest chat delete -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest chat delete -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -138,10 +138,10 @@ npx polyv-live-cli@latest chat delete -c <频道ID> [选项]
 
 ```bash
 # 删除单条消息
-npx polyv-live-cli@latest chat delete -c 3151318 -m abc123
+npx --yes polyv-live-cli@latest chat delete -c 3151318 -m abc123
 
 # 清空所有消息
-npx polyv-live-cli@latest chat delete -c 3151318 --clear
+npx --yes polyv-live-cli@latest chat delete -c 3151318 --clear
 ```
 
 > 警告：删除操作不可恢复，执行前会有确认提示。
@@ -155,7 +155,7 @@ npx polyv-live-cli@latest chat delete -c 3151318 --clear
 禁言指定用户，支持频道级别和账号级别（全局）。
 
 ```bash
-npx polyv-live-cli@latest chat ban [选项]
+npx --yes polyv-live-cli@latest chat ban [选项]
 ```
 
 #### 选项
@@ -171,13 +171,13 @@ npx polyv-live-cli@latest chat ban [选项]
 
 ```bash
 # 频道级别禁言
-npx polyv-live-cli@latest chat ban -c 3151318 -u user1,user2
+npx --yes polyv-live-cli@latest chat ban -c 3151318 -u user1,user2
 
 # 全局禁言
-npx polyv-live-cli@latest chat ban -u user1,user2 --global
+npx --yes polyv-live-cli@latest chat ban -u user1,user2 --global
 
 # JSON 格式输出
-npx polyv-live-cli@latest chat ban -c 3151318 -u user1 -o json
+npx --yes polyv-live-cli@latest chat ban -c 3151318 -u user1 -o json
 ```
 
 ---
@@ -187,7 +187,7 @@ npx polyv-live-cli@latest chat ban -c 3151318 -u user1 -o json
 解除用户的禁言状态。
 
 ```bash
-npx polyv-live-cli@latest chat unban [选项]
+npx --yes polyv-live-cli@latest chat unban [选项]
 ```
 
 #### 选项
@@ -203,10 +203,10 @@ npx polyv-live-cli@latest chat unban [选项]
 
 ```bash
 # 频道级别解禁
-npx polyv-live-cli@latest chat unban -c 3151318 -u user1,user2
+npx --yes polyv-live-cli@latest chat unban -c 3151318 -u user1,user2
 
 # 全局解禁
-npx polyv-live-cli@latest chat unban -u user1,user2 --global
+npx --yes polyv-live-cli@latest chat unban -u user1,user2 --global
 ```
 
 ---
@@ -216,7 +216,7 @@ npx polyv-live-cli@latest chat unban -u user1,user2 --global
 将用户踢出直播间，支持频道级别和账号级别（全局）。
 
 ```bash
-npx polyv-live-cli@latest chat kick [选项]
+npx --yes polyv-live-cli@latest chat kick [选项]
 ```
 
 #### 选项
@@ -235,13 +235,13 @@ npx polyv-live-cli@latest chat kick [选项]
 
 ```bash
 # 频道级别踢人
-npx polyv-live-cli@latest chat kick -c 3151318 --viewer-ids viewer1,viewer2 -n Nick1,Nick2
+npx --yes polyv-live-cli@latest chat kick -c 3151318 --viewer-ids viewer1,viewer2 -n Nick1,Nick2
 
 # 全局踢人
-npx polyv-live-cli@latest chat kick --viewer-ids viewer1 --global
+npx --yes polyv-live-cli@latest chat kick --viewer-ids viewer1 --global
 
 # JSON 格式输出
-npx polyv-live-cli@latest chat kick -c 3151318 --viewer-ids viewer1 -o json
+npx --yes polyv-live-cli@latest chat kick -c 3151318 --viewer-ids viewer1 -o json
 ```
 
 ---
@@ -251,7 +251,7 @@ npx polyv-live-cli@latest chat kick -c 3151318 --viewer-ids viewer1 -o json
 解除用户的踢人状态，允许重新进入直播间。
 
 ```bash
-npx polyv-live-cli@latest chat unkick [选项]
+npx --yes polyv-live-cli@latest chat unkick [选项]
 ```
 
 #### 选项
@@ -268,10 +268,10 @@ npx polyv-live-cli@latest chat unkick [选项]
 
 ```bash
 # 频道级别解踢
-npx polyv-live-cli@latest chat unkick -c 3151318 --viewer-ids viewer1 -n Nick1
+npx --yes polyv-live-cli@latest chat unkick -c 3151318 --viewer-ids viewer1 -n Nick1
 
 # 全局解踢
-npx polyv-live-cli@latest chat unkick --viewer-ids viewer1 --global
+npx --yes polyv-live-cli@latest chat unkick --viewer-ids viewer1 --global
 ```
 
 ---
@@ -281,7 +281,7 @@ npx polyv-live-cli@latest chat unkick --viewer-ids viewer1 --global
 查看频道的禁言用户、禁言 IP 或禁言词列表。
 
 ```bash
-npx polyv-live-cli@latest chat banned list -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest chat banned list -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -301,16 +301,16 @@ npx polyv-live-cli@latest chat banned list -c <频道ID> [选项]
 
 ```bash
 # 查看禁言用户列表
-npx polyv-live-cli@latest chat banned list -c 3151318 --type userId
+npx --yes polyv-live-cli@latest chat banned list -c 3151318 --type userId
 
 # 查看禁言 IP 列表
-npx polyv-live-cli@latest chat banned list -c 3151318 --type ip
+npx --yes polyv-live-cli@latest chat banned list -c 3151318 --type ip
 
 # 查看禁言词列表
-npx polyv-live-cli@latest chat banned list -c 3151318 --type badword
+npx --yes polyv-live-cli@latest chat banned list -c 3151318 --type badword
 
 # JSON 格式输出
-npx polyv-live-cli@latest chat banned list -c 3151318 --type userId -o json
+npx --yes polyv-live-cli@latest chat banned list -c 3151318 --type userId -o json
 ```
 
 ---
@@ -320,7 +320,7 @@ npx polyv-live-cli@latest chat banned list -c 3151318 --type userId -o json
 查看频道被踢出的用户列表。
 
 ```bash
-npx polyv-live-cli@latest chat kicked list -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest chat kicked list -c <频道ID> [选项]
 ```
 
 #### 必需选项
@@ -339,10 +339,10 @@ npx polyv-live-cli@latest chat kicked list -c <频道ID> [选项]
 
 ```bash
 # 查看踢人列表
-npx polyv-live-cli@latest chat kicked list -c 3151318
+npx --yes polyv-live-cli@latest chat kicked list -c 3151318
 
 # JSON 格式输出
-npx polyv-live-cli@latest chat kicked list -c 3151318 -o json
+npx --yes polyv-live-cli@latest chat kicked list -c 3151318 -o json
 ```
 
 ---
@@ -353,24 +353,24 @@ npx polyv-live-cli@latest chat kicked list -c 3151318 -o json
 
 ```bash
 # 发送开播公告
-npx polyv-live-cli@latest chat send -c 3151318 -m "直播即将开始，请稍候..." -n "系统公告" -a "管理员"
+npx --yes polyv-live-cli@latest chat send -c 3151318 -m "直播即将开始，请稍候..." -n "系统公告" -a "管理员"
 ```
 
 ### 2. 查看并管理聊天记录
 
 ```bash
 # 查看今天的聊天记录
-npx polyv-live-cli@latest chat list -c 3151318 --start-day 2024-01-15 --end-day 2024-01-15
+npx --yes polyv-live-cli@latest chat list -c 3151318 --start-day 2024-01-15 --end-day 2024-01-15
 
 # 如果发现不当内容，删除该消息
-npx polyv-live-cli@latest chat delete -c 3151318 -m <消息ID>
+npx --yes polyv-live-cli@latest chat delete -c 3151318 -m <消息ID>
 ```
 
 ### 3. 直播结束后清理聊天
 
 ```bash
 # 清空所有聊天消息
-npx polyv-live-cli@latest chat delete -c 3151318 --clear
+npx --yes polyv-live-cli@latest chat delete -c 3151318 --clear
 ```
 
 ## 错误处理

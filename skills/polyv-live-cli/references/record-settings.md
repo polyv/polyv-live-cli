@@ -11,7 +11,7 @@
 查询频道回放设置。
 
 ```bash
-npx polyv-live-cli@latest record setting get -c <频道ID> [-o table|json]
+npx --yes polyv-live-cli@latest record setting get -c <频道ID> [-o table|json]
 ```
 
 **参数：**
@@ -22,10 +22,10 @@ npx polyv-live-cli@latest record setting get -c <频道ID> [-o table|json]
 
 ```bash
 # 查询频道回放设置
-npx polyv-live-cli@latest record setting get -c 2588188
+npx --yes polyv-live-cli@latest record setting get -c 2588188
 
 # JSON格式输出
-npx polyv-live-cli@latest record setting get -c 2588188 -o json
+npx --yes polyv-live-cli@latest record setting get -c 2588188 -o json
 ```
 
 **响应字段：**
@@ -49,7 +49,7 @@ npx polyv-live-cli@latest record setting get -c 2588188 -o json
 修改频道回放设置。
 
 ```bash
-npx polyv-live-cli@latest record setting set -c <频道ID> [选项]
+npx --yes polyv-live-cli@latest record setting set -c <频道ID> [选项]
 ```
 
 **参数：**
@@ -69,13 +69,13 @@ npx polyv-live-cli@latest record setting set -c <频道ID> [选项]
 
 ```bash
 # 开启回放
-npx polyv-live-cli@latest record setting set -c 2588188 --playback-enabled Y
+npx --yes polyv-live-cli@latest record setting set -c 2588188 --playback-enabled Y
 
 # 设置为单个回放模式，来源为回放列表
-npx polyv-live-cli@latest record setting set -c 2588188 --type single --origin playback --video-id 73801f70c8
+npx --yes polyv-live-cli@latest record setting set -c 2588188 --type single --origin playback --video-id 73801f70c8
 
 # 关闭回放
-npx polyv-live-cli@latest record setting set -c 2588188 --playback-enabled N
+npx --yes polyv-live-cli@latest record setting set -c 2588188 --playback-enabled N
 ```
 
 ---
@@ -85,7 +85,7 @@ npx polyv-live-cli@latest record setting set -c 2588188 --playback-enabled N
 将录制文件转存到点播（同步模式）。
 
 ```bash
-npx polyv-live-cli@latest record convert -c <频道ID> --file-name <文件名> [选项]
+npx --yes polyv-live-cli@latest record convert -c <频道ID> --file-name <文件名> [选项]
 ```
 
 **参数：**
@@ -102,13 +102,13 @@ npx polyv-live-cli@latest record convert -c <频道ID> --file-name <文件名> [
 
 ```bash
 # 同步转存录制文件
-npx polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放20240320" --session-id abc123
+npx --yes polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放20240320" --session-id abc123
 
 # 异步转存（适用于大文件）
-npx polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放" --session-id abc123 --async
+npx --yes polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放" --session-id abc123 --async
 
 # 转存并设为默认回放
-npx polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放" --session-id abc123 --set-as-default Y
+npx --yes polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放" --session-id abc123 --set-as-default Y
 ```
 
 **注意事项：**
@@ -123,7 +123,7 @@ npx polyv-live-cli@latest record convert -c 2588188 --file-name "直播回放" -
 设置默认回放视频。
 
 ```bash
-npx polyv-live-cli@latest record set-default -c <频道ID> --video-id <视频ID> [选项]
+npx --yes polyv-live-cli@latest record set-default -c <频道ID> --video-id <视频ID> [选项]
 ```
 
 **参数：**
@@ -136,10 +136,10 @@ npx polyv-live-cli@latest record set-default -c <频道ID> --video-id <视频ID>
 
 ```bash
 # 从回放列表设置默认视频
-npx polyv-live-cli@latest record set-default -c 2588188 --video-id 73801f70c8 --list-type playback
+npx --yes polyv-live-cli@latest record set-default -c 2588188 --video-id 73801f70c8 --list-type playback
 
 # 从点播列表设置默认视频
-npx polyv-live-cli@latest record set-default -c 2588188 --video-id 73801f70c8 --list-type vod
+npx --yes polyv-live-cli@latest record set-default -c 2588188 --video-id 73801f70c8 --list-type vod
 ```
 
 ---
@@ -150,27 +150,27 @@ npx polyv-live-cli@latest record set-default -c 2588188 --video-id 73801f70c8 --
 
 ```bash
 # 1. 查询当前回放设置
-npx polyv-live-cli@latest record setting get -c 2588188
+npx --yes polyv-live-cli@latest record setting get -c 2588188
 
 # 2. 转存录制文件到点播
-npx polyv-live-cli@latest record convert -c 2588188 --file-name "产品介绍直播" --session-id session123
+npx --yes polyv-live-cli@latest record convert -c 2588188 --file-name "产品介绍直播" --session-id session123
 
 # 3. 设置为默认回放视频
-npx polyv-live-cli@latest record set-default -c 2588188 --video-id vid456 --list-type playback
+npx --yes polyv-live-cli@latest record set-default -c 2588188 --video-id vid456 --list-type playback
 
 # 4. 开启回放功能
-npx polyv-live-cli@latest record setting set -c 2588188 --playback-enabled Y
+npx --yes polyv-live-cli@latest record setting set -c 2588188 --playback-enabled Y
 ```
 
 ### 批量转存历史直播
 
 ```bash
 # 查询场次列表获取sessionId
-npx polyv-live-cli@latest session list -c 2588188
+npx --yes polyv-live-cli@latest session list -c 2588188
 
 # 依次转存各场次的录制文件
-npx polyv-live-cli@latest record convert -c 2588188 --file-name "直播01" --session-id session1 --async
-npx polyv-live-cli@latest record convert -c 2588188 --file-name "直播02" --session-id session2 --async
+npx --yes polyv-live-cli@latest record convert -c 2588188 --file-name "直播01" --session-id session1 --async
+npx --yes polyv-live-cli@latest record convert -c 2588188 --file-name "直播02" --session-id session2 --async
 ```
 
 ## 相关API文档
