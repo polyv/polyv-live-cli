@@ -162,8 +162,10 @@ npx --yes polyv-live-cli@latest session get -c 2588188 --session-id e9s2h3jd8f -
 
 ## 相关 API 文档
 
-- [获取场次列表](../../docs/api/v4/channel/session/new/list.md)
-- [获取场次详情](../../docs/api/v4/channel/session/new/get.md)
+以下路径相对于本仓库根目录解析的 `../document-center/docs/live/api`：
+
+- `v4/channel/session/new/list.md`
+- `v4/channel/session/new/get.md`
 
 ## 相关命令
 

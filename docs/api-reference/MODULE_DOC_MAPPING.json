@@ -1,0 +1,832 @@
+{
+  "metadata": {
+    "totalDocs": 614,
+    "totalApis": 550,
+    "generatedAt": "2026-03-22",
+    "description": "PolyV 直播 API 文档到业务模块的映射",
+    "apiDocsRoot": "../document-center/docs/live/api",
+    "apiDocsRootBase": "repository root",
+    "projectIndexRoot": "docs/api-reference",
+    "pathFormat": "modules.*.docs 中的 API 文档路径相对于 apiDocsRoot；apiDocsRoot 相对于本仓库根目录解析；以 docs/api-reference/ 开头的路径表示本仓库内的项目侧索引。",
+    "legacyDocsPath": "docs/api 是被忽略的本地兼容缓存，不作为事实来源。"
+  },
+  "modules": {
+    "account": {
+      "description": "账号管理",
+      "docs": [
+        "account/channel_detail.md",
+        "account/channels.md",
+        "account/create_category.md",
+        "account/delete_category.md",
+        "account/demo.md",
+        "account/get_category_list.md",
+        "account/get_income_detail.md",
+        "account/get_simple_channel_list.md",
+        "account/get_user_durations.md",
+        "account/get_user_info.md",
+        "account/mic_duration.md",
+        "account/receive_list.md",
+        "account/set_playback_callback.md",
+        "account/set_record_callback.md",
+        "account/set_stream_callback.md",
+        "account/set_user_children_login_token.md",
+        "account/set_user_login_token.md",
+        "account/sso_manager.md",
+        "account/sso.md",
+        "account/switch_get.md",
+        "account/switch_update.md",
+        "account/update_category_name.md",
+        "account/update_category_rank.md",
+        "account/user_channel_basic_list.md",
+        "account/user_playback_list.md",
+        "account/web_start_client.md"
+      ]
+    },
+    "callback": {
+      "description": "回调设置",
+      "docs": [
+        "callback/activity_change_callback.md",
+        "callback/ai_ppt_video_callback.md",
+        "callback/channel_booking_callback.md",
+        "callback/coupon_receive_callback.md",
+        "callback/feedback_callback.md",
+        "callback/interaction_callback.md",
+        "callback/invite_qrcode_url_get.md",
+        "callback/key_info_callback.md",
+        "callback/live_record_audio_audit_callback.md",
+        "callback/live_stats_data_callback.md",
+        "callback/live_status_callback.md",
+        "callback/live_violation_cut_off_callback.md",
+        "callback/livescan_callback.md",
+        "callback/livestatus_callback.md",
+        "callback/member_status_callback.md",
+        "callback/page_event.md",
+        "callback/playback_callback.md",
+        "callback/ppt_record_callback.md",
+        "callback/push_info_callback.md",
+        "callback/record_callback.md",
+        "callback/speak_callback.md",
+        "callback/subtitle_callback.md",
+        "callback/subtitle_content_callback.md"
+      ]
+    },
+    "channel": {
+      "description": "频道管理（核心）",
+      "docs": [
+        "channel/auth/get_channel_api_access_token.md",
+        "channel/auth/get_channel_watch_test_mode_token.md",
+        "channel/operate/basic_create.md",
+        "channel/operate/batch_create_channels.md",
+        "channel/operate/batch_create.md",
+        "channel/operate/batch_delete_channels.md",
+        "channel/operate/copy_channel.md",
+        "channel/operate/create.md",
+        "channel/operate/delete_channel.md",
+        "channel/operate/get_channel_detail_setting.md",
+        "channel/operate/get_channel_detail.md",
+        "channel/operate/set_max_viewer.md",
+        "channel/operate/update_channel_detail_setting.md",
+        "channel/operate/update_password.md",
+        "channel/operate/update_setting.md",
+        "channel/operate/update_stream_type.md",
+        "channel/operate/get_api_token.md",
+        "channel/operate/get_callback_setting.md",
+        "channel/operate/get_watch_api_token.md",
+        "v4/channel/basic_create.md",
+        "v4/channel/create_batch.md",
+        "v4/channel/create_mr.md",
+        "v4/channel/create.md",
+        "v4/channel/get_all_live_status_list.md",
+        "v4/channel/update.md",
+        "v4/channel/operate/channel_basic_list.md",
+        "v4/channel/operate/channel_detail_list.md",
+        "v4/channel/operate/channel_simple_list.md",
+        "v4/channel/operate/channel_set_pull_bitrate.md",
+        "v4/channel/operate/channel_update_template.md",
+        "v4/channel/operate/get_channel_detail.md",
+        "v4/channel/operate/get_channel.md",
+        "v4/channel/operate/list_channel_basic_info.md",
+        "v4/channel/operate/list_channel_basic.md"
+      ]
+    },
+    "document": {
+      "description": "文档管理",
+      "docs": [
+        "channel/doc/del_channel_multimedia_resource.md",
+        "channel/doc/del_user_multimedia_resource.md",
+        "channel/doc/delete_document.md",
+        "channel/doc/get_channel_multimedia_resource_detail.md",
+        "channel/doc/get_channel_multimedia_resource.md",
+        "channel/doc/get_doc_convert_status.md",
+        "channel/doc/get_doc_list.md",
+        "channel/doc/get_user_multimedia_resource_detail.md",
+        "channel/doc/link_channel_multimedia_resource.md",
+        "channel/doc/update_teacher_doc_relation.md",
+        "channel/doc/upload_doc.md"
+      ]
+    },
+    "product": {
+      "description": "商品管理",
+      "docs": [
+        "channel/operate/add_channel_product.md",
+        "channel/operate/batch_add_channel_product.md",
+        "channel/operate/batch_delete_channel_product.md",
+        "channel/operate/batch_shelf_channel_product.md",
+        "channel/operate/cancel_push_channel_product.md",
+        "channel/operate/delete_channel_product.md",
+        "channel/operate/get_channel_product_enabled.md",
+        "channel/operate/get_channel_product_list.md",
+        "channel/operate/push_channel_product.md",
+        "channel/operate/reference_product.md",
+        "channel/operate/shelf_channel_product.md",
+        "channel/operate/sort_channel_product.md",
+        "channel/operate/update_channel_product_enabled.md",
+        "channel/operate/update_channel_product.md",
+        "v4/channel/product/sort_channel_product.md",
+        "v4/channel/product/topping_channel_product.md",
+        "v4/channel/product/untopping_channel_product.md",
+        "v4/channel/product_setting/get_product_setting.md",
+        "v4/channel/product_setting/update_product_setting.md",
+        "v4/channel/product_stats/page.md",
+        "v4/channel/product_stats/summary.md",
+        "v4/channel/product_tag/product_tag_create.md",
+        "v4/channel/product_tag/product_tag_delete.md",
+        "v4/channel/product_tag/product_tag_list.md",
+        "v4/channel/product_tag/product_tag_update.md",
+        "v4/user/product/order/batch_update_status.md",
+        "v4/user/product/order/get.md",
+        "v4/user/product/order/list.md",
+        "v4/user/product/product_add.md",
+        "v4/user/product/product_del.md",
+        "v4/user/product/product_edit.md",
+        "v4/user/product/product_list.md",
+        "v4/user/product/product_tag_create.md",
+        "v4/user/product/product_tag_delete.md",
+        "v4/user/product/product_tag_list.md",
+        "v4/user/product/product_tag_update.md"
+      ]
+    },
+    "playback": {
+      "description": "回放管理",
+      "docs": [
+        "channel/playback/add_vod_playback.md",
+        "channel/playback/clip_record_file.md",
+        "channel/playback/delete_playback.md",
+        "channel/playback/delete_record.md",
+        "channel/playback/get_channel_sessions.md",
+        "channel/playback/get_playback_enabled.md",
+        "channel/playback/get_playback_list.md",
+        "channel/playback/get_playback_setting.md",
+        "channel/playback/get_record_file.md",
+        "channel/playback/get_record_info.md",
+        "channel/playback/record_add_breakpoint.md",
+        "channel/playback/record_convert_async.md",
+        "channel/playback/record_convert.md",
+        "channel/playback/record_file_merge_async.md",
+        "channel/playback/record_file_merge.md",
+        "channel/playback/record_merge_mp4_start.md",
+        "channel/playback/record_merge_mp4.md",
+        "channel/playback/set_playback_enabled.md",
+        "channel/playback/set_playback_single_sort.md",
+        "channel/playback/set_playback_sort.md",
+        "channel/playback/set_record_default.md",
+        "channel/playback/set_record_setting.md",
+        "channel/playback/update_playback_title.md",
+        "v4/channel/playback/playback_list.md",
+        "v4/channel/playback/update_channel_subtitle.md",
+        "v4/channel/play-back/query-play-back-video-info.md"
+      ]
+    },
+    "player": {
+      "description": "播放器管理",
+      "docs": [
+        "channel/player/update_head.md",
+        "channel/player/update_logo.md",
+        "channel/player/update_stop.md",
+        "channel/marquee/set_diyurl-marquee.md",
+        "player/anti_record_setting.md",
+        "player/get_anti_record.md",
+        "player/marquee_instruction.md",
+        "player/marquee_url_instruction.md",
+        "player/player_backstage_param.md",
+        "player/set_marquee.md",
+        "player/update_head.md",
+        "player/update_logo.md",
+        "player/update_stop.md",
+        "player/watch/get_watch_feedback_list.md"
+      ]
+    },
+    "session": {
+      "description": "场次管理",
+      "docs": [
+        "channel/session/export_session_stats.md",
+        "channel/session/get_session-by-external.md",
+        "channel/session/list_file_id_by_external.md",
+        "channel/session/relevance-session-by-external.md",
+        "channel/session/session_list.md",
+        "v4/channel/session/get_relevance.md",
+        "v4/channel/session/new/create.md",
+        "v4/channel/session/new/delete.md",
+        "v4/channel/session/new/get.md",
+        "v4/channel/session/new/list.md",
+        "v4/channel/session/new/update.md"
+      ]
+    },
+    "stream": {
+      "description": "推流/直播状态管理",
+      "docs": [
+        "channel/state/end_disk_push.md",
+        "channel/state/get_live_status_list.md",
+        "channel/state/get_live_status.md",
+        "channel/state/get_stream_info.md",
+        "channel/state/get_streams.md",
+        "channel/state/list_disk_video.md",
+        "channel/state/live_banpush.md",
+        "channel/state/live_resume.md",
+        "channel/state/set_status_end.md",
+        "channel/state/set_status_start.md",
+        "channel/monitor/pull_hls_url.md",
+        "channel/operate/add_disk_videos-2.md",
+        "channel/operate/add_disk_videos.md",
+        "channel/operate/delete_disk_videos.md",
+        "channel/operate/end_disk_video.md",
+        "channel/operate/get_push_url.md",
+        "v4/channel/monitor_list_stream_info.md"
+      ]
+    },
+    "statistics": {
+      "description": "数据统计",
+      "docs": [
+        "channel/statistics/get_product_click_stats.md",
+        "channel/statistics/get_product_list_stats.md",
+        "channel/statistics/get_redpack_stats.md",
+        "channel/viewdata/channel_play_summary.md",
+        "channel/viewdata/channel_statistic.md",
+        "channel/viewdata/concurrency.md",
+        "channel/viewdata/daily_summary.md",
+        "channel/viewdata/get_max_history_concurrent.md",
+        "channel/viewdata/get_realtime_viewers.md",
+        "channel/viewdata/get_session_stats.md",
+        "channel/viewdata/link_mic_detail_list.md",
+        "channel/viewdata/mic_detail_list.md",
+        "channel/viewdata/realviewers.md",
+        "channel/viewdata/summary.md",
+        "channel/viewdata/viewlog_2.md",
+        "channel/viewdata/viewlog_page_v3.md",
+        "channel/viewdata/viewlog_page.md",
+        "v4/channel/statistics/browsers_summary.md",
+        "v4/channel/statistics/geo_summary_mc.md",
+        "v4/channel/statistics/get_invite_rank.md",
+        "v4/channel/statistics/get_invite_stats.md",
+        "v4/channel/statistics/live_summary.md",
+        "v4/channel/statistics/lottery_list.md",
+        "v4/channel/statistics/weixin_booking_stats.md",
+        "v4/channel/viewdata/get_live_session.md",
+        "v4/statistics/summary_list.md",
+        "v4/user/viewlog/viewlog_detail.md",
+        "v4/user/viewlog/viewlog_list.md"
+      ]
+    },
+    "warmup": {
+      "description": "暖场设置",
+      "docs": [
+        "channel/warmup/update_warmup_image.md",
+        "channel/warmup/update_warmup_switch.md",
+        "channel/warmup/update_warmup_video.md"
+      ]
+    },
+    "chat": {
+      "description": "聊天管理",
+      "docs": [
+        "chat/banned/add_badwords.md",
+        "chat/banned/add_banned_ip.md",
+        "chat/banned/delete_channel_banned.md",
+        "chat/banned/delete_user_badword.md",
+        "chat/banned/forbid_channel_kick_users.md",
+        "chat/banned/forbid_channel_unkick_users.md",
+        "chat/banned/forbid_kick_users.md",
+        "chat/banned/forbid_unkick_users.md",
+        "chat/banned/get_channel_banned_list.md",
+        "chat/banned/get_channel_banned_user_list.md",
+        "chat/banned/get_channel_kicked_user_list.md",
+        "chat/banned/get_forbid_user_list.md",
+        "chat/banned/get_user_badword_list.md",
+        "chat/banned/get_user_banned_list.md",
+        "chat/banned/update_banned_user.md",
+        "chat/banned/update_user_banned_viewer.md",
+        "chat/censor/update_censor_enabled.md",
+        "chat/message/chat_alert_to_special.md",
+        "chat/message/delete_all_message.md",
+        "chat/message/delete_message_by_id.md",
+        "chat/message/get_message_list.md",
+        "chat/message/get-speak-list.md",
+        "chat/message/message_audit.md",
+        "chat/message/send_hidden_message_by_admin.md",
+        "chat/message/send_hidden_message.md",
+        "chat/message/send_message.md",
+        "chat/role/get_admin_info.md",
+        "chat/role/get_teacher_info.md",
+        "chat/role/get_user_list.md",
+        "chat/role/update_admin_info.md",
+        "chat/role/update_teacher_info.md",
+        "channel/operate/chat_online_count.md",
+        "channel/operate/get_chat_online_count.md",
+        "channel/operate/get_chat_token.md",
+        "channel/operate/remove_chat_contents.md",
+        "v4/channel/chat/update_chat_enabled.md",
+        "v4/chat/checkin/batch_checkin.md",
+        "v4/chat/notice_add.md",
+        "v4/chat/notice_clean.md",
+        "v4/chat/notice_list.md",
+        "v4/chat/qa/qa_list.md",
+        "v4/chat/robot/get_robot_setting.md",
+        "v4/chat/robot/get_robot_stats.md",
+        "v4/chat/robot/pause_robot.md",
+        "v4/chat/robot/update_robot_setting.md",
+        "v4/chat/send_custom_message_encode.md",
+        "v4/chat/send_custom_message.md",
+        "v5/chat/redirect/channel/emit-by-userId/post.md"
+      ]
+    },
+    "role": {
+      "description": "角色管理（助教/嘉宾）",
+      "docs": [
+        "channel/operate/add_account.md",
+        "channel/operate/delete_account.md",
+        "channel/operate/get_account.md",
+        "channel/operate/get_accounts.md",
+        "channel/operate/set_account_token.md",
+        "channel/operate/update_account.md",
+        "v4/channel/operate/account/add_account.md",
+        "v4/channel/operate/account/delete_accounts.md",
+        "v4/channel/operate/account/get_account_viewer.md",
+        "v4/channel/operate/account/update_account_viewer.md",
+        "v4/channel/operate/account/update_account.md",
+        "v4/channel/role_config/get_by_role.md",
+        "v4/channel/role_config/teacher_list.md",
+        "v4/channel/role_config/update_by_role.md"
+      ]
+    },
+    "interaction": {
+      "description": "互动管理（签到/问答/问卷）",
+      "docs": [
+        "live_interaction/add_edit_question.md",
+        "live_interaction/add_edit_questionnaire.md",
+        "live_interaction/add_receive_info_v4.md",
+        "live_interaction/add_receive_info.md",
+        "live_interaction/batch_create_questionnaire.md",
+        "live_interaction/create_questionnaire.md",
+        "live_interaction/delete_question.md",
+        "live_interaction/download_winner_detail.md",
+        "live_interaction/get_answer_list.md",
+        "live_interaction/get_checkin_by_checkid.md",
+        "live_interaction/get_checkin_by_sessionid.md",
+        "live_interaction/get_checkin_by_time.md",
+        "live_interaction/get_checkin_list.md",
+        "live_interaction/get_question_list.md",
+        "live_interaction/get_questionnaire_detail.md",
+        "live_interaction/get_questionnaire_result.md",
+        "live_interaction/get_winner_detail.md",
+        "live_interaction/list_channels_lottery.md",
+        "live_interaction/list_lottery.md",
+        "live_interaction/list_question_send_time.md",
+        "live_interaction/list_question.md",
+        "live_interaction/list_questionaire.md",
+        "live_interaction/list_questionnaire_by_page.md",
+        "live_interaction/send_favor.md",
+        "live_interaction/send_question_result.md",
+        "live_interaction/send_question.md",
+        "live_interaction/send_reward_msg.md",
+        "live_interaction/stop_question.md",
+        "channel/operate/channels_stop_questionnaire.md",
+        "v4/channel/interaction_event/delete.md",
+        "v4/channel/interaction_event/save.md",
+        "v4/channel/interaction/invite/inviter_create.md",
+        "v4/channel/interaction/script/disk_video_script_delete.md",
+        "v4/channel/interaction/script/disk_video_script_query.md",
+        "v4/channel/interaction/script/disk_video_script_upload.md"
+      ]
+    },
+    "lottery": {
+      "description": "抽奖管理",
+      "docs": [
+        "v4/channel/lottery_activity/lottery_activity_create.md",
+        "v4/channel/lottery_activity/lottery_activity_delete.md",
+        "v4/channel/lottery_activity/lottery_activity_get.md",
+        "v4/channel/lottery_activity/lottery_activity_list.md",
+        "v4/channel/lottery_activity/lottery_activity_update.md",
+        "v4/channel/lottery_viewer/blacklist_add.md",
+        "v4/channel/lottery_viewer/blacklist_delete.md",
+        "v4/channel/lottery_viewer/blacklist_page.md",
+        "v4/channel/lottery_viewer/group_add.md",
+        "v4/channel/lottery_viewer/group_create_viewer_name.md",
+        "v4/channel/lottery_viewer/group_delete.md",
+        "v4/channel/lottery_viewer/group_list.md",
+        "v4/channel/lottery_viewer/group_update.md",
+        "v4/channel/lottery_viewer/group_viewer_add.md",
+        "v4/channel/lottery_viewer/group_viewer_delete.md",
+        "v4/channel/lottery_viewer/group_viewer_list.md",
+        "v4/channel/lottery/activity_record_list.md",
+        "v4/channel/lottery/create_wait_lottery.md",
+        "v4/channel/lottery/query_winner_viewer.md",
+        "v4/user/viewer_lottery_win.md"
+      ]
+    },
+    "coupon": {
+      "description": "优惠券管理",
+      "docs": [
+        "v4/channel/coupon/create.md",
+        "v4/channel/coupon/delete.md",
+        "v4/channel/coupon/list.md",
+        "v4/platform/user_coupon_create.md",
+        "v4/platform/user_coupon_delete_batch.md",
+        "v4/platform/user_coupon_search_viewer.md",
+        "v4/platform/user_coupon_search.md",
+        "v4/platform/user_coupon_update_status_batch.md",
+        "v4/platform/user_coupon_update.md"
+      ]
+    },
+    "transmit": {
+      "description": "转播管理",
+      "docs": [
+        "channel/operate/batch_add_transmit.md",
+        "channel/operate/get_transmit_associations.md",
+        "v4/channel/distribute/create_batch.md",
+        "v4/channel/distribute/delete_batch.md",
+        "v4/channel/distribute/list.md",
+        "v4/channel/distribute/statistic.md",
+        "v4/channel/distribute/update_batch.md",
+        "v4/channel/distribute/update-master-switch.md",
+        "v4/channel/distribute/update-switch.md"
+      ]
+    },
+    "ppt": {
+      "description": "课件管理",
+      "docs": [
+        "channel/operate/add_record_task.md",
+        "channel/operate/delete_pptrecord.md",
+        "channel/operate/get_pptrecord_setting.md",
+        "channel/operate/ppt_get_setting.md",
+        "channel/operate/ppt_setting.md",
+        "channel/operate/pptrecord_list.md",
+        "channel/operate/update_pptrecord_setting.md"
+      ]
+    },
+    "record": {
+      "description": "录制文件管理",
+      "docs": [
+        "v4/channel/recordfile/batch_publish_subtitle.md",
+        "v4/channel/recordfile/create_record_file_outline.md",
+        "v4/channel/recordfile/get_record_file_outline.md",
+        "v4/channel/recordfile/page_m_record.md"
+      ]
+    },
+    "donate": {
+      "description": "打赏管理",
+      "docs": [
+        "donate/donateSetting.md",
+        "v4/channel/donate/get.md",
+        "v4/channel/donate/update.md",
+        "v4/channel/reward/gift_page.md",
+        "v4/channel/reward/like_page.md",
+        "web/page_interaction/donate_get.md"
+      ]
+    },
+    "cardPush": {
+      "description": "卡片推送",
+      "docs": [
+        "v4/channel/market/cardPush/cancelPush.md",
+        "v4/channel/market/cardPush/create.md",
+        "v4/channel/market/cardPush/delete.md",
+        "v4/channel/market/cardPush/get.md",
+        "v4/channel/market/cardPush/push.md",
+        "v4/channel/market/cardPush/update.md"
+      ]
+    },
+    "marketing": {
+      "description": "营销推广",
+      "docs": [
+        "v4/channel/market/share/get.md",
+        "v4/channel/market/share/update.md",
+        "v4/channel/popularization/batch_create_popularization.md",
+        "v4/channel/popularization/popularization_list.md",
+        "channel/operate/list_channels_follow.md",
+        "channel/operate/update_channels_follow.md",
+        "web/page_interaction/get_weixin_share.md",
+        "web/page_interaction/update_weixin_share.md",
+        "web/page_interaction/update_cash.md",
+        "web/page_interaction/update_good.md"
+      ]
+    },
+    "viewer": {
+      "description": "观众管理",
+      "docs": [
+        "v4/user/viewerrecord/create.md",
+        "v4/user/viewerrecord/delete.md",
+        "v4/user/viewerrecord/direct_auth.md",
+        "v4/user/viewerrecord/get.md",
+        "v4/user/viewerrecord/import_external_viewer.md",
+        "v4/user/viewerrecord/label/add_viewer_label.md",
+        "v4/user/viewerrecord/label/create.md",
+        "v4/user/viewerrecord/label/del_viewer_label.md",
+        "v4/user/viewerrecord/label/delete.md",
+        "v4/user/viewerrecord/label/list.md",
+        "v4/user/viewerrecord/label/update.md",
+        "v4/user/viewerrecord/list.md",
+        "v4/user/viewerrecord/update_config.md",
+        "v4/user/viewerrecord/update.md",
+        "v4/user/customfield/add_custom_field_viewer_value.md",
+        "v4/user/customfield/add_custom_field.md",
+        "v4/user/customfield/list_custom_field.md",
+        "v4/channel/watch/viewer_logout.md"
+      ]
+    },
+    "watchCondition": {
+      "description": "观看条件",
+      "docs": [
+        "web/watch_condition/add_white_list.md",
+        "web/watch_condition/customauth_2.md",
+        "web/watch_condition/delete_white_list.md",
+        "web/watch_condition/direct_auth.md",
+        "web/watch_condition/download_record_info.md",
+        "web/watch_condition/download_white_list.md",
+        "web/watch_condition/enroll_list.md",
+        "web/watch_condition/external_authorization_2.md",
+        "web/watch_condition/get_record_field.md",
+        "web/watch_condition/get_record_info.md",
+        "web/watch_condition/get_watch_condition.md",
+        "web/watch_condition/get_white_list.md",
+        "web/watch_condition/polyv_url.md",
+        "web/watch_condition/set_auth_type.md",
+        "web/watch_condition/set_authorized_address.md",
+        "web/watch_condition/set_externalauth.md",
+        "web/watch_condition/set_watch_condition.md",
+        "web/watch_condition/update_auth_url.md",
+        "web/watch_condition/update_white_list.md",
+        "web/watch_condition/upload_white_list.md"
+      ]
+    },
+    "webapp": {
+      "description": "应用角色管理",
+      "docs": [
+        "v4/webapp/permission_list.md",
+        "v4/webapp/role_create.md",
+        "v4/webapp/role_delete.md",
+        "v4/webapp/role_get.md",
+        "v4/webapp/role_list.md",
+        "v4/webapp/role_update.md"
+      ]
+    },
+    "taskReward": {
+      "description": "任务奖励",
+      "docs": [
+        "v4/channel/task_reward/create.md",
+        "v4/channel/task_reward/delete.md",
+        "v4/channel/task_reward/page.md",
+        "v4/channel/task_reward/stats.md",
+        "v4/channel/task_reward/stop.md",
+        "v4/channel/task_reward/submit_accept_info.md",
+        "v4/channel/task_reward/update.md",
+        "v4/channel/task_reward/viewer_detail.md",
+        "v4/channel/task_reward/viewer_union_detail.md"
+      ]
+    },
+    "subtitle": {
+      "description": "字幕管理",
+      "docs": [
+        "v4/channel/subtitle/get_subtitle.md",
+        "v4/channel/subtitle/list_all_language.md",
+        "v4/channel/subtitle/update_subtitle.md"
+      ]
+    },
+    "group": {
+      "description": "集团账号管理",
+      "docs": [
+        "group/list-allocate-log.md",
+        "group/set-concurrences.md",
+        "group/set-flow.md",
+        "group/set-live-durations.md",
+        "group/set-space.md",
+        "v4/group/account/billing_list.md",
+        "v4/group/user/allocation-log.md",
+        "v4/group/user/billing_list.md",
+        "v4/group/user/callback.md",
+        "v4/group/user/create.md",
+        "v4/group/user/package_list.md",
+        "v4/group/user/package_update.md"
+      ]
+    },
+    "material": {
+      "description": "物料管理",
+      "docs": [
+        "v4/material/category/category-list.md",
+        "v4/material/label/label-create.md",
+        "v4/material/label/label-delete.md",
+        "v4/material/label/label-list.md",
+        "v4/material/label/label-update.md",
+        "v4/material/material-delete.md",
+        "v4/material/material-list.md"
+      ]
+    },
+    "finance": {
+      "description": "财务/账单管理",
+      "docs": [
+        "finance/audio-moderation/audio_moderation_get.md",
+        "finance/audio-moderation/audio_moderation_list.md",
+        "finance/audio-moderation/audio_moderation_update.md",
+        "finance/bill_detail_list.md",
+        "finance/video-moderation/result_list.md",
+        "finance/video-moderation/video_moderation_get.md",
+        "finance/video-moderation/video_moderation_update.md",
+        "v4/user/bill/use_detail_list.md"
+      ]
+    },
+    "robot": {
+      "description": "虚拟人数/机器人",
+      "docs": [
+        "v4/robot/robot_delete_batch.md",
+        "v4/robot/robot_list.md",
+        "v4/robot/robot_save_batch.md"
+      ]
+    },
+    "children": {
+      "description": "子账号管理",
+      "docs": [
+        "v4/user/children/create.md",
+        "v4/user/children/delete.md",
+        "v4/user/children/get_by_sale.md",
+        "v4/user/children/list.md",
+        "v4/user/children/role/list.md",
+        "v4/user/children/update.md"
+      ]
+    },
+    "label": {
+      "description": "标签管理",
+      "docs": [
+        "v4/user/label/add_channel_label_refs.md",
+        "v4/user/label/create_label.md",
+        "v4/user/label/delete_label.md",
+        "v4/user/label/list_label.md",
+        "v4/user/label/update_label.md"
+      ]
+    },
+    "organization": {
+      "description": "组织管理",
+      "docs": [
+        "v4/user/organization/create.md",
+        "v4/user/organization/delete.md",
+        "v4/user/organization/list.md"
+      ]
+    },
+    "globalSetting": {
+      "description": "全局设置",
+      "docs": [
+        "v4/user/get_callback.md",
+        "v4/user/get_global_footer.md",
+        "v4/user/get_global_switch.md",
+        "v4/user/get_pv_show_enable.md",
+        "v4/user/update_callback.md",
+        "v4/user/update_global_footer.md",
+        "v4/user/update_global_switch.md",
+        "v4/user/update_pv_show_enable.md",
+        "v4/global/auth/auth_get.md",
+        "v4/global/auth/auth_update.md",
+        "v4/global/page_setting/page_setting_get.md",
+        "v4/global/page_setting/page_setting_update.md",
+        "web/setting/update_global_enabled.md",
+        "web/setting/uploadimage.md"
+      ]
+    },
+    "template": {
+      "description": "模板设置",
+      "docs": [
+        "v4/user/template/get_audio_moderation_setting.md",
+        "v4/user/template/get_marquee.md",
+        "v4/user/template/get_playback_setting.md",
+        "v4/user/template/get_role_config.md",
+        "v4/user/template/get_video_moderation_setting.md",
+        "v4/user/template/getDonate.md",
+        "v4/user/template/update_audio_moderation_setting.md",
+        "v4/user/template/update_marquee.md",
+        "v4/user/template/update_playback_setting.md",
+        "v4/user/template/update_role_config.md",
+        "v4/user/template/update_video_moderation_setting.md",
+        "v4/user/template/updateDonate.md"
+      ]
+    },
+    "inviteSales": {
+      "description": "邀请销售",
+      "docs": [
+        "v4/user/invitesales/add.md",
+        "v4/user/invitesales/list-follow-viewer.md",
+        "v4/user/invitesales/list.md",
+        "v4/user/invitesales/remove.md",
+        "v4/user/invitesales/update.md"
+      ]
+    },
+    "webChannel": {
+      "description": "Web频道设置",
+      "docs": [
+        "web/info/get_countdown.md",
+        "web/info/getsplash.md",
+        "web/info/live_likes.md",
+        "web/info/set_countdown.md",
+        "web/info/setpublisher.md",
+        "web/info/setsplash.md",
+        "web/info/update_likes.md",
+        "web/info/updatechannellogo.md",
+        "web/info/updatechannelname.md",
+        "web/menu/add_menu.md",
+        "web/menu/channel_menu_list.md",
+        "web/menu/menu_delete.md",
+        "web/menu/setmenu.md",
+        "web/menu/tuwen_list.md",
+        "web/menu/update_channel_menu.md",
+        "web/menu/update_consulting_enabled.md",
+        "web/menu/update_rank.md"
+      ]
+    },
+    "ai": {
+      "description": "AI 功能",
+      "docs": [
+        "v4/ai/digital-human/list-digital-human.md",
+        "v4/ai/digital-human/list-organization.md",
+        "v4/ai/digital-human/set-organizations.md",
+        "v4/ai/video-produce/video-produce-batch-create-new.md",
+        "v4/ai/video-produce/video-produce-batch-create.md",
+        "v4/ai/video-produce/video-produce-delete.md",
+        "v4/ai/video-produce/video-produce-get.md",
+        "v4/ai/video-produce/video-produce-list.md",
+        "v4/ai/video-produce/video-produce-ppt-get.md",
+        "v4/ai/video-produce/video-produce-ppt-list.md",
+        "v4/ai/video-produce/video-produce-ppt-upload.md",
+        "v4/ai/video-produce/video-produce-tts-voice-list.md"
+      ]
+    },
+    "anchor": {
+      "description": "主播管理",
+      "docs": [
+        "platform/channel_anchor_create.md",
+        "platform/channel_anchor_get.md",
+        "platform/channel_anchor_list_relation.md",
+        "platform/channel_anchor_list_unrelation.md",
+        "platform/channel_anchor_list.md",
+        "platform/channel_anchor_update_status.md",
+        "platform/channel_anchor_update.md"
+      ]
+    },
+    "uncategorized": {
+      "description": "未分类/杂项",
+      "docs": [
+        "uncategorized/callback/channel_change_callback.md",
+        "uncategorized/ccb_focus_reset.md",
+        "uncategorized/change_data_by_user.md",
+        "uncategorized/channel_learn_durations.md",
+        "uncategorized/chat/chat_get_group_login_times.md",
+        "uncategorized/get_change_person.md",
+        "uncategorized/huawei/digitalMan/billingList.md",
+        "uncategorized/huawei/digitalMan/channelStatusValid.md",
+        "uncategorized/huawei/digitalMan/createAccount.md",
+        "uncategorized/huawei/digitalMan/createIsolation.md",
+        "uncategorized/huawei/digitalMan/healthCheack.md",
+        "uncategorized/huawei/digitalMan/isolationList.md",
+        "uncategorized/huawei/digitalMan/packageList.md",
+        "uncategorized/huawei/digitalMan/packageUpdate.md",
+        "uncategorized/huawei/digitalMan/resetAppSecret.md",
+        "uncategorized/inviter_poster_page.md",
+        "uncategorized/learn_durations.md",
+        "uncategorized/list_tencent_stream_info.md",
+        "channel/operate/association_receive_channels.md",
+        "channel/operate/batch_add_submeeting.md",
+        "channel/operate/set_token_1.md",
+        "platform/content_group_list.md",
+        "platform/SM2_encrypt_detail.md",
+        "v4/user/mic_duration.md",
+        "v4/user/mr_concurrency_detail.md",
+        "v4/user/sms_send.md"
+      ]
+    },
+    "documentation": {
+      "description": "文档说明（非API）",
+      "docs": [
+        "_sidebar.md",
+        "buildSign.md",
+        "CHANGELOG.md",
+        "errorInfo.md",
+        "faq/multirate_instruction.md",
+        "getChatToken.md",
+        "getGroupSecretKey.md",
+        "getSecretKey.md",
+        "docs/api-reference/INDEX.md",
+        "introduce.md",
+        "limit.md",
+        "product_introduction.md",
+        "quickAccess.md",
+        "README.md",
+        "root/source_register.md",
+        "root/tencent_order.md",
+        "tips.md"
+      ]
+    }
+  }
+}

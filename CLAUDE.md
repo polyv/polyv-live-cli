@@ -121,13 +121,18 @@ CLI supports multiple auth sources (priority order):
 
 ## API Documentation
 
-When implementing new features, always refer to the API docs:
+When implementing new features, use the project-maintained API indexes first, then read the raw API docs from the document-center checkout.
+
+- API index: `docs/api-reference/MODULE_DOC_MAPPING.json`
+- Command guide: `docs/api-reference/CLI_COMMANDS_GUIDE.md`
+- Raw API docs root: `../document-center/docs/live/api` relative to the repository root
+- Override raw docs root with `POLYV_API_DOCS_DIR`
 
 | Feature | Doc Location |
 |---------|--------------|
-| Coupon | `docs/api/coupon/README.md` |
-| Product | `docs/api/product/` |
-| Channel | `docs/api/channel/` |
+| Coupon | `v4/platform/user_coupon_*.md` under the raw docs root |
+| Product | `channel/operate/*product*.md` and `v4/user/product/` under the raw docs root |
+| Channel | `channel/` and `v4/channel/` under the raw docs root |
 
 ## Signature Mechanism
 

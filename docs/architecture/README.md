@@ -160,7 +160,7 @@ npm run format
 
 - **[Product Requirements](../prd.md)**: Functional specifications
 - **[User Stories](../stories/)**: Implementation tasks
-- **[API Documentation](../api/)**: PolyV API references
+- **[API Reference Indexes](../api-reference/)**: Project indexes for PolyV API docs; raw docs live under `../document-center/docs/live/api` relative to the repository root
 - **[Main Architecture](../architecture.md)**: Complete unified document
 
 ---
@@ -200,4 +200,4 @@ npm run format
 
 ---
 
-*Architecture documentation complete and ready for implementation. Each module provides focused, actionable guidance for specific aspects of the system.* 
+*Architecture documentation complete and ready for implementation. Each module provides focused, actionable guidance for specific aspects of the system.*

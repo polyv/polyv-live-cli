@@ -8,7 +8,8 @@
  * Story 1.9: implement-type-generator
  */
 
-import { join, dirname } from 'path';
+import { existsSync } from 'fs';
+import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { MarkdownParser } from './parsers/markdown-parser.js';
 import { TypeGenerator } from './generators/type-generator.js';
@@ -18,10 +19,27 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
-const PROJECT_ROOT = join(__dirname, '..');
-const DOCS_DIR = join(PROJECT_ROOT, 'docs/api');
-const OUTPUT_DIR = join(PROJECT_ROOT, 'src/types/generated');
-const REPORT_PATH = join(PROJECT_ROOT, '_bmad-output/type-generation-report.json');
+const PACKAGE_ROOT = join(__dirname, '..');
+const REPO_ROOT = join(PACKAGE_ROOT, '../..');
+// Default API docs path is relative to the repository root, not packages/sdk.
+const DEFAULT_API_DOCS_DIR = resolve(REPO_ROOT, '../document-center/docs/live/api');
+const LEGACY_API_DOCS_DIR = resolve(REPO_ROOT, 'docs/api');
+const DOCS_DIR = resolveApiDocsDir();
+const OUTPUT_DIR = join(PACKAGE_ROOT, 'src/types/generated');
+const REPORT_PATH = join(PACKAGE_ROOT, '_bmad-output/type-generation-report.json');
+
+function resolveApiDocsDir(): string {
+  const configuredDocsDir = process.env['POLYV_API_DOCS_DIR'];
+  if (configuredDocsDir) {
+    return resolve(configuredDocsDir);
+  }
+
+  if (existsSync(DEFAULT_API_DOCS_DIR)) {
+    return DEFAULT_API_DOCS_DIR;
+  }
+
+  return LEGACY_API_DOCS_DIR;
+}
 
 /**
  * Main entry point
@@ -35,7 +53,7 @@ async function main(): Promise<void> {
 
   try {
     // Discover API documentation files
-    console.log('📂 Scanning docs/api/ for Markdown files...');
+    console.log(`📂 Scanning API docs from: ${DOCS_DIR}`);
     const files = await processor.getApiMarkdownFiles();
     console.log(`   Found ${files.length} API documentation files\n`);
 

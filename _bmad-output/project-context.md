@@ -1,7 +1,7 @@
 ---
 project_name: polyv-cli
 user_name: Nick
-date: 2026-03-22
+date: 2026-06-18
 sections_completed:
   - technology_stack
   - implementation_rules
@@ -16,7 +16,7 @@ sections_completed:
   - agent_first_design
   - api_doc_reference
   - epic_roadmap
-version: 3.0
+version: 3.4
 status: complete
 optimized_for_llm: true
 ---
@@ -66,7 +66,8 @@ polyv-cli/
 │       │   └── types/           # CLI 类型
 │       └── tests/               # 单元 + 集成测试
 ├── docs/
-│   └── api/                     # API 文档 + MODULE_DOC_MAPPING.json
+│   ├── api-reference/           # API 文档映射和项目侧索引
+│   └── api-coverage/            # CLI/API 覆盖关系
 ├── _bmad-output/
 │   ├── planning-artifacts/      # PRD, 架构, Epics
 │   └── implementation-artifacts/ # Stories, Sprint 状态
@@ -111,20 +112,36 @@ PolyV API (基础层 - 直播云平台能力)
 
 ## API 文档参考系统 📚
 
-### MODULE_DOC_MAPPING.json 位置
+### API 文档源路径
+
+原始 API 文档不维护在本仓库。读取顺序：
+
+1. 优先使用环境变量 `POLYV_API_DOCS_DIR`
+2. 未设置时使用默认同级仓库路径：`../document-center/docs/live/api`，相对于本仓库根目录解析
+3. `docs/api/` 仅是本地兼容缓存，已被 `.gitignore` 排除，不作为事实来源
+
+### 项目侧 API 索引
+
+本仓库维护 CLI/SDK 开发用的二次索引：
 
 ```
-docs/api/MODULE_DOC_MAPPING.json
+docs/api-reference/MODULE_DOC_MAPPING.json
+docs/api-reference/CLI_COMMANDS_GUIDE.md
+docs/api-reference/INDEX.md
+docs/api-reference/BUSINESS_MODULES_INDEX.md
 ```
+
+`MODULE_DOC_MAPPING.json` 中 `modules.*.docs` 的 API 文档路径默认相对于 `../document-center/docs/live/api`。这个默认根目录相对于本仓库根目录解析。如果路径以 `docs/api-reference/` 开头，则读取本仓库内的项目侧索引文件。
 
 ### 使用流程
 
 1. **查找模块** - 在 `modules` 对象中找到对应模块名
-2. **阅读文档** - 根据 `docs` 数组中的路径读取 API 文档
-3. **实现 SDK** - 在 `packages/sdk/src/services/` 中实现
-4. **定义类型** - 在 `packages/sdk/src/types/` 中定义
+2. **解析路径** - 将 `docs` 数组中的 API 文档路径拼到 `POLYV_API_DOCS_DIR` 或相对于本仓库根目录解析的 `../document-center/docs/live/api`
+3. **阅读文档** - 从文档中心源目录读取具体 API 文档
+4. **实现 SDK** - 在 `packages/sdk/src/services/` 中实现
+5. **定义类型** - 在 `packages/sdk/src/types/` 中定义
 
-### 核心模块映射 (36 个模块)
+### 核心模块映射 (42 个模块，表格列出常用核心模块)
 
 | 模块 | 说明 | 文档数 | CLI 命令 |
 |------|------|--------|----------|
@@ -628,7 +645,7 @@ const signParams = { appId, timestamp, userId };  // 正确
 | 分页参数 | pageNumber 从 1 开始，不是 0 | 使用 `{ pageNumber: 1, pageSize: 10 }` |
 | API 版本混用 | V3/V4 API 响应格式不同 | 检查 `code` 和 `status` 字段 |
 | SDK 导入后缀 | ESM 模块必须加 `.js` 后缀 | `from './service.js'` 不是 `from './service'` |
-| API 文档遗漏 | 不知道使用哪个 API | 查阅 `docs/api/MODULE_DOC_MAPPING.json` |
+| API 文档遗漏 | 不知道使用哪个 API | 查阅 `docs/api-reference/MODULE_DOC_MAPPING.json`，再到相对于本仓库根目录解析的 `../document-center/docs/live/api` 读取具体文档 |
 
 ---
 
@@ -657,7 +674,7 @@ git add -A && git commit -m "feat: implement story XXX"
 - **严格遵循**所有记录的规则
 - 如有疑问，选择**更严格的选项**
 - 如果发现新模式，**更新此文件**
-- **开发新模块前**，先查阅 `docs/api/MODULE_DOC_MAPPING.json`
+- **开发新模块前**，先查阅 `docs/api-reference/MODULE_DOC_MAPPING.json`
 
 ### 人类用户
 
@@ -672,7 +689,8 @@ git add -A && git commit -m "feat: implement story XXX"
 
 | 资源 | 路径 |
 |------|------|
-| API 文档映射 | `docs/api/MODULE_DOC_MAPPING.json` |
+| API 文档源 | `../document-center/docs/live/api`，相对于本仓库根目录解析 |
+| API 文档映射 | `docs/api-reference/MODULE_DOC_MAPPING.json` |
 | PRD 文档 | `_bmad-output/planning-artifacts/prd.md` |
 | 架构文档 | `_bmad-output/planning-artifacts/architecture.md` |
 | Epics & Stories | `_bmad-output/planning-artifacts/epics.md` |
@@ -683,5 +701,5 @@ git add -A && git commit -m "feat: implement story XXX"
 
 ---
 
-**最后更新:** 2026-03-24
-**版本:** 3.3 (添加 CLI 选项短参数规则：禁止使用 -v/-V)
+**最后更新:** 2026-06-18
+**版本:** 3.4 (API 文档源迁移到 document-center，项目侧索引迁入 docs/api-reference)

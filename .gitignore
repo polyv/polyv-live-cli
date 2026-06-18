@@ -98,7 +98,7 @@ debug/
 .gemini/
 .claude/settings.local.json
 
-# API 文档 (外部文档，不提交)
+# API 原始文档缓存 (外部文档，不提交；项目侧索引在 docs/api-reference/)
 docs/api/
 
 # 本地 CLI 配置（包含账户凭证）

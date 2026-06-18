@@ -17,8 +17,8 @@ stepsCompleted:
 inputDocuments:
   - _bmad-output/project-context.md
   - _bmad-output/planning-artifacts/epics.md
-  - docs/api/MODULE_DOC_MAPPING.json
-  - docs/api/CLI_COMMANDS_GUIDE.md
+  - docs/api-reference/MODULE_DOC_MAPPING.json
+  - docs/api-reference/CLI_COMMANDS_GUIDE.md
 workflowType: 'prd'
 documentCounts:
   briefCount: 0
@@ -323,7 +323,7 @@ SDK (packages/sdk)
 
 ## Appendix: Module Reference
 
-完整模块映射请参考: `docs/api/MODULE_DOC_MAPPING.json`
+完整模块映射请参考: `docs/api-reference/MODULE_DOC_MAPPING.json`。映射中的 API 文档路径相对于本仓库根目录下的 `../document-center/docs/live/api`。
 
 | 命令 | 模块 | 文档数 |
 |------|------|--------|

@@ -127,7 +127,7 @@ export interface CreateChannelRequest {
  * Parameters required for creating a new channel using V4 API.
  * V4 API uses JSON body for request parameters.
  *
- * @see docs/api/v4/channel/create.md
+ * @see v4/channel/create.md under POLYV_API_DOCS_DIR or ../document-center/docs/live/api relative to the repository root
  */
 export interface CreateChannelV4Request {
   /** 直播名称，最大长度100 - REQUIRED */
@@ -258,7 +258,7 @@ export interface AuthSetting {
  * Update Watch Condition Request
  * 修改频道观看条件请求
  *
- * @see docs/api/web/watch_condition/set_watch_condition.md
+ * @see web/watch_condition/set_watch_condition.md under POLYV_API_DOCS_DIR or ../document-center/docs/live/api relative to the repository root
  */
 export interface UpdateWatchConditionRequest {
   /** 频道号，不传为通用设置 */

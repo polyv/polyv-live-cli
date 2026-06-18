@@ -190,7 +190,7 @@ interface CardPush {
 - [Source: docs/api/v4/channel/market/cardPush/push.md] - 推送卡片 API
 - [Source: docs/api/v4/channel/market/cardPush/cancelPush.md] - 取消推送 API
 - [Source: docs/api/v4/channel/market/cardPush/delete.md] - 删除卡片推送 API
-- [Source: docs/api/MODULE_DOC_MAPPING.json] - cardPush 模块定义
+- [Source: docs/api-reference/MODULE_DOC_MAPPING.json] - cardPush 模块定义；具体 API 文档路径相对于本仓库根目录下的 `../document-center/docs/live/api`
 - [Source: packages/cli/src/commands/promotion.commands.ts] - 参考命令模式
 - [Source: packages/cli/src/handlers/promotion.handler.ts] - 参考Handler模式
 - [Source: packages/cli/src/services/promotion-service.ts] - 参考Service模式

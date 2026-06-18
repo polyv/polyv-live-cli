@@ -1,0 +1,17 @@
+# PolyV API 项目侧索引
+
+本目录存放 polyv-live-cli 仓库维护的 API 索引，用于 AI Agent、BMAD 规划和 CLI/SDK 开发。
+这里不存放原始保利威 API 文档。
+
+## 文档来源
+
+- 原始 API 文档默认根目录：`../document-center/docs/live/api`，相对于本仓库根目录解析
+- 自定义 workspace 可用环境变量覆盖：`POLYV_API_DOCS_DIR`
+- 兼容缓存目录：`docs/api/`，该目录已被 `.gitignore` 排除，不作为事实来源
+
+## 文件说明
+
+- `MODULE_DOC_MAPPING.json`：机器可读的模块到文档映射。`modules.*.docs` 中的路径默认相对于原始 API 文档根目录；以 `docs/api-reference/` 开头的路径表示本仓库内的项目侧索引。
+- `CLI_COMMANDS_GUIDE.md`：按 CLI 开发视角整理的 API 文档选择指南。
+- `INDEX.md`：面向人工阅读的 API 文档树索引。
+- `BUSINESS_MODULES_INDEX.md`：按业务领域整理的 API 分组，用于规划新的 CLI 能力。

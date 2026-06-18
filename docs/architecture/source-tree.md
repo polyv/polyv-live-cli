@@ -280,17 +280,14 @@ docs/prd/
 ### **API Documentation**
 
 ```
-docs/api/
-└── 📁 channel/                    # PolyV channel APIs
-    ├── 📄 create.md               # Channel creation API
-    ├── 📄 channels.md             # Channel listing API
-    ├── 📄 get_channel_detail.md   # Channel details API
-    ├── 📄 update_channel_detail_setting.md # Channel update API
-    ├── 📄 batch_delete_channels.md # Batch delete API
-    ├── 📄 get_stream_info.md      # Stream info API
-    ├── 📄 set_status_start.md     # Start stream API
-    └── 📄 set_status_end.md       # End stream API
+docs/api-reference/
+├── 📄 MODULE_DOC_MAPPING.json     # Module-to-document mapping for BMAD/agents
+├── 📄 CLI_COMMANDS_GUIDE.md       # CLI-oriented API selection guide
+├── 📄 INDEX.md                    # Human-readable API tree index
+└── 📄 BUSINESS_MODULES_INDEX.md   # Business-domain API grouping
 ```
+
+Raw PolyV API docs are not maintained in this repository. By default they are read from `../document-center/docs/live/api` relative to the repository root; use `POLYV_API_DOCS_DIR` to override the source checkout.
 
 ---
 
@@ -422,4 +419,4 @@ npm run format       # Format code
 
 ---
 
-*This source tree documentation provides a complete guide to the project structure and development patterns. Follow these conventions for consistent, maintainable code.* 
+*This source tree documentation provides a complete guide to the project structure and development patterns. Follow these conventions for consistent, maintainable code.*

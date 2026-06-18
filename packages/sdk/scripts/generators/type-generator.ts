@@ -128,7 +128,7 @@ ${typeContents}
  * PolyV SDK Generated Types
  *
  * AUTO-GENERATED FILE - DO NOT EDIT
- * Generated from docs/api/*.md by scripts/generate-types.ts
+ * Generated from API docs by scripts/generate-types.ts
  *
  * Last updated: ${new Date().toISOString()}
  */
@@ -150,7 +150,7 @@ ${typeContents}
  * ${moduleName} API Types
  *
  * AUTO-GENERATED FILE - DO NOT EDIT
- * Generated from docs/api/${moduleName}/*.md by scripts/generate-types.ts
+ * Generated from API docs module ${moduleName} by scripts/generate-types.ts
  *
  * Last updated: ${new Date().toISOString()}
  */
@@ -178,7 +178,7 @@ ${typeContents}
  * PolyV SDK Generated Types
  *
  * AUTO-GENERATED FILE - DO NOT EDIT
- * Generated from docs/api/*.md by scripts/generate-types.ts
+ * Generated from API docs by scripts/generate-types.ts
  *
  * Last updated: ${new Date().toISOString()}
  */
