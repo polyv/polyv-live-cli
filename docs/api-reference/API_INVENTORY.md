@@ -1,6 +1,6 @@
 # PolyV Live API Inventory
 
-生成时间：2026-06-18T18:23:54.213Z
+生成时间：2026-06-18T21:23:16.788Z
 
 ## 来源与规则
 
@@ -20,10 +20,10 @@
 | 可解析 API 数 | 590 |
 | 去重后最新 API 数 | 578 |
 | 被旧版去重的 API 数 | 12 |
-| SDK 源码 API 路径数 | 539 |
-| SDK 已实现最新 API 数 | 338 |
-| SDK 未实现最新 API 数 | 240 |
-| SDK 覆盖率 | 58.5% |
+| SDK 源码 API 路径数 | 541 |
+| SDK 已实现最新 API 数 | 368 |
+| SDK 未实现最新 API 数 | 210 |
+| SDK 覆盖率 | 63.7% |
 
 ## 模块覆盖率
 
@@ -31,13 +31,13 @@
 | --- | --- | ---: | ---: | ---: | ---: |
 | `channel` | 频道 | 283 | 111 | 172 | 39.2% |
 | `user` | 用户与观众 | 73 | 35 | 38 | 47.9% |
-| `live_interaction` | 直播互动 | 30 | 0 | 30 | 0% |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% |
 | `chat` | 聊天 | 45 | 45 | 0 | 100% |
 | `finance` | 财务与审核 | 7 | 7 | 0 | 100% |
 | `global` | 全局设置 | 4 | 4 | 0 | 100% |
 | `group` | 组织与套餐 | 11 | 11 | 0 | 100% |
+| `live_interaction` | 直播互动 | 30 | 30 | 0 | 100% |
 | `material` | 素材库 | 7 | 7 | 0 | 100% |
 | `platform` | 开放平台 | 14 | 14 | 0 | 100% |
 | `player` | 播放器 | 7 | 7 | 0 | 100% |
@@ -50,7 +50,7 @@
 
 ## SDK 补齐建议
 
-- 优先补齐缺口最大的模块：`channel` 172 个、`user` 38 个、`live_interaction` 30 个。
+- 优先补齐缺口最大的模块：`channel` 172 个、`user` 38 个。
 - 每个缺口应以本清单的 Method、Path、请求形态和业务必填参数为入口，再回到源文档核对完整请求/响应表，避免只按路径补空方法。
 - v4/v5 接口大多需要 JSON body；v2/v3 历史接口多为 query/form 风格。新增 SDK 方法时应把签名公共参数留给 `PolyVClient` 拦截器处理。
 - 对列表、导出、批量创建、异步任务类接口，建议先抽通用分页/任务状态类型，再补服务方法，减少后续 CLI 命令重复定义。
@@ -481,36 +481,36 @@
 
 | 功能/用途 | Method | Path | 源文档 | 请求形态 | 业务必填参数 | SDK 实现 | 替代旧版 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 查询多个频道抽奖记录<br><sub>1、获取一段时间内的多个直播频道发起抽奖记录列表</sub> | GET | `/live/v3/channel/lottery/list-channels-lottery` | `../document-center/docs/live/api/live_interaction/list_channels_lottery.md` | query | channelIds, endTime, startTime | no | - |
-| 查询频道抽奖记录(旧版)<br><sub>1、获取一段时间内的直播频道抽奖记录列表</sub> | GET | `/live/v3/channel/lottery/list-lottery` | `../document-center/docs/live/api/live_interaction/list_lottery.md` | query | channelId, endTime, startTime | no | - |
-| 查询频道答题卡发送时间列表<br><sub>1、获取频道的答题卡发送时间列表</sub> | GET | `/live/v3/channel/interact/question/list-send-time` | `../document-center/docs/live/api/live_interaction/list_question_send_time.md` | query | channelId | no | - |
-| 查询频道答题卡结果<br><sub>1、通过频道号，查询答题卡答题结果列表</sub> | GET | `/live/v3/channel/question/answer-records` | `../document-center/docs/live/api/live_interaction/get_answer_list.md` | query | channelId | no | - |
-| 查询频道答题卡列表<br><sub>1、获取频道的答题卡列表</sub> | GET | `/live/v3/channel/interact/question/list-question` | `../document-center/docs/live/api/live_interaction/list_question.md` | query | channelId | no | - |
-| 查询频道发起的签到记录<br><sub>1、通过直播场次id，查询签到发起记录</sub> | GET | `/live/v3/channel/chat/checkin-by-sessionId` | `../document-center/docs/live/api/live_interaction/get_checkin_by_sessionid.md` | query | channelId, sessionId | no | - |
-| 查询频道签到成功记录<br><sub>1、查询频道号下，某天或某场直播的签到记录（仅返回已签到记录）</sub> | GET | `/live/v3/channel/checkin/list` | `../document-center/docs/live/api/live_interaction/get_checkin_list.md` | query | channelId | no | - |
-| 查询频道提问记录<br><sub>1、通过频道号，查询咨询提问记录</sub> | GET | `/live/v2/chat/{param}/getQuestion` | `../document-center/docs/live/api/live_interaction/get_question_list.md` | query | - | no | - |
-| 查询频道问卷结果<br><sub>1、查询直播问卷的答题结果及统计</sub> | GET | `/live/v3/channel/questionnaire/answer-records` | `../document-center/docs/live/api/live_interaction/get_questionnaire_result.md` | query | channelId | no | - |
-| 查询频道问卷列表<br><sub>1、获取频道的问卷列表</sub> | GET | `/live/v3/channel/questionnaire/list` | `../document-center/docs/live/api/live_interaction/list_questionaire.md` | query | channelId | no | - |
-| 查询频道问卷题目与结果<br><sub>1、查询频道问卷题目与结果</sub> | GET | `/live/v3/channel/questionnaire/detail` | `../document-center/docs/live/api/live_interaction/get_questionnaire_detail.md` | query | channelId, questionnaireId | no | - |
-| 查询频道指定时间范围内发起的签到记录<br><sub>1、通过指定时间范围查询签到发起记录</sub> | GET | `/live/v3/channel/chat/get-checkin-list` | `../document-center/docs/live/api/live_interaction/get_checkin_by_time.md` | query | channelId, endDate, startDate | no | - |
-| 查询频道中奖记录<br><sub>1、通过抽奖ID获取频道的单场抽奖的中奖用户列表</sub> | GET | `/live/v3/channel/lottery/get-winner-detail` | `../document-center/docs/live/api/live_interaction/get_winner_detail.md` | query | channelId, lotteryId | no | - |
-| 查询学员提问客户回调地址<br><sub>> 查询当前账号已配置的「学员提问」客户回调 URL；若从未配置或已删除，则 data.callbackUrl 为空字符串。</sub> | GET | `/live/v5/chat/redirect/channel/student-question-webhook/get` | `../document-center/docs/live/api/live_interaction/student-question-webhook-get.md` | query | - | no | - |
-| 发送答题卡<br><sub>1、发送答题卡</sub> | POST | `/live/v4/channel/question/send` | `../document-center/docs/live/api/live_interaction/send_question.md` | query/form | channelId, questionId | no | - |
-| 发送答题卡结果<br><sub>1、发送答题卡结果</sub> | POST | `/live/v4/channel/question/send-result` | `../document-center/docs/live/api/live_interaction/send_question_result.md` | query/form | channelId, questionId | no | - |
-| 发送打赏消息<br><sub>1、发送打赏消息</sub> | POST | `/live/v3/channel/chat/send-reward-msg` | `../document-center/docs/live/api/live_interaction/send_reward_msg.md` | query/form | avatar, channelId, content, donateType, nickname, viewerId | no | - |
-| 发送点赞<br><sub>1、实现用户自开发观看页点赞效果，通过调用接口可以进行点赞，默认每次请求都是一次点赞</sub> | POST | `/live/v2/channels/{param}/like` | `../document-center/docs/live/api/live_interaction/send_favor.md` | query/form | viewerId | no | - |
-| 分页查询频道问卷结果<br><sub>1、分页查询频道问卷结果</sub> | GET | `/live/v3/channel/questionnaire/list-answer-records` | `../document-center/docs/live/api/live_interaction/list_questionnaire_by_page.md` | query | channelId | no | - |
-| 根据签到ID查询所有签到记录<br><sub>1、通过签到id查询签到记录（包括已签到与未签到记录）</sub> | GET | `/live/v3/channel/chat/get-checkins` | `../document-center/docs/live/api/live_interaction/get_checkin_by_checkid.md` | query | channelId, checkinId | no | - |
-| 讲师通过 HTTP 回复学员提问<br><sub>> 由业务服务端调用，在指定频道内以讲师身份回复某位观众的「提问私聊」记录；</sub> | POST | `/live/v5/chat/redirect/channel/teacher-answer/post` | `../document-center/docs/live/api/live_interaction/teacher-answer-post.md` | json-body | content, roomId, viewerUserId | no | - |
-| 配置学员提问客户回调地址<br><sub>> 按账号维度保存或更新「学员提问」成功后，服务端异步 POST 通知的客户地址（Webhook URL）。</sub> | POST | `/live/v5/chat/redirect/channel/student-question-webhook/post` | `../document-center/docs/live/api/live_interaction/student-question-webhook-post.md` | json-body | callbackUrl, roomId | no | - |
-| 批量创建问卷（支持多频道同时创建）<br><sub>1、支持批量创建问卷（支持多频道同时创建）</sub> | POST | `/live/v4/channel/questionnaire/create-batch` | `../document-center/docs/live/api/live_interaction/batch_create_questionnaire.md` | json-body | questionnaires | no | - |
-| 删除频道答题卡<br><sub>1、删除频道答题卡信息</sub> | POST | `/live/v3/channel/interact/question/delete-question` | `../document-center/docs/live/api/live_interaction/delete_question.md` | query/form | channelId, questionId | no | - |
-| 删除学员提问客户回调地址<br><sub>> 删除当前账号下的「学员提问」客户回调配置；删除后，学员提问成功时不再向原 URL POST 通知。</sub> | POST | `/live/v5/chat/redirect/channel/student-question-webhook/delete` | `../document-center/docs/live/api/live_interaction/student-question-webhook-delete.md` | query/form | roomId | no | - |
-| 提交中奖信息<br><sub>1、提交中奖者填写的信息</sub> | POST | `/live/v4/channel/lottery/add-receive-info` | `../document-center/docs/live/api/live_interaction/add_receive_info_v4.md` | query/form | channelId, lotteryId, viewerId, winnerCode | no | v3 POST /live/v3/channel/chat/add-receive-info (live_interaction/add_receive_info.md) |
-| 停止答题卡<br><sub>1、停止答题卡</sub> | POST | `/live/v4/channel/question/stop` | `../document-center/docs/live/api/live_interaction/stop_question.md` | query/form | channelId, questionId | no | - |
-| 下载频道中奖记录<br><sub>1、导出频道的单抽奖的中奖用户列表的中奖文件</sub> | GET | `/live/v3/channel/lottery/download-winner-detail` | `../document-center/docs/live/api/live_interaction/download_winner_detail.md` | query | channelId, lotteryId | no | - |
-| 新增或修改频道答题卡<br><sub>1、编辑或添加答题卡信息，为全量增加或修改</sub> | POST | `/live/v3/channel/interact/question/add-edit-question` | `../document-center/docs/live/api/live_interaction/add_edit_question.md` | query/form | answer, channelId, itemType, name, questionId, type | no | - |
-| 新增或修改频道问卷<br><sub>1、创建问卷</sub> | POST | `/live/v4/channel/questionnaire/save` | `../document-center/docs/live/api/live_interaction/create_questionnaire.md` | json-body | channelId, questionnaireTitle, questions | no | v3 POST /live/v3/channel/questionnaire/add-edit-questionnaire (live_interaction/add_edit_questionnaire.md) |
+| 查询多个频道抽奖记录<br><sub>1、获取一段时间内的多个直播频道发起抽奖记录列表</sub> | GET | `/live/v3/channel/lottery/list-channels-lottery` | `../document-center/docs/live/api/live_interaction/list_channels_lottery.md` | query | channelIds, endTime, startTime | yes: LiveInteractionService#listChannelsLottery (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道抽奖记录(旧版)<br><sub>1、获取一段时间内的直播频道抽奖记录列表</sub> | GET | `/live/v3/channel/lottery/list-lottery` | `../document-center/docs/live/api/live_interaction/list_lottery.md` | query | channelId, endTime, startTime | yes: LiveInteractionService#listLottery (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道答题卡发送时间列表<br><sub>1、获取频道的答题卡发送时间列表</sub> | GET | `/live/v3/channel/interact/question/list-send-time` | `../document-center/docs/live/api/live_interaction/list_question_send_time.md` | query | channelId | yes: LiveInteractionService#listQuestionSendTime (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道答题卡结果<br><sub>1、通过频道号，查询答题卡答题结果列表</sub> | GET | `/live/v3/channel/question/answer-records` | `../document-center/docs/live/api/live_interaction/get_answer_list.md` | query | channelId | yes: LiveInteractionService#getAnswerList (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道答题卡列表<br><sub>1、获取频道的答题卡列表</sub> | GET | `/live/v3/channel/interact/question/list-question` | `../document-center/docs/live/api/live_interaction/list_question.md` | query | channelId | yes: LiveInteractionService#listQuestion (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道发起的签到记录<br><sub>1、通过直播场次id，查询签到发起记录</sub> | GET | `/live/v3/channel/chat/checkin-by-sessionId` | `../document-center/docs/live/api/live_interaction/get_checkin_by_sessionid.md` | query | channelId, sessionId | yes: LiveInteractionService#getCheckinBySessionId (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道签到成功记录<br><sub>1、查询频道号下，某天或某场直播的签到记录（仅返回已签到记录）</sub> | GET | `/live/v3/channel/checkin/list` | `../document-center/docs/live/api/live_interaction/get_checkin_list.md` | query | channelId | yes: LiveInteractionService#getCheckinList (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道提问记录<br><sub>1、通过频道号，查询咨询提问记录</sub> | GET | `/live/v2/chat/{param}/getQuestion` | `../document-center/docs/live/api/live_interaction/get_question_list.md` | query | - | yes: LiveInteractionService#getQuestionList (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道问卷结果<br><sub>1、查询直播问卷的答题结果及统计</sub> | GET | `/live/v3/channel/questionnaire/answer-records` | `../document-center/docs/live/api/live_interaction/get_questionnaire_result.md` | query | channelId | yes: LiveInteractionService#getQuestionnaireResult (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道问卷列表<br><sub>1、获取频道的问卷列表</sub> | GET | `/live/v3/channel/questionnaire/list` | `../document-center/docs/live/api/live_interaction/list_questionaire.md` | query | channelId | yes: LiveInteractionService#listQuestionnaire (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道问卷题目与结果<br><sub>1、查询频道问卷题目与结果</sub> | GET | `/live/v3/channel/questionnaire/detail` | `../document-center/docs/live/api/live_interaction/get_questionnaire_detail.md` | query | channelId, questionnaireId | yes: LiveInteractionService#getQuestionnaireDetail (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道指定时间范围内发起的签到记录<br><sub>1、通过指定时间范围查询签到发起记录</sub> | GET | `/live/v3/channel/chat/get-checkin-list` | `../document-center/docs/live/api/live_interaction/get_checkin_by_time.md` | query | channelId, endDate, startDate | yes: LiveInteractionService#getCheckinByTime (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询频道中奖记录<br><sub>1、通过抽奖ID获取频道的单场抽奖的中奖用户列表</sub> | GET | `/live/v3/channel/lottery/get-winner-detail` | `../document-center/docs/live/api/live_interaction/get_winner_detail.md` | query | channelId, lotteryId | yes: LiveInteractionService#getWinnerDetail (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 查询学员提问客户回调地址<br><sub>> 查询当前账号已配置的「学员提问」客户回调 URL；若从未配置或已删除，则 data.callbackUrl 为空字符串。</sub> | GET | `/live/v5/chat/redirect/channel/student-question-webhook/get` | `../document-center/docs/live/api/live_interaction/student-question-webhook-get.md` | query | - | yes: LiveInteractionService#getStudentQuestionWebhook (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 发送答题卡<br><sub>1、发送答题卡</sub> | POST | `/live/v4/channel/question/send` | `../document-center/docs/live/api/live_interaction/send_question.md` | query/form | channelId, questionId | yes: LiveInteractionService#sendQuestion (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 发送答题卡结果<br><sub>1、发送答题卡结果</sub> | POST | `/live/v4/channel/question/send-result` | `../document-center/docs/live/api/live_interaction/send_question_result.md` | query/form | channelId, questionId | yes: LiveInteractionService#sendQuestionResult (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 发送打赏消息<br><sub>1、发送打赏消息</sub> | POST | `/live/v3/channel/chat/send-reward-msg` | `../document-center/docs/live/api/live_interaction/send_reward_msg.md` | query/form | avatar, channelId, content, donateType, nickname, viewerId | yes: LiveInteractionService#sendRewardMsg (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 发送点赞<br><sub>1、实现用户自开发观看页点赞效果，通过调用接口可以进行点赞，默认每次请求都是一次点赞</sub> | POST | `/live/v2/channels/{param}/like` | `../document-center/docs/live/api/live_interaction/send_favor.md` | query/form | viewerId | yes: LiveInteractionService#sendFavor (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 分页查询频道问卷结果<br><sub>1、分页查询频道问卷结果</sub> | GET | `/live/v3/channel/questionnaire/list-answer-records` | `../document-center/docs/live/api/live_interaction/list_questionnaire_by_page.md` | query | channelId | yes: LiveInteractionService#listQuestionnaireByPage (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 根据签到ID查询所有签到记录<br><sub>1、通过签到id查询签到记录（包括已签到与未签到记录）</sub> | GET | `/live/v3/channel/chat/get-checkins` | `../document-center/docs/live/api/live_interaction/get_checkin_by_checkid.md` | query | channelId, checkinId | yes: LiveInteractionService#getCheckinByCheckinId (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 讲师通过 HTTP 回复学员提问<br><sub>> 由业务服务端调用，在指定频道内以讲师身份回复某位观众的「提问私聊」记录；</sub> | POST | `/live/v5/chat/redirect/channel/teacher-answer/post` | `../document-center/docs/live/api/live_interaction/teacher-answer-post.md` | json-body | content, roomId, viewerUserId | yes: LiveInteractionService#sendTeacherAnswer (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 配置学员提问客户回调地址<br><sub>> 按账号维度保存或更新「学员提问」成功后，服务端异步 POST 通知的客户地址（Webhook URL）。</sub> | POST | `/live/v5/chat/redirect/channel/student-question-webhook/post` | `../document-center/docs/live/api/live_interaction/student-question-webhook-post.md` | json-body | callbackUrl, roomId | yes: LiveInteractionService#setStudentQuestionWebhook (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 批量创建问卷（支持多频道同时创建）<br><sub>1、支持批量创建问卷（支持多频道同时创建）</sub> | POST | `/live/v4/channel/questionnaire/create-batch` | `../document-center/docs/live/api/live_interaction/batch_create_questionnaire.md` | json-body | questionnaires | yes: LiveInteractionService#batchCreateQuestionnaire (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 删除频道答题卡<br><sub>1、删除频道答题卡信息</sub> | POST | `/live/v3/channel/interact/question/delete-question` | `../document-center/docs/live/api/live_interaction/delete_question.md` | query/form | channelId, questionId | yes: LiveInteractionService#deleteQuestion (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 删除学员提问客户回调地址<br><sub>> 删除当前账号下的「学员提问」客户回调配置；删除后，学员提问成功时不再向原 URL POST 通知。</sub> | POST | `/live/v5/chat/redirect/channel/student-question-webhook/delete` | `../document-center/docs/live/api/live_interaction/student-question-webhook-delete.md` | query/form | roomId | yes: LiveInteractionService#deleteStudentQuestionWebhook (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 提交中奖信息<br><sub>1、提交中奖者填写的信息</sub> | POST | `/live/v4/channel/lottery/add-receive-info` | `../document-center/docs/live/api/live_interaction/add_receive_info_v4.md` | query/form | channelId, lotteryId, viewerId, winnerCode | yes: LiveInteractionService#addReceiveInfoV4 (packages/sdk/src/services/live-interaction.service.ts) | v3 POST /live/v3/channel/chat/add-receive-info (live_interaction/add_receive_info.md) |
+| 停止答题卡<br><sub>1、停止答题卡</sub> | POST | `/live/v4/channel/question/stop` | `../document-center/docs/live/api/live_interaction/stop_question.md` | query/form | channelId, questionId | yes: LiveInteractionService#stopQuestion (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 下载频道中奖记录<br><sub>1、导出频道的单抽奖的中奖用户列表的中奖文件</sub> | GET | `/live/v3/channel/lottery/download-winner-detail` | `../document-center/docs/live/api/live_interaction/download_winner_detail.md` | query | channelId, lotteryId | yes: LiveInteractionService#downloadWinnerDetail (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 新增或修改频道答题卡<br><sub>1、编辑或添加答题卡信息，为全量增加或修改</sub> | POST | `/live/v3/channel/interact/question/add-edit-question` | `../document-center/docs/live/api/live_interaction/add_edit_question.md` | query/form | answer, channelId, itemType, name, questionId, type | yes: LiveInteractionService#addEditQuestion (packages/sdk/src/services/live-interaction.service.ts) | - |
+| 新增或修改频道问卷<br><sub>1、创建问卷</sub> | POST | `/live/v4/channel/questionnaire/save` | `../document-center/docs/live/api/live_interaction/create_questionnaire.md` | json-body | channelId, questionnaireTitle, questions | yes: LiveInteractionService#createQuestionnaire (packages/sdk/src/services/live-interaction.service.ts) | v3 POST /live/v3/channel/questionnaire/add-edit-questionnaire (live_interaction/add_edit_questionnaire.md) |
 
 ### material - 素材库
 

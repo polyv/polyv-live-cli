@@ -160,6 +160,24 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expectPaginatedResponse(receiveList);
   });
 
+  it('calls live interaction read-only APIs when a channel can be discovered', async () => {
+    const channelId = await discoverChannelId(client);
+
+    if (!channelId) {
+      console.warn('Skipping live interaction assertions: no POLYV_CHANNEL_ID and no channel found via list APIs.');
+      return;
+    }
+
+    const now = Date.now();
+    const startTime = now - 7 * 24 * 60 * 60 * 1000;
+
+    await client.liveInteraction.getCheckinList({ channelId, page: 1, pageSize: 1 });
+    await client.liveInteraction.listQuestion({ channelId });
+    await client.liveInteraction.listQuestionSendTime({ channelId });
+    await client.liveInteraction.listQuestionnaire({ channelId, page: 1, pageSize: 1 });
+    await client.liveInteraction.listLottery({ channelId, startTime, endTime: now, page: 1, limit: 1 });
+  });
+
   describeWithWriteAccess('write API lifecycle', () => {
     it('sends encoded custom chat message with form body', async () => {
       const channelId = await discoverChannelId(client);

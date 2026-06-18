@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-18T18:23:54.205Z",
+  "generatedAt": "2026-06-18T21:23:16.780Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,9 +18,9 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 539,
-    "sdkImplemented": 338,
-    "sdkMissing": 240
+    "sdkEndpoints": 541,
+    "sdkImplemented": 368,
+    "sdkMissing": 210
   },
   "modules": [
     {
@@ -38,14 +38,6 @@
       "implemented": 35,
       "missing": 38,
       "coverage": 47.9
-    },
-    {
-      "module": "live_interaction",
-      "label": "直播互动",
-      "total": 30,
-      "implemented": 0,
-      "missing": 30,
-      "coverage": 0
     },
     {
       "module": "account",
@@ -92,6 +84,14 @@
       "label": "组织与套餐",
       "total": 11,
       "implemented": 11,
+      "missing": 0,
+      "coverage": 100
+    },
+    {
+      "module": "live_interaction",
+      "label": "直播互动",
+      "total": 30,
+      "implemented": 30,
       "missing": 0,
       "coverage": 100
     },
@@ -11609,12 +11609,12 @@
       "dedupeKey": "live_interaction:查询多个频道抽奖记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/lottery/list-channels-lottery",
+        "reference": "LiveInteractionService#listChannelsLottery",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11640,12 +11640,12 @@
       "dedupeKey": "live_interaction:查询频道抽奖记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/lottery/list-lottery",
+        "reference": "LiveInteractionService#listLottery",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11669,12 +11669,12 @@
       "dedupeKey": "live_interaction:查询频道答题卡发送时间列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/interact/question/list-send-time",
+        "reference": "LiveInteractionService#listQuestionSendTime",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11698,12 +11698,12 @@
       "dedupeKey": "live_interaction:查询频道答题卡结果",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/question/answer-records",
+        "reference": "LiveInteractionService#getAnswerList",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11727,12 +11727,12 @@
       "dedupeKey": "live_interaction:查询频道答题卡列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/interact/question/list-question",
+        "reference": "LiveInteractionService#listQuestion",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11757,12 +11757,12 @@
       "dedupeKey": "live_interaction:查询频道发起的签到记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/chat/checkin-by-sessionId",
+        "reference": "LiveInteractionService#getCheckinBySessionId",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11786,12 +11786,12 @@
       "dedupeKey": "live_interaction:查询频道签到成功记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/checkin/list",
+        "reference": "LiveInteractionService#getCheckinList",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11813,12 +11813,12 @@
       "dedupeKey": "live_interaction:查询频道提问记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v2/chat/{param}/getQuestion",
+        "reference": "LiveInteractionService#getQuestionList",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11842,12 +11842,12 @@
       "dedupeKey": "live_interaction:查询频道问卷结果",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/questionnaire/answer-records",
+        "reference": "LiveInteractionService#getQuestionnaireResult",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11871,12 +11871,12 @@
       "dedupeKey": "live_interaction:查询频道问卷列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/questionnaire/list",
+        "reference": "LiveInteractionService#listQuestionnaire",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11901,12 +11901,12 @@
       "dedupeKey": "live_interaction:查询频道问卷题目与结果",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/questionnaire/detail",
+        "reference": "LiveInteractionService#getQuestionnaireDetail",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11932,12 +11932,12 @@
       "dedupeKey": "live_interaction:查询频道指定时间范围内发起的签到记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/chat/get-checkin-list",
+        "reference": "LiveInteractionService#getCheckinByTime",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11962,12 +11962,12 @@
       "dedupeKey": "live_interaction:查询频道中奖记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/lottery/get-winner-detail",
+        "reference": "LiveInteractionService#getWinnerDetail",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -11989,12 +11989,12 @@
       "dedupeKey": "live_interaction:查询学员提问客户回调地址",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v5/chat/redirect/channel/student-question-webhook/get",
+        "reference": "LiveInteractionService#getStudentQuestionWebhook",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12019,12 +12019,12 @@
       "dedupeKey": "live_interaction:发送答题卡",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/question/send",
+        "reference": "LiveInteractionService#sendQuestion",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12049,12 +12049,12 @@
       "dedupeKey": "live_interaction:发送答题卡结果",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/question/send-result",
+        "reference": "LiveInteractionService#sendQuestionResult",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12083,12 +12083,12 @@
       "dedupeKey": "live_interaction:发送打赏消息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/chat/send-reward-msg",
+        "reference": "LiveInteractionService#sendRewardMsg",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12112,12 +12112,12 @@
       "dedupeKey": "live_interaction:发送点赞",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/channels/{param}/like",
+        "reference": "LiveInteractionService#sendFavor",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12141,12 +12141,12 @@
       "dedupeKey": "live_interaction:分页查询频道问卷结果",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/questionnaire/list-answer-records",
+        "reference": "LiveInteractionService#listQuestionnaireByPage",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12171,12 +12171,12 @@
       "dedupeKey": "live_interaction:根据签到id查询所有签到记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/chat/get-checkins",
+        "reference": "LiveInteractionService#getCheckinByCheckinId",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12202,12 +12202,12 @@
       "dedupeKey": "live_interaction:讲师通过http回复学员提问",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v5/chat/redirect/channel/teacher-answer/post",
+        "reference": "LiveInteractionService#sendTeacherAnswer",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12232,12 +12232,12 @@
       "dedupeKey": "live_interaction:配置学员提问客户回调地址",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v5/chat/redirect/channel/student-question-webhook/post",
+        "reference": "LiveInteractionService#setStudentQuestionWebhook",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12261,12 +12261,12 @@
       "dedupeKey": "live_interaction:批量创建问卷支持多频道同时创建",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/questionnaire/create-batch",
+        "reference": "LiveInteractionService#batchCreateQuestionnaire",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12291,12 +12291,12 @@
       "dedupeKey": "live_interaction:删除频道答题卡",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/interact/question/delete-question",
+        "reference": "LiveInteractionService#deleteQuestion",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12320,12 +12320,12 @@
       "dedupeKey": "live_interaction:删除学员提问客户回调地址",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v5/chat/redirect/channel/student-question-webhook/delete",
+        "reference": "LiveInteractionService#deleteStudentQuestionWebhook",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12361,12 +12361,12 @@
         }
       ],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery/add-receive-info",
+        "reference": "LiveInteractionService#addReceiveInfoV4",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12391,12 +12391,12 @@
       "dedupeKey": "live_interaction:停止答题卡",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/question/stop",
+        "reference": "LiveInteractionService#stopQuestion",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12421,12 +12421,12 @@
       "dedupeKey": "live_interaction:下载频道中奖记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/lottery/download-winner-detail",
+        "reference": "LiveInteractionService#downloadWinnerDetail",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12455,12 +12455,12 @@
       "dedupeKey": "live_interaction:新增或修改频道答题卡",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/interact/question/add-edit-question",
+        "reference": "LiveInteractionService#addEditQuestion",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -12495,12 +12495,12 @@
         }
       ],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/questionnaire/save",
+        "reference": "LiveInteractionService#createQuestionnaire",
+        "file": "packages/sdk/src/services/live-interaction.service.ts"
       }
     },
     {
@@ -18891,8 +18891,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/getCheckinList",
-      "normalizedPath": "/live/v2/chat/getCheckinList",
+      "path": "/live/v3/channel/checkin/list",
+      "normalizedPath": "/live/v3/channel/checkin/list",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getCheckinList",
@@ -18900,8 +18900,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/getCheckinByCheckId",
-      "normalizedPath": "/live/v2/chat/getCheckinByCheckId",
+      "path": "/live/v3/channel/chat/get-checkins",
+      "normalizedPath": "/live/v3/channel/chat/get-checkins",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getCheckinByCheckinId",
@@ -18909,8 +18909,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/getCheckinBySessionId",
-      "normalizedPath": "/live/v2/chat/getCheckinBySessionId",
+      "path": "/live/v3/channel/chat/checkin-by-sessionId",
+      "normalizedPath": "/live/v3/channel/chat/checkin-by-sessionId",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getCheckinBySessionId",
@@ -18918,8 +18918,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/getCheckinByTime",
-      "normalizedPath": "/live/v2/chat/getCheckinByTime",
+      "path": "/live/v3/channel/chat/get-checkin-list",
+      "normalizedPath": "/live/v3/channel/chat/get-checkin-list",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getCheckinByTime",
@@ -18927,8 +18927,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/questionnaire/create",
-      "normalizedPath": "/live/v2/questionnaire/create",
+      "path": "/live/v4/channel/questionnaire/save",
+      "normalizedPath": "/live/v4/channel/questionnaire/save",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "createQuestionnaire",
@@ -18936,26 +18936,17 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/questionnaire/batch_create",
-      "normalizedPath": "/live/v2/questionnaire/batch_create",
+      "path": "/live/v4/channel/questionnaire/create-batch",
+      "normalizedPath": "/live/v4/channel/questionnaire/create-batch",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "batchCreateQuestionnaire",
       "reference": "LiveInteractionService#batchCreateQuestionnaire"
     },
     {
-      "method": "POST",
-      "path": "/live/v2/questionnaire/add_edit",
-      "normalizedPath": "/live/v2/questionnaire/add_edit",
-      "file": "packages/sdk/src/services/live-interaction.service.ts",
-      "className": "LiveInteractionService",
-      "methodName": "addEditQuestionnaire",
-      "reference": "LiveInteractionService#addEditQuestionnaire"
-    },
-    {
       "method": "GET",
-      "path": "/live/v3/user/questionnaire/list",
-      "normalizedPath": "/live/v3/user/questionnaire/list",
+      "path": "/live/v3/channel/questionnaire/list",
+      "normalizedPath": "/live/v3/channel/questionnaire/list",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "listQuestionnaire",
@@ -18963,8 +18954,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/user/questionnaire/list_by_page",
-      "normalizedPath": "/live/v3/user/questionnaire/list_by_page",
+      "path": "/live/v3/channel/questionnaire/list-answer-records",
+      "normalizedPath": "/live/v3/channel/questionnaire/list-answer-records",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "listQuestionnaireByPage",
@@ -18972,8 +18963,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/user/questionnaire/detail",
-      "normalizedPath": "/live/v3/user/questionnaire/detail",
+      "path": "/live/v3/channel/questionnaire/detail",
+      "normalizedPath": "/live/v3/channel/questionnaire/detail",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getQuestionnaireDetail",
@@ -18981,8 +18972,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/user/questionnaire/result",
-      "normalizedPath": "/live/v3/user/questionnaire/result",
+      "path": "/live/v3/channel/questionnaire/answer-records",
+      "normalizedPath": "/live/v3/channel/questionnaire/answer-records",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getQuestionnaireResult",
@@ -18990,8 +18981,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/question/list",
-      "normalizedPath": "/live/v2/question/list",
+      "path": "/live/v3/channel/interact/question/list-question",
+      "normalizedPath": "/live/v3/channel/interact/question/list-question",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "listQuestion",
@@ -18999,8 +18990,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/question/list_send_time",
-      "normalizedPath": "/live/v2/question/list_send_time",
+      "path": "/live/v3/channel/interact/question/list-send-time",
+      "normalizedPath": "/live/v3/channel/interact/question/list-send-time",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "listQuestionSendTime",
@@ -19008,8 +18999,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/question/add_edit",
-      "normalizedPath": "/live/v2/question/add_edit",
+      "path": "/live/v3/channel/interact/question/add-edit-question",
+      "normalizedPath": "/live/v3/channel/interact/question/add-edit-question",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "addEditQuestion",
@@ -19017,8 +19008,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/question/delete",
-      "normalizedPath": "/live/v2/question/delete",
+      "path": "/live/v3/channel/interact/question/delete-question",
+      "normalizedPath": "/live/v3/channel/interact/question/delete-question",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "deleteQuestion",
@@ -19026,8 +19017,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/question/send",
-      "normalizedPath": "/live/v2/question/send",
+      "path": "/live/v4/channel/question/send",
+      "normalizedPath": "/live/v4/channel/question/send",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "sendQuestion",
@@ -19035,8 +19026,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/question/stop",
-      "normalizedPath": "/live/v2/question/stop",
+      "path": "/live/v4/channel/question/stop",
+      "normalizedPath": "/live/v4/channel/question/stop",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "stopQuestion",
@@ -19044,8 +19035,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/question/send_result",
-      "normalizedPath": "/live/v2/question/send_result",
+      "path": "/live/v4/channel/question/send-result",
+      "normalizedPath": "/live/v4/channel/question/send-result",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "sendQuestionResult",
@@ -19053,8 +19044,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/getAnswerList",
-      "normalizedPath": "/live/v2/chat/getAnswerList",
+      "path": "/live/v3/channel/question/answer-records",
+      "normalizedPath": "/live/v3/channel/question/answer-records",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getAnswerList",
@@ -19062,8 +19053,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/list_lottery",
-      "normalizedPath": "/live/v2/chat/list_lottery",
+      "path": "/live/v3/channel/lottery/list-lottery",
+      "normalizedPath": "/live/v3/channel/lottery/list-lottery",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "listLottery",
@@ -19071,8 +19062,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/list_channels_lottery",
-      "normalizedPath": "/live/v2/chat/list_channels_lottery",
+      "path": "/live/v3/channel/lottery/list-channels-lottery",
+      "normalizedPath": "/live/v3/channel/lottery/list-channels-lottery",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "listChannelsLottery",
@@ -19080,8 +19071,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/get_winner_detail",
-      "normalizedPath": "/live/v2/chat/get_winner_detail",
+      "path": "/live/v3/channel/lottery/get-winner-detail",
+      "normalizedPath": "/live/v3/channel/lottery/get-winner-detail",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getWinnerDetail",
@@ -19089,8 +19080,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/download_winner_detail",
-      "normalizedPath": "/live/v2/chat/download_winner_detail",
+      "path": "/live/v3/channel/lottery/download-winner-detail",
+      "normalizedPath": "/live/v3/channel/lottery/download-winner-detail",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "downloadWinnerDetail",
@@ -19098,17 +19089,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/chat/add_receive_info",
-      "normalizedPath": "/live/v2/chat/add_receive_info",
-      "file": "packages/sdk/src/services/live-interaction.service.ts",
-      "className": "LiveInteractionService",
-      "methodName": "addReceiveInfo",
-      "reference": "LiveInteractionService#addReceiveInfo"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/chat/add_receive_info",
-      "normalizedPath": "/live/v4/chat/add_receive_info",
+      "path": "/live/v4/channel/lottery/add-receive-info",
+      "normalizedPath": "/live/v4/channel/lottery/add-receive-info",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "addReceiveInfoV4",
@@ -19116,8 +19098,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/chat/send_favor",
-      "normalizedPath": "/live/v2/chat/send_favor",
+      "path": "/live/v2/channels/{param}/like",
+      "normalizedPath": "/live/v2/channels/{param}/like",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "sendFavor",
@@ -19125,8 +19107,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v2/chat/send_reward_msg",
-      "normalizedPath": "/live/v2/chat/send_reward_msg",
+      "path": "/live/v3/channel/chat/send-reward-msg",
+      "normalizedPath": "/live/v3/channel/chat/send-reward-msg",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "sendRewardMsg",
@@ -19134,12 +19116,48 @@
     },
     {
       "method": "GET",
-      "path": "/live/v2/chat/{param}/get_question_list",
-      "normalizedPath": "/live/v2/chat/{param}/get_question_list",
+      "path": "/live/v2/chat/{param}/getQuestion",
+      "normalizedPath": "/live/v2/chat/{param}/getQuestion",
       "file": "packages/sdk/src/services/live-interaction.service.ts",
       "className": "LiveInteractionService",
       "methodName": "getQuestionList",
       "reference": "LiveInteractionService#getQuestionList"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v5/chat/redirect/channel/student-question-webhook/get",
+      "normalizedPath": "/live/v5/chat/redirect/channel/student-question-webhook/get",
+      "file": "packages/sdk/src/services/live-interaction.service.ts",
+      "className": "LiveInteractionService",
+      "methodName": "getStudentQuestionWebhook",
+      "reference": "LiveInteractionService#getStudentQuestionWebhook"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v5/chat/redirect/channel/student-question-webhook/post",
+      "normalizedPath": "/live/v5/chat/redirect/channel/student-question-webhook/post",
+      "file": "packages/sdk/src/services/live-interaction.service.ts",
+      "className": "LiveInteractionService",
+      "methodName": "setStudentQuestionWebhook",
+      "reference": "LiveInteractionService#setStudentQuestionWebhook"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v5/chat/redirect/channel/student-question-webhook/delete",
+      "normalizedPath": "/live/v5/chat/redirect/channel/student-question-webhook/delete",
+      "file": "packages/sdk/src/services/live-interaction.service.ts",
+      "className": "LiveInteractionService",
+      "methodName": "deleteStudentQuestionWebhook",
+      "reference": "LiveInteractionService#deleteStudentQuestionWebhook"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v5/chat/redirect/channel/teacher-answer/post",
+      "normalizedPath": "/live/v5/chat/redirect/channel/teacher-answer/post",
+      "file": "packages/sdk/src/services/live-interaction.service.ts",
+      "className": "LiveInteractionService",
+      "methodName": "sendTeacherAnswer",
+      "reference": "LiveInteractionService#sendTeacherAnswer"
     },
     {
       "method": "POST",
