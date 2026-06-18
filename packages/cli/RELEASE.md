@@ -102,7 +102,7 @@ polyv-cli --help
 ```
 
 ### 2. GitHub Release 验证
-- 检查 [Releases 页面](https://github.com/terryso/polyv-live-cli/releases)
+- 检查 [Releases 页面](https://github.com/polyv/polyv-live-cli/releases)
 - 确认自动生成的 Release Notes
 - 验证附件和下载链接
 

@@ -49,13 +49,13 @@
   ],
   "author": "PolyV Team",
   "license": "MIT",
-  "homepage": "https://github.com/terryso/polyv-live-cli#readme",
+  "homepage": "https://github.com/polyv/polyv-live-cli#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terryso/polyv-live-cli.git"
+    "url": "git+https://github.com/polyv/polyv-live-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/terryso/polyv-live-cli/issues"
+    "url": "https://github.com/polyv/polyv-live-cli/issues"
   },
   "engines": {
     "node": ">=18.0.0"
