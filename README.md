@@ -37,6 +37,12 @@ AI Agent: [自动执行 npx polyv-live-cli@latest statistics viewdata ...]
 AI Agent: [自动执行 npx polyv-live-cli@latest coupon create ...]
 ```
 
+### WorkBuddy 演示
+
+观看完整演示，了解如何在 WorkBuddy 中通过 PolyV Live CLI 完成保利威直播接入全过程。
+
+[观看演示视频](https://polyv-cuplayer-admin.oss-cn-shenzhen.aliyuncs.com/assets/video/demo.mp4)
+
 ## AI Agent Skill
 
 本项目提供官方 Skill，让 AI Agent（如 Claude Code、OpenClaw 等）能够智能管理直播服务。
