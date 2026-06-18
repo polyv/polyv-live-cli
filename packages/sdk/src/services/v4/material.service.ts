@@ -16,6 +16,11 @@ import type {
   DeleteMaterialsResult,
   ListMaterialCategoriesParams,
   ListMaterialCategoriesResponse,
+  ListMaterialLabelsParams,
+  ListMaterialLabelsResponse,
+  CreateMaterialLabelParams,
+  UpdateMaterialLabelParams,
+  DeleteMaterialLabelParams,
 } from '../../types/v4-material.js';
 
 /** Valid material types */
@@ -54,6 +59,27 @@ export class V4MaterialService {
         `${fieldName} must be one of: ${VALID_MATERIAL_TYPES.join(', ')}`,
         fieldName
       );
+    }
+  }
+
+  /**
+   * Validate material label name
+   */
+  private validateLabelName(name: string): void {
+    if (!name || name.trim() === '') {
+      throw new PolyVValidationError('name is required and cannot be empty', 'name');
+    }
+  }
+
+  /**
+   * Validate material label ID
+   */
+  private validateLabelId(id: number): void {
+    if (id === undefined || id === null) {
+      throw new PolyVValidationError('id is required', 'id');
+    }
+    if (!Number.isInteger(id) || id <= 0) {
+      throw new PolyVValidationError('id must be a positive integer', 'id');
     }
   }
 
@@ -150,5 +176,74 @@ export class V4MaterialService {
       { params: { materialType: params.materialType, parentId: params.parentId } }
     );
     return response as unknown as ListMaterialCategoriesResponse;
+  }
+
+  // ============================================
+  // Material Label APIs
+  // ============================================
+
+  /**
+   * List material labels
+   *
+   * @param params - Pagination and optional keyword filter
+   * @returns Promise resolving to paginated material labels
+   */
+  async listMaterialLabels(params: ListMaterialLabelsParams): Promise<ListMaterialLabelsResponse> {
+    this.validatePagination(params.pageNumber, params.pageSize);
+
+    const response = await this.client.httpClient.get<ListMaterialLabelsResponse>(
+      '/live/v4/material/label/list',
+      { params }
+    );
+    return response as unknown as ListMaterialLabelsResponse;
+  }
+
+  /**
+   * Create a material label
+   *
+   * @param params - Label creation params
+   * @returns Promise resolving to true when created
+   */
+  async createMaterialLabel(params: CreateMaterialLabelParams): Promise<boolean> {
+    this.validateLabelName(params.name);
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v4/material/label/create',
+      params
+    );
+    return response as unknown as boolean;
+  }
+
+  /**
+   * Update a material label
+   *
+   * @param params - Label update params
+   * @returns Promise resolving to true when updated
+   */
+  async updateMaterialLabel(params: UpdateMaterialLabelParams): Promise<boolean> {
+    this.validateLabelId(params.id);
+    this.validateLabelName(params.name);
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v4/material/label/update',
+      params
+    );
+    return response as unknown as boolean;
+  }
+
+  /**
+   * Delete a material label
+   *
+   * @param params - Label deletion params
+   * @returns Promise resolving to true when deleted
+   */
+  async deleteMaterialLabel(params: DeleteMaterialLabelParams): Promise<boolean> {
+    this.validateLabelId(params.id);
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v4/material/label/delete',
+      params
+    );
+    return response as unknown as boolean;
   }
 }

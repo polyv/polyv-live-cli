@@ -81,17 +81,31 @@ describe('V4ChatService', () => {
 
   describe('sendCustomMessageEncode', () => {
     it('[P0] should send encoded custom message successfully', async () => {
-      mockHttpClient.get.mockResolvedValueOnce(undefined);
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
 
       await service.sendCustomMessageEncode({
         channelId: '123456',
-        content: encodeURIComponent('Hello with special chars!'),
+        content: 'SGVsbG8td29ybGQ',
+        joinHistoryList: 0,
+        watchType: '2',
       });
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v4/chat/send-custom-message-encode',
-        { params: expect.objectContaining({ channelId: '123456' }) }
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/chat/send-custom-message/encode',
+        expect.any(URLSearchParams),
+        {
+          params: { channelId: '123456', joinHistoryList: 0, watchType: '2' },
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }
       );
+      const body = mockHttpClient.post.mock.calls[0][1] as URLSearchParams;
+      expect(body.get('content')).toBe('SGVsbG8td29ybGQ');
+    });
+
+    it('[P1] should throw error when encoded content exceeds 1500 characters', async () => {
+      await expect(
+        service.sendCustomMessageEncode({ channelId: '123456', content: 'a'.repeat(1501) })
+      ).rejects.toThrow('content cannot exceed 1500 characters');
     });
   });
 
@@ -126,6 +140,38 @@ describe('V4ChatService', () => {
       await expect(
         service.listBulletins({ channelId: '123456', pageNumber: 1, pageSize: 1001 })
       ).rejects.toThrow('pageSize must be between 1 and 1000');
+    });
+  });
+
+  describe('addBulletin', () => {
+    it('[P0] should add bulletin successfully', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(true);
+
+      const result = await service.addBulletin({
+        channelId: '123456',
+        content: 'Notice',
+        isTop: 'Y',
+        isPop: 'N',
+      });
+
+      expect(result).toBe(true);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/chat/add-bullentin',
+        null,
+        { params: { channelId: '123456', content: 'Notice', isTop: 'Y', isPop: 'N' } }
+      );
+    });
+
+    it('[P1] should throw error when content is empty', async () => {
+      await expect(
+        service.addBulletin({ channelId: '123456', content: '' })
+      ).rejects.toThrow('content is required and cannot be empty');
+    });
+
+    it('[P1] should throw error when isTop is invalid', async () => {
+      await expect(
+        service.addBulletin({ channelId: '123456', content: 'Notice', isTop: 'INVALID' as any })
+      ).rejects.toThrow('isTop must be Y or N');
     });
   });
 
@@ -302,6 +348,52 @@ describe('V4ChatService', () => {
       await expect(
         service.updateRobotSetting({ channelId: '', robotNumber: 10, addRobotModel: 'timely' })
       ).rejects.toThrow('channelId is required and cannot be empty');
+    });
+  });
+
+  describe('updateRobotListSetting', () => {
+    it('[P0] should update robot list setting successfully', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      const params = {
+        channelId: '123456',
+        robotNumber: 2,
+        addRobotModel: 'timely' as const,
+        virtualBookingNumber: 100,
+        robotList: [
+          { name: 'Robot 1', avatar: 'https://example.com/1.png' },
+          { name: 'Robot 2', avatar: 'https://example.com/2.png' },
+        ],
+      };
+
+      await service.updateRobotListSetting(params);
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/robot/setting-robot-list/update',
+        params,
+        { params: { channelId: '123456' } }
+      );
+    });
+
+    it('[P1] should throw error when fixed_time has no changeTime', async () => {
+      await expect(
+        service.updateRobotListSetting({
+          channelId: '123456',
+          robotNumber: 10,
+          addRobotModel: 'fixed_time',
+        })
+      ).rejects.toThrow('changeTime is required when addRobotModel is fixed_time');
+    });
+
+    it('[P1] should throw error when robot avatar is empty', async () => {
+      await expect(
+        service.updateRobotListSetting({
+          channelId: '123456',
+          robotNumber: 10,
+          addRobotModel: 'timely',
+          robotList: [{ name: 'Robot', avatar: '' }],
+        })
+      ).rejects.toThrow('robotList[0].avatar is required');
     });
   });
 });

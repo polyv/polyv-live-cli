@@ -403,4 +403,55 @@ describe('FinanceService', () => {
         .rejects.toThrow('pageSize cannot exceed 1000');
     });
   });
+
+  describe('listBillDetails', () => {
+    it('should list bill details successfully', async () => {
+      const mockResponse = {
+        pageNumber: 1,
+        pageSize: 10,
+        totalItems: 1,
+        totalPages: 1,
+        contents: [{ userId: 'user001', itemCategory: 'duration', cost: 0.81 }],
+      };
+      mockClient.httpClient.get.mockResolvedValue(mockResponse);
+
+      const result = await service.listBillDetails({
+        itemCategory: 'duration',
+        startDate: '2024-05-01',
+        endDate: '2024-05-31',
+        pageNumber: 1,
+        pageSize: 10,
+      });
+
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+        '/live/v3/finance/bill/detail',
+        {
+          params: {
+            itemCategory: 'duration',
+            startDate: '2024-05-01',
+            endDate: '2024-05-31',
+            pageNumber: 1,
+            pageSize: 10,
+          },
+        }
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw validation error when itemCategory is invalid', async () => {
+      await expect(service.listBillDetails({
+        itemCategory: 'invalid' as any,
+        startDate: '2024-05-01',
+        endDate: '2024-05-31',
+      })).rejects.toThrow('itemCategory must be one of');
+    });
+
+    it('should throw validation error when date range crosses month', async () => {
+      await expect(service.listBillDetails({
+        itemCategory: 'duration',
+        startDate: '2024-05-31',
+        endDate: '2024-06-01',
+      })).rejects.toThrow('startDate and endDate must be in the same month');
+    });
+  });
 });

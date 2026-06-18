@@ -11,6 +11,7 @@ import type { PolyVClient } from '../../client.js';
 import type {
   SendCustomMessageParams,
   SendCustomMessageEncodeParams,
+  AddBulletinParams,
   ListBulletinsParams,
   ListBulletinsResponse,
   CleanNoticesParams,
@@ -25,8 +26,11 @@ import type {
   RobotStats,
   PauseRobotParams,
   UpdateRobotSettingParams,
+  UpdateRobotListSettingParams,
 } from '../../types/v4-robot.js';
 import { PolyVValidationError } from '../../errors/polyv-validation-error.js';
+
+const VALID_ROBOT_MODELS = ['timely', 'fixed_time'] as const;
 
 /**
  * V4ChatService
@@ -82,23 +86,43 @@ export class V4ChatService {
   /**
    * Send an encoded custom message
    *
-   * @param params - Message parameters (content should be URL encoded)
+   * @param params - Message parameters (content should be URL-safe base64 encoded)
    *
    * @example
    * ```typescript
    * await client.v4Chat.sendCustomMessageEncode({
    *   channelId: '123456',
-   *   content: encodeURIComponent('Hello with special chars!'),
+   *   content: 'SGVsbG8td29ybGQ',
    * });
    * ```
    */
   async sendCustomMessageEncode(params: SendCustomMessageEncodeParams): Promise<void> {
     this.validateChannelId(params.channelId);
-    this.validateMessageContent(params);
+    this.validateEncodedMessageContent(params);
 
-    await this.client.httpClient.get(
-      '/live/v4/chat/send-custom-message-encode',
-      { params }
+    const queryParams: Record<string, unknown> = { channelId: params.channelId };
+    if (params.joinHistoryList !== undefined) {
+      queryParams.joinHistoryList = params.joinHistoryList;
+    }
+    if (params.watchType !== undefined) {
+      queryParams.watchType = params.watchType;
+    }
+
+    const body = new URLSearchParams();
+    if (params.content !== undefined) {
+      body.set('content', params.content);
+    }
+    if (params.imgUrl !== undefined) {
+      body.set('imgUrl', params.imgUrl);
+    }
+
+    await this.client.httpClient.post(
+      '/live/v4/chat/send-custom-message/encode',
+      body,
+      {
+        params: queryParams,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      }
     );
   }
 
@@ -132,6 +156,32 @@ export class V4ChatService {
       { params }
     );
     return response as unknown as ListBulletinsResponse;
+  }
+
+  /**
+   * Add a channel bulletin/notice
+   *
+   * @param params - Add bulletin parameters
+   * @returns true when added successfully
+   */
+  async addBulletin(params: AddBulletinParams): Promise<boolean> {
+    this.validateChannelId(params.channelId);
+    if (!params.content || params.content.trim() === '') {
+      throw new PolyVValidationError('content is required and cannot be empty', 'content');
+    }
+    if (params.isTop !== undefined && params.isTop !== 'Y' && params.isTop !== 'N') {
+      throw new PolyVValidationError('isTop must be Y or N', 'isTop', params.isTop);
+    }
+    if (params.isPop !== undefined && params.isPop !== 'Y' && params.isPop !== 'N') {
+      throw new PolyVValidationError('isPop must be Y or N', 'isPop', params.isPop);
+    }
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v4/chat/add-bullentin',
+      null,
+      { params }
+    );
+    return response as unknown as boolean;
   }
 
   /**
@@ -334,6 +384,22 @@ export class V4ChatService {
     );
   }
 
+  /**
+   * Update channel robot count and custom robot list
+   *
+   * @param params - Robot list setting parameters
+   */
+  async updateRobotListSetting(params: UpdateRobotListSettingParams): Promise<void> {
+    this.validateChannelId(String(params.channelId));
+    this.validateRobotListSetting(params);
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/robot/setting-robot-list/update',
+      params,
+      { params: { channelId: params.channelId } }
+    );
+  }
+
   // ============================================
   // Private Validation Helpers
   // ============================================
@@ -368,6 +434,65 @@ export class V4ChatService {
     }
     if (params.content && params.content.length > 1000) {
       throw new PolyVValidationError('content cannot exceed 1000 characters', 'content', params.content);
+    }
+  }
+
+  /**
+   * Validate encoded message content
+   */
+  private validateEncodedMessageContent(params: { content?: string; imgUrl?: string }): void {
+    if (!params.content && !params.imgUrl) {
+      throw new PolyVValidationError('content or imgUrl is required');
+    }
+    if (params.content && params.content.length > 1500) {
+      throw new PolyVValidationError('content cannot exceed 1500 characters', 'content', params.content);
+    }
+  }
+
+  /**
+   * Validate robot list settings
+   */
+  private validateRobotListSetting(params: UpdateRobotListSettingParams): void {
+    if (params.robotNumber === undefined || params.robotNumber === null) {
+      throw new PolyVValidationError('robotNumber is required', 'robotNumber');
+    }
+    if (!Number.isInteger(params.robotNumber) || params.robotNumber < 0 || params.robotNumber > 600000) {
+      throw new PolyVValidationError('robotNumber must be an integer between 0 and 600000', 'robotNumber');
+    }
+    if (!VALID_ROBOT_MODELS.includes(params.addRobotModel as typeof VALID_ROBOT_MODELS[number])) {
+      throw new PolyVValidationError(
+        `addRobotModel must be one of: ${VALID_ROBOT_MODELS.join(', ')}`,
+        'addRobotModel',
+        params.addRobotModel
+      );
+    }
+    if (params.addRobotModel === 'fixed_time') {
+      if (params.changeTime === undefined || params.changeTime === null) {
+        throw new PolyVValidationError('changeTime is required when addRobotModel is fixed_time', 'changeTime');
+      }
+      if (params.changeTime < 20 || params.changeTime > 18000) {
+        throw new PolyVValidationError('changeTime must be between 20 and 18000 seconds', 'changeTime');
+      }
+    }
+    if (params.robotList !== undefined) {
+      if (params.robotList.length > 600000) {
+        throw new PolyVValidationError('robotList cannot contain more than 600000 items', 'robotList');
+      }
+      params.robotList.forEach((robot, index) => {
+        if (!robot.name || robot.name.trim() === '') {
+          throw new PolyVValidationError(`robotList[${index}].name is required`, `robotList[${index}].name`);
+        }
+        if (!robot.avatar || robot.avatar.trim() === '') {
+          throw new PolyVValidationError(`robotList[${index}].avatar is required`, `robotList[${index}].avatar`);
+        }
+      });
+    }
+    if (
+      params.robotRandomMemberEnabled !== undefined &&
+      params.robotRandomMemberEnabled !== 'Y' &&
+      params.robotRandomMemberEnabled !== 'N'
+    ) {
+      throw new PolyVValidationError('robotRandomMemberEnabled must be Y or N', 'robotRandomMemberEnabled');
     }
   }
 }

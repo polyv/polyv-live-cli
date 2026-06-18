@@ -817,16 +817,12 @@ export interface DownloadWhiteListParams {
  * Set external auth parameters
  */
 export interface SetExternalAuthParams {
-  /** Channel ID (required) */
-  channelId: string;
-  /** External key (optional) */
-  externalKey?: string;
-  /** External URI (optional) */
-  externalUri?: string;
-  /** External redirect URI (optional) */
-  externalRedirectUri?: string;
-  /** External button enabled: Y or N (optional) */
-  externalButtonEnabled?: 'Y' | 'N';
+  /** Live account user ID used in the URL path */
+  userId: string;
+  /** External auth user-info endpoint */
+  externalUri: string;
+  /** Channel ID; omit or pass 0 to apply to all channels */
+  channelId?: string;
 }
 
 /**
@@ -921,26 +917,40 @@ export interface RecordInfoResponse {
 export interface EnrollListParams {
   /** Channel ID (required) */
   channelId: string;
-  /** Page number (optional, default 1) */
-  page?: number;
-  /** Page size (optional, default 10) */
-  pageSize?: number;
+  /** Viewer IDs, comma-separated, max 20 */
+  viewerIds?: string;
+}
+
+/**
+ * Enroll field item
+ */
+export interface EnrollField {
+  /** Field name */
+  name: string;
+  /** Field value */
+  value: string;
 }
 
 /**
  * Enroll item
  */
 export interface EnrollItem {
-  /** Enroll ID */
-  id: number;
-  /** User ID */
-  userId: string;
-  /** Nickname */
-  nickname: string;
-  /** Avatar */
-  avatar: string;
+  /** Viewer ID */
+  viewerId: string;
+  /** Mobile number */
+  mobile?: string;
   /** Enroll time (13-bit timestamp) */
-  createdTime: number;
+  createTime: number;
+  /** Whether this viewer has watched */
+  hasWatched: 'Y' | 'N';
+  /** Promotion channel ID */
+  promoteId?: string | null;
+  /** Promotion channel name */
+  promoteName?: string | null;
+  /** Audit status: W = waiting, P = passed, F = refused */
+  auditStatus?: 'W' | 'P' | 'F';
+  /** Enroll fields */
+  fields: EnrollField[];
   /** Custom fields data */
   [key: string]: unknown;
 }
@@ -949,16 +959,10 @@ export interface EnrollItem {
  * Enroll list response
  */
 export interface EnrollListResponse {
-  /** Total count */
-  total: number;
-  /** Current page */
-  pageNumber: number;
-  /** Total pages */
-  totalPages: number;
-  /** Page size */
-  pageSize: number;
+  /** Whether enrollment audit is enabled */
+  auditEnabled: 'Y' | 'N';
   /** Enroll items */
-  contents: EnrollItem[];
+  list: EnrollItem[];
 }
 
 /**
@@ -973,9 +977,11 @@ export interface DownloadRecordInfoParams {
  * Update auth URL parameters
  */
 export interface UpdateAuthUrlParams {
-  /** Channel ID (required) */
-  channelId: string;
-  /** Auth URL (optional) */
+  /** Channel ID; omit for global settings */
+  channelId?: string;
+  /** Auth URL; omit or pass empty string to clear */
+  url?: string;
+  /** Deprecated alias for url */
   authUrl?: string;
 }
 
@@ -983,10 +989,22 @@ export interface UpdateAuthUrlParams {
  * Set authorized address parameters
  */
 export interface SetAuthorizedAddressParams {
-  /** Channel ID (required) */
-  channelId: string;
-  /** Authorized addresses (comma-separated, optional) */
-  authAddresses?: string;
+  /** Live account user ID used in the URL path */
+  userId: string;
+  /** Custom auth URL */
+  customUri: string;
+  /** Channel ID; omit or pass 0 to apply to all channels */
+  channelId?: string;
+}
+
+/**
+ * External/custom auth secret key response item
+ */
+export interface ExternalAuthSetting {
+  /** Channel ID */
+  channelId: string | number;
+  /** Secret key */
+  secretKey: string;
 }
 
 /**

@@ -296,3 +296,80 @@ export interface ListVideoModerationResultsResponse {
   /** Total items */
   totalItems: number;
 }
+
+// ============================================
+// Billing Detail Types
+// ============================================
+
+/**
+ * Billing detail item category
+ */
+export type BillDetailItemCategory = 'seminarDuration' | 'seminarRecordDuration' | 'duration';
+
+/**
+ * Parameters for listing billing detail records
+ */
+export interface ListBillDetailsParams {
+  /** Billing item category */
+  itemCategory: BillDetailItemCategory;
+  /** Start date, yyyy-MM-dd, must be in the same month as endDate */
+  startDate: string;
+  /** End date, yyyy-MM-dd, must be in the same month as startDate */
+  endDate: string;
+  /** Page number */
+  pageNumber?: number;
+  /** Page size */
+  pageSize?: number;
+}
+
+/**
+ * Billing detail item
+ */
+export interface BillDetailItem {
+  /** Account user ID */
+  userId: string;
+  /** Account period, e.g. 2026-01 */
+  accountPeriod: string;
+  /** Billing date */
+  statAt: string;
+  /** Usage date */
+  useDate: string;
+  /** Usage amount */
+  itemConsumed: number;
+  /** Settlement usage amount */
+  clearingItemConsumed: number;
+  /** Billing item category */
+  itemCategory: string;
+  /** Billing item name */
+  itemName: string;
+  /** Product name */
+  production: string;
+  /** Trade type */
+  tradeType: string;
+  /** Cost */
+  cost: number;
+  /** Billing status */
+  status: string;
+  /** Unit price */
+  univalence: number;
+  /** Unit price unit */
+  univalenceUnit: string;
+  /** Usage unit */
+  itemConsumedUnit: string;
+}
+
+/**
+ * Billing detail list response
+ */
+export interface ListBillDetailsResponse {
+  /** Current page number */
+  pageNumber: number;
+  /** Page size */
+  pageSize: number;
+  /** Total items */
+  totalItems: number;
+  /** Total pages */
+  totalPages: number;
+  /** Billing detail contents */
+  contents: BillDetailItem[];
+}

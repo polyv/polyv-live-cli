@@ -294,6 +294,53 @@ describe('V4AiService', () => {
   });
 
   // ============================================
+  // asyncUploadVideoProducePpt Tests
+  // ============================================
+
+  describe('asyncUploadVideoProducePpt', () => {
+    it('[P0] should async upload video produce ppt successfully', async () => {
+      const mockResponse = { fileId: 'file001' };
+      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.asyncUploadVideoProducePpt({
+        url: 'https://example.com/presentation.pptx',
+        docName: 'Presentation',
+        type: 'animate',
+        callbackUrl: 'https://example.com/callback',
+      });
+
+      expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/ai/video-produce/ppt/async-upload',
+        null,
+        {
+          params: {
+            url: 'https://example.com/presentation.pptx',
+            docName: 'Presentation',
+            type: 'animate',
+            callbackUrl: 'https://example.com/callback',
+          },
+        }
+      );
+    });
+
+    it('[P1] should throw error when url is empty', async () => {
+      await expect(
+        service.asyncUploadVideoProducePpt({ url: '' })
+      ).rejects.toThrow('url is required and cannot be empty');
+    });
+
+    it('[P1] should throw error when type is invalid', async () => {
+      await expect(
+        service.asyncUploadVideoProducePpt({
+          url: 'https://example.com/presentation.pptx',
+          type: 'invalid' as any,
+        })
+      ).rejects.toThrow('type must be common or animate');
+    });
+  });
+
+  // ============================================
   // uploadVideoProducePpt Tests
   // ============================================
 

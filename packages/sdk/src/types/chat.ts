@@ -47,6 +47,10 @@ export interface delChatParams {
   id: string;
 }
 
+export interface CountOnlineUserParams {
+  channelId: string;
+}
+
 export interface cleanChatParams {
   channelId: string;
 }

@@ -18,8 +18,12 @@ import type {
   ListVideoModerationResultsParams,
   ListVideoModerationResultsResponse,
   IllegalNotifySettings,
+  ListBillDetailsParams,
+  ListBillDetailsResponse,
 } from '../types/finance.js';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
+
+const BILL_DETAIL_ITEM_CATEGORIES = ['seminarDuration', 'seminarRecordDuration', 'duration'] as const;
 
 /**
  * FinanceService
@@ -337,6 +341,26 @@ export class FinanceService {
   }
 
   // ============================================
+  // Billing Detail API
+  // ============================================
+
+  /**
+   * List billing detail records
+   *
+   * @param params - Billing detail query parameters
+   * @returns Paginated billing detail records
+   */
+  async listBillDetails(params: ListBillDetailsParams): Promise<ListBillDetailsResponse> {
+    this.validateBillDetailParams(params);
+
+    const response = await this.client.httpClient.get<ListBillDetailsResponse>(
+      '/live/v3/finance/bill/detail',
+      { params }
+    );
+    return response as unknown as ListBillDetailsResponse;
+  }
+
+  // ============================================
   // Private Validation Helpers
   // ============================================
 
@@ -423,6 +447,38 @@ export class FinanceService {
       if (params.pageSize > 1000) {
         throw new PolyVValidationError('pageSize cannot exceed 1000');
       }
+    }
+  }
+
+  /**
+   * Validate billing detail query parameters
+   */
+  private validateBillDetailParams(params: ListBillDetailsParams): void {
+    if (!params.itemCategory) {
+      throw new PolyVValidationError('itemCategory is required');
+    }
+    if (!BILL_DETAIL_ITEM_CATEGORIES.includes(params.itemCategory)) {
+      throw new PolyVValidationError(
+        `itemCategory must be one of: ${BILL_DETAIL_ITEM_CATEGORIES.join(', ')}`
+      );
+    }
+    this.validateDate(params.startDate, 'startDate');
+    this.validateDate(params.endDate, 'endDate');
+    if (params.startDate.slice(0, 7) !== params.endDate.slice(0, 7)) {
+      throw new PolyVValidationError('startDate and endDate must be in the same month');
+    }
+    if (params.startDate > params.endDate) {
+      throw new PolyVValidationError('startDate must be earlier than or equal to endDate');
+    }
+    this.validatePagination(params);
+  }
+
+  /**
+   * Validate yyyy-MM-dd date
+   */
+  private validateDate(value: string, field: string): void {
+    if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      throw new PolyVValidationError(`${field} must be in yyyy-MM-dd format`);
     }
   }
 }

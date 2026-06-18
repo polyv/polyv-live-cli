@@ -1185,27 +1185,28 @@ describe('WebService', () => {
 
   describe('setExternalAuth', () => {
     it('should set external auth successfully', async () => {
-      mockClient.httpClient.post.mockResolvedValue('success');
+      const mockResponse = [{ channelId: 2191532, secretKey: 'secret-key' }];
+      mockClient.httpClient.post.mockResolvedValue(mockResponse);
 
       const result = await service.setExternalAuth({
-        channelId: '123456',
-        externalKey: 'key123',
+        userId: 'user123',
         externalUri: 'https://auth.example.com',
+        channelId: '123456',
       });
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
-        '/live/v3/channel/auth/external/set',
+        '/live/v2/channelSetting/user123/auth-external',
         null,
-        { params: { channelId: '123456', externalKey: 'key123', externalUri: 'https://auth.example.com' } }
+        { params: { externalUri: 'https://auth.example.com', channelId: '123456' } }
       );
-      expect(result).toBe('success');
+      expect(result).toEqual(mockResponse);
     });
 
-    it('should throw validation error for invalid externalButtonEnabled', async () => {
+    it('should throw validation error for missing externalUri', async () => {
       await expect(service.setExternalAuth({
-        channelId: '123456',
-        externalButtonEnabled: 'INVALID' as 'Y',
-      })).rejects.toThrow('externalButtonEnabled must be Y or N');
+        userId: 'user123',
+        externalUri: '',
+      })).rejects.toThrow('externalUri is required');
     });
   });
 
@@ -1293,20 +1294,26 @@ describe('WebService', () => {
 
   describe('enrollList', () => {
     it('should get enroll list successfully', async () => {
-      const mockResponse = { contents: [], total: 0 };
+      const mockResponse = { auditEnabled: 'N', list: [] };
       mockClient.httpClient.get.mockResolvedValue(mockResponse);
 
       const result = await service.enrollList({
         channelId: '123456',
-        page: 1,
-        pageSize: 10,
+        viewerIds: 'viewer1,viewer2',
       });
 
       expect(mockClient.httpClient.get).toHaveBeenCalledWith(
-        '/live/v3/channel/auth/enroll/list',
-        { params: { channelId: '123456', page: 1, pageSize: 10 } }
+        '/live/v3/channel/enroll/list',
+        { params: { channelId: '123456', viewerIds: 'viewer1,viewer2' } }
       );
       expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw validation error when viewerIds exceeds 20 items', async () => {
+      await expect(service.enrollList({
+        channelId: '123456',
+        viewerIds: Array.from({ length: 21 }, (_, index) => `viewer${index}`).join(','),
+      })).rejects.toThrow('viewerIds cannot contain more than 20 items');
     });
   });
 
@@ -1331,13 +1338,13 @@ describe('WebService', () => {
 
       const result = await service.updateAuthUrl({
         channelId: '123456',
-        authUrl: 'https://example.com/auth-callback',
+        url: 'https://example.com/auth-callback',
       });
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
-        '/live/v3/channel/auth/update-auth-url',
+        '/live/v3/channel/restrict/update-auth-url',
         null,
-        { params: { channelId: '123456', authUrl: 'https://example.com/auth-callback' } }
+        { params: { channelId: '123456', url: 'https://example.com/auth-callback' } }
       );
       expect(result).toBe('success');
     });
@@ -1345,19 +1352,28 @@ describe('WebService', () => {
 
   describe('setAuthorizedAddress', () => {
     it('should set authorized address successfully', async () => {
-      mockClient.httpClient.post.mockResolvedValue('success');
+      const mockResponse = [{ channelId: 2191532, secretKey: 'secret-key' }];
+      mockClient.httpClient.post.mockResolvedValue(mockResponse);
 
       const result = await service.setAuthorizedAddress({
+        userId: 'user123',
         channelId: '123456',
-        authAddresses: '192.168.1.1,192.168.1.2',
+        customUri: 'https://example.com/custom-auth',
       });
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
-        '/live/v3/channel/auth/set-authorized-address',
+        '/live/v2/channelSetting/user123/oauth-custom',
         null,
-        { params: { channelId: '123456', authAddresses: '192.168.1.1,192.168.1.2' } }
+        { params: { customUri: 'https://example.com/custom-auth', channelId: '123456' } }
       );
-      expect(result).toBe('success');
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw validation error for missing customUri', async () => {
+      await expect(service.setAuthorizedAddress({
+        userId: 'user123',
+        customUri: '',
+      })).rejects.toThrow('customUri is required');
     });
   });
 

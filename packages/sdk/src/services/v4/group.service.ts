@@ -17,6 +17,8 @@ import type {
   UpdateGroupUserPackageParams,
   ListBillingDailyParams,
   ListBillingDailyResponse,
+  ListGroupUserBillingDailyParams,
+  ListGroupUserBillingDailyResponse,
   ListAllocationLogsParams,
   ListAllocationLogsResponse,
 } from '../../types/v4-group.js';
@@ -62,6 +64,19 @@ export class V4GroupService {
     const dateRegex = /^\d{6}$/;
     if (!dateRegex.test(billingDate)) {
       throw new PolyVValidationError('billingDate must be in yyyyMM format (e.g., 202603)', 'billingDate');
+    }
+  }
+
+  /**
+   * Validate group billing period in yyyyMM format and minimum range
+   */
+  private validateGroupBillingPeriod(value: string, fieldName: string): void {
+    const dateRegex = /^\d{6}$/;
+    if (!dateRegex.test(value)) {
+      throw new PolyVValidationError(`${fieldName} must be in yyyyMM format (e.g., 202205)`, fieldName);
+    }
+    if (Number(value) < 202204) {
+      throw new PolyVValidationError(`${fieldName} must be 202204 or later`, fieldName);
     }
   }
 
@@ -230,6 +245,34 @@ export class V4GroupService {
       { params }
     );
     return response as unknown as ListBillingDailyResponse;
+  }
+
+  /**
+   * List group sub-account billing statistics
+   *
+   * Get daily billing statistics for sub-accounts in a billing period range.
+   *
+   * @param params - List params with startDate/endDate in yyyyMM format
+   * @returns Promise resolving to paginated list of sub-account billing items
+   */
+  async listGroupUserBillingDaily(
+    params: ListGroupUserBillingDailyParams
+  ): Promise<ListGroupUserBillingDailyResponse> {
+    this.validatePagination(params.pageNumber, params.pageSize);
+    this.validateGroupBillingPeriod(params.startDate, 'startDate');
+    this.validateGroupBillingPeriod(params.endDate, 'endDate');
+    if (Number(params.startDate) > Number(params.endDate)) {
+      throw new PolyVValidationError('startDate must be earlier than or equal to endDate', 'startDate');
+    }
+    if (params.email !== undefined) {
+      this.validateEmail(params.email, 'email');
+    }
+
+    const response = await this.client.httpClient.get<ListGroupUserBillingDailyResponse>(
+      '/live/v4/group/user/billing-daily/list',
+      { params }
+    );
+    return response as unknown as ListGroupUserBillingDailyResponse;
   }
 
   /**

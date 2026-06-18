@@ -394,4 +394,81 @@ describe('V4MaterialService', () => {
       });
     });
   });
+
+  // ============================================
+  // Material Label Tests
+  // ============================================
+
+  describe('material labels', () => {
+    it('[P0] should list material labels successfully', async () => {
+      const mockResponse = {
+        pageNumber: 1,
+        pageSize: 10,
+        totalPages: 1,
+        totalItems: 1,
+        contents: [{ id: 1, name: 'Important', userId: 'user001' }],
+      };
+      mockHttpClient.get.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.listMaterialLabels({
+        pageNumber: 1,
+        pageSize: 10,
+        keyword: 'Important',
+      });
+
+      expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/material/label/list',
+        { params: { pageNumber: 1, pageSize: 10, keyword: 'Important' } }
+      );
+    });
+
+    it('[P0] should create material label successfully', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(true);
+
+      const result = await service.createMaterialLabel({ name: 'Important' });
+
+      expect(result).toBe(true);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/material/label/create',
+        { name: 'Important' }
+      );
+    });
+
+    it('[P0] should update material label successfully', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(true);
+
+      const result = await service.updateMaterialLabel({ id: 1, name: 'Updated' });
+
+      expect(result).toBe(true);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/material/label/update',
+        { id: 1, name: 'Updated' }
+      );
+    });
+
+    it('[P0] should delete material label successfully', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(true);
+
+      const result = await service.deleteMaterialLabel({ id: 1 });
+
+      expect(result).toBe(true);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/material/label/delete',
+        { id: 1 }
+      );
+    });
+
+    it('[P1] should throw error for empty label name', async () => {
+      await expect(
+        service.createMaterialLabel({ name: '' })
+      ).rejects.toThrow('name is required and cannot be empty');
+    });
+
+    it('[P1] should throw error for invalid label id', async () => {
+      await expect(
+        service.deleteMaterialLabel({ id: 0 })
+      ).rejects.toThrow('id must be a positive integer');
+    });
+  });
 });

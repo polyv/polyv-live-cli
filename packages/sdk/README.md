@@ -181,6 +181,26 @@ const client = new PolyVClient({
 
 - Node.js >= 18.0.0
 
+## Integration Tests
+
+SDK integration tests live in `tests/integration` and make real API calls.
+
+```bash
+cp .env.example .env
+pnpm test:integration
+```
+
+Required variables:
+
+- `POLYV_APP_ID`
+- `POLYV_APP_SECRET`
+- `POLYV_USER_ID`
+
+Optional variables:
+
+- `POLYV_CHANNEL_ID`: used for channel-scoped API checks. Tests try to discover a channel if this is absent.
+- `POLYV_RUN_WRITE_INTEGRATION=true`: enables write API lifecycle tests with cleanup. It is off by default.
+
 ## License
 
 MIT

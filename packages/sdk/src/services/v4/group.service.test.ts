@@ -200,6 +200,54 @@ describe('V4GroupService', () => {
   });
 
   // ============================================
+  // listGroupUserBillingDaily Tests
+  // ============================================
+
+  describe('listGroupUserBillingDaily', () => {
+    it('[P0] should list group user billing daily successfully', async () => {
+      const mockResponse = {
+        contents: [{ unionId: 'union001', production: '直播', category: '国内观看时长' }],
+        total: 1,
+      };
+      mockHttpClient.get.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.listGroupUserBillingDaily({
+        startDate: '202205',
+        endDate: '202210',
+        email: 'sub@example.com',
+        pageNumber: 1,
+        pageSize: 10,
+      });
+
+      expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/group/user/billing-daily/list',
+        {
+          params: {
+            startDate: '202205',
+            endDate: '202210',
+            email: 'sub@example.com',
+            pageNumber: 1,
+            pageSize: 10,
+          },
+        }
+      );
+    });
+
+    it('[P1] should throw error for invalid startDate format', async () => {
+      await expect(
+        service.listGroupUserBillingDaily({ startDate: '2022-05', endDate: '202210' })
+      ).rejects.toThrow('startDate must be in yyyyMM format');
+    });
+
+    it('[P1] should throw error for billing period before 202204', async () => {
+      await expect(
+        service.listGroupUserBillingDaily({ startDate: '202203', endDate: '202204' })
+      ).rejects.toThrow('startDate must be 202204 or later');
+    });
+  });
+
+  // ============================================
   // listAllocationLogs Tests
   // ============================================
 

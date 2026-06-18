@@ -138,6 +138,36 @@ export interface UpdateRobotSettingParams {
 }
 
 /**
+ * Channel custom robot item
+ */
+export interface ChannelRobotItem {
+  /** Robot nickname */
+  name: string;
+  /** Robot avatar URL */
+  avatar: string;
+}
+
+/**
+ * Parameters for updating channel robot count and custom robot list
+ */
+export interface UpdateRobotListSettingParams {
+  /** Channel ID */
+  channelId: string | number;
+  /** Displayed robot count, max 600000 */
+  robotNumber: number;
+  /** Virtual booking number */
+  virtualBookingNumber?: number;
+  /** Add robot model */
+  addRobotModel: AddRobotModel;
+  /** Effective time in seconds when addRobotModel is fixed_time */
+  changeTime?: number;
+  /** Custom robot list */
+  robotList?: ChannelRobotItem[];
+  /** Whether to use random content-library robots */
+  robotRandomMemberEnabled?: 'Y' | 'N';
+}
+
+/**
  * Channel robot stats entity
  */
 export interface RobotStats {

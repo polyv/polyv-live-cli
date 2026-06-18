@@ -65,9 +65,9 @@ import type {
   DownloadRecordInfoParams,
   UpdateAuthUrlParams,
   SetAuthorizedAddressParams,
+  ExternalAuthSetting,
   CustomAuthInfoResponse,
-  PolyvUrlResponse,
-  AuthSetting
+  PolyvUrlResponse
 } from '../types/web.js';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
 
@@ -1461,32 +1461,25 @@ export class WebService {
    * });
    * ```
    */
-  async setExternalAuth(params: SetExternalAuthParams): Promise<string> {
-    this.validateChannelId(params.channelId);
-
-    const apiParams: Record<string, unknown> = { channelId: params.channelId };
-    if (params.externalKey !== undefined) {
-      apiParams.externalKey = params.externalKey;
+  async setExternalAuth(params: SetExternalAuthParams): Promise<ExternalAuthSetting[]> {
+    if (!params.userId || params.userId.trim() === '') {
+      throw new PolyVValidationError('userId is required');
     }
-    if (params.externalUri !== undefined) {
-      apiParams.externalUri = params.externalUri;
-    }
-    if (params.externalRedirectUri !== undefined) {
-      apiParams.externalRedirectUri = params.externalRedirectUri;
-    }
-    if (params.externalButtonEnabled !== undefined) {
-      if (!['Y', 'N'].includes(params.externalButtonEnabled)) {
-        throw new PolyVValidationError('externalButtonEnabled must be Y or N');
-      }
-      apiParams.externalButtonEnabled = params.externalButtonEnabled;
+    if (!params.externalUri || params.externalUri.trim() === '') {
+      throw new PolyVValidationError('externalUri is required');
     }
 
-    const response = await this.client.httpClient.post<string>(
-      '/live/v3/channel/auth/external/set',
+    const apiParams: Record<string, unknown> = { externalUri: params.externalUri };
+    if (params.channelId !== undefined) {
+      apiParams.channelId = params.channelId;
+    }
+
+    const response = await this.client.httpClient.post<ExternalAuthSetting[]>(
+      `/live/v2/channelSetting/${params.userId}/auth-external`,
       null,
       { params: apiParams }
     );
-    return response as unknown as string;
+    return response as unknown as ExternalAuthSetting[];
   }
 
   /**
@@ -1642,17 +1635,20 @@ export class WebService {
    */
   async enrollList(params: EnrollListParams): Promise<EnrollListResponse> {
     this.validateChannelId(params.channelId);
+    if (params.viewerIds) {
+      const viewerIds = params.viewerIds.split(',').filter((id) => id.trim() !== '');
+      if (viewerIds.length > 20) {
+        throw new PolyVValidationError('viewerIds cannot contain more than 20 items');
+      }
+    }
 
     const apiParams: Record<string, unknown> = { channelId: params.channelId };
-    if (params.page !== undefined) {
-      apiParams.page = params.page;
-    }
-    if (params.pageSize !== undefined) {
-      apiParams.pageSize = params.pageSize;
+    if (params.viewerIds !== undefined) {
+      apiParams.viewerIds = params.viewerIds;
     }
 
     const response = await this.client.httpClient.get<EnrollListResponse>(
-      '/live/v3/channel/auth/enroll/list',
+      '/live/v3/channel/enroll/list',
       { params: apiParams }
     );
     return response as unknown as EnrollListResponse;
@@ -1696,15 +1692,17 @@ export class WebService {
    * ```
    */
   async updateAuthUrl(params: UpdateAuthUrlParams): Promise<string> {
-    this.validateChannelId(params.channelId);
-
-    const apiParams: Record<string, unknown> = { channelId: params.channelId };
-    if (params.authUrl !== undefined) {
-      apiParams.authUrl = params.authUrl;
+    const apiParams: Record<string, unknown> = {};
+    if (params.channelId !== undefined) {
+      apiParams.channelId = params.channelId;
+    }
+    const url = params.url ?? params.authUrl;
+    if (url !== undefined) {
+      apiParams.url = url;
     }
 
     const response = await this.client.httpClient.post<string>(
-      '/live/v3/channel/auth/update-auth-url',
+      '/live/v3/channel/restrict/update-auth-url',
       null,
       { params: apiParams }
     );
@@ -1726,20 +1724,25 @@ export class WebService {
    * });
    * ```
    */
-  async setAuthorizedAddress(params: SetAuthorizedAddressParams): Promise<string> {
-    this.validateChannelId(params.channelId);
-
-    const apiParams: Record<string, unknown> = { channelId: params.channelId };
-    if (params.authAddresses !== undefined) {
-      apiParams.authAddresses = params.authAddresses;
+  async setAuthorizedAddress(params: SetAuthorizedAddressParams): Promise<ExternalAuthSetting[]> {
+    if (!params.userId || params.userId.trim() === '') {
+      throw new PolyVValidationError('userId is required');
+    }
+    if (!params.customUri || params.customUri.trim() === '') {
+      throw new PolyVValidationError('customUri is required');
     }
 
-    const response = await this.client.httpClient.post<string>(
-      '/live/v3/channel/auth/set-authorized-address',
+    const apiParams: Record<string, unknown> = { customUri: params.customUri };
+    if (params.channelId !== undefined) {
+      apiParams.channelId = params.channelId;
+    }
+
+    const response = await this.client.httpClient.post<ExternalAuthSetting[]>(
+      `/live/v2/channelSetting/${params.userId}/oauth-custom`,
       null,
       { params: apiParams }
     );
-    return response as unknown as string;
+    return response as unknown as ExternalAuthSetting[];
   }
 
   /**

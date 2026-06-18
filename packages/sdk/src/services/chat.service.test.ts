@@ -110,23 +110,50 @@ describe('ChatService', () => {
     });
   });
 
+  describe('countOnlineUser', () => {
+    it('should count online users successfully', async () => {
+      mockClient.httpClient.get.mockResolvedValue(3);
+
+      const result = await service.countOnlineUser({ channelId: '123456' });
+
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+        '/live/v3/channel/chat/count-online-user',
+        { params: { channelId: '123456' } }
+      );
+      expect(result).toBe(3);
+    });
+
+    it('should throw validation error for missing channelId', async () => {
+      await expect(service.countOnlineUser({ channelId: '' }))
+        .rejects.toThrow('channelId is required');
+    });
+  });
+
   // ============================================
   // AC 6: delChat - Delete a chat message
   // ============================================
   describe('delChat', () => {
     it('should delete chat successfully', async () => {
-      mockClient.httpClient.get.mockResolvedValue({ data: true });
+      mockClient.httpClient.post.mockResolvedValue({ data: 'success' });
 
       const result = await service.delChat({
         channelId: '123456',
         id: 'msg-uuid',
       });
 
-      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+      expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v2/chat/123456/delChat',
+        null,
         { params: { id: 'msg-uuid' } }
       );
-      expect(result).toEqual({ data: true });
+      expect(result).toEqual({ data: 'success' });
+    });
+
+    it('should throw validation error for missing id', async () => {
+      await expect(service.delChat({
+        channelId: '123456',
+        id: '',
+      })).rejects.toThrow('id is required');
     });
   });
 
@@ -320,6 +347,13 @@ describe('ChatService', () => {
         page: 1,
         len: 100,
       })).rejects.toThrow('roomId is required');
+    });
+
+    it('should throw validation error when len exceeds 1000', async () => {
+      await expect(service.getUserList({
+        roomId: '123456',
+        len: 1001,
+      })).rejects.toThrow('len must be between 1 and 1000');
     });
   });
 

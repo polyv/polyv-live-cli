@@ -160,3 +160,58 @@ export interface ListMaterialCategoriesResponse {
   /** Category list */
   contents: MaterialCategory[];
 }
+
+// ============================================
+// Material Label Types
+// ============================================
+
+/**
+ * Material label entity
+ */
+export interface MaterialLabel {
+  /** Label ID */
+  id: number;
+  /** Label name */
+  name: string;
+  /** User ID */
+  userId: string;
+}
+
+/**
+ * Parameters for listing material labels
+ */
+export interface ListMaterialLabelsParams extends MaterialPaginationParams {
+  /** Keyword for fuzzy label name search */
+  keyword?: string;
+}
+
+/**
+ * Response for listing material labels
+ */
+export interface ListMaterialLabelsResponse extends MaterialPaginatedResponse<MaterialLabel> {}
+
+/**
+ * Parameters for creating a material label
+ */
+export interface CreateMaterialLabelParams {
+  /** Label name */
+  name: string;
+}
+
+/**
+ * Parameters for updating a material label
+ */
+export interface UpdateMaterialLabelParams {
+  /** Label ID */
+  id: number;
+  /** Label name */
+  name: string;
+}
+
+/**
+ * Parameters for deleting a material label
+ */
+export interface DeleteMaterialLabelParams {
+  /** Label ID */
+  id: number;
+}

@@ -51,16 +51,14 @@ export interface SendCustomMessageParams {
 export interface SendCustomMessageEncodeParams {
   /** Channel ID */
   channelId: string;
-  /** Encoded message content (required if imgUrl is not provided) */
+  /** URL-safe base64 encoded message content (required if imgUrl is not provided, max 1500 chars) */
   content?: string;
   /** Image URL (required if content is not provided) */
   imgUrl?: string;
   /** Whether to join history list */
-  joinHistoryList?: boolean;
+  joinHistoryList?: 0 | 1;
   /** Target audience type (see WatchType) */
   watchType?: WatchType;
-  /** Whether message is important */
-  important?: boolean;
 }
 
 // ============================================
@@ -117,6 +115,20 @@ export interface ListBulletinsResponse {
   totalItems: number;
   /** Bulletin list */
   contents: Bulletin[];
+}
+
+/**
+ * Parameters for adding a bulletin/notice
+ */
+export interface AddBulletinParams {
+  /** Channel ID */
+  channelId: string;
+  /** Bulletin content */
+  content: string;
+  /** Whether pinned to top */
+  isTop?: 'Y' | 'N';
+  /** Whether popup enabled */
+  isPop?: 'Y' | 'N';
 }
 
 /**
@@ -220,4 +232,3 @@ export interface BatchCheckinParams {
   /** Check-in items (max 1000) */
   items: BatchCheckinItem[];
 }
-

@@ -25,6 +25,8 @@ import type {
   ListVideoProducePptsResponse,
   GetVideoProducePptParams,
   VideoProducePpt,
+  AsyncUploadVideoProducePptParams,
+  AsyncUploadVideoProducePptResponse,
   UploadVideoProducePptParams,
   UploadVideoProducePptResponse,
   TtsVoice,
@@ -308,6 +310,30 @@ export class V4AiService {
       { params }
     );
     return response as unknown as VideoProducePpt;
+  }
+
+  /**
+   * Asynchronously upload a PPT URL for video creation
+   *
+   * @param params - Async upload parameters
+   * @returns Uploaded PPT file ID
+   */
+  async asyncUploadVideoProducePpt(
+    params: AsyncUploadVideoProducePptParams
+  ): Promise<AsyncUploadVideoProducePptResponse> {
+    if (!params.url || params.url.trim() === '') {
+      throw new PolyVValidationError('url is required and cannot be empty');
+    }
+    if (params.type !== undefined && params.type !== 'common' && params.type !== 'animate') {
+      throw new PolyVValidationError('type must be common or animate', 'type', params.type);
+    }
+
+    const response = await this.client.httpClient.post<AsyncUploadVideoProducePptResponse>(
+      '/live/v4/ai/video-produce/ppt/async-upload',
+      null,
+      { params }
+    );
+    return response as unknown as AsyncUploadVideoProducePptResponse;
   }
 
   /**

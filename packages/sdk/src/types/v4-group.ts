@@ -195,6 +195,49 @@ export interface ListBillingDailyParams extends GroupPaginationParams {
 export interface ListBillingDailyResponse extends GroupPaginatedResponse<BillingDailyItem> {}
 
 /**
+ * Group sub-account billing daily item entity
+ */
+export interface GroupUserBillingDailyItem {
+  /** Group sub-account ID */
+  unionId: string;
+  /** Account period */
+  accountPeriod: string;
+  /** Sub-account email */
+  email?: string | null;
+  /** Memo */
+  memo?: string | null;
+  /** Product name */
+  production: string;
+  /** Usage category */
+  category: string;
+  /** Usage amount */
+  itemConsumed: number;
+  /** Usage unit */
+  itemConsumedUnit: string;
+  /** Settlement date */
+  statAt: string;
+  /** Trade type */
+  tradeType: number;
+}
+
+/**
+ * Parameters for listing group sub-account billing daily statistics
+ */
+export interface ListGroupUserBillingDailyParams extends GroupPaginationParams {
+  /** Start billing period, format yyyyMM, must be 202204 or later */
+  startDate: string;
+  /** End billing period, format yyyyMM, must be 202204 or later */
+  endDate: string;
+  /** Optional sub-account email filter */
+  email?: string;
+}
+
+/**
+ * Response for listing group sub-account billing daily statistics
+ */
+export interface ListGroupUserBillingDailyResponse extends GroupPaginatedResponse<GroupUserBillingDailyItem> {}
+
+/**
  * Allocation log item entity
  */
 export interface AllocationLogItem {

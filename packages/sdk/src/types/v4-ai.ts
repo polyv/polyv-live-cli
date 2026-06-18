@@ -365,6 +365,35 @@ export interface GetVideoProducePptParams {
 }
 
 /**
+ * PPT conversion type for video creation
+ */
+export type VideoProducePptConvertType = 'common' | 'animate';
+
+/**
+ * Parameters for asynchronously uploading a video produce PPT by URL
+ */
+export interface AsyncUploadVideoProducePptParams {
+  /** PPT file URL (ppt/pptx, max 200MB) */
+  url: string;
+  /** Custom document name, defaults to file name in URL */
+  docName?: string;
+  /** Conversion type, defaults to common */
+  type?: VideoProducePptConvertType;
+  /** Callback URL for upload/convert status */
+  callbackUrl?: string;
+  /** Child account user ID for PPT isolation */
+  childUserId?: string;
+}
+
+/**
+ * Response for asynchronously uploading a video produce PPT
+ */
+export interface AsyncUploadVideoProducePptResponse {
+  /** File ID */
+  fileId: string;
+}
+
+/**
  * Parameters for uploading a video produce PPT
  */
 export interface UploadVideoProducePptParams {

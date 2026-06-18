@@ -17,6 +17,7 @@ import type {
   SendChatResponse,
   sendHiddenByAdminParams,
   SendHiddenByAdminResponse,
+  CountOnlineUserParams,
   delChatParams,
   delChatResponse,
   cleanChatParams,
@@ -101,6 +102,15 @@ export class ChatService {
    */
   constructor(client: PolyVClient) {
     this.client = client;
+  }
+
+  /**
+   * Validate channel ID
+   */
+  private validateChannelId(channelId: string): void {
+    if (!channelId || channelId.trim() === '') {
+      throw new PolyVValidationError('channelId is required');
+    }
   }
 
   // ============================================
@@ -223,6 +233,22 @@ export class ChatService {
     return response as unknown as SendHiddenByAdminResponse;
   }
 
+  /**
+   * Query current online user count for a channel chat room
+   *
+   * @param params - Query parameters
+   * @returns Current online user count
+   */
+  async countOnlineUser(params: CountOnlineUserParams): Promise<number> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<number>(
+      '/live/v3/channel/chat/count-online-user',
+      { params }
+    );
+    return response as unknown as number;
+  }
+
   // ============================================
   // AC 6: delChat - Delete a chat message
   // ============================================
@@ -245,8 +271,14 @@ export class ChatService {
    * ```
    */
   async delChat(params: delChatParams): Promise<delChatResponse> {
-    const response = await this.client.httpClient.get<delChatResponse>(
+    this.validateChannelId(params.channelId);
+    if (!params.id || params.id.trim() === '') {
+      throw new PolyVValidationError('id is required');
+    }
+
+    const response = await this.client.httpClient.post<delChatResponse>(
       `/live/v2/chat/${params.channelId}/delChat`,
+      null,
       { params: { id: params.id } }
     );
     return response as unknown as delChatResponse;
@@ -475,6 +507,12 @@ export class ChatService {
   async getUserList(params: GetUserListParams): Promise<GetUserListResponse> {
     if (!params.roomId) {
       throw new PolyVValidationError('roomId is required');
+    }
+    if (params.page !== undefined && params.page < 1) {
+      throw new PolyVValidationError('page must be >= 1');
+    }
+    if (params.len !== undefined && (params.len < 1 || params.len > 1000)) {
+      throw new PolyVValidationError('len must be between 1 and 1000');
     }
 
     // Use a separate axios instance for this different base URL

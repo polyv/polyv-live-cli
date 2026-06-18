@@ -15,3 +15,12 @@
 - `CLI_COMMANDS_GUIDE.md`：按 CLI 开发视角整理的 API 文档选择指南。
 - `INDEX.md`：面向人工阅读的 API 文档树索引。
 - `BUSINESS_MODULES_INDEX.md`：按业务领域整理的 API 分组，用于规划新的 CLI 能力。
+- `API_INVENTORY.md`：由真实 API 文档和 SDK 源码生成的接口清单，保留同功能最高版本，并标记 SDK 是否已实现。
+- `api-inventory.json`：`API_INVENTORY.md` 的机器可读数据源，便于后续 SDK 补齐和 CI 校验。
+- `SDK_COMPLETION_GOALS.md`：按批次补齐 SDK 未实现 API 的 `/goal` 提示词清单。
+
+## 生成命令
+
+```bash
+pnpm api:inventory
+```
