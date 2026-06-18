@@ -52,6 +52,38 @@ describeWithCredentials('SDK real API integration smoke', () => {
     }
   });
 
+  it('calls account read-only APIs without mock responses', async () => {
+    const userInfo = await client.account.getUserInfo();
+    const dateRange = currentMonthDateRange();
+
+    const channelIds = await client.account.channels();
+    const simpleChannels = await client.account.getSimpleChannelList({ page: 1, pageSize: 1 });
+    const basicChannels = await client.account.userChannelBasicList({ page: 1, pageSize: 1 });
+    const userDurations = await client.account.getUserDurations();
+    const micDuration = await client.account.micDuration();
+    const incomeDetail = await client.account.getIncomeDetail({
+      userId: userInfo.userId,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+      page: 1,
+      pageSize: 1,
+    });
+
+    expect(channelIds.channels).toEqual(expect.any(Array));
+    expectPaginatedResponse(simpleChannels);
+    expectPaginatedResponse(basicChannels);
+    expect(userDurations).toEqual(expect.objectContaining({
+      userId: expect.any(String),
+      available: expect.any(Number),
+      used: expect.any(Number),
+    }));
+    expect(micDuration).toEqual(expect.objectContaining({
+      available: expect.any(Number),
+      history: expect.any(Number),
+    }));
+    expectPaginatedResponse(incomeDetail);
+  });
+
   it('calls material label list without mock responses', async () => {
     const materialLabels = await client.v4Material.listMaterialLabels({
       pageNumber: 1,
@@ -115,6 +147,8 @@ describeWithCredentials('SDK real API integration smoke', () => {
 
     const onlineCount = await client.chat.countOnlineUser({ channelId });
     const enrollList = await client.web.enrollList({ channelId });
+    const switchSettings = await client.account.switchGet({ channelId });
+    const receiveList = await client.account.receiveList({ channelId, page: 1, pageSize: 1 });
 
     expect(typeof onlineCount).toBe('number');
     expect(onlineCount).toBeGreaterThanOrEqual(0);
@@ -122,6 +156,8 @@ describeWithCredentials('SDK real API integration smoke', () => {
       auditEnabled: expect.stringMatching(/^[YN]$/),
       list: expect.any(Array),
     }));
+    expect(switchSettings).toEqual(expect.any(Array));
+    expectPaginatedResponse(receiveList);
   });
 
   describeWithWriteAccess('write API lifecycle', () => {

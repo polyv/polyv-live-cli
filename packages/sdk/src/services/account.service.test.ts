@@ -20,10 +20,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import axios from 'axios'
 import { PolyVClient } from '../client.js'
 import { AccountService } from './account.service.js'
-import type {
-  Category,
-  ChannelListItem,
-} from '../types/account.js'
+import type { Category } from '../types/account.js'
 import { PolyVValidationError } from '../errors/polyv-validation-error.js'
 
 // Mock axios
@@ -274,37 +271,38 @@ describe('AccountService', () => {
 
   describe('AC3: Channel List', () => {
     describe('channels', () => {
-      it('should return paginated channel list', async () => {
+      it('should query channel ids with GET', async () => {
         const mockResponse = {
-          contents: [{ channelId: 'ch123', name: 'Test Channel' }] as ChannelListItem[],
-          total: 1,
-          pageSize: 10,
-          currentPage: 1,
+          channels: [2139283, 2139268],
         }
-        mockAxiosInstance.post.mockResolvedValueOnce(mockResponse)
+        mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.channels({ page: 1, pageSize: 10 })
+        const result = await accountService.channels({
+          categoryId: 340019,
+          keyword: 'Test',
+          labelId: 'label-1',
+        })
 
-        expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        expect(mockAxiosInstance.get).toHaveBeenCalledWith(
           '/live/v3/user/channels',
-          { page: 1, pageSize: 10 }
+          { params: { categoryId: 340019, keyword: 'Test', labelId: 'label-1' } }
         )
-        expect(result.contents).toHaveLength(1)
-        expect(result.total).toBe(1)
+        expect(result.channels).toEqual([2139283, 2139268])
       })
 
       it('should return empty list when no channels exist', async () => {
         const mockResponse = {
-          contents: [],
-          total: 0,
-          pageSize: 10,
-          currentPage: 1,
+          channels: [],
         }
-        mockAxiosInstance.post.mockResolvedValueOnce(mockResponse)
+        mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
         const result = await accountService.channels()
 
-        expect(result.contents).toEqual([])
+        expect(mockAxiosInstance.get).toHaveBeenCalledWith(
+          '/live/v3/user/channels',
+          { params: {} }
+        )
+        expect(result.channels).toEqual([])
       })
     })
 
@@ -334,19 +332,75 @@ describe('AccountService', () => {
       })
     })
 
+    describe('channelDetailList', () => {
+      it('should return channel detail list with POST form params', async () => {
+        const mockResponse = {
+          contents: [{ channelId: 2191569, name: 'Test Channel' }],
+          pageNumber: 1,
+          pageSize: 20,
+          totalItems: 1,
+        }
+        mockAxiosInstance.post.mockResolvedValueOnce(mockResponse)
+
+        const result = await accountService.channelDetailList({
+          page: 1,
+          pageSize: 20,
+          categoryId: '345134',
+          watchStatus: 'playback',
+          keyword: 'Test',
+        })
+
+        expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+          '/live/v3/channel/management/list-detail',
+          null,
+          {
+            params: {
+              page: 1,
+              pageSize: 20,
+              categoryId: '345134',
+              watchStatus: 'playback',
+              keyword: 'Test',
+            },
+          }
+        )
+        expect(result.contents).toHaveLength(1)
+      })
+
+      it('should validate pagination', async () => {
+        await expect(accountService.channelDetailList({ page: 0 }))
+          .rejects.toThrow(PolyVValidationError)
+      })
+    })
+
     describe('getSimpleChannelList', () => {
       it('should return simple channel list', async () => {
         const mockResponse = {
           contents: [{ channelId: 'ch123', name: 'Test' }],
-          total: 1,
+          pageNumber: 1,
+          pageSize: 20,
+          totalItems: 1,
         }
         mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.getSimpleChannelList({ categoryId: 123 })
+        const result = await accountService.getSimpleChannelList({
+          categoryId: 123,
+          page: 1,
+          pageSize: 20,
+          watchStatus: 'playback',
+          keyword: 'Test',
+        })
 
         expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/user/get-simple-channel-list',
-          { params: { categoryId: 123 } }
+          '/live/v3/channel/management/list',
+          {
+            params: {
+              categoryId: 123,
+              page: 1,
+              pageSize: 20,
+              watchStatus: 'playback',
+              keyword: 'Test',
+            },
+          }
         )
         expect(result.contents).toHaveLength(1)
       })
@@ -356,15 +410,21 @@ describe('AccountService', () => {
       it('should return basic channel list for user', async () => {
         const mockResponse = {
           contents: [{ channelId: 'ch123', name: 'Test' }],
-          total: 1,
+          pageNumber: 1,
+          pageSize: 20,
+          totalItems: 1,
         }
         mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.userChannelBasicList({ page: 1 })
+        const result = await accountService.userChannelBasicList({
+          categoryIds: [340019, 345134],
+          page: 1,
+          pageSize: 20,
+        })
 
         expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/user/channel/basic-list',
-          { params: { page: 1 } }
+          '/live/v3/channel/basic/list',
+          { params: { categoryIds: '340019,345134', page: 1, pageSize: 20 } }
         )
         expect(result.contents).toHaveLength(1)
       })
@@ -398,83 +458,114 @@ describe('AccountService', () => {
 
   describe('AC4: Statistics', () => {
     describe('receiveList', () => {
-      it('should return income/expense list', async () => {
+      it('should return receive channel list', async () => {
         const mockResponse = {
-          contents: [{ id: '1', type: 'income', amount: 100 }],
-          total: 1,
+          contents: [{ channelId: '1972965', name: 'Spring' }],
+          pageNumber: 1,
+          pageSize: 10,
+          totalItems: 1,
         }
         mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.receiveList({ page: 1 })
+        const result = await accountService.receiveList({
+          channelId: '2788479',
+          keyword: 'Spring',
+          page: 1,
+          pageSize: 10,
+        })
 
         expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/finance/receive/list',
-          { params: { page: 1 } }
+          '/live/v3/channel/basic/receive/list',
+          { params: { channelId: '2788479', keyword: 'Spring', page: 1, pageSize: 10 } }
         )
         expect(result.contents).toHaveLength(1)
+      })
+
+      it('should throw PolyVValidationError when channelId is missing', async () => {
+        await expect(accountService.receiveList({ channelId: '' }))
+          .rejects.toThrow(PolyVValidationError)
       })
     })
 
     describe('getIncomeDetail', () => {
       it('should return detailed income information', async () => {
         const mockResponse = {
-          income: {
-            totalIncome: 1000,
-            todayIncome: 100,
-            monthIncome: 500,
-          },
+          contents: [{ amount: 0.01, payType: 'good', payTypeName: '道具打赏', userId: 'user123' }],
+          pageNumber: 1,
+          pageSize: 20,
+          totalItems: 1,
         }
-        mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
+        mockAxiosInstance.post.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.getIncomeDetail()
+        const result = await accountService.getIncomeDetail({
+          userId: 'user123',
+          startDate: '2024-01-01',
+          endDate: '2024-01-31',
+          channelId: '1965681',
+          page: 1,
+          pageSize: 20,
+        })
 
-        expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/finance/get-income-detail',
-          { params: undefined }
+        expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+          '/live/v2/user/user123/get-income-detail',
+          null,
+          {
+            params: {
+              startDate: '2024-01-01',
+              endDate: '2024-01-31',
+              channelId: '1965681',
+              page: 1,
+              pageSize: 20,
+            },
+          }
         )
-        expect(result.income.totalIncome).toBe(1000)
+        expect(result.contents[0].amount).toBe(0.01)
+      })
+
+      it('should throw PolyVValidationError when required dates are missing', async () => {
+        await expect(accountService.getIncomeDetail({
+          userId: 'user123',
+          startDate: '',
+          endDate: '2024-01-31',
+        })).rejects.toThrow(PolyVValidationError)
       })
     })
 
     describe('getUserDurations', () => {
       it('should return user viewing duration', async () => {
         const mockResponse = {
-          durations: {
-            totalDuration: 3600,
-            liveDuration: 1800,
-            playbackDuration: 1800,
-          },
+          userId: 'user123',
+          available: 9610,
+          used: 570,
         }
-        mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
+        mockAxiosInstance.post.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.getUserDurations({ userId: 'user123' })
+        const result = await accountService.getUserDurations()
 
-        expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/user/durations/get',
-          { params: { userId: 'user123' } }
+        expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+          '/live/v2/user/get-user-durations',
+          null,
+          { params: {} }
         )
-        expect(result.durations.totalDuration).toBe(3600)
+        expect(result.available).toBe(9610)
       })
     })
 
     describe('micDuration', () => {
       it('should return mic duration statistics', async () => {
         const mockResponse = {
-          micDuration: {
-            totalDuration: 1800,
-            sessionCount: 10,
-            avgDuration: 180,
-          },
+          available: 5000,
+          history: 3,
         }
         mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.micDuration({ channelId: 'ch123' })
+        const result = await accountService.micDuration()
 
         expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/user/mic-duration/get',
-          { params: { channelId: 'ch123' } }
+          '/live/v3/channel/statistics/mic/get-duration',
+          { params: {} }
         )
-        expect(result.micDuration.totalDuration).toBe(1800)
+        expect(result.history).toBe(3)
       })
     })
   })
@@ -486,20 +577,19 @@ describe('AccountService', () => {
   describe('AC5: Switch Config', () => {
     describe('switchGet', () => {
       it('should return current switch configuration', async () => {
-        const mockResponse = {
-          config: {
-            globalSettingEnabled: true,
-            authEnabled: false,
-          },
-        }
+        const mockResponse = [
+          { type: 'isClosePreview', enabled: 'N' },
+          { type: 'mobileWatch', enabled: 'Y' },
+        ]
         mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
-        const result = await accountService.switchGet()
+        const result = await accountService.switchGet({ channelId: '2191569' })
 
         expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/user/switch/get'
+          '/live/v3/channel/switch/get',
+          { params: { channelId: '2191569' } }
         )
-        expect(result.config.globalSettingEnabled).toBe(true)
+        expect(result[0].type).toBe('isClosePreview')
       })
     })
 
@@ -508,30 +598,31 @@ describe('AccountService', () => {
         mockAxiosInstance.post.mockResolvedValueOnce(true)
 
         const result = await accountService.switchUpdate({
-          param: 'authEnabled',
+          channelId: '2191569',
+          type: 'mobileWatch',
           enabled: 'Y',
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/switch/update',
+          '/live/v3/channel/switch/update',
           null,
-          { params: { param: 'authEnabled', enabled: 'Y' } }
+          { params: { channelId: '2191569', type: 'mobileWatch', enabled: 'Y' } }
         )
         expect(result.success).toBe(true)
       })
 
-      it('should convert boolean true to Y', async () => {
+      it('should convert boolean true to Y and accept deprecated param alias', async () => {
         mockAxiosInstance.post.mockResolvedValueOnce(true)
 
         await accountService.switchUpdate({
-          param: 'authEnabled',
+          param: 'mobileWatch',
           enabled: true,
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/switch/update',
+          '/live/v3/channel/switch/update',
           null,
-          { params: { param: 'authEnabled', enabled: 'Y' } }
+          { params: { type: 'mobileWatch', enabled: 'Y' } }
         )
       })
 
@@ -544,15 +635,14 @@ describe('AccountService', () => {
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/switch/update',
+          '/live/v3/channel/switch/update',
           null,
-          { params: { param: 'authEnabled', enabled: 'N' } }
+          { params: { type: 'authEnabled', enabled: 'N' } }
         )
       })
 
-      it('should throw PolyVValidationError when param is missing', async () => {
+      it('should throw PolyVValidationError when type is missing', async () => {
         await expect(accountService.switchUpdate({
-          param: '',
           enabled: 'Y',
         })).rejects.toThrow(PolyVValidationError)
       })
@@ -573,14 +663,15 @@ describe('AccountService', () => {
   describe('AC6: Callback Settings', () => {
     describe('setStreamCallback', () => {
       it('should set stream callback URL', async () => {
-        mockAxiosInstance.post.mockResolvedValueOnce(true)
+        mockAxiosInstance.post.mockResolvedValueOnce('success')
 
         const result = await accountService.setStreamCallback({
+          userId: 'user123',
           url: 'https://example.com/stream-callback',
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/set-stream-callback',
+          '/live/v2/user/user123/set-stream-callback',
           null,
           { params: { url: 'https://example.com/stream-callback' } }
         )
@@ -589,6 +680,7 @@ describe('AccountService', () => {
 
       it('should throw PolyVValidationError when URL is invalid', async () => {
         await expect(accountService.setStreamCallback({
+          userId: 'user123',
           url: 'not-a-valid-url',
         })).rejects.toThrow(PolyVValidationError)
       })
@@ -596,14 +688,19 @@ describe('AccountService', () => {
       it('should clear callback when URL is empty', async () => {
         mockAxiosInstance.post.mockResolvedValueOnce(true)
 
-        const result = await accountService.setStreamCallback({ url: '' })
+        const result = await accountService.setStreamCallback({ userId: 'user123', url: '' })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/set-stream-callback',
+          '/live/v2/user/user123/set-stream-callback',
           null,
           { params: { url: '' } }
         )
         expect(result.success).toBe(true)
+      })
+
+      it('should throw PolyVValidationError when userId is missing', async () => {
+        await expect(accountService.setStreamCallback({ userId: '', url: '' }))
+          .rejects.toThrow(PolyVValidationError)
       })
     })
 
@@ -612,11 +709,12 @@ describe('AccountService', () => {
         mockAxiosInstance.post.mockResolvedValueOnce(true)
 
         const result = await accountService.setRecordCallback({
+          userId: 'user123',
           url: 'https://example.com/record-callback',
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/set-record-callback',
+          '/live/v2/user/user123/set-record-callback',
           null,
           { params: { url: 'https://example.com/record-callback' } }
         )
@@ -625,6 +723,7 @@ describe('AccountService', () => {
 
       it('should throw PolyVValidationError when URL is invalid', async () => {
         await expect(accountService.setRecordCallback({
+          userId: 'user123',
           url: 'invalid-url',
         })).rejects.toThrow(PolyVValidationError)
       })
@@ -635,11 +734,12 @@ describe('AccountService', () => {
         mockAxiosInstance.post.mockResolvedValueOnce(true)
 
         const result = await accountService.setPlaybackCallback({
+          userId: 'user123',
           url: 'https://example.com/playback-callback',
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/set-playback-callback',
+          '/live/v2/user/user123/set-playback-callback',
           null,
           { params: { url: 'https://example.com/playback-callback' } }
         )
@@ -648,6 +748,7 @@ describe('AccountService', () => {
 
       it('should throw PolyVValidationError when URL is invalid', async () => {
         await expect(accountService.setPlaybackCallback({
+          userId: 'user123',
           url: 'not-valid',
         })).rejects.toThrow(PolyVValidationError)
       })
@@ -666,7 +767,7 @@ describe('AccountService', () => {
         const result = await accountService.setUserLoginToken({ token: 'my-token' })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/set-login-token',
+          '/live/v3/user/set-sso-token',
           null,
           { params: { token: 'my-token' } }
         )
@@ -684,21 +785,36 @@ describe('AccountService', () => {
         mockAxiosInstance.post.mockResolvedValueOnce(true)
 
         const result = await accountService.setUserChildrenLoginToken({
-          userId: 'child123',
+          childEmail: 'child@example.com',
           token: 'child-token',
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/set-children-login-token',
+          '/live/v3/user/set-sso-token',
           null,
-          { params: { userId: 'child123', token: 'child-token' } }
+          { params: { childEmail: 'child@example.com', token: 'child-token' } }
         )
         expect(result.success).toBe(true)
       })
 
-      it('should throw PolyVValidationError when userId is missing', async () => {
+      it('should accept deprecated userId alias for childEmail', async () => {
+        mockAxiosInstance.post.mockResolvedValueOnce(true)
+
+        await accountService.setUserChildrenLoginToken({
+          userId: 'child@example.com',
+          token: 'child-token',
+        })
+
+        expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+          '/live/v3/user/set-sso-token',
+          null,
+          { params: { childEmail: 'child@example.com', token: 'child-token' } }
+        )
+      })
+
+      it('should throw PolyVValidationError when childEmail is missing', async () => {
         await expect(accountService.setUserChildrenLoginToken({
-          userId: '',
+          childEmail: '',
           token: 'token',
         })).rejects.toThrow(PolyVValidationError)
       })

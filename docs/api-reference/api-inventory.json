@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-18T17:55:34.632Z",
+  "generatedAt": "2026-06-18T18:23:54.205Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,9 +18,9 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 538,
-    "sdkImplemented": 323,
-    "sdkMissing": 255
+    "sdkEndpoints": 539,
+    "sdkImplemented": 338,
+    "sdkMissing": 240
   },
   "modules": [
     {
@@ -51,9 +51,9 @@
       "module": "account",
       "label": "账号与财务",
       "total": 22,
-      "implemented": 7,
-      "missing": 15,
-      "coverage": 31.8
+      "implemented": 22,
+      "missing": 0,
+      "coverage": 100
     },
     {
       "module": "ai",
@@ -188,12 +188,12 @@
       "dedupeKey": "account:查询频道的功能开关状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/switch/get",
+        "reference": "AccountService#switchGet",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -215,9 +215,9 @@
       "dedupeKey": "account:查询频道列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
-        "methodMismatch": true,
-        "sdkMethod": "POST",
+        "implemented": true,
+        "methodMismatch": false,
+        "sdkMethod": "GET",
         "sdkPath": "/live/v3/user/channels",
         "reference": "AccountService#channels",
         "file": "packages/sdk/src/services/account.service.ts"
@@ -269,12 +269,12 @@
       "dedupeKey": "account:查询所有频道的基础信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/basic/list",
+        "reference": "AccountService#userChannelBasicList",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -296,12 +296,12 @@
       "dedupeKey": "account:查询所有频道的缩略信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/management/list",
+        "reference": "AccountService#getSimpleChannelList",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -323,12 +323,12 @@
       "dedupeKey": "account:查询所有频道的详细信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/management/list-detail",
+        "reference": "AccountService#channelDetailList",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -350,12 +350,12 @@
       "dedupeKey": "account:查询账号可用直播分钟数",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/user/get-user-durations",
+        "reference": "AccountService#getUserDurations",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -377,12 +377,12 @@
       "dedupeKey": "account:查询账号连麦分钟数",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/statistics/mic/get-duration",
+        "reference": "AccountService#micDuration",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -407,12 +407,12 @@
       "dedupeKey": "account:查询账号收入详情",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/user/{param}/get-income-detail",
+        "reference": "AccountService#getIncomeDetail",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -519,12 +519,12 @@
       "dedupeKey": "account:分页查询频道可设置接收转播频道列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/basic/receive/list",
+        "reference": "AccountService#receiveList",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -577,12 +577,12 @@
       "dedupeKey": "account:设置账号单点登录token",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/user/set-sso-token",
+        "reference": "AccountService#setUserLoginToken",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -607,12 +607,12 @@
       "dedupeKey": "account:设置直播子账号单点登录token",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/user/set-sso-token",
+        "reference": "AccountService#setUserLoginToken",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -634,12 +634,12 @@
       "dedupeKey": "account:修改录制生成回调设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/user/{param}/set-record-callback",
+        "reference": "AccountService#setRecordCallback",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -664,12 +664,12 @@
       "dedupeKey": "account:修改频道的功能开关状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/switch/update",
+        "reference": "AccountService#switchUpdate",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -751,12 +751,12 @@
       "dedupeKey": "account:修改直播状态改变回调设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/user/{param}/set-stream-callback",
+        "reference": "AccountService#setStreamCallback",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -778,12 +778,12 @@
       "dedupeKey": "account:修改转存成功回调设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/user/{param}/set-playback-callback",
+        "reference": "AccountService#setPlaybackCallback",
+        "file": "packages/sdk/src/services/account.service.ts"
       }
     },
     {
@@ -17378,7 +17378,7 @@
       "reference": "AccountService#getUserInfo"
     },
     {
-      "method": "POST",
+      "method": "GET",
       "path": "/live/v3/user/channels",
       "normalizedPath": "/live/v3/user/channels",
       "file": "packages/sdk/src/services/account.service.ts",
@@ -17396,9 +17396,18 @@
       "reference": "AccountService#channelDetail"
     },
     {
+      "method": "POST",
+      "path": "/live/v3/channel/management/list-detail",
+      "normalizedPath": "/live/v3/channel/management/list-detail",
+      "file": "packages/sdk/src/services/account.service.ts",
+      "className": "AccountService",
+      "methodName": "channelDetailList",
+      "reference": "AccountService#channelDetailList"
+    },
+    {
       "method": "GET",
-      "path": "/live/v3/user/get-simple-channel-list",
-      "normalizedPath": "/live/v3/user/get-simple-channel-list",
+      "path": "/live/v3/channel/management/list",
+      "normalizedPath": "/live/v3/channel/management/list",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "getSimpleChannelList",
@@ -17406,8 +17415,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/user/channel/basic-list",
-      "normalizedPath": "/live/v3/user/channel/basic-list",
+      "path": "/live/v3/channel/basic/list",
+      "normalizedPath": "/live/v3/channel/basic/list",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "userChannelBasicList",
@@ -17424,26 +17433,26 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/finance/receive/list",
-      "normalizedPath": "/live/v3/finance/receive/list",
+      "path": "/live/v3/channel/basic/receive/list",
+      "normalizedPath": "/live/v3/channel/basic/receive/list",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "receiveList",
       "reference": "AccountService#receiveList"
     },
     {
-      "method": "GET",
-      "path": "/live/v3/finance/get-income-detail",
-      "normalizedPath": "/live/v3/finance/get-income-detail",
+      "method": "POST",
+      "path": "/live/v2/user/{param}/get-income-detail",
+      "normalizedPath": "/live/v2/user/{param}/get-income-detail",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "getIncomeDetail",
       "reference": "AccountService#getIncomeDetail"
     },
     {
-      "method": "GET",
-      "path": "/live/v3/user/durations/get",
-      "normalizedPath": "/live/v3/user/durations/get",
+      "method": "POST",
+      "path": "/live/v2/user/get-user-durations",
+      "normalizedPath": "/live/v2/user/get-user-durations",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "getUserDurations",
@@ -17451,8 +17460,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/user/mic-duration/get",
-      "normalizedPath": "/live/v3/user/mic-duration/get",
+      "path": "/live/v3/channel/statistics/mic/get-duration",
+      "normalizedPath": "/live/v3/channel/statistics/mic/get-duration",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "micDuration",
@@ -17460,8 +17469,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v3/user/switch/get",
-      "normalizedPath": "/live/v3/user/switch/get",
+      "path": "/live/v3/channel/switch/get",
+      "normalizedPath": "/live/v3/channel/switch/get",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "switchGet",
@@ -17469,8 +17478,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v3/user/switch/update",
-      "normalizedPath": "/live/v3/user/switch/update",
+      "path": "/live/v3/channel/switch/update",
+      "normalizedPath": "/live/v3/channel/switch/update",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "switchUpdate",
@@ -17478,8 +17487,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v3/user/set-stream-callback",
-      "normalizedPath": "/live/v3/user/set-stream-callback",
+      "path": "/live/v2/user/{param}/set-stream-callback",
+      "normalizedPath": "/live/v2/user/{param}/set-stream-callback",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "setStreamCallback",
@@ -17487,8 +17496,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v3/user/set-record-callback",
-      "normalizedPath": "/live/v3/user/set-record-callback",
+      "path": "/live/v2/user/{param}/set-record-callback",
+      "normalizedPath": "/live/v2/user/{param}/set-record-callback",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "setRecordCallback",
@@ -17496,8 +17505,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v3/user/set-playback-callback",
-      "normalizedPath": "/live/v3/user/set-playback-callback",
+      "path": "/live/v2/user/{param}/set-playback-callback",
+      "normalizedPath": "/live/v2/user/{param}/set-playback-callback",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "setPlaybackCallback",
@@ -17505,8 +17514,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v3/user/set-login-token",
-      "normalizedPath": "/live/v3/user/set-login-token",
+      "path": "/live/v3/user/set-sso-token",
+      "normalizedPath": "/live/v3/user/set-sso-token",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "setUserLoginToken",
@@ -17514,8 +17523,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v3/user/set-children-login-token",
-      "normalizedPath": "/live/v3/user/set-children-login-token",
+      "path": "/live/v3/user/set-sso-token",
+      "normalizedPath": "/live/v3/user/set-sso-token",
       "file": "packages/sdk/src/services/account.service.ts",
       "className": "AccountService",
       "methodName": "setUserChildrenLoginToken",

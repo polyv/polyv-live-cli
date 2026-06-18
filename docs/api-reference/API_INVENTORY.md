@@ -1,6 +1,6 @@
 # PolyV Live API Inventory
 
-生成时间：2026-06-18T17:55:34.641Z
+生成时间：2026-06-18T18:23:54.213Z
 
 ## 来源与规则
 
@@ -20,10 +20,10 @@
 | 可解析 API 数 | 590 |
 | 去重后最新 API 数 | 578 |
 | 被旧版去重的 API 数 | 12 |
-| SDK 源码 API 路径数 | 538 |
-| SDK 已实现最新 API 数 | 323 |
-| SDK 未实现最新 API 数 | 255 |
-| SDK 覆盖率 | 55.9% |
+| SDK 源码 API 路径数 | 539 |
+| SDK 已实现最新 API 数 | 338 |
+| SDK 未实现最新 API 数 | 240 |
+| SDK 覆盖率 | 58.5% |
 
 ## 模块覆盖率
 
@@ -32,7 +32,7 @@
 | `channel` | 频道 | 283 | 111 | 172 | 39.2% |
 | `user` | 用户与观众 | 73 | 35 | 38 | 47.9% |
 | `live_interaction` | 直播互动 | 30 | 0 | 30 | 0% |
-| `account` | 账号与财务 | 22 | 7 | 15 | 31.8% |
+| `account` | 账号与财务 | 22 | 22 | 0 | 100% |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% |
 | `chat` | 聊天 | 45 | 45 | 0 | 100% |
 | `finance` | 财务与审核 | 7 | 7 | 0 | 100% |
@@ -50,7 +50,7 @@
 
 ## SDK 补齐建议
 
-- 优先补齐缺口最大的模块：`channel` 172 个、`user` 38 个、`live_interaction` 30 个、`account` 15 个。
+- 优先补齐缺口最大的模块：`channel` 172 个、`user` 38 个、`live_interaction` 30 个。
 - 每个缺口应以本清单的 Method、Path、请求形态和业务必填参数为入口，再回到源文档核对完整请求/响应表，避免只按路径补空方法。
 - v4/v5 接口大多需要 JSON body；v2/v3 历史接口多为 query/form 风格。新增 SDK 方法时应把签名公共参数留给 `PolyVClient` 拦截器处理。
 - 对列表、导出、批量创建、异步任务类接口，建议先抽通用分页/任务状态类型，再补服务方法，减少后续 CLI 命令重复定义。
@@ -61,28 +61,28 @@
 
 | 功能/用途 | Method | Path | 源文档 | 请求形态 | 业务必填参数 | SDK 实现 | 替代旧版 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 查询频道的功能开关状态<br><sub>1、查询开关状态，可查询全局开关状态或频道开关状态</sub> | GET | `/live/v3/channel/switch/get` | `../document-center/docs/live/api/account/switch_get.md` | query | - | no | - |
-| 查询频道列表<br><sub>1、根据分类id和频道名称查询频道号列表</sub> | GET | `/live/v3/user/channels` | `../document-center/docs/live/api/account/channels.md` | query | - | no: path exists as POST in AccountService#channels | - |
+| 查询频道的功能开关状态<br><sub>1、查询开关状态，可查询全局开关状态或频道开关状态</sub> | GET | `/live/v3/channel/switch/get` | `../document-center/docs/live/api/account/switch_get.md` | query | - | yes: AccountService#switchGet (packages/sdk/src/services/account.service.ts) | - |
+| 查询频道列表<br><sub>1、根据分类id和频道名称查询频道号列表</sub> | GET | `/live/v3/user/channels` | `../document-center/docs/live/api/account/channels.md` | query | - | yes: AccountService#channels (packages/sdk/src/services/account.service.ts) | - |
 | 查询所有频道的回放视频<br><sub>1、查询账号下回放列表和点播列表, 注意：不包括暂存列表</sub> | GET | `/live/v3/user/playback/list` | `../document-center/docs/live/api/account/user_playback_list.md` | query | - | yes: AccountService#userPlaybackList (packages/sdk/src/services/account.service.ts) | - |
-| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表</sub> | GET | `/live/v3/channel/basic/list` | `../document-center/docs/live/api/account/user_channel_basic_list.md` | query | - | no | - |
-| 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表</sub> | GET | `/live/v3/channel/management/list` | `../document-center/docs/live/api/account/get_simple_channel_list.md` | query | - | no | - |
-| 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表</sub> | POST | `/live/v3/channel/management/list-detail` | `../document-center/docs/live/api/account/channel_detail.md` | query/form | - | no | - |
-| 查询账号可用直播分钟数<br><sub>1、查询账号可用直播分钟数</sub> | POST | `/live/v2/user/get-user-durations` | `../document-center/docs/live/api/account/get_user_durations.md` | query/form | - | no | - |
-| 查询账号连麦分钟数<br><sub>1、查询账号连麦分钟数</sub> | GET | `/live/v3/channel/statistics/mic/get-duration` | `../document-center/docs/live/api/account/mic_duration.md` | query | - | no | - |
-| 查询账号收入详情<br><sub>1、接口URL中的{userId}为直播账号ID</sub> | POST | `/live/v2/user/{param}/get-income-detail` | `../document-center/docs/live/api/account/get_income_detail.md` | query/form | endDate, startDate | no | - |
+| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表</sub> | GET | `/live/v3/channel/basic/list` | `../document-center/docs/live/api/account/user_channel_basic_list.md` | query | - | yes: AccountService#userChannelBasicList (packages/sdk/src/services/account.service.ts) | - |
+| 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表</sub> | GET | `/live/v3/channel/management/list` | `../document-center/docs/live/api/account/get_simple_channel_list.md` | query | - | yes: AccountService#getSimpleChannelList (packages/sdk/src/services/account.service.ts) | - |
+| 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表</sub> | POST | `/live/v3/channel/management/list-detail` | `../document-center/docs/live/api/account/channel_detail.md` | query/form | - | yes: AccountService#channelDetailList (packages/sdk/src/services/account.service.ts) | - |
+| 查询账号可用直播分钟数<br><sub>1、查询账号可用直播分钟数</sub> | POST | `/live/v2/user/get-user-durations` | `../document-center/docs/live/api/account/get_user_durations.md` | query/form | - | yes: AccountService#getUserDurations (packages/sdk/src/services/account.service.ts) | - |
+| 查询账号连麦分钟数<br><sub>1、查询账号连麦分钟数</sub> | GET | `/live/v3/channel/statistics/mic/get-duration` | `../document-center/docs/live/api/account/mic_duration.md` | query | - | yes: AccountService#micDuration (packages/sdk/src/services/account.service.ts) | - |
+| 查询账号收入详情<br><sub>1、接口URL中的{userId}为直播账号ID</sub> | POST | `/live/v2/user/{param}/get-income-detail` | `../document-center/docs/live/api/account/get_income_detail.md` | query/form | endDate, startDate | yes: AccountService#getIncomeDetail (packages/sdk/src/services/account.service.ts) | - |
 | 查询账号信息<br><sub>1、查询用户账号信息接口</sub> | GET | `/live/v3/user/get-info` | `../document-center/docs/live/api/account/get_user_info.md` | query | - | yes: AccountService#getUserInfo (packages/sdk/src/services/account.service.ts) | - |
 | 查询直播分类<br><sub>1、查询直播分类信息</sub> | POST | `/live/v3/user/category/list` | `../document-center/docs/live/api/account/get_category_list.md` | query/form | - | yes: AccountService#getCategoryList (packages/sdk/src/services/account.service.ts) | - |
 | 创建直播分类<br><sub>1、创建直播分类</sub> | POST | `/live/v3/user/category/create` | `../document-center/docs/live/api/account/create_category.md` | query/form | categoryName | yes: AccountService#createCategory (packages/sdk/src/services/account.service.ts) | - |
-| 分页查询频道可设置接收转播频道列表<br><sub>1、通过一个（发起转播的）频道分页查询能够被它设置接收转播的频道列表</sub> | GET | `/live/v3/channel/basic/receive/list` | `../document-center/docs/live/api/account/receive_list.md` | query | channelId | no | - |
+| 分页查询频道可设置接收转播频道列表<br><sub>1、通过一个（发起转播的）频道分页查询能够被它设置接收转播的频道列表</sub> | GET | `/live/v3/channel/basic/receive/list` | `../document-center/docs/live/api/account/receive_list.md` | query | channelId | yes: AccountService#receiveList (packages/sdk/src/services/account.service.ts) | - |
 | 删除直播分类<br><sub>1、删除直播频道分类</sub> | POST | `/live/v3/user/category/delete` | `../document-center/docs/live/api/account/delete_category.md` | query/form | categoryId | yes: AccountService#deleteCategory (packages/sdk/src/services/account.service.ts) | - |
-| 设置账号单点登录token<br><sub>1、设置账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | `../document-center/docs/live/api/account/set_user_login_token.md` | query/form | token | no | - |
-| 设置直播子账号单点登录token<br><sub>1、设置直播子账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | `../document-center/docs/live/api/account/set_user_children_login_token.md` | query/form | childEmail, token | no | - |
-| 修改录制生成回调设置<br><sub>1、设置账号下录制视频通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-record-callback` | `../document-center/docs/live/api/account/set_record_callback.md` | query/form | - | no | - |
-| 修改频道的功能开关状态<br><sub>1、修改功能开关设置，可修改全局开关设置或频道开关设置</sub> | POST | `/live/v3/channel/switch/update` | `../document-center/docs/live/api/account/switch_update.md` | query/form | enabled, type | no | - |
+| 设置账号单点登录token<br><sub>1、设置账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | `../document-center/docs/live/api/account/set_user_login_token.md` | query/form | token | yes: AccountService#setUserLoginToken (packages/sdk/src/services/account.service.ts) | - |
+| 设置直播子账号单点登录token<br><sub>1、设置直播子账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | `../document-center/docs/live/api/account/set_user_children_login_token.md` | query/form | childEmail, token | yes: AccountService#setUserLoginToken (packages/sdk/src/services/account.service.ts) | - |
+| 修改录制生成回调设置<br><sub>1、设置账号下录制视频通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-record-callback` | `../document-center/docs/live/api/account/set_record_callback.md` | query/form | - | yes: AccountService#setRecordCallback (packages/sdk/src/services/account.service.ts) | - |
+| 修改频道的功能开关状态<br><sub>1、修改功能开关设置，可修改全局开关设置或频道开关设置</sub> | POST | `/live/v3/channel/switch/update` | `../document-center/docs/live/api/account/switch_update.md` | query/form | enabled, type | yes: AccountService#switchUpdate (packages/sdk/src/services/account.service.ts) | - |
 | 修改直播分类名称<br><sub>1、修改直播频道分类的名称</sub> | POST | `/live/v3/user/category/update-name` | `../document-center/docs/live/api/account/update_category_name.md` | query/form | categoryId, categoryName | yes: AccountService#updateCategoryName (packages/sdk/src/services/account.service.ts) | - |
 | 修改直播分类顺序<br><sub>1、修改直播频道分类的顺序</sub> | POST | `/live/v3/user/category/update-rank` | `../document-center/docs/live/api/account/update_category_rank.md` | query/form | afterCategoryId, categoryId | yes: AccountService#updateCategoryRank (packages/sdk/src/services/account.service.ts) | - |
-| 修改直播状态改变回调设置<br><sub>1、设置账号下频道直播状态改变通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-stream-callback` | `../document-center/docs/live/api/account/set_stream_callback.md` | query/form | - | no | - |
-| 修改转存成功回调设置<br><sub>1、设置账号下转存回放视频成功通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-playback-callback` | `../document-center/docs/live/api/account/set_playback_callback.md` | query/form | - | no | - |
+| 修改直播状态改变回调设置<br><sub>1、设置账号下频道直播状态改变通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-stream-callback` | `../document-center/docs/live/api/account/set_stream_callback.md` | query/form | - | yes: AccountService#setStreamCallback (packages/sdk/src/services/account.service.ts) | - |
+| 修改转存成功回调设置<br><sub>1、设置账号下转存回放视频成功通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-playback-callback` | `../document-center/docs/live/api/account/set_playback_callback.md` | query/form | - | yes: AccountService#setPlaybackCallback (packages/sdk/src/services/account.service.ts) | - |
 
 ### ai - AI 与数字人
 

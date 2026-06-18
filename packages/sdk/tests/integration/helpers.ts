@@ -11,6 +11,7 @@ interface IntegrationConfig {
 
 interface ChannelListResponse {
   contents?: Array<{ channelId?: string | number }>;
+  channels?: Array<string | number>;
 }
 
 interface PaginatedResponse<T = unknown> {
@@ -64,7 +65,7 @@ export async function discoverChannelId(client: PolyVClient): Promise<string | u
 
   const attempts: Array<() => Promise<ChannelListResponse>> = [
     () => client.v4Channel.channelDetailList({ pageNumber: 1, pageSize: 1 }),
-    () => client.account.channels({ page: 1, pageSize: 1 }),
+    () => client.account.channels(),
     () => client.account.userChannelBasicList({ page: 1, pageSize: 1 }),
     () => client.account.getSimpleChannelList({ page: 1, pageSize: 1 }),
     () => client.v4Channel.channelSimpleList({ pageNumber: 1, pageSize: 1 }),
@@ -74,7 +75,7 @@ export async function discoverChannelId(client: PolyVClient): Promise<string | u
   for (const attempt of attempts) {
     try {
       const response = await attempt();
-      const channelId = response.contents?.[0]?.channelId;
+      const channelId = response.contents?.[0]?.channelId ?? response.channels?.[0];
       if (channelId !== undefined && channelId !== null && String(channelId).trim() !== '') {
         return String(channelId);
       }

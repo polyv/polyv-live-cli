@@ -24,6 +24,8 @@ import type {
   ChannelsResponse,
   ChannelDetailParams,
   ChannelDetailResponse,
+  ChannelDetailListParams,
+  ChannelDetailListResponse,
   GetSimpleChannelListParams,
   GetSimpleChannelListResponse,
   UserChannelBasicListParams,
@@ -38,6 +40,7 @@ import type {
   GetUserDurationsResponse,
   MicDurationParams,
   MicDurationResponse,
+  SwitchGetParams,
   SwitchGetResponse,
   SwitchUpdateParams,
   SwitchUpdateResponse,
@@ -79,6 +82,70 @@ export class AccountService {
    */
   constructor(client: PolyVClient) {
     this.client = client;
+  }
+
+  private compactParams(params?: Record<string, unknown>): Record<string, unknown> {
+    if (!params) return {};
+
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== null)
+    );
+  }
+
+  private validateRequiredString(value: unknown, fieldName: string): string {
+    if (typeof value !== 'string' || value.trim() === '') {
+      throw new PolyVValidationError(`${fieldName} is required`);
+    }
+
+    return value.trim();
+  }
+
+  private validatePositiveInteger(value: unknown, fieldName: string): void {
+    if (value === undefined || value === null) return;
+    if (!Number.isInteger(value) || Number(value) < 1) {
+      throw new PolyVValidationError(`${fieldName} must be a positive integer`);
+    }
+  }
+
+  private validatePageParams(params?: { page?: number; pageSize?: number }): void {
+    this.validatePositiveInteger(params?.page, 'page');
+    this.validatePositiveInteger(params?.pageSize, 'pageSize');
+  }
+
+  private validateDate(value: string, fieldName: string): void {
+    this.validateRequiredString(value, fieldName);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      throw new PolyVValidationError(`${fieldName} must use yyyy-MM-dd format`);
+    }
+  }
+
+  private validateCallbackUrl(url: string | undefined): void {
+    if (!url || url.trim() === '') return;
+
+    try {
+      const parsedUrl = new URL(url);
+      if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+        throw new Error('invalid protocol');
+      }
+    } catch {
+      throw new PolyVValidationError('url must be a valid http:// or https:// URL');
+    }
+  }
+
+  private normalizeEnabled(enabled: SwitchUpdateParams['enabled']): 'Y' | 'N' {
+    if (typeof enabled === 'boolean') {
+      return enabled ? 'Y' : 'N';
+    }
+
+    if (enabled !== 'Y' && enabled !== 'N') {
+      throw new PolyVValidationError('enabled must be Y or N');
+    }
+
+    return enabled;
+  }
+
+  private successResponse(response: unknown): { success: boolean } {
+    return { success: response === true || response === 'success' || response === '' };
   }
 
   // ============================================
@@ -247,25 +314,24 @@ export class AccountService {
   // ============================================
 
   /**
-   * Get channel list with pagination
+   * Get channel ID list
    *
    * @param params - Query parameters
-   * @returns Paginated channel list
+   * @returns Channel ID list
    *
    * @example
    * ```typescript
    * const result = await client.account.channels({
-   *   page: 1,
-   *   pageSize: 10,
    *   categoryId: 123,
+   *   keyword: 'demo',
    * });
-   * console.log(result.contents);
+   * console.log(result.channels);
    * ```
    */
   async channels(params?: ChannelsParams): Promise<ChannelsResponse> {
-    const response = await this.client.httpClient.post<ChannelsResponse>(
+    const response = await this.client.httpClient.get<ChannelsResponse>(
       '/live/v3/user/channels',
-      params
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as ChannelsResponse;
   }
@@ -297,6 +363,23 @@ export class AccountService {
   }
 
   /**
+   * Get channel detail list
+   *
+   * @param params - Query parameters
+   * @returns Paginated channel detail list
+   */
+  async channelDetailList(params?: ChannelDetailListParams): Promise<ChannelDetailListResponse> {
+    this.validatePageParams(params);
+
+    const response = await this.client.httpClient.post<ChannelDetailListResponse>(
+      '/live/v3/channel/management/list-detail',
+      null,
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
+    );
+    return response as unknown as ChannelDetailListResponse;
+  }
+
+  /**
    * Get simple channel list (lightweight)
    *
    * @param params - Query parameters
@@ -313,9 +396,11 @@ export class AccountService {
    * ```
    */
   async getSimpleChannelList(params?: GetSimpleChannelListParams): Promise<GetSimpleChannelListResponse> {
+    this.validatePageParams(params);
+
     const response = await this.client.httpClient.get<GetSimpleChannelListResponse>(
-      '/live/v3/user/get-simple-channel-list',
-      { params }
+      '/live/v3/channel/management/list',
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as GetSimpleChannelListResponse;
   }
@@ -330,15 +415,26 @@ export class AccountService {
    * ```typescript
    * const result = await client.account.userChannelBasicList({
    *   page: 1,
-   *   pageSize: 10,
+   *   pageSize: 20,
+   *   categoryIds: '340019,345134',
    * });
    * console.log(result.contents);
    * ```
    */
   async userChannelBasicList(params?: UserChannelBasicListParams): Promise<UserChannelBasicListResponse> {
+    this.validatePageParams(params);
+    const categoryIds = Array.isArray(params?.categoryIds)
+      ? params.categoryIds.join(',')
+      : params?.categoryIds;
+
     const response = await this.client.httpClient.get<UserChannelBasicListResponse>(
-      '/live/v3/user/channel/basic-list',
-      { params }
+      '/live/v3/channel/basic/list',
+      {
+        params: this.compactParams({
+          ...params,
+          categoryIds,
+        }),
+      }
     );
     return response as unknown as UserChannelBasicListResponse;
   }
@@ -373,7 +469,7 @@ export class AccountService {
   // ============================================
 
   /**
-   * Get receive (income/expense) list
+   * Get channels that can receive a transmission
    *
    * @param params - Query parameters
    * @returns Receive list
@@ -381,18 +477,20 @@ export class AccountService {
    * @example
    * ```typescript
    * const result = await client.account.receiveList({
+   *   channelId: '2788479',
    *   page: 1,
    *   pageSize: 10,
-   *   startDate: '2024-01-01',
-   *   endDate: '2024-01-31',
    * });
    * console.log(result.contents);
    * ```
    */
   async receiveList(params?: ReceiveListParams): Promise<ReceiveListResponse> {
+    this.validateRequiredString(params?.channelId, 'channelId');
+    this.validatePageParams(params);
+
     const response = await this.client.httpClient.get<ReceiveListResponse>(
-      '/live/v3/finance/receive/list',
-      { params }
+      '/live/v3/channel/basic/receive/list',
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as ReceiveListResponse;
   }
@@ -406,60 +504,66 @@ export class AccountService {
    * @example
    * ```typescript
    * const result = await client.account.getIncomeDetail({
+   *   userId: '1b448be323',
    *   startDate: '2024-01-01',
    *   endDate: '2024-01-31',
    * });
-   * console.log(result.income);
+   * console.log(result.contents);
    * ```
    */
   async getIncomeDetail(params?: GetIncomeDetailParams): Promise<GetIncomeDetailResponse> {
-    const response = await this.client.httpClient.get<GetIncomeDetailResponse>(
-      '/live/v3/finance/get-income-detail',
-      { params }
+    if (!params) {
+      throw new PolyVValidationError('params is required');
+    }
+    const encodedUserId = encodeURIComponent(this.validateRequiredString(params.userId, 'userId'));
+    this.validateDate(params.startDate, 'startDate');
+    this.validateDate(params.endDate, 'endDate');
+    this.validatePageParams(params);
+
+    const { userId: _userId, ...requestParams } = params;
+    const response = await this.client.httpClient.post<GetIncomeDetailResponse>(
+      `/live/v2/user/${encodedUserId}/get-income-detail`,
+      null,
+      { params: this.compactParams(requestParams as Record<string, unknown>) }
     );
     return response as unknown as GetIncomeDetailResponse;
   }
 
   /**
-   * Get user viewing durations
+   * Get account live duration balance
    *
-   * @param params - Query parameters
    * @returns User durations
    *
    * @example
    * ```typescript
-   * const result = await client.account.getUserDurations({
-   *   userId: 'user123',
-   * });
-   * console.log(result.durations);
+   * const result = await client.account.getUserDurations();
+   * console.log(result.available, result.used);
    * ```
    */
   async getUserDurations(params?: GetUserDurationsParams): Promise<GetUserDurationsResponse> {
-    const response = await this.client.httpClient.get<GetUserDurationsResponse>(
-      '/live/v3/user/durations/get',
-      { params }
+    const response = await this.client.httpClient.post<GetUserDurationsResponse>(
+      '/live/v2/user/get-user-durations',
+      null,
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as GetUserDurationsResponse;
   }
 
   /**
-   * Get mic (co-host) duration statistics
+   * Get account mic duration statistics
    *
-   * @param params - Query parameters
    * @returns Mic duration
    *
    * @example
    * ```typescript
-   * const result = await client.account.micDuration({
-   *   channelId: '123456',
-   * });
-   * console.log(result.micDuration);
+   * const result = await client.account.micDuration();
+   * console.log(result.available, result.history);
    * ```
    */
   async micDuration(params?: MicDurationParams): Promise<MicDurationResponse> {
     const response = await this.client.httpClient.get<MicDurationResponse>(
-      '/live/v3/user/mic-duration/get',
-      { params }
+      '/live/v3/channel/statistics/mic/get-duration',
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as MicDurationResponse;
   }
@@ -475,13 +579,14 @@ export class AccountService {
    *
    * @example
    * ```typescript
-   * const result = await client.account.switchGet();
-   * console.log(result.config);
+   * const result = await client.account.switchGet({ channelId: '123456' });
+   * console.log(result[0]);
    * ```
    */
-  async switchGet(): Promise<SwitchGetResponse> {
+  async switchGet(params?: SwitchGetParams): Promise<SwitchGetResponse> {
     const response = await this.client.httpClient.get<SwitchGetResponse>(
-      '/live/v3/user/switch/get'
+      '/live/v3/channel/switch/get',
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as SwitchGetResponse;
   }
@@ -495,30 +600,31 @@ export class AccountService {
    * @example
    * ```typescript
    * const result = await client.account.switchUpdate({
-   *   param: 'authEnabled',
+   *   channelId: '123456',
+   *   type: 'mobileWatch',
    *   enabled: 'Y',
    * });
    * console.log(result.success);
    * ```
    */
   async switchUpdate(params: SwitchUpdateParams): Promise<SwitchUpdateResponse> {
-    if (!params.param) {
-      throw new PolyVValidationError('param is required');
-    }
+    const type = this.validateRequiredString(params.type ?? params.param, 'type');
     if (params.enabled === undefined || params.enabled === null) {
       throw new PolyVValidationError('enabled is required');
     }
 
-    const enabledValue = typeof params.enabled === 'boolean'
-      ? (params.enabled ? 'Y' : 'N')
-      : params.enabled;
-
     const response = await this.client.httpClient.post<SwitchUpdateResponse>(
-      '/live/v3/user/switch/update',
+      '/live/v3/channel/switch/update',
       null,
-      { params: { param: params.param, enabled: enabledValue } }
+      {
+        params: this.compactParams({
+          channelId: params.channelId,
+          type,
+          enabled: this.normalizeEnabled(params.enabled),
+        }),
+      }
     );
-    return { success: response as unknown as boolean };
+    return this.successResponse(response);
   }
 
   // ============================================
@@ -540,21 +646,15 @@ export class AccountService {
    * ```
    */
   async setStreamCallback(params: SetStreamCallbackParams): Promise<SetStreamCallbackResponse> {
-    // Validate URL format if provided
-    if (params.url && params.url.trim() !== '') {
-      try {
-        new URL(params.url);
-      } catch {
-        throw new PolyVValidationError('url must be a valid URL');
-      }
-    }
+    const encodedUserId = encodeURIComponent(this.validateRequiredString(params.userId, 'userId'));
+    this.validateCallbackUrl(params.url);
 
     const response = await this.client.httpClient.post<SetStreamCallbackResponse>(
-      '/live/v3/user/set-stream-callback',
+      `/live/v2/user/${encodedUserId}/set-stream-callback`,
       null,
-      { params: { url: params.url || '' } }
+      { params: this.compactParams({ url: params.url }) }
     );
-    return { success: response as unknown as boolean };
+    return this.successResponse(response);
   }
 
   /**
@@ -572,21 +672,15 @@ export class AccountService {
    * ```
    */
   async setRecordCallback(params: SetRecordCallbackParams): Promise<SetRecordCallbackResponse> {
-    // Validate URL format if provided
-    if (params.url && params.url.trim() !== '') {
-      try {
-        new URL(params.url);
-      } catch {
-        throw new PolyVValidationError('url must be a valid URL');
-      }
-    }
+    const encodedUserId = encodeURIComponent(this.validateRequiredString(params.userId, 'userId'));
+    this.validateCallbackUrl(params.url);
 
     const response = await this.client.httpClient.post<SetRecordCallbackResponse>(
-      '/live/v3/user/set-record-callback',
+      `/live/v2/user/${encodedUserId}/set-record-callback`,
       null,
-      { params: { url: params.url || '' } }
+      { params: this.compactParams({ url: params.url }) }
     );
-    return { success: response as unknown as boolean };
+    return this.successResponse(response);
   }
 
   /**
@@ -604,21 +698,15 @@ export class AccountService {
    * ```
    */
   async setPlaybackCallback(params: SetPlaybackCallbackParams): Promise<SetPlaybackCallbackResponse> {
-    // Validate URL format if provided
-    if (params.url && params.url.trim() !== '') {
-      try {
-        new URL(params.url);
-      } catch {
-        throw new PolyVValidationError('url must be a valid URL');
-      }
-    }
+    const encodedUserId = encodeURIComponent(this.validateRequiredString(params.userId, 'userId'));
+    this.validateCallbackUrl(params.url);
 
     const response = await this.client.httpClient.post<SetPlaybackCallbackResponse>(
-      '/live/v3/user/set-playback-callback',
+      `/live/v2/user/${encodedUserId}/set-playback-callback`,
       null,
-      { params: { url: params.url || '' } }
+      { params: this.compactParams({ url: params.url }) }
     );
-    return { success: response as unknown as boolean };
+    return this.successResponse(response);
   }
 
   // ============================================
@@ -645,11 +733,11 @@ export class AccountService {
     }
 
     const response = await this.client.httpClient.post<SetUserLoginTokenResponse>(
-      '/live/v3/user/set-login-token',
+      '/live/v3/user/set-sso-token',
       null,
       { params }
     );
-    return { success: response as unknown as boolean };
+    return this.successResponse(response);
   }
 
   /**
@@ -668,19 +756,20 @@ export class AccountService {
    * ```
    */
   async setUserChildrenLoginToken(params: SetUserChildrenLoginTokenParams): Promise<SetUserChildrenLoginTokenResponse> {
-    if (!params.userId) {
-      throw new PolyVValidationError('userId is required');
-    }
+    const childEmail = 'childEmail' in params
+      ? params.childEmail
+      : params.userId;
+    this.validateRequiredString(childEmail, 'childEmail');
     if (!params.token) {
       throw new PolyVValidationError('token is required');
     }
 
     const response = await this.client.httpClient.post<SetUserChildrenLoginTokenResponse>(
-      '/live/v3/user/set-children-login-token',
+      '/live/v3/user/set-sso-token',
       null,
-      { params }
+      { params: { childEmail, token: params.token } }
     );
-    return { success: response as unknown as boolean };
+    return this.successResponse(response);
   }
 
   // ============================================

@@ -75,11 +75,39 @@ export interface GetUserInfoResponse {
 // AC3: Channel List Types
 // ============================================
 
+export type AccountYnFlag = 'Y' | 'N';
+
+export type ChannelWatchStatus = 'live' | 'playback' | 'end' | 'waiting' | string;
+
+export interface AccountPaginatedResponse<T> {
+  pageSize: number;
+  pageNumber: number;
+  totalItems: number;
+  contents: T[];
+  startRow?: number;
+  firstPage?: boolean;
+  lastPage?: boolean;
+  prePageNumber?: number;
+  limit?: number;
+  nextPageNumber?: number;
+  endRow?: number;
+  totalPages?: number;
+  offset?: number;
+}
+
 export interface ChannelsParams {
+  /** Category ID. */
+  categoryId?: string | number;
+  /** Channel name keyword. */
+  keyword?: string;
+  /** Label ID. */
+  labelId?: string;
+  /**
+   * Deprecated compatibility fields from older SDK builds.
+   * The source account/channels API does not document pagination.
+   */
   page?: number;
   pageSize?: number;
-  categoryId?: number;
-  keyword?: string;
 }
 
 export interface ChannelListItem {
@@ -97,10 +125,7 @@ export interface ChannelListItem {
 }
 
 export interface ChannelsResponse {
-  contents: ChannelListItem[];
-  total: number;
-  pageSize: number;
-  currentPage: number;
+  channels: Array<string | number>;
 }
 
 export interface ChannelDetailParams {
@@ -137,32 +162,126 @@ export interface ChannelDetailResponse {
 }
 
 export interface GetSimpleChannelListParams {
-  categoryId?: number;
   page?: number;
   pageSize?: number;
-}
-
-export interface SimpleChannel {
-  channelId: string;
-  name: string;
-  scene?: string;
-}
-
-export interface GetSimpleChannelListResponse {
-  contents: SimpleChannel[];
-  total: number;
-}
-
-export interface UserChannelBasicListParams {
-  page?: number;
-  pageSize?: number;
+  categoryId?: string | number;
+  watchStatus?: ChannelWatchStatus;
   keyword?: string;
 }
 
-export interface UserChannelBasicListResponse {
-  contents: ChannelListItem[];
-  total: number;
+export interface ChannelDetailListParams {
+  page?: number;
+  pageSize?: number;
+  categoryId?: string | number;
+  watchStatus?: ChannelWatchStatus;
+  keyword?: string;
 }
+
+export interface ChannelAuthSetting {
+  channelId: string | number;
+  rank: number;
+  userId: string;
+  globalSettingEnabled: AccountYnFlag;
+  enabled: AccountYnFlag;
+  authType: string;
+  payAuthTips?: string | null;
+  price?: number | null;
+  watchEndTime?: number | null;
+  validTimePeriod?: number | null;
+  infoAuthTips?: string | null;
+  infoDesc?: string | null;
+  codeAuthTips?: string | null;
+  authCode?: string | null;
+  qcodeTips?: string | null;
+  qcodeImg?: string | null;
+  customKey?: string | null;
+  customUri?: string | null;
+  externalKey?: string | null;
+  externalUri?: string | null;
+  externalRedirectUri?: string | null;
+  directKey?: string | null;
+  trialWatchEnabled?: AccountYnFlag;
+  trialWatchTime?: number | null;
+  trialWatchEndTime?: number | null;
+  authTips?: string | null;
+  whiteListInputTips?: string | null;
+  whiteListEntryText?: string | null;
+  [key: string]: unknown;
+}
+
+export interface ChannelManagementDetail {
+  channelId: string | number;
+  name: string;
+  channelPasswd?: string;
+  categoryId?: string | number;
+  scene?: string;
+  watchStatus?: string;
+  watchStatusText?: string;
+  sceneText?: string;
+  watchUrl?: string;
+  content?: string;
+  startTime?: number;
+  channelLogo?: string;
+  splashImg?: string;
+  splashEnabled?: AccountYnFlag;
+  publisher?: string;
+  authSetting?: ChannelAuthSetting[];
+  [key: string]: unknown;
+}
+
+export type ChannelDetailListResponse = AccountPaginatedResponse<ChannelManagementDetail>;
+
+export interface SimpleChannel {
+  channelId: string | number;
+  name: string;
+  channelPasswd?: string;
+  categoryId?: string | number;
+  scene?: string;
+  watchStatus?: string;
+  watchStatusText?: string;
+  sceneText?: string;
+  watchUrl?: string;
+  [key: string]: unknown;
+}
+
+export type GetSimpleChannelListResponse = AccountPaginatedResponse<SimpleChannel>;
+
+export interface UserChannelBasicListParams {
+  /** Category IDs, either comma-separated or an array to be joined by comma. */
+  categoryIds?: string | number | Array<string | number>;
+  page?: number;
+  pageSize?: number;
+  /** Deprecated compatibility field from older SDK builds. */
+  keyword?: string;
+}
+
+export interface ChannelBasicVideo {
+  videoId: string;
+  videoPoolId: string;
+}
+
+export interface ChannelBasicItem {
+  channelId: string | number;
+  name: string;
+  publisher?: string;
+  startTime?: number;
+  pageView?: number;
+  likes?: number;
+  coverImg?: string;
+  splashImg?: string;
+  splashEnabled?: AccountYnFlag;
+  desc?: string;
+  maxViewer?: number;
+  watchStatus?: string;
+  watchStatusText?: string;
+  onlineNum?: number;
+  bgImg?: string | null;
+  videoList?: ChannelBasicVideo[] | null;
+  categoryId?: string | number;
+  [key: string]: unknown;
+}
+
+export type UserChannelBasicListResponse = AccountPaginatedResponse<ChannelBasicItem>;
 
 export interface UserPlaybackListParams {
   page?: number;
@@ -193,106 +312,111 @@ export interface UserPlaybackListResponse {
 // ============================================
 
 export interface ReceiveListParams {
+  channelId: string;
+  keyword?: string;
   page?: number;
   pageSize?: number;
-  startDate?: string;
-  endDate?: string;
-  type?: string;
 }
 
 export interface ReceiveItem {
-  id: string;
-  type: string;
-  amount: number;
-  balance: number;
-  desc: string;
-  createdTime: number;
+  channelId: string | number;
+  name: string;
+  channelPasswd?: string | null;
+  hostPasswd?: string | null;
+  attendeePasswd?: string | null;
+  categoryName?: string;
+  authType?: string;
+  status?: number;
+  recentViewCount?: number;
+  subChannelAccount?: string | null;
+  subChannelPasswd?: string | null;
+  watchUrl?: string | null;
+  watchQRCodeUrl?: string | null;
+  scene?: string;
+  type?: string;
+  startTime?: string | null;
+  guest?: string | null;
+  pureRtcEnabled?: AccountYnFlag;
+  transmitType?: string;
+  multipleRoom?: unknown;
+  creatorChildId?: string | null;
+  creatorName?: string | null;
+  rtcType?: string;
+  transmitChannelId?: string | null;
+  [key: string]: unknown;
 }
 
-export interface ReceiveListResponse {
-  contents: ReceiveItem[];
-  total: number;
-}
+export type ReceiveListResponse = AccountPaginatedResponse<ReceiveItem>;
 
 export interface GetIncomeDetailParams {
-  startDate?: string;
-  endDate?: string;
+  /** Live account user ID used in the URL path. */
+  userId: string;
+  /** Query start date in yyyy-MM-dd format. */
+  startDate: string;
+  /** Query end date in yyyy-MM-dd format. */
+  endDate: string;
+  /** Channel ID. Omit or pass 0 to query all channels. */
+  channelId?: string | number;
+  page?: number;
+  pageSize?: number;
 }
 
-export interface IncomeDetail {
-  totalIncome: number;
-  todayIncome: number;
-  monthIncome: number;
-  details: Array<{
-    type: string;
-    amount: number;
-    count: number;
-  }>;
+export interface IncomeDetailItem {
+  userId: string;
+  amount: number;
+  goodNum?: number | null;
+  channelId?: string | number;
+  payType: string;
+  payTypeName: string;
+  viewerName?: string;
+  payTime?: number;
+  weixinAppId?: string;
+  outTradeNo?: string;
+  openId?: string;
+  [key: string]: unknown;
 }
 
-export interface GetIncomeDetailResponse {
-  income: IncomeDetail;
-}
+export type GetIncomeDetailResponse = AccountPaginatedResponse<IncomeDetailItem>;
 
-export interface GetUserDurationsParams {
-  userId?: string;
-  channelId?: string;
-  startDate?: string;
-  endDate?: string;
-}
-
-export interface UserDurations {
-  totalDuration: number;
-  liveDuration: number;
-  playbackDuration: number;
-  details: Array<{
-    date: string;
-    liveDuration: number;
-    playbackDuration: number;
-  }>;
-}
+export interface GetUserDurationsParams {}
 
 export interface GetUserDurationsResponse {
-  durations: UserDurations;
+  userId: string;
+  available: number;
+  used: number;
 }
 
-export interface MicDurationParams {
-  channelId?: string;
-  startDate?: string;
-  endDate?: string;
-}
-
-export interface MicDuration {
-  totalDuration: number;
-  sessionCount: number;
-  avgDuration: number;
-}
+export interface MicDurationParams {}
 
 export interface MicDurationResponse {
-  micDuration: MicDuration;
+  available: number;
+  history: number;
 }
 
 // ============================================
 // AC5: Switch Config Types
 // ============================================
 
-export interface SwitchConfig {
-  globalSettingEnabled: boolean;
-  authEnabled: boolean;
-  recordEnabled: boolean;
-  playbackEnabled: boolean;
-  danmuEnabled: boolean;
-  // Add more switch config fields as needed
-  [key: string]: boolean | string | number;
+export interface SwitchGetParams {
+  /** Channel ID. Omit to query global switch settings. */
+  channelId?: string;
 }
 
-export interface SwitchGetResponse {
-  config: SwitchConfig;
+export interface SwitchConfigItem {
+  type: string;
+  enabled: AccountYnFlag;
 }
+
+export type SwitchGetResponse = SwitchConfigItem[];
 
 export interface SwitchUpdateParams {
-  param: string;
-  enabled: 'Y' | 'N' | boolean;
+  /** Channel ID. Omit to update global switch settings. */
+  channelId?: string;
+  /** Switch type from the source API. */
+  type?: string;
+  /** Deprecated compatibility alias for type. */
+  param?: string;
+  enabled: AccountYnFlag | boolean;
 }
 
 export interface SwitchUpdateResponse {
@@ -304,7 +428,9 @@ export interface SwitchUpdateResponse {
 // ============================================
 
 export interface SetStreamCallbackParams {
-  url: string;
+  /** Live account user ID used in the URL path. */
+  userId: string;
+  url?: string;
 }
 
 export interface SetStreamCallbackResponse {
@@ -312,7 +438,9 @@ export interface SetStreamCallbackResponse {
 }
 
 export interface SetRecordCallbackParams {
-  url: string;
+  /** Live account user ID used in the URL path. */
+  userId: string;
+  url?: string;
 }
 
 export interface SetRecordCallbackResponse {
@@ -320,7 +448,9 @@ export interface SetRecordCallbackResponse {
 }
 
 export interface SetPlaybackCallbackParams {
-  url: string;
+  /** Live account user ID used in the URL path. */
+  userId: string;
+  url?: string;
 }
 
 export interface SetPlaybackCallbackResponse {
@@ -339,10 +469,19 @@ export interface SetUserLoginTokenResponse {
   success: boolean;
 }
 
-export interface SetUserChildrenLoginTokenParams {
-  userId: string;
-  token: string;
-}
+export type SetUserChildrenLoginTokenParams =
+  | {
+      /** Child account email from the source API. */
+      childEmail: string;
+      token: string;
+      userId?: never;
+    }
+  | {
+      /** Deprecated compatibility alias. Prefer childEmail. */
+      userId: string;
+      token: string;
+      childEmail?: never;
+    };
 
 export interface SetUserChildrenLoginTokenResponse {
   success: boolean;
