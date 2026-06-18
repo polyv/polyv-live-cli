@@ -11,6 +11,7 @@
     "test:integration": "pnpm --filter polyv-live-cli test:integration",
     "test:cli:coverage": "pnpm --filter polyv-live-cli test:coverage",
     "test:sdk:coverage": "pnpm --filter polyv-live-api-sdk test:coverage",
+    "coverage:badge": "node scripts/update-coverage-badge.mjs",
     "lint": "pnpm -r lint",
     "clean": "pnpm -r clean",
     "changeset": "changeset",

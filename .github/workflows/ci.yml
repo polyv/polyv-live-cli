@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+permissions:
+  contents: write
+
 jobs:
   test:
     name: Test on Node.js ${{ matrix.node-version }}
@@ -52,6 +55,9 @@ jobs:
       - name: Run SDK tests with coverage
         run: pnpm --filter polyv-live-api-sdk test:coverage
 
+      - name: Update coverage badge
+        run: pnpm coverage:badge
+
       - name: Check Codecov token
         id: codecov-token
         env:
@@ -84,6 +90,20 @@ jobs:
       - name: Skip Codecov upload
         if: matrix.node-version == 20 && steps.codecov-token.outputs.available != 'true'
         run: echo "CODECOV_TOKEN is not configured; skipping Codecov uploads."
+
+      - name: Commit coverage badge
+        if: github.event_name == 'push'
+        run: |
+          if git diff --quiet README.md; then
+            echo "Coverage badge is already up to date."
+            exit 0
+          fi
+
+          git config user.name "37795272"
+          git config user.email "90859897+37795272@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: update coverage badge [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
   build-check:
     name: Build Check

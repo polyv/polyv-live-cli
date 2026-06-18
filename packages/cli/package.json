@@ -124,6 +124,7 @@
     ],
     "coverageReporters": [
       "text",
+      "json-summary",
       "lcov",
       "html"
     ],
