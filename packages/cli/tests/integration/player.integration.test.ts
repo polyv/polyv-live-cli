@@ -4,7 +4,9 @@
  * @since 10.5.0
  */
 
+import { ChannelServiceSdk } from '../../src/services/channel.service.sdk';
 import { PlayerServiceSdk } from '../../src/services/player.service.sdk';
+import { ChannelCreateRequest } from '../../src/types/channel';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
 
 // Use test config from CLI accounts or environment
@@ -12,17 +14,50 @@ const testConfig = getTestConfig();
 const shouldRunTests = hasRealCredentials();
 
 (shouldRunTests ? describe : describe.skip)('Player Integration Tests', () => {
+  let channelService: ChannelServiceSdk;
   let playerService: PlayerServiceSdk;
   let testChannelId: string;
+  let createdChannelIds: string[] = [];
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    channelService = new ChannelServiceSdk(testConfig.authConfig, {
+      baseUrl: testConfig.baseUrl,
+      timeout: 30000,
+      maxRetries: 3,
+      debug: false
+    });
     playerService = new PlayerServiceSdk(testConfig.authConfig, {
       baseUrl: testConfig.baseUrl,
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
-  });
+
+    const createRequest: ChannelCreateRequest = {
+      name: `Player Integration Test ${Date.now()}`,
+      newScene: 'topclass',
+      template: 'ppt'
+    };
+    const createdChannel = await channelService.createChannel(createRequest);
+    testChannelId = String(createdChannel.channelId);
+    createdChannelIds.push(testChannelId);
+  }, 30000);
+
+  afterAll(async () => {
+    const channelIds = [...createdChannelIds];
+    createdChannelIds = [];
+
+    if (channelIds.length === 0) {
+      return;
+    }
+
+    try {
+      await channelService.batchDeleteChannels({ channelIds });
+      console.log(`Cleaned up player integration test channels: ${channelIds.join(', ')}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`Failed to clean up player integration test channels ${channelIds.join(', ')}: ${message}`);
+    }
+  }, 30000);
 
   // ========================================
   // Player Config Get Tests

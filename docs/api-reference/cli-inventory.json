@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T18:27:33.765Z",
+  "generatedAt": "2026-06-19T19:16:05.487Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,18 +13,18 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 210,
-    "cliMissingLatestApis": 368,
-    "cliCoverage": 36.3,
-    "cliUsageReferences": 214,
-    "cliSdkServiceUsages": 214,
+    "cliUsedLatestApis": 243,
+    "cliMissingLatestApis": 335,
+    "cliCoverage": 42,
+    "cliUsageReferences": 248,
+    "cliSdkServiceUsages": 248,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 202,
+    "matchedApiIds": 235,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 282,
-    "cliTopLevelCommands": 35
+    "cliCommandPaths": 324,
+    "cliTopLevelCommands": 36
   },
   "modules": [
     {
@@ -46,16 +46,6 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 10,
       "cliCoverage": 13.7
-    },
-    {
-      "module": "web",
-      "label": "观看页与观看条件",
-      "total": 40,
-      "cliUsed": 7,
-      "cliMissing": 33,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 7,
-      "cliCoverage": 17.5
     },
     {
       "module": "chat",
@@ -195,6 +185,16 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 10,
+      "cliCoverage": 100
+    },
+    {
+      "module": "web",
+      "label": "观看页与观看条件",
+      "total": 40,
+      "cliUsed": 40,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 40,
       "cliCoverage": 100
     },
     {
@@ -3252,6 +3252,504 @@
       "line": 80
     },
     {
+      "command": "web",
+      "path": [
+        "web"
+      ],
+      "depth": 1,
+      "signature": "web",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 67
+    },
+    {
+      "command": "web auth",
+      "path": [
+        "web",
+        "auth"
+      ],
+      "depth": 2,
+      "signature": "auth",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 209
+    },
+    {
+      "command": "web donate",
+      "path": [
+        "web",
+        "donate"
+      ],
+      "depth": 2,
+      "signature": "donate",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 168
+    },
+    {
+      "command": "web info",
+      "path": [
+        "web",
+        "info"
+      ],
+      "depth": 2,
+      "signature": "info",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 69
+    },
+    {
+      "command": "web menu",
+      "path": [
+        "web",
+        "menu"
+      ],
+      "depth": 2,
+      "signature": "menu",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 115
+    },
+    {
+      "command": "web setting",
+      "path": [
+        "web",
+        "setting"
+      ],
+      "depth": 2,
+      "signature": "setting",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 197
+    },
+    {
+      "command": "web share",
+      "path": [
+        "web",
+        "share"
+      ],
+      "depth": 2,
+      "signature": "share",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 186
+    },
+    {
+      "command": "web auth auth-url-update",
+      "path": [
+        "web",
+        "auth",
+        "auth-url-update"
+      ],
+      "depth": 3,
+      "signature": "auth-url-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 227
+    },
+    {
+      "command": "web auth authorized-address-set",
+      "path": [
+        "web",
+        "auth",
+        "authorized-address-set"
+      ],
+      "depth": 3,
+      "signature": "authorized-address-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 221
+    },
+    {
+      "command": "web auth enroll-list",
+      "path": [
+        "web",
+        "auth",
+        "enroll-list"
+      ],
+      "depth": 3,
+      "signature": "enroll-list",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 240
+    },
+    {
+      "command": "web auth external-set",
+      "path": [
+        "web",
+        "auth",
+        "external-set"
+      ],
+      "depth": 3,
+      "signature": "external-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 215
+    },
+    {
+      "command": "web auth record-field-get",
+      "path": [
+        "web",
+        "auth",
+        "record-field-get"
+      ],
+      "depth": 3,
+      "signature": "record-field-get",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 232
+    },
+    {
+      "command": "web auth record-info-download",
+      "path": [
+        "web",
+        "auth",
+        "record-info-download"
+      ],
+      "depth": 3,
+      "signature": "record-info-download",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 245
+    },
+    {
+      "command": "web auth record-info-list",
+      "path": [
+        "web",
+        "auth",
+        "record-info-list"
+      ],
+      "depth": 3,
+      "signature": "record-info-list",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 236
+    },
+    {
+      "command": "web auth type-set",
+      "path": [
+        "web",
+        "auth",
+        "type-set"
+      ],
+      "depth": 3,
+      "signature": "type-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 210
+    },
+    {
+      "command": "web auth whitelist",
+      "path": [
+        "web",
+        "auth",
+        "whitelist"
+      ],
+      "depth": 3,
+      "signature": "whitelist",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 250
+    },
+    {
+      "command": "web donate cash-update",
+      "path": [
+        "web",
+        "donate",
+        "cash-update"
+      ],
+      "depth": 3,
+      "signature": "cash-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 173
+    },
+    {
+      "command": "web donate get",
+      "path": [
+        "web",
+        "donate",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 169
+    },
+    {
+      "command": "web donate good-update",
+      "path": [
+        "web",
+        "donate",
+        "good-update"
+      ],
+      "depth": 3,
+      "signature": "good-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 180
+    },
+    {
+      "command": "web info channel-logo-update",
+      "path": [
+        "web",
+        "info",
+        "channel-logo-update"
+      ],
+      "depth": 3,
+      "signature": "channel-logo-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 90
+    },
+    {
+      "command": "web info channel-name-update",
+      "path": [
+        "web",
+        "info",
+        "channel-name-update"
+      ],
+      "depth": 3,
+      "signature": "channel-name-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 85
+    },
+    {
+      "command": "web info countdown-get",
+      "path": [
+        "web",
+        "info",
+        "countdown-get"
+      ],
+      "depth": 3,
+      "signature": "countdown-get",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 105
+    },
+    {
+      "command": "web info countdown-set",
+      "path": [
+        "web",
+        "info",
+        "countdown-set"
+      ],
+      "depth": 3,
+      "signature": "countdown-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 109
+    },
+    {
+      "command": "web info likes-get",
+      "path": [
+        "web",
+        "info",
+        "likes-get"
+      ],
+      "depth": 3,
+      "signature": "likes-get",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 95
+    },
+    {
+      "command": "web info likes-update",
+      "path": [
+        "web",
+        "info",
+        "likes-update"
+      ],
+      "depth": 3,
+      "signature": "likes-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 99
+    },
+    {
+      "command": "web info publisher-set",
+      "path": [
+        "web",
+        "info",
+        "publisher-set"
+      ],
+      "depth": 3,
+      "signature": "publisher-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 79
+    },
+    {
+      "command": "web info splash-get",
+      "path": [
+        "web",
+        "info",
+        "splash-get"
+      ],
+      "depth": 3,
+      "signature": "splash-get",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 70
+    },
+    {
+      "command": "web info splash-set",
+      "path": [
+        "web",
+        "info",
+        "splash-set"
+      ],
+      "depth": 3,
+      "signature": "splash-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 74
+    },
+    {
+      "command": "web menu add",
+      "path": [
+        "web",
+        "menu",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 121
+    },
+    {
+      "command": "web menu consulting-update",
+      "path": [
+        "web",
+        "menu",
+        "consulting-update"
+      ],
+      "depth": 3,
+      "signature": "consulting-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 157
+    },
+    {
+      "command": "web menu delete",
+      "path": [
+        "web",
+        "menu",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 140
+    },
+    {
+      "command": "web menu intro-set",
+      "path": [
+        "web",
+        "menu",
+        "intro-set"
+      ],
+      "depth": 3,
+      "signature": "intro-set",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 151
+    },
+    {
+      "command": "web menu list",
+      "path": [
+        "web",
+        "menu",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 116
+    },
+    {
+      "command": "web menu rank-update",
+      "path": [
+        "web",
+        "menu",
+        "rank-update"
+      ],
+      "depth": 3,
+      "signature": "rank-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 145
+    },
+    {
+      "command": "web menu tuwen-list",
+      "path": [
+        "web",
+        "menu",
+        "tuwen-list"
+      ],
+      "depth": 3,
+      "signature": "tuwen-list",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 162
+    },
+    {
+      "command": "web menu update",
+      "path": [
+        "web",
+        "menu",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 131
+    },
+    {
+      "command": "web setting global-enabled-update",
+      "path": [
+        "web",
+        "setting",
+        "global-enabled-update"
+      ],
+      "depth": 3,
+      "signature": "global-enabled-update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 198
+    },
+    {
+      "command": "web setting image-upload",
+      "path": [
+        "web",
+        "setting",
+        "image-upload"
+      ],
+      "depth": 3,
+      "signature": "image-upload",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 204
+    },
+    {
+      "command": "web share get",
+      "path": [
+        "web",
+        "share",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 187
+    },
+    {
+      "command": "web share update",
+      "path": [
+        "web",
+        "share",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 191
+    },
+    {
+      "command": "web auth whitelist download",
+      "path": [
+        "web",
+        "auth",
+        "whitelist",
+        "download"
+      ],
+      "depth": 4,
+      "signature": "download",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 257
+    },
+    {
+      "command": "web auth whitelist upload",
+      "path": [
+        "web",
+        "auth",
+        "whitelist",
+        "upload"
+      ],
+      "depth": 4,
+      "signature": "upload",
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 251
+    },
+    {
       "command": "webapp",
       "path": [
         "webapp"
@@ -3464,31 +3962,6 @@
       "missing": 63,
       "total": 106,
       "coverage": 40.6
-    },
-    {
-      "modules": [
-        "web"
-      ],
-      "title": "观看页配置",
-      "command": "新增 `web` 或扩展 `player`/`watch-condition`",
-      "rationale": "观看页菜单、暖场、点赞、图文、授权、登记表等配置适合 CLI 自动化，但当前只覆盖观看条件和白名单的一部分。",
-      "examples": [
-        "`web splash get/set`、`web menu add/update/delete`",
-        "`web share get/update`、`web likes get/update`",
-        "`web record-field get`、`web enroll list/export`"
-      ],
-      "relatedModules": [
-        {
-          "module": "web",
-          "label": "观看页与观看条件",
-          "missing": 33,
-          "total": 40,
-          "coverage": 17.5
-        }
-      ],
-      "missing": 33,
-      "total": 40,
-      "coverage": 17.5
     },
     {
       "modules": [
@@ -11587,6 +12060,14 @@
             "file": "packages/cli/src/services/player.service.sdk.ts",
             "line": 169,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateChannelName",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 30,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
       }
@@ -12313,6 +12794,14 @@
             "file": "packages/cli/src/services/player.service.sdk.ts",
             "line": 169,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateChannelName",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 30,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
       }
@@ -12350,6 +12839,14 @@
             "file": "packages/cli/src/services/player.service.sdk.ts",
             "line": 169,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateChannelName",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 30,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
       }
@@ -17780,6 +18277,14 @@
             "file": "packages/cli/src/services/player.service.sdk.ts",
             "line": 169,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateChannelName",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 30,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
       }
@@ -20515,8 +21020,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#enrollList",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 184,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20578,8 +21092,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getDonate",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 103,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20606,8 +21129,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getRecordInfo",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 179,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20634,8 +21166,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getRecordField",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 174,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20662,8 +21203,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#liveLikes",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 43,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20725,8 +21275,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getTuwenList",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 98,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20753,8 +21312,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getWeixinShare",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 118,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20781,8 +21349,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getMenuList",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 63,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20807,8 +21384,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getCountdown",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 53,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20833,8 +21419,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#getSplash",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 15,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20862,8 +21457,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#uploadWhiteList",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 141,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20928,8 +21532,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#deleteMenu",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 73,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20957,8 +21570,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#uploadImage",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 133,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20985,8 +21607,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateGood",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 113,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21015,8 +21646,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateGlobalEnabled",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 128,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21044,8 +21684,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateCash",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 108,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21072,8 +21721,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#downloadWhiteList",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 149,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21101,8 +21759,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#downloadRecordInfo",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 189,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21129,8 +21796,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setAuthType",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 154,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21194,8 +21870,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateLikes",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 48,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21276,6 +21961,14 @@
             "file": "packages/cli/src/services/player.service.sdk.ts",
             "line": 169,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateChannelName",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 30,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
       }
@@ -21304,8 +21997,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateChannelLogo",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 35,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21332,8 +22034,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setExternalAuth",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 159,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21360,8 +22071,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateWeixinShare",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 123,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21388,8 +22108,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setPublisher",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 25,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21416,8 +22145,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setAuthorizedAddress",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 164,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21442,8 +22180,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateAuthUrl",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21470,8 +22217,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateConsultingEnabled",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 93,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21499,8 +22255,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateRank",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 88,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21528,8 +22293,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#updateMenu",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 78,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21556,8 +22330,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setSplash",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 20,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21582,8 +22365,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setCountdown",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 58,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21611,8 +22403,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#setMenu",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 83,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21679,8 +22480,17 @@
         "file": "packages/sdk/src/services/web.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "WebService#addMenu",
+            "cliModule": "web",
+            "file": "packages/cli/src/services/web-service.ts",
+            "line": 68,
+            "sdkFile": "packages/sdk/src/services/web.service.ts"
+          }
+        ]
       }
     },
     {

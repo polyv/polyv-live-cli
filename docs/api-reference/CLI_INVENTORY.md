@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-19T18:27:33.765Z
+生成时间：2026-06-19T19:16:05.487Z
 
 ## 来源与规则
 
@@ -15,16 +15,16 @@
 | 指标 | 数值 |
 | --- | ---: |
 | 最新 API 数 | 578 |
-| CLI 已使用最新 API 数 | 210 |
-| CLI 未使用最新 API 数 | 368 |
-| CLI 最新 API 覆盖率 | 36.3% |
-| CLI 调用引用数 | 214 |
-| 其中 SDK service 调用 | 214 |
+| CLI 已使用最新 API 数 | 243 |
+| CLI 未使用最新 API 数 | 335 |
+| CLI 最新 API 覆盖率 | 42% |
+| CLI 调用引用数 | 248 |
+| 其中 SDK service 调用 | 248 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 282 |
-| CLI 一级命令数 | 35 |
+| CLI 命令路径数 | 324 |
+| CLI 一级命令数 | 36 |
 
 ## 模块覆盖率
 
@@ -32,7 +32,6 @@
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | `channel` | 频道 | 283 | 61 | 222 | 21.6% | 61 | 0 |
 | `user` | 用户与观众 | 73 | 10 | 63 | 13.7% | 10 | 0 |
-| `web` | 观看页与观看条件 | 40 | 7 | 33 | 17.5% | 7 | 0 |
 | `chat` | 聊天 | 45 | 14 | 31 | 31.1% | 14 | 0 |
 | `live_interaction` | 直播互动 | 30 | 11 | 19 | 36.7% | 11 | 0 |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% | 22 | 0 |
@@ -47,14 +46,14 @@
 | `root` | 根目录 | 2 | 2 | 0 | 100% | 2 | 0 |
 | `statistics` | 数据统计 | 1 | 1 | 0 | 100% | 1 | 0 |
 | `uncategorized` | 未分类 | 10 | 10 | 0 | 100% | 10 | 0 |
+| `web` | 观看页与观看条件 | 40 | 40 | 0 | 100% | 40 | 0 |
 | `webapp` | WebApp | 6 | 6 | 0 | 100% | 6 | 0 |
 
 ## 补齐建议
 
-- 缺口最大的模块：`channel` 222/283、`user` 63/73、`web` 33/40、`chat` 31/45、`live_interaction` 19/30。
+- 缺口最大的模块：`channel` 222/283、`user` 63/73、`chat` 31/45、`live_interaction` 19/30。
 - 频道高级能力：`channel` 子命令扩展。缺口：`channel` 222/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
 - 账号、组织与资源管理：新增 `user`、`group`，扩展 `platform`。缺口：`user` 63/73、`account` 0/22、`group` 0/11。这些接口更偏运营后台和批量管理，适合给内部自动化脚本使用。 建议入口：`account category *`、`account callback *`、`account duration`；`user product *`、`user viewer-label *`；`group quota *`、`group allocation-log list`。
-- 观看页配置：新增 `web` 或扩展 `player`/`watch-condition`。缺口：`web` 33/40。观看页菜单、暖场、点赞、图文、授权、登记表等配置适合 CLI 自动化，但当前只覆盖观看条件和白名单的一部分。 建议入口：`web splash get/set`、`web menu add/update/delete`；`web share get/update`、`web likes get/update`；`web record-field get`、`web enroll list/export`。
 - 聊天治理与机器人：扩展 `chat`，新增 `robot`。缺口：`chat` 31/45、`robot` 0/3。当前已有消息、禁言、踢人，但敏感词、公告、审核、角色、机器人配置仍大量缺失。 建议入口：`chat badword *`、`chat notice *`、`chat audit *`；`chat role teacher/admin get/update`；`robot setting get/update`、`robot stats`。
 - 互动活动补齐：扩展 `checkin`、`qa`、`questionnaire`、`lottery`，新增活动子命令。缺口：`live_interaction` 19/30。CLI 已有基础签到/问答/问卷/抽奖，但红包、福袋、邀请、任务奖励、观众分组等活动运营能力仍缺。 建议入口：`lottery group *`、`lottery blacklist *`；`interaction lucky-bag winners`、`interaction red-pack stats`；`interaction task-reward *`。
 
@@ -331,6 +330,48 @@
 | `watch-condition` | `packages/cli/src/commands/watch-condition.commands.ts:33` |
 | `watch-condition get` | `packages/cli/src/commands/watch-condition.commands.ts:39` |
 | `watch-condition set` | `packages/cli/src/commands/watch-condition.commands.ts:80` |
+| `web` | `packages/cli/src/commands/web.commands.ts:67` |
+| `web auth` | `packages/cli/src/commands/web.commands.ts:209` |
+| `web donate` | `packages/cli/src/commands/web.commands.ts:168` |
+| `web info` | `packages/cli/src/commands/web.commands.ts:69` |
+| `web menu` | `packages/cli/src/commands/web.commands.ts:115` |
+| `web setting` | `packages/cli/src/commands/web.commands.ts:197` |
+| `web share` | `packages/cli/src/commands/web.commands.ts:186` |
+| `web auth auth-url-update` | `packages/cli/src/commands/web.commands.ts:227` |
+| `web auth authorized-address-set` | `packages/cli/src/commands/web.commands.ts:221` |
+| `web auth enroll-list` | `packages/cli/src/commands/web.commands.ts:240` |
+| `web auth external-set` | `packages/cli/src/commands/web.commands.ts:215` |
+| `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
+| `web auth record-info-download` | `packages/cli/src/commands/web.commands.ts:245` |
+| `web auth record-info-list` | `packages/cli/src/commands/web.commands.ts:236` |
+| `web auth type-set` | `packages/cli/src/commands/web.commands.ts:210` |
+| `web auth whitelist` | `packages/cli/src/commands/web.commands.ts:250` |
+| `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
+| `web donate get` | `packages/cli/src/commands/web.commands.ts:169` |
+| `web donate good-update` | `packages/cli/src/commands/web.commands.ts:180` |
+| `web info channel-logo-update` | `packages/cli/src/commands/web.commands.ts:90` |
+| `web info channel-name-update` | `packages/cli/src/commands/web.commands.ts:85` |
+| `web info countdown-get` | `packages/cli/src/commands/web.commands.ts:105` |
+| `web info countdown-set` | `packages/cli/src/commands/web.commands.ts:109` |
+| `web info likes-get` | `packages/cli/src/commands/web.commands.ts:95` |
+| `web info likes-update` | `packages/cli/src/commands/web.commands.ts:99` |
+| `web info publisher-set` | `packages/cli/src/commands/web.commands.ts:79` |
+| `web info splash-get` | `packages/cli/src/commands/web.commands.ts:70` |
+| `web info splash-set` | `packages/cli/src/commands/web.commands.ts:74` |
+| `web menu add` | `packages/cli/src/commands/web.commands.ts:121` |
+| `web menu consulting-update` | `packages/cli/src/commands/web.commands.ts:157` |
+| `web menu delete` | `packages/cli/src/commands/web.commands.ts:140` |
+| `web menu intro-set` | `packages/cli/src/commands/web.commands.ts:151` |
+| `web menu list` | `packages/cli/src/commands/web.commands.ts:116` |
+| `web menu rank-update` | `packages/cli/src/commands/web.commands.ts:145` |
+| `web menu tuwen-list` | `packages/cli/src/commands/web.commands.ts:162` |
+| `web menu update` | `packages/cli/src/commands/web.commands.ts:131` |
+| `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
+| `web setting image-upload` | `packages/cli/src/commands/web.commands.ts:204` |
+| `web share get` | `packages/cli/src/commands/web.commands.ts:187` |
+| `web share update` | `packages/cli/src/commands/web.commands.ts:191` |
+| `web auth whitelist download` | `packages/cli/src/commands/web.commands.ts:257` |
+| `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:251` |
 | `webapp` | `packages/cli/src/commands/webapp.commands.ts:32` |
 | `webapp permission-list` | `packages/cli/src/commands/webapp.commands.ts:34` |
 | `webapp role` | `packages/cli/src/commands/webapp.commands.ts:39` |
@@ -619,7 +660,7 @@
 | 设置播放器片头广告<br><sub>1、接口用于设置某频道播放器的片头广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateHead` | query/form | - | PlayerService#updateHeadAdvert (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#updateHeadAdvert (packages/cli/src/services/player.service.sdk.ts:154) |
 | 设置播放器暂停广告<br><sub>1、接口用于设置某频道播放器的暂停广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateStop` | query/form | - | PlayerService#updateStopAdvert (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#updateStopAdvert (packages/cli/src/services/player.service.sdk.ts:159) |
 | 设置播放器自定义url跑马灯<br><sub>1、通过接口可以设置播放器内容保护自定义url跑马灯开关，在开启时需提交url参数。</sub> | GET | `/live/v2/channelRestrict/{param}/set-diyurl-marquee` | query | marqueeRestrict, url | ChannelService#setDiyUrlMarquee (packages/sdk/src/services/channel.service.ts) | no |
-| 设置播放器Logo<br><sub>1、修改播放器logo图片</sub> | POST | `/live/v2/channels/{param}/update` | query/form | logoImage, logoOpacity, logoPosition | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169) |
+| 设置播放器Logo<br><sub>1、修改播放器logo图片</sub> | POST | `/live/v2/channels/{param}/update` | query/form | logoImage, logoOpacity, logoPosition | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
 | 设置频道单点登录token<br><sub>1、设置频道单点登录的token</sub> | POST | `/live/v2/channels/{param}/set-token` | query/form | token | ChannelService#setChannelToken (packages/sdk/src/services/channel.service.ts) | no |
 | 设置频道重制课件配置信息<br><sub>1、设置频道重制课件配置信息</sub> | POST | `/live/v3/channel/pptRecord/setting` | query/form | - | ChannelService#updatePptRecordSetting (packages/sdk/src/services/channel.service.ts) | no |
 | 设置伪直播<br><sub>1、批量添加伪直播的视频，需预先将视频上传至点播系统或者视频来源于直播暂存录制</sub> | POST | `/live/v3/channel/stream/add-disk-videos` | query/form | channelId, vids | ChannelService#addDiskVideos (packages/sdk/src/services/channel.service.ts) | no |
@@ -643,8 +684,8 @@
 | 修改角色观众设置信息<br><sub>1、修改角色观众设置信息</sub> | POST | `/live/v4/channel/account/viewer/update` | json-body | channelId | V4ChannelService#updateAccountViewerConfig (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改角色信息<br><sub>1、修改助教或嘉宾的信息</sub> | POST | `/live/v4/channel/account/update` | json-body | account, channelId | V4ChannelService#updateAccountInfo (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改暖场设置开关<br><sub>1、通过频道号，修改暖场开关</sub> | POST | `/live/v3/channel/set-warmup-enabled` | query/form | channelId, warmUpEnabled | ChannelService#updateWarmupSwitch (packages/sdk/src/services/channel.service.ts) | no |
-| 修改暖场视频<br><sub>1、通过频道号，修改播放器的暖场视频</sub> | POST | `/live/v2/channels/{param}/update` | query/form | warmUpFlv | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169) |
-| 修改暖场图片<br><sub>1、通过频道号，修改播放器的暖场图片</sub> | POST | `/live/v2/channels/{param}/update` | query/form | coverImage | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169) |
+| 修改暖场视频<br><sub>1、通过频道号，修改播放器的暖场视频</sub> | POST | `/live/v2/channels/{param}/update` | query/form | warmUpFlv | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
+| 修改暖场图片<br><sub>1、通过频道号，修改播放器的暖场图片</sub> | POST | `/live/v2/channels/{param}/update` | query/form | coverImage | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
 | 修改频道关注公众号设置信息<br><sub>1、更新关注公众号设置接口</sub> | POST | `/live/v3/channel/promotion/update-channels-follow` | query/form | channelIds, qrCodeUrl | ChannelService#updateChannelsFollow (packages/sdk/src/services/channel.service.ts) | no |
 | 修改频道观看人数限制<br><sub>1、设置频道最大观看在线人数</sub> | POST | `/live/v2/channelRestrict/{param}/set-max-viewer` | query/form | maxViewer, userId | ChannelService#setMaxViewer (packages/sdk/src/services/channel.service.ts) | no |
 | 修改频道回调设置<br><sub>1、修改频道回调设置接口</sub> | POST | `/live/v3/channel/callback/update-setting` | query/form | channelId | ChannelService#updateCallbackSetting (packages/sdk/src/services/channel.service.ts) | no |
@@ -847,7 +888,7 @@
 | 设置频道内容保护（防录屏信息）<br><sub>1、通过频道号，设置频道内容保护（防录屏信息）</sub> | POST | `/live/v3/channel/anti/record/setting` | query/form | antiRecordType, channelId, content, fontSize, modelType | PlayerService#setAntiRecordSettings (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#setAntiRecordSettings (packages/cli/src/services/player.service.sdk.ts:144) |
 | 修改频道播放器片头广告<br><sub>1、管理系统设置频道播放器的片头广告：频道管理-观看页设置-营销-广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateHead` | query/form | - | PlayerService#updateHeadAdvert (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#updateHeadAdvert (packages/cli/src/services/player.service.sdk.ts:154) |
 | 修改频道播放器暂停广告<br><sub>1、管理系统修改频道播放器的暂停广告：频道管理-观看页设置-营销-广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateStop` | query/form | - | PlayerService#updateStopAdvert (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#updateStopAdvert (packages/cli/src/services/player.service.sdk.ts:159) |
-| 修改频道播放器中显示的logo<br><sub>1、管理系统修改播放器logo图片：频道管理-播放器管理-播放器-logo设置</sub> | POST | `/live/v2/channels/{param}/update` | query/form | - | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169) |
+| 修改频道播放器中显示的logo<br><sub>1、管理系统修改播放器logo图片：频道管理-播放器管理-播放器-logo设置</sub> | POST | `/live/v2/channels/{param}/update` | query/form | - | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
 
 ### robot - 数字人与机器人
 
@@ -967,46 +1008,46 @@
 
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 查询报名观看记录<br><sub>1、查询报名观看记录</sub> | GET | `/live/v3/channel/enroll/list` | query | channelId | WebService#enrollList (packages/sdk/src/services/web.service.ts) | no |
+| 查询报名观看记录<br><sub>1、查询报名观看记录</sub> | GET | `/live/v3/channel/enroll/list` | query | channelId | WebService#enrollList (packages/sdk/src/services/web.service.ts) | sdk: WebService#enrollList (packages/cli/src/services/web-service.ts:184) |
 | 查询频道白名单<br><sub>1、获取全局或频道的观看条件白名单列表</sub> | GET | `/live/v3/channel/auth/get-white-list` | query | rank | WebService#getWhiteList (packages/sdk/src/services/web.service.ts) | sdk: WebService#getWhiteList (packages/cli/src/services/whitelist-service.ts:90) |
-| 查询频道打赏设置<br><sub>1、获取全局或当前生效的打赏设置</sub> | GET | `/live/v3/channel/donate/get` | query | - | WebService#getDonate (packages/sdk/src/services/web.service.ts) | no |
-| 查询频道登记观看记录<br><sub>1、获取频道的登记观看列表数据内容</sub> | GET | `/live/v3/channel/auth/get-record-info` | query | channelId | WebService#getRecordInfo (packages/sdk/src/services/web.service.ts) | no |
-| 查询频道登记观看设置的字段信息<br><sub>1、获取频道或全局的登记观看字段</sub> | GET | `/live/v3/channel/auth/get-record-field` | query | rank | WebService#getRecordField (packages/sdk/src/services/web.service.ts) | no |
-| 查询频道点赞数和观看次数<br><sub>1、接口用于获取一个或者多个频道点赞数和观看热度</sub> | GET | `/live/v2/channels/live-likes` | query | channelIds | WebService#liveLikes (packages/sdk/src/services/web.service.ts) | no |
+| 查询频道打赏设置<br><sub>1、获取全局或当前生效的打赏设置</sub> | GET | `/live/v3/channel/donate/get` | query | - | WebService#getDonate (packages/sdk/src/services/web.service.ts) | sdk: WebService#getDonate (packages/cli/src/services/web-service.ts:103) |
+| 查询频道登记观看记录<br><sub>1、获取频道的登记观看列表数据内容</sub> | GET | `/live/v3/channel/auth/get-record-info` | query | channelId | WebService#getRecordInfo (packages/sdk/src/services/web.service.ts) | sdk: WebService#getRecordInfo (packages/cli/src/services/web-service.ts:179) |
+| 查询频道登记观看设置的字段信息<br><sub>1、获取频道或全局的登记观看字段</sub> | GET | `/live/v3/channel/auth/get-record-field` | query | rank | WebService#getRecordField (packages/sdk/src/services/web.service.ts) | sdk: WebService#getRecordField (packages/cli/src/services/web-service.ts:174) |
+| 查询频道点赞数和观看次数<br><sub>1、接口用于获取一个或者多个频道点赞数和观看热度</sub> | GET | `/live/v2/channels/live-likes` | query | channelIds | WebService#liveLikes (packages/sdk/src/services/web.service.ts) | sdk: WebService#liveLikes (packages/cli/src/services/web-service.ts:43) |
 | 查询频道观看条件<br><sub>1、查询频道观看条件</sub> | GET | `/live/v3/channel/auth/get` | query | - | WebService#getWatchCondition (packages/sdk/src/services/web.service.ts) | sdk: WebService#getWatchCondition (packages/cli/src/services/watch-condition-service.ts:43) |
-| 查询频道图文直播内容<br><sub>1、查询频道图文直播内容</sub> | GET | `/live/v3/channel/watch/tuwen/list` | query | channelId | WebService#getTuwenList (packages/sdk/src/services/web.service.ts) | no |
-| 查询频道微信分享信息(旧版)<br><sub>1、查询频道微信分享信息</sub> | GET | `/live/v3/channel/weixin-share/get` | query | channelId | WebService#getWeixinShare (packages/sdk/src/services/web.service.ts) | no |
-| 查询频道页面菜单信息<br><sub>1、查询频道页面菜单信息</sub> | GET | `/live/v3/channel/menu/list` | query | channelId | WebService#getMenuList (packages/sdk/src/services/web.service.ts) | no |
-| 查询频道直播开始时间<br><sub>1、接口用于获取倒计时设置的相关信息</sub> | GET | `/live/v2/channelSetting/{param}/get-countdown` | query | - | WebService#getCountdown (packages/sdk/src/services/web.service.ts) | no |
-| 查询引导图<br><sub>1、接口用于获取用户频道号引导图开关的状态，以及具体引导图的url</sub> | GET | `/live/v2/channelSetting/{param}/getSplash` | query | - | WebService#getSplash (packages/sdk/src/services/web.service.ts) | no |
-| 批量导入频道白名单<br><sub>1、设置频道或全局观看条件中的白名单列表</sub> | POST | `/live/v3/channel/auth/upload-white-list` | query/form | file, rank | WebService#uploadWhiteList (packages/sdk/src/services/web.service.ts) | no |
+| 查询频道图文直播内容<br><sub>1、查询频道图文直播内容</sub> | GET | `/live/v3/channel/watch/tuwen/list` | query | channelId | WebService#getTuwenList (packages/sdk/src/services/web.service.ts) | sdk: WebService#getTuwenList (packages/cli/src/services/web-service.ts:98) |
+| 查询频道微信分享信息(旧版)<br><sub>1、查询频道微信分享信息</sub> | GET | `/live/v3/channel/weixin-share/get` | query | channelId | WebService#getWeixinShare (packages/sdk/src/services/web.service.ts) | sdk: WebService#getWeixinShare (packages/cli/src/services/web-service.ts:118) |
+| 查询频道页面菜单信息<br><sub>1、查询频道页面菜单信息</sub> | GET | `/live/v3/channel/menu/list` | query | channelId | WebService#getMenuList (packages/sdk/src/services/web.service.ts) | sdk: WebService#getMenuList (packages/cli/src/services/web-service.ts:63) |
+| 查询频道直播开始时间<br><sub>1、接口用于获取倒计时设置的相关信息</sub> | GET | `/live/v2/channelSetting/{param}/get-countdown` | query | - | WebService#getCountdown (packages/sdk/src/services/web.service.ts) | sdk: WebService#getCountdown (packages/cli/src/services/web-service.ts:53) |
+| 查询引导图<br><sub>1、接口用于获取用户频道号引导图开关的状态，以及具体引导图的url</sub> | GET | `/live/v2/channelSetting/{param}/getSplash` | query | - | WebService#getSplash (packages/sdk/src/services/web.service.ts) | sdk: WebService#getSplash (packages/cli/src/services/web-service.ts:15) |
+| 批量导入频道白名单<br><sub>1、设置频道或全局观看条件中的白名单列表</sub> | POST | `/live/v3/channel/auth/upload-white-list` | query/form | file, rank | WebService#uploadWhiteList (packages/sdk/src/services/web.service.ts) | sdk: WebService#uploadWhiteList (packages/cli/src/services/web-service.ts:141) |
 | 删除频道白名单<br><sub>1、用于删除指定观看白名单（支持一键清空）</sub> | POST | `/live/v3/channel/auth/delete-white-list` | query/form | isClear, rank | WebService#deleteWhiteList (packages/sdk/src/services/web.service.ts) | sdk: WebService#deleteWhiteList (packages/cli/src/services/whitelist-service.ts:133) |
-| 删除频道菜单<br><sub>1、删除频道菜单</sub> | POST | `/live/v3/channel/menu/delete` | query/form | menuIds | WebService#deleteMenu (packages/sdk/src/services/web.service.ts) | no |
-| 上传频道所有装修图片素材<br><sub>1、接口用于上传图片素材，同时获取图片地址</sub> | POST | `/live/v3/common/upload-image` | query/form | file, type | WebService#uploadImage (packages/sdk/src/services/web.service.ts) | no |
-| 设置礼物打赏<br><sub>1、设置礼物打赏-现金支付礼物（旧版后台为：道具打赏）</sub> | POST | `/live/v3/channel/donate/update-good` | json-body | goods | WebService#updateGood (packages/sdk/src/services/web.service.ts) | no |
-| 设置频道是否应用通用设置<br><sub>1、接口用于设置〔是否应用通用设置〕，包括的功能有打赏设置，广告设置，观看条件设置，跑马灯，功能开关，播放限制，观看页的皮肤设置</sub> | POST | `/live/v3/channel/common/update-global-enabled` | query/form | channelId, enabled, globalEnabledType | WebService#updateGlobalEnabled (packages/sdk/src/services/web.service.ts) | no |
-| 设置现金打赏<br><sub>1、设置频道或者全局现金打赏（带上频道号为设置频道现金打赏，不带频道号默认为全局现金打赏设置）</sub> | POST | `/live/v3/channel/donate/update-cash` | json-body | cashes, cashMin | WebService#updateCash (packages/sdk/src/services/web.service.ts) | no |
-| 下载频道白名单<br><sub>1、下载全局或频道的观看条件白名单列表</sub> | GET | `/live/v3/channel/auth/download-white-list` | query | rank | WebService#downloadWhiteList (packages/sdk/src/services/web.service.ts) | no |
-| 下载频道登记观看记录<br><sub>1、下载频道的登记观看列表，包含登记观看记录字段和数据内容</sub> | GET | `/live/v3/channel/auth/download-record-info` | query | channelId, rank | WebService#downloadRecordInfo (packages/sdk/src/services/web.service.ts) | no |
-| 修改观看条件<br><sub>1、设置频道的观看条件</sub> | POST | `/live/v2/channelSetting/{param}/set-auth-type` | query/form | authType | WebService#setAuthType (packages/sdk/src/services/web.service.ts) | no |
+| 删除频道菜单<br><sub>1、删除频道菜单</sub> | POST | `/live/v3/channel/menu/delete` | query/form | menuIds | WebService#deleteMenu (packages/sdk/src/services/web.service.ts) | sdk: WebService#deleteMenu (packages/cli/src/services/web-service.ts:73) |
+| 上传频道所有装修图片素材<br><sub>1、接口用于上传图片素材，同时获取图片地址</sub> | POST | `/live/v3/common/upload-image` | query/form | file, type | WebService#uploadImage (packages/sdk/src/services/web.service.ts) | sdk: WebService#uploadImage (packages/cli/src/services/web-service.ts:133) |
+| 设置礼物打赏<br><sub>1、设置礼物打赏-现金支付礼物（旧版后台为：道具打赏）</sub> | POST | `/live/v3/channel/donate/update-good` | json-body | goods | WebService#updateGood (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateGood (packages/cli/src/services/web-service.ts:113) |
+| 设置频道是否应用通用设置<br><sub>1、接口用于设置〔是否应用通用设置〕，包括的功能有打赏设置，广告设置，观看条件设置，跑马灯，功能开关，播放限制，观看页的皮肤设置</sub> | POST | `/live/v3/channel/common/update-global-enabled` | query/form | channelId, enabled, globalEnabledType | WebService#updateGlobalEnabled (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateGlobalEnabled (packages/cli/src/services/web-service.ts:128) |
+| 设置现金打赏<br><sub>1、设置频道或者全局现金打赏（带上频道号为设置频道现金打赏，不带频道号默认为全局现金打赏设置）</sub> | POST | `/live/v3/channel/donate/update-cash` | json-body | cashes, cashMin | WebService#updateCash (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateCash (packages/cli/src/services/web-service.ts:108) |
+| 下载频道白名单<br><sub>1、下载全局或频道的观看条件白名单列表</sub> | GET | `/live/v3/channel/auth/download-white-list` | query | rank | WebService#downloadWhiteList (packages/sdk/src/services/web.service.ts) | sdk: WebService#downloadWhiteList (packages/cli/src/services/web-service.ts:149) |
+| 下载频道登记观看记录<br><sub>1、下载频道的登记观看列表，包含登记观看记录字段和数据内容</sub> | GET | `/live/v3/channel/auth/download-record-info` | query | channelId, rank | WebService#downloadRecordInfo (packages/sdk/src/services/web.service.ts) | sdk: WebService#downloadRecordInfo (packages/cli/src/services/web-service.ts:189) |
+| 修改观看条件<br><sub>1、设置频道的观看条件</sub> | POST | `/live/v2/channelSetting/{param}/set-auth-type` | query/form | authType | WebService#setAuthType (packages/sdk/src/services/web.service.ts) | sdk: WebService#setAuthType (packages/cli/src/services/web-service.ts:154) |
 | 修改频道单个白名单<br><sub>1、用于更新观看白名单信息</sub> | POST | `/live/v3/channel/auth/update-white-list` | query/form | code, oldCode, rank | WebService#updateWhiteList (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateWhiteList (packages/cli/src/services/whitelist-service.ts:119) |
-| 修改频道点赞数和观看次数<br><sub>1、设置频道的点赞数和观看热度</sub> | GET | `/live/v2/channels/{param}/update-likes` | query | - | WebService#updateLikes (packages/sdk/src/services/web.service.ts) | no |
+| 修改频道点赞数和观看次数<br><sub>1、设置频道的点赞数和观看热度</sub> | GET | `/live/v2/channels/{param}/update-likes` | query | - | WebService#updateLikes (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateLikes (packages/cli/src/services/web-service.ts:48) |
 | 修改频道观看条件<br><sub>1、修改频道或通用设置的观看条件（旧版直播后台-通用设置-观看条件）</sub> | POST | `/live/v3/channel/auth/update` | json-body | authSettings | ChannelService#updateWatchCondition (packages/sdk/src/services/channel.service.ts) | sdk: WebService#setWatchCondition (packages/cli/src/services/watch-condition-service.ts:57)<br>sdk: ChannelService#updateWatchCondition (packages/cli/src/setup/resource-handlers.ts:116) |
-| 修改频道名称<br><sub>1、设置频道名称</sub> | POST | `/live/v2/channels/{param}/update` | query/form | name | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169) |
-| 修改频道图标<br><sub>1、设置频道图标</sub> | POST | `/live/v2/channelSetting/{param}/setCoverImg` | query/form | imgfile | WebService#updateChannelLogo (packages/sdk/src/services/web.service.ts) | no |
-| 修改频道外部授权设置<br><sub>1、设置直播外部授权</sub> | POST | `/live/v2/channelSetting/{param}/auth-external` | query/form | externalUri | WebService#setExternalAuth (packages/sdk/src/services/web.service.ts) | no |
-| 修改频道微信分享信息(旧版)<br><sub>1、修改频道的微信分享相关设置</sub> | POST | `/live/v3/channel/weixin-share/update` | query/form | channelId | WebService#updateWeixinShare (packages/sdk/src/services/web.service.ts) | no |
-| 修改频道主持人姓名<br><sub>1、设置单个或者所有频道的主持人姓名</sub> | POST | `/live/v2/channelSetting/{param}/setPublisher` | query/form | publisher | WebService#setPublisher (packages/sdk/src/services/web.service.ts) | no |
-| 修改频道自定义授权设置<br><sub>1、修改频道自定义授权设置</sub> | POST | `/live/v2/channelSetting/{param}/oauth-custom` | query/form | customUri | WebService#setAuthorizedAddress (packages/sdk/src/services/web.service.ts) | no |
-| 修改设置授权认证URL<br><sub>1、设置频道和全局播放限制的授权认证URL，通过是否传channelId进行频道和全局区分</sub> | POST | `/live/v3/channel/restrict/update-auth-url` | query/form | - | WebService#updateAuthUrl (packages/sdk/src/services/web.service.ts) | no |
-| 修改提问功能开关<br><sub>1、开启或关闭咨询提问功能开关</sub> | POST | `/live/v2/channel/menu/{param}/update-consulting-enabled` | query/form | enabled | WebService#updateConsultingEnabled (packages/sdk/src/services/web.service.ts) | no |
-| 修改页面菜单排序<br><sub>1、设置直播频道菜单的顺序</sub> | POST | `/live/v3/channel/menu/update-rank` | query/form | channelId, menuIds | WebService#updateRank (packages/sdk/src/services/web.service.ts) | no |
-| 修改页面菜单信息<br><sub>1、修改页面菜单信息</sub> | POST | `/live/v3/channel/menu/update` | query/form | content, menuId | WebService#updateMenu (packages/sdk/src/services/web.service.ts) | no |
-| 修改引导图<br><sub>1、接口用于设置引导页开关以及引导图</sub> | POST | `/live/v2/channelSetting/{param}/setSplash` | query/form | splashEnabled | WebService#setSplash (packages/sdk/src/services/web.service.ts) | no |
-| 修改直播倒计时设置<br><sub>1、接口用于修改频道的倒计时设置</sub> | POST | `/live/v2/channelSetting/{param}/set-countdown` | query/form | - | WebService#setCountdown (packages/sdk/src/services/web.service.ts) | no |
-| 修改直播介绍菜单<br><sub>1、设置自定义菜单中用户设置菜单的直播介绍</sub> | POST | `/live/v2/channelSetting/{param}/{param}/set-menu` | query/form | content, menuType | WebService#setMenu (packages/sdk/src/services/web.service.ts) | no |
+| 修改频道名称<br><sub>1、设置频道名称</sub> | POST | `/live/v2/channels/{param}/update` | query/form | name | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
+| 修改频道图标<br><sub>1、设置频道图标</sub> | POST | `/live/v2/channelSetting/{param}/setCoverImg` | query/form | imgfile | WebService#updateChannelLogo (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateChannelLogo (packages/cli/src/services/web-service.ts:35) |
+| 修改频道外部授权设置<br><sub>1、设置直播外部授权</sub> | POST | `/live/v2/channelSetting/{param}/auth-external` | query/form | externalUri | WebService#setExternalAuth (packages/sdk/src/services/web.service.ts) | sdk: WebService#setExternalAuth (packages/cli/src/services/web-service.ts:159) |
+| 修改频道微信分享信息(旧版)<br><sub>1、修改频道的微信分享相关设置</sub> | POST | `/live/v3/channel/weixin-share/update` | query/form | channelId | WebService#updateWeixinShare (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateWeixinShare (packages/cli/src/services/web-service.ts:123) |
+| 修改频道主持人姓名<br><sub>1、设置单个或者所有频道的主持人姓名</sub> | POST | `/live/v2/channelSetting/{param}/setPublisher` | query/form | publisher | WebService#setPublisher (packages/sdk/src/services/web.service.ts) | sdk: WebService#setPublisher (packages/cli/src/services/web-service.ts:25) |
+| 修改频道自定义授权设置<br><sub>1、修改频道自定义授权设置</sub> | POST | `/live/v2/channelSetting/{param}/oauth-custom` | query/form | customUri | WebService#setAuthorizedAddress (packages/sdk/src/services/web.service.ts) | sdk: WebService#setAuthorizedAddress (packages/cli/src/services/web-service.ts:164) |
+| 修改设置授权认证URL<br><sub>1、设置频道和全局播放限制的授权认证URL，通过是否传channelId进行频道和全局区分</sub> | POST | `/live/v3/channel/restrict/update-auth-url` | query/form | - | WebService#updateAuthUrl (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateAuthUrl (packages/cli/src/services/web-service.ts:169) |
+| 修改提问功能开关<br><sub>1、开启或关闭咨询提问功能开关</sub> | POST | `/live/v2/channel/menu/{param}/update-consulting-enabled` | query/form | enabled | WebService#updateConsultingEnabled (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateConsultingEnabled (packages/cli/src/services/web-service.ts:93) |
+| 修改页面菜单排序<br><sub>1、设置直播频道菜单的顺序</sub> | POST | `/live/v3/channel/menu/update-rank` | query/form | channelId, menuIds | WebService#updateRank (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateRank (packages/cli/src/services/web-service.ts:88) |
+| 修改页面菜单信息<br><sub>1、修改页面菜单信息</sub> | POST | `/live/v3/channel/menu/update` | query/form | content, menuId | WebService#updateMenu (packages/sdk/src/services/web.service.ts) | sdk: WebService#updateMenu (packages/cli/src/services/web-service.ts:78) |
+| 修改引导图<br><sub>1、接口用于设置引导页开关以及引导图</sub> | POST | `/live/v2/channelSetting/{param}/setSplash` | query/form | splashEnabled | WebService#setSplash (packages/sdk/src/services/web.service.ts) | sdk: WebService#setSplash (packages/cli/src/services/web-service.ts:20) |
+| 修改直播倒计时设置<br><sub>1、接口用于修改频道的倒计时设置</sub> | POST | `/live/v2/channelSetting/{param}/set-countdown` | query/form | - | WebService#setCountdown (packages/sdk/src/services/web.service.ts) | sdk: WebService#setCountdown (packages/cli/src/services/web-service.ts:58) |
+| 修改直播介绍菜单<br><sub>1、设置自定义菜单中用户设置菜单的直播介绍</sub> | POST | `/live/v2/channelSetting/{param}/{param}/set-menu` | query/form | content, menuType | WebService#setMenu (packages/sdk/src/services/web.service.ts) | sdk: WebService#setMenu (packages/cli/src/services/web-service.ts:83) |
 | 增加频道单个白名单<br><sub>1、接口用于添加单个观看白名单</sub> | POST | `/live/v3/channel/auth/add-white-list` | query/form | code, rank | WebService#addWhiteList (packages/sdk/src/services/web.service.ts) | sdk: WebService#addWhiteList (packages/cli/src/services/whitelist-service.ts:104) |
-| 增加页面菜单<br><sub>1、添加一个频道菜单</sub> | POST | `/live/v3/channel/menu/add` | query/form | channelId, name, type | WebService#addMenu (packages/sdk/src/services/web.service.ts) | no |
+| 增加页面菜单<br><sub>1、添加一个频道菜单</sub> | POST | `/live/v3/channel/menu/add` | query/form | channelId, name, type | WebService#addMenu (packages/sdk/src/services/web.service.ts) | sdk: WebService#addMenu (packages/cli/src/services/web-service.ts:68) |
 
 ### webapp - WebApp
 

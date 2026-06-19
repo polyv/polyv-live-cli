@@ -43,6 +43,7 @@ import { registerMaterialCommands } from './commands/material.commands';
 import { registerWebAppCommands } from './commands/webapp.commands';
 import { registerRobotCommands } from './commands/robot.commands';
 import { registerPartnerCommands } from './commands/partner.commands';
+import { registerWebCommands } from './commands/web.commands';
 
 // Global error handlers
 process.on('uncaughtException', handleUncaughtError);
@@ -124,6 +125,7 @@ Commands:
   webapp                Manage WebApp roles and permissions
   robot                 Manage global robots
   partner               Manage partner account tools
+  web                   Manage watch page configuration
 
 Quick Start:
   $ polyv-live-cli account add <name> --app-id <id> --app-secret <secret>  # Add account
@@ -205,6 +207,7 @@ async function main(): Promise<void> {
   registerWebAppCommands(program);
   registerRobotCommands(program);
   registerPartnerCommands(program);
+  registerWebCommands(program);
 
   // Helper function to get all registered commands dynamically
   function getAllRegisteredCommands(): { topLevel: string[], subCommands: Map<string, string[]> } {
@@ -239,6 +242,7 @@ Quick Start:
   $ polyv-live-cli global --help     # Global settings
   $ polyv-live-cli group --help      # Group account resources
   $ polyv-live-cli finance --help    # Finance and moderation
+  $ polyv-live-cli web --help        # Watch page configuration
 
 Authentication:
   - Use 'polyv-live-cli account add' to add accounts
@@ -269,7 +273,7 @@ Authentication:
   }
   
   // Check if this is a valid command that should execute normally
-  const hasValidCommand = args.includes('channel') || args.includes('stream') || args.includes('product') || args.includes('coupon') || args.includes('setup') || args.includes('monitor') || args.includes('account') || args.includes('use') || args.includes('statistics') || args.includes('player') || args.includes('playback') || args.includes('document') || args.includes('session') || args.includes('record') || args.includes('chat') || args.includes('checkin') || args.includes('qa') || args.includes('questionnaire') || args.includes('lottery') || args.includes('donate') || args.includes('viewer') || args.includes('watch-condition') || args.includes('whitelist') || args.includes('platform') || args.includes('promotion') || args.includes('card-push') || args.includes('transmit') || args.includes('ai') || args.includes('global') || args.includes('group') || args.includes('finance') || args.includes('material') || args.includes('webapp') || args.includes('robot') || args.includes('partner');
+  const hasValidCommand = args.includes('channel') || args.includes('stream') || args.includes('product') || args.includes('coupon') || args.includes('setup') || args.includes('monitor') || args.includes('account') || args.includes('use') || args.includes('statistics') || args.includes('player') || args.includes('playback') || args.includes('document') || args.includes('session') || args.includes('record') || args.includes('chat') || args.includes('checkin') || args.includes('qa') || args.includes('questionnaire') || args.includes('lottery') || args.includes('donate') || args.includes('viewer') || args.includes('watch-condition') || args.includes('whitelist') || args.includes('platform') || args.includes('promotion') || args.includes('card-push') || args.includes('transmit') || args.includes('ai') || args.includes('global') || args.includes('group') || args.includes('finance') || args.includes('material') || args.includes('webapp') || args.includes('robot') || args.includes('partner') || args.includes('web');
   if (hasValidCommand) {
     // Let Commander.js handle the command execution
     try {
@@ -302,7 +306,7 @@ Authentication:
     );
     
     const hasCommands = args.some(arg =>
-      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'help' || arg === 'watch-condition' || arg === 'whitelist' || arg === 'transmit' || arg === 'global' || arg === 'group' || arg === 'finance' || arg === 'material' || arg === 'webapp' || arg === 'robot' || arg === 'partner'
+      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'help' || arg === 'watch-condition' || arg === 'whitelist' || arg === 'transmit' || arg === 'global' || arg === 'group' || arg === 'finance' || arg === 'material' || arg === 'webapp' || arg === 'robot' || arg === 'partner' || arg === 'web'
     );
     
     // Check for any potential command (even unknown ones)
@@ -591,8 +595,8 @@ Authentication:
   if (!isHelpOrVersion) {
     // Check if we have any actual commands
     const hasActualCommands = args.some(arg =>
-      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'whitelist' || arg === 'global' || arg === 'group' || arg === 'finance' || arg === 'material' || arg === 'webapp' || arg === 'robot' || arg === 'partner' ||
-      arg.startsWith('channel ') || arg.startsWith('stream ') || arg.startsWith('product ') || arg.startsWith('coupon ') || arg.startsWith('setup ') || arg.startsWith('monitor ') || arg.startsWith('account ') || arg.startsWith('use ') || arg.startsWith('statistics ') || arg.startsWith('player ') || arg.startsWith('playback ') || arg.startsWith('document ') || arg.startsWith('session ') || arg.startsWith('checkin ') || arg.startsWith('whitelist ') || arg.startsWith('global ') || arg.startsWith('group ') || arg.startsWith('finance ') || arg.startsWith('material ') || arg.startsWith('webapp ') || arg.startsWith('robot ') || arg.startsWith('partner ')
+      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'whitelist' || arg === 'global' || arg === 'group' || arg === 'finance' || arg === 'material' || arg === 'webapp' || arg === 'robot' || arg === 'partner' || arg === 'web' ||
+      arg.startsWith('channel ') || arg.startsWith('stream ') || arg.startsWith('product ') || arg.startsWith('coupon ') || arg.startsWith('setup ') || arg.startsWith('monitor ') || arg.startsWith('account ') || arg.startsWith('use ') || arg.startsWith('statistics ') || arg.startsWith('player ') || arg.startsWith('playback ') || arg.startsWith('document ') || arg.startsWith('session ') || arg.startsWith('checkin ') || arg.startsWith('whitelist ') || arg.startsWith('global ') || arg.startsWith('group ') || arg.startsWith('finance ') || arg.startsWith('material ') || arg.startsWith('webapp ') || arg.startsWith('robot ') || arg.startsWith('partner ') || arg.startsWith('web ')
     );
     
 
