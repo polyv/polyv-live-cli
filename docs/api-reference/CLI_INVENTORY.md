@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-19T19:16:05.487Z
+生成时间：2026-06-19T19:37:35.540Z
 
 ## 来源与规则
 
@@ -15,27 +15,27 @@
 | 指标 | 数值 |
 | --- | ---: |
 | 最新 API 数 | 578 |
-| CLI 已使用最新 API 数 | 243 |
-| CLI 未使用最新 API 数 | 335 |
-| CLI 最新 API 覆盖率 | 42% |
-| CLI 调用引用数 | 248 |
-| 其中 SDK service 调用 | 248 |
+| CLI 已使用最新 API 数 | 275 |
+| CLI 未使用最新 API 数 | 303 |
+| CLI 最新 API 覆盖率 | 47.6% |
+| CLI 调用引用数 | 279 |
+| 其中 SDK service 调用 | 279 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 324 |
+| CLI 命令路径数 | 362 |
 | CLI 一级命令数 | 36 |
 
 ## 模块覆盖率
 
 | 模块 | 名称 | 最新 API | CLI 已用 | CLI 未用 | 覆盖率 | SDK 调用覆盖 | 直接 HTTP 覆盖 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `channel` | 频道 | 283 | 61 | 222 | 21.6% | 61 | 0 |
+| `channel` | 频道 | 283 | 62 | 221 | 21.9% | 62 | 0 |
 | `user` | 用户与观众 | 73 | 10 | 63 | 13.7% | 10 | 0 |
-| `chat` | 聊天 | 45 | 14 | 31 | 31.1% | 14 | 0 |
 | `live_interaction` | 直播互动 | 30 | 11 | 19 | 36.7% | 11 | 0 |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% | 22 | 0 |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% | 13 | 0 |
+| `chat` | 聊天 | 45 | 45 | 0 | 100% | 45 | 0 |
 | `finance` | 财务与审核 | 7 | 7 | 0 | 100% | 7 | 0 |
 | `global` | 全局设置 | 4 | 4 | 0 | 100% | 4 | 0 |
 | `group` | 组织与套餐 | 11 | 11 | 0 | 100% | 11 | 0 |
@@ -51,10 +51,9 @@
 
 ## 补齐建议
 
-- 缺口最大的模块：`channel` 222/283、`user` 63/73、`chat` 31/45、`live_interaction` 19/30。
-- 频道高级能力：`channel` 子命令扩展。缺口：`channel` 222/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
+- 缺口最大的模块：`channel` 221/283、`user` 63/73、`live_interaction` 19/30。
+- 频道高级能力：`channel` 子命令扩展。缺口：`channel` 221/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
 - 账号、组织与资源管理：新增 `user`、`group`，扩展 `platform`。缺口：`user` 63/73、`account` 0/22、`group` 0/11。这些接口更偏运营后台和批量管理，适合给内部自动化脚本使用。 建议入口：`account category *`、`account callback *`、`account duration`；`user product *`、`user viewer-label *`；`group quota *`、`group allocation-log list`。
-- 聊天治理与机器人：扩展 `chat`，新增 `robot`。缺口：`chat` 31/45、`robot` 0/3。当前已有消息、禁言、踢人，但敏感词、公告、审核、角色、机器人配置仍大量缺失。 建议入口：`chat badword *`、`chat notice *`、`chat audit *`；`chat role teacher/admin get/update`；`robot setting get/update`、`robot stats`。
 - 互动活动补齐：扩展 `checkin`、`qa`、`questionnaire`、`lottery`，新增活动子命令。缺口：`live_interaction` 19/30。CLI 已有基础签到/问答/问卷/抽奖，但红包、福袋、邀请、任务奖励、观众分组等活动运营能力仍缺。 建议入口：`lottery group *`、`lottery blacklist *`；`interaction lucky-bag winners`、`interaction red-pack stats`；`interaction task-reward *`。
 
 ## CLI 命令面
@@ -124,19 +123,57 @@
 | `channel list` | `packages/cli/src/commands/channel.commands.ts:199` |
 | `channel status-valid` | `packages/cli/src/commands/channel.commands.ts:559` |
 | `channel update` | `packages/cli/src/commands/channel.commands.ts:342` |
-| `chat` | `packages/cli/src/commands/chat.commands.ts:45` |
-| `chat ban` | `packages/cli/src/commands/chat.commands.ts:229` |
-| `chat banned` | `packages/cli/src/commands/chat.commands.ts:355` |
-| `chat delete` | `packages/cli/src/commands/chat.commands.ts:166` |
-| `chat group-login-times` | `packages/cli/src/commands/chat.commands.ts:210` |
-| `chat kick` | `packages/cli/src/commands/chat.commands.ts:289` |
-| `chat kicked` | `packages/cli/src/commands/chat.commands.ts:385` |
-| `chat list` | `packages/cli/src/commands/chat.commands.ts:105` |
-| `chat send` | `packages/cli/src/commands/chat.commands.ts:51` |
-| `chat unban` | `packages/cli/src/commands/chat.commands.ts:259` |
-| `chat unkick` | `packages/cli/src/commands/chat.commands.ts:322` |
-| `chat banned list` | `packages/cli/src/commands/chat.commands.ts:358` |
-| `chat kicked list` | `packages/cli/src/commands/chat.commands.ts:388` |
+| `chat` | `packages/cli/src/commands/chat.commands.ts:87` |
+| `chat badword` | `packages/cli/src/commands/chat.commands.ts:568` |
+| `chat ban` | `packages/cli/src/commands/chat.commands.ts:282` |
+| `chat banned` | `packages/cli/src/commands/chat.commands.ts:408` |
+| `chat censor` | `packages/cli/src/commands/chat.commands.ts:676` |
+| `chat delete` | `packages/cli/src/commands/chat.commands.ts:219` |
+| `chat group-login-times` | `packages/cli/src/commands/chat.commands.ts:263` |
+| `chat kick` | `packages/cli/src/commands/chat.commands.ts:342` |
+| `chat kicked` | `packages/cli/src/commands/chat.commands.ts:438` |
+| `chat list` | `packages/cli/src/commands/chat.commands.ts:158` |
+| `chat message` | `packages/cli/src/commands/chat.commands.ts:463` |
+| `chat notice` | `packages/cli/src/commands/chat.commands.ts:632` |
+| `chat qa` | `packages/cli/src/commands/chat.commands.ts:664` |
+| `chat robot` | `packages/cli/src/commands/chat.commands.ts:738` |
+| `chat role` | `packages/cli/src/commands/chat.commands.ts:688` |
+| `chat send` | `packages/cli/src/commands/chat.commands.ts:104` |
+| `chat unban` | `packages/cli/src/commands/chat.commands.ts:312` |
+| `chat unkick` | `packages/cli/src/commands/chat.commands.ts:375` |
+| `chat badword add` | `packages/cli/src/commands/chat.commands.ts:577` |
+| `chat badword delete` | `packages/cli/src/commands/chat.commands.ts:587` |
+| `chat badword list` | `packages/cli/src/commands/chat.commands.ts:571` |
+| `chat banned delete` | `packages/cli/src/commands/chat.commands.ts:622` |
+| `chat banned forbid-list` | `packages/cli/src/commands/chat.commands.ts:612` |
+| `chat banned ip-add` | `packages/cli/src/commands/chat.commands.ts:595` |
+| `chat banned list` | `packages/cli/src/commands/chat.commands.ts:411` |
+| `chat banned user-list` | `packages/cli/src/commands/chat.commands.ts:604` |
+| `chat censor update` | `packages/cli/src/commands/chat.commands.ts:679` |
+| `chat kicked list` | `packages/cli/src/commands/chat.commands.ts:441` |
+| `chat message admin-send` | `packages/cli/src/commands/chat.commands.ts:482` |
+| `chat message alert-special` | `packages/cli/src/commands/chat.commands.ts:508` |
+| `chat message audit` | `packages/cli/src/commands/chat.commands.ts:518` |
+| `chat message custom-send` | `packages/cli/src/commands/chat.commands.ts:533` |
+| `chat message custom-send-encode` | `packages/cli/src/commands/chat.commands.ts:546` |
+| `chat message emit-by-user-id` | `packages/cli/src/commands/chat.commands.ts:558` |
+| `chat message hidden-send` | `packages/cli/src/commands/chat.commands.ts:466` |
+| `chat message online-count` | `packages/cli/src/commands/chat.commands.ts:491` |
+| `chat message speak-list` | `packages/cli/src/commands/chat.commands.ts:498` |
+| `chat notice add` | `packages/cli/src/commands/chat.commands.ts:645` |
+| `chat notice clean` | `packages/cli/src/commands/chat.commands.ts:656` |
+| `chat notice list` | `packages/cli/src/commands/chat.commands.ts:635` |
+| `chat qa list` | `packages/cli/src/commands/chat.commands.ts:667` |
+| `chat robot list-update` | `packages/cli/src/commands/chat.commands.ts:767` |
+| `chat robot pause` | `packages/cli/src/commands/chat.commands.ts:781` |
+| `chat robot setting-get` | `packages/cli/src/commands/chat.commands.ts:741` |
+| `chat robot setting-update` | `packages/cli/src/commands/chat.commands.ts:755` |
+| `chat robot stats` | `packages/cli/src/commands/chat.commands.ts:748` |
+| `chat role admin-get` | `packages/cli/src/commands/chat.commands.ts:691` |
+| `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:698` |
+| `chat role teacher-get` | `packages/cli/src/commands/chat.commands.ts:709` |
+| `chat role teacher-update` | `packages/cli/src/commands/chat.commands.ts:716` |
+| `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:728` |
 | `checkin` | `packages/cli/src/commands/checkin.commands.ts:32` |
 | `checkin list` | `packages/cli/src/commands/checkin.commands.ts:93` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
@@ -568,7 +605,7 @@
 | 获取观看页测试模式的访问令牌<br><sub>1、接口用于获取观看页测试模式的访问令牌</sub> | POST | `/live/v3/channel/watch/get-test-mode-token` | query/form | channelId | ChannelService#getTestModeToken (packages/sdk/src/services/channel.service.ts) | no |
 | 获取观众观看调用接口token<br><sub>1、获取观众观看调用接口token</sub> | POST | `/live/v3/channel/watch/get-api-token` | query/form | channelId, viewerId | ChannelService#getApiToken (packages/sdk/src/services/channel.service.ts) | no |
 | 获取频道关注公众号设置信息<br><sub>1、查询关注公众号设置接口</sub> | GET | `/live/v3/channel/promotion/list-channels-follow` | query | channelIds | ChannelService#listChannelsFollow (packages/sdk/src/services/channel.service.ts) | no |
-| 获取频道聊天室的在线人数<br><sub>1、获取频道聊天室的在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | query | channelId | ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | no |
+| 获取频道聊天室的在线人数<br><sub>1、获取频道聊天室的在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | query | channelId | ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#countOnlineUser (packages/cli/src/services/chat.service.sdk.ts:273) |
 | 获取频道聊天室在线人数接口<br><sub>1、获取频道聊天室在线人数接口</sub> | POST | `/live/v3/channel/chat/count-online-user` | query/form | channelId | ChannelService#getChatOnlineCount (packages/sdk/src/services/channel.service.ts) | no |
 | 获取频道商品统计概览<br><sub>1、查询频道商品整体统计数据概览（点击、下单、成交等指标汇总）</sub> | GET | `/live/v4/channel/product/stats/summary` | query | channelId | V4ChannelService#getProductStatsSummary (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 获取频道推流URL<br><sub>1、获取频道推流URL，由于推流地址可能发生变化，所以请在使用时获取</sub> | GET | `/live/v3/channel/stream/get-push-url` | query | channelId | ChannelService#getPushUrl (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPushUrl (packages/cli/src/services/stream.service.sdk.ts:63) |
@@ -729,51 +766,51 @@
 
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| （可隐藏）发送图文信息<br><sub>1、通过聊天室API，发送图文信息</sub> | POST | `/live/v1/channelSetting/{param}/send-chat` | query/form | content/imgUrl, userId | ChatService#sendChat (packages/sdk/src/services/chat.service.ts) | no |
-| （可隐藏）以管理员身份发送信息<br><sub>1、通过管理员，发送聊天消息</sub> | POST | `/live/v3/channel/chat/send` | query/form | channelId, content, role | ChatService#sendHiddenByAdmin (packages/sdk/src/services/chat.service.ts) | no |
-| 查询管理员身份信息<br><sub>1、通过频道号，查询管理员身份信息</sub> | GET | `/live/v2/channelSetting/{param}/get-chat-admin` | query | - | ChatService#getAdminInfo (packages/sdk/src/services/chat.service.ts) | no |
-| 查询聊天室在线人数<br><sub>1、通过频道号，查询频道聊天室当前在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | query | channelId | ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | no |
-| 查询频道公告列表<br><sub>1、查询频道公告列表</sub> | GET | `/live/v4/chat/list-bullentin` | query | channelId, pageNumber, pageSize | V4ChatService#listBulletins (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 查询频道禁言用户Userid/IP<br><sub>1、通过频道号，查询禁言的用户列表或者ip列表</sub> | GET | `/live/v3/channel/chat/get-banned-list` | query | channelId, type | ChatService#getChannelBannedUserList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getChannelBannedUserList (packages/cli/src/services/chat.service.sdk.ts:207) |
-| 查询频道聊天记录<br><sub>1、通过频道号，查询一段时间内的聊天记录</sub> | GET | `/live/v3/channel/chat/get-history-page` | query | channelId, endDay, startDay | ChatService#getHistoryPage (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getHistoryPage (packages/cli/src/services/chat.service.sdk.ts:94) |
-| 查询频道踢人列表<br><sub>1、通过频道号，查询踢人列表</sub> | POST | `/live/v3/channel/chat/list-kicked` | query/form | channelId | ChatService#getChannelKickedUserList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getChannelKickedUserList (packages/cli/src/services/chat.service.sdk.ts:236) |
-| 查询频道问答列表<br><sub>1、查询频道问答列表</sub> | GET | `/live/v4/chat/list-qa` | query | channelId, pageNumber, pageSize | V4ChatService#listQa (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 查询频道虚拟人数设置<br><sub>1、查询频道的虚拟人数设置</sub> | GET | `/live/v4/channel/robot/setting/get` | query | channelId | V4ChatService#getRobotSetting (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 查询频道虚拟人数详情<br><sub>1、查询虚拟人数统计情况</sub> | GET | `/live/v4/channel/robot/stats/get` | query | channelId | V4RobotService#getRobotStats (packages/sdk/src/services/v4/robot.service.ts) | no |
-| 查询频道严禁词/禁言ip<br><sub>1、通过频道号，查询严禁词或者禁言ip列表</sub> | GET | `/live/v3/channel/badword/list` | query | channelId | ChatService#getChannelBannedList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getChannelBannedList (packages/cli/src/services/chat.service.sdk.ts:226) |
-| 查询所有聊天记录<br><sub>1、查询账号下频道聊天记录</sub> | GET | `/live/v3/user/chat/get-speak-list` | query | - | ChatService#getSpeakList (packages/sdk/src/services/chat.service.ts) | no |
-| 查询账号禁言列表<br><sub>1、通过账号下的禁言列表</sub> | GET | `/live/v3/user/chat/banned-user/list` | query | - | ChatService#getUserBannedList (packages/sdk/src/services/chat.service.ts) | no |
-| 查询账号严禁词<br><sub>1、查询账号下通用设置的严禁词列表</sub> | GET | `/live/v3/user/badword/list` | query | - | ChatService#getUserBadwordList (packages/sdk/src/services/chat.service.ts) | no |
-| 发布公告<br><sub>1、发布频道公告</sub> | POST | `/live/v4/chat/add-bullentin` | query/form | channelId, content | V4ChatService#addBulletin (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 发送开播端弹窗消息<br><sub>1、用于直播中，给开播讲师以弹窗形式发送特定消息的能力（当前仅支持给讲师触发）</sub> | POST | `/live/v4/chat/alert-to-special` | query/form | channelId, message, title | ChatService#alertToSpecial (packages/sdk/src/services/chat.service.ts) | no |
-| 发送审核通过的聊天消息<br><sub>1、发送审核通过的聊天消息</sub> | POST | `/live/v4/chat/message/audit` | json-body | channelId, content, msgId, nickName, viewerId | ChatService#messageAudit (packages/sdk/src/services/chat.service.ts) | no |
-| 发送自定义消息<br><sub>1、发送聊天室自定义消息</sub> | GET | `/live/v4/chat/send-custom-message` | query | channelId | V4ChatService#sendCustomMessage (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 发送自定义消息<br><sub>1、发送聊天室自定义消息</sub> | POST | `/live/v4/chat/send-custom-message/encode` | query/form | channelId | V4ChatService#sendCustomMessageEncode (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 根据用户ID进行广播消息<br><sub>根据用户ID列表向指定频道内的用户广播消息</sub> | POST | `/live/v5/chat/redirect/channel/emit-by-userId/post` | json-body | payload, roomId, userIds | OtherService#emitByUserId (packages/sdk/src/services/other.service.ts) | no |
-| 更新聊天审核开关<br><sub>1、更新聊天审核开关</sub> | POST | `/live/v3/channel/chat/update-censor-enabled` | query/form | channelId | ChatService#updateCensorEnabled (packages/sdk/src/services/chat.service.ts) | no |
-| 管理员发送聊天信息<br><sub>1、通过HTTP接口发送聊天文本内容，可指定发言者的头像、头衔、昵称，无需连接聊天室</sub> | POST | `/live/v3/channel/chat/send-admin-msg` | query/form | apiVersion, channelId, nickName, pic | ChatService#sendAdminMsg (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#sendAdminMsg (packages/cli/src/services/chat.service.sdk.ts:68) |
-| 获取讲师信息<br><sub>1、获取讲师信息</sub> | GET | `/live/v3/channel/account/getTeacher` | query | channelId | ChatService#getTeacherInfo (packages/sdk/src/services/chat.service.ts) | no |
-| 获取聊天室在线列表<br><sub>1、通过频道号，获取聊天室在线列表</sub> | GET | `/front/userlistExternal` | query | roomId | ChatService#getUserList (packages/sdk/src/services/chat.service.ts) | no |
-| 禁言/解禁用户<br><sub>1、通过登录聊天室的userId，禁言或者解禁用户</sub> | POST | `/live/v3/channel/chat/banned-user` | query/form | channelId, userIds | ChatService#updateBannedUser (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateBannedUser (packages/cli/src/services/chat.service.sdk.ts:128) |
-| 禁言IP<br><sub>1、修改聊天室禁言ip</sub> | POST | `/live/v2/chat/{param}/addBannedIP` | query/form | ip | ChatService#addBannedIp (packages/sdk/src/services/chat.service.ts) | no |
-| 批量导入严禁词<br><sub>1、批量导入频道或者通用的严禁词</sub> | POST | `/live/v2/chat/{param}/addBadWords` | query/form | words | ChatService#addBadwords (packages/sdk/src/services/chat.service.ts) | no |
+| （可隐藏）发送图文信息<br><sub>1、通过聊天室API，发送图文信息</sub> | POST | `/live/v1/channelSetting/{param}/send-chat` | query/form | content/imgUrl, userId | ChatService#sendChat (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#sendChat (packages/cli/src/services/chat.service.sdk.ts:254) |
+| （可隐藏）以管理员身份发送信息<br><sub>1、通过管理员，发送聊天消息</sub> | POST | `/live/v3/channel/chat/send` | query/form | channelId, content, role | ChatService#sendHiddenByAdmin (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#sendHiddenByAdmin (packages/cli/src/services/chat.service.sdk.ts:264) |
+| 查询管理员身份信息<br><sub>1、通过频道号，查询管理员身份信息</sub> | GET | `/live/v2/channelSetting/{param}/get-chat-admin` | query | - | ChatService#getAdminInfo (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getAdminInfo (packages/cli/src/services/chat.service.sdk.ts:448) |
+| 查询聊天室在线人数<br><sub>1、通过频道号，查询频道聊天室当前在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | query | channelId | ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#countOnlineUser (packages/cli/src/services/chat.service.sdk.ts:273) |
+| 查询频道公告列表<br><sub>1、查询频道公告列表</sub> | GET | `/live/v4/chat/list-bullentin` | query | channelId, pageNumber, pageSize | V4ChatService#listBulletins (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#listBulletins (packages/cli/src/services/chat.service.sdk.ts:406) |
+| 查询频道禁言用户Userid/IP<br><sub>1、通过频道号，查询禁言的用户列表或者ip列表</sub> | GET | `/live/v3/channel/chat/get-banned-list` | query | channelId, type | ChatService#getChannelBannedUserList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getChannelBannedUserList (packages/cli/src/services/chat.service.sdk.ts:211) |
+| 查询频道聊天记录<br><sub>1、通过频道号，查询一段时间内的聊天记录</sub> | GET | `/live/v3/channel/chat/get-history-page` | query | channelId, endDay, startDay | ChatService#getHistoryPage (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getHistoryPage (packages/cli/src/services/chat.service.sdk.ts:98) |
+| 查询频道踢人列表<br><sub>1、通过频道号，查询踢人列表</sub> | POST | `/live/v3/channel/chat/list-kicked` | query/form | channelId | ChatService#getChannelKickedUserList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getChannelKickedUserList (packages/cli/src/services/chat.service.sdk.ts:240) |
+| 查询频道问答列表<br><sub>1、查询频道问答列表</sub> | GET | `/live/v4/chat/list-qa` | query | channelId, pageNumber, pageSize | V4ChatService#listQa (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#listQa (packages/cli/src/services/chat.service.sdk.ts:431) |
+| 查询频道虚拟人数设置<br><sub>1、查询频道的虚拟人数设置</sub> | GET | `/live/v4/channel/robot/setting/get` | query | channelId | V4ChatService#getRobotSetting (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#getRobotSetting (packages/cli/src/services/chat.service.sdk.ts:495) |
+| 查询频道虚拟人数详情<br><sub>1、查询虚拟人数统计情况</sub> | GET | `/live/v4/channel/robot/stats/get` | query | channelId | V4RobotService#getRobotStats (packages/sdk/src/services/v4/robot.service.ts) | sdk: V4RobotService#getRobotStats (packages/cli/src/services/chat.service.sdk.ts:500) |
+| 查询频道严禁词/禁言ip<br><sub>1、通过频道号，查询严禁词或者禁言ip列表</sub> | GET | `/live/v3/channel/badword/list` | query | channelId | ChatService#getChannelBannedList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getChannelBannedList (packages/cli/src/services/chat.service.sdk.ts:230) |
+| 查询所有聊天记录<br><sub>1、查询账号下频道聊天记录</sub> | GET | `/live/v3/user/chat/get-speak-list` | query | - | ChatService#getSpeakList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getSpeakList (packages/cli/src/services/chat.service.sdk.ts:278) |
+| 查询账号禁言列表<br><sub>1、通过账号下的禁言列表</sub> | GET | `/live/v3/user/chat/banned-user/list` | query | - | ChatService#getUserBannedList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getUserBannedList (packages/cli/src/services/chat.service.sdk.ts:374) |
+| 查询账号严禁词<br><sub>1、查询账号下通用设置的严禁词列表</sub> | GET | `/live/v3/user/badword/list` | query | - | ChatService#getUserBadwordList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getUserBadwordList (packages/cli/src/services/chat.service.sdk.ts:350) |
+| 发布公告<br><sub>1、发布频道公告</sub> | POST | `/live/v4/chat/add-bullentin` | query/form | channelId, content | V4ChatService#addBulletin (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#addBulletin (packages/cli/src/services/chat.service.sdk.ts:416) |
+| 发送开播端弹窗消息<br><sub>1、用于直播中，给开播讲师以弹窗形式发送特定消息的能力（当前仅支持给讲师触发）</sub> | POST | `/live/v4/chat/alert-to-special` | query/form | channelId, message, title | ChatService#alertToSpecial (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#alertToSpecial (packages/cli/src/services/chat.service.sdk.ts:288) |
+| 发送审核通过的聊天消息<br><sub>1、发送审核通过的聊天消息</sub> | POST | `/live/v4/chat/message/audit` | json-body | channelId, content, msgId, nickName, viewerId | ChatService#messageAudit (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#messageAudit (packages/cli/src/services/chat.service.sdk.ts:297) |
+| 发送自定义消息<br><sub>1、发送聊天室自定义消息</sub> | GET | `/live/v4/chat/send-custom-message` | query | channelId | V4ChatService#sendCustomMessage (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#sendCustomMessage (packages/cli/src/services/chat.service.sdk.ts:312) |
+| 发送自定义消息<br><sub>1、发送聊天室自定义消息</sub> | POST | `/live/v4/chat/send-custom-message/encode` | query/form | channelId | V4ChatService#sendCustomMessageEncode (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#sendCustomMessageEncode (packages/cli/src/services/chat.service.sdk.ts:330) |
+| 根据用户ID进行广播消息<br><sub>根据用户ID列表向指定频道内的用户广播消息</sub> | POST | `/live/v5/chat/redirect/channel/emit-by-userId/post` | json-body | payload, roomId, userIds | OtherService#emitByUserId (packages/sdk/src/services/other.service.ts) | sdk: OtherService#emitByUserId (packages/cli/src/services/chat.service.sdk.ts:341) |
+| 更新聊天审核开关<br><sub>1、更新聊天审核开关</sub> | POST | `/live/v3/channel/chat/update-censor-enabled` | query/form | channelId | ChatService#updateCensorEnabled (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateCensorEnabled (packages/cli/src/services/chat.service.sdk.ts:440) |
+| 管理员发送聊天信息<br><sub>1、通过HTTP接口发送聊天文本内容，可指定发言者的头像、头衔、昵称，无需连接聊天室</sub> | POST | `/live/v3/channel/chat/send-admin-msg` | query/form | apiVersion, channelId, nickName, pic | ChatService#sendAdminMsg (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#sendAdminMsg (packages/cli/src/services/chat.service.sdk.ts:72) |
+| 获取讲师信息<br><sub>1、获取讲师信息</sub> | GET | `/live/v3/channel/account/getTeacher` | query | channelId | ChatService#getTeacherInfo (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getTeacherInfo (packages/cli/src/services/chat.service.sdk.ts:463) |
+| 获取聊天室在线列表<br><sub>1、通过频道号，获取聊天室在线列表</sub> | GET | `/front/userlistExternal` | query | roomId | ChatService#getUserList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getUserList (packages/cli/src/services/chat.service.sdk.ts:485) |
+| 禁言/解禁用户<br><sub>1、通过登录聊天室的userId，禁言或者解禁用户</sub> | POST | `/live/v3/channel/chat/banned-user` | query/form | channelId, userIds | ChatService#updateBannedUser (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateBannedUser (packages/cli/src/services/chat.service.sdk.ts:132) |
+| 禁言IP<br><sub>1、修改聊天室禁言ip</sub> | POST | `/live/v2/chat/{param}/addBannedIP` | query/form | ip | ChatService#addBannedIp (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#addBannedIp (packages/cli/src/services/chat.service.sdk.ts:369) |
+| 批量导入严禁词<br><sub>1、批量导入频道或者通用的严禁词</sub> | POST | `/live/v2/chat/{param}/addBadWords` | query/form | words | ChatService#addBadwords (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#addBadwords (packages/cli/src/services/chat.service.sdk.ts:355) |
 | 批量设置签到功能<br><sub>1、批量设置签到功能</sub> | POST | `/live/v4/chat/batch-checkin` | json-body | channelId | V4ChatService#batchCheckin (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#batchCheckin (packages/cli/src/services/checkin-service.ts:71) |
-| 频道内取消踢人<br><sub>1、通过登录聊天室的userId，频道内取消踢出用户</sub> | POST | `/live/v4/chat/channel/forbid/unkick-users` | json-body | channelId, nickNames, viewerIds | ChatService#forbidChannelUnkickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidChannelUnkickUsers (packages/cli/src/services/chat.service.sdk.ts:181) |
-| 频道内踢人<br><sub>1、通过登录聊天室的userId，频道内踢出用户</sub> | POST | `/live/v4/chat/channel/forbid/kick-users` | json-body | channelId, nickNames, viewerIds | ChatService#forbidChannelKickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidChannelKickUsers (packages/cli/src/services/chat.service.sdk.ts:155) |
-| 清空频道公告信息<br><sub>1、清空频道公告信息</sub> | POST | `/live/v4/chat/notice/clean` | query/form | channelId | V4ChatService#cleanNotices (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 清空频道聊天记录<br><sub>1、通过频道号，删除全部聊天记录</sub> | GET | `/live/v2/chat/{param}/cleanChat` | query | - | ChatService#cleanChat (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#cleanChat (packages/cli/src/services/chat.service.sdk.ts:110) |
-| 全平台封禁用户列表<br><sub>1、全平台（账号下）封禁的聊天室用户列表（包括禁言、踢人等）</sub> | GET | `/live/v4/chat/forbid/list` | query | - | ChatService#getForbidUserList (packages/sdk/src/services/chat.service.ts) | no |
-| 全平台取消踢人<br><sub>1、通过登录聊天室的userId，取消踢出用户</sub> | POST | `/live/v4/chat/forbid/unkick-users` | json-body | nickNames, viewerIds | ChatService#forbidUnkickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidUnkickUsers (packages/cli/src/services/chat.service.sdk.ts:194) |
-| 全平台踢人<br><sub>1、通过登录聊天室的userId，踢出用户</sub> | POST | `/live/v4/chat/forbid/kick-users` | json-body | nickNames, viewerIds | ChatService#forbidKickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidKickUsers (packages/cli/src/services/chat.service.sdk.ts:168) |
-| 删除频道单条聊天记录<br><sub>1、通过聊天id，删除聊天记录</sub> | POST | `/live/v2/chat/{param}/delChat` | query/form | id | ChatService#delChat (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#delChat (packages/cli/src/services/chat.service.sdk.ts:114) |
-| 删除频道严禁词/禁言ip<br><sub>1、取消被禁言的ip或者删除严禁词</sub> | POST | `/live/v2/chat/{param}/delBanned` | query/form | content, type | ChatService#deleteChannelBanned (packages/sdk/src/services/chat.service.ts) | no |
-| 删除账号严禁词<br><sub>1、删除账号通用设置的严禁词，支持批量删除多个严禁词</sub> | POST | `/live/v3/user/badword/delete` | query/form | words | ChatService#deleteUserBadword (packages/sdk/src/services/chat.service.ts) | no |
-| 设置频道虚拟人数<br><sub>1、设置频道虚拟人数</sub> | POST | `/live/v4/channel/robot/setting/update` | query/form | addRobotModel, channelId, robotNumber | V4RobotService#updateRobotSetting (packages/sdk/src/services/v4/robot.service.ts) | no |
-| 设置频道虚拟人数及虚拟人<br><sub>1、设置频道虚拟人数及自定义虚拟人列表</sub> | POST | `/live/v4/channel/robot/setting-robot-list/update` | json-body | addRobotModel, channelId, robotNumber | V4ChatService#updateRobotListSetting (packages/sdk/src/services/v4/chat.service.ts) | no |
-| 停止频道虚拟人数<br><sub>1、设置虚拟人数分时生效后停止虚拟人数增加</sub> | POST | `/live/v4/channel/robot/pause` | query/form | channelId | V4RobotService#pauseRobot (packages/sdk/src/services/v4/robot.service.ts) | no |
-| 修改管理员身份信息<br><sub>1、通过频道号，修改管理员信息，提交参数都不能为空</sub> | POST | `/live/v2/channelSetting/{param}/set-chat-admin` | query/form | actor, avatar, nickname | ChatService#updateAdminInfo (packages/sdk/src/services/chat.service.ts) | no |
-| 修改讲师身份信息<br><sub>1、通过频道号，修改讲师的相关信息</sub> | POST | `/live/v3/channel/account/updateTeacher` | query/form | channelId | ChatService#updateTeacherInfo (packages/sdk/src/services/chat.service.ts) | no |
-| 账号设置禁言/解禁用户<br><sub>1、通过登录聊天室的userId，禁言或者解禁用户</sub> | POST | `/live/v3/user/chat/banned-user/update` | query/form | banned, viewerIds | ChatService#updateBannedViewer (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateBannedViewer (packages/cli/src/services/chat.service.sdk.ts:142) |
+| 频道内取消踢人<br><sub>1、通过登录聊天室的userId，频道内取消踢出用户</sub> | POST | `/live/v4/chat/channel/forbid/unkick-users` | json-body | channelId, nickNames, viewerIds | ChatService#forbidChannelUnkickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidChannelUnkickUsers (packages/cli/src/services/chat.service.sdk.ts:185) |
+| 频道内踢人<br><sub>1、通过登录聊天室的userId，频道内踢出用户</sub> | POST | `/live/v4/chat/channel/forbid/kick-users` | json-body | channelId, nickNames, viewerIds | ChatService#forbidChannelKickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidChannelKickUsers (packages/cli/src/services/chat.service.sdk.ts:159) |
+| 清空频道公告信息<br><sub>1、清空频道公告信息</sub> | POST | `/live/v4/chat/notice/clean` | query/form | channelId | V4ChatService#cleanNotices (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#cleanNotices (packages/cli/src/services/chat.service.sdk.ts:426) |
+| 清空频道聊天记录<br><sub>1、通过频道号，删除全部聊天记录</sub> | GET | `/live/v2/chat/{param}/cleanChat` | query | - | ChatService#cleanChat (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#cleanChat (packages/cli/src/services/chat.service.sdk.ts:114) |
+| 全平台封禁用户列表<br><sub>1、全平台（账号下）封禁的聊天室用户列表（包括禁言、踢人等）</sub> | GET | `/live/v4/chat/forbid/list` | query | - | ChatService#getForbidUserList (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#getForbidUserList (packages/cli/src/services/chat.service.sdk.ts:387) |
+| 全平台取消踢人<br><sub>1、通过登录聊天室的userId，取消踢出用户</sub> | POST | `/live/v4/chat/forbid/unkick-users` | json-body | nickNames, viewerIds | ChatService#forbidUnkickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidUnkickUsers (packages/cli/src/services/chat.service.sdk.ts:198) |
+| 全平台踢人<br><sub>1、通过登录聊天室的userId，踢出用户</sub> | POST | `/live/v4/chat/forbid/kick-users` | json-body | nickNames, viewerIds | ChatService#forbidKickUsers (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#forbidKickUsers (packages/cli/src/services/chat.service.sdk.ts:172) |
+| 删除频道单条聊天记录<br><sub>1、通过聊天id，删除聊天记录</sub> | POST | `/live/v2/chat/{param}/delChat` | query/form | id | ChatService#delChat (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#delChat (packages/cli/src/services/chat.service.sdk.ts:118) |
+| 删除频道严禁词/禁言ip<br><sub>1、取消被禁言的ip或者删除严禁词</sub> | POST | `/live/v2/chat/{param}/delBanned` | query/form | content, type | ChatService#deleteChannelBanned (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#deleteChannelBanned (packages/cli/src/services/chat.service.sdk.ts:397) |
+| 删除账号严禁词<br><sub>1、删除账号通用设置的严禁词，支持批量删除多个严禁词</sub> | POST | `/live/v3/user/badword/delete` | query/form | words | ChatService#deleteUserBadword (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#deleteUserBadword (packages/cli/src/services/chat.service.sdk.ts:364) |
+| 设置频道虚拟人数<br><sub>1、设置频道虚拟人数</sub> | POST | `/live/v4/channel/robot/setting/update` | query/form | addRobotModel, channelId, robotNumber | V4RobotService#updateRobotSetting (packages/sdk/src/services/v4/robot.service.ts) | sdk: V4RobotService#updateRobotSetting (packages/cli/src/services/chat.service.sdk.ts:511) |
+| 设置频道虚拟人数及虚拟人<br><sub>1、设置频道虚拟人数及自定义虚拟人列表</sub> | POST | `/live/v4/channel/robot/setting-robot-list/update` | json-body | addRobotModel, channelId, robotNumber | V4ChatService#updateRobotListSetting (packages/sdk/src/services/v4/chat.service.ts) | sdk: V4ChatService#updateRobotListSetting (packages/cli/src/services/chat.service.sdk.ts:530) |
+| 停止频道虚拟人数<br><sub>1、设置虚拟人数分时生效后停止虚拟人数增加</sub> | POST | `/live/v4/channel/robot/pause` | query/form | channelId | V4RobotService#pauseRobot (packages/sdk/src/services/v4/robot.service.ts) | sdk: V4RobotService#pauseRobot (packages/cli/src/services/chat.service.sdk.ts:543) |
+| 修改管理员身份信息<br><sub>1、通过频道号，修改管理员信息，提交参数都不能为空</sub> | POST | `/live/v2/channelSetting/{param}/set-chat-admin` | query/form | actor, avatar, nickname | ChatService#updateAdminInfo (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateAdminInfo (packages/cli/src/services/chat.service.sdk.ts:453) |
+| 修改讲师身份信息<br><sub>1、通过频道号，修改讲师的相关信息</sub> | POST | `/live/v3/channel/account/updateTeacher` | query/form | channelId | ChatService#updateTeacherInfo (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateTeacherInfo (packages/cli/src/services/chat.service.sdk.ts:474) |
+| 账号设置禁言/解禁用户<br><sub>1、通过登录聊天室的userId，禁言或者解禁用户</sub> | POST | `/live/v3/user/chat/banned-user/update` | query/form | banned, viewerIds | ChatService#updateBannedViewer (packages/sdk/src/services/chat.service.ts) | sdk: ChatService#updateBannedViewer (packages/cli/src/services/chat.service.sdk.ts:146) |
 
 ### finance - 财务与审核
 
@@ -921,7 +958,7 @@
 | 创建集团分帐号<br><sub>1、创建集团分帐号</sub> | POST | `/live/v4/group/user/isolation/create` | json-body | email, password | OtherService#createIsolation (packages/sdk/src/services/other.service.ts) | sdk: OtherService#createIsolation (packages/cli/src/services/group-service.ts:73) |
 | 分配分帐号资源<br><sub>1、分配分帐号资源</sub> | POST | `/live/v4/group/user/package-validity/update` | json-body | email | OtherService#updatePackageValidity (packages/sdk/src/services/other.service.ts) | sdk: OtherService#updatePackageValidity (packages/cli/src/services/group-service.ts:83) |
 | 分页查询邀请海报邀请数据<br><sub>1、分页查询邀请海报邀请数据</sub> | GET | `/live/v4/statistics/inviter-poster/list` | query | channelId | OtherService#getInviterPosterList (packages/sdk/src/services/other.service.ts) | sdk: OtherService#getInviterPosterList (packages/cli/src/services/statistics.service.sdk.ts:61) |
-| 根据频道id和场次id获取用户发言次数统计<br><sub>1、根据频道id和场次id获取用户发言次数统计</sub> | GET | `/live/v4/chat/get-group-login-times` | query | channelId | OtherService#getGroupLoginTimes (packages/sdk/src/services/other.service.ts) | sdk: OtherService#getGroupLoginTimes (packages/cli/src/services/chat.service.sdk.ts:243) |
+| 根据频道id和场次id获取用户发言次数统计<br><sub>1、根据频道id和场次id获取用户发言次数统计</sub> | GET | `/live/v4/chat/get-group-login-times` | query | channelId | OtherService#getGroupLoginTimes (packages/sdk/src/services/other.service.ts) | sdk: OtherService#getGroupLoginTimes (packages/cli/src/services/chat.service.sdk.ts:247) |
 | 频道状态验证<br><sub>1、查询频道合法状态</sub> | GET | `/live/v4/channel/status-valid` | query | channels | OtherService#checkChannelStatusValid (packages/sdk/src/services/other.service.ts) | sdk: OtherService#checkChannelStatusValid (packages/cli/src/services/channel.service.sdk.ts:235) |
 | 设置重点直播列表<br><sub>1、给部分账号提供设置重点直播列表，仅开通功能的账号可以使用</sub> | POST | `/live/v4/channel/ccb/focus/reset` | query/form | - | OtherService#resetCcbFocus (packages/sdk/src/services/other.service.ts) | sdk: OtherService#resetCcbFocus (packages/cli/src/services/channel.service.sdk.ts:244) |
 | 重置分账号应用密匙<br><sub>1、重置分账号应用密匙</sub> | POST | `/live/v4/group/user/secret/reset` | query/form | email | OtherService#resetAppSecret (packages/sdk/src/services/other.service.ts) | sdk: OtherService#resetAppSecret (packages/cli/src/services/group-service.ts:88) |

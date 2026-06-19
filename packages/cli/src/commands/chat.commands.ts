@@ -37,6 +37,48 @@ export function validateOutputFormat(value: string): 'table' | 'json' {
   return value as 'table' | 'json';
 }
 
+export function parsePositiveInteger(value: string): number {
+  const parsed = parseInt(value, 10);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error('Value must be a positive integer');
+  }
+  return parsed;
+}
+
+export function parseNonNegativeInteger(value: string): number {
+  const parsed = parseInt(value, 10);
+  if (!Number.isInteger(parsed) || parsed < 0) {
+    throw new Error('Value must be a non-negative integer');
+  }
+  return parsed;
+}
+
+export function parseBooleanOption(value: string): boolean {
+  if (value === 'true' || value === '1' || value === 'Y') return true;
+  if (value === 'false' || value === '0' || value === 'N') return false;
+  throw new Error('Value must be true/false, 1/0, or Y/N');
+}
+
+export function parseJoinHistoryList(value: string): 0 | 1 {
+  const parsed = parseInt(value, 10);
+  if (parsed !== 0 && parsed !== 1) {
+    throw new Error('joinHistoryList must be 0 or 1');
+  }
+  return parsed as 0 | 1;
+}
+
+export function parseCommaList(value: string): string[] {
+  return value.split(',').map(item => item.trim()).filter(Boolean);
+}
+
+export function parseRobotList(value: string): Array<{ name: string; avatar: string }> {
+  const parsed = JSON.parse(value);
+  if (!Array.isArray(parsed)) {
+    throw new Error('Robot list must be a JSON array');
+  }
+  return parsed;
+}
+
 /**
  * Registers chat-related commands with the CLI program
  * @param program Commander.js program instance
@@ -44,6 +86,17 @@ export function validateOutputFormat(value: string): 'table' | 'json' {
 export function registerChatCommands(program: Command): void {
   const chatCmd = program.command('chat');
   chatCmd.description('Manage live streaming chat messages');
+
+  async function withChatHandler(action: (handler: ChatHandler) => Promise<void>): Promise<void> {
+    try {
+      const parentOptions = program.opts();
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+      await action(new ChatHandler(authConfig, serviceConfig));
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  }
 
   // ========================================
   // chat send (AC #1)
@@ -406,6 +459,332 @@ Note:
         process.exit(1);
       }
     });
+
+  const messageCmd = chatCmd.command('message');
+  messageCmd.description('Manage advanced chat messages');
+
+  messageCmd
+    .command('hidden-send')
+    .description('Send hidden text or image message as a user')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('-u, --user-id <id>', 'user ID')
+    .option('--content <text>', 'message content')
+    .option('--img-url <url>', 'image URL')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.sendHiddenMessage({
+      channelId: options.channelId,
+      userId: options.userId,
+      content: options.content,
+      imgUrl: options.imgUrl,
+      output: options.output,
+    })));
+
+  messageCmd
+    .command('admin-send')
+    .description('Send hidden message as an admin role')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--content <text>', 'message content')
+    .requiredOption('--role <role>', 'sender role')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.sendHiddenByAdmin(options)));
+
+  messageCmd
+    .command('online-count')
+    .description('Get current chat online user count')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.countOnlineUser(options)));
+
+  messageCmd
+    .command('speak-list')
+    .description('List account chat speak records')
+    .option('--start-time <timestamp>', 'start time timestamp', parsePositiveInteger)
+    .option('--end-time <timestamp>', 'end time timestamp', parsePositiveInteger)
+    .option('--cursor <cursor>', 'pagination cursor')
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.listSpeak(options)));
+
+  messageCmd
+    .command('alert-special')
+    .description('Send popup alert to broadcaster')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--title <text>', 'popup title')
+    .requiredOption('--message <text>', 'popup message')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.alertToSpecial(options)));
+
+  messageCmd
+    .command('audit')
+    .description('Submit an approved chat message audit item')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--msg-id <id>', 'message ID')
+    .requiredOption('--viewer-id <id>', 'viewer ID')
+    .requiredOption('--nick-name <name>', 'viewer nickname')
+    .requiredOption('--content <text>', 'message content')
+    .option('--avatar <url>', 'viewer avatar URL')
+    .option('--session-id <id>', 'session ID')
+    .option('--viewer-type <type>', 'viewer type')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.auditMessage(options)));
+
+  messageCmd
+    .command('custom-send')
+    .description('Send custom chat message')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--content <text>', 'message content')
+    .option('--img-url <url>', 'image URL')
+    .option('--join-history-list <value>', 'join history list (true|false)', parseBooleanOption)
+    .option('--watch-type <type>', 'watch target type')
+    .option('--important <value>', 'important message flag (true|false)', parseBooleanOption)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.sendCustomMessage(options)));
+
+  messageCmd
+    .command('custom-send-encode')
+    .description('Send URL-safe base64 encoded custom chat message')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--content <text>', 'encoded message content')
+    .option('--img-url <url>', 'image URL')
+    .option('--join-history-list <value>', 'join history list (0|1)', parseJoinHistoryList)
+    .option('--watch-type <type>', 'watch target type')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.sendCustomMessageEncode(options)));
+
+  messageCmd
+    .command('emit-by-user-id')
+    .description('Broadcast message to specific users by user ID')
+    .requiredOption('-r, --room-id <id>', 'room ID')
+    .requiredOption('-u, --user-ids <ids>', 'user IDs, comma-separated', parseCommaList)
+    .requiredOption('--payload <text>', 'message payload')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.emitByUserId(options)));
+
+  const badwordCmd = chatCmd.command('badword');
+  badwordCmd.description('Manage account and channel badwords');
+
+  badwordCmd
+    .command('list')
+    .description('List account badwords')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.listUserBadwords(options)));
+
+  badwordCmd
+    .command('add')
+    .description('Add account or channel badwords')
+    .requiredOption('--user-id <id>', 'account user ID')
+    .requiredOption('--words <words>', 'badwords, comma-separated', parseCommaList)
+    .option('-c, --channel-id <id>', 'channel ID for channel-level badwords')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.addBadwords(options)));
+
+  badwordCmd
+    .command('delete')
+    .description('Delete account badwords')
+    .requiredOption('--words <words>', 'badwords, comma-separated')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.deleteUserBadword(options)));
+
+  bannedCmd
+    .command('ip-add')
+    .description('Ban an IP address in channel chat')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--ip <ip>', 'IP address')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.addBannedIp(options)));
+
+  bannedCmd
+    .command('user-list')
+    .description('List account banned users')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.listUserBanned(options)));
+
+  bannedCmd
+    .command('forbid-list')
+    .description('List globally forbidden chat users')
+    .option('--viewer-id <id>', 'viewer ID filter')
+    .option('--nick-name <name>', 'nickname filter')
+    .option('--page-number <number>', 'page number', parsePositiveInteger)
+    .option('--page-size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.listForbidUsers(options)));
+
+  bannedCmd
+    .command('delete')
+    .description('Delete channel badword or banned IP')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('-t, --type <type>', 'item type (ip|badword)')
+    .requiredOption('--content <text>', 'IP or badword content')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.deleteChannelBanned(options)));
+
+  const noticeCmd = chatCmd.command('notice');
+  noticeCmd.description('Manage channel notices');
+
+  noticeCmd
+    .command('list')
+    .description('List channel notices')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page-number <number>', 'page number', parsePositiveInteger)
+    .option('--page-size <number>', 'page size', parsePositiveInteger)
+    .option('--sort <sort>', 'sort expression, for example createTime:desc')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.listBulletins(options)));
+
+  noticeCmd
+    .command('add')
+    .description('Add channel notice')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--content <text>', 'notice content')
+    .option('--is-top <value>', 'pin to top (Y|N)')
+    .option('--is-pop <value>', 'show popup (Y|N)')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.addBulletin(options)));
+
+  noticeCmd
+    .command('clean')
+    .description('Clear all channel notices')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.cleanNotices(options)));
+
+  const qaCmd = chatCmd.command('qa');
+  qaCmd.description('Manage chat Q&A records');
+
+  qaCmd
+    .command('list')
+    .description('List channel Q&A records')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page-number <number>', 'page number', parsePositiveInteger)
+    .option('--page-size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.listQa(options)));
+
+  const censorCmd = chatCmd.command('censor');
+  censorCmd.description('Manage chat censor settings');
+
+  censorCmd
+    .command('update')
+    .description('Update chat censor enabled setting')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--enabled <value>', 'enabled flag (Y|N)')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.updateCensorEnabled(options)));
+
+  const roleCmd = chatCmd.command('role');
+  roleCmd.description('Manage chat role information');
+
+  roleCmd
+    .command('admin-get')
+    .description('Get admin role information')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.getAdminInfo(options)));
+
+  roleCmd
+    .command('admin-update')
+    .description('Update admin role information')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--nickname <name>', 'admin nickname')
+    .requiredOption('--actor <title>', 'admin actor/title')
+    .option('--avatar <url>', 'admin avatar URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.updateAdminInfo(options)));
+
+  roleCmd
+    .command('teacher-get')
+    .description('Get teacher role information')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.getTeacherInfo(options)));
+
+  roleCmd
+    .command('teacher-update')
+    .description('Update teacher role information')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--nickname <name>', 'teacher nickname')
+    .option('--actor <title>', 'teacher actor/title')
+    .option('--passwd <password>', 'teacher password')
+    .option('--avatar <url>', 'teacher avatar URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.updateTeacherInfo(options)));
+
+  roleCmd
+    .command('user-list')
+    .description('List online chat room users')
+    .requiredOption('-r, --room-id <id>', 'room ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--len <number>', 'page size', parsePositiveInteger)
+    .option('--to-get-sub-rooms <value>', 'include sub rooms (true|false)', parseBooleanOption)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.getUserList(options)));
+
+  const robotCmd = chatCmd.command('robot');
+  robotCmd.description('Manage channel chat robots');
+
+  robotCmd
+    .command('setting-get')
+    .description('Get channel robot setting')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.getRobotSetting(options)));
+
+  robotCmd
+    .command('stats')
+    .description('Get channel robot stats')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.getRobotStats(options)));
+
+  robotCmd
+    .command('setting-update')
+    .description('Update channel robot setting')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--robot-number <number>', 'robot number', parseNonNegativeInteger)
+    .requiredOption('--add-robot-model <model>', 'robot add model (timely|fixed_time)')
+    .option('--change-time <seconds>', 'change time in seconds', parsePositiveInteger)
+    .option('--virtual-booking-number <number>', 'virtual booking number', parseNonNegativeInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.updateRobotSetting(options)));
+
+  robotCmd
+    .command('list-update')
+    .description('Update channel robot count and custom robot list')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--robot-number <number>', 'robot number', parseNonNegativeInteger)
+    .requiredOption('--add-robot-model <model>', 'robot add model (timely|fixed_time)')
+    .option('--change-time <seconds>', 'change time in seconds', parsePositiveInteger)
+    .option('--virtual-booking-number <number>', 'virtual booking number', parseNonNegativeInteger)
+    .option('--robot-list <json>', 'custom robot list JSON array', parseRobotList)
+    .option('--robot-random-member-enabled <value>', 'random content-library robots (Y|N)')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.updateRobotListSetting(options)));
+
+  robotCmd
+    .command('pause')
+    .description('Pause channel robot growth')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.pauseRobot(options)));
 
   // ========================================
   // Common helper

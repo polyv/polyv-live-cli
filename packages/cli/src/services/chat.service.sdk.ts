@@ -24,6 +24,10 @@ import {
   ChatDeleteOptions,
 } from '../types/chat';
 
+function compactParams<T extends Record<string, unknown>>(params: T): any {
+  return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
+}
+
 /**
  * Chat service for managing PolyV live streaming chat messages using SDK
  */
@@ -243,6 +247,300 @@ export class ChatServiceSdk {
     return await client.other.getGroupLoginTimes({
       channelId: options.channelId,
     });
+  }
+
+  async sendChat(options: { channelId: string; userId: string; content?: string; imgUrl?: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.sendChat(compactParams({
+      channelId: options.channelId,
+      userId: options.userId,
+      content: options.content,
+      imgUrl: options.imgUrl,
+    }));
+  }
+
+  async sendHiddenByAdmin(options: { channelId: string; content: string; role: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.sendHiddenByAdmin(compactParams({
+      channelId: options.channelId,
+      content: options.content,
+      role: options.role,
+    }));
+  }
+
+  async countOnlineUser(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.countOnlineUser(options);
+  }
+
+  async getSpeakList(options: { startTime?: number; endTime?: number; cursor?: string; size?: number }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getSpeakList(compactParams({
+      startTime: options.startTime,
+      endTime: options.endTime,
+      cursor: options.cursor,
+      size: options.size,
+    }));
+  }
+
+  async alertToSpecial(options: { channelId: string; title: string; message: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.alertToSpecial(compactParams({
+      channelId: options.channelId,
+      title: options.title,
+      message: options.message,
+    }));
+  }
+
+  async messageAudit(options: { channelId: string; messages: any[] }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.messageAudit(compactParams({
+      channelId: options.channelId,
+      messages: options.messages,
+    }));
+  }
+
+  async sendCustomMessage(options: {
+    channelId: string;
+    content?: string;
+    imgUrl?: string;
+    joinHistoryList?: boolean;
+    watchType?: string;
+    important?: boolean;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.sendCustomMessage(compactParams({
+      channelId: options.channelId,
+      content: options.content,
+      imgUrl: options.imgUrl,
+      joinHistoryList: options.joinHistoryList,
+      watchType: options.watchType,
+      important: options.important,
+    }));
+  }
+
+  async sendCustomMessageEncode(options: {
+    channelId: string;
+    content?: string;
+    imgUrl?: string;
+    joinHistoryList?: 0 | 1;
+    watchType?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.sendCustomMessageEncode(compactParams({
+      channelId: options.channelId,
+      content: options.content,
+      imgUrl: options.imgUrl,
+      joinHistoryList: options.joinHistoryList,
+      watchType: options.watchType,
+    }));
+  }
+
+  async emitByUserId(options: { roomId: string; userIds: string[]; payload: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.other.emitByUserId(compactParams({
+      roomId: options.roomId,
+      userIds: options.userIds,
+      payload: options.payload,
+    }));
+  }
+
+  async getUserBadwordList(): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getUserBadwordList();
+  }
+
+  async addBadwords(options: { userId: string; words: string[]; channelId?: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.addBadwords(compactParams({
+      userId: options.userId,
+      words: options.words,
+      channelId: options.channelId,
+    }));
+  }
+
+  async deleteUserBadword(options: { words: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.deleteUserBadword(options);
+  }
+
+  async addBannedIp(options: { channelId: string; ip: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.addBannedIp(options);
+  }
+
+  async getUserBannedList(options: { page?: number; size?: number }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getUserBannedList(compactParams({
+      page: options.page,
+      size: options.size,
+    }));
+  }
+
+  async getForbidUserList(options: {
+    viewerId?: string;
+    nickName?: string;
+    pageNumber?: number;
+    pageSize?: number;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getForbidUserList(compactParams({
+      viewerId: options.viewerId,
+      nickName: options.nickName,
+      pageNumber: options.pageNumber,
+      pageSize: options.pageSize,
+    }));
+  }
+
+  async deleteChannelBanned(options: { channelId: string; type: 'ip' | 'badword'; content: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.deleteChannelBanned(compactParams({
+      channelId: options.channelId,
+      type: options.type,
+      content: options.content,
+    }));
+  }
+
+  async listBulletins(options: { channelId: string; pageNumber: number; pageSize: number; sort?: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.listBulletins(compactParams({
+      channelId: options.channelId,
+      pageNumber: options.pageNumber,
+      pageSize: options.pageSize,
+      sort: options.sort,
+    }));
+  }
+
+  async addBulletin(options: { channelId: string; content: string; isTop?: 'Y' | 'N'; isPop?: 'Y' | 'N' }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.addBulletin(compactParams({
+      channelId: options.channelId,
+      content: options.content,
+      isTop: options.isTop,
+      isPop: options.isPop,
+    }));
+  }
+
+  async cleanNotices(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.cleanNotices(options);
+  }
+
+  async listQa(options: { channelId: string; pageNumber: number; pageSize: number }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.listQa(compactParams({
+      channelId: options.channelId,
+      pageNumber: options.pageNumber,
+      pageSize: options.pageSize,
+    }));
+  }
+
+  async updateCensorEnabled(options: { channelId: string; enabled?: 'Y' | 'N' }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.updateCensorEnabled(compactParams({
+      channelId: options.channelId,
+      enabled: options.enabled,
+    }));
+  }
+
+  async getAdminInfo(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getAdminInfo(options.channelId);
+  }
+
+  async updateAdminInfo(options: { channelId: string; nickname: string; actor: string; avatar?: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.updateAdminInfo(compactParams({
+      channelId: options.channelId,
+      nickname: options.nickname,
+      actor: options.actor,
+      avatar: options.avatar,
+    }));
+  }
+
+  async getTeacherInfo(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getTeacherInfo(options);
+  }
+
+  async updateTeacherInfo(options: {
+    channelId: string;
+    nickname?: string;
+    actor?: string;
+    passwd?: string;
+    avatar?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.updateTeacherInfo(compactParams({
+      channelId: options.channelId,
+      nickname: options.nickname,
+      actor: options.actor,
+      passwd: options.passwd,
+      avatar: options.avatar,
+    }));
+  }
+
+  async getUserList(options: { roomId: string; page?: number; len?: number; toGetSubRooms?: boolean }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.chat.getUserList(compactParams({
+      roomId: options.roomId,
+      page: options.page,
+      len: options.len,
+      toGetSubRooms: options.toGetSubRooms,
+    }));
+  }
+
+  async getRobotSetting(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.getRobotSetting(options);
+  }
+
+  async getRobotStats(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Robot.getRobotStats(options);
+  }
+
+  async updateRobotSetting(options: {
+    channelId: string;
+    robotNumber: number;
+    addRobotModel: 'timely' | 'fixed_time';
+    changeTime?: number;
+    virtualBookingNumber?: number;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Robot.updateRobotSetting(compactParams({
+      channelId: options.channelId,
+      robotNumber: options.robotNumber,
+      addRobotModel: options.addRobotModel,
+      changeTime: options.changeTime,
+      virtualBookingNumber: options.virtualBookingNumber,
+    }));
+  }
+
+  async updateRobotListSetting(options: {
+    channelId: string;
+    robotNumber: number;
+    addRobotModel: 'timely' | 'fixed_time';
+    changeTime?: number;
+    virtualBookingNumber?: number;
+    robotList?: Array<{ name: string; avatar: string }>;
+    robotRandomMemberEnabled?: 'Y' | 'N';
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Chat.updateRobotListSetting(compactParams({
+      channelId: options.channelId,
+      robotNumber: options.robotNumber,
+      addRobotModel: options.addRobotModel,
+      changeTime: options.changeTime,
+      virtualBookingNumber: options.virtualBookingNumber,
+      robotList: options.robotList,
+      robotRandomMemberEnabled: options.robotRandomMemberEnabled,
+    }));
+  }
+
+  async pauseRobot(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Robot.pauseRobot(options);
   }
 
   // ===== Validation Methods =====

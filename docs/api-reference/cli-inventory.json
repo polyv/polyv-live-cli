@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T19:16:05.487Z",
+  "generatedAt": "2026-06-19T19:37:35.540Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 243,
-    "cliMissingLatestApis": 335,
-    "cliCoverage": 42,
-    "cliUsageReferences": 248,
-    "cliSdkServiceUsages": 248,
+    "cliUsedLatestApis": 275,
+    "cliMissingLatestApis": 303,
+    "cliCoverage": 47.6,
+    "cliUsageReferences": 279,
+    "cliSdkServiceUsages": 279,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 235,
+    "matchedApiIds": 266,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 324,
+    "cliCommandPaths": 362,
     "cliTopLevelCommands": 36
   },
   "modules": [
@@ -31,11 +31,11 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 61,
-      "cliMissing": 222,
+      "cliUsed": 62,
+      "cliMissing": 221,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 61,
-      "cliCoverage": 21.6
+      "sdkServiceUsed": 62,
+      "cliCoverage": 21.9
     },
     {
       "module": "user",
@@ -46,16 +46,6 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 10,
       "cliCoverage": 13.7
-    },
-    {
-      "module": "chat",
-      "label": "聊天",
-      "total": 45,
-      "cliUsed": 14,
-      "cliMissing": 31,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 14,
-      "cliCoverage": 31.1
     },
     {
       "module": "live_interaction",
@@ -85,6 +75,16 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 13,
+      "cliCoverage": 100
+    },
+    {
+      "module": "chat",
+      "label": "聊天",
+      "total": 45,
+      "cliUsed": 45,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 45,
       "cliCoverage": 100
     },
     {
@@ -957,7 +957,18 @@
       "depth": 1,
       "signature": "chat",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 45
+      "line": 87
+    },
+    {
+      "command": "chat badword",
+      "path": [
+        "chat",
+        "badword"
+      ],
+      "depth": 2,
+      "signature": "badword",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 568
     },
     {
       "command": "chat ban",
@@ -968,7 +979,7 @@
       "depth": 2,
       "signature": "ban",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 229
+      "line": 282
     },
     {
       "command": "chat banned",
@@ -979,7 +990,18 @@
       "depth": 2,
       "signature": "banned",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 355
+      "line": 408
+    },
+    {
+      "command": "chat censor",
+      "path": [
+        "chat",
+        "censor"
+      ],
+      "depth": 2,
+      "signature": "censor",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 676
     },
     {
       "command": "chat delete",
@@ -990,7 +1012,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 166
+      "line": 219
     },
     {
       "command": "chat group-login-times",
@@ -1001,7 +1023,7 @@
       "depth": 2,
       "signature": "group-login-times",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 210
+      "line": 263
     },
     {
       "command": "chat kick",
@@ -1012,7 +1034,7 @@
       "depth": 2,
       "signature": "kick",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 289
+      "line": 342
     },
     {
       "command": "chat kicked",
@@ -1023,7 +1045,7 @@
       "depth": 2,
       "signature": "kicked",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 385
+      "line": 438
     },
     {
       "command": "chat list",
@@ -1034,7 +1056,62 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 105
+      "line": 158
+    },
+    {
+      "command": "chat message",
+      "path": [
+        "chat",
+        "message"
+      ],
+      "depth": 2,
+      "signature": "message",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 463
+    },
+    {
+      "command": "chat notice",
+      "path": [
+        "chat",
+        "notice"
+      ],
+      "depth": 2,
+      "signature": "notice",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 632
+    },
+    {
+      "command": "chat qa",
+      "path": [
+        "chat",
+        "qa"
+      ],
+      "depth": 2,
+      "signature": "qa",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 664
+    },
+    {
+      "command": "chat robot",
+      "path": [
+        "chat",
+        "robot"
+      ],
+      "depth": 2,
+      "signature": "robot",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 738
+    },
+    {
+      "command": "chat role",
+      "path": [
+        "chat",
+        "role"
+      ],
+      "depth": 2,
+      "signature": "role",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 688
     },
     {
       "command": "chat send",
@@ -1045,7 +1122,7 @@
       "depth": 2,
       "signature": "send",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 51
+      "line": 104
     },
     {
       "command": "chat unban",
@@ -1056,7 +1133,7 @@
       "depth": 2,
       "signature": "unban",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 259
+      "line": 312
     },
     {
       "command": "chat unkick",
@@ -1067,7 +1144,79 @@
       "depth": 2,
       "signature": "unkick",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 322
+      "line": 375
+    },
+    {
+      "command": "chat badword add",
+      "path": [
+        "chat",
+        "badword",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 577
+    },
+    {
+      "command": "chat badword delete",
+      "path": [
+        "chat",
+        "badword",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 587
+    },
+    {
+      "command": "chat badword list",
+      "path": [
+        "chat",
+        "badword",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 571
+    },
+    {
+      "command": "chat banned delete",
+      "path": [
+        "chat",
+        "banned",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 622
+    },
+    {
+      "command": "chat banned forbid-list",
+      "path": [
+        "chat",
+        "banned",
+        "forbid-list"
+      ],
+      "depth": 3,
+      "signature": "forbid-list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 612
+    },
+    {
+      "command": "chat banned ip-add",
+      "path": [
+        "chat",
+        "banned",
+        "ip-add"
+      ],
+      "depth": 3,
+      "signature": "ip-add",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 595
     },
     {
       "command": "chat banned list",
@@ -1079,7 +1228,31 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 358
+      "line": 411
+    },
+    {
+      "command": "chat banned user-list",
+      "path": [
+        "chat",
+        "banned",
+        "user-list"
+      ],
+      "depth": 3,
+      "signature": "user-list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 604
+    },
+    {
+      "command": "chat censor update",
+      "path": [
+        "chat",
+        "censor",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 679
     },
     {
       "command": "chat kicked list",
@@ -1091,7 +1264,283 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 388
+      "line": 441
+    },
+    {
+      "command": "chat message admin-send",
+      "path": [
+        "chat",
+        "message",
+        "admin-send"
+      ],
+      "depth": 3,
+      "signature": "admin-send",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 482
+    },
+    {
+      "command": "chat message alert-special",
+      "path": [
+        "chat",
+        "message",
+        "alert-special"
+      ],
+      "depth": 3,
+      "signature": "alert-special",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 508
+    },
+    {
+      "command": "chat message audit",
+      "path": [
+        "chat",
+        "message",
+        "audit"
+      ],
+      "depth": 3,
+      "signature": "audit",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 518
+    },
+    {
+      "command": "chat message custom-send",
+      "path": [
+        "chat",
+        "message",
+        "custom-send"
+      ],
+      "depth": 3,
+      "signature": "custom-send",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 533
+    },
+    {
+      "command": "chat message custom-send-encode",
+      "path": [
+        "chat",
+        "message",
+        "custom-send-encode"
+      ],
+      "depth": 3,
+      "signature": "custom-send-encode",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 546
+    },
+    {
+      "command": "chat message emit-by-user-id",
+      "path": [
+        "chat",
+        "message",
+        "emit-by-user-id"
+      ],
+      "depth": 3,
+      "signature": "emit-by-user-id",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 558
+    },
+    {
+      "command": "chat message hidden-send",
+      "path": [
+        "chat",
+        "message",
+        "hidden-send"
+      ],
+      "depth": 3,
+      "signature": "hidden-send",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 466
+    },
+    {
+      "command": "chat message online-count",
+      "path": [
+        "chat",
+        "message",
+        "online-count"
+      ],
+      "depth": 3,
+      "signature": "online-count",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 491
+    },
+    {
+      "command": "chat message speak-list",
+      "path": [
+        "chat",
+        "message",
+        "speak-list"
+      ],
+      "depth": 3,
+      "signature": "speak-list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 498
+    },
+    {
+      "command": "chat notice add",
+      "path": [
+        "chat",
+        "notice",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 645
+    },
+    {
+      "command": "chat notice clean",
+      "path": [
+        "chat",
+        "notice",
+        "clean"
+      ],
+      "depth": 3,
+      "signature": "clean",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 656
+    },
+    {
+      "command": "chat notice list",
+      "path": [
+        "chat",
+        "notice",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 635
+    },
+    {
+      "command": "chat qa list",
+      "path": [
+        "chat",
+        "qa",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 667
+    },
+    {
+      "command": "chat robot list-update",
+      "path": [
+        "chat",
+        "robot",
+        "list-update"
+      ],
+      "depth": 3,
+      "signature": "list-update",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 767
+    },
+    {
+      "command": "chat robot pause",
+      "path": [
+        "chat",
+        "robot",
+        "pause"
+      ],
+      "depth": 3,
+      "signature": "pause",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 781
+    },
+    {
+      "command": "chat robot setting-get",
+      "path": [
+        "chat",
+        "robot",
+        "setting-get"
+      ],
+      "depth": 3,
+      "signature": "setting-get",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 741
+    },
+    {
+      "command": "chat robot setting-update",
+      "path": [
+        "chat",
+        "robot",
+        "setting-update"
+      ],
+      "depth": 3,
+      "signature": "setting-update",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 755
+    },
+    {
+      "command": "chat robot stats",
+      "path": [
+        "chat",
+        "robot",
+        "stats"
+      ],
+      "depth": 3,
+      "signature": "stats",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 748
+    },
+    {
+      "command": "chat role admin-get",
+      "path": [
+        "chat",
+        "role",
+        "admin-get"
+      ],
+      "depth": 3,
+      "signature": "admin-get",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 691
+    },
+    {
+      "command": "chat role admin-update",
+      "path": [
+        "chat",
+        "role",
+        "admin-update"
+      ],
+      "depth": 3,
+      "signature": "admin-update",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 698
+    },
+    {
+      "command": "chat role teacher-get",
+      "path": [
+        "chat",
+        "role",
+        "teacher-get"
+      ],
+      "depth": 3,
+      "signature": "teacher-get",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 709
+    },
+    {
+      "command": "chat role teacher-update",
+      "path": [
+        "chat",
+        "role",
+        "teacher-update"
+      ],
+      "depth": 3,
+      "signature": "teacher-update",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 716
+    },
+    {
+      "command": "chat role user-list",
+      "path": [
+        "chat",
+        "role",
+        "user-list"
+      ],
+      "depth": 3,
+      "signature": "user-list",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 728
     },
     {
       "command": "checkin",
@@ -3913,14 +4362,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 222,
+          "missing": 221,
           "total": 283,
-          "coverage": 21.6
+          "coverage": 21.9
         }
       ],
-      "missing": 222,
+      "missing": 221,
       "total": 283,
-      "coverage": 21.6
+      "coverage": 21.9
     },
     {
       "modules": [
@@ -3962,39 +4411,6 @@
       "missing": 63,
       "total": 106,
       "coverage": 40.6
-    },
-    {
-      "modules": [
-        "chat",
-        "robot"
-      ],
-      "title": "聊天治理与机器人",
-      "command": "扩展 `chat`，新增 `robot`",
-      "rationale": "当前已有消息、禁言、踢人，但敏感词、公告、审核、角色、机器人配置仍大量缺失。",
-      "examples": [
-        "`chat badword *`、`chat notice *`、`chat audit *`",
-        "`chat role teacher/admin get/update`",
-        "`robot setting get/update`、`robot stats`"
-      ],
-      "relatedModules": [
-        {
-          "module": "chat",
-          "label": "聊天",
-          "missing": 31,
-          "total": 45,
-          "coverage": 31.1
-        },
-        {
-          "module": "robot",
-          "label": "数字人与机器人",
-          "missing": 0,
-          "total": 3,
-          "coverage": 100
-        }
-      ],
-      "missing": 31,
-      "total": 48,
-      "coverage": 35.4
     },
     {
       "modules": [
@@ -9245,8 +9661,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#countOnlineUser",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 273,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14059,8 +14484,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#sendChat",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 254,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14089,8 +14523,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#sendHiddenByAdmin",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 264,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14115,8 +14558,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getAdminInfo",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 448,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14143,8 +14595,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#countOnlineUser",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 273,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14173,8 +14634,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#listBulletins",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 406,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14209,7 +14679,7 @@
             "reference": "ChatService#getChannelBannedUserList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 207,
+            "line": 211,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14248,7 +14718,7 @@
             "reference": "ChatService#getHistoryPage",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 94,
+            "line": 98,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14285,7 +14755,7 @@
             "reference": "ChatService#getChannelKickedUserList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 236,
+            "line": 240,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14317,8 +14787,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#listQa",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 431,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14345,8 +14824,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#getRobotSetting",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 495,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14373,8 +14861,17 @@
         "file": "packages/sdk/src/services/v4/robot.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4RobotService#getRobotStats",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 500,
+            "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14408,7 +14905,7 @@
             "reference": "ChatService#getChannelBannedList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 226,
+            "line": 230,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14436,8 +14933,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getSpeakList",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 278,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14462,8 +14968,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getUserBannedList",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 374,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14488,8 +15003,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getUserBadwordList",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 350,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14517,8 +15041,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#addBulletin",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 416,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14547,8 +15080,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#alertToSpecial",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 288,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14579,8 +15121,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#messageAudit",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 297,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14607,8 +15158,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#sendCustomMessage",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 312,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14635,8 +15195,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#sendCustomMessageEncode",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 330,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14665,8 +15234,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#emitByUserId",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 341,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14693,8 +15271,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#updateCensorEnabled",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 440,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14731,7 +15318,7 @@
             "reference": "ChatService#sendAdminMsg",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 68,
+            "line": 72,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14761,8 +15348,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getTeacherInfo",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 463,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14789,8 +15385,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getUserList",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 485,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14825,7 +15430,7 @@
             "reference": "ChatService#updateBannedUser",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 128,
+            "line": 132,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14855,8 +15460,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#addBannedIp",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 369,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14883,8 +15497,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#addBadwords",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 355,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14957,7 +15580,7 @@
             "reference": "ChatService#forbidChannelUnkickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 181,
+            "line": 185,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -14996,7 +15619,7 @@
             "reference": "ChatService#forbidChannelKickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 155,
+            "line": 159,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -15026,8 +15649,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#cleanNotices",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 426,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15059,7 +15691,7 @@
             "reference": "ChatService#cleanChat",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 110,
+            "line": 114,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -15087,8 +15719,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#getForbidUserList",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 387,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15123,7 +15764,7 @@
             "reference": "ChatService#forbidUnkickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 194,
+            "line": 198,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -15161,7 +15802,7 @@
             "reference": "ChatService#forbidKickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 168,
+            "line": 172,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -15198,7 +15839,7 @@
             "reference": "ChatService#delChat",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 114,
+            "line": 118,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -15229,8 +15870,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#deleteChannelBanned",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 397,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15257,8 +15907,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#deleteUserBadword",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 364,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15287,8 +15946,17 @@
         "file": "packages/sdk/src/services/v4/robot.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4RobotService#updateRobotSetting",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 511,
+            "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15317,8 +15985,17 @@
         "file": "packages/sdk/src/services/v4/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChatService#updateRobotListSetting",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 530,
+            "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15345,8 +16022,17 @@
         "file": "packages/sdk/src/services/v4/robot.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4RobotService#pauseRobot",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 543,
+            "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15375,8 +16061,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#updateAdminInfo",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 453,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15403,8 +16098,17 @@
         "file": "packages/sdk/src/services/chat.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChatService#updateTeacherInfo",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 474,
+            "sdkFile": "packages/sdk/src/services/chat.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15439,7 +16143,7 @@
             "reference": "ChatService#updateBannedViewer",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 142,
+            "line": 146,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -18763,7 +19467,7 @@
             "reference": "OtherService#getGroupLoginTimes",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 243,
+            "line": 247,
             "sdkFile": "packages/sdk/src/services/other.service.ts"
           }
         ]

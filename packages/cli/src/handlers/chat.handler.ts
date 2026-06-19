@@ -192,7 +192,476 @@ export class ChatHandler extends BaseHandler {
     }, 'chat.group-login-times.get');
   }
 
+  async sendHiddenMessage(options: {
+    channelId: string;
+    userId: string;
+    content?: string;
+    imgUrl?: string;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'userId']);
+      this.validateContentOrImage(options);
+      const result = await this.chatService.sendChat(options);
+      this.displayGenericResult(result, options.output, 'Hidden message sent successfully');
+    }, 'chat.message.hidden-send');
+  }
+
+  async sendHiddenByAdmin(options: {
+    channelId: string;
+    content: string;
+    role: string;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'content', 'role']);
+      const result = await this.chatService.sendHiddenByAdmin(options);
+      this.displayGenericResult(result, options.output, 'Admin hidden message sent successfully');
+    }, 'chat.message.admin-send');
+  }
+
+  async countOnlineUser(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.countOnlineUser({ channelId: options.channelId });
+      this.displayGenericResult({ channelId: options.channelId, onlineUserCount: result }, options.output);
+    }, 'chat.message.online-count');
+  }
+
+  async listSpeak(options: {
+    startTime?: number;
+    endTime?: number;
+    cursor?: string;
+    size?: number;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.chatService.getSpeakList(options);
+      this.displayGenericResult(result, options.output);
+    }, 'chat.message.speak-list');
+  }
+
+  async alertToSpecial(options: {
+    channelId: string;
+    title: string;
+    message: string;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'title', 'message']);
+      if (!(await this.confirmIfNeeded(options.force, `Send popup alert to channel ${options.channelId}?`))) return;
+      const result = await this.chatService.alertToSpecial(options);
+      this.displayGenericResult(result, options.output, 'Popup alert sent successfully');
+    }, 'chat.message.alert-special');
+  }
+
+  async auditMessage(options: {
+    channelId: string;
+    msgId: string;
+    viewerId: string;
+    nickName: string;
+    content: string;
+    avatar?: string;
+    sessionId?: string;
+    viewerType?: string;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'msgId', 'viewerId', 'nickName', 'content']);
+      if (!(await this.confirmIfNeeded(options.force, `Submit audited chat message ${options.msgId}?`))) return;
+      const result = await this.chatService.messageAudit({
+        channelId: options.channelId,
+        messages: [{
+          msgId: options.msgId,
+          viewerId: options.viewerId,
+          nickName: options.nickName,
+          content: options.content,
+          avatar: options.avatar,
+          sessionId: options.sessionId,
+          viewerType: options.viewerType
+        }]
+      });
+      this.displayGenericResult(result, options.output, 'Audited message submitted successfully');
+    }, 'chat.message.audit');
+  }
+
+  async sendCustomMessage(options: {
+    channelId: string;
+    content?: string;
+    imgUrl?: string;
+    joinHistoryList?: boolean;
+    watchType?: string;
+    important?: boolean;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateContentOrImage(options);
+      if (!(await this.confirmIfNeeded(options.force, `Send custom message to channel ${options.channelId}?`))) return;
+      const result = await this.chatService.sendCustomMessage(options);
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Custom message sent successfully');
+    }, 'chat.message.custom-send');
+  }
+
+  async sendCustomMessageEncode(options: {
+    channelId: string;
+    content?: string;
+    imgUrl?: string;
+    joinHistoryList?: 0 | 1;
+    watchType?: string;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateContentOrImage(options);
+      if (!(await this.confirmIfNeeded(options.force, `Send encoded custom message to channel ${options.channelId}?`))) return;
+      const result = await this.chatService.sendCustomMessageEncode(options);
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Encoded custom message sent successfully');
+    }, 'chat.message.custom-send-encode');
+  }
+
+  async emitByUserId(options: { roomId: string; userIds: string[]; payload: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['roomId', 'payload']);
+      if (!options.userIds || options.userIds.length === 0) {
+        throw new PolyVValidationError('userIds is required', 'userIds', options.userIds, 'validation_failed');
+      }
+      if (!(await this.confirmIfNeeded(options.force, `Broadcast message to ${options.userIds.length} users in room ${options.roomId}?`))) return;
+      const result = await this.chatService.emitByUserId(options);
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Broadcast message sent successfully');
+    }, 'chat.message.emit-by-user-id');
+  }
+
+  async listUserBadwords(options: { output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.chatService.getUserBadwordList();
+      this.displayGenericResult(result, options.output);
+    }, 'chat.badword.list');
+  }
+
+  async addBadwords(options: { userId: string; words: string[]; channelId?: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['userId']);
+      if (!options.words || options.words.length === 0) {
+        throw new PolyVValidationError('words is required', 'words', options.words, 'validation_failed');
+      }
+      if (!(await this.confirmIfNeeded(options.force, `Add ${options.words.length} badword(s)?`))) return;
+      const result = await this.chatService.addBadwords(options);
+      this.displayGenericResult(result, options.output, 'Badwords added successfully');
+    }, 'chat.badword.add');
+  }
+
+  async deleteUserBadword(options: { words: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['words']);
+      if (!(await this.confirmIfNeeded(options.force, `Delete account badword(s): ${options.words}?`))) return;
+      const result = await this.chatService.deleteUserBadword({ words: options.words });
+      this.displayGenericResult(result, options.output, 'Account badwords deleted successfully');
+    }, 'chat.badword.delete');
+  }
+
+  async addBannedIp(options: { channelId: string; ip: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'ip']);
+      if (!(await this.confirmIfNeeded(options.force, `Ban IP ${options.ip} in channel ${options.channelId}?`))) return;
+      const result = await this.chatService.addBannedIp({ channelId: options.channelId, ip: options.ip });
+      this.displayGenericResult(result, options.output, 'IP banned successfully');
+    }, 'chat.banned.ip-add');
+  }
+
+  async listUserBanned(options: { page?: number; size?: number; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.chatService.getUserBannedList(this.compactOptions({ page: options.page, size: options.size }));
+      this.displayGenericResult(result, options.output);
+    }, 'chat.banned.user-list');
+  }
+
+  async listForbidUsers(options: {
+    viewerId?: string;
+    nickName?: string;
+    pageNumber?: number;
+    pageSize?: number;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.chatService.getForbidUserList(options);
+      this.displayGenericResult(result, options.output);
+    }, 'chat.banned.forbid-list');
+  }
+
+  async deleteChannelBanned(options: {
+    channelId: string;
+    type: 'ip' | 'badword';
+    content: string;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'type', 'content']);
+      if (options.type !== 'ip' && options.type !== 'badword') {
+        throw new PolyVValidationError('type must be ip or badword', 'type', options.type, 'validation_failed');
+      }
+      if (!(await this.confirmIfNeeded(options.force, `Delete ${options.type} from channel ${options.channelId}: ${options.content}?`))) return;
+      const result = await this.chatService.deleteChannelBanned(options);
+      this.displayGenericResult(result, options.output, 'Channel banned item deleted successfully');
+    }, 'chat.banned.delete');
+  }
+
+  async listBulletins(options: { channelId: string; pageNumber?: number; pageSize?: number; sort?: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.listBulletins(this.compactOptions({
+        channelId: options.channelId,
+        pageNumber: options.pageNumber || 1,
+        pageSize: options.pageSize || 20,
+        sort: options.sort
+      }));
+      this.displayGenericResult(result, options.output);
+    }, 'chat.notice.list');
+  }
+
+  async addBulletin(options: {
+    channelId: string;
+    content: string;
+    isTop?: 'Y' | 'N';
+    isPop?: 'Y' | 'N';
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'content']);
+      this.validateYN('isTop', options.isTop);
+      this.validateYN('isPop', options.isPop);
+      if (!(await this.confirmIfNeeded(options.force, `Add notice to channel ${options.channelId}?`))) return;
+      const result = await this.chatService.addBulletin(options);
+      this.displayGenericResult(result, options.output, 'Notice added successfully');
+    }, 'chat.notice.add');
+  }
+
+  async cleanNotices(options: { channelId: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      if (!(await this.confirmIfNeeded(options.force, `Clear all notices for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.cleanNotices({ channelId: options.channelId });
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Notices cleared successfully');
+    }, 'chat.notice.clean');
+  }
+
+  async listQa(options: { channelId: string; pageNumber?: number; pageSize?: number; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.listQa({
+        channelId: options.channelId,
+        pageNumber: options.pageNumber || 1,
+        pageSize: options.pageSize || 20
+      });
+      this.displayGenericResult(result, options.output);
+    }, 'chat.qa.list');
+  }
+
+  async updateCensorEnabled(options: { channelId: string; enabled?: 'Y' | 'N'; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateYN('enabled', options.enabled);
+      if (!(await this.confirmIfNeeded(options.force, `Update chat censor setting for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.updateCensorEnabled(this.compactOptions({
+        channelId: options.channelId,
+        enabled: options.enabled
+      }));
+      this.displayGenericResult(result, options.output, 'Chat censor setting updated successfully');
+    }, 'chat.censor.update');
+  }
+
+  async getAdminInfo(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.getAdminInfo({ channelId: options.channelId });
+      this.displayGenericResult(result, options.output);
+    }, 'chat.role.admin-get');
+  }
+
+  async updateAdminInfo(options: {
+    channelId: string;
+    nickname: string;
+    actor: string;
+    avatar?: string;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'nickname', 'actor']);
+      if (!(await this.confirmIfNeeded(options.force, `Update admin info for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.updateAdminInfo(options);
+      this.displayGenericResult(result, options.output, 'Admin info updated successfully');
+    }, 'chat.role.admin-update');
+  }
+
+  async getTeacherInfo(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.getTeacherInfo({ channelId: options.channelId });
+      this.displayGenericResult(result, options.output);
+    }, 'chat.role.teacher-get');
+  }
+
+  async updateTeacherInfo(options: {
+    channelId: string;
+    nickname?: string;
+    actor?: string;
+    passwd?: string;
+    avatar?: string;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      if (!(await this.confirmIfNeeded(options.force, `Update teacher info for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.updateTeacherInfo(options);
+      this.displayGenericResult(result, options.output, 'Teacher info updated successfully');
+    }, 'chat.role.teacher-update');
+  }
+
+  async getUserList(options: {
+    roomId: string;
+    page?: number;
+    len?: number;
+    toGetSubRooms?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['roomId']);
+      const result = await this.chatService.getUserList(options);
+      this.displayGenericResult(result, options.output);
+    }, 'chat.role.user-list');
+  }
+
+  async getRobotSetting(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.getRobotSetting({ channelId: options.channelId });
+      this.displayGenericResult(result, options.output);
+    }, 'chat.robot.setting-get');
+  }
+
+  async getRobotStats(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      const result = await this.chatService.getRobotStats({ channelId: options.channelId });
+      this.displayGenericResult(result, options.output);
+    }, 'chat.robot.stats');
+  }
+
+  async updateRobotSetting(options: {
+    channelId: string;
+    robotNumber: number;
+    addRobotModel: 'timely' | 'fixed_time';
+    changeTime?: number;
+    virtualBookingNumber?: number;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'robotNumber', 'addRobotModel']);
+      if (!(await this.confirmIfNeeded(options.force, `Update robot setting for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.updateRobotSetting(options);
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Robot setting updated successfully');
+    }, 'chat.robot.setting-update');
+  }
+
+  async updateRobotListSetting(options: {
+    channelId: string;
+    robotNumber: number;
+    addRobotModel: 'timely' | 'fixed_time';
+    changeTime?: number;
+    virtualBookingNumber?: number;
+    robotList?: Array<{ name: string; avatar: string }>;
+    robotRandomMemberEnabled?: 'Y' | 'N';
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'robotNumber', 'addRobotModel']);
+      this.validateYN('robotRandomMemberEnabled', options.robotRandomMemberEnabled);
+      if (!(await this.confirmIfNeeded(options.force, `Update robot list setting for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.updateRobotListSetting(options);
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Robot list setting updated successfully');
+    }, 'chat.robot.list-update');
+  }
+
+  async pauseRobot(options: { channelId: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      if (!(await this.confirmIfNeeded(options.force, `Pause robot growth for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.pauseRobot({ channelId: options.channelId });
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Robot paused successfully');
+    }, 'chat.robot.pause');
+  }
+
   // ===== Private Display Methods =====
+
+  private validateRequiredOptions(options: Record<string, any>, fields: string[]): void {
+    const missing = fields.filter((field) => {
+      const value = options[field];
+      return value === undefined || value === null || (typeof value === 'string' && value.trim() === '');
+    });
+
+    if (missing.length > 0) {
+      throw new PolyVValidationError(
+        `Missing required options: ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      throw new PolyVValidationError('output must be either "table" or "json"', 'output', options.output, 'validation_failed');
+    }
+  }
+
+  private compactOptions<T extends Record<string, any>>(options: T): any {
+    return Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined));
+  }
+
+  private validateContentOrImage(options: { content?: string; imgUrl?: string }): void {
+    if (!options.content && !options.imgUrl) {
+      throw new PolyVValidationError('content or imgUrl is required', 'content', options, 'validation_failed');
+    }
+  }
+
+  private validateYN(field: string, value?: string): void {
+    if (value !== undefined && value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(`${field} must be Y or N`, field, value, 'validation_failed');
+    }
+  }
+
+  private async confirmIfNeeded(force: boolean | undefined, message: string): Promise<boolean> {
+    if (force) {
+      return true;
+    }
+
+    const confirmed = await confirmDeletion(message, 'yes');
+    if (!confirmed) {
+      this.displayInfo('Operation cancelled');
+    }
+    return confirmed;
+  }
+
+  private displayGenericResult(result: any, format?: OutputFormat, successMessage?: string): void {
+    if (successMessage && format !== 'json') {
+      this.displaySuccess(successMessage);
+    }
+
+    if (result !== undefined) {
+      this.displayData(result, format || 'table');
+    } else if (format === 'json') {
+      this.displayData({ success: true }, 'json');
+    }
+  }
 
   private displaySendResult(result: SendAdminMsgResponse, format?: OutputFormat): void {
     const data = {

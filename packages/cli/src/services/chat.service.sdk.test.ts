@@ -52,7 +52,44 @@ describe('ChatServiceSdk', () => {
         sendAdminMsg: jest.fn(),
         getHistoryPage: jest.fn(),
         delChat: jest.fn(),
-        cleanChat: jest.fn()
+        cleanChat: jest.fn(),
+        addBadwords: jest.fn(),
+        getUserBadwordList: jest.fn(),
+        deleteUserBadword: jest.fn(),
+        addBannedIp: jest.fn(),
+        getUserBannedList: jest.fn(),
+        getForbidUserList: jest.fn(),
+        deleteChannelBanned: jest.fn(),
+        countOnlineUser: jest.fn(),
+        sendChat: jest.fn(),
+        sendHiddenByAdmin: jest.fn(),
+        alertToSpecial: jest.fn(),
+        messageAudit: jest.fn(),
+        updateCensorEnabled: jest.fn(),
+        getAdminInfo: jest.fn(),
+        updateAdminInfo: jest.fn(),
+        getTeacherInfo: jest.fn(),
+        updateTeacherInfo: jest.fn(),
+        getUserList: jest.fn()
+      },
+      v4Chat: {
+        listBulletins: jest.fn(),
+        addBulletin: jest.fn(),
+        cleanNotices: jest.fn(),
+        listQa: jest.fn(),
+        sendCustomMessage: jest.fn(),
+        sendCustomMessageEncode: jest.fn(),
+        getRobotSetting: jest.fn(),
+        updateRobotListSetting: jest.fn()
+      },
+      v4Robot: {
+        getRobotStats: jest.fn(),
+        updateRobotSetting: jest.fn(),
+        pauseRobot: jest.fn()
+      },
+      other: {
+        emitByUserId: jest.fn(),
+        getGroupLoginTimes: jest.fn()
       }
     };
 
@@ -407,6 +444,76 @@ describe('ChatServiceSdk', () => {
           messageId: 'msg-123'
         })
       ).rejects.toThrow();
+    });
+  });
+
+  describe('extended chat API mappings', () => {
+    it('should add badwords through SDK', async () => {
+      mockClient.chat.addBadwords.mockResolvedValue({ data: { count: 2 } });
+
+      await chatService.addBadwords({
+        userId: 'user-1',
+        channelId: '3151318',
+        words: ['foo', 'bar']
+      });
+
+      expect(mockClient.chat.addBadwords).toHaveBeenCalledWith({
+        userId: 'user-1',
+        channelId: '3151318',
+        words: ['foo', 'bar']
+      });
+    });
+
+    it('should list bulletins through V4 chat SDK', async () => {
+      mockClient.v4Chat.listBulletins.mockResolvedValue({ contents: [] });
+
+      await chatService.listBulletins({
+        channelId: '3151318',
+        pageNumber: 1,
+        pageSize: 20,
+        sort: 'createTime:desc'
+      });
+
+      expect(mockClient.v4Chat.listBulletins).toHaveBeenCalledWith({
+        channelId: '3151318',
+        pageNumber: 1,
+        pageSize: 20,
+        sort: 'createTime:desc'
+      });
+    });
+
+    it('should update robot setting through V4 robot SDK', async () => {
+      mockClient.v4Robot.updateRobotSetting.mockResolvedValue(undefined);
+
+      await chatService.updateRobotSetting({
+        channelId: '3151318',
+        robotNumber: 10,
+        addRobotModel: 'timely'
+      });
+
+      expect(mockClient.v4Robot.updateRobotSetting).toHaveBeenCalledWith({
+        channelId: '3151318',
+        robotNumber: 10,
+        addRobotModel: 'timely',
+        changeTime: undefined,
+        virtualBookingNumber: undefined
+      });
+    });
+
+    it('should emit message by user id through OtherService', async () => {
+      mockClient.other.emitByUserId.mockResolvedValue({});
+
+      await chatService.emitByUserId({
+        roomId: '3151318',
+        userIds: ['user-1'],
+        payload: 'hello'
+      });
+
+      expect(mockClient.other.emitByUserId).toHaveBeenCalledWith({
+        roomId: '3151318',
+        userIds: ['user-1'],
+        payload: 'hello'
+      });
     });
   });
 });

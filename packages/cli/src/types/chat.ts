@@ -164,3 +164,24 @@ export interface ChatKickedListOptions {
   /** Output format */
   output?: OutputFormat;
 }
+
+export interface ChatDangerousOptions {
+  /** Skip confirmation prompt */
+  force?: boolean;
+  /** Output format */
+  output?: OutputFormat;
+}
+
+export interface ChatChannelOptions {
+  /** Channel ID */
+  channelId: string;
+  /** Output format */
+  output?: OutputFormat;
+}
+
+export interface ChatPaginationOptions extends ChatChannelOptions {
+  /** Page number */
+  pageNumber?: number;
+  /** Page size */
+  pageSize?: number;
+}

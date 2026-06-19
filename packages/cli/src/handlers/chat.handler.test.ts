@@ -54,7 +54,13 @@ describe('ChatHandler', () => {
     mockChatService = {
       sendAdminMessage: jest.fn(),
       listMessages: jest.fn(),
-      deleteMessage: jest.fn()
+      deleteMessage: jest.fn(),
+      addBadwords: jest.fn(),
+      cleanNotices: jest.fn(),
+      getRobotStats: jest.fn(),
+      updateRobotSetting: jest.fn(),
+      listBulletins: jest.fn(),
+      updateTeacherInfo: jest.fn()
     } as any;
 
     // Mock ChatService constructor
@@ -1236,6 +1242,85 @@ describe('ChatHandler', () => {
 
       expect(mockConsoleLog).toHaveBeenCalledWith(
         expect.stringContaining('"userId": "user1"')
+      );
+    });
+  });
+
+  describe('extended chat governance handlers', () => {
+    it('should add badwords with force without prompting', async () => {
+      mockChatService.addBadwords.mockResolvedValue({ data: { count: 2 } });
+
+      await chatHandler.addBadwords({
+        userId: 'user-1',
+        words: ['foo', 'bar'],
+        force: true,
+        output: 'json'
+      });
+
+      expect(mockConfirmDeletion).not.toHaveBeenCalled();
+      expect(mockChatService.addBadwords).toHaveBeenCalledWith(
+        expect.objectContaining({
+          userId: 'user-1',
+          words: ['foo', 'bar']
+        })
+      );
+      expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringContaining('"count": 2'));
+    });
+
+    it('should prompt before cleaning notices without force', async () => {
+      mockConfirmDeletion.mockResolvedValue(true);
+      mockChatService.cleanNotices.mockResolvedValue(undefined);
+
+      await chatHandler.cleanNotices({
+        channelId: '3151318',
+        output: 'json'
+      });
+
+      expect(mockConfirmDeletion).toHaveBeenCalledWith(
+        expect.stringContaining('Clear all notices'),
+        'yes'
+      );
+      expect(mockChatService.cleanNotices).toHaveBeenCalledWith({ channelId: '3151318' });
+    });
+
+    it('should list bulletins with default pagination', async () => {
+      mockChatService.listBulletins.mockResolvedValue({
+        pageNumber: 1,
+        pageSize: 20,
+        totalItems: 0,
+        contents: []
+      });
+
+      await chatHandler.listBulletins({
+        channelId: '3151318',
+        output: 'json'
+      });
+
+      expect(mockChatService.listBulletins).toHaveBeenCalledWith({
+        channelId: '3151318',
+        pageNumber: 1,
+        pageSize: 20,
+        sort: undefined
+      });
+    });
+
+    it('should update robot setting with force', async () => {
+      mockChatService.updateRobotSetting.mockResolvedValue(undefined);
+
+      await chatHandler.updateRobotSetting({
+        channelId: '3151318',
+        robotNumber: 10,
+        addRobotModel: 'timely',
+        force: true,
+        output: 'json'
+      });
+
+      expect(mockChatService.updateRobotSetting).toHaveBeenCalledWith(
+        expect.objectContaining({
+          channelId: '3151318',
+          robotNumber: 10,
+          addRobotModel: 'timely'
+        })
       );
     });
   });

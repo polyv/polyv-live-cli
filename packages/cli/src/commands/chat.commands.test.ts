@@ -467,4 +467,95 @@ describe('Chat Commands', () => {
       });
     });
   });
+
+  describe('extended chat governance commands', () => {
+    let program: Command;
+
+    beforeEach(() => {
+      program = new Command();
+      registerChatCommands(program);
+    });
+
+    function getNestedCommand(path: string[]): Command | undefined {
+      let current = program.commands.find(cmd => cmd.name() === path[0]);
+      for (const segment of path.slice(1)) {
+        current = current?.commands.find(cmd => cmd.name() === segment);
+      }
+      return current;
+    }
+
+    it('should register extended command groups', () => {
+      for (const group of ['message', 'badword', 'banned', 'notice', 'qa', 'censor', 'role', 'robot']) {
+        expect(getNestedCommand(['chat', group])).toBeDefined();
+      }
+    });
+
+    it('should register commands for remaining chat APIs', () => {
+      const commands = [
+        ['chat', 'message', 'hidden-send'],
+        ['chat', 'message', 'admin-send'],
+        ['chat', 'message', 'online-count'],
+        ['chat', 'message', 'speak-list'],
+        ['chat', 'message', 'alert-special'],
+        ['chat', 'message', 'audit'],
+        ['chat', 'message', 'custom-send'],
+        ['chat', 'message', 'custom-send-encode'],
+        ['chat', 'message', 'emit-by-user-id'],
+        ['chat', 'badword', 'list'],
+        ['chat', 'badword', 'add'],
+        ['chat', 'badword', 'delete'],
+        ['chat', 'banned', 'ip-add'],
+        ['chat', 'banned', 'user-list'],
+        ['chat', 'banned', 'forbid-list'],
+        ['chat', 'banned', 'delete'],
+        ['chat', 'notice', 'list'],
+        ['chat', 'notice', 'add'],
+        ['chat', 'notice', 'clean'],
+        ['chat', 'qa', 'list'],
+        ['chat', 'censor', 'update'],
+        ['chat', 'role', 'admin-get'],
+        ['chat', 'role', 'admin-update'],
+        ['chat', 'role', 'teacher-get'],
+        ['chat', 'role', 'teacher-update'],
+        ['chat', 'role', 'user-list'],
+        ['chat', 'robot', 'setting-get'],
+        ['chat', 'robot', 'stats'],
+        ['chat', 'robot', 'setting-update'],
+        ['chat', 'robot', 'list-update'],
+        ['chat', 'robot', 'pause'],
+      ];
+
+      for (const commandPath of commands) {
+        expect(getNestedCommand(commandPath)).toBeDefined();
+      }
+    });
+
+    it('should expose force option for dangerous write commands', () => {
+      const dangerousCommands = [
+        ['chat', 'message', 'alert-special'],
+        ['chat', 'message', 'audit'],
+        ['chat', 'message', 'custom-send'],
+        ['chat', 'message', 'custom-send-encode'],
+        ['chat', 'message', 'emit-by-user-id'],
+        ['chat', 'badword', 'add'],
+        ['chat', 'badword', 'delete'],
+        ['chat', 'banned', 'ip-add'],
+        ['chat', 'banned', 'delete'],
+        ['chat', 'notice', 'add'],
+        ['chat', 'notice', 'clean'],
+        ['chat', 'censor', 'update'],
+        ['chat', 'role', 'admin-update'],
+        ['chat', 'role', 'teacher-update'],
+        ['chat', 'robot', 'setting-update'],
+        ['chat', 'robot', 'list-update'],
+        ['chat', 'robot', 'pause'],
+      ];
+
+      for (const commandPath of dangerousCommands) {
+        const optionNames = (getNestedCommand(commandPath)?.options || []).map(opt => opt.long);
+        expect(optionNames).toContain('--force');
+        expect(optionNames).toContain('--output');
+      }
+    });
+  });
 });

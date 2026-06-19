@@ -72,7 +72,38 @@ describe('Chat Commands - Command Execution', () => {
       kickUser: jest.fn(),
       unkickUser: jest.fn(),
       listBanned: jest.fn(),
-      listKicked: jest.fn()
+      listKicked: jest.fn(),
+      sendHiddenMessage: jest.fn(),
+      sendHiddenByAdmin: jest.fn(),
+      countOnlineUser: jest.fn(),
+      listSpeak: jest.fn(),
+      alertToSpecial: jest.fn(),
+      auditMessage: jest.fn(),
+      sendCustomMessage: jest.fn(),
+      sendCustomMessageEncode: jest.fn(),
+      emitByUserId: jest.fn(),
+      listUserBadwords: jest.fn(),
+      addBadwords: jest.fn(),
+      deleteUserBadword: jest.fn(),
+      addBannedIp: jest.fn(),
+      listUserBanned: jest.fn(),
+      listForbidUsers: jest.fn(),
+      deleteChannelBanned: jest.fn(),
+      listBulletins: jest.fn(),
+      addBulletin: jest.fn(),
+      cleanNotices: jest.fn(),
+      listQa: jest.fn(),
+      updateCensorEnabled: jest.fn(),
+      getAdminInfo: jest.fn(),
+      updateAdminInfo: jest.fn(),
+      getTeacherInfo: jest.fn(),
+      updateTeacherInfo: jest.fn(),
+      getUserList: jest.fn(),
+      getRobotSetting: jest.fn(),
+      getRobotStats: jest.fn(),
+      updateRobotSetting: jest.fn(),
+      updateRobotListSetting: jest.fn(),
+      pauseRobot: jest.fn()
     } as any;
 
     (ChatHandler as jest.Mock).mockImplementation(() => mockChatHandler);
@@ -573,6 +604,92 @@ describe('Chat Commands - Command Execution', () => {
       expect(mockChatHandler.sendAdminMessage).toHaveBeenCalledWith(
         expect.objectContaining({
           output: 'json'
+        })
+      );
+    });
+  });
+
+  describe('extended command execution', () => {
+    it('[P0] should execute badword add with parsed word list and force flag', async () => {
+      mockChatHandler.addBadwords.mockResolvedValue(undefined);
+
+      await program.parseAsync(['node', 'test', 'chat', 'badword', 'add',
+        '--user-id', 'user-1',
+        '--words', 'foo,bar',
+        '--channel-id', '12345678',
+        '--force',
+        '--output', 'json'
+      ]);
+
+      expect(mockChatHandler.addBadwords).toHaveBeenCalledWith(
+        expect.objectContaining({
+          userId: 'user-1',
+          words: ['foo', 'bar'],
+          channelId: '12345678',
+          force: true,
+          output: 'json'
+        })
+      );
+    });
+
+    it('[P0] should execute notice list with pagination', async () => {
+      mockChatHandler.listBulletins.mockResolvedValue(undefined);
+
+      await program.parseAsync(['node', 'test', 'chat', 'notice', 'list',
+        '--channel-id', '12345678',
+        '--page-number', '2',
+        '--page-size', '30',
+        '--output', 'json'
+      ]);
+
+      expect(mockChatHandler.listBulletins).toHaveBeenCalledWith(
+        expect.objectContaining({
+          channelId: '12345678',
+          pageNumber: 2,
+          pageSize: 30,
+          output: 'json'
+        })
+      );
+    });
+
+    it('[P0] should execute role teacher update with force flag', async () => {
+      mockChatHandler.updateTeacherInfo.mockResolvedValue(undefined);
+
+      await program.parseAsync(['node', 'test', 'chat', 'role', 'teacher-update',
+        '--channel-id', '12345678',
+        '--nickname', 'Teacher',
+        '--actor', 'Host',
+        '--force'
+      ]);
+
+      expect(mockChatHandler.updateTeacherInfo).toHaveBeenCalledWith(
+        expect.objectContaining({
+          channelId: '12345678',
+          nickname: 'Teacher',
+          actor: 'Host',
+          force: true
+        })
+      );
+    });
+
+    it('[P0] should execute robot list update with parsed JSON robot list', async () => {
+      mockChatHandler.updateRobotListSetting.mockResolvedValue(undefined);
+
+      await program.parseAsync(['node', 'test', 'chat', 'robot', 'list-update',
+        '--channel-id', '12345678',
+        '--robot-number', '2',
+        '--add-robot-model', 'timely',
+        '--robot-list', '[{"name":"Robot","avatar":"https://example.com/a.png"}]',
+        '--force'
+      ]);
+
+      expect(mockChatHandler.updateRobotListSetting).toHaveBeenCalledWith(
+        expect.objectContaining({
+          channelId: '12345678',
+          robotNumber: 2,
+          addRobotModel: 'timely',
+          robotList: [{ name: 'Robot', avatar: 'https://example.com/a.png' }],
+          force: true
         })
       );
     });
