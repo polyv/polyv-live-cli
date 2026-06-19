@@ -3569,6 +3569,278 @@ export interface UpdateDonateGiftParams {
 }
 
 // ============================================
+// V4 Channel Marketing & Content Exact API Types
+// ============================================
+
+export interface CardPushExact {
+  cardPushId?: number | string;
+  channelId?: string | number;
+  cardType?: 'common' | 'qrCode' | string;
+  imageType?: 'giftbox' | 'redpack' | 'custom' | 'weixinWork' | string;
+  title?: string;
+  link?: string;
+  duration?: 0 | 5 | 10 | 20 | 30 | number;
+  showCondition?: 'PUSH' | 'WATCH' | string;
+  [key: string]: unknown;
+}
+
+export interface ListCardPushesParams {
+  channelId: string | number;
+}
+
+export type ListCardPushesResponse = CardPushExact[];
+
+export interface CreateCardPushExactParams {
+  channelId: string | number;
+  cardType?: 'common' | 'qrCode' | string;
+  imageType: 'giftbox' | 'redpack' | 'custom' | 'weixinWork' | string;
+  title: string;
+  link: string;
+  duration: 0 | 5 | 10 | 20 | 30 | number;
+  durationPosition?: 'bottom' | 'top' | string;
+  showCondition: 'PUSH' | 'WATCH' | string;
+  conditionValue?: number;
+  conditionUnit?: 'SECONDS' | 'MINUTES' | string;
+  countdownMsg?: string;
+  enterEnabled?: YNFlag;
+  linkEnabled?: YNFlag;
+  redirectType?: 'iframe' | 'tab' | string;
+  enterImage?: string;
+  cardImage?: string;
+  weixinWordQrCodeId?: string;
+  qrCodeImage?: string;
+  hrefType?: 'common' | 'multiplatform' | string;
+  pcLink?: string;
+  mobileLink?: string;
+  wxMiniprogramOriginalId?: string;
+  wxMiniprogramAppId?: string;
+  wxMiniprogramLink?: string;
+  mobileAppLink?: string;
+}
+
+export type CreateCardPushExactResponse = CardPushExact;
+
+export interface CardPushIdParams {
+  channelId: string | number;
+  cardPushId: string | number;
+}
+
+export interface UpdateCardPushExactParams extends CardPushIdParams, Partial<Omit<CreateCardPushExactParams, 'channelId'>> {}
+
+export interface ShareExact {
+  shareBtnEnable?: YNFlag;
+  titleType?: 'follow' | 'custom' | string;
+  weixinShareTitle?: string;
+  weixinShareDesc?: string;
+  weixinShareCustomUrl?: string;
+  webShareCustomUrl?: string;
+  weixinShareCustomUrlWithParamEnabled?: YNFlag;
+  webShareCustomUrlWithParamEnabled?: YNFlag;
+  [key: string]: unknown;
+}
+
+export interface GetShareExactParams {
+  channelId: string | number;
+}
+
+export interface UpdateShareExactParams extends ShareExact {
+  channelId: string | number;
+  shareBtnEnable: YNFlag;
+  titleType: 'follow' | 'custom' | string;
+}
+
+export interface CouponEnabled {
+  enabled: YNFlag;
+  [key: string]: unknown;
+}
+
+export interface CouponEnabledParams {
+  channelId: string | number;
+}
+
+export interface UpdateCouponEnabledParams extends CouponEnabledParams {
+  enabled: YNFlag;
+}
+
+export interface ChannelCoupon {
+  couponId?: string;
+  name?: string;
+  status?: string;
+  [key: string]: unknown;
+}
+
+export interface ListChannelCouponsParams extends V4PaginationParams {
+  channelId: string | number;
+  name?: string;
+}
+
+export type ListChannelCouponsResponse = V4ChannelPageResponse<ChannelCoupon>;
+
+export interface DeleteChannelCouponsParams {
+  channelId: string | number;
+  couponIds: Array<string | number>;
+}
+
+export interface ProductPushRule {
+  productExplainEnabled?: YNFlag;
+  productExplainingAutoPushAndSticky?: YNFlag;
+  productListSortType?: 'ASC' | 'DESC' | string;
+  productTagSortType?: 'DEFAULT' | 'CUSTOM' | string;
+  productPushRule?: 'smallCard' | 'bigCard' | 'chooseCard' | string;
+  productHotEffectEnabled?: YNFlag;
+  normalProductHotEffectTips?: string;
+  jobProductHotEffectTips?: string;
+  financeProductHotEffectTips?: string;
+  outLinkProductRedirectEnabled?: YNFlag;
+  productTagSortOrderIds?: Array<string | number>;
+  [key: string]: unknown;
+}
+
+export interface ProductPushRuleParams {
+  channelId: string | number;
+}
+
+export interface UpdateProductPushRuleParams extends ProductPushRuleParams, ProductPushRule {}
+
+export interface ProductTagExact {
+  id?: number | string;
+  name?: string;
+  [key: string]: unknown;
+}
+
+export interface ListProductTagsExactParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export type ListProductTagsExactResponse = V4ChannelPageResponse<ProductTagExact>;
+
+export interface CreateProductTagExactParams {
+  channelId: string | number;
+  name: string;
+}
+
+export type CreateProductTagExactResponse = ProductTagExact;
+
+export interface UpdateProductTagExactParams {
+  channelId: string | number;
+  id: string | number;
+  name: string;
+}
+
+export interface DeleteProductTagExactParams {
+  channelId: string | number;
+  id: string | number;
+}
+
+export interface ProductStatsExact {
+  productId?: string | number;
+  productName?: string;
+  viewCount?: number;
+  clickCount?: number;
+  [key: string]: unknown;
+}
+
+export interface ListProductStatsParams extends V4PaginationParams {
+  channelId: string | number;
+  productId?: string;
+  productName?: string;
+  sessionId?: string;
+}
+
+export type ListProductStatsResponse = V4ChannelPageResponse<ProductStatsExact>;
+
+export interface ProductStatsSummaryParams {
+  channelId: string | number;
+  sessionId?: string;
+}
+
+export interface ProductStatsSummary {
+  [key: string]: unknown;
+}
+
+export interface SortChannelProductRankParams {
+  channelId: string | number;
+  productId: string | number;
+  rank: number;
+}
+
+export interface ChannelProductActionParams {
+  channelId: string | number;
+  productId: string | number;
+}
+
+export interface BatchCreatePopularizationsExactParams {
+  channelId: string | number;
+  names: string[];
+}
+
+export interface PopularizationExact {
+  id?: number | string;
+  name?: string;
+  url?: string;
+  [key: string]: unknown;
+}
+
+export type BatchCreatePopularizationsExactResponse = PopularizationExact[];
+
+export interface ListPopularizationsExactParams {
+  channelId: string | number;
+}
+
+export type ListPopularizationsExactResponse = PopularizationExact[];
+
+export interface RecordFileExact {
+  fileId?: string;
+  channelId?: string | number;
+  name?: string;
+  duration?: number;
+  [key: string]: unknown;
+}
+
+export interface ListMaterialRecordFilesParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export type ListMaterialRecordFilesResponse = V4ChannelPageResponse<RecordFileExact>;
+
+export interface CreateRecordFileOutlineParams {
+  fileId: string;
+  aiKnowledgeQuizEnabled?: YNFlag;
+  aiSummaryAuditEnabled?: YNFlag;
+  syncToPlaybackDotEnabled?: YNFlag;
+}
+
+export interface RecordFileOutline {
+  fileId?: string;
+  outline?: unknown;
+  [key: string]: unknown;
+}
+
+export interface GetRecordFileOutlineParams {
+  channelId: string | number;
+  fileId: string;
+}
+
+export interface RecordFileSubtitlePublishItem {
+  id: string | number;
+  status: 'finish' | 'publish' | string;
+}
+
+export interface BatchPublishRecordFileSubtitlesParams {
+  subtitles: RecordFileSubtitlePublishItem[];
+}
+
+export interface WatchViewerLogoutParams {
+  channelId: string | number;
+  token?: string;
+}
+
+export interface BatchUpdateChatEnabledParams {
+  channelIds: Array<string | number>;
+  chatEnabled: YNFlag;
+}
+
+// ============================================
 // Type Aliases for Backward Compatibility
 // ============================================
 

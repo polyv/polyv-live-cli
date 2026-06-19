@@ -293,6 +293,48 @@ import type {
   ListRewardLikesResponse,
   CreateLotteryGroupViewerNamesParams,
   CreateLotteryGroupViewerNamesResponse,
+  ListCardPushesParams,
+  ListCardPushesResponse,
+  CreateCardPushExactParams,
+  CreateCardPushExactResponse,
+  CardPushIdParams,
+  UpdateCardPushExactParams,
+  GetShareExactParams,
+  ShareExact,
+  UpdateShareExactParams,
+  CouponEnabledParams,
+  CouponEnabled,
+  UpdateCouponEnabledParams,
+  ListChannelCouponsParams,
+  ListChannelCouponsResponse,
+  DeleteChannelCouponsParams,
+  ProductPushRuleParams,
+  ProductPushRule,
+  UpdateProductPushRuleParams,
+  ListProductTagsExactParams,
+  ListProductTagsExactResponse,
+  CreateProductTagExactParams,
+  CreateProductTagExactResponse,
+  UpdateProductTagExactParams,
+  DeleteProductTagExactParams,
+  ListProductStatsParams,
+  ListProductStatsResponse,
+  ProductStatsSummaryParams,
+  ProductStatsSummary,
+  SortChannelProductRankParams,
+  ChannelProductActionParams,
+  BatchCreatePopularizationsExactParams,
+  BatchCreatePopularizationsExactResponse,
+  ListPopularizationsExactParams,
+  ListPopularizationsExactResponse,
+  ListMaterialRecordFilesParams,
+  ListMaterialRecordFilesResponse,
+  CreateRecordFileOutlineParams,
+  RecordFileOutline,
+  GetRecordFileOutlineParams,
+  BatchPublishRecordFileSubtitlesParams,
+  WatchViewerLogoutParams,
+  BatchUpdateChatEnabledParams,
 } from '../../types/v4-channel.js';
 import { PolyVValidationError } from '../../errors/polyv-validation-error.js';
 
@@ -3194,6 +3236,466 @@ export class V4ChannelService {
   }
 
   // ============================================
+  // V4 Channel Marketing & Content Exact API Paths
+  // ============================================
+
+  /**
+   * List channel card pushes.
+   */
+  async listCardPushes(params: ListCardPushesParams): Promise<ListCardPushesResponse> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<ListCardPushesResponse>(
+      '/live/v4/channel/card-push/list',
+      { params }
+    );
+    return response as unknown as ListCardPushesResponse;
+  }
+
+  /**
+   * Create a channel card push. This API is GET in the source document.
+   */
+  async createCardPushExact(params: CreateCardPushExactParams): Promise<CreateCardPushExactResponse> {
+    this.validateCardPushCreateParams(params);
+
+    const response = await this.client.httpClient.get<CreateCardPushExactResponse>(
+      '/live/v4/channel/card-push/create',
+      { params }
+    );
+    return response as unknown as CreateCardPushExactResponse;
+  }
+
+  /**
+   * Update a channel card push.
+   */
+  async updateCardPushExact(params: UpdateCardPushExactParams): Promise<void> {
+    this.validateCardPushIdParams(params);
+    this.validateCardPushOptionalParams(params);
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/card-push/update',
+      params
+    );
+  }
+
+  /**
+   * Delete a channel card push.
+   */
+  async deleteCardPushExact(params: CardPushIdParams): Promise<void> {
+    this.validateCardPushIdParams(params);
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/card-push/delete',
+      null,
+      { params }
+    );
+  }
+
+  /**
+   * Push a channel card.
+   */
+  async pushCardPushExact(params: CardPushIdParams): Promise<void> {
+    this.validateCardPushIdParams(params);
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/card-push/push',
+      null,
+      { params }
+    );
+  }
+
+  /**
+   * Cancel a pushed channel card.
+   */
+  async cancelCardPushExact(params: CardPushIdParams): Promise<void> {
+    this.validateCardPushIdParams(params);
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/card-push/cancel-push',
+      null,
+      { params }
+    );
+  }
+
+  /**
+   * Query new channel WeChat share settings.
+   */
+  async getShareExact(params: GetShareExactParams): Promise<ShareExact> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<ShareExact>(
+      '/live/v4/channel/share/get',
+      { params }
+    );
+    return response as unknown as ShareExact;
+  }
+
+  /**
+   * Update new channel WeChat share settings. This API is GET in the source document.
+   */
+  async updateShareExact(params: UpdateShareExactParams): Promise<ShareExact> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.shareBtnEnable, 'shareBtnEnable');
+    this.validateOptionalYn(params.shareBtnEnable, 'shareBtnEnable');
+    this.validateRequiredString(params.titleType, 'titleType');
+    this.validateOptionalYn(params.weixinShareCustomUrlWithParamEnabled, 'weixinShareCustomUrlWithParamEnabled');
+    this.validateOptionalYn(params.webShareCustomUrlWithParamEnabled, 'webShareCustomUrlWithParamEnabled');
+
+    const response = await this.client.httpClient.get<ShareExact>(
+      '/live/v4/channel/share/update',
+      { params }
+    );
+    return response as unknown as ShareExact;
+  }
+
+  /**
+   * Query channel coupon switch.
+   */
+  async getCouponEnabled(params: CouponEnabledParams): Promise<CouponEnabled> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<CouponEnabled>(
+      '/live/v4/channel/coupon/get-enabled',
+      { params }
+    );
+    return response as unknown as CouponEnabled;
+  }
+
+  /**
+   * Update channel coupon switch.
+   */
+  async updateCouponEnabled(params: UpdateCouponEnabledParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.enabled, 'enabled');
+    this.validateOptionalYn(params.enabled, 'enabled');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/coupon/update-enabled',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * List channel coupons.
+   */
+  async listChannelCoupons(params: ListChannelCouponsParams): Promise<ListChannelCouponsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListChannelCouponsResponse>(
+      '/live/v4/channel/coupon/list',
+      { params }
+    );
+    return response as unknown as ListChannelCouponsResponse;
+  }
+
+  /**
+   * Delete channel coupons.
+   */
+  async deleteChannelCoupons(params: DeleteChannelCouponsParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateIdArray(params.couponIds, 'couponIds', 30);
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/coupon/delete',
+      params
+    );
+  }
+
+  /**
+   * Query channel product push rule.
+   */
+  async getProductPushRule(params: ProductPushRuleParams): Promise<ProductPushRule> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<ProductPushRule>(
+      '/live/v4/channel/product/push/rule',
+      { params }
+    );
+    return response as unknown as ProductPushRule;
+  }
+
+  /**
+   * Update channel product push rule.
+   */
+  async updateProductPushRule(params: UpdateProductPushRuleParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateProductPushRuleParams(params);
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/product/push/rule',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * List channel product tags.
+   */
+  async listProductTagsExact(params: ListProductTagsExactParams): Promise<ListProductTagsExactResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListProductTagsExactResponse>(
+      '/live/v4/channel/product/tag/list',
+      { params }
+    );
+    return response as unknown as ListProductTagsExactResponse;
+  }
+
+  /**
+   * Create a channel product tag.
+   */
+  async createProductTagExact(params: CreateProductTagExactParams): Promise<CreateProductTagExactResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.name, 'name');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateProductTagExactResponse>(
+      '/live/v4/channel/product/tag/create',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateProductTagExactResponse;
+  }
+
+  /**
+   * Update a channel product tag.
+   */
+  async updateProductTagExact(params: UpdateProductTagExactParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    this.validateRequiredString(params.name, 'name');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/product/tag/update',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Delete a channel product tag.
+   */
+  async deleteProductTagExact(params: DeleteProductTagExactParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/product/tag/delete',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * List channel product statistics.
+   */
+  async listProductStats(params: ListProductStatsParams): Promise<ListProductStatsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+    this.validateMaxPageSize(params.pageSize, 300);
+
+    const response = await this.client.httpClient.get<ListProductStatsResponse>(
+      '/live/v4/channel/product/stats/page',
+      { params }
+    );
+    return response as unknown as ListProductStatsResponse;
+  }
+
+  /**
+   * Query channel product statistics summary.
+   */
+  async getProductStatsSummary(params: ProductStatsSummaryParams): Promise<ProductStatsSummary> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<ProductStatsSummary>(
+      '/live/v4/channel/product/stats/summary',
+      { params }
+    );
+    return response as unknown as ProductStatsSummary;
+  }
+
+  /**
+   * Update a channel product rank.
+   */
+  async sortChannelProductRank(params: SortChannelProductRankParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.productId, 'productId');
+    this.validateRequiredNumber(params.rank, 'rank');
+    if (params.rank <= 0) {
+      throw new PolyVValidationError('rank must be greater than 0', 'rank', params.rank);
+    }
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/product/sort-rank',
+      null,
+      { params }
+    );
+  }
+
+  /**
+   * Pin a channel product.
+   */
+  async toppingChannelProduct(params: ChannelProductActionParams): Promise<void> {
+    this.validateChannelProductActionParams(params);
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/product/topping',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Unpin a channel product.
+   */
+  async untoppingChannelProduct(params: ChannelProductActionParams): Promise<void> {
+    this.validateChannelProductActionParams(params);
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/product/un-topping',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Batch create channel popularization entries.
+   */
+  async createPopularizations(
+    params: BatchCreatePopularizationsExactParams
+  ): Promise<BatchCreatePopularizationsExactResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateNonEmptyArray(params.names, 'names');
+    if (params.names.length > 500) {
+      throw new PolyVValidationError('names cannot contain more than 500 items', 'names', params.names);
+    }
+    params.names.forEach((name, index) => {
+      this.validateRequiredString(name, `names[${index}]`);
+      if (name.length > 20) {
+        throw new PolyVValidationError(`names[${index}] cannot exceed 20 characters`, `names[${index}]`, name);
+      }
+    });
+
+    const response = await this.client.httpClient.post<BatchCreatePopularizationsExactResponse>(
+      '/live/v4/channel/popularization/create-batch',
+      params
+    );
+    return response as unknown as BatchCreatePopularizationsExactResponse;
+  }
+
+  /**
+   * List channel popularization entries.
+   */
+  async listPopularizations(params: ListPopularizationsExactParams): Promise<ListPopularizationsExactResponse> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<ListPopularizationsExactResponse>(
+      '/live/v4/channel/popularization/list',
+      { params }
+    );
+    return response as unknown as ListPopularizationsExactResponse;
+  }
+
+  /**
+   * List material-library record files for a channel.
+   */
+  async listMaterialRecordFiles(params: ListMaterialRecordFilesParams): Promise<ListMaterialRecordFilesResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListMaterialRecordFilesResponse>(
+      '/live/v4/channel/record-file/m-list',
+      { params }
+    );
+    return response as unknown as ListMaterialRecordFilesResponse;
+  }
+
+  /**
+   * Create an outline for a temporary record file.
+   */
+  async createRecordFileOutline(params: CreateRecordFileOutlineParams): Promise<RecordFileOutline> {
+    this.validateRequiredString(params.fileId, 'fileId');
+    this.validateOptionalYn(params.aiKnowledgeQuizEnabled, 'aiKnowledgeQuizEnabled');
+    this.validateOptionalYn(params.aiSummaryAuditEnabled, 'aiSummaryAuditEnabled');
+    this.validateOptionalYn(params.syncToPlaybackDotEnabled, 'syncToPlaybackDotEnabled');
+
+    const response = await this.client.httpClient.post<RecordFileOutline>(
+      '/live/v4/channel/record-file/subtitle/outline/create',
+      null,
+      { params }
+    );
+    return response as unknown as RecordFileOutline;
+  }
+
+  /**
+   * Query an outline by temporary record file ID.
+   */
+  async getRecordFileOutline(params: GetRecordFileOutlineParams): Promise<RecordFileOutline> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.fileId, 'fileId');
+
+    const response = await this.client.httpClient.get<RecordFileOutline>(
+      '/live/v4/channel/record-file/subtitle/outline/get-by-fileId',
+      { params }
+    );
+    return response as unknown as RecordFileOutline;
+  }
+
+  /**
+   * Batch publish temporary record-file subtitles.
+   */
+  async batchPublishRecordFileSubtitles(params: BatchPublishRecordFileSubtitlesParams): Promise<void> {
+    this.validateNonEmptyArray(params.subtitles, 'subtitles');
+    params.subtitles.forEach((subtitle, index) => {
+      this.validateRequiredId(subtitle.id, `subtitles[${index}].id`);
+      this.validateRequiredString(subtitle.status, `subtitles[${index}].status`);
+    });
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/record-file/subtitle/batch-publish',
+      null,
+      { params }
+    );
+  }
+
+  /**
+   * Log out a viewer from the channel watch page.
+   */
+  async logoutWatchViewer(params: WatchViewerLogoutParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/watch/viewer/logout',
+      Object.keys(body).length > 0 ? body : null,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Batch update channel chat speaking switch.
+   */
+  async batchUpdateChatEnabled(params: BatchUpdateChatEnabledParams): Promise<void> {
+    this.validateIdArray(params.channelIds, 'channelIds');
+    this.validateRequiredString(params.chatEnabled, 'chatEnabled');
+    this.validateOptionalYn(params.chatEnabled, 'chatEnabled');
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/chat/update-chatEnabled',
+      params
+    );
+  }
+
+  // ============================================
   // Private Validation Helpers
   // ============================================
 
@@ -3294,6 +3796,47 @@ export class V4ChannelService {
     if (params.startTime !== undefined && params.endTime !== undefined && params.endTime <= params.startTime) {
       throw new PolyVValidationError('endTime must be greater than startTime', 'endTime', params.endTime);
     }
+  }
+
+  private validateCardPushCreateParams(params: CreateCardPushExactParams): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.imageType, 'imageType');
+    this.validateRequiredString(params.title, 'title');
+    if (params.title.length > 16) {
+      throw new PolyVValidationError('title cannot exceed 16 characters', 'title', params.title);
+    }
+    this.validateRequiredString(params.link, 'link');
+    this.validateRequiredNumber(params.duration, 'duration');
+    this.validateRequiredString(params.showCondition, 'showCondition');
+    this.validateCardPushOptionalParams(params);
+  }
+
+  private validateCardPushIdParams(params: CardPushIdParams): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.cardPushId, 'cardPushId');
+  }
+
+  private validateCardPushOptionalParams(params: Partial<CreateCardPushExactParams>): void {
+    this.validateOptionalYn(params.enterEnabled, 'enterEnabled');
+    this.validateOptionalYn(params.linkEnabled, 'linkEnabled');
+    if (params.countdownMsg !== undefined && params.countdownMsg.length > 8) {
+      throw new PolyVValidationError('countdownMsg cannot exceed 8 characters', 'countdownMsg', params.countdownMsg);
+    }
+    if (params.duration !== undefined && ![0, 5, 10, 20, 30].includes(params.duration)) {
+      throw new PolyVValidationError('duration must be one of 0, 5, 10, 20, or 30', 'duration', params.duration);
+    }
+  }
+
+  private validateProductPushRuleParams(params: UpdateProductPushRuleParams): void {
+    this.validateOptionalYn(params.productExplainEnabled, 'productExplainEnabled');
+    this.validateOptionalYn(params.productExplainingAutoPushAndSticky, 'productExplainingAutoPushAndSticky');
+    this.validateOptionalYn(params.productHotEffectEnabled, 'productHotEffectEnabled');
+    this.validateOptionalYn(params.outLinkProductRedirectEnabled, 'outLinkProductRedirectEnabled');
+  }
+
+  private validateChannelProductActionParams(params: ChannelProductActionParams): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.productId, 'productId');
   }
 
   private normalizeIdList(

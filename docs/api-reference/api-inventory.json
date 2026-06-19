@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T12:13:22.208Z",
+  "generatedAt": "2026-06-19T13:08:39.179Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,19 +18,11 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 679,
-    "sdkImplemented": 547,
-    "sdkMissing": 31
+    "sdkEndpoints": 710,
+    "sdkImplemented": 578,
+    "sdkMissing": 0
   },
   "modules": [
-    {
-      "module": "channel",
-      "label": "频道",
-      "total": 283,
-      "implemented": 252,
-      "missing": 31,
-      "coverage": 89
-    },
     {
       "module": "account",
       "label": "账号与财务",
@@ -44,6 +36,14 @@
       "label": "AI 与数字人",
       "total": 13,
       "implemented": 13,
+      "missing": 0,
+      "coverage": 100
+    },
+    {
+      "module": "channel",
+      "label": "频道",
+      "total": 283,
+      "implemented": 283,
       "missing": 0,
       "coverage": 100
     },
@@ -2199,12 +2199,12 @@
       "dedupeKey": "channel:查询频道卡片推送",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/card-push/list",
+        "reference": "V4ChannelService#listCardPushes",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -2494,12 +2494,12 @@
       "dedupeKey": "channel:查询频道商品配置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/product/push/rule",
+        "reference": "V4ChannelService#getProductPushRule",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -2552,12 +2552,12 @@
       "dedupeKey": "channel:查询频道微信分享信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/share/get",
+        "reference": "V4ChannelService#getShareExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -2721,12 +2721,12 @@
       "dedupeKey": "channel:查询频道优惠券开关状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/coupon/get-enabled",
+        "reference": "V4ChannelService#getCouponEnabled",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -2750,12 +2750,12 @@
       "dedupeKey": "channel:查询频道优惠券列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/coupon/list",
+        "reference": "V4ChannelService#listChannelCoupons",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3154,12 +3154,12 @@
       "dedupeKey": "channel:查询商品标签列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/product/tag/list",
+        "reference": "V4ChannelService#listProductTagsExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3869,12 +3869,12 @@
       "dedupeKey": "channel:创建频道卡片推送",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/card-push/create",
+        "reference": "V4ChannelService#createCardPushExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3965,12 +3965,12 @@
       "dedupeKey": "channel:创建商品标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/tag/create",
+        "reference": "V4ChannelService#createProductTagExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4025,12 +4025,12 @@
       "dedupeKey": "channel:创建暂存视频大纲",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/record-file/subtitle/outline/create",
+        "reference": "V4ChannelService#createRecordFileOutline",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4232,12 +4232,12 @@
       "dedupeKey": "channel:分页查询频道商品统计列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/product/stats/page",
+        "reference": "V4ChannelService#listProductStats",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4288,12 +4288,12 @@
       "dedupeKey": "channel:分页查询素材库频道直播回放列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/record-file/m-list",
+        "reference": "V4ChannelService#listMaterialRecordFiles",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4595,12 +4595,12 @@
       "dedupeKey": "channel:更新商品标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/tag/update",
+        "reference": "V4ChannelService#updateProductTagExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5069,12 +5069,12 @@
       "dedupeKey": "channel:获取频道商品统计概览",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/product/stats/summary",
+        "reference": "V4ChannelService#getProductStatsSummary",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5631,12 +5631,12 @@
       "dedupeKey": "channel:批量创建渠道推广",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/popularization/create-batch",
+        "reference": "V4ChannelService#createPopularizations",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -6136,12 +6136,12 @@
       "dedupeKey": "channel:频道观看页观众退出登录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/watch/viewer/logout",
+        "reference": "V4ChannelService#logoutWatchViewer",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -6907,12 +6907,12 @@
       "dedupeKey": "channel:渠道推广列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/popularization/list",
+        "reference": "V4ChannelService#listPopularizations",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -6967,12 +6967,12 @@
       "dedupeKey": "channel:取消推送卡片",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/card-push/cancel-push",
+        "reference": "V4ChannelService#cancelCardPushExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7027,12 +7027,12 @@
       "dedupeKey": "channel:取消置顶频道商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/un-topping",
+        "reference": "V4ChannelService#untoppingChannelProduct",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7235,12 +7235,12 @@
       "dedupeKey": "channel:删除卡片推送",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/card-push/delete",
+        "reference": "V4ChannelService#deleteCardPushExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7325,12 +7325,12 @@
       "dedupeKey": "channel:删除频道优惠券",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/coupon/delete",
+        "reference": "V4ChannelService#deleteChannelCoupons",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7384,12 +7384,12 @@
       "dedupeKey": "channel:删除商品标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/tag/delete",
+        "reference": "V4ChannelService#deleteProductTagExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8121,12 +8121,12 @@
       "dedupeKey": "channel:通过序号修改频道商品库列表顺序",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/sort-rank",
+        "reference": "V4ChannelService#sortChannelProductRank",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8178,12 +8178,12 @@
       "dedupeKey": "channel:推送频道卡片",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/card-push/push",
+        "reference": "V4ChannelService#pushCardPushExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8693,12 +8693,12 @@
       "dedupeKey": "channel:修改频道卡片推送",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/card-push/update",
+        "reference": "V4ChannelService#updateCardPushExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8783,12 +8783,12 @@
       "dedupeKey": "channel:修改频道聊天室发言开关",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/chat/update-chatEnabled",
+        "reference": "V4ChannelService#batchUpdateChatEnabled",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8901,12 +8901,12 @@
       "dedupeKey": "channel:修改频道商品配置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/push/rule",
+        "reference": "V4ChannelService#updateProductPushRule",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9024,12 +9024,12 @@
       "dedupeKey": "channel:修改频道微信分享信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/share/update",
+        "reference": "V4ChannelService#updateShareExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9085,12 +9085,12 @@
       "dedupeKey": "channel:修改频道优惠券开关状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/coupon/update-enabled",
+        "reference": "V4ChannelService#updateCouponEnabled",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9486,12 +9486,12 @@
       "dedupeKey": "channel:暂存视频的字幕文件批量发布",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/record-file/subtitle/batch-publish",
+        "reference": "V4ChannelService#batchPublishRecordFileSubtitles",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9546,12 +9546,12 @@
       "dedupeKey": "channel:置顶频道商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/product/topping",
+        "reference": "V4ChannelService#toppingChannelProduct",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9607,12 +9607,12 @@
       "dedupeKey": "channel:/channel/recordfile/get_record_file_outline",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/record-file/subtitle/outline/get-by-fileId",
+        "reference": "V4ChannelService#getRecordFileOutline",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -21885,6 +21885,285 @@
       "className": "V4ChannelService",
       "methodName": "updateDonateGift",
       "reference": "V4ChannelService#updateDonateGift"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/card-push/list",
+      "normalizedPath": "/live/v4/channel/card-push/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listCardPushes",
+      "reference": "V4ChannelService#listCardPushes"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/card-push/create",
+      "normalizedPath": "/live/v4/channel/card-push/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createCardPushExact",
+      "reference": "V4ChannelService#createCardPushExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/card-push/update",
+      "normalizedPath": "/live/v4/channel/card-push/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateCardPushExact",
+      "reference": "V4ChannelService#updateCardPushExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/card-push/delete",
+      "normalizedPath": "/live/v4/channel/card-push/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteCardPushExact",
+      "reference": "V4ChannelService#deleteCardPushExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/card-push/push",
+      "normalizedPath": "/live/v4/channel/card-push/push",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "pushCardPushExact",
+      "reference": "V4ChannelService#pushCardPushExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/card-push/cancel-push",
+      "normalizedPath": "/live/v4/channel/card-push/cancel-push",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "cancelCardPushExact",
+      "reference": "V4ChannelService#cancelCardPushExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/share/get",
+      "normalizedPath": "/live/v4/channel/share/get",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getShareExact",
+      "reference": "V4ChannelService#getShareExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/share/update",
+      "normalizedPath": "/live/v4/channel/share/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateShareExact",
+      "reference": "V4ChannelService#updateShareExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/coupon/get-enabled",
+      "normalizedPath": "/live/v4/channel/coupon/get-enabled",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getCouponEnabled",
+      "reference": "V4ChannelService#getCouponEnabled"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/coupon/update-enabled",
+      "normalizedPath": "/live/v4/channel/coupon/update-enabled",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateCouponEnabled",
+      "reference": "V4ChannelService#updateCouponEnabled"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/coupon/list",
+      "normalizedPath": "/live/v4/channel/coupon/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listChannelCoupons",
+      "reference": "V4ChannelService#listChannelCoupons"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/coupon/delete",
+      "normalizedPath": "/live/v4/channel/coupon/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteChannelCoupons",
+      "reference": "V4ChannelService#deleteChannelCoupons"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/product/push/rule",
+      "normalizedPath": "/live/v4/channel/product/push/rule",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getProductPushRule",
+      "reference": "V4ChannelService#getProductPushRule"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/push/rule",
+      "normalizedPath": "/live/v4/channel/product/push/rule",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateProductPushRule",
+      "reference": "V4ChannelService#updateProductPushRule"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/product/tag/list",
+      "normalizedPath": "/live/v4/channel/product/tag/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listProductTagsExact",
+      "reference": "V4ChannelService#listProductTagsExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/tag/create",
+      "normalizedPath": "/live/v4/channel/product/tag/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createProductTagExact",
+      "reference": "V4ChannelService#createProductTagExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/tag/update",
+      "normalizedPath": "/live/v4/channel/product/tag/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateProductTagExact",
+      "reference": "V4ChannelService#updateProductTagExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/tag/delete",
+      "normalizedPath": "/live/v4/channel/product/tag/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteProductTagExact",
+      "reference": "V4ChannelService#deleteProductTagExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/product/stats/page",
+      "normalizedPath": "/live/v4/channel/product/stats/page",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listProductStats",
+      "reference": "V4ChannelService#listProductStats"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/product/stats/summary",
+      "normalizedPath": "/live/v4/channel/product/stats/summary",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getProductStatsSummary",
+      "reference": "V4ChannelService#getProductStatsSummary"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/sort-rank",
+      "normalizedPath": "/live/v4/channel/product/sort-rank",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "sortChannelProductRank",
+      "reference": "V4ChannelService#sortChannelProductRank"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/topping",
+      "normalizedPath": "/live/v4/channel/product/topping",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "toppingChannelProduct",
+      "reference": "V4ChannelService#toppingChannelProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/product/un-topping",
+      "normalizedPath": "/live/v4/channel/product/un-topping",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "untoppingChannelProduct",
+      "reference": "V4ChannelService#untoppingChannelProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/popularization/create-batch",
+      "normalizedPath": "/live/v4/channel/popularization/create-batch",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createPopularizations",
+      "reference": "V4ChannelService#createPopularizations"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/popularization/list",
+      "normalizedPath": "/live/v4/channel/popularization/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listPopularizations",
+      "reference": "V4ChannelService#listPopularizations"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/record-file/m-list",
+      "normalizedPath": "/live/v4/channel/record-file/m-list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listMaterialRecordFiles",
+      "reference": "V4ChannelService#listMaterialRecordFiles"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/record-file/subtitle/outline/create",
+      "normalizedPath": "/live/v4/channel/record-file/subtitle/outline/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createRecordFileOutline",
+      "reference": "V4ChannelService#createRecordFileOutline"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/record-file/subtitle/outline/get-by-fileId",
+      "normalizedPath": "/live/v4/channel/record-file/subtitle/outline/get-by-fileId",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getRecordFileOutline",
+      "reference": "V4ChannelService#getRecordFileOutline"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/record-file/subtitle/batch-publish",
+      "normalizedPath": "/live/v4/channel/record-file/subtitle/batch-publish",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "batchPublishRecordFileSubtitles",
+      "reference": "V4ChannelService#batchPublishRecordFileSubtitles"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/watch/viewer/logout",
+      "normalizedPath": "/live/v4/channel/watch/viewer/logout",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "logoutWatchViewer",
+      "reference": "V4ChannelService#logoutWatchViewer"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/chat/update-chatEnabled",
+      "normalizedPath": "/live/v4/channel/chat/update-chatEnabled",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "batchUpdateChatEnabled",
+      "reference": "V4ChannelService#batchUpdateChatEnabled"
     },
     {
       "method": "POST",

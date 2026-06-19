@@ -45,6 +45,13 @@ function isExpectedMrPermissionRestriction(error: unknown): boolean {
     && error.message.includes('没有开启MR直播权限');
 }
 
+function isExpectedPopularizationReadOnlyRestriction(error: unknown): boolean {
+  return error instanceof PolyVAPIError
+    && error.statusCode === 500
+    && error.polyvCode === 10005
+    && error.message.includes('系统异常');
+}
+
 describeWithCredentials('SDK real API integration smoke', () => {
   const client = createIntegrationClient();
 
@@ -505,6 +512,57 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expectPaginatedResponse(rewardLikes);
     expectPaginatedResponse(taskRewardActivities);
     expectPaginatedResponse(taskRewardStats);
+  });
+
+  it('calls V4 channel marketing and content read-only APIs when a channel can be discovered', async () => {
+    const channelId = await discoverChannelId(client);
+
+    if (!channelId) {
+      console.warn('Skipping V4 channel marketing/content assertions: no POLYV_CHANNEL_ID and no channel found via list APIs.');
+      return;
+    }
+
+    const [
+      cardPushes,
+      shareSettings,
+      couponEnabled,
+      coupons,
+      productRule,
+      productTags,
+      productStats,
+      productStatsSummary,
+      recordFiles,
+    ] = await Promise.all([
+      client.v4Channel.listCardPushes({ channelId }),
+      client.v4Channel.getShareExact({ channelId }),
+      client.v4Channel.getCouponEnabled({ channelId }),
+      client.v4Channel.listChannelCoupons({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.getProductPushRule({ channelId }),
+      client.v4Channel.listProductTagsExact({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listProductStats({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.getProductStatsSummary({ channelId }),
+      client.v4Channel.listMaterialRecordFiles({ channelId, pageNumber: 1, pageSize: 1 }),
+    ]);
+
+    expect(cardPushes).toBeDefined();
+    expect(shareSettings).toBeDefined();
+    expect(couponEnabled).toBeDefined();
+    expectPaginatedResponse(coupons);
+    expect(productRule).toBeDefined();
+    expectPaginatedResponse(productTags);
+    expectPaginatedResponse(productStats);
+    expect(productStatsSummary).toBeDefined();
+    expect(recordFiles).toBeDefined();
+
+    try {
+      const popularizations = await client.v4Channel.listPopularizations({ channelId });
+      expect(popularizations).toBeDefined();
+    } catch (error) {
+      if (!isExpectedPopularizationReadOnlyRestriction(error)) {
+        throw error;
+      }
+      console.warn('Skipping popularization list assertion: API returned server-side 10005 系统异常 for this account/channel.');
+    }
   });
 
   describeWithWriteAccess('write API lifecycle', () => {
