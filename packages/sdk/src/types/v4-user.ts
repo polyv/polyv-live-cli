@@ -743,25 +743,46 @@ export interface DeleteProductParams {
  */
 export interface ProductTag {
   /** Tag ID */
-  tagId: number;
+  id: number;
   /** Tag name */
-  tagName: string;
+  name: string;
+  /** Legacy alias for tag ID */
+  tagId?: number;
+  /** Legacy alias for tag name */
+  tagName?: string;
+  /** Tag type */
+  type?: string;
+  /** Number of linked products */
+  productCount?: number;
+  /** Created timestamp */
+  createTime?: string | number;
+  /** Updated timestamp */
+  updateTime?: string | number | null;
+}
+
+/**
+ * Parameters for listing product tags
+ */
+export interface ListProductTagsParams extends UserPaginationParams {
+  /** Channel ID */
+  channelId: string | number;
+  /** Keyword search */
+  keyword?: string;
 }
 
 /**
  * Response for listing product tags
  */
-export interface ListProductTagsResponse {
-  /** Tag list */
-  contents: ProductTag[];
-}
+export interface ListProductTagsResponse extends UserPaginatedResponse<ProductTag> {}
 
 /**
  * Parameters for creating a product tag
  */
 export interface CreateProductTagParams {
   /** Tag name */
-  tagName: string;
+  name?: string;
+  /** Legacy alias for tag name */
+  tagName?: string;
 }
 
 /**
@@ -774,9 +795,13 @@ export interface CreateProductTagResponse extends ProductTag {}
  */
 export interface UpdateProductTagParams {
   /** Tag ID */
-  tagId: number;
+  id?: number;
   /** Tag name */
-  tagName: string;
+  name?: string;
+  /** Legacy alias for tag ID */
+  tagId?: number;
+  /** Legacy alias for tag name */
+  tagName?: string;
 }
 
 /**
@@ -784,7 +809,9 @@ export interface UpdateProductTagParams {
  */
 export interface DeleteProductTagParams {
   /** Tag ID */
-  tagId: number;
+  id?: number;
+  /** Legacy alias for tag ID */
+  tagId?: number;
 }
 
 // ============================================

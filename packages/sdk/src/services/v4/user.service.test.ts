@@ -582,20 +582,28 @@ describe('V4UserService', () => {
       const mockResponse = { contents: [] };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.listProductTags();
+      const result = await service.listProductTags({ channelId: 123, pageNumber: 1, pageSize: 10 });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/product/tag/list',
+        { params: { channelId: 123, pageNumber: 1, pageSize: 10 } }
+      );
     });
   });
 
   describe('createProductTag', () => {
     it('should create product tag', async () => {
-      const mockResponse = { tagId: 1 };
+      const mockResponse = { id: 1, name: 'Hot' };
       mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.createProductTag({ tagName: 'Hot' });
+      const result = await service.createProductTag({ name: 'Hot' });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/tag/create',
+        { name: 'Hot' }
+      );
     });
   });
 
@@ -603,9 +611,12 @@ describe('V4UserService', () => {
     it('should update product tag', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateProductTag({ tagId: 1, tagName: 'Updated' });
+      await service.updateProductTag({ id: 1, name: 'Updated' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/tag/update',
+        { id: 1, name: 'Updated' }
+      );
     });
   });
 
@@ -613,9 +624,12 @@ describe('V4UserService', () => {
     it('should delete product tag', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.deleteProductTag({ tagId: 1 });
+      await service.deleteProductTag({ id: 1 });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/tag/delete',
+        { id: 1 }
+      );
     });
   });
 

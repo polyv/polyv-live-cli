@@ -12,11 +12,23 @@ import {
   ProductServiceConfig,
   ProductAddOptions,
   ProductUpdateOptions,
-  ProductDeleteOptions
+  ProductDeleteOptions,
+  ProductLibraryListOptions,
+  ProductLibraryCreateOptions,
+  ProductLibraryUpdateOptions,
+  ProductLibraryDeleteOptions,
+  ProductTagListOptions,
+  ProductTagCreateOptions,
+  ProductTagUpdateOptions,
+  ProductTagDeleteOptions,
+  ProductOrderListOptions,
+  ProductOrderGetOptions,
+  ProductOrderBatchStatusOptions
 } from '../types/product';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
 import { confirmDeletion } from '../utils/confirmation';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Options for product list command from CLI
@@ -383,6 +395,127 @@ export class ProductHandler extends BaseHandler {
       this.displayData(data, 'json');
     } else {
       this.displaySuccess(`Product ${options.productId} deleted successfully`, data, 'table');
+    }
+  }
+
+  // ========================================
+  // User-level Product Library
+  // ========================================
+
+  async listUserProducts(options: ProductLibraryListOptions = {}): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.productService.listUserProducts(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.library.list');
+  }
+
+  async createUserProduct(options: ProductLibraryCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['name', 'linkType', 'link']);
+      await confirmWrite(options.force, `Create user product "${options.name}"?`);
+      const result = await this.productService.createUserProduct(options);
+      this.displayWriteResult('User product created successfully', { productId: result }, options.output);
+    }, 'product.library.create');
+  }
+
+  async updateUserProduct(options: ProductLibraryUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['productId', 'name', 'linkType', 'link']);
+      await confirmWrite(options.force, `Update user product ${options.productId}?`);
+      await this.productService.updateUserProduct(options);
+      this.displayWriteResult('User product updated successfully', { productId: options.productId }, options.output);
+    }, 'product.library.update');
+  }
+
+  async deleteUserProduct(options: ProductLibraryDeleteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['productId']);
+      await confirmWrite(options.force, `Delete user product ${options.productId}?`);
+      await this.productService.deleteUserProduct(options);
+      this.displayWriteResult('User product deleted successfully', { productId: options.productId }, options.output);
+    }, 'product.library.delete');
+  }
+
+  async listProductTags(options: ProductTagListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.productService.listProductTags(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.tag.list');
+  }
+
+  async createProductTag(options: ProductTagCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['name']);
+      await confirmWrite(options.force, `Create product tag "${options.name}"?`);
+      const result = await this.productService.createProductTag(options);
+      this.displayWriteResult('Product tag created successfully', result, options.output);
+    }, 'product.tag.create');
+  }
+
+  async updateProductTag(options: ProductTagUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['id', 'name']);
+      await confirmWrite(options.force, `Update product tag ${options.id}?`);
+      await this.productService.updateProductTag(options);
+      this.displayWriteResult('Product tag updated successfully', { id: options.id, name: options.name }, options.output);
+    }, 'product.tag.update');
+  }
+
+  async deleteProductTag(options: ProductTagDeleteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['id']);
+      await confirmWrite(options.force, `Delete product tag ${options.id}?`);
+      await this.productService.deleteProductTag(options);
+      this.displayWriteResult('Product tag deleted successfully', { id: options.id }, options.output);
+    }, 'product.tag.delete');
+  }
+
+  async listProductOrders(options: ProductOrderListOptions = {}): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.productService.listProductOrders(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.order.list');
+  }
+
+  async getProductOrder(options: ProductOrderGetOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['orderNo']);
+      const result = await this.productService.getProductOrder(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.order.get');
+  }
+
+  async batchUpdateProductOrderStatus(options: ProductOrderBatchStatusOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['orderNos', 'status']);
+      await confirmWrite(options.force, `Update status for product orders ${options.orderNos}?`);
+      const result = await this.productService.batchUpdateProductOrderStatus(options);
+      this.displayWriteResult('Product order status updated successfully', result, options.output);
+    }, 'product.order.batchStatus');
+  }
+
+  private displayWriteResult(message: string, data: unknown, output?: OutputFormat): void {
+    if (output === 'json') {
+      this.displayData({ success: true, data }, 'json');
+    } else {
+      this.displaySuccess(message, data, 'table');
+    }
+  }
+
+  private requireFields(options: object, fields: string[]): void {
+    const record = options as Record<string, unknown>;
+    const missing = fields.filter((field) => {
+      const value = record[field];
+      return value === undefined || value === null || value === '';
+    });
+    if (missing.length > 0) {
+      throw new PolyVValidationError(
+        `Missing required option(s): ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
     }
   }
 }

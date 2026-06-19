@@ -6,7 +6,14 @@
 
 import { Command } from 'commander';
 import { ProductHandler, ProductListOptions } from '../handlers/product.handler';
-import { ProductServiceConfig, ProductAddOptions, ProductUpdateOptions, ProductDeleteOptions } from '../types/product';
+import {
+  ProductServiceConfig,
+  ProductAddOptions,
+  ProductUpdateOptions,
+  ProductDeleteOptions,
+  ProductLibraryCreateOptions,
+  ProductLibraryUpdateOptions
+} from '../types/product';
 import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
@@ -174,6 +181,17 @@ export function validateLinkType(value: string): 10 | 11 {
 }
 
 /**
+ * Validate user-level product link type
+ */
+export function validateUserProductLinkType(value: string): 10 | 11 | 12 {
+  const parsed = parseInt(value, 10);
+  if (parsed !== 10 && parsed !== 11 && parsed !== 12) {
+    throw new Error('Link type must be 10 (通用链接), 11 (多平台链接), or 12 (原生方法)');
+  }
+  return parsed as 10 | 11 | 12;
+}
+
+/**
  * Validate price value
  * @param value Price string to validate
  * @returns Validated price number
@@ -188,6 +206,94 @@ export function validatePrice(value: string): number {
     throw new Error('Price cannot be negative');
   }
   return parsed;
+}
+
+function withProductHandler(program: Command, run: (handler: ProductHandler) => Promise<void>): Promise<void> {
+  return (async () => {
+    try {
+      const parentOptions = program.opts();
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+      await run(new ProductHandler(authConfig, serviceConfig));
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  })();
+}
+
+function addPaging(command: Command): Command {
+  return command
+    .option('-P, --page <number>', 'page number', parseInteger, 1)
+    .option('-s, --size <number>', 'items per page', validateSize, 20)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table');
+}
+
+function addUserProductOptions<T extends Command>(command: T, update = false): T {
+  if (update) {
+    command.requiredOption('-p, --product-id <productId>', 'user product ID');
+  }
+  command
+    .requiredOption('-n, --name <name>', 'product name')
+    .requiredOption('--link-type <type>', 'link type: 10 | 11 | 12', validateUserProductLinkType)
+    .requiredOption('-l, --link <url>', 'product link')
+    .option('-t, --product-type <type>', 'product type: normal | finance | position', validateProductType)
+    .option('--cover <url>', 'product cover URL')
+    .option('--pc-link <url>', 'PC link')
+    .option('--mobile-link <url>', 'mobile web link')
+    .option('--wx-miniprogram-link <url>', 'WeChat miniprogram link')
+    .option('--wx-miniprogram-original-id <id>', 'WeChat miniprogram original ID')
+    .option('--mobile-app-link <url>', 'mobile app link')
+    .option('--android-link <url>', 'Android native link')
+    .option('--ios-link <url>', 'iOS native link')
+    .option('--other-link <url>', 'other platform link')
+    .option('--features <json>', 'features/tags as JSON array string')
+    .option('--tag-ids <ids>', 'comma-separated product tag IDs')
+    .option('--btn-show <text>', 'button text')
+    .option('--product-desc <desc>', 'product description')
+    .option('--product-detail <detail>', 'product detail')
+    .option('--ext <json>', 'extended product info JSON string')
+    .option('--price-type <type>', 'price type: AMOUNT | CUSTOM')
+    .option('--real-price <amount>', 'real price amount', validatePrice)
+    .option('--custom-price <text>', 'custom price text')
+    .option('--original-price-type <type>', 'original price type: AMOUNT | CUSTOM')
+    .option('--price <amount>', 'original price amount', validatePrice)
+    .option('--custom-original-price <text>', 'custom original price text')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table');
+  return command;
+}
+
+function toUserProductOptions(options: any): ProductLibraryCreateOptions | ProductLibraryUpdateOptions {
+  return {
+    ...(options.productId ? { productId: options.productId } : {}),
+    name: options.name,
+    linkType: options.linkType,
+    link: options.link,
+    productType: options.productType,
+    cover: options.cover,
+    pcLink: options.pcLink,
+    mobileLink: options.mobileLink,
+    wxMiniprogramLink: options.wxMiniprogramLink,
+    wxMiniprogramOriginalId: options.wxMiniprogramOriginalId,
+    mobileAppLink: options.mobileAppLink,
+    androidLink: options.androidLink,
+    iosLink: options.iosLink,
+    otherLink: options.otherLink,
+    features: options.features,
+    tagIds: options.tagIds,
+    btnShow: options.btnShow,
+    productDesc: options.productDesc,
+    productDetail: options.productDetail,
+    ext: options.ext,
+    priceType: options.priceType,
+    realPrice: options.realPrice,
+    customPrice: options.customPrice,
+    originalPriceType: options.originalPriceType,
+    price: options.price,
+    customOrignalPrice: options.customOriginalPrice,
+    force: options.force,
+    output: options.output,
+  };
 }
 
 /**
@@ -523,4 +629,126 @@ Note:
   Deletion is permanent and cannot be undone.
   Use --force to skip the confirmation prompt.
 `);
+
+  // ========================================
+  // product library - user-level product library
+  // ========================================
+  const libraryCmd = productCmd.command('library').description('Manage user-level product library');
+
+  addPaging(libraryCmd.command('list').description('List user-level product library'))
+    .option('-k, --keyword <keyword>', 'keyword search')
+    .option('-t, --product-type <type>', 'product type filter')
+    .action((options) => withProductHandler(program, handler => handler.listUserProducts({
+      page: options.page,
+      size: options.size,
+      keyword: options.keyword,
+      productType: options.productType,
+      output: options.output,
+    })));
+
+  addUserProductOptions(libraryCmd.command('create').description('Create a user-level product'))
+    .action((options) => withProductHandler(program, handler => handler.createUserProduct(
+      toUserProductOptions(options) as ProductLibraryCreateOptions
+    )));
+
+  addUserProductOptions(libraryCmd.command('update').description('Update a user-level product'), true)
+    .action((options) => withProductHandler(program, handler => handler.updateUserProduct(
+      toUserProductOptions(options) as ProductLibraryUpdateOptions
+    )));
+
+  libraryCmd.command('delete')
+    .description('Delete a user-level product')
+    .requiredOption('-p, --product-id <productId>', 'user product ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.deleteUserProduct({
+      productId: options.productId,
+      force: options.force,
+      output: options.output,
+    })));
+
+  // ========================================
+  // product tag - user-level product tags
+  // ========================================
+  const tagCmd = productCmd.command('tag').description('Manage user-level product tags');
+
+  addPaging(tagCmd.command('list').description('List user-level product tags'))
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('-k, --keyword <keyword>', 'keyword search')
+    .action((options) => withProductHandler(program, handler => handler.listProductTags({
+      channelId: options.channelId,
+      page: options.page,
+      size: options.size,
+      keyword: options.keyword,
+      output: options.output,
+    })));
+
+  tagCmd.command('create')
+    .description('Create a user-level product tag')
+    .requiredOption('-n, --name <name>', 'tag name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.createProductTag({
+      name: options.name,
+      force: options.force,
+      output: options.output,
+    })));
+
+  tagCmd.command('update')
+    .description('Update a user-level product tag')
+    .requiredOption('--id <id>', 'tag ID', parseInteger)
+    .requiredOption('-n, --name <name>', 'tag name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.updateProductTag({
+      id: options.id,
+      name: options.name,
+      force: options.force,
+      output: options.output,
+    })));
+
+  tagCmd.command('delete')
+    .description('Delete a user-level product tag')
+    .requiredOption('--id <id>', 'tag ID', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.deleteProductTag({
+      id: options.id,
+      force: options.force,
+      output: options.output,
+    })));
+
+  // ========================================
+  // product order - user-level product orders
+  // ========================================
+  const orderCmd = productCmd.command('order').description('Manage user-level product orders');
+
+  addPaging(orderCmd.command('list').description('List user-level product orders'))
+    .action((options) => withProductHandler(program, handler => handler.listProductOrders({
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  orderCmd.command('get')
+    .description('Get a user-level product order')
+    .requiredOption('--order-no <orderNo>', 'order number')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.getProductOrder({
+      orderNo: options.orderNo,
+      output: options.output,
+    })));
+
+  orderCmd.command('batch-status')
+    .description('Batch update user-level product order status')
+    .requiredOption('--order-nos <orderNos>', 'comma-separated order numbers')
+    .requiredOption('--status <status>', 'new order status')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.batchUpdateProductOrderStatus({
+      orderNos: options.orderNos,
+      status: options.status,
+      force: options.force,
+      output: options.output,
+    })));
 }

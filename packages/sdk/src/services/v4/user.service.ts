@@ -53,6 +53,7 @@ import type {
   UpdateProductParams,
   DeleteProductParams,
   // AC6: Product Tag types
+  ListProductTagsParams,
   ListProductTagsResponse,
   CreateProductTagParams,
   CreateProductTagResponse,
@@ -848,13 +849,20 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * const tags = await client.v4User.listProductTags();
+   * const tags = await client.v4User.listProductTags({
+   *   channelId: 100001,
+   *   pageNumber: 1,
+   *   pageSize: 10,
+   * });
    * ```
    */
-  async listProductTags(): Promise<ListProductTagsResponse> {
+  async listProductTags(params: ListProductTagsParams): Promise<ListProductTagsResponse> {
+    this.validateRequiredId(params.channelId, 'channelId');
+    this.validatePaginationParams(params);
+
     const response = await this.client.httpClient.get<ListProductTagsResponse>(
       '/live/v4/user/product/tag/list',
-      {}
+      { params }
     );
     return response as unknown as ListProductTagsResponse;
   }
@@ -868,16 +876,17 @@ export class V4UserService {
    * @example
    * ```typescript
    * const tag = await client.v4User.createProductTag({
-   *   tagName: 'Hot',
+   *   name: 'Hot',
    * });
    * ```
    */
   async createProductTag(params: CreateProductTagParams): Promise<CreateProductTagResponse> {
-    this.validateRequiredString(params.tagName, 'tagName');
+    const name = params.name ?? params.tagName;
+    this.validateRequiredString(name, 'name');
 
     const response = await this.client.httpClient.post<CreateProductTagResponse>(
       '/live/v4/user/product/tag/create',
-      params
+      { name }
     );
     return response as unknown as CreateProductTagResponse;
   }
@@ -890,17 +899,20 @@ export class V4UserService {
    * @example
    * ```typescript
    * await client.v4User.updateProductTag({
-   *   tagId: 1,
-   *   tagName: 'Updated Tag',
+   *   id: 1,
+   *   name: 'Updated Tag',
    * });
    * ```
    */
   async updateProductTag(params: UpdateProductTagParams): Promise<void> {
-    this.validateRequiredNumber(params.tagId, 'tagId');
+    const id = params.id ?? params.tagId;
+    const name = params.name ?? params.tagName;
+    this.validateRequiredNumber(id, 'id');
+    this.validateRequiredString(name, 'name');
 
     await this.client.httpClient.post(
       '/live/v4/user/product/tag/update',
-      params
+      { id, name }
     );
   }
 
@@ -911,15 +923,16 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.deleteProductTag({ tagId: 1 });
+   * await client.v4User.deleteProductTag({ id: 1 });
    * ```
    */
   async deleteProductTag(params: DeleteProductTagParams): Promise<void> {
-    this.validateRequiredNumber(params.tagId, 'tagId');
+    const id = params.id ?? params.tagId;
+    this.validateRequiredNumber(id, 'id');
 
     await this.client.httpClient.post(
       '/live/v4/user/product/tag/delete',
-      params
+      { id }
     );
   }
 

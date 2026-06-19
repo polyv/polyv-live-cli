@@ -45,6 +45,8 @@ import { registerWebAppCommands } from './commands/webapp.commands';
 import { registerRobotCommands } from './commands/robot.commands';
 import { registerPartnerCommands } from './commands/partner.commands';
 import { registerWebCommands } from './commands/web.commands';
+import { registerInviteSalesCommands } from './commands/invite-sales.commands';
+import { registerCustomFieldCommands } from './commands/custom-field.commands';
 
 // Global error handlers
 process.on('uncaughtException', handleUncaughtError);
@@ -127,6 +129,8 @@ Commands:
   robot                 Manage global robots
   partner               Manage partner account tools
   web                   Manage watch page configuration
+  invite-sales          Manage user invite sales
+  custom-field          Manage user custom fields
   interaction           Manage cross-cutting live interaction APIs
 
 Quick Start:
@@ -211,6 +215,8 @@ async function main(): Promise<void> {
   registerRobotCommands(program);
   registerPartnerCommands(program);
   registerWebCommands(program);
+  registerInviteSalesCommands(program);
+  registerCustomFieldCommands(program);
 
   // Helper function to get all registered commands dynamically
   function getAllRegisteredCommands(): { topLevel: string[], subCommands: Map<string, string[]> } {

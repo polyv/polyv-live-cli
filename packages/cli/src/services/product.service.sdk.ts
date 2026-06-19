@@ -10,14 +10,29 @@ import {
   ProductAddOptions,
   ProductAddResult,
   ProductUpdateOptions,
-  ProductDeleteOptions
+  ProductDeleteOptions,
+  ProductLibraryListOptions,
+  ProductLibraryCreateOptions,
+  ProductLibraryUpdateOptions,
+  ProductLibraryDeleteOptions,
+  ProductTagListOptions,
+  ProductTagCreateOptions,
+  ProductTagUpdateOptions,
+  ProductTagDeleteOptions,
+  ProductOrderListOptions,
+  ProductOrderGetOptions,
+  ProductOrderBatchStatusOptions
 } from '../types/product';
 import { AuthConfig } from '../types/auth';
 import { PolyVError, PolyVAPIError, PolyVValidationError } from '../utils/errors';
 import { createSdkClient } from '../sdk';
 import type {
   AddChannelProductParams,
-  UpdateChannelProductParams
+  UpdateChannelProductParams,
+  ProductOrder,
+  ListProductOrdersResponse,
+  BatchUpdateOrderStatusResponse,
+  ListProductTagsResponse
 } from 'polyv-live-api-sdk';
 
 /**
@@ -243,6 +258,155 @@ export class ProductServiceSdk {
     }
   }
 
+  // ========================================
+  // User-level Product Library APIs
+  // ========================================
+
+  async listUserProducts(options: ProductLibraryListOptions = {}) {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.listProducts({
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 20,
+        ...(options.keyword && { keyword: options.keyword }),
+        ...(options.productType && { productType: options.productType }),
+      });
+    } catch (error) {
+      throw this.handleError(error, 'listUserProducts');
+    }
+  }
+
+  async createUserProduct(options: ProductLibraryCreateOptions) {
+    try {
+      this.validateUserProductOptions(options, ['name', 'linkType', 'link']);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.createProduct(this.toUserProductParams(options));
+    } catch (error) {
+      throw this.handleError(error, 'createUserProduct');
+    }
+  }
+
+  async updateUserProduct(options: ProductLibraryUpdateOptions): Promise<void> {
+    try {
+      this.validateUserProductOptions(options, ['productId', 'name', 'linkType', 'link']);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4User.updateProduct(this.toUserProductParams(options));
+    } catch (error) {
+      throw this.handleError(error, 'updateUserProduct');
+    }
+  }
+
+  async deleteUserProduct(options: ProductLibraryDeleteOptions): Promise<void> {
+    try {
+      if (!options.productId || options.productId.trim() === '') {
+        throw new PolyVValidationError('productId is required', 'productId', options.productId, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4User.deleteProduct({ productId: options.productId });
+    } catch (error) {
+      throw this.handleError(error, 'deleteUserProduct');
+    }
+  }
+
+  async listProductTags(options: ProductTagListOptions): Promise<ListProductTagsResponse> {
+    try {
+      if (!options.channelId || options.channelId.trim() === '') {
+        throw new PolyVValidationError('channelId is required', 'channelId', options.channelId, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.listProductTags({
+        channelId: options.channelId,
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 20,
+        ...(options.keyword && { keyword: options.keyword }),
+      });
+    } catch (error) {
+      throw this.handleError(error, 'listProductTags');
+    }
+  }
+
+  async createProductTag(options: ProductTagCreateOptions) {
+    try {
+      if (!options.name || options.name.trim() === '') {
+        throw new PolyVValidationError('name is required', 'name', options.name, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.createProductTag({ name: options.name });
+    } catch (error) {
+      throw this.handleError(error, 'createProductTag');
+    }
+  }
+
+  async updateProductTag(options: ProductTagUpdateOptions): Promise<void> {
+    try {
+      if (!options.id || options.id <= 0) {
+        throw new PolyVValidationError('id must be a positive integer', 'id', options.id, 'positive_integer');
+      }
+      if (!options.name || options.name.trim() === '') {
+        throw new PolyVValidationError('name is required', 'name', options.name, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4User.updateProductTag({ id: options.id, name: options.name });
+    } catch (error) {
+      throw this.handleError(error, 'updateProductTag');
+    }
+  }
+
+  async deleteProductTag(options: ProductTagDeleteOptions): Promise<void> {
+    try {
+      if (!options.id || options.id <= 0) {
+        throw new PolyVValidationError('id must be a positive integer', 'id', options.id, 'positive_integer');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4User.deleteProductTag({ id: options.id });
+    } catch (error) {
+      throw this.handleError(error, 'deleteProductTag');
+    }
+  }
+
+  async listProductOrders(options: ProductOrderListOptions): Promise<ListProductOrdersResponse> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.listProductOrders({
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 20,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'listProductOrders');
+    }
+  }
+
+  async getProductOrder(options: ProductOrderGetOptions): Promise<ProductOrder> {
+    try {
+      if (!options.orderNo || options.orderNo.trim() === '') {
+        throw new PolyVValidationError('orderNo is required', 'orderNo', options.orderNo, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.getProductOrder({ orderNo: options.orderNo });
+    } catch (error) {
+      throw this.handleError(error, 'getProductOrder');
+    }
+  }
+
+  async batchUpdateProductOrderStatus(options: ProductOrderBatchStatusOptions): Promise<BatchUpdateOrderStatusResponse | null> {
+    try {
+      const orderNos = this.parseStringList(options.orderNos, 'orderNos');
+      if (orderNos.length > 1000) {
+        throw new PolyVValidationError('orderNos cannot exceed 1000 items', 'orderNos', options.orderNos, 'max_items');
+      }
+      if (!options.status || options.status.trim() === '') {
+        throw new PolyVValidationError('status is required', 'status', options.status, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4User.batchUpdateOrderStatus({
+        orderNos,
+        status: options.status,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'batchUpdateProductOrderStatus');
+    }
+  }
+
   // ===== Validation Methods =====
 
   private validateListRequest(request: ProductListRequest): void {
@@ -358,6 +522,85 @@ export class ProductServiceSdk {
   }
 
   // ===== Helper Methods =====
+
+  private validateUserProductOptions(options: object, requiredFields: string[]): void {
+    const values = options as Record<string, unknown>;
+    const errors: string[] = [];
+    for (const field of requiredFields) {
+      const value = values[field];
+      if (value === undefined || value === null || value === '') {
+        errors.push(`${field} is required`);
+      }
+    }
+
+    if (values['linkType'] !== undefined && ![10, 11, 12].includes(Number(values['linkType']))) {
+      errors.push('linkType must be 10, 11, or 12');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `User product options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private toUserProductParams(options: ProductLibraryCreateOptions | ProductLibraryUpdateOptions): any {
+    return this.compact({
+      ...('productId' in options ? { productId: options.productId } : {}),
+      name: options.name,
+      linkType: options.linkType,
+      link: options.link,
+      cover: options.cover,
+      productType: options.productType,
+      pcLink: options.pcLink,
+      mobileLink: options.mobileLink,
+      wxMiniprogramOriginalId: options.wxMiniprogramOriginalId,
+      wxMiniprogramLink: options.wxMiniprogramLink,
+      mobileAppLink: options.mobileAppLink,
+      iosLink: options.iosLink,
+      androidLink: options.androidLink,
+      otherLink: options.otherLink,
+      features: options.features,
+      tagIds: options.tagIds ? this.parseNumberList(options.tagIds, 'tagIds') : undefined,
+      btnShow: options.btnShow,
+      productDesc: options.productDesc,
+      productDetail: options.productDetail,
+      ext: options.ext,
+      priceType: options.priceType,
+      realPrice: options.realPrice,
+      customPrice: options.customPrice,
+      originalPriceType: options.originalPriceType,
+      price: options.price,
+      customOrignalPrice: options.customOrignalPrice,
+    });
+  }
+
+  private parseStringList(value: string, fieldName: string): string[] {
+    const list = value.split(',').map(item => item.trim()).filter(Boolean);
+    if (list.length === 0) {
+      throw new PolyVValidationError(`${fieldName} must not be empty`, fieldName, value, 'not_empty');
+    }
+    return Array.from(new Set(list));
+  }
+
+  private parseNumberList(value: string, fieldName: string): number[] {
+    return this.parseStringList(value, fieldName).map(item => {
+      const parsed = Number(item);
+      if (!Number.isInteger(parsed) || parsed <= 0) {
+        throw new PolyVValidationError(`${fieldName} must contain positive integers`, fieldName, value, 'positive_integer_list');
+      }
+      return parsed;
+    });
+  }
+
+  private compact<T extends Record<string, unknown>>(params: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== '')
+    ) as Partial<T>;
+  }
 
   private handleError(error: unknown, operation: string): Error {
     if (this.config.debug) {

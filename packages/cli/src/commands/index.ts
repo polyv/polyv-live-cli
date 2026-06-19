@@ -27,3 +27,7 @@ export { registerPlatformCommands } from './platform.commands';
 
 // Cross-cutting live interaction commands
 export { registerInteractionCommands } from './interaction.commands';
+
+// User product/invite/custom field commands
+export { registerInviteSalesCommands } from './invite-sales.commands';
+export { registerCustomFieldCommands } from './custom-field.commands';

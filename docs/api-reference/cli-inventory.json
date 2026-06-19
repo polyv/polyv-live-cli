@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T20:19:50.025Z",
+  "generatedAt": "2026-06-19T20:43:18.380Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,18 +13,18 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 308,
-    "cliMissingLatestApis": 270,
-    "cliCoverage": 53.3,
-    "cliUsageReferences": 312,
-    "cliSdkServiceUsages": 312,
+    "cliUsedLatestApis": 326,
+    "cliMissingLatestApis": 252,
+    "cliCoverage": 56.4,
+    "cliUsageReferences": 331,
+    "cliSdkServiceUsages": 331,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 299,
+    "matchedApiIds": 317,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 400,
-    "cliTopLevelCommands": 37
+    "cliCommandPaths": 426,
+    "cliTopLevelCommands": 39
   },
   "modules": [
     {
@@ -41,11 +41,11 @@
       "module": "user",
       "label": "用户与观众",
       "total": 73,
-      "cliUsed": 24,
-      "cliMissing": 49,
+      "cliUsed": 42,
+      "cliMissing": 31,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 24,
-      "cliCoverage": 32.9
+      "sdkServiceUsed": 42,
+      "cliCoverage": 57.5
     },
     {
       "module": "account",
@@ -1651,6 +1651,61 @@
       "line": 258
     },
     {
+      "command": "custom-field",
+      "path": [
+        "custom-field"
+      ],
+      "depth": 1,
+      "signature": "custom-field",
+      "file": "packages/cli/src/commands/custom-field.commands.ts",
+      "line": 23
+    },
+    {
+      "command": "custom-field add",
+      "path": [
+        "custom-field",
+        "add"
+      ],
+      "depth": 2,
+      "signature": "add",
+      "file": "packages/cli/src/commands/custom-field.commands.ts",
+      "line": 30
+    },
+    {
+      "command": "custom-field list",
+      "path": [
+        "custom-field",
+        "list"
+      ],
+      "depth": 2,
+      "signature": "list",
+      "file": "packages/cli/src/commands/custom-field.commands.ts",
+      "line": 25
+    },
+    {
+      "command": "custom-field value",
+      "path": [
+        "custom-field",
+        "value"
+      ],
+      "depth": 2,
+      "signature": "value",
+      "file": "packages/cli/src/commands/custom-field.commands.ts",
+      "line": 39
+    },
+    {
+      "command": "custom-field value save",
+      "path": [
+        "custom-field",
+        "value",
+        "save"
+      ],
+      "depth": 3,
+      "signature": "save",
+      "file": "packages/cli/src/commands/custom-field.commands.ts",
+      "line": 41
+    },
+    {
       "command": "document",
       "path": [
         "document"
@@ -2265,6 +2320,83 @@
       "signature": "set",
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 110
+    },
+    {
+      "command": "invite-sales",
+      "path": [
+        "invite-sales"
+      ],
+      "depth": 1,
+      "signature": "invite-sales",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 31
+    },
+    {
+      "command": "invite-sales add",
+      "path": [
+        "invite-sales",
+        "add"
+      ],
+      "depth": 2,
+      "signature": "add",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 40
+    },
+    {
+      "command": "invite-sales follow-viewer",
+      "path": [
+        "invite-sales",
+        "follow-viewer"
+      ],
+      "depth": 2,
+      "signature": "follow-viewer",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 64
+    },
+    {
+      "command": "invite-sales list",
+      "path": [
+        "invite-sales",
+        "list"
+      ],
+      "depth": 2,
+      "signature": "list",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 33
+    },
+    {
+      "command": "invite-sales remove",
+      "path": [
+        "invite-sales",
+        "remove"
+      ],
+      "depth": 2,
+      "signature": "remove",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 56
+    },
+    {
+      "command": "invite-sales update",
+      "path": [
+        "invite-sales",
+        "update"
+      ],
+      "depth": 2,
+      "signature": "update",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 48
+    },
+    {
+      "command": "invite-sales follow-viewer list",
+      "path": [
+        "invite-sales",
+        "follow-viewer",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 66
     },
     {
       "command": "lottery",
@@ -3143,7 +3275,7 @@
       "depth": 1,
       "signature": "product",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 199
+      "line": 305
     },
     {
       "command": "product add",
@@ -3154,7 +3286,7 @@
       "depth": 2,
       "signature": "add",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 296
+      "line": 402
     },
     {
       "command": "product delete",
@@ -3165,7 +3297,18 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 486
+      "line": 592
+    },
+    {
+      "command": "product library",
+      "path": [
+        "product",
+        "library"
+      ],
+      "depth": 2,
+      "signature": "library",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 636
     },
     {
       "command": "product list",
@@ -3176,7 +3319,29 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 203
+      "line": 309
+    },
+    {
+      "command": "product order",
+      "path": [
+        "product",
+        "order"
+      ],
+      "depth": 2,
+      "signature": "order",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 724
+    },
+    {
+      "command": "product tag",
+      "path": [
+        "product",
+        "tag"
+      ],
+      "depth": 2,
+      "signature": "tag",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 673
     },
     {
       "command": "product update",
@@ -3187,7 +3352,139 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 401
+      "line": 507
+    },
+    {
+      "command": "product library create",
+      "path": [
+        "product",
+        "library",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 649
+    },
+    {
+      "command": "product library delete",
+      "path": [
+        "product",
+        "library",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 659
+    },
+    {
+      "command": "product library list",
+      "path": [
+        "product",
+        "library",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 638
+    },
+    {
+      "command": "product library update",
+      "path": [
+        "product",
+        "library",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 654
+    },
+    {
+      "command": "product order batch-status",
+      "path": [
+        "product",
+        "order",
+        "batch-status"
+      ],
+      "depth": 3,
+      "signature": "batch-status",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 742
+    },
+    {
+      "command": "product order get",
+      "path": [
+        "product",
+        "order",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 733
+    },
+    {
+      "command": "product order list",
+      "path": [
+        "product",
+        "order",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 726
+    },
+    {
+      "command": "product tag create",
+      "path": [
+        "product",
+        "tag",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 686
+    },
+    {
+      "command": "product tag delete",
+      "path": [
+        "product",
+        "tag",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 710
+    },
+    {
+      "command": "product tag list",
+      "path": [
+        "product",
+        "tag",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 675
+    },
+    {
+      "command": "product tag update",
+      "path": [
+        "product",
+        "tag",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 697
     },
     {
       "command": "promotion",
@@ -4820,9 +5117,9 @@
         {
           "module": "user",
           "label": "用户与观众",
-          "missing": 49,
+          "missing": 31,
           "total": 73,
-          "coverage": 32.9
+          "coverage": 57.5
         },
         {
           "module": "account",
@@ -4839,9 +5136,9 @@
           "coverage": 100
         }
       ],
-      "missing": 49,
+      "missing": 31,
       "total": 106,
-      "coverage": 53.8
+      "coverage": 70.8
     }
   ],
   "unmatchedUsages": [],
@@ -7457,7 +7754,7 @@
             "reference": "ChannelService#listChannelProducts",
             "cliModule": "product",
             "file": "packages/cli/src/services/product.service.sdk.ts",
-            "line": 89,
+            "line": 104,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -12376,7 +12673,7 @@
             "reference": "ChannelService#deleteChannelProduct",
             "cliModule": "product",
             "file": "packages/cli/src/services/product.service.sdk.ts",
-            "line": 237,
+            "line": 252,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -13135,7 +13432,7 @@
             "reference": "ChannelService#addChannelProduct",
             "cliModule": "product",
             "file": "packages/cli/src/services/product.service.sdk.ts",
-            "line": 164,
+            "line": 179,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -14155,7 +14452,7 @@
             "reference": "ChannelService#updateChannelProduct",
             "cliModule": "product",
             "file": "packages/cli/src/services/product.service.sdk.ts",
-            "line": 220,
+            "line": 235,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -20224,8 +20521,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateProduct",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 293,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20591,8 +20897,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listProductOrders",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 370,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20619,8 +20934,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getProductOrder",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 385,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20896,8 +21220,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createProduct",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 283,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20924,8 +21257,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createProductTag",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 334,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21028,7 +21370,15 @@
             "reference": "V4UserService#listProducts",
             "cliModule": "product",
             "file": "packages/cli/src/services/product.service.sdk.ts",
-            "line": 65,
+            "line": 80,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listProducts",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 268,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -21060,8 +21410,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listProductTags",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 317,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21086,8 +21445,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listCustomFields",
+            "cliModule": "custom-field",
+            "file": "packages/cli/src/services/custom-field-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21152,8 +21520,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateProductTag",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 349,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21220,8 +21597,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#addCustomFieldValue",
+            "cliModule": "custom-field",
+            "file": "packages/cli/src/services/custom-field-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21344,8 +21730,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listFollowViewers",
+            "cliModule": "invite-sales",
+            "file": "packages/cli/src/services/invite-sales-service.ts",
+            "line": 33,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21370,8 +21765,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listInviteSales",
+            "cliModule": "invite-sales",
+            "file": "packages/cli/src/services/invite-sales-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21425,8 +21829,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#batchUpdateOrderStatus",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 401,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21602,8 +22015,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteProduct",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 305,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21630,8 +22052,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteProductTag",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 361,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21752,8 +22183,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#addInviteSale",
+            "cliModule": "invite-sales",
+            "file": "packages/cli/src/services/invite-sales-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21889,8 +22329,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#addCustomField",
+            "cliModule": "custom-field",
+            "file": "packages/cli/src/services/custom-field-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22253,8 +22702,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateInviteSale",
+            "cliModule": "invite-sales",
+            "file": "packages/cli/src/services/invite-sales-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22361,8 +22819,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#removeInviteSale",
+            "cliModule": "invite-sales",
+            "file": "packages/cli/src/services/invite-sales-service.ts",
+            "line": 28,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {

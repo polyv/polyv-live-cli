@@ -313,3 +313,100 @@ export interface ProductDeleteOptions {
   /** Output format */
   output?: 'table' | 'json';
 }
+
+// ========================================
+// User-level Product Library Types
+// ========================================
+
+export interface ProductLibraryListOptions {
+  page?: number;
+  size?: number;
+  keyword?: string;
+  productType?: string;
+  output?: 'table' | 'json';
+}
+
+export interface ProductLibraryCreateOptions {
+  name: string;
+  linkType: number;
+  link: string;
+  cover?: string;
+  productType?: string;
+  pcLink?: string;
+  mobileLink?: string;
+  wxMiniprogramOriginalId?: string;
+  wxMiniprogramLink?: string;
+  mobileAppLink?: string;
+  iosLink?: string;
+  androidLink?: string;
+  otherLink?: string;
+  features?: string;
+  tagIds?: string;
+  btnShow?: string;
+  productDesc?: string;
+  productDetail?: string;
+  ext?: string;
+  priceType?: ProductPriceType;
+  realPrice?: number;
+  customPrice?: string;
+  originalPriceType?: ProductPriceType;
+  price?: number;
+  customOrignalPrice?: string;
+  force?: boolean;
+  output?: 'table' | 'json';
+}
+
+export interface ProductLibraryUpdateOptions extends ProductLibraryCreateOptions {
+  productId: string;
+}
+
+export interface ProductLibraryDeleteOptions {
+  productId: string;
+  force?: boolean;
+  output?: 'table' | 'json';
+}
+
+export interface ProductTagListOptions {
+  channelId: string;
+  page?: number;
+  size?: number;
+  keyword?: string;
+  output?: 'table' | 'json';
+}
+
+export interface ProductTagCreateOptions {
+  name: string;
+  force?: boolean;
+  output?: 'table' | 'json';
+}
+
+export interface ProductTagUpdateOptions {
+  id: number;
+  name: string;
+  force?: boolean;
+  output?: 'table' | 'json';
+}
+
+export interface ProductTagDeleteOptions {
+  id: number;
+  force?: boolean;
+  output?: 'table' | 'json';
+}
+
+export interface ProductOrderListOptions {
+  page?: number;
+  size?: number;
+  output?: 'table' | 'json';
+}
+
+export interface ProductOrderGetOptions {
+  orderNo: string;
+  output?: 'table' | 'json';
+}
+
+export interface ProductOrderBatchStatusOptions {
+  orderNos: string;
+  status: string;
+  force?: boolean;
+  output?: 'table' | 'json';
+}
