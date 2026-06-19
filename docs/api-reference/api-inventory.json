@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T07:29:25.567Z",
+  "generatedAt": "2026-06-19T08:14:43.012Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,18 +18,18 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 578,
-    "sdkImplemented": 442,
-    "sdkMissing": 136
+    "sdkEndpoints": 586,
+    "sdkImplemented": 452,
+    "sdkMissing": 126
   },
   "modules": [
     {
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "implemented": 147,
-      "missing": 136,
-      "coverage": 51.9
+      "implemented": 157,
+      "missing": 126,
+      "coverage": 55.5
     },
     {
       "module": "account",
@@ -1997,12 +1997,12 @@
       "dedupeKey": "channel:查询频道广告列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/advert/list",
+        "reference": "ChannelService#getChannelAdverts",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -2407,12 +2407,12 @@
       "dedupeKey": "channel:查询频道商品库开关状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/product/get-enabled",
+        "reference": "ChannelService#getChannelProductEnabled",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -2950,12 +2950,12 @@
       "dedupeKey": "channel:查询频道重制课件配置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/pptRecord/get-setting",
+        "reference": "ChannelService#getPptRecordSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -2979,12 +2979,12 @@
       "dedupeKey": "channel:查询频道重制课件设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/pptRecord/get-setting",
+        "reference": "ChannelService#getPptRecordSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -3008,12 +3008,12 @@
       "dedupeKey": "channel:查询频道状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live_status/query",
+        "reference": "ChannelService#getLiveStatus",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -3597,12 +3597,12 @@
       "dedupeKey": "channel:查询重制课件任务列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/pptRecord/list",
+        "reference": "ChannelService#listPptRecordTasks",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -3624,12 +3624,12 @@
       "dedupeKey": "channel:查询转播频道信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/transmit/get-associations",
+        "reference": "ChannelService#getTransmitAssociations",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -3655,12 +3655,12 @@
       "dedupeKey": "channel:查询子账号频道列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/channel-user-children/get-channels",
+        "reference": "ChannelService#getUserChildrenChannels",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -4982,12 +4982,12 @@
       "dedupeKey": "channel:获取频道关注公众号设置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v3/channel/promotion/list-channels-follow",
+        "reference": "ChannelService#listChannelsFollow",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7701,9 +7701,9 @@
       "dedupeKey": "channel:设置播放器自定义url跑马灯",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
-        "methodMismatch": true,
-        "sdkMethod": "POST",
+        "implemented": true,
+        "methodMismatch": false,
+        "sdkMethod": "GET",
         "sdkPath": "/live/v2/channelRestrict/{param}/set-diyurl-marquee",
         "reference": "ChannelService#setDiyUrlMarquee",
         "file": "packages/sdk/src/services/channel.service.ts"
@@ -13196,8 +13196,8 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v2/channelRestrict/{param}/set-diyurl-marquee",
-        "reference": "ChannelService#setDiyUrlMarquee",
-        "file": "packages/sdk/src/services/channel.service.ts"
+        "reference": "PlayerService#setMarqueeUrl",
+        "file": "packages/sdk/src/services/player.service.ts"
       }
     },
     {
@@ -18368,7 +18368,7 @@
       "reference": "ChannelService#getViewlogPageV3"
     },
     {
-      "method": "POST",
+      "method": "GET",
       "path": "/live/v2/channelRestrict/{param}/set-diyurl-marquee",
       "normalizedPath": "/live/v2/channelRestrict/{param}/set-diyurl-marquee",
       "file": "packages/sdk/src/services/channel.service.ts",
@@ -18656,6 +18656,15 @@
       "reference": "ChannelService#listUnrelatedChannelViewers"
     },
     {
+      "method": "GET",
+      "path": "/live_status/query",
+      "normalizedPath": "/live_status/query",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getLiveStatus",
+      "reference": "ChannelService#getLiveStatus"
+    },
+    {
       "method": "POST",
       "path": "/live/v2/channels/live-status",
       "normalizedPath": "/live/v2/channels/live-status",
@@ -18762,6 +18771,69 @@
       "className": "ChannelService",
       "methodName": "updateWarmupVideo",
       "reference": "ChannelService#updateWarmupVideo"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v3/channel/advert/list",
+      "normalizedPath": "/live/v3/channel/advert/list",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChannelAdverts",
+      "reference": "ChannelService#getChannelAdverts"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v3/channel/product/get-enabled",
+      "normalizedPath": "/live/v3/channel/product/get-enabled",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChannelProductEnabled",
+      "reference": "ChannelService#getChannelProductEnabled"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v3/channel/pptRecord/get-setting",
+      "normalizedPath": "/live/v3/channel/pptRecord/get-setting",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getPptRecordSetting",
+      "reference": "ChannelService#getPptRecordSetting"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v3/channel/pptRecord/list",
+      "normalizedPath": "/live/v3/channel/pptRecord/list",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listPptRecordTasks",
+      "reference": "ChannelService#listPptRecordTasks"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v3/channel/transmit/get-associations",
+      "normalizedPath": "/live/v3/channel/transmit/get-associations",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getTransmitAssociations",
+      "reference": "ChannelService#getTransmitAssociations"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/channel-user-children/get-channels",
+      "normalizedPath": "/live/v4/channel/channel-user-children/get-channels",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getUserChildrenChannels",
+      "reference": "ChannelService#getUserChildrenChannels"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v3/channel/promotion/list-channels-follow",
+      "normalizedPath": "/live/v3/channel/promotion/list-channels-follow",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listChannelsFollow",
+      "reference": "ChannelService#listChannelsFollow"
     },
     {
       "method": "GET",

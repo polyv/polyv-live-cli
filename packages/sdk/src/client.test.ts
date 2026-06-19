@@ -364,6 +364,17 @@ describe('PolyVClient', () => {
       expect(result).toEqual({ id: '123', name: 'test' });
     });
 
+    it('[P1] should return raw live status text for historical status endpoint responses', async () => {
+      const mockAxiosCreate = vi.mocked(axios.create);
+      const mockInstance = mockAxiosCreate();
+      const responseInterceptorCalls = vi.mocked(mockInstance.interceptors.response.use).mock.calls;
+      const successHandler = responseInterceptorCalls[0][0];
+
+      expect(successHandler({ data: 'live', status: 200 })).toBe('live');
+      expect(successHandler({ data: 'end', status: 200 })).toBe('end');
+      expect(successHandler({ data: 'end\n', status: 200 })).toBe('end');
+    });
+
     it('[P1] should throw API error for non-200 code', async () => {
       const mockAxiosCreate = vi.mocked(axios.create);
       const mockInstance = mockAxiosCreate();

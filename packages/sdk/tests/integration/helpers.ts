@@ -6,6 +6,7 @@ interface IntegrationConfig {
   appSecret: string;
   userId?: string;
   channelId?: string;
+  childUserId?: string;
   baseUrl: string;
 }
 
@@ -32,6 +33,7 @@ export function getIntegrationConfig(): IntegrationConfig {
     appSecret: process.env.POLYV_APP_SECRET ?? '',
     userId: process.env.POLYV_USER_ID,
     channelId: process.env.POLYV_CHANNEL_ID ?? process.env.POLYV_TEST_CHANNEL_ID,
+    childUserId: process.env.POLYV_CHILD_USER_ID,
     baseUrl: process.env.POLYV_BASE_URL ?? process.env.POLYV_TEST_BASE_URL ?? 'https://api.polyv.net',
   };
 }

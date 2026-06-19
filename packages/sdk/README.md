@@ -199,6 +199,7 @@ Required variables:
 Optional variables:
 
 - `POLYV_CHANNEL_ID`: used for channel-scoped API checks. Tests try to discover a channel if this is absent.
+- `POLYV_CHILD_USER_ID`: used for child-account channel list checks. That assertion is skipped when absent.
 - `POLYV_RUN_WRITE_INTEGRATION=true`: enables write API lifecycle tests with cleanup. It is off by default.
 
 ## License

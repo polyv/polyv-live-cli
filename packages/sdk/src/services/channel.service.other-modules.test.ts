@@ -111,7 +111,7 @@ describe('ChannelService Other Modules APIs', () => {
   // ============================================
   describe('AC1: setDiyUrlMarquee', () => {
     it('should enable marquee with URL', async () => {
-      mockAxiosInstance.post.mockResolvedValueOnce('success')
+      mockAxiosInstance.get.mockResolvedValueOnce('success')
 
       const result = await channelService.setDiyUrlMarquee({
         channelId: 'ch123456',
@@ -119,25 +119,23 @@ describe('ChannelService Other Modules APIs', () => {
         url: 'https://example.com/marquee',
       })
 
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+      expect(mockAxiosInstance.get).toHaveBeenCalledWith(
         '/live/v2/channelRestrict/ch123456/set-diyurl-marquee',
-        null,
         { params: { marqueeRestrict: 'Y', url: 'https://example.com/marquee' } }
       )
       expect(result).toBe('success')
     })
 
     it('should disable marquee without URL', async () => {
-      mockAxiosInstance.post.mockResolvedValueOnce('success')
+      mockAxiosInstance.get.mockResolvedValueOnce('success')
 
       await channelService.setDiyUrlMarquee({
         channelId: 'ch123456',
         marqueeRestrict: 'N',
       })
 
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+      expect(mockAxiosInstance.get).toHaveBeenCalledWith(
         '/live/v2/channelRestrict/ch123456/set-diyurl-marquee',
-        null,
         { params: { marqueeRestrict: 'N' } }
       )
     })

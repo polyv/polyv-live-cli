@@ -502,7 +502,7 @@ function collectSdkEndpointsFromSource(source, file, className, endpoints) {
   for (const match of source.matchAll(callPattern)) {
     const method = match[1].toUpperCase();
     const literal = match[3];
-    const pathMatch = literal.match(/\/(?:live\/|live-bg\/|v\d+\/|front\/)[^\s'"`,)\]]+/);
+    const pathMatch = literal.match(/\/(?:live\/|live_status\/|live-bg\/|v\d+\/|front\/)[^\s'"`,)\]]+/);
     if (!pathMatch) continue;
 
     const rawPath = pathMatch[0];

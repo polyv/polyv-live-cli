@@ -340,6 +340,55 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expectPaginatedResponse(receiveList);
   });
 
+  it('calls historical channel operate read-only APIs when a channel can be discovered', async () => {
+    const channelId = await discoverChannelId(client);
+
+    if (!channelId) {
+      console.warn('Skipping historical channel operate assertions: no POLYV_CHANNEL_ID and no channel found via list APIs.');
+      return;
+    }
+
+    const adverts = await client.channel.getChannelAdverts(channelId);
+    const productEnabled = await client.channel.getChannelProductEnabled(channelId);
+    const pptSetting = await client.channel.getPptRecordSetting(channelId);
+    const pptTasks = await client.channel.listPptRecordTasks({
+      channelId,
+      page: 1,
+      pageSize: 1,
+    });
+    const transmitAssociations = await client.channel.getTransmitAssociations({ channelId });
+    const followSettings = await client.channel.listChannelsFollow({ channelIds: [channelId] });
+    const channelDetail = await client.channel.getChannel(channelId);
+
+    expect(adverts).toEqual(expect.any(Array));
+    expect(productEnabled.enabled).toMatch(/^[YN]$/);
+    expect(pptSetting.channelId).toBeDefined();
+    expect(Number(pptTasks.pageNumber)).toBeGreaterThanOrEqual(1);
+    expect(pptTasks.contents).toEqual(expect.any(Array));
+    expect(transmitAssociations).toEqual(expect.any(Array));
+    expect(followSettings.list).toEqual(expect.any(Array));
+
+    if (channelDetail.stream) {
+      await expect(client.channel.getLiveStatus(channelDetail.stream)).resolves.toMatch(/^(live|end)$/);
+    } else {
+      console.warn('Skipping live status assertion: discovered channel detail does not include stream.');
+    }
+
+    const config = getIntegrationConfig();
+    if (!config.childUserId) {
+      console.warn('Skipping child account channel list assertion: POLYV_CHILD_USER_ID is not configured.');
+      return;
+    }
+
+    const childChannels = await client.channel.getUserChildrenChannels({
+      childUserId: config.childUserId,
+      pageNumber: 1,
+      pageSize: 1,
+    });
+
+    expectPaginatedResponse(childChannels);
+  });
+
   it('calls historical channel playback read-only APIs when a channel can be discovered', async () => {
     const channelId = await discoverChannelId(client);
 

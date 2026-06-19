@@ -1,6 +1,6 @@
 # PolyV Live API Inventory
 
-生成时间：2026-06-19T07:29:25.574Z
+生成时间：2026-06-19T08:14:43.029Z
 
 ## 来源与规则
 
@@ -20,16 +20,16 @@
 | 可解析 API 数 | 590 |
 | 去重后最新 API 数 | 578 |
 | 被旧版去重的 API 数 | 12 |
-| SDK 源码 API 路径数 | 578 |
-| SDK 已实现最新 API 数 | 442 |
-| SDK 未实现最新 API 数 | 136 |
-| SDK 覆盖率 | 76.5% |
+| SDK 源码 API 路径数 | 586 |
+| SDK 已实现最新 API 数 | 452 |
+| SDK 未实现最新 API 数 | 126 |
+| SDK 覆盖率 | 78.2% |
 
 ## 模块覆盖率
 
 | 模块 | 名称 | 最新 API | SDK 已实现 | 待补齐 | 覆盖率 |
 | --- | --- | ---: | ---: | ---: | ---: |
-| `channel` | 频道 | 283 | 147 | 136 | 51.9% |
+| `channel` | 频道 | 283 | 157 | 126 | 55.5% |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% |
 | `chat` | 聊天 | 45 | 45 | 0 | 100% |
@@ -50,7 +50,7 @@
 
 ## SDK 补齐建议
 
-- 优先补齐缺口最大的模块：`channel` 136 个。
+- 优先补齐缺口最大的模块：`channel` 126 个。
 - 每个缺口应以本清单的 Method、Path、请求形态和业务必填参数为入口，再回到源文档核对完整请求/响应表，避免只按路径补空方法。
 - v4/v5 接口大多需要 JSON body；v2/v3 历史接口多为 query/form 风格。新增 SDK 方法时应把签名公共参数留给 `PolyVClient` 拦截器处理。
 - 对列表、导出、批量创建、异步任务类接口，建议先抽通用分页/任务状态类型，再补服务方法，减少后续 CLI 命令重复定义。
@@ -133,7 +133,7 @@
 | 查询频道的关联音视频文件<br><sub>1、查询频道的关联音视频文件</sub> | GET | `/live/v4/channel/multimedia/resource/list-vids` | `../document-center/docs/live/api/channel/doc/get_channel_multimedia_resource.md` | query | channelId | yes: ChannelService#getChannelMultimediaResourceList (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道的关联音视频文件详情<br><sub>1、查询频道的关联音视频文件详情</sub> | GET | `/live/v4/channel/multimedia/resource/list` | `../document-center/docs/live/api/channel/doc/get_channel_multimedia_resource_detail.md` | query | channelId | yes: ChannelService#getChannelMultimediaResourceDetail (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道多场次概览统计数据<br><sub>1、接口用于统计直播间内多场次的直播的观看数据，数据会根据场次号进行汇总，返回观看UV、观看PV等。</sub> | GET | `/live/v3/channel/statistics/get-session-stats` | `../document-center/docs/live/api/channel/viewdata/get_session_stats.md` | query | channelId | yes: ChannelService#getSessionStats (packages/sdk/src/services/channel.service.ts) | - |
-| 查询频道广告列表<br><sub>1、查询频道广告列表信息，如频道广告设置了应用通用设置，则获取全局广告</sub> | GET | `/live/v3/channel/advert/list` | `../document-center/docs/live/api/channel/operate/get_channel_adverts.md` | query | channelId | no | - |
+| 查询频道广告列表<br><sub>1、查询频道广告列表信息，如频道广告设置了应用通用设置，则获取全局广告</sub> | GET | `/live/v3/channel/advert/list` | `../document-center/docs/live/api/channel/operate/get_channel_adverts.md` | query | channelId | yes: ChannelService#getChannelAdverts (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道号下所有角色信息<br><sub>1、查询频道内所有助教和嘉宾的具体信息</sub> | GET | `/live/v2/channelAccount/{param}/accounts` | `../document-center/docs/live/api/channel/operate/get_accounts.md` | query | - | yes: ChannelService#getAccounts (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道回调设置<br><sub>1、查询频道回调设置接口</sub> | GET | `/live/v3/channel/callback/get-setting` | `../document-center/docs/live/api/channel/operate/get_callback_setting.md` | query | channelId | yes: ChannelService#getCallbackSetting (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道回放开关<br><sub>1、查询频道的回放开关状态</sub> | GET | `/live/v3/channel/playback/get-enabled` | `../document-center/docs/live/api/channel/playback/get_playback_enabled.md` | query | channelId | yes: ChannelService#getPlaybackEnabled (packages/sdk/src/services/channel.service.ts) | - |
@@ -147,7 +147,7 @@
 | 查询频道连麦详情数据<br><sub>1、接口用于查询某个频道的一段时间区间内的连麦详情数据，支持分页</sub> | GET | `/live/v3/channel/mic/log/list-detail` | `../document-center/docs/live/api/channel/viewdata/link_mic_detail_list.md` | query | channelId, endDate, startDate | yes: ChannelService#getLinkMicDetailList (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道某段时间的直播观看详情数据<br><sub>1、通过频道号获取该频道某段时间的直播观看的统计数据</sub> | GET | `/live/v2/statistics/{param}/summary` | `../document-center/docs/live/api/channel/viewdata/summary.md` | query | endDay, startDay | yes: ChannelService#getSummary (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道商品点击统计<br><sub>1、分页查询直播频道商品点击数据</sub> | GET | `/live/v4/channel/product/click` | `../document-center/docs/live/api/channel/statistics/get_product_click_stats.md` | query | channelId | yes: ChannelService#getProductClickStats (packages/sdk/src/services/channel.service.ts) | - |
-| 查询频道商品库开关状态<br><sub>1、查询频道商品库开关状态</sub> | GET | `/live/v3/channel/product/get-enabled` | `../document-center/docs/live/api/channel/operate/get_channel_product_enabled.md` | query | channelId | no | - |
+| 查询频道商品库开关状态<br><sub>1、查询频道商品库开关状态</sub> | GET | `/live/v3/channel/product/get-enabled` | `../document-center/docs/live/api/channel/operate/get_channel_product_enabled.md` | query | channelId | yes: ChannelService#getChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道商品列表<br><sub>1、获取频道商品库商品列表</sub> | GET | `/live/v3/channel/product/list` | `../document-center/docs/live/api/channel/operate/get_channel_product_list.md` | query | channelId | yes: ChannelService#listChannelProducts (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道商品列表点击统计<br><sub>1、分页查询直播频道购物袋展开次数</sub> | GET | `/live/v4/channel/product/click/product-list` | `../document-center/docs/live/api/channel/statistics/get_product_list_stats.md` | query | channelId | yes: ChannelService#getProductListStats (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道商品配置<br><sub>1、查询频道商品配置</sub> | GET | `/live/v4/channel/product/push/rule` | `../document-center/docs/live/api/v4/channel/product_setting/get_product_setting.md` | query | channelId | no | - |
@@ -165,9 +165,9 @@
 | 查询频道直播推流信息<br><sub>1、获取频道直播的实时推流信息</sub> | GET | `/live/v3/channel/monitor/get-stream-info` | `../document-center/docs/live/api/channel/state/get_stream_info.md` | query | channelId | yes: ChannelService#getStreamInfo (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道直播暂存列表<br><sub>1、管理系统频道录制视频信息入口：云直播-我的直播-频道设置-回放管理-视频库-直播暂存</sub> | GET | `/live/v2/channels/{param}/recordFiles` | `../document-center/docs/live/api/channel/playback/get_record_info.md` | query | - | yes: ChannelService#listRecordFiles (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道终端分布数据统计<br><sub>1、查询频道观看终端分布统计信息</sub> | GET | `/live/v4/channel/statistics/browser-summary` | `../document-center/docs/live/api/v4/channel/statistics/browsers_summary.md` | query | channelId, endTime, startTime | yes: StatisticsService#getDeviceDistribution (packages/sdk/src/services/statistics.service.ts) | - |
-| 查询频道重制课件配置信息<br><sub>1、查询频道重制课件参数设置信息</sub> | GET | `/live/v3/channel/pptRecord/get-setting` | `../document-center/docs/live/api/channel/operate/ppt_get_setting.md` | query | - | no | - |
-| 查询频道重制课件设置<br><sub>1、查询频道重制课件设置</sub> | GET | `/live/v3/channel/pptRecord/get-setting` | `../document-center/docs/live/api/channel/operate/get_pptrecord_setting.md` | query | channelId | no | - |
-| 查询频道状态<br><sub>1、查询频道直播状态</sub> | GET | `/live_status/query` | `../document-center/docs/live/api/channel/state/get_live_status.md` | query | stream | no | - |
+| 查询频道重制课件配置信息<br><sub>1、查询频道重制课件参数设置信息</sub> | GET | `/live/v3/channel/pptRecord/get-setting` | `../document-center/docs/live/api/channel/operate/ppt_get_setting.md` | query | - | yes: ChannelService#getPptRecordSetting (packages/sdk/src/services/channel.service.ts) | - |
+| 查询频道重制课件设置<br><sub>1、查询频道重制课件设置</sub> | GET | `/live/v3/channel/pptRecord/get-setting` | `../document-center/docs/live/api/channel/operate/get_pptrecord_setting.md` | query | channelId | yes: ChannelService#getPptRecordSetting (packages/sdk/src/services/channel.service.ts) | - |
+| 查询频道状态<br><sub>1、查询频道直播状态</sub> | GET | `/live_status/query` | `../document-center/docs/live/api/channel/state/get_live_status.md` | query | stream | yes: ChannelService#getLiveStatus (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道字幕配置信息<br><sub>1、查询频道字幕配置信息</sub> | GET | `/live/v4/channel/subtitle/config/get` | `../document-center/docs/live/api/v4/channel/subtitle/get_subtitle.md` | query | channelId | no | - |
 | 查询任务奖励活动分页列表<br><sub>1、查询任务奖励活动分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/page` | `../document-center/docs/live/api/v4/channel/task_reward/page.md` | query | channelId | no | - |
 | 查询任务奖励活动观众奖励明细分页列表<br><sub>1、查询任务奖励活动观众奖励明细分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/viewer-detail` | `../document-center/docs/live/api/v4/channel/task_reward/viewer_detail.md` | query | activityId, channelId | no | - |
@@ -187,9 +187,9 @@
 | 查询邀请海报明细数据<br><sub>1、分页查询邀请海报明细数据统计</sub> | GET | `/live/v4/channel/invite/list` | `../document-center/docs/live/api/v4/channel/statistics/get_invite_stats.md` | query | channelId | no | - |
 | 查询音视频文件详情<br><sub>1、查询音视频文件详情</sub> | GET | `/live/v4/user/multimedia/resource/list` | `../document-center/docs/live/api/channel/doc/get_user_multimedia_resource_detail.md` | query | vids | yes: ChannelService#getUserMultimediaResourceDetail (packages/sdk/src/services/channel.service.ts) | - |
 | 查询云分发数据信息<br><sub>1、查询频道云分发数据信息</sub> | GET | `/live/v4/channel/distribute/get/statistic` | `../document-center/docs/live/api/v4/channel/distribute/statistic.md` | query | channelId | no | - |
-| 查询重制课件任务列表<br><sub>1、查询课件重制任务列表</sub> | GET | `/live/v3/channel/pptRecord/list` | `../document-center/docs/live/api/channel/operate/pptrecord_list.md` | query | channelId | no | - |
-| 查询转播频道信息<br><sub>1、查询账号或频道下的转播列表信息</sub> | GET | `/live/v3/channel/transmit/get-associations` | `../document-center/docs/live/api/channel/operate/get_transmit_associations.md` | query | - | no | - |
-| 查询子账号频道列表<br><sub>1、查询子账号频道列表</sub> | GET | `/live/v4/channel/channel-user-children/get-channels` | `../document-center/docs/live/api/channel/operate/get_user_children_channels.md` | query | childUserId, pageNumber, pageSize | no | - |
+| 查询重制课件任务列表<br><sub>1、查询课件重制任务列表</sub> | GET | `/live/v3/channel/pptRecord/list` | `../document-center/docs/live/api/channel/operate/pptrecord_list.md` | query | channelId | yes: ChannelService#listPptRecordTasks (packages/sdk/src/services/channel.service.ts) | - |
+| 查询转播频道信息<br><sub>1、查询账号或频道下的转播列表信息</sub> | GET | `/live/v3/channel/transmit/get-associations` | `../document-center/docs/live/api/channel/operate/get_transmit_associations.md` | query | - | yes: ChannelService#getTransmitAssociations (packages/sdk/src/services/channel.service.ts) | - |
+| 查询子账号频道列表<br><sub>1、查询子账号频道列表</sub> | GET | `/live/v4/channel/channel-user-children/get-channels` | `../document-center/docs/live/api/channel/operate/get_user_children_channels.md` | query | childUserId, pageNumber, pageSize | yes: ChannelService#getUserChildrenChannels (packages/sdk/src/services/channel.service.ts) | - |
 | 创建并初始化频道<br><sub>1、根据请求参数与默认模板创建频道</sub> | POST | `/live/v4/channel/create-init` | `../document-center/docs/live/api/v4/channel/basic_create.md` | json-body | basicSetting | no | - |
 | 创建抽奖活动<br><sub>1、创建抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/create` | `../document-center/docs/live/api/v4/channel/lottery_activity/lottery_activity_create.md` | json-body | activityName, amount, channelId, lotteryCondition, prizeName | no | - |
 | 创建互动监听事件<br><sub>1、创建互动监听事件</sub> | POST | `/live/v4/channel/interaction-event/save` | `../document-center/docs/live/api/v4/channel/interaction_event/save.md` | json-body | allDone, channelId, tasks | yes: V4ChannelService#interactionEventSave (packages/sdk/src/services/v4/channel.service.ts) | - |
@@ -232,7 +232,7 @@
 | 获取观看页 SDK 授权令牌<br><sub>1、获取观众观看调用接口token</sub> | POST | `/live/v3/channel/watch/get-watch-api-token` | `../document-center/docs/live/api/channel/operate/get_watch_api_token.md` | query/form | channelId, viewerId | no | - |
 | 获取观看页测试模式的访问令牌<br><sub>1、接口用于获取观看页测试模式的访问令牌</sub> | POST | `/live/v3/channel/watch/get-test-mode-token` | `../document-center/docs/live/api/channel/auth/get_channel_watch_test_mode_token.md` | query/form | channelId | yes: ChannelService#getTestModeToken (packages/sdk/src/services/channel.service.ts) | - |
 | 获取观众观看调用接口token<br><sub>1、获取观众观看调用接口token</sub> | POST | `/live/v3/channel/watch/get-api-token` | `../document-center/docs/live/api/channel/operate/get_api_token.md` | query/form | channelId, viewerId | no | - |
-| 获取频道关注公众号设置信息<br><sub>1、查询关注公众号设置接口</sub> | GET | `/live/v3/channel/promotion/list-channels-follow` | `../document-center/docs/live/api/channel/operate/list_channels_follow.md` | query | channelIds | no | - |
+| 获取频道关注公众号设置信息<br><sub>1、查询关注公众号设置接口</sub> | GET | `/live/v3/channel/promotion/list-channels-follow` | `../document-center/docs/live/api/channel/operate/list_channels_follow.md` | query | channelIds | yes: ChannelService#listChannelsFollow (packages/sdk/src/services/channel.service.ts) | - |
 | 获取频道聊天室的在线人数<br><sub>1、获取频道聊天室的在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/channel/operate/get_chat_online_count.md` | query | channelId | yes: ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | - |
 | 获取频道聊天室在线人数接口<br><sub>1、获取频道聊天室在线人数接口</sub> | POST | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/channel/operate/chat_online_count.md` | query/form | channelId | no: path exists as GET in ChatService#countOnlineUser | - |
 | 获取频道商品统计概览<br><sub>1、查询频道商品整体统计数据概览（点击、下单、成交等指标汇总）</sub> | GET | `/live/v4/channel/product/stats/summary` | `../document-center/docs/live/api/v4/channel/product_stats/summary.md` | query | channelId | no | - |
@@ -324,7 +324,7 @@
 | 上传文档到某个频道<br><sub>1、上传频道文档接口</sub> | POST | `/live/v3/channel/document/upload-doc` | `../document-center/docs/live/api/channel/doc/upload_doc.md` | query/form | channelId | yes: ChannelService#uploadDoc (packages/sdk/src/services/channel.service.ts) | - |
 | 设置播放器片头广告<br><sub>1、接口用于设置某频道播放器的片头广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateHead` | `../document-center/docs/live/api/channel/player/update_head.md` | query/form | - | yes: PlayerService#updateHeadAdvert (packages/sdk/src/services/player.service.ts) | - |
 | 设置播放器暂停广告<br><sub>1、接口用于设置某频道播放器的暂停广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateStop` | `../document-center/docs/live/api/channel/player/update_stop.md` | query/form | - | yes: PlayerService#updateStopAdvert (packages/sdk/src/services/player.service.ts) | - |
-| 设置播放器自定义url跑马灯<br><sub>1、通过接口可以设置播放器内容保护自定义url跑马灯开关，在开启时需提交url参数。</sub> | GET | `/live/v2/channelRestrict/{param}/set-diyurl-marquee` | `../document-center/docs/live/api/channel/marquee/set_diyurl-marquee.md` | query | marqueeRestrict, url | no: path exists as POST in ChannelService#setDiyUrlMarquee | - |
+| 设置播放器自定义url跑马灯<br><sub>1、通过接口可以设置播放器内容保护自定义url跑马灯开关，在开启时需提交url参数。</sub> | GET | `/live/v2/channelRestrict/{param}/set-diyurl-marquee` | `../document-center/docs/live/api/channel/marquee/set_diyurl-marquee.md` | query | marqueeRestrict, url | yes: ChannelService#setDiyUrlMarquee (packages/sdk/src/services/channel.service.ts) | - |
 | 设置播放器Logo<br><sub>1、修改播放器logo图片</sub> | POST | `/live/v2/channels/{param}/update` | `../document-center/docs/live/api/channel/player/update_logo.md` | query/form | logoImage, logoOpacity, logoPosition | yes: ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | - |
 | 设置频道单点登录token<br><sub>1、设置频道单点登录的token</sub> | POST | `/live/v2/channels/{param}/set-token` | `../document-center/docs/live/api/channel/operate/set_token_1.md` | query/form | token | no | - |
 | 设置频道重制课件配置信息<br><sub>1、设置频道重制课件配置信息</sub> | POST | `/live/v3/channel/pptRecord/setting` | `../document-center/docs/live/api/channel/operate/ppt_setting.md` | query/form | - | no | - |
@@ -549,7 +549,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 查询频道内容保护（防录屏信息）<br><sub>1、通过频道号，查询频道内容保护（防录屏信息）</sub> | GET | `/live/v3/channel/anti/record/get` | `../document-center/docs/live/api/player/get_anti_record.md` | query | - | yes: PlayerService#getAntiRecordSettings (packages/sdk/src/services/player.service.ts) | - |
 | 查询投诉反馈<br><sub>1、查询投诉反馈</sub> | GET | `/live/v4/channel/feedback/list` | `../document-center/docs/live/api/player/watch/get_watch_feedback_list.md` | query | - | yes: PlayerService#getWatchFeedbackList (packages/sdk/src/services/player.service.ts) | - |
-| 内容保护（防录屏）设置<br><sub>1、通过频道号，修改播放器内容保护自定义url跑马灯开关，在开启时需提交url参数</sub> | POST | `/live/v2/channelRestrict/{param}/set-diyurl-marquee` | `../document-center/docs/live/api/player/set_marquee.md` | query/form | - | yes: ChannelService#setDiyUrlMarquee (packages/sdk/src/services/channel.service.ts) | - |
+| 内容保护（防录屏）设置<br><sub>1、通过频道号，修改播放器内容保护自定义url跑马灯开关，在开启时需提交url参数</sub> | POST | `/live/v2/channelRestrict/{param}/set-diyurl-marquee` | `../document-center/docs/live/api/player/set_marquee.md` | query/form | - | yes: PlayerService#setMarqueeUrl (packages/sdk/src/services/player.service.ts) | - |
 | 设置频道内容保护（防录屏信息）<br><sub>1、通过频道号，设置频道内容保护（防录屏信息）</sub> | POST | `/live/v3/channel/anti/record/setting` | `../document-center/docs/live/api/player/anti_record_setting.md` | query/form | antiRecordType, channelId, content, fontSize, modelType | yes: PlayerService#setAntiRecordSettings (packages/sdk/src/services/player.service.ts) | - |
 | 修改频道播放器片头广告<br><sub>1、管理系统设置频道播放器的片头广告：频道管理-观看页设置-营销-广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateHead` | `../document-center/docs/live/api/player/update_head.md` | query/form | - | yes: PlayerService#updateHeadAdvert (packages/sdk/src/services/player.service.ts) | - |
 | 修改频道播放器暂停广告<br><sub>1、管理系统修改频道播放器的暂停广告：频道管理-观看页设置-营销-广告</sub> | POST | `/live/v2/channelAdvert/{param}/updateStop` | `../document-center/docs/live/api/player/update_stop.md` | query/form | - | yes: PlayerService#updateStopAdvert (packages/sdk/src/services/player.service.ts) | - |

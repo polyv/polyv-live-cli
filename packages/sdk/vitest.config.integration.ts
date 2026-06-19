@@ -26,6 +26,7 @@ export default defineConfig({
       POLYV_APP_SECRET: process.env.POLYV_APP_SECRET || '',
       POLYV_USER_ID: process.env.POLYV_USER_ID || '',
       POLYV_CHANNEL_ID: process.env.POLYV_CHANNEL_ID || '',
+      POLYV_CHILD_USER_ID: process.env.POLYV_CHILD_USER_ID || '',
     },
   }
 });

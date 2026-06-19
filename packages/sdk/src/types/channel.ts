@@ -2501,6 +2501,210 @@ export interface UpdateWarmupVideoRequest {
   warmUpFlv: string;
 }
 
+// --------------------------------------------
+// Historical Operate Read Types
+// --------------------------------------------
+
+/**
+ * Channel advert item returned by /live/v3/channel/advert/list.
+ */
+export interface ChannelAdvert {
+  /** Text advert content */
+  text?: string;
+  /** Image advert URL */
+  img?: string;
+  /** Advert link URL */
+  href?: string;
+}
+
+/**
+ * Channel product library enabled status.
+ */
+export interface ChannelProductEnabledResponse {
+  /** Product library enabled flag */
+  enabled: YNFlag;
+}
+
+/**
+ * PPT record setting returned by /live/v3/channel/pptRecord/get-setting.
+ */
+export interface PptRecordSettingResponse {
+  /** Channel ID */
+  channelId: string | number;
+  /** PolyV user ID */
+  userId: string;
+  /** Video layout type: 0 three-screen, 1 document-only, 2 picture-in-picture */
+  type: number;
+  /** Whether global setting is enabled */
+  globalSettingEnabled: YNFlag;
+  /** Camera aspect ratio */
+  videoRatio?: string | number;
+  /** Display image URL used by older docs */
+  brandImgFile?: string;
+  /** Background image URL used by older docs */
+  backgroundImgFile?: string;
+  /** Display image URL */
+  brandImg?: string;
+  /** Background image URL */
+  backgroundImg?: string;
+  /** Created time */
+  createdTime?: number;
+  /** Last modified time */
+  lastModified?: number;
+  /** Camera position */
+  actionPosition?: string;
+}
+
+/**
+ * Query parameters for /live/v3/channel/pptRecord/list.
+ */
+export interface ListPptRecordTasksParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** PPT record session ID */
+  sessionId?: string;
+  /** Task status */
+  status?: string;
+  /** Live start time lower bound, yyyyMMddHHmmss */
+  startTime?: string;
+  /** Live start time upper bound, yyyyMMddHHmmss */
+  endTime?: string;
+  /** Page number */
+  page?: number;
+  /** Page size */
+  pageSize?: number;
+}
+
+/**
+ * PPT record task item.
+ */
+export interface PptRecordTaskItem {
+  /** Task ID */
+  taskId: number;
+  /** Channel ID */
+  channelId: string | number;
+  /** Playback title */
+  title?: string;
+  /** MP4 download URL */
+  url?: string;
+  /** PPT record session ID */
+  sessionId?: string;
+  /** Live start time, yyyyMMddHHmmss */
+  startTime?: string;
+  /** Task status */
+  status?: string;
+  /** Remaining days before expiry */
+  remainDay?: number;
+  /** Video duration in seconds */
+  duration?: number;
+  /** Live system video ID */
+  videoId?: string;
+  /** VOD VID after upload */
+  vid?: string | null;
+}
+
+/**
+ * PPT record task page response.
+ */
+export interface ListPptRecordTasksResponse {
+  pageNumber: number;
+  totalPages: number;
+  pageSize: number;
+  contents: PptRecordTaskItem[];
+}
+
+/**
+ * Query parameters for /live/v3/channel/transmit/get-associations.
+ */
+export interface GetTransmitAssociationsParams {
+  /** Source channel ID; omit to query all associations under the account */
+  channelId?: string;
+}
+
+/**
+ * Transmit association item.
+ */
+export interface TransmitAssociation {
+  /** Source channel ID; null when the receiver has no source channel association */
+  channelId: string | number | null;
+  /** Receiver channel ID */
+  receiveChannelId: string | number;
+}
+
+/**
+ * Query parameters for /live/v4/channel/channel-user-children/get-channels.
+ */
+export interface GetUserChildrenChannelsParams {
+  /** Child account user ID - REQUIRED */
+  childUserId: string;
+  /** Channel created time lower bound */
+  startTime?: number;
+  /** Channel created time upper bound */
+  endTime?: number;
+  /** Page number - REQUIRED */
+  pageNumber: number;
+  /** Page size - REQUIRED */
+  pageSize: number;
+}
+
+/**
+ * Child account channel item.
+ */
+export interface UserChildrenChannel {
+  /** Channel ID */
+  channelId: number;
+  /** Organization ID */
+  organizationId?: string;
+  /** Created time */
+  createdTime?: number;
+}
+
+/**
+ * Child account channel page response.
+ */
+export interface GetUserChildrenChannelsResponse {
+  pageSize: number;
+  pageNumber: number;
+  totalItems: number;
+  totalPages: number;
+  contents: UserChildrenChannel[];
+}
+
+/**
+ * Query parameters for /live/v3/channel/promotion/list-channels-follow.
+ */
+export interface ListChannelsFollowParams {
+  /** Channel IDs, comma-separated or array - REQUIRED */
+  channelIds: string | Array<string | number>;
+}
+
+/**
+ * Channel follow-public-account settings.
+ */
+export interface ChannelFollowSetting {
+  /** Channel ID */
+  channelId: string | number;
+  /** Follow feature switch */
+  enabled: YNFlag;
+  /** Auto popup switch */
+  autoShowEnabled: YNFlag;
+  /** QR code image URL */
+  qrCodeUrl?: string;
+  /** Entry text */
+  entranceText?: string;
+  /** Popup tips */
+  tips?: string;
+  /** PC popup tips */
+  pcFollowTips?: string;
+}
+
+/**
+ * Channel follow settings response.
+ */
+export interface ListChannelsFollowResponse {
+  list: ChannelFollowSetting[];
+}
+
 // ============================================
 // Product Types (Story 8-2)
 // ============================================

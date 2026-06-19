@@ -295,6 +295,15 @@ export class PolyVClient {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client.interceptors.response.use(
       (response: any): any => {
+        // Some historical endpoints return a raw text body instead of the standard
+        // { code, data } envelope. /live_status/query returns exactly "live" or "end".
+        if (typeof response.data === 'string') {
+          const rawStatus = response.data.trim();
+          if (rawStatus === 'live' || rawStatus === 'end') {
+            return rawStatus;
+          }
+        }
+
         // Check for API success
         if (response.data?.code === 200) {
           // Extract and return data field directly

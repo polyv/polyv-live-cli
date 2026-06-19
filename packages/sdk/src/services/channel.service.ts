@@ -106,6 +106,17 @@ import type {
   UpdateWarmupSwitchRequest,
   UpdateWarmupImageRequest,
   UpdateWarmupVideoRequest,
+  ChannelAdvert,
+  ChannelProductEnabledResponse,
+  PptRecordSettingResponse,
+  ListPptRecordTasksParams,
+  ListPptRecordTasksResponse,
+  GetTransmitAssociationsParams,
+  TransmitAssociation,
+  GetUserChildrenChannelsParams,
+  GetUserChildrenChannelsResponse,
+  ListChannelsFollowParams,
+  ListChannelsFollowResponse,
   // Story 8-2 Types
   AddChannelProductParams,
   AddChannelProductResponse,
@@ -244,6 +255,37 @@ export class ChannelService {
     if (!Number.isInteger(value) || value < 1 || value > 1000) {
       throw PolyVValidationError.outOfRange(field, value, { min: 1, max: 1000 });
     }
+  }
+
+  private validatePositiveInteger(value: number | undefined, field: string): void {
+    if (value === undefined || value === null) {
+      throw PolyVValidationError.required(field);
+    }
+
+    if (!Number.isInteger(value) || value < 1 || value > 1000) {
+      throw PolyVValidationError.outOfRange(field, value, { min: 1, max: 1000 });
+    }
+  }
+
+  private normalizeCommaSeparatedValues(
+    values: string | Array<string | number>,
+    field: string
+  ): string {
+    if (Array.isArray(values)) {
+      if (values.length === 0) {
+        throw PolyVValidationError.required(field);
+      }
+
+      const normalized = values.map((value, index) => {
+        this.validateRequiredValue(value, `${field}[${index}]`);
+        return String(value).trim();
+      });
+
+      return normalized.join(',');
+    }
+
+    this.validateRequiredText(values, field);
+    return values.trim();
   }
 
   private validateViewerIds(viewerIds: string[]): void {
@@ -4118,9 +4160,8 @@ export class ChannelService {
       params.url = options.url;
     }
 
-    const response = await this.client.httpClient.post<string>(
+    const response = await this.client.httpClient.get<string>(
       `/live/v2/channelRestrict/${options.channelId}/set-diyurl-marquee`,
-      null,
       { params }
     );
 
@@ -5166,6 +5207,178 @@ export class ChannelService {
     );
 
     return response as unknown as string;
+  }
+
+  // --------------------------------------------
+  // Historical Operate Read APIs
+  // --------------------------------------------
+
+  /**
+   * Get channel advert list.
+   *
+   * @param channelId - The channel ID
+   * @returns Channel advert settings. If channel advert uses global settings, the global adverts are returned.
+   */
+  async getChannelAdverts(channelId: string): Promise<ChannelAdvert[]> {
+    this.validateRequiredText(channelId, 'channelId');
+
+    const response = await this.client.httpClient.get<ChannelAdvert[]>(
+      '/live/v3/channel/advert/list',
+      { params: { channelId } }
+    );
+
+    return response as unknown as ChannelAdvert[];
+  }
+
+  /**
+   * Get channel product library enabled status.
+   *
+   * @param channelId - The channel ID
+   * @returns Product library enabled status
+   */
+  async getChannelProductEnabled(channelId: string): Promise<ChannelProductEnabledResponse> {
+    this.validateRequiredText(channelId, 'channelId');
+
+    const response = await this.client.httpClient.get<ChannelProductEnabledResponse>(
+      '/live/v3/channel/product/get-enabled',
+      { params: { channelId } }
+    );
+
+    return response as unknown as ChannelProductEnabledResponse;
+  }
+
+  /**
+   * Get PPT record setting.
+   *
+   * @param channelId - The channel ID
+   * @returns PPT record setting
+   */
+  async getPptRecordSetting(channelId: string): Promise<PptRecordSettingResponse> {
+    this.validateRequiredText(channelId, 'channelId');
+
+    const response = await this.client.httpClient.get<PptRecordSettingResponse>(
+      '/live/v3/channel/pptRecord/get-setting',
+      { params: { channelId } }
+    );
+
+    return response as unknown as PptRecordSettingResponse;
+  }
+
+  /**
+   * List PPT record tasks.
+   *
+   * @param params - Query parameters including channelId
+   * @returns Paginated PPT record task list
+   */
+  async listPptRecordTasks(params: ListPptRecordTasksParams): Promise<ListPptRecordTasksResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateOptionalPage(params.page, 'page');
+    this.validateOptionalPage(params.pageSize, 'pageSize');
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+    };
+    if (params.sessionId !== undefined) {
+      queryParams.sessionId = params.sessionId;
+    }
+    if (params.status !== undefined) {
+      queryParams.status = params.status;
+    }
+    if (params.startTime !== undefined) {
+      queryParams.startTime = params.startTime;
+    }
+    if (params.endTime !== undefined) {
+      queryParams.endTime = params.endTime;
+    }
+    if (params.page !== undefined) {
+      queryParams.page = params.page;
+    }
+    if (params.pageSize !== undefined) {
+      queryParams.pageSize = params.pageSize;
+    }
+
+    const response = await this.client.httpClient.get<ListPptRecordTasksResponse>(
+      '/live/v3/channel/pptRecord/list',
+      { params: queryParams }
+    );
+
+    return response as unknown as ListPptRecordTasksResponse;
+  }
+
+  /**
+   * Get transmit channel associations for the account or one source channel.
+   *
+   * @param params - Optional source channel filter
+   * @returns Transmit association list
+   */
+  async getTransmitAssociations(
+    params: GetTransmitAssociationsParams = {}
+  ): Promise<TransmitAssociation[]> {
+    if (params.channelId !== undefined) {
+      this.validateRequiredText(params.channelId, 'channelId');
+    }
+
+    const queryParams: Record<string, unknown> = {};
+    if (params.channelId !== undefined) {
+      queryParams.channelId = params.channelId;
+    }
+
+    const response = await this.client.httpClient.get<TransmitAssociation[]>(
+      '/live/v3/channel/transmit/get-associations',
+      { params: queryParams }
+    );
+
+    return response as unknown as TransmitAssociation[];
+  }
+
+  /**
+   * Get channels owned by a child account.
+   *
+   * @param params - Query parameters including childUserId and pagination
+   * @returns Paginated child-account channel list
+   */
+  async getUserChildrenChannels(
+    params: GetUserChildrenChannelsParams
+  ): Promise<GetUserChildrenChannelsResponse> {
+    this.validateRequiredText(params.childUserId, 'childUserId');
+    this.validatePositiveInteger(params.pageNumber, 'pageNumber');
+    this.validatePositiveInteger(params.pageSize, 'pageSize');
+
+    const queryParams: Record<string, unknown> = {
+      childUserId: params.childUserId,
+      pageNumber: params.pageNumber,
+      pageSize: params.pageSize,
+    };
+    if (params.startTime !== undefined) {
+      queryParams.startTime = params.startTime;
+    }
+    if (params.endTime !== undefined) {
+      queryParams.endTime = params.endTime;
+    }
+
+    const response = await this.client.httpClient.get<GetUserChildrenChannelsResponse>(
+      '/live/v4/channel/channel-user-children/get-channels',
+      { params: queryParams }
+    );
+
+    return response as unknown as GetUserChildrenChannelsResponse;
+  }
+
+  /**
+   * List follow-public-account settings for one or more channels.
+   *
+   * @param params - Channel IDs as an array or comma-separated string
+   * @returns Follow-public-account settings
+   */
+  async listChannelsFollow(params: ListChannelsFollowParams): Promise<ListChannelsFollowResponse> {
+    const channelIds = this.normalizeCommaSeparatedValues(params.channelIds, 'channelIds');
+
+    const response = await this.client.httpClient.get<ListChannelsFollowResponse>(
+      '/live/v3/channel/promotion/list-channels-follow',
+      { params: { channelIds } }
+    );
+
+    return response as unknown as ListChannelsFollowResponse;
   }
 
   // ============================================
