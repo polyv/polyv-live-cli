@@ -102,7 +102,6 @@ export class TypeGenerator {
     }
 
     lines.push('}');
-    lines.push('');
 
     return lines.join('\n');
   }
@@ -113,33 +112,8 @@ export class TypeGenerator {
   generateModuleContent(types: GeneratedType[], moduleName: string): string {
     const header = this.generateFileHeader(moduleName);
     const typeContents = types.map((t) => t.content).join('\n');
-    const exports = types.map((t) => t.name).join(',\n  ');
 
-    return `${header}
-${typeContents}
-`;
-  }
-
-  /**
-   * Generate index.ts content
-   */
-  generateIndexContent(modules: string[]): string {
-    const header = `/**
- * PolyV SDK Generated Types
- *
- * AUTO-GENERATED FILE - DO NOT EDIT
- * Generated from API docs by scripts/generate-types.ts
- *
- * Last updated: ${new Date().toISOString()}
- */
-
-`;
-
-    const exports = modules
-      .map((m) => `export * from './${m}.js';`)
-      .join('\n');
-
-    return header + exports + '\n';
+    return `${header}${typeContents}`.trimEnd() + '\n';
   }
 
   /**
@@ -187,7 +161,7 @@ ${typeContents}
 
     const exports = moduleNames.map((m) => `export * from './${m}.js';`).join('\n');
 
-    return header + exports + '\n';
+    return `${header}${exports}`.trimEnd() + '\n';
   }
 }
 

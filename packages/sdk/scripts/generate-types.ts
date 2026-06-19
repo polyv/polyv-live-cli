@@ -93,7 +93,7 @@ async function main(): Promise<void> {
 
       allResults.push(...moduleResults);
 
-      if (moduleResults.some((r) => r.success)) {
+      if (existsSync(join(OUTPUT_DIR, `${module}.ts`))) {
         moduleNames.push(module);
       }
     }
