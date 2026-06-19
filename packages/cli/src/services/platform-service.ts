@@ -13,6 +13,7 @@ import {
   SwitchGetResponse,
   SwitchUpdateResponse,
   CallbackSettings,
+  UpdateCallbackParams,
 } from 'polyv-live-api-sdk';
 
 /**
@@ -158,12 +159,9 @@ export class PlatformServiceSdk {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
 
     // Build update params - only include defined values
-    const updateParams: { url?: string; enabled?: boolean } = {};
+    const updateParams: UpdateCallbackParams = {};
     if (params.url !== undefined) {
-      updateParams.url = params.url;
-    }
-    if (params.enabled !== undefined) {
-      updateParams.enabled = params.enabled;
+      updateParams.streamCallbackUrl = params.url;
     }
 
     // Call SDK

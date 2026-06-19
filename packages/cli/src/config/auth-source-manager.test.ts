@@ -347,7 +347,7 @@ describe('EnvironmentAuthDetector', () => {
 
       expect(result).not.toBeNull();
       expect(result!.type).toBe('environment');
-      expect(result!.priority).toBe(5);
+      expect(result!.priority).toBe(4);
       expect(result!.appId).toBe('env-app-id');
       expect(result!.appSecret).toBe('env-app-secret');
       expect(result!.userId).toBe('env-user-id');
@@ -471,6 +471,7 @@ describe('AuthenticationSourceManager', () => {
     mockAccountManager = {
       accountExists: jest.fn(),
       getAccount: jest.fn(),
+      getDefaultAccount: jest.fn().mockReturnValue(null),
     } as any;
 
     manager = new AuthenticationSourceManager(mockSessionManager, mockAccountManager);
@@ -559,7 +560,32 @@ describe('AuthenticationSourceManager', () => {
 
       expect(source).not.toBeNull();
       expect(source!.type).toBe('environment');
-      expect(source!.priority).toBe(5);
+      expect(source!.priority).toBe(4);
+    });
+
+    it('应该优先使用环境变量而不是默认账号', () => {
+      process.env = {
+        [AUTH_ENV_VARS.APP_ID]: 'env-app-id',
+        [AUTH_ENV_VARS.APP_SECRET]: 'env-app-secret',
+      };
+
+      mockSessionManager.getCurrentSessionAccount.mockReturnValue(null);
+      mockAccountManager.getDefaultAccount.mockReturnValue('default-account');
+      mockAccountManager.accountExists.mockReturnValue(true);
+      mockAccountManager.getAccount.mockReturnValue({
+        name: 'default-account',
+        appId: 'default-app-id',
+        appSecret: 'default-app-secret',
+        createdAt: '2023-01-01T00:00:00.000Z',
+        updatedAt: '2023-01-01T00:00:00.000Z',
+      });
+
+      const source = manager.getAuthenticationSource();
+
+      expect(source).not.toBeNull();
+      expect(source!.type).toBe('environment');
+      expect(source!.appId).toBe('env-app-id');
+      expect(source!.appSecret).toBe('env-app-secret');
     });
 
     it('应该返回null当没有完整认证源时', () => {

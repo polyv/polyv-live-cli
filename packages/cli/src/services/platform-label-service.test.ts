@@ -65,22 +65,25 @@ describe('PlatformLabelServiceSdk', () => {
     it('should call v4User.listViewerLabels', async () => {
       // Arrange
       const mockLabels = [
-        { labelId: 1, labelName: 'VIP' },
-        { labelId: 2, labelName: 'SVIP' },
+        { id: 1, label: 'VIP' },
+        { id: 2, label: 'SVIP' },
       ];
-      mockClient.v4User.listViewerLabels.mockResolvedValue(mockLabels);
+      mockClient.v4User.listViewerLabels.mockResolvedValue({ contents: mockLabels });
 
       // Act
       const result = await service.listViewerLabels();
 
       // Assert
       expect(mockClient.v4User.listViewerLabels).toHaveBeenCalled();
-      expect(result).toEqual(mockLabels);
+      expect(result).toEqual([
+        { labelId: 1, labelName: 'VIP' },
+        { labelId: 2, labelName: 'SVIP' },
+      ]);
     });
 
     it('should return empty array when no labels exist', async () => {
       // Arrange
-      mockClient.v4User.listViewerLabels.mockResolvedValue([]);
+      mockClient.v4User.listViewerLabels.mockResolvedValue({ contents: [] });
 
       // Act
       const result = await service.listViewerLabels();
@@ -102,17 +105,17 @@ describe('PlatformLabelServiceSdk', () => {
   describe('createViewerLabel', () => {
     it('should call v4User.createViewerLabel with correct params', async () => {
       // Arrange
-      const mockLabel = { labelId: 1, labelName: 'VIP' };
-      mockClient.v4User.createViewerLabel.mockResolvedValue(mockLabel);
+      const mockLabel = { id: 1, label: 'VIP' };
+      mockClient.v4User.createViewerLabel.mockResolvedValue([mockLabel]);
 
       // Act
       const result = await service.createViewerLabel({ labelName: 'VIP' });
 
       // Assert
       expect(mockClient.v4User.createViewerLabel).toHaveBeenCalledWith({
-        labelName: 'VIP',
+        labels: ['VIP'],
       });
-      expect(result).toEqual(mockLabel);
+      expect(result).toEqual({ labelId: 1, labelName: 'VIP' });
     });
 
     it('should validate labelName is not empty', async () => {
@@ -142,8 +145,8 @@ describe('PlatformLabelServiceSdk', () => {
 
       // Assert
       expect(mockClient.v4User.updateViewerLabel).toHaveBeenCalledWith({
-        labelId: 1,
-        labelName: 'Updated VIP',
+        id: 1,
+        label: 'Updated VIP',
       });
     });
 
@@ -183,7 +186,7 @@ describe('PlatformLabelServiceSdk', () => {
 
       // Assert
       expect(mockClient.v4User.deleteViewerLabel).toHaveBeenCalledWith({
-        labelId: 1,
+        id: 1,
       });
     });
 

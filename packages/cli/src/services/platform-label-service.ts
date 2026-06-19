@@ -8,6 +8,7 @@ import { AuthConfig } from '../types/auth';
 import { PlatformLabelServiceConfig, ViewerLabel } from '../types/platform-label';
 import { createSdkClient } from '../sdk';
 import { PolyVValidationError } from '../utils/errors';
+import type { ViewerLabel as SdkViewerLabel } from 'polyv-live-api-sdk';
 
 /**
  * Platform label service for managing viewer labels using SDK
@@ -43,7 +44,9 @@ export class PlatformLabelServiceSdk {
     // Call SDK
     const result = await client.v4User.listViewerLabels();
 
-    return result as unknown as ViewerLabel[];
+    const labels = Array.isArray(result) ? result : result.contents || [];
+
+    return labels.map(label => this.normalizeViewerLabel(label));
   }
 
   /**
@@ -63,10 +66,20 @@ export class PlatformLabelServiceSdk {
 
     // Call SDK
     const result = await client.v4User.createViewerLabel({
-      labelName: params.labelName,
+      labels: [params.labelName],
     });
 
-    return result as unknown as ViewerLabel;
+    const createdLabel = Array.isArray(result) ? result[0] : result;
+    if (!createdLabel) {
+      throw new PolyVValidationError(
+        '创建标签后未返回标签信息',
+        'labelName',
+        params.labelName,
+        'empty_response'
+      );
+    }
+
+    return this.normalizeViewerLabel(createdLabel);
   }
 
   /**
@@ -89,8 +102,8 @@ export class PlatformLabelServiceSdk {
 
     // Call SDK
     await client.v4User.updateViewerLabel({
-      labelId: params.labelId,
-      labelName: params.labelName,
+      id: params.labelId,
+      label: params.labelName,
     });
   }
 
@@ -111,7 +124,7 @@ export class PlatformLabelServiceSdk {
 
     // Call SDK
     await client.v4User.deleteViewerLabel({
-      labelId: params.labelId,
+      id: params.labelId,
     });
   }
 
@@ -149,5 +162,16 @@ export class PlatformLabelServiceSdk {
         'validation_failed'
       );
     }
+  }
+
+  private normalizeViewerLabel(label: SdkViewerLabel | ViewerLabel): ViewerLabel {
+    if ('labelId' in label && 'labelName' in label) {
+      return label;
+    }
+
+    return {
+      labelId: Number(label.id),
+      labelName: label.label,
+    };
   }
 }

@@ -17,10 +17,14 @@
 - `BUSINESS_MODULES_INDEX.md`：按业务领域整理的 API 分组，用于规划新的 CLI 能力。
 - `API_INVENTORY.md`：由真实 API 文档和 SDK 源码生成的接口清单，保留同功能最高版本，并标记 SDK 是否已实现。
 - `api-inventory.json`：`API_INVENTORY.md` 的机器可读数据源，便于后续 SDK 补齐和 CI 校验。
+- `CLI_INVENTORY.md`：由 `api-inventory.json`、SDK 源码和 CLI 源码生成的 CLI API 使用清单，标记哪些最新 API 已被 CLI 命令面使用。
+- `cli-inventory.json`：`CLI_INVENTORY.md` 的机器可读数据源，便于规划 CLI 补齐模块和追踪直接 `httpClient` 调用。
+- `CLI_COMPLETION_GOALS.md`：按批次补齐 CLI 未使用 API 的 `/goal` 提示词清单。
 - `SDK_COMPLETION_GOALS.md`：按批次补齐 SDK 未实现 API 的 `/goal` 提示词清单。
 
 ## 生成命令
 
 ```bash
 pnpm api:inventory
+pnpm cli:inventory
 ```

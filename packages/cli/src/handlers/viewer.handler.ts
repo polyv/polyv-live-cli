@@ -20,6 +20,7 @@ import type {
   ListViewerRecordsParams,
   ListViewerRecordsResponse,
   ViewerRecord,
+  ViewerLabel as SdkViewerLabel,
 } from 'polyv-live-api-sdk';
 
 /** Viewer label type from API */
@@ -151,7 +152,7 @@ export class ViewerHandler extends BaseHandler {
       const result = await this.viewerService.listViewerLabels();
 
       // Filter by keyword if provided (client-side)
-      let contents: ViewerLabel[] = result?.contents || [];
+      let contents: ViewerLabel[] = (result?.contents || []).map(label => this.normalizeViewerLabel(label));
       if (options.keyword) {
         const keywordLower = options.keyword.toLowerCase();
         contents = contents.filter((label: ViewerLabel) =>
@@ -528,6 +529,13 @@ export class ViewerHandler extends BaseHandler {
   }
 
   // ===== Private Helper Methods =====
+
+  private normalizeViewerLabel(label: SdkViewerLabel): ViewerLabel {
+    return {
+      labelId: Number(label.id),
+      labelName: label.label,
+    };
+  }
 
   private truncate(str: string, maxLength: number): string {
     if (!str) return '-';

@@ -198,7 +198,7 @@ describe('Authentication Priority System Integration', () => {
 
       expect(source).not.toBeNull();
       expect(source!.type).toBe('environment');
-      expect(source!.priority).toBe(5);
+      expect(source!.priority).toBe(4);
       expect(source!.appId).toBe('envappid12345678');
       expect(source!.appSecret).toBe('envappsecret123456789');
       expect(source!.userId).toBe('env-user-id');
@@ -220,7 +220,7 @@ describe('Authentication Priority System Integration', () => {
 
       expect(source).not.toBeNull();
       expect(source!.type).toBe('environment');
-      expect(source!.priority).toBe(5);
+      expect(source!.priority).toBe(4);
       expect(source!.appId).toBe('envappid12345678');
       expect(source!.appSecret).toBe('envappsecret123456789');
     });
