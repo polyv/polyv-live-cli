@@ -27,6 +27,7 @@ import { registerCheckinCommands } from './commands/checkin.commands';
 import { registerQaCommands } from './commands/qa.commands';
 import { registerQuestionnaireCommands } from './commands/questionnaire.commands';
 import { registerLotteryCommands } from './commands/lottery.commands';
+import { registerInteractionCommands } from './commands/interaction.commands';
 import { registerDonateCommands } from './commands/donate.commands';
 import { registerViewerCommands } from './commands/viewer.commands';
 import { registerWatchConditionCommands } from './commands/watch-condition.commands';
@@ -126,6 +127,7 @@ Commands:
   robot                 Manage global robots
   partner               Manage partner account tools
   web                   Manage watch page configuration
+  interaction           Manage cross-cutting live interaction APIs
 
 Quick Start:
   $ polyv-live-cli account add <name> --app-id <id> --app-secret <secret>  # Add account
@@ -191,6 +193,7 @@ async function main(): Promise<void> {
   registerQaCommands(program);
   registerQuestionnaireCommands(program);
   registerLotteryCommands(program);
+  registerInteractionCommands(program);
   registerDonateCommands(program);
   registerViewerCommands(program);
   registerWatchConditionCommands(program);
@@ -243,6 +246,7 @@ Quick Start:
   $ polyv-live-cli group --help      # Group account resources
   $ polyv-live-cli finance --help    # Finance and moderation
   $ polyv-live-cli web --help        # Watch page configuration
+  $ polyv-live-cli interaction --help # Cross-cutting live interaction APIs
 
 Authentication:
   - Use 'polyv-live-cli account add' to add accounts

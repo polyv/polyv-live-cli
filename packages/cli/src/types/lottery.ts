@@ -142,6 +142,58 @@ export interface LotteryRecordsOptions {
 }
 
 /**
+ * Options for listing lottery records across channels
+ */
+export interface LotteryChannelRecordsOptions {
+  /** Channel IDs (required) */
+  channelIds: string[];
+  /** Start time (timestamp in milliseconds) */
+  startTime: number;
+  /** End time (timestamp in milliseconds) */
+  endTime: number;
+  /** Session ID filter */
+  sessionId?: string;
+  /** Page number */
+  page?: number;
+  /** Items per page */
+  limit?: number;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for downloading winner details
+ */
+export interface LotteryDownloadWinnersOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Lottery ID (required) */
+  lotteryId: string;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for adding winner receive information
+ */
+export interface LotteryReceiveInfoOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Lottery ID (required) */
+  lotteryId: string;
+  /** Winner code (required) */
+  winnerCode: string;
+  /** Viewer ID (required) */
+  viewerId: string;
+  /** Receive information JSON */
+  receiveInfo?: string | Record<string, unknown> | unknown[];
+  /** Skip confirmation prompt */
+  force?: boolean;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
  * Service configuration for lottery operations
  */
 export interface LotteryServiceConfig {
@@ -224,4 +276,35 @@ export interface ListLotteryRecordsParams {
   sessionId?: string;
   page?: number;
   limit?: number;
+}
+
+/**
+ * Parameters for listing lottery records across channels via SDK
+ */
+export interface ListChannelsLotteryParams {
+  channelIds: string[];
+  startTime: number;
+  endTime: number;
+  sessionId?: string;
+  page?: number;
+  limit?: number;
+}
+
+/**
+ * Parameters for downloading winner details via SDK
+ */
+export interface DownloadWinnerDetailParams {
+  channelId: string;
+  lotteryId: string;
+}
+
+/**
+ * Parameters for adding winner receive information via SDK
+ */
+export interface AddReceiveInfoV4Params {
+  channelId: string;
+  lotteryId: string;
+  winnerCode: string;
+  viewerId: string;
+  receiveInfo?: Record<string, unknown> | unknown[];
 }

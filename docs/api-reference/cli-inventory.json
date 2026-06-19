@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T19:37:35.540Z",
+  "generatedAt": "2026-06-19T20:01:18.817Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,18 +13,18 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 275,
-    "cliMissingLatestApis": 303,
-    "cliCoverage": 47.6,
-    "cliUsageReferences": 279,
-    "cliSdkServiceUsages": 279,
+    "cliUsedLatestApis": 294,
+    "cliMissingLatestApis": 284,
+    "cliCoverage": 50.9,
+    "cliUsageReferences": 298,
+    "cliSdkServiceUsages": 298,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 266,
+    "matchedApiIds": 285,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 362,
-    "cliTopLevelCommands": 36
+    "cliCommandPaths": 383,
+    "cliTopLevelCommands": 37
   },
   "modules": [
     {
@@ -46,16 +46,6 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 10,
       "cliCoverage": 13.7
-    },
-    {
-      "module": "live_interaction",
-      "label": "直播互动",
-      "total": 30,
-      "cliUsed": 11,
-      "cliMissing": 19,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 11,
-      "cliCoverage": 36.7
     },
     {
       "module": "account",
@@ -115,6 +105,16 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 11,
+      "cliCoverage": 100
+    },
+    {
+      "module": "live_interaction",
+      "label": "直播互动",
+      "total": 30,
+      "cliUsed": 30,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 30,
       "cliCoverage": 100
     },
     {
@@ -1575,6 +1575,17 @@
       "line": 148
     },
     {
+      "command": "checkin session-result",
+      "path": [
+        "checkin",
+        "session-result"
+      ],
+      "depth": 2,
+      "signature": "session-result",
+      "file": "packages/cli/src/commands/checkin.commands.ts",
+      "line": 188
+    },
+    {
       "command": "checkin sessions",
       "path": [
         "checkin",
@@ -1583,7 +1594,7 @@
       "depth": 2,
       "signature": "sessions",
       "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 188
+      "line": 228
     },
     {
       "command": "checkin start",
@@ -2166,6 +2177,96 @@
       "line": 195
     },
     {
+      "command": "interaction",
+      "path": [
+        "interaction"
+      ],
+      "depth": 1,
+      "signature": "interaction",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 36
+    },
+    {
+      "command": "interaction favor",
+      "path": [
+        "interaction",
+        "favor"
+      ],
+      "depth": 2,
+      "signature": "favor",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 50
+    },
+    {
+      "command": "interaction reward",
+      "path": [
+        "interaction",
+        "reward"
+      ],
+      "depth": 2,
+      "signature": "reward",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 66
+    },
+    {
+      "command": "interaction teacher-answer",
+      "path": [
+        "interaction",
+        "teacher-answer"
+      ],
+      "depth": 2,
+      "signature": "teacher-answer",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 136
+    },
+    {
+      "command": "interaction webhook",
+      "path": [
+        "interaction",
+        "webhook"
+      ],
+      "depth": 2,
+      "signature": "webhook",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 96
+    },
+    {
+      "command": "interaction webhook delete",
+      "path": [
+        "interaction",
+        "webhook",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 124
+    },
+    {
+      "command": "interaction webhook get",
+      "path": [
+        "interaction",
+        "webhook",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 100
+    },
+    {
+      "command": "interaction webhook set",
+      "path": [
+        "interaction",
+        "webhook",
+        "set"
+      ],
+      "depth": 3,
+      "signature": "set",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 110
+    },
+    {
       "command": "lottery",
       "path": [
         "lottery"
@@ -2173,7 +2274,18 @@
       "depth": 1,
       "signature": "lottery",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 33
+      "line": 57
+    },
+    {
+      "command": "lottery channel-records",
+      "path": [
+        "lottery",
+        "channel-records"
+      ],
+      "depth": 2,
+      "signature": "channel-records",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 381
     },
     {
       "command": "lottery create",
@@ -2184,7 +2296,7 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 39
+      "line": 63
     },
     {
       "command": "lottery delete",
@@ -2195,7 +2307,18 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 225
+      "line": 249
+    },
+    {
+      "command": "lottery download-winners",
+      "path": [
+        "lottery",
+        "download-winners"
+      ],
+      "depth": 2,
+      "signature": "download-winners",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 422
     },
     {
       "command": "lottery get",
@@ -2206,7 +2329,7 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 139
+      "line": 163
     },
     {
       "command": "lottery list",
@@ -2217,7 +2340,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 94
+      "line": 118
+    },
+    {
+      "command": "lottery receive-info",
+      "path": [
+        "lottery",
+        "receive-info"
+      ],
+      "depth": 2,
+      "signature": "receive-info",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 455
     },
     {
       "command": "lottery records",
@@ -2228,7 +2362,7 @@
       "depth": 2,
       "signature": "records",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 306
+      "line": 330
     },
     {
       "command": "lottery update",
@@ -2239,7 +2373,7 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 179
+      "line": 203
     },
     {
       "command": "lottery winners",
@@ -2250,7 +2384,7 @@
       "depth": 2,
       "signature": "winners",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 262
+      "line": 286
     },
     {
       "command": "material",
@@ -3095,7 +3229,40 @@
       "depth": 1,
       "signature": "qa",
       "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 32
+      "line": 48
+    },
+    {
+      "command": "qa add-edit",
+      "path": [
+        "qa",
+        "add-edit"
+      ],
+      "depth": 2,
+      "signature": "add-edit",
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 256
+    },
+    {
+      "command": "qa answers",
+      "path": [
+        "qa",
+        "answers"
+      ],
+      "depth": 2,
+      "signature": "answers",
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 200
+    },
+    {
+      "command": "qa delete-question",
+      "path": [
+        "qa",
+        "delete-question"
+      ],
+      "depth": 2,
+      "signature": "delete-question",
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 295
     },
     {
       "command": "qa list",
@@ -3106,7 +3273,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 83
+      "line": 99
+    },
+    {
+      "command": "qa question-list",
+      "path": [
+        "qa",
+        "question-list"
+      ],
+      "depth": 2,
+      "signature": "question-list",
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 229
     },
     {
       "command": "qa send",
@@ -3117,7 +3295,29 @@
       "depth": 2,
       "signature": "send",
       "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 38
+      "line": 54
+    },
+    {
+      "command": "qa send-result",
+      "path": [
+        "qa",
+        "send-result"
+      ],
+      "depth": 2,
+      "signature": "send-result",
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 322
+    },
+    {
+      "command": "qa send-times",
+      "path": [
+        "qa",
+        "send-times"
+      ],
+      "depth": 2,
+      "signature": "send-times",
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 177
     },
     {
       "command": "qa stop",
@@ -3128,7 +3328,7 @@
       "depth": 2,
       "signature": "stop",
       "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 121
+      "line": 137
     },
     {
       "command": "questionnaire",
@@ -3138,7 +3338,18 @@
       "depth": 1,
       "signature": "questionnaire",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 32
+      "line": 48
+    },
+    {
+      "command": "questionnaire batch-create",
+      "path": [
+        "questionnaire",
+        "batch-create"
+      ],
+      "depth": 2,
+      "signature": "batch-create",
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 290
     },
     {
       "command": "questionnaire create",
@@ -3149,7 +3360,7 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 38
+      "line": 54
     },
     {
       "command": "questionnaire detail",
@@ -3160,7 +3371,18 @@
       "depth": 2,
       "signature": "detail",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 154
+      "line": 212
+    },
+    {
+      "command": "questionnaire legacy-list",
+      "path": [
+        "questionnaire",
+        "legacy-list"
+      ],
+      "depth": 2,
+      "signature": "legacy-list",
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 170
     },
     {
       "command": "questionnaire list",
@@ -3171,7 +3393,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 101
+      "line": 117
+    },
+    {
+      "command": "questionnaire results",
+      "path": [
+        "questionnaire",
+        "results"
+      ],
+      "depth": 2,
+      "signature": "results",
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 248
     },
     {
       "command": "record",
@@ -4411,31 +4644,6 @@
       "missing": 63,
       "total": 106,
       "coverage": 40.6
-    },
-    {
-      "modules": [
-        "live_interaction"
-      ],
-      "title": "互动活动补齐",
-      "command": "扩展 `checkin`、`qa`、`questionnaire`、`lottery`，新增活动子命令",
-      "rationale": "CLI 已有基础签到/问答/问卷/抽奖，但红包、福袋、邀请、任务奖励、观众分组等活动运营能力仍缺。",
-      "examples": [
-        "`lottery group *`、`lottery blacklist *`",
-        "`interaction lucky-bag winners`、`interaction red-pack stats`",
-        "`interaction task-reward *`"
-      ],
-      "relatedModules": [
-        {
-          "module": "live_interaction",
-          "label": "直播互动",
-          "missing": 19,
-          "total": 30,
-          "coverage": 36.7
-        }
-      ],
-      "missing": 19,
-      "total": 30,
-      "coverage": 36.7
     }
   ],
   "unmatchedUsages": [],
@@ -5810,7 +6018,7 @@
             "reference": "V4ChannelService#getLotteryActivityExact",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 78,
+            "line": 81,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           },
           {
@@ -5818,7 +6026,7 @@
             "reference": "V4ChannelService#getLotteryActivityExact",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 92,
+            "line": 95,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -5855,7 +6063,7 @@
             "reference": "V4ChannelService#listLotteryActivitiesExact",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 64,
+            "line": 67,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -8354,7 +8562,7 @@
             "reference": "V4ChannelService#createLotteryActivityExact",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 48,
+            "line": 51,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -9151,7 +9359,7 @@
             "reference": "V4ChannelService#updateLotteryActivityExact",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 97,
+            "line": 100,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -11742,7 +11950,7 @@
             "reference": "V4ChannelService#deleteLotteryActivityExact",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 113,
+            "line": 116,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -15541,7 +15749,7 @@
             "reference": "V4ChatService#batchCheckin",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 71,
+            "line": 72,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -16992,8 +17200,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#listChannelsLottery",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 160,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17029,7 +17246,7 @@
             "reference": "LiveInteractionService#listLottery",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 141,
+            "line": 144,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17059,8 +17276,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#listQuestionSendTime",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 109,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17087,8 +17313,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#getAnswerList",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 125,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17122,7 +17357,7 @@
             "reference": "LiveInteractionService#listQuestion",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 67,
+            "line": 76,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17153,8 +17388,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#getCheckinBySessionId",
+            "cliModule": "checkin",
+            "file": "packages/cli/src/services/checkin-service.ts",
+            "line": 123,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17188,7 +17432,7 @@
             "reference": "LiveInteractionService#getCheckinList",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 85,
+            "line": 86,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17216,8 +17460,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#getQuestionList",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 144,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17244,8 +17497,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#getQuestionnaireResult",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 326,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17272,8 +17534,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#listQuestionnaire",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 289,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17308,7 +17579,7 @@
             "reference": "LiveInteractionService#getQuestionnaireDetail",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 175,
+            "line": 309,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17347,7 +17618,7 @@
             "reference": "LiveInteractionService#getCheckinByTime",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 122,
+            "line": 140,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17385,7 +17656,7 @@
             "reference": "LiveInteractionService#getWinnerDetail",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 127,
+            "line": 130,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17413,8 +17684,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#getStudentQuestionWebhook",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 62,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17449,7 +17729,7 @@
             "reference": "LiveInteractionService#sendQuestion",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 49,
+            "line": 58,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17480,8 +17760,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#sendQuestionResult",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 197,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17513,8 +17802,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#sendRewardMsg",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 42,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17541,8 +17839,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#sendFavor",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 29,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17576,7 +17883,7 @@
             "reference": "LiveInteractionService#listQuestionnaireByPage",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 154,
+            "line": 268,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17614,7 +17921,7 @@
             "reference": "LiveInteractionService#getCheckinByCheckinId",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 105,
+            "line": 106,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17646,8 +17953,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#sendTeacherAnswer",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 96,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17675,8 +17991,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#setStudentQuestionWebhook",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 73,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17703,8 +18028,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#batchCreateQuestionnaire",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 346,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17732,8 +18066,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#deleteQuestion",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 180,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17760,8 +18103,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#deleteStudentQuestionWebhook",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 85,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17791,8 +18143,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#addReceiveInfoV4",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 198,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17827,7 +18188,7 @@
             "reference": "LiveInteractionService#stopQuestion",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 83,
+            "line": 92,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -17858,8 +18219,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#downloadWinnerDetail",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 181,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17891,8 +18261,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#addEditQuestion",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 164,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17928,7 +18307,7 @@
             "reference": "LiveInteractionService#createQuestionnaire",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 104,
+            "line": 218,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]

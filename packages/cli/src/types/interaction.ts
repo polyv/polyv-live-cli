@@ -1,9 +1,8 @@
 /**
- * @fileoverview Type definitions for interactive operations and navigation
- * @author Development Team
- * @since 1.0.0
+ * @fileoverview Type definitions for cross-cutting live interaction commands
  */
 
+import { OutputFormat } from '../handlers/base.handler';
 
 /**
  * Keyboard event interface for blessed terminal interactions
@@ -254,4 +253,103 @@ export interface InteractionConfig {
     position: 'top' | 'bottom';
     height: number;
   };
+}
+
+export interface InteractionServiceConfig {
+  baseUrl: string;
+  timeout: number;
+  debug: boolean;
+}
+
+export interface InteractionFavorOptions {
+  channelId: string;
+  viewerId: string;
+  times?: number;
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface InteractionRewardOptions {
+  channelId: string;
+  nickname: string;
+  avatar: string;
+  viewerId: string;
+  donateType: string;
+  content: string;
+  goodImage?: string;
+  sessionId?: string;
+  goodNum?: string;
+  needUserImage?: 'Y' | 'N';
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface StudentQuestionWebhookGetOptions {
+  roomId?: string;
+  output?: OutputFormat;
+}
+
+export interface StudentQuestionWebhookSetOptions {
+  roomId: string;
+  callbackUrl: string;
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface StudentQuestionWebhookDeleteOptions {
+  roomId: string;
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface TeacherAnswerOptions {
+  roomId: string;
+  content: string;
+  viewerUserId: string;
+  teacherNick?: string;
+  teacherPic?: string;
+  msgType?: string;
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface SendFavorParams {
+  channelId: string;
+  viewerId: string;
+  times?: number;
+}
+
+export interface SendRewardMsgParams {
+  channelId: string;
+  nickname: string;
+  avatar: string;
+  viewerId: string;
+  donateType: string;
+  content: string;
+  goodImage?: string;
+  sessionId?: string;
+  goodNum?: string;
+  needUserImage?: 'Y' | 'N';
+}
+
+export interface GetStudentQuestionWebhookParams {
+  roomId?: string;
+}
+
+export interface SetStudentQuestionWebhookParams {
+  roomId: string;
+  callbackUrl: string;
+}
+
+export interface DeleteStudentQuestionWebhookParams {
+  roomId: string;
+}
+
+export interface SendTeacherAnswerParams {
+  roomId: string;
+  content: string;
+  viewerUserId: string;
+  teacherNick?: string;
+  teacherPic?: string;
+  msgType?: string;
 }

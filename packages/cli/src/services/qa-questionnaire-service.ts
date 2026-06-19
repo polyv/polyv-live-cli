@@ -12,9 +12,18 @@ import {
   SendQaParams,
   ListQaParams,
   StopQaParams,
+  ListQuestionSendTimeParams,
+  GetAnswerListParams,
+  GetQuestionListParams,
+  AddEditQuestionParams,
+  DeleteQuestionParams,
+  SendQuestionResultParams,
   CreateQuestionnaireParams,
   ListQuestionnairesParams,
+  ListQuestionnaireLegacyParams,
   GetQuestionnaireDetailParams,
+  GetQuestionnaireResultParams,
+  BatchCreateQuestionnaireParams,
 } from '../types/qa';
 
 /**
@@ -87,6 +96,111 @@ export class QaQuestionnaireServiceSdk {
       return result;
     } catch (error) {
       throw this.wrapError(error, 'stopQa');
+    }
+  }
+
+  /**
+   * List QA send times
+   * @param params List parameters
+   * @returns API response with send time list
+   */
+  async listQuestionSendTime(params: ListQuestionSendTimeParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.listQuestionSendTime({
+        channelId: params.channelId,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'listQuestionSendTime');
+    }
+  }
+
+  /**
+   * List QA answer records
+   * @param params List parameters
+   * @returns API response with answer records
+   */
+  async getAnswerList(params: GetAnswerListParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.getAnswerList({
+        channelId: params.channelId,
+        sessionId: params.sessionId,
+        startDate: params.startDate,
+        endDate: params.endDate,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'getAnswerList');
+    }
+  }
+
+  /**
+   * List student question records
+   * @param params List parameters
+   * @returns API response with question records
+   */
+  async getQuestionList(params: GetQuestionListParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.getQuestionList(
+        params.channelId,
+        {
+          begin: params.begin,
+          end: params.end,
+        }
+      );
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'getQuestionList');
+    }
+  }
+
+  /**
+   * Create or update a QA question
+   * @param params Question parameters
+   * @returns API response with question list
+   */
+  async addEditQuestion(params: AddEditQuestionParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.addEditQuestion(
+        this.toSdkQuestion(params)
+      );
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'addEditQuestion');
+    }
+  }
+
+  /**
+   * Delete a QA question
+   * @param params Delete parameters
+   * @returns API response
+   */
+  async deleteQuestion(params: DeleteQuestionParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.deleteQuestion({
+        channelId: params.channelId,
+        questionId: params.questionId,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'deleteQuestion');
+    }
+  }
+
+  /**
+   * Publish QA result statistics
+   * @param params Publish parameters
+   * @returns API response
+   */
+  async sendQuestionResult(params: SendQuestionResultParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.sendQuestionResult({
+        channelId: params.channelId,
+        questionId: params.questionId,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'sendQuestionResult');
     }
   }
 
@@ -166,6 +280,26 @@ export class QaQuestionnaireServiceSdk {
   }
 
   /**
+   * List questionnaires through the legacy V3 API
+   * @param params List parameters
+   * @returns API response with questionnaire list
+   */
+  async listQuestionnaire(params: ListQuestionnaireLegacyParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.listQuestionnaire({
+        channelId: params.channelId,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        page: params.page,
+        pageSize: params.pageSize,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'listQuestionnaire');
+    }
+  }
+
+  /**
    * Get questionnaire detail
    * @param params Detail parameters
    * @returns API response with questionnaire details
@@ -180,6 +314,63 @@ export class QaQuestionnaireServiceSdk {
     } catch (error) {
       throw this.wrapError(error, 'getQuestionnaireDetail');
     }
+  }
+
+  /**
+   * Get questionnaire answer records
+   * @param params Result parameters
+   * @returns API response with answer records
+   */
+  async getQuestionnaireResult(params: GetQuestionnaireResultParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.getQuestionnaireResult({
+        channelId: params.channelId,
+        questionnaireId: params.questionnaireId,
+        sessionId: params.sessionId,
+        startDate: params.startDate,
+        endDate: params.endDate,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'getQuestionnaireResult');
+    }
+  }
+
+  /**
+   * Batch-create questionnaires
+   * @param params Batch create parameters
+   * @returns API response
+   */
+  async batchCreateQuestionnaire(params: BatchCreateQuestionnaireParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.batchCreateQuestionnaire({
+        questionnaires: params.questionnaires,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'batchCreateQuestionnaire');
+    }
+  }
+
+  private toSdkQuestion(params: AddEditQuestionParams): Record<string, unknown> {
+    const question: Record<string, unknown> = {
+      channelId: params.channelId,
+      questionId: params.questionId,
+      type: params.type,
+      answer: params.answer,
+      name: params.name,
+      itemType: params.itemType,
+    };
+
+    params.options?.slice(0, 15).forEach((option, index) => {
+      question[`option${index + 1}`] = option;
+    });
+
+    params.tips?.slice(0, 5).forEach((tip, index) => {
+      question[`tips${index + 1}`] = tip;
+    });
+
+    return question;
   }
 
   // ============================================

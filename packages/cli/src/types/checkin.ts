@@ -55,6 +55,18 @@ export interface CheckinResultOptions {
 }
 
 /**
+ * Options for getting checkin details by live session ID
+ */
+export interface CheckinSessionResultOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Live session ID (required) */
+  sessionId: string;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
  * Options for listing checkin sessions
  */
 export interface CheckinSessionsOptions {
@@ -108,6 +120,14 @@ export interface ListCheckinsParams {
 export interface GetCheckinResultParams {
   channelId: string;
   checkinId: string;
+}
+
+/**
+ * Parameters for getting checkin records by session ID via SDK
+ */
+export interface GetCheckinBySessionIdParams {
+  channelId: string;
+  sessionId: string;
 }
 
 /**

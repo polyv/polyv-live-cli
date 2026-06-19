@@ -24,3 +24,6 @@ export { registerUseCommand } from './use.commands';
 
 // Platform commands
 export { registerPlatformCommands } from './platform.commands';
+
+// Cross-cutting live interaction commands
+export { registerInteractionCommands } from './interaction.commands';

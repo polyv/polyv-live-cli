@@ -11,12 +11,22 @@ import {
   QaSendOptions,
   QaListOptions,
   QaStopOptions,
+  QaSendTimesOptions,
+  QaAnswerListOptions,
+  QaQuestionListOptions,
+  QaAddEditOptions,
+  QaDeleteQuestionOptions,
+  QaSendResultOptions,
   QuestionnaireCreateOptions,
   QuestionnaireListOptions,
+  QuestionnaireLegacyListOptions,
   QuestionnaireDetailOptions,
+  QuestionnaireResultOptions,
+  QuestionnaireBatchCreateOptions,
 } from '../types/qa';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Handler for QA and questionnaire-related CLI commands
@@ -118,6 +128,112 @@ export class QaQuestionnaireHandler extends BaseHandler {
     }, 'qa.stop');
   }
 
+  async listQuestionSendTime(options: QaSendTimesOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+
+      const result = await this.service.listQuestionSendTime({
+        channelId: options.channelId,
+      });
+
+      this.displayGenericResult(result, options.output);
+    }, 'qa.send-times');
+  }
+
+  async getAnswerList(options: QaAnswerListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateDateRangeOptions(options);
+
+      const params: any = {
+        channelId: options.channelId,
+      };
+      if (options.sessionId !== undefined) params.sessionId = options.sessionId;
+      if (options.startDate !== undefined) params.startDate = options.startDate;
+      if (options.endDate !== undefined) params.endDate = options.endDate;
+
+      const result = await this.service.getAnswerList(params);
+
+      this.displayGenericResult(result, options.output);
+    }, 'qa.answers');
+  }
+
+  async getQuestionList(options: QaQuestionListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateOptionalPositiveInteger('begin', options.begin);
+      this.validateOptionalPositiveInteger('end', options.end);
+
+      const params: any = {
+        channelId: options.channelId,
+      };
+      if (options.begin !== undefined) params.begin = options.begin;
+      if (options.end !== undefined) params.end = options.end;
+
+      const result = await this.service.getQuestionList(params);
+
+      this.displayGenericResult(result, options.output);
+    }, 'qa.question-list');
+  }
+
+  async addEditQuestion(options: QaAddEditOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'questionId', 'type', 'answer', 'name', 'itemType']);
+      if (!Number.isInteger(options.itemType) || options.itemType < 0) {
+        throw new PolyVValidationError(
+          'itemType must be a non-negative integer',
+          'itemType',
+          options.itemType,
+          'validation_failed'
+        );
+      }
+
+      await confirmWrite(options.force, `Create or update QA question ${options.questionId}?`);
+      const params: any = {
+        channelId: options.channelId,
+        questionId: options.questionId,
+        type: options.type,
+        answer: options.answer,
+        name: options.name,
+        itemType: options.itemType,
+      };
+      if (options.options !== undefined) params.options = options.options;
+      if (options.tips !== undefined) params.tips = options.tips;
+
+      const result = await this.service.addEditQuestion(params);
+
+      this.displayGenericResult(result, options.output, 'QA question saved successfully');
+    }, 'qa.add-edit');
+  }
+
+  async deleteQuestion(options: QaDeleteQuestionOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'questionId']);
+
+      await confirmWrite(options.force, `Delete QA question ${options.questionId}?`);
+      const result = await this.service.deleteQuestion({
+        channelId: options.channelId,
+        questionId: options.questionId,
+      });
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'QA question deleted successfully');
+    }, 'qa.delete-question');
+  }
+
+  async sendQuestionResult(options: QaSendResultOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'questionId']);
+
+      await confirmWrite(options.force, `Publish QA result for question ${options.questionId}?`);
+      const result = await this.service.sendQuestionResult({
+        channelId: options.channelId,
+        questionId: options.questionId,
+      });
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'QA result published successfully');
+    }, 'qa.send-result');
+  }
+
   // ========================================
   // questionnaire create (AC #4)
   // ========================================
@@ -187,6 +303,26 @@ export class QaQuestionnaireHandler extends BaseHandler {
     }, 'questionnaire.list');
   }
 
+  async listQuestionnaire(options: QuestionnaireLegacyListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateOptionalPositiveInteger('page', options.page);
+      this.validateOptionalPositiveInteger('size', options.size);
+
+      const params: any = {
+        channelId: options.channelId,
+      };
+      if (options.startTime !== undefined) params.startTime = options.startTime;
+      if (options.endTime !== undefined) params.endTime = options.endTime;
+      if (options.page !== undefined) params.page = options.page;
+      if (options.size !== undefined) params.pageSize = options.size;
+
+      const result = await this.service.listQuestionnaire(params);
+
+      this.displayGenericResult(result, options.output);
+    }, 'questionnaire.legacy-list');
+  }
+
   // ========================================
   // questionnaire detail (AC #6)
   // ========================================
@@ -215,7 +351,110 @@ export class QaQuestionnaireHandler extends BaseHandler {
     }, 'questionnaire.detail');
   }
 
+  async getQuestionnaireResult(options: QuestionnaireResultOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      this.validateDateRangeOptions(options);
+
+      const params: any = {
+        channelId: options.channelId,
+      };
+      if (options.questionnaireId !== undefined) params.questionnaireId = options.questionnaireId;
+      if (options.sessionId !== undefined) params.sessionId = options.sessionId;
+      if (options.startDate !== undefined) params.startDate = options.startDate;
+      if (options.endDate !== undefined) params.endDate = options.endDate;
+
+      const result = await this.service.getQuestionnaireResult(params);
+
+      this.displayGenericResult(result, options.output);
+    }, 'questionnaire.results');
+  }
+
+  async batchCreateQuestionnaire(options: QuestionnaireBatchCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['questionnaires']);
+      const questionnaires = this.parseQuestionnaires(options.questionnaires);
+
+      await confirmWrite(options.force, `Batch create ${questionnaires.length} questionnaire(s)?`);
+      const result = await this.service.batchCreateQuestionnaire({
+        questionnaires,
+      });
+
+      this.displayGenericResult(result, options.output, 'Questionnaires created successfully');
+    }, 'questionnaire.batch-create');
+  }
+
   // ===== Private Validation Methods =====
+
+  private validateRequiredOptions(options: Record<string, any>, fields: string[]): void {
+    const missing = fields.filter((field) => {
+      const value = options[field];
+      return value === undefined || value === null || (typeof value === 'string' && value.trim() === '');
+    });
+
+    if (missing.length > 0) {
+      throw new PolyVValidationError(
+        `Missing required options: ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      throw new PolyVValidationError(
+        'output must be either "table" or "json"',
+        'output',
+        options.output,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateDateRangeOptions(options: { startDate?: string; endDate?: string }): void {
+    const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (options.startDate && !dateFormatRegex.test(options.startDate)) {
+      throw new PolyVValidationError(
+        'Invalid startDate format. Use yyyy-MM-dd',
+        'startDate',
+        options.startDate,
+        'validation_failed'
+      );
+    }
+    if (options.endDate && !dateFormatRegex.test(options.endDate)) {
+      throw new PolyVValidationError(
+        'Invalid endDate format. Use yyyy-MM-dd',
+        'endDate',
+        options.endDate,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateOptionalPositiveInteger(field: string, value: number | undefined): void {
+    if (value === undefined) return;
+    if (!Number.isInteger(value) || value < 1) {
+      throw new PolyVValidationError(
+        `${field} must be a positive integer`,
+        field,
+        value,
+        'validation_failed'
+      );
+    }
+  }
+
+  private parseQuestionnaires(value: string | Record<string, unknown>[]): Record<string, unknown>[] {
+    const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      throw new PolyVValidationError(
+        'questionnaires must be a non-empty JSON array',
+        'questionnaires',
+        value,
+        'validation_failed'
+      );
+    }
+    return parsed as Record<string, unknown>[];
+  }
 
   private validateSendOptions(options: QaSendOptions): void {
     const errors: string[] = [];
@@ -596,6 +835,13 @@ export class QaQuestionnaireHandler extends BaseHandler {
         this.displayAsTable(tableData);
       }
     }
+  }
+
+  private displayGenericResult(result: any, format?: 'table' | 'json', successMessage?: string): void {
+    if (successMessage && format !== 'json') {
+      this.displaySuccess(successMessage);
+    }
+    this.displayData(result ?? { success: true }, format || 'table');
   }
 
   // ===== Private Helper Methods =====

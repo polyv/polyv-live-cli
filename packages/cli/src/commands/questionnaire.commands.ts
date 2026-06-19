@@ -24,6 +24,22 @@ export function validateOutputFormat(value: string): 'table' | 'json' {
   return value as 'table' | 'json';
 }
 
+export function parsePositiveInteger(value: string): number {
+  const parsed = parseInt(value, 10);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error('Value must be a positive integer');
+  }
+  return parsed;
+}
+
+export function parsePositiveNumber(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    throw new Error('Value must be a positive number');
+  }
+  return parsed;
+}
+
 /**
  * Registers questionnaire-related commands with the CLI program
  * @param program Commander.js program instance
@@ -149,6 +165,48 @@ Examples:
 `);
 
   // ========================================
+  // questionnaire legacy-list
+  // ========================================
+  const legacyListCmd = questionnaireCmd
+    .command('legacy-list')
+    .description('List questionnaires through the legacy V3 API')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--start-time <timestamp>', 'start timestamp', parsePositiveNumber)
+    .option('--end-time <timestamp>', 'end timestamp', parsePositiveNumber)
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const handler = new QaQuestionnaireHandler(authConfig, serviceConfig);
+
+        await handler.listQuestionnaire({
+          channelId: options.channelId,
+          startTime: options.startTime,
+          endTime: options.endTime,
+          page: options.page,
+          size: options.size,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  legacyListCmd.addHelpText('after', `
+Examples:
+  # List questionnaires through legacy API
+  $ polyv-live-cli questionnaire legacy-list -c "3151318" --page 1 --size 20
+
+  # List by timestamp range
+  $ polyv-live-cli questionnaire legacy-list -c "3151318" --start-time 1704067200000 --end-time 1706745599000
+`);
+
+  // ========================================
   // questionnaire detail (AC #6)
   // ========================================
   const detailCmd = questionnaireCmd
@@ -182,6 +240,81 @@ Examples:
 
   # JSON output
   $ polyv-live-cli questionnaire detail -c "3151318" --questionnaire-id "fs9v59nq4u" -o json
+`);
+
+  // ========================================
+  // questionnaire results
+  // ========================================
+  const resultsCmd = questionnaireCmd
+    .command('results')
+    .description('List questionnaire answer records')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--questionnaire-id <id>', 'questionnaire ID filter')
+    .option('--session-id <id>', 'live session ID filter')
+    .option('--start-date <date>', 'start date filter (yyyy-MM-dd)')
+    .option('--end-date <date>', 'end date filter (yyyy-MM-dd)')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const handler = new QaQuestionnaireHandler(authConfig, serviceConfig);
+
+        await handler.getQuestionnaireResult({
+          channelId: options.channelId,
+          questionnaireId: options.questionnaireId,
+          sessionId: options.sessionId,
+          startDate: options.startDate,
+          endDate: options.endDate,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  resultsCmd.addHelpText('after', `
+Examples:
+  # List questionnaire answer records
+  $ polyv-live-cli questionnaire results -c "3151318" --questionnaire-id "fs9v59nq4u"
+
+  # JSON output
+  $ polyv-live-cli questionnaire results -c "3151318" --session-id "fwly13xczv" -o json
+`);
+
+  // ========================================
+  // questionnaire batch-create
+  // ========================================
+  const batchCreateCmd = questionnaireCmd
+    .command('batch-create')
+    .description('Batch create questionnaires')
+    .requiredOption('--questionnaires <json>', 'questionnaires array as JSON string')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const handler = new QaQuestionnaireHandler(authConfig, serviceConfig);
+
+        await handler.batchCreateQuestionnaire({
+          questionnaires: options.questionnaires,
+          force: options.force,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  batchCreateCmd.addHelpText('after', `
+Examples:
+  # Batch create questionnaires
+  $ polyv-live-cli questionnaire batch-create --questionnaires '[{"channelId":"3151318","questionnaireTitle":"Survey","questions":[{"name":"Gender","type":"R","options":["Male","Female"]}]}]' --force
 `);
 }
 

@@ -16,6 +16,9 @@ import {
   DeleteLotteryActivityParams,
   GetWinnerDetailParams,
   ListLotteryRecordsParams,
+  ListChannelsLotteryParams,
+  DownloadWinnerDetailParams,
+  AddReceiveInfoV4Params,
 } from '../types/lottery';
 
 /**
@@ -144,6 +147,64 @@ export class LotteryServiceSdk {
       return result;
     } catch (error) {
       throw this.wrapError(error, 'listLottery');
+    }
+  }
+
+  /**
+   * List lottery records across channels using LiveInteraction V3 API
+   * @param params List parameters
+   * @returns API response with lottery records
+   */
+  async listChannelsLottery(params: ListChannelsLotteryParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.listChannelsLottery({
+        channelIds: params.channelIds,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        sessionId: params.sessionId,
+        page: params.page,
+        limit: params.limit,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'listChannelsLottery');
+    }
+  }
+
+  /**
+   * Download winner details using LiveInteraction V3 API
+   * @param params Download parameters
+   * @returns API response with download data
+   */
+  async downloadWinnerDetail(params: DownloadWinnerDetailParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.downloadWinnerDetail({
+        channelId: params.channelId,
+        lotteryId: params.lotteryId,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'downloadWinnerDetail');
+    }
+  }
+
+  /**
+   * Add winner receive information using LiveInteraction V4 API
+   * @param params Receive information parameters
+   * @returns API response
+   */
+  async addReceiveInfoV4(params: AddReceiveInfoV4Params): Promise<any> {
+    try {
+      const result = await this.liveInteraction.addReceiveInfoV4({
+        channelId: params.channelId,
+        lotteryId: params.lotteryId,
+        winnerCode: params.winnerCode,
+        viewerId: params.viewerId,
+        receiveInfo: params.receiveInfo,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'addReceiveInfoV4');
     }
   }
 

@@ -46,6 +46,100 @@ export interface QaStopOptions {
   output?: OutputFormat;
 }
 
+/**
+ * Options for listing QA send times
+ */
+export interface QaSendTimesOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for listing QA answer records
+ */
+export interface QaAnswerListOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Session ID filter */
+  sessionId?: string;
+  /** Start date filter (yyyy-MM-dd) */
+  startDate?: string;
+  /** End date filter (yyyy-MM-dd) */
+  endDate?: string;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for listing student question records
+ */
+export interface QaQuestionListOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Begin timestamp */
+  begin?: number;
+  /** End timestamp */
+  end?: number;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for creating or updating a QA question
+ */
+export interface QaAddEditOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Question ID (required) */
+  questionId: string;
+  /** Question type */
+  type: string;
+  /** Correct answer */
+  answer: string;
+  /** Question name */
+  name: string;
+  /** Item type */
+  itemType: number;
+  /** Question options */
+  options?: string[];
+  /** Answer explanations */
+  tips?: string[];
+  /** Skip confirmation prompt */
+  force?: boolean;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for deleting a QA question
+ */
+export interface QaDeleteQuestionOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Question ID (required) */
+  questionId: string;
+  /** Skip confirmation prompt */
+  force?: boolean;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for publishing QA result statistics
+ */
+export interface QaSendResultOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Question ID (required) */
+  questionId: string;
+  /** Skip confirmation prompt */
+  force?: boolean;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
 // ============================================
 // Questionnaire (问卷) Types
 // ============================================
@@ -115,6 +209,24 @@ export interface QuestionnaireListOptions {
 }
 
 /**
+ * Options for listing questionnaires through the legacy V3 API
+ */
+export interface QuestionnaireLegacyListOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Start timestamp */
+  startTime?: number;
+  /** End timestamp */
+  endTime?: number;
+  /** Page number */
+  page?: number;
+  /** Page size */
+  size?: number;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
  * Options for getting questionnaire detail
  */
 export interface QuestionnaireDetailOptions {
@@ -122,6 +234,36 @@ export interface QuestionnaireDetailOptions {
   channelId: string;
   /** Questionnaire ID (required) */
   questionnaireId: string;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for getting questionnaire answer records
+ */
+export interface QuestionnaireResultOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Questionnaire ID filter */
+  questionnaireId?: string;
+  /** Session ID filter */
+  sessionId?: string;
+  /** Start date filter (yyyy-MM-dd) */
+  startDate?: string;
+  /** End date filter (yyyy-MM-dd) */
+  endDate?: string;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for batch-creating questionnaires
+ */
+export interface QuestionnaireBatchCreateOptions {
+  /** Questionnaires array (can be JSON string or parsed array) */
+  questionnaires: string | Record<string, unknown>[];
+  /** Skip confirmation prompt */
+  force?: boolean;
   /** Output format (table or json) */
   output?: OutputFormat;
 }
@@ -171,6 +313,62 @@ export interface StopQaParams {
 }
 
 /**
+ * Parameters for listing QA send times via SDK
+ */
+export interface ListQuestionSendTimeParams {
+  channelId: string;
+}
+
+/**
+ * Parameters for listing QA answer records via SDK
+ */
+export interface GetAnswerListParams {
+  channelId: string;
+  sessionId?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+/**
+ * Parameters for listing student question records via SDK
+ */
+export interface GetQuestionListParams {
+  channelId: string;
+  begin?: number;
+  end?: number;
+}
+
+/**
+ * Parameters for creating or updating a QA question via SDK
+ */
+export interface AddEditQuestionParams {
+  channelId: string;
+  questionId: string;
+  type: string;
+  answer: string;
+  name: string;
+  itemType: number;
+  options?: string[];
+  tips?: string[];
+}
+
+/**
+ * Parameters for deleting a QA question via SDK
+ */
+export interface DeleteQuestionParams {
+  channelId: string;
+  questionId: string;
+}
+
+/**
+ * Parameters for publishing QA result statistics via SDK
+ */
+export interface SendQuestionResultParams {
+  channelId: string;
+  questionId: string;
+}
+
+/**
  * Parameters for creating questionnaire via SDK
  */
 export interface CreateQuestionnaireParams {
@@ -197,9 +395,38 @@ export interface ListQuestionnairesParams {
 }
 
 /**
+ * Parameters for listing questionnaires through the legacy V3 API
+ */
+export interface ListQuestionnaireLegacyParams {
+  channelId: string;
+  startTime?: number;
+  endTime?: number;
+  page?: number;
+  pageSize?: number;
+}
+
+/**
  * Parameters for getting questionnaire detail via SDK
  */
 export interface GetQuestionnaireDetailParams {
   channelId: string;
   questionnaireId: string;
+}
+
+/**
+ * Parameters for getting questionnaire answer records via SDK
+ */
+export interface GetQuestionnaireResultParams {
+  channelId: string;
+  questionnaireId?: string;
+  sessionId?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+/**
+ * Parameters for batch-creating questionnaires via SDK
+ */
+export interface BatchCreateQuestionnaireParams {
+  questionnaires: Record<string, unknown>[];
 }

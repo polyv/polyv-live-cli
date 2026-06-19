@@ -25,6 +25,30 @@ export function validateOutputFormat(value: string): OutputFormat {
   return value as OutputFormat;
 }
 
+export function parsePositiveInteger(value: string): number {
+  const parsed = parseInt(value, 10);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error('Value must be a positive integer');
+  }
+  return parsed;
+}
+
+export function parsePositiveNumber(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    throw new Error('Value must be a positive number');
+  }
+  return parsed;
+}
+
+export function parseStringList(value: string): string[] {
+  const list = value.split(',').map((item) => item.trim()).filter(Boolean);
+  if (list.length === 0) {
+    throw new Error('Value must contain at least one item');
+  }
+  return list;
+}
+
 /**
  * Registers lottery-related commands with the CLI program
  * @param program Commander.js program instance
@@ -349,6 +373,121 @@ Examples:
 Output Formats:
   table       - Formatted table output (default)
   json        - JSON format for programmatic use
+`);
+
+  // ========================================
+  // lottery channel-records
+  // ========================================
+  const channelRecordsCmd = lotteryCmd
+    .command('channel-records')
+    .description('Get lottery records across channels')
+    .requiredOption('--channel-ids <ids>', 'comma-separated channel IDs', parseStringList)
+    .requiredOption('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parsePositiveNumber)
+    .requiredOption('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parsePositiveNumber)
+    .option('--session-id <id>', 'session ID filter')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--limit <number>', 'items per page', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const lotteryHandler = new LotteryHandler(authConfig, serviceConfig);
+
+        await lotteryHandler.getChannelRecords({
+          channelIds: options.channelIds,
+          startTime: options.startTime,
+          endTime: options.endTime,
+          sessionId: options.sessionId,
+          page: options.page,
+          limit: options.limit,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  channelRecordsCmd.addHelpText('after', `
+Examples:
+  # Get lottery records across channels
+  $ polyv-live-cli lottery channel-records --channel-ids "3151318,3151319" --start-time 1704067200000 --end-time 1706745599000
+`);
+
+  // ========================================
+  // lottery download-winners
+  // ========================================
+  const downloadWinnersCmd = lotteryCmd
+    .command('download-winners')
+    .description('Download lottery winner details')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--lottery-id <id>', 'lottery ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const lotteryHandler = new LotteryHandler(authConfig, serviceConfig);
+
+        await lotteryHandler.downloadWinners({
+          channelId: options.channelId,
+          lotteryId: options.lotteryId,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  downloadWinnersCmd.addHelpText('after', `
+Examples:
+  # Download winner details
+  $ polyv-live-cli lottery download-winners -c "3151318" --lottery-id "fv3mao43u6" -o json
+`);
+
+  // ========================================
+  // lottery receive-info
+  // ========================================
+  const receiveInfoCmd = lotteryCmd
+    .command('receive-info')
+    .description('Add winner receive information')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--lottery-id <id>', 'lottery ID')
+    .requiredOption('--winner-code <code>', 'winner code')
+    .requiredOption('--viewer-id <id>', 'viewer ID')
+    .option('--receive-info <json>', 'receive information JSON object or array')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const lotteryHandler = new LotteryHandler(authConfig, serviceConfig);
+
+        await lotteryHandler.addReceiveInfo({
+          channelId: options.channelId,
+          lotteryId: options.lotteryId,
+          winnerCode: options.winnerCode,
+          viewerId: options.viewerId,
+          receiveInfo: options.receiveInfo,
+          force: options.force,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  receiveInfoCmd.addHelpText('after', `
+Examples:
+  # Add winner receive information
+  $ polyv-live-cli lottery receive-info -c "3151318" --lottery-id "fv3mao43u6" --viewer-id "viewer-1" --winner-code "ABC123" --receive-info '{"name":"Nick","phone":"13800000000"}' --force
 `);
 }
 

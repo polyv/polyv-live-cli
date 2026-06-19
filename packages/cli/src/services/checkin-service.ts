@@ -12,6 +12,7 @@ import {
   StartCheckinParams,
   ListCheckinsParams,
   GetCheckinResultParams,
+  GetCheckinBySessionIdParams,
   ListSessionsParams,
 } from '../types/checkin';
 
@@ -109,6 +110,23 @@ export class CheckinServiceSdk {
       return result;
     } catch (error) {
       throw this.wrapError(error, 'getCheckinResult');
+    }
+  }
+
+  /**
+   * Get checkin records by live session ID
+   * @param params Session result parameters
+   * @returns API response with session checkin details
+   */
+  async getCheckinBySessionId(params: GetCheckinBySessionIdParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.getCheckinBySessionId({
+        channelId: params.channelId,
+        sessionId: params.sessionId,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'getCheckinBySessionId');
     }
   }
 

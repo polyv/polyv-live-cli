@@ -368,8 +368,8 @@ describe('Lottery Commands', () => {
   // ============================================================
   // All subcommands overview
   // ============================================================
-  describe('11.5-CMD-017: should register all 7 subcommands', () => {
-    it('should register create, list, get, update, delete, winners, records subcommands', () => {
+  describe('11.5-CMD-017: should register lottery subcommands', () => {
+    it('should register activity, winner, and record subcommands', () => {
       const prog = createTestProgram();
       registerLotteryCommands(prog);
 
@@ -383,8 +383,11 @@ describe('Lottery Commands', () => {
       expect(subcommandNames).toContain('delete');
       expect(subcommandNames).toContain('winners');
       expect(subcommandNames).toContain('records');
+      expect(subcommandNames).toContain('channel-records');
+      expect(subcommandNames).toContain('download-winners');
+      expect(subcommandNames).toContain('receive-info');
 
-      expect(subcommandNames).toHaveLength(7);
+      expect(subcommandNames).toHaveLength(10);
     });
   });
 

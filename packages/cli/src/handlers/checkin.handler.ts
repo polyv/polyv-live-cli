@@ -11,6 +11,7 @@ import {
   CheckinStartOptions,
   CheckinListOptions,
   CheckinResultOptions,
+  CheckinSessionResultOptions,
   CheckinSessionsOptions,
 } from '../types/checkin';
 import { AuthConfig } from '../types/auth';
@@ -140,6 +141,24 @@ export class CheckinHandler extends BaseHandler {
     }, 'checkin.result');
   }
 
+  /**
+   * Get checkin records by live session ID
+   * @param options Checkin session result options from CLI
+   * @returns Promise that resolves when result is displayed
+   */
+  async getCheckinBySessionId(options: CheckinSessionResultOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateSessionResultOptions(options);
+
+      const result = await this.checkinService.getCheckinBySessionId({
+        channelId: options.channelId,
+        sessionId: options.sessionId,
+      });
+
+      this.displaySessionResult(result, options);
+    }, 'checkin.session-result');
+  }
+
   // ========================================
   // checkin sessions (AC #4)
   // ========================================
@@ -250,6 +269,31 @@ export class CheckinHandler extends BaseHandler {
     if (errors.length > 0) {
       throw new PolyVValidationError(
         `Checkin result options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateSessionResultOptions(options: CheckinSessionResultOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (!options.sessionId || options.sessionId.trim() === '') {
+      errors.push('sessionId is required');
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Checkin session result options validation failed: ${errors.join(', ')}`,
         'options',
         options,
         'validation_failed'
@@ -413,6 +457,26 @@ export class CheckinHandler extends BaseHandler {
       console.log(`Found ${data.length} checkin sessions`);
       this.displayAsTable(tableData);
     }
+  }
+
+  private displaySessionResult(result: any, options: CheckinSessionResultOptions): void {
+    const data = result?.data ?? result;
+
+    if (options.output === 'json') {
+      this.displayData({
+        channelId: options.channelId,
+        sessionId: options.sessionId,
+        data,
+      }, 'json');
+      return;
+    }
+
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      this.displayInfo(`No checkin result found for session ${options.sessionId}`);
+      return;
+    }
+
+    this.displayData(data, 'table');
   }
 
   // ===== Private Helper Methods =====

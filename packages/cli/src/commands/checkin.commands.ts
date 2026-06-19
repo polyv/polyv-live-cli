@@ -183,6 +183,46 @@ Output Formats:
 `);
 
   // ========================================
+  // checkin session-result
+  // ========================================
+  const sessionResultCmd = checkinCmd
+    .command('session-result')
+    .description('Get checkin records by live session ID')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--session-id <id>', 'live session ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const checkinHandler = new CheckinHandler(authConfig, serviceConfig);
+
+        await checkinHandler.getCheckinBySessionId({
+          channelId: options.channelId,
+          sessionId: options.sessionId,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  sessionResultCmd.addHelpText('after', `
+Examples:
+  # Get checkin records by live session ID
+  $ polyv-live-cli checkin session-result -c "3151318" --session-id "fwly13xczv"
+
+  # JSON output
+  $ polyv-live-cli checkin session-result -c "3151318" --session-id "fwly13xczv" -o json
+
+Output Formats:
+  table       - Formatted table output (default)
+  json        - JSON format for programmatic use
+`);
+
+  // ========================================
   // checkin sessions (AC #4)
   // ========================================
   const sessionsCmd = checkinCmd

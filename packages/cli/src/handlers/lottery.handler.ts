@@ -4,7 +4,7 @@
  * @since 11.5.0
  */
 
-import { BaseHandler } from './base.handler';
+import { BaseHandler, OutputFormat } from './base.handler';
 import { LotteryServiceSdk } from '../services/lottery-service';
 import {
   LotteryServiceConfig,
@@ -15,10 +15,14 @@ import {
   LotteryDeleteOptions,
   LotteryWinnersOptions,
   LotteryRecordsOptions,
+  LotteryChannelRecordsOptions,
+  LotteryDownloadWinnersOptions,
+  LotteryReceiveInfoOptions,
   LotteryCondition,
 } from '../types/lottery';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Valid lottery condition types
@@ -290,6 +294,58 @@ export class LotteryHandler extends BaseHandler {
     }, 'lottery.records');
   }
 
+  async getChannelRecords(options: LotteryChannelRecordsOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateChannelRecordsOptions(options);
+
+      const params: any = {
+        channelIds: options.channelIds,
+        startTime: options.startTime,
+        endTime: options.endTime,
+      };
+      if (options.sessionId !== undefined) params.sessionId = options.sessionId;
+      if (options.page !== undefined) params.page = options.page;
+      if (options.limit !== undefined) params.limit = options.limit;
+
+      const result = await this.lotteryService.listChannelsLottery(params);
+
+      this.displayGenericResult(result, options.output);
+    }, 'lottery.channel-records');
+  }
+
+  async downloadWinners(options: LotteryDownloadWinnersOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateDownloadWinnersOptions(options);
+
+      const result = await this.lotteryService.downloadWinnerDetail({
+        channelId: options.channelId,
+        lotteryId: options.lotteryId,
+      });
+
+      this.displayGenericResult(result, options.output);
+    }, 'lottery.download-winners');
+  }
+
+  async addReceiveInfo(options: LotteryReceiveInfoOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateReceiveInfoOptions(options);
+
+      await confirmWrite(options.force, `Add receive info for lottery winner ${options.winnerCode}?`);
+      const params: any = {
+        channelId: options.channelId,
+        lotteryId: options.lotteryId,
+        winnerCode: options.winnerCode,
+        viewerId: options.viewerId,
+      };
+      const receiveInfo = this.parseReceiveInfo(options.receiveInfo);
+      if (receiveInfo !== undefined) params.receiveInfo = receiveInfo;
+
+      const result = await this.lotteryService.addReceiveInfoV4(params);
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Receive info saved successfully');
+    }, 'lottery.receive-info');
+  }
+
   // ===== Private Validation Methods =====
 
   private validateCreateOptions(options: LotteryCreateOptions): void {
@@ -483,6 +539,96 @@ export class LotteryHandler extends BaseHandler {
     }
   }
 
+  private validateChannelRecordsOptions(options: LotteryChannelRecordsOptions): void {
+    const errors: string[] = [];
+
+    if (!Array.isArray(options.channelIds) || options.channelIds.length === 0) {
+      errors.push('channelIds is required');
+    }
+    this.validatePositiveNumber(errors, 'startTime', options.startTime);
+    this.validatePositiveNumber(errors, 'endTime', options.endTime);
+    this.validateOptionalPositiveInteger(errors, 'page', options.page);
+    this.validateOptionalPositiveInteger(errors, 'limit', options.limit);
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Lottery channel records options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateDownloadWinnersOptions(options: LotteryDownloadWinnersOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+    if (!options.lotteryId || options.lotteryId.trim() === '') {
+      errors.push('lotteryId is required');
+    }
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Lottery download winners options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateReceiveInfoOptions(options: LotteryReceiveInfoOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+    if (!options.lotteryId || options.lotteryId.trim() === '') {
+      errors.push('lotteryId is required');
+    }
+    if (!options.winnerCode || options.winnerCode.trim() === '') {
+      errors.push('winnerCode is required');
+    }
+    if (!options.viewerId || options.viewerId.trim() === '') {
+      errors.push('viewerId is required');
+    }
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Lottery receive info options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validatePositiveNumber(errors: string[], field: string, value: number | undefined): void {
+    if (!Number.isFinite(value) || (value as number) <= 0) {
+      errors.push(`${field} must be a positive number`);
+    }
+  }
+
+  private validateOptionalPositiveInteger(errors: string[], field: string, value: number | undefined): void {
+    if (value === undefined) return;
+    if (!Number.isInteger(value) || value < 1) {
+      errors.push(`${field} must be a positive integer`);
+    }
+  }
+
   // ===== Private Display Methods =====
 
   private displayCreateResult(result: any, options: LotteryCreateOptions): void {
@@ -633,7 +779,32 @@ export class LotteryHandler extends BaseHandler {
     }
   }
 
+  private displayGenericResult(result: any, format?: OutputFormat, successMessage?: string): void {
+    if (successMessage && format !== 'json') {
+      this.displaySuccess(successMessage);
+    }
+    this.displayData(result ?? { success: true }, format || 'table');
+  }
+
   // ===== Private Helper Methods =====
+
+  private parseReceiveInfo(
+    value: LotteryReceiveInfoOptions['receiveInfo']
+  ): Record<string, unknown> | unknown[] | undefined {
+    if (value === undefined || typeof value !== 'string') {
+      return value as Record<string, unknown> | unknown[] | undefined;
+    }
+    const parsed = JSON.parse(value);
+    if (!parsed || typeof parsed !== 'object') {
+      throw new PolyVValidationError(
+        'receiveInfo must be a JSON object or array',
+        'receiveInfo',
+        value,
+        'validation_failed'
+      );
+    }
+    return parsed as Record<string, unknown> | unknown[];
+  }
 
   private truncate(str: string, maxLength: number): string {
     if (!str) return '-';
