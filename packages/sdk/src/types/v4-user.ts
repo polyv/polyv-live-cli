@@ -331,22 +331,92 @@ export interface DirectAuthViewerParams {
 export interface ExternalViewerItem {
   /** Viewer nickname */
   nickname: string;
-  /** Phone number */
-  mobile: string;
-  /** Name */
-  name?: string;
-  /** Email */
-  email?: string;
-  /** Area */
-  area?: string;
+  /** External viewer ID */
+  externalViewerId: string;
+  /** Viewer label IDs */
+  labelIds?: Array<string | number>;
+  /** Follow user info */
+  followUsers?: ViewerFollowUser;
+}
+
+/**
+ * Viewer follow user info
+ */
+export interface ViewerFollowUser {
+  /** Follow user ID */
+  userId: string;
+  /** Follow user type, defaults to wxwork */
+  type?: string;
 }
 
 /**
  * Parameters for importing external viewers
  */
-export interface ImportExternalViewerParams {
-  /** Array of viewers to import */
-  viewers: ExternalViewerItem[];
+export type ImportExternalViewerParams = ExternalViewerItem[];
+
+/**
+ * Imported external viewer item
+ */
+export interface ImportedExternalViewer {
+  /** Viewer union ID */
+  viewerUnionId: string;
+  /** Viewer nickname */
+  nickname: string;
+  /** External viewer ID */
+  externalViewerId: string;
+  /** Viewer source */
+  source?: ViewerSource;
+  /** Latest auth timestamp */
+  latestAuthTime?: number;
+  /** Created timestamp */
+  createTime?: number;
+}
+
+/**
+ * Response for importing external viewers
+ */
+export type ImportExternalViewerResponse = ImportedExternalViewer[];
+
+/**
+ * Y/N switch value
+ */
+export type UserSwitchValue = 'Y' | 'N';
+
+/**
+ * Tourist external auth link config
+ */
+export interface TouristExternalHrefConfig {
+  pcLink?: string;
+  mobileLink?: string;
+  androidLink?: string;
+  iosLink?: string;
+  otherLink?: string;
+  wxMiniprogramLink?: string;
+  wxMiniprogramOriginalId?: string;
+  wxMiniprogramAppId?: string;
+  mobileAppLink?: string;
+  harmonyLink?: string;
+  jumpWay?: string;
+}
+
+/**
+ * Parameters for updating viewer user system config
+ */
+export interface UpdateViewerUserSystemConfigParams {
+  /** Mobile login switch */
+  mobileLoginEnabled: UserSwitchValue;
+  /** WeCom login switch */
+  wxWorkLoginEnabled: UserSwitchValue;
+  /** WeChat auth validity period in days, 0-180 */
+  viewerWeixinAuthExpired?: number;
+  /** Collect mobile switch */
+  collectMobileEnabled?: UserSwitchValue;
+  /** Guest mode switch */
+  guestModeEnabled?: UserSwitchValue;
+  /** Tourist external login switch */
+  touristExternalHrefEnabled?: UserSwitchValue;
+  /** Tourist external login link config */
+  touristExternalHrefConfig?: TouristExternalHrefConfig;
 }
 
 // ============================================
@@ -358,9 +428,9 @@ export interface ImportExternalViewerParams {
  */
 export interface ViewerLabel {
   /** Label ID */
-  labelId: number;
+  id: string | number;
   /** Label name */
-  labelName: string;
+  label: string;
 }
 
 /**
@@ -375,23 +445,23 @@ export interface ListViewerLabelsResponse {
  * Parameters for creating a viewer label
  */
 export interface CreateViewerLabelParams {
-  /** Label name */
-  labelName: string;
+  /** Label names */
+  labels: string[];
 }
 
 /**
  * Response for creating a viewer label
  */
-export interface CreateViewerLabelResponse extends ViewerLabel {}
+export type CreateViewerLabelResponse = ViewerLabel[];
 
 /**
  * Parameters for updating a viewer label
  */
 export interface UpdateViewerLabelParams {
   /** Label ID */
-  labelId: number;
+  id: string | number;
   /** Label name */
-  labelName: string;
+  label?: string;
 }
 
 /**
@@ -399,7 +469,7 @@ export interface UpdateViewerLabelParams {
  */
 export interface DeleteViewerLabelParams {
   /** Label ID */
-  labelId: number;
+  id: string | number;
 }
 
 /**
@@ -632,18 +702,20 @@ export interface BatchUpdateOrderStatusParams {
  */
 export interface Label {
   /** Label ID */
-  labelId: number;
+  id: string;
   /** Label name */
-  labelName: string;
+  name: string;
 }
+
+/**
+ * Parameters for listing labels
+ */
+export interface ListLabelsParams extends UserPaginationParams {}
 
 /**
  * Response for listing labels
  */
-export interface ListLabelsResponse {
-  /** Label list */
-  contents: Label[];
-}
+export interface ListLabelsResponse extends UserPaginatedResponse<Label> {}
 
 /**
  * Parameters for creating a label
@@ -663,7 +735,7 @@ export interface CreateLabelResponse extends Label {}
  */
 export interface UpdateLabelParams {
   /** Label ID */
-  labelId: number;
+  labelId: string;
   /** Label name */
   labelName: string;
 }
@@ -673,17 +745,17 @@ export interface UpdateLabelParams {
  */
 export interface DeleteLabelParams {
   /** Label ID */
-  labelId: number;
+  labelId: string;
 }
 
 /**
  * Parameters for adding channel label refs
  */
 export interface AddChannelLabelRefsParams {
-  /** Label ID */
-  labelId: number;
+  /** Label IDs */
+  labelIds: string[];
   /** Channel IDs */
-  channelIds: string[];
+  channelIds: Array<string | number>;
 }
 
 // ============================================
@@ -1103,26 +1175,49 @@ export interface GetBillUseDetailListResponse {
 }
 
 /**
- * Parameters for viewer lottery win
+ * Parameters for listing viewer lottery wins
  */
-export interface ViewerLotteryWinParams {
-  /** Lottery ID */
-  lotteryId: number;
+export interface ViewerLotteryWinParams extends UserPaginationParams {
   /** Viewer ID */
   viewerId: string;
 }
 
 /**
- * Viewer lottery win response
+ * Viewer lottery win item
  */
-export interface ViewerLotteryWinResponse {
+export interface ViewerLotteryWinItem {
+  /** Channel ID */
+  channelId?: number;
+  /** Channel name */
+  channelName?: string;
+  /** Session ID */
+  sessionId?: string;
+  /** Receive info JSON string */
+  collectInfo?: string;
+  /** Accept type */
+  acceptType?: string;
   /** Lottery ID */
-  lotteryId: number;
-  /** Prize */
+  lotteryId?: string;
+  /** Prize name */
   prize?: string;
-  /** Status */
-  status?: string;
+  /** Whether prize was received */
+  received?: boolean;
+  /** Winner code */
+  winnerCode?: string;
+  /** Activity name */
+  activityName?: string;
+  /** Win timestamp */
+  createdTime?: number;
+  /** Last modified timestamp */
+  lastModified?: number;
+  /** Whether receive info collection is enabled */
+  receiveEnabled?: boolean;
 }
+
+/**
+ * Response for listing viewer lottery wins
+ */
+export interface ViewerLotteryWinResponse extends UserPaginatedResponse<ViewerLotteryWinItem> {}
 
 /**
  * Parameters for getting watch log detail

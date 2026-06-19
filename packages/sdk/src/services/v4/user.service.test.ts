@@ -299,14 +299,19 @@ describe('V4UserService', () => {
 
   describe('deleteViewerRecord', () => {
     it('should delete viewer record', async () => {
-      mockHttpClient.post.mockResolvedValueOnce(undefined);
+      mockHttpClient.get.mockResolvedValueOnce(undefined);
 
       await service.deleteViewerRecord({ viewerUnionId: 'viewer_001' });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
         '/live/v4/user/viewer-record/delete',
-        { viewerUnionId: 'viewer_001' }
+        { params: { viewerUnionId: 'viewer_001' } }
       );
+    });
+
+    it('should throw validation error when viewerUnionId is empty', async () => {
+      await expect(service.deleteViewerRecord({ viewerUnionId: '' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -326,18 +331,66 @@ describe('V4UserService', () => {
 
   describe('importExternalViewer', () => {
     it('should import external viewers', async () => {
-      mockHttpClient.post.mockResolvedValueOnce(undefined);
+      const mockResponse = [{ viewerUnionId: 'viewer_001', externalViewerId: 'ext_001', nickname: 'User 1' }];
+      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
-      await service.importExternalViewer({
-        viewers: [{ nickname: 'User 1', mobile: '13800138001' }],
-      });
+      const result = await service.importExternalViewer([
+        { externalViewerId: 'ext_001', nickname: 'User 1', labelIds: ['label_001'] },
+      ]);
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/viewer-record/import-external-viewer',
+        [{ externalViewerId: 'ext_001', nickname: 'User 1', labelIds: ['label_001'] }]
+      );
     });
 
     it('should throw validation error when viewers is empty', async () => {
-      await expect(service.importExternalViewer({ viewers: [] }))
+      await expect(service.importExternalViewer([]))
         .rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should throw validation error when externalViewerId is empty', async () => {
+      await expect(service.importExternalViewer([{ externalViewerId: '', nickname: 'User 1' }]))
+        .rejects.toThrow(PolyVValidationError);
+    });
+  });
+
+  describe('updateViewerUserSystemConfig', () => {
+    it('should update viewer user system config', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.updateViewerUserSystemConfig({
+        mobileLoginEnabled: 'Y',
+        wxWorkLoginEnabled: 'N',
+        viewerWeixinAuthExpired: 30,
+        collectMobileEnabled: 'Y',
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/viewer-user-system/update-config',
+        {
+          mobileLoginEnabled: 'Y',
+          wxWorkLoginEnabled: 'N',
+          viewerWeixinAuthExpired: 30,
+          collectMobileEnabled: 'Y',
+        }
+      );
+    });
+
+    it('should throw validation error when switch value is invalid', async () => {
+      await expect(service.updateViewerUserSystemConfig({
+        mobileLoginEnabled: 'YES' as any,
+        wxWorkLoginEnabled: 'N',
+      })).rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should throw validation error when viewerWeixinAuthExpired is out of range', async () => {
+      await expect(service.updateViewerUserSystemConfig({
+        mobileLoginEnabled: 'Y',
+        wxWorkLoginEnabled: 'N',
+        viewerWeixinAuthExpired: 181,
+      })).rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -358,12 +411,21 @@ describe('V4UserService', () => {
 
   describe('createViewerLabel', () => {
     it('should create viewer label', async () => {
-      const mockResponse = { labelId: 1 };
+      const mockResponse = [{ id: 1, label: 'VIP' }];
       mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.createViewerLabel({ labelName: 'VIP' });
+      const result = await service.createViewerLabel({ labels: ['VIP'] });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/viewer-label/create-batch',
+        { labels: ['VIP'] }
+      );
+    });
+
+    it('should throw validation error when labels is empty', async () => {
+      await expect(service.createViewerLabel({ labels: [] }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -371,9 +433,17 @@ describe('V4UserService', () => {
     it('should update viewer label', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateViewerLabel({ labelId: 1, labelName: 'Updated' });
+      await service.updateViewerLabel({ id: 1, label: 'Updated' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/viewer-label/update',
+        { id: 1, label: 'Updated' }
+      );
+    });
+
+    it('should throw validation error when id is missing', async () => {
+      await expect(service.updateViewerLabel({ id: undefined as any, label: 'Updated' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -381,9 +451,18 @@ describe('V4UserService', () => {
     it('should delete viewer label', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.deleteViewerLabel({ labelId: 1 });
+      await service.deleteViewerLabel({ id: 1 });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/viewer-label/delete',
+        null,
+        { params: { id: 1 } }
+      );
+    });
+
+    it('should throw validation error when id is empty', async () => {
+      await expect(service.deleteViewerLabel({ id: '' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -562,20 +641,38 @@ describe('V4UserService', () => {
       const mockResponse = { contents: [] };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.listLabels();
+      const result = await service.listLabels({ pageNumber: 1, pageSize: 10 });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/label/page',
+        { params: { pageNumber: 1, pageSize: 10 } }
+      );
+    });
+
+    it('should throw validation error when pageNumber is invalid', async () => {
+      await expect(service.listLabels({ pageNumber: 0, pageSize: 10 }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
   describe('createLabel', () => {
     it('should create label', async () => {
-      const mockResponse = { labelId: 1 };
+      const mockResponse = { id: 'label_001', name: 'Tech' };
       mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
       const result = await service.createLabel({ labelName: 'Tech' });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/label/save',
+        { labelName: 'Tech' }
+      );
+    });
+
+    it('should throw validation error when labelName is empty', async () => {
+      await expect(service.createLabel({ labelName: '' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -583,19 +680,30 @@ describe('V4UserService', () => {
     it('should update label', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateLabel({ labelId: 1, labelName: 'Updated' });
+      await service.updateLabel({ labelId: 'label_001', labelName: 'Updated' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/label/update',
+        { labelId: 'label_001', labelName: 'Updated' }
+      );
     });
   });
 
   describe('deleteLabel', () => {
     it('should delete label', async () => {
-      mockHttpClient.post.mockResolvedValueOnce(undefined);
+      mockHttpClient.get.mockResolvedValueOnce(undefined);
 
-      await service.deleteLabel({ labelId: 1 });
+      await service.deleteLabel({ labelId: 'label_001' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/label/delete',
+        { params: { labelId: 'label_001' } }
+      );
+    });
+
+    it('should throw validation error when labelId is empty', async () => {
+      await expect(service.deleteLabel({ labelId: '' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -603,13 +711,27 @@ describe('V4UserService', () => {
     it('should add channel label refs', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.addChannelLabelRefs({ labelId: 1, channelIds: ['123456', '789012'] });
+      await service.addChannelLabelRefs({
+        labelIds: ['label_001', 'label_002'],
+        channelIds: ['123456', '789012'],
+      });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/label-ref/save-batch',
+        {
+          labelIds: ['label_001', 'label_002'],
+          channelIds: ['123456', '789012'],
+        }
+      );
     });
 
     it('should throw validation error when channelIds is empty', async () => {
-      await expect(service.addChannelLabelRefs({ labelId: 1, channelIds: [] }))
+      await expect(service.addChannelLabelRefs({ labelIds: ['label_001'], channelIds: [] }))
+        .rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should throw validation error when labelIds is empty', async () => {
+      await expect(service.addChannelLabelRefs({ labelIds: [], channelIds: ['123456'] }))
         .rejects.toThrow(PolyVValidationError);
     });
   });
@@ -981,12 +1103,28 @@ describe('V4UserService', () => {
 
   describe('viewerLotteryWin', () => {
     it('should get viewer lottery win info', async () => {
-      const mockResponse = { win: true };
+      const mockResponse = { contents: [], pageNumber: 1, pageSize: 10 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.viewerLotteryWin({ lotteryId: 1, viewerId: 'viewer_001' });
+      const result = await service.viewerLotteryWin({
+        viewerId: 'viewer_001',
+        pageNumber: 1,
+        pageSize: 10,
+      });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/lottery/list-personal-win',
+        { params: { viewerId: 'viewer_001', pageNumber: 1, pageSize: 10 } }
+      );
+    });
+
+    it('should throw validation error when viewerId is empty', async () => {
+      await expect(service.viewerLotteryWin({
+        viewerId: '',
+        pageNumber: 1,
+        pageSize: 10,
+      })).rejects.toThrow(PolyVValidationError);
     });
   });
 

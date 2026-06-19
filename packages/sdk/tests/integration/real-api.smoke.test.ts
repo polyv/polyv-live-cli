@@ -93,6 +93,38 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expectPaginatedResponse(materialLabels);
   });
 
+  it('calls V4 user label page without mock responses', async () => {
+    const labels = await client.v4User.listLabels({
+      pageNumber: 1,
+      pageSize: 10,
+    });
+
+    expect(labels).toEqual(expect.objectContaining({
+      contents: expect.any(Array),
+    }));
+    expect(Number(labels.pageNumber)).toBeGreaterThanOrEqual(1);
+    expect(Number(labels.pageSize)).toBeGreaterThanOrEqual(1);
+  });
+
+  it('calls viewer lottery win list when a viewer ID is configured', async () => {
+    const viewerId = process.env.POLYV_VIEWER_ID;
+
+    if (!viewerId) {
+      console.warn('Skipping viewer lottery win assertion: POLYV_VIEWER_ID is not configured.');
+      return;
+    }
+
+    const wins = await client.v4User.viewerLotteryWin({
+      viewerId,
+      pageNumber: 1,
+      pageSize: 10,
+    });
+
+    expect(wins).toEqual(expect.objectContaining({
+      contents: expect.any(Array),
+    }));
+  });
+
   it('calls AI video-produce PPT list without mock responses', async () => {
     const videoProducePpts = await client.v4Ai.listVideoProducePpts({
       pageNumber: 1,
@@ -231,6 +263,50 @@ describeWithCredentials('SDK real API integration smoke', () => {
       } finally {
         if (createdLabelId !== undefined) {
           await client.v4Material.deleteMaterialLabel({ id: createdLabelId });
+        }
+      }
+    });
+
+    it('creates, updates, and deletes a V4 user label with cleanup', async () => {
+      const uniqueName = `sdk-it-${Date.now()}`;
+      const updatedName = `${uniqueName}-updated`;
+      let createdLabelId: string | undefined;
+
+      try {
+        const createdLabel = await client.v4User.createLabel({ labelName: uniqueName });
+        createdLabelId = createdLabel.id;
+        expect(createdLabelId).toEqual(expect.any(String));
+
+        await client.v4User.updateLabel({
+          labelId: createdLabelId,
+          labelName: updatedName,
+        });
+      } finally {
+        if (createdLabelId) {
+          await client.v4User.deleteLabel({ labelId: createdLabelId });
+        }
+      }
+    });
+
+    it('creates, updates, and deletes viewer labels with cleanup', async () => {
+      const uniqueName = `sdk-it-${Date.now()}`;
+      const updatedName = `${uniqueName}-updated`;
+      let createdLabelId: string | number | undefined;
+
+      try {
+        const createdLabels = await client.v4User.createViewerLabel({ labels: [uniqueName] });
+        createdLabelId = createdLabels[0]?.id;
+        if (createdLabelId === undefined) {
+          throw new Error('V4 viewer label creation did not return an id.');
+        }
+
+        await client.v4User.updateViewerLabel({
+          id: createdLabelId,
+          label: updatedName,
+        });
+      } finally {
+        if (createdLabelId !== undefined) {
+          await client.v4User.deleteViewerLabel({ id: createdLabelId });
         }
       }
     });

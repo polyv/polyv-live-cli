@@ -34,6 +34,8 @@ import type {
   DeleteViewerRecordParams,
   DirectAuthViewerParams,
   ImportExternalViewerParams,
+  ImportExternalViewerResponse,
+  UpdateViewerUserSystemConfigParams,
   // AC4: Viewer Label types
   ListViewerLabelsResponse,
   CreateViewerLabelParams,
@@ -62,6 +64,7 @@ import type {
   ProductOrder,
   BatchUpdateOrderStatusParams,
   // AC8: Label types
+  ListLabelsParams,
   ListLabelsResponse,
   CreateLabelParams,
   CreateLabelResponse,
@@ -486,9 +489,9 @@ export class V4UserService {
   async deleteViewerRecord(params: DeleteViewerRecordParams): Promise<void> {
     this.validateRequiredString(params.viewerUnionId, 'viewerUnionId');
 
-    await this.client.httpClient.post(
+    await this.client.httpClient.get(
       '/live/v4/user/viewer-record/delete',
-      params
+      { params }
     );
   }
 
@@ -524,20 +527,58 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.importExternalViewer({
-   *   viewers: [
-   *     { nickname: 'User 1', mobile: '13800138001' },
-   *   ],
+   * await client.v4User.importExternalViewer([
+   *   { externalViewerId: 'ext_001', nickname: 'User 1' },
+   * ]);
+   * ```
+   */
+  async importExternalViewer(params: ImportExternalViewerParams): Promise<ImportExternalViewerResponse> {
+    this.validateNonEmptyArray(params, 'params');
+    params.forEach((viewer, index) => {
+      this.validateRequiredString(viewer.externalViewerId, `params[${index}].externalViewerId`);
+      this.validateRequiredString(viewer.nickname, `params[${index}].nickname`);
+    });
+
+    const response = await this.client.httpClient.post<ImportExternalViewerResponse>(
+      '/live/v4/user/viewer-record/import-external-viewer',
+      params
+    );
+    return response as unknown as ImportExternalViewerResponse;
+  }
+
+  /**
+   * Update viewer user system config
+   *
+   * @param params - Viewer user system config
+   *
+   * @example
+   * ```typescript
+   * await client.v4User.updateViewerUserSystemConfig({
+   *   mobileLoginEnabled: 'Y',
+   *   wxWorkLoginEnabled: 'N',
    * });
    * ```
    */
-  async importExternalViewer(params: ImportExternalViewerParams): Promise<void> {
-    if (!params.viewers || params.viewers.length === 0) {
-      throw new PolyVValidationError('viewers is required and cannot be empty');
+  async updateViewerUserSystemConfig(params: UpdateViewerUserSystemConfigParams): Promise<void> {
+    this.validateYnValue(params.mobileLoginEnabled, 'mobileLoginEnabled');
+    this.validateYnValue(params.wxWorkLoginEnabled, 'wxWorkLoginEnabled');
+    this.validateOptionalYnValue(params.collectMobileEnabled, 'collectMobileEnabled');
+    this.validateOptionalYnValue(params.guestModeEnabled, 'guestModeEnabled');
+    this.validateOptionalYnValue(params.touristExternalHrefEnabled, 'touristExternalHrefEnabled');
+
+    if (
+      params.viewerWeixinAuthExpired !== undefined
+      && (params.viewerWeixinAuthExpired < 0 || params.viewerWeixinAuthExpired > 180)
+    ) {
+      throw new PolyVValidationError(
+        'viewerWeixinAuthExpired must be between 0 and 180',
+        'viewerWeixinAuthExpired',
+        params.viewerWeixinAuthExpired
+      );
     }
 
     await this.client.httpClient.post(
-      '/live/v4/user/viewer-record/import',
+      '/live/v4/user/viewer-user-system/update-config',
       params
     );
   }
@@ -573,15 +614,18 @@ export class V4UserService {
    * @example
    * ```typescript
    * const label = await client.v4User.createViewerLabel({
-   *   labelName: 'VIP',
+   *   labels: ['VIP'],
    * });
    * ```
    */
   async createViewerLabel(params: CreateViewerLabelParams): Promise<CreateViewerLabelResponse> {
-    this.validateRequiredString(params.labelName, 'labelName');
+    this.validateNonEmptyArray(params.labels, 'labels');
+    params.labels.forEach((label, index) => {
+      this.validateRequiredString(label, `labels[${index}]`);
+    });
 
     const response = await this.client.httpClient.post<CreateViewerLabelResponse>(
-      '/live/v4/user/viewer-record/label/create',
+      '/live/v4/user/viewer-label/create-batch',
       params
     );
     return response as unknown as CreateViewerLabelResponse;
@@ -595,16 +639,16 @@ export class V4UserService {
    * @example
    * ```typescript
    * await client.v4User.updateViewerLabel({
-   *   labelId: 1,
-   *   labelName: 'Updated Label',
+   *   id: 1,
+   *   label: 'Updated Label',
    * });
    * ```
    */
   async updateViewerLabel(params: UpdateViewerLabelParams): Promise<void> {
-    this.validateRequiredNumber(params.labelId, 'labelId');
+    this.validateRequiredId(params.id, 'id');
 
     await this.client.httpClient.post(
-      '/live/v4/user/viewer-record/label/update',
+      '/live/v4/user/viewer-label/update',
       params
     );
   }
@@ -616,15 +660,16 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.deleteViewerLabel({ labelId: 1 });
+   * await client.v4User.deleteViewerLabel({ id: 1 });
    * ```
    */
   async deleteViewerLabel(params: DeleteViewerLabelParams): Promise<void> {
-    this.validateRequiredNumber(params.labelId, 'labelId');
+    this.validateRequiredId(params.id, 'id');
 
     await this.client.httpClient.post(
-      '/live/v4/user/viewer-record/label/delete',
-      params
+      '/live/v4/user/viewer-label/delete',
+      null,
+      { params }
     );
   }
 
@@ -950,13 +995,18 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * const labels = await client.v4User.listLabels();
+   * const labels = await client.v4User.listLabels({
+   *   pageNumber: 1,
+   *   pageSize: 10,
+   * });
    * ```
    */
-  async listLabels(): Promise<ListLabelsResponse> {
+  async listLabels(params: ListLabelsParams): Promise<ListLabelsResponse> {
+    this.validatePaginationParams(params);
+
     const response = await this.client.httpClient.get<ListLabelsResponse>(
-      '/live/v4/user/label/list',
-      {}
+      '/live/v4/user/label/page',
+      { params }
     );
     return response as unknown as ListLabelsResponse;
   }
@@ -978,7 +1028,7 @@ export class V4UserService {
     this.validateRequiredString(params.labelName, 'labelName');
 
     const response = await this.client.httpClient.post<CreateLabelResponse>(
-      '/live/v4/user/label/create',
+      '/live/v4/user/label/save',
       params
     );
     return response as unknown as CreateLabelResponse;
@@ -998,7 +1048,8 @@ export class V4UserService {
    * ```
    */
   async updateLabel(params: UpdateLabelParams): Promise<void> {
-    this.validateRequiredNumber(params.labelId, 'labelId');
+    this.validateRequiredString(params.labelId, 'labelId');
+    this.validateRequiredString(params.labelName, 'labelName');
 
     await this.client.httpClient.post(
       '/live/v4/user/label/update',
@@ -1013,15 +1064,15 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.deleteLabel({ labelId: 1 });
+   * await client.v4User.deleteLabel({ labelId: 'label_001' });
    * ```
    */
   async deleteLabel(params: DeleteLabelParams): Promise<void> {
-    this.validateRequiredNumber(params.labelId, 'labelId');
+    this.validateRequiredString(params.labelId, 'labelId');
 
-    await this.client.httpClient.post(
+    await this.client.httpClient.get(
       '/live/v4/user/label/delete',
-      params
+      { params }
     );
   }
 
@@ -1033,19 +1084,17 @@ export class V4UserService {
    * @example
    * ```typescript
    * await client.v4User.addChannelLabelRefs({
-   *   labelId: 1,
+   *   labelIds: ['label_001'],
    *   channelIds: ['123456', '789012'],
    * });
    * ```
    */
   async addChannelLabelRefs(params: AddChannelLabelRefsParams): Promise<void> {
-    this.validateRequiredNumber(params.labelId, 'labelId');
-    if (!params.channelIds || params.channelIds.length === 0) {
-      throw new PolyVValidationError('channelIds is required and cannot be empty');
-    }
+    this.validateNonEmptyArray(params.channelIds, 'channelIds');
+    this.validateNonEmptyArray(params.labelIds, 'labelIds');
 
     await this.client.httpClient.post(
-      '/live/v4/user/label/add-channel-refs',
+      '/live/v4/channel/label-ref/save-batch',
       params
     );
   }
@@ -1717,17 +1766,18 @@ export class V4UserService {
    * @example
    * ```typescript
    * const win = await client.v4User.viewerLotteryWin({
-   *   lotteryId: 1,
    *   viewerId: 'viewer_001',
+   *   pageNumber: 1,
+   *   pageSize: 10,
    * });
    * ```
    */
   async viewerLotteryWin(params: ViewerLotteryWinParams): Promise<ViewerLotteryWinResponse> {
-    this.validateRequiredNumber(params.lotteryId, 'lotteryId');
     this.validateRequiredString(params.viewerId, 'viewerId');
+    this.validatePaginationParams(params);
 
     const response = await this.client.httpClient.get<ViewerLotteryWinResponse>(
-      '/live/v4/user/viewer-lottery-win/get',
+      '/live/v4/user/lottery/list-personal-win',
       { params }
     );
     return response as unknown as ViewerLotteryWinResponse;
@@ -1854,6 +1904,45 @@ export class V4UserService {
   private validateRequiredNumber(value: number | undefined, fieldName: string): void {
     if (value === undefined || value === null) {
       throw new PolyVValidationError(`${fieldName} is required`, fieldName, value);
+    }
+  }
+
+  /**
+   * Validate required string or number ID parameter
+   */
+  private validateRequiredId(value: string | number | undefined, fieldName: string): void {
+    if (value === undefined || value === null) {
+      throw new PolyVValidationError(`${fieldName} is required`, fieldName, value);
+    }
+    if (typeof value === 'string' && value.trim() === '') {
+      throw new PolyVValidationError(`${fieldName} is required and cannot be empty`, fieldName, value);
+    }
+  }
+
+  /**
+   * Validate non-empty array parameter
+   */
+  private validateNonEmptyArray(value: unknown[] | undefined, fieldName: string): void {
+    if (!Array.isArray(value) || value.length === 0) {
+      throw new PolyVValidationError(`${fieldName} is required and cannot be empty`, fieldName, value);
+    }
+  }
+
+  /**
+   * Validate required Y/N switch value
+   */
+  private validateYnValue(value: string | undefined, fieldName: string): void {
+    if (value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(`${fieldName} must be 'Y' or 'N'`, fieldName, value);
+    }
+  }
+
+  /**
+   * Validate optional Y/N switch value
+   */
+  private validateOptionalYnValue(value: string | undefined, fieldName: string): void {
+    if (value !== undefined) {
+      this.validateYnValue(value, fieldName);
     }
   }
 

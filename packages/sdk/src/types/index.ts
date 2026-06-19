@@ -552,8 +552,14 @@ export type {
   UpdateViewerRecordParams,
   DeleteViewerRecordParams,
   DirectAuthViewerParams,
+  ViewerFollowUser,
   ExternalViewerItem,
   ImportExternalViewerParams,
+  ImportedExternalViewer,
+  ImportExternalViewerResponse,
+  UserSwitchValue,
+  TouristExternalHrefConfig,
+  UpdateViewerUserSystemConfigParams,
 } from './v4-user.js';
 
 // V4 User types - AC4: Viewer Label
@@ -601,6 +607,7 @@ export type {
 // V4 User types - AC8: Label
 export type {
   Label,
+  ListLabelsParams,
   ListLabelsResponse,
   CreateLabelParams,
   CreateLabelResponse,
@@ -669,6 +676,7 @@ export type {
   BillUseDetailItem,
   GetBillUseDetailListResponse,
   ViewerLotteryWinParams,
+  ViewerLotteryWinItem,
   ViewerLotteryWinResponse,
   GetWatchLogDetailParams,
   WatchLogDetailResponse,

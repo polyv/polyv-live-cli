@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-18T21:23:16.780Z",
+  "generatedAt": "2026-06-19T01:09:58.192Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,9 +18,9 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 541,
-    "sdkImplemented": 368,
-    "sdkMissing": 210
+    "sdkEndpoints": 542,
+    "sdkImplemented": 379,
+    "sdkMissing": 199
   },
   "modules": [
     {
@@ -35,9 +35,9 @@
       "module": "user",
       "label": "用户与观众",
       "total": 73,
-      "implemented": 35,
-      "missing": 38,
-      "coverage": 47.9
+      "implemented": 46,
+      "missing": 27,
+      "coverage": 63
     },
     {
       "module": "account",
@@ -14300,12 +14300,12 @@
       "dedupeKey": "user:查询用户中奖记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/lottery/list-personal-win",
+        "reference": "V4UserService#viewerLotteryWin",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14410,12 +14410,12 @@
       "dedupeKey": "user:创建标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/label/save",
+        "reference": "V4UserService#createLabel",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14439,12 +14439,12 @@
       "dedupeKey": "user:创建标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/viewer-label/create-batch",
+        "reference": "V4UserService#createViewerLabel",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14560,12 +14560,12 @@
       "dedupeKey": "user:分页查询标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/label/page",
+        "reference": "V4UserService#listLabels",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14677,12 +14677,12 @@
       "dedupeKey": "user:更新标签信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/viewer-label/update",
+        "reference": "V4UserService#updateViewerLabel",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14992,12 +14992,12 @@
       "dedupeKey": "user:频道批量添加标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/label-ref/save-batch",
+        "reference": "V4UserService#addChannelLabelRefs",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15021,9 +15021,9 @@
       "dedupeKey": "user:删除标签",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
-        "methodMismatch": true,
-        "sdkMethod": "POST",
+        "implemented": true,
+        "methodMismatch": false,
+        "sdkMethod": "GET",
         "sdkPath": "/live/v4/user/label/delete",
         "reference": "V4UserService#deleteLabel",
         "file": "packages/sdk/src/services/v4/user.service.ts"
@@ -15050,12 +15050,12 @@
       "dedupeKey": "user:删除标签信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/viewer-label/delete",
+        "reference": "V4UserService#deleteViewerLabel",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15079,9 +15079,9 @@
       "dedupeKey": "user:删除观众信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
-        "methodMismatch": true,
-        "sdkMethod": "POST",
+        "implemented": true,
+        "methodMismatch": false,
+        "sdkMethod": "GET",
         "sdkPath": "/live/v4/user/viewer-record/delete",
         "reference": "V4UserService#deleteViewerRecord",
         "file": "packages/sdk/src/services/v4/user.service.ts"
@@ -15314,12 +15314,12 @@
       "dedupeKey": "user:通过外部id导入用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/viewer-record/import-external-viewer",
+        "reference": "V4UserService#importExternalViewer",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15642,12 +15642,12 @@
       "dedupeKey": "user:修改配置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/viewer-user-system/update-config",
+        "reference": "V4UserService#updateViewerUserSystemConfig",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -21176,7 +21176,7 @@
       "reference": "V4UserService#updateViewerRecord"
     },
     {
-      "method": "POST",
+      "method": "GET",
       "path": "/live/v4/user/viewer-record/delete",
       "normalizedPath": "/live/v4/user/viewer-record/delete",
       "file": "packages/sdk/src/services/v4/user.service.ts",
@@ -21195,12 +21195,21 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/viewer-record/import",
-      "normalizedPath": "/live/v4/user/viewer-record/import",
+      "path": "/live/v4/user/viewer-record/import-external-viewer",
+      "normalizedPath": "/live/v4/user/viewer-record/import-external-viewer",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "importExternalViewer",
       "reference": "V4UserService#importExternalViewer"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/user/viewer-user-system/update-config",
+      "normalizedPath": "/live/v4/user/viewer-user-system/update-config",
+      "file": "packages/sdk/src/services/v4/user.service.ts",
+      "className": "V4UserService",
+      "methodName": "updateViewerUserSystemConfig",
+      "reference": "V4UserService#updateViewerUserSystemConfig"
     },
     {
       "method": "GET",
@@ -21213,8 +21222,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/viewer-record/label/create",
-      "normalizedPath": "/live/v4/user/viewer-record/label/create",
+      "path": "/live/v4/user/viewer-label/create-batch",
+      "normalizedPath": "/live/v4/user/viewer-label/create-batch",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "createViewerLabel",
@@ -21222,8 +21231,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/viewer-record/label/update",
-      "normalizedPath": "/live/v4/user/viewer-record/label/update",
+      "path": "/live/v4/user/viewer-label/update",
+      "normalizedPath": "/live/v4/user/viewer-label/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updateViewerLabel",
@@ -21231,8 +21240,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/viewer-record/label/delete",
-      "normalizedPath": "/live/v4/user/viewer-record/label/delete",
+      "path": "/live/v4/user/viewer-label/delete",
+      "normalizedPath": "/live/v4/user/viewer-label/delete",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "deleteViewerLabel",
@@ -21357,8 +21366,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/label/list",
-      "normalizedPath": "/live/v4/user/label/list",
+      "path": "/live/v4/user/label/page",
+      "normalizedPath": "/live/v4/user/label/page",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "listLabels",
@@ -21366,8 +21375,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/label/create",
-      "normalizedPath": "/live/v4/user/label/create",
+      "path": "/live/v4/user/label/save",
+      "normalizedPath": "/live/v4/user/label/save",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "createLabel",
@@ -21383,7 +21392,7 @@
       "reference": "V4UserService#updateLabel"
     },
     {
-      "method": "POST",
+      "method": "GET",
       "path": "/live/v4/user/label/delete",
       "normalizedPath": "/live/v4/user/label/delete",
       "file": "packages/sdk/src/services/v4/user.service.ts",
@@ -21393,8 +21402,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/label/add-channel-refs",
-      "normalizedPath": "/live/v4/user/label/add-channel-refs",
+      "path": "/live/v4/channel/label-ref/save-batch",
+      "normalizedPath": "/live/v4/channel/label-ref/save-batch",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "addChannelLabelRefs",
@@ -21690,8 +21699,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/viewer-lottery-win/get",
-      "normalizedPath": "/live/v4/user/viewer-lottery-win/get",
+      "path": "/live/v4/user/lottery/list-personal-win",
+      "normalizedPath": "/live/v4/user/lottery/list-personal-win",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "viewerLotteryWin",

@@ -1,6 +1,6 @@
 # PolyV Live API Inventory
 
-生成时间：2026-06-18T21:23:16.788Z
+生成时间：2026-06-19T01:09:58.206Z
 
 ## 来源与规则
 
@@ -20,17 +20,17 @@
 | 可解析 API 数 | 590 |
 | 去重后最新 API 数 | 578 |
 | 被旧版去重的 API 数 | 12 |
-| SDK 源码 API 路径数 | 541 |
-| SDK 已实现最新 API 数 | 368 |
-| SDK 未实现最新 API 数 | 210 |
-| SDK 覆盖率 | 63.7% |
+| SDK 源码 API 路径数 | 542 |
+| SDK 已实现最新 API 数 | 379 |
+| SDK 未实现最新 API 数 | 199 |
+| SDK 覆盖率 | 65.6% |
 
 ## 模块覆盖率
 
 | 模块 | 名称 | 最新 API | SDK 已实现 | 待补齐 | 覆盖率 |
 | --- | --- | ---: | ---: | ---: | ---: |
 | `channel` | 频道 | 283 | 111 | 172 | 39.2% |
-| `user` | 用户与观众 | 73 | 35 | 38 | 47.9% |
+| `user` | 用户与观众 | 73 | 46 | 27 | 63% |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% |
 | `chat` | 聊天 | 45 | 45 | 0 | 100% |
@@ -50,7 +50,7 @@
 
 ## SDK 补齐建议
 
-- 优先补齐缺口最大的模块：`channel` 172 个、`user` 38 个。
+- 优先补齐缺口最大的模块：`channel` 172 个、`user` 27 个。
 - 每个缺口应以本清单的 Method、Path、请求形态和业务必填参数为入口，再回到源文档核对完整请求/响应表，避免只按路径补空方法。
 - v4/v5 接口大多需要 JSON body；v2/v3 历史接口多为 query/form 风格。新增 SDK 方法时应把签名公共参数留给 `PolyVClient` 拦截器处理。
 - 对列表、导出、批量创建、异步任务类接口，建议先抽通用分页/任务状态类型，再补服务方法，减少后续 CLI 命令重复定义。
@@ -613,20 +613,20 @@
 | 查询商品订单详情<br><sub>1、查询商品订单详情</sub> | GET | `/live/v4/user/product/order/get` | `../document-center/docs/live/api/v4/user/product/order/get.md` | query | orderNo | yes: V4UserService#getProductOrder (packages/sdk/src/services/v4/user.service.ts) | - |
 | 查询页脚设置<br><sub>1、查询全局页脚设置</sub> | GET | `/live/v4/user/global-setting/footer/get` | `../document-center/docs/live/api/v4/user/get_global_footer.md` | query | - | no | - |
 | 查询用户账单使用明细数据<br><sub>1、查询用户账单使用明细数据</sub> | GET | `/live/v4/channel/use-detail/list` | `../document-center/docs/live/api/v4/user/bill/use_detail_list.md` | query | endDate, itemCategory, startDate | no | - |
-| 查询用户中奖记录<br><sub>1、查询用户中奖记录</sub> | GET | `/live/v4/user/lottery/list-personal-win` | `../document-center/docs/live/api/v4/user/viewer_lottery_win.md` | query | pageNumber, pageSize, viewerId | no | - |
+| 查询用户中奖记录<br><sub>1、查询用户中奖记录</sub> | GET | `/live/v4/user/lottery/list-personal-win` | `../document-center/docs/live/api/v4/user/viewer_lottery_win.md` | query | pageNumber, pageSize, viewerId | yes: V4UserService#viewerLotteryWin (packages/sdk/src/services/v4/user.service.ts) | - |
 | 查询用户子账号列表<br><sub>1、查询用户子账号列表</sub> | GET | `/live/v4/user/children/list` | `../document-center/docs/live/api/v4/user/children/list.md` | query | - | yes: V4UserService#listChildAccounts (packages/sdk/src/services/v4/user.service.ts) | - |
 | 查询账号时间范围连麦使用量<br><sub>1、查询账号时间范围连麦使用量</sub> | GET | `/live/v4/statistics/mic/history/get` | `../document-center/docs/live/api/v4/user/mic_duration.md` | query | - | no | - |
 | 查询组织架构列表<br><sub>1、组织架构列表</sub> | GET | `/live/v4/user/organization/list` | `../document-center/docs/live/api/v4/user/organization/list.md` | query | - | yes: V4UserService#listOrganizations (packages/sdk/src/services/v4/user.service.ts) | - |
-| 创建标签<br><sub>1、创建标签</sub> | POST | `/live/v4/user/label/save` | `../document-center/docs/live/api/v4/user/label/create_label.md` | json-body | labelName | no | - |
-| 创建标签<br><sub>1、创建标签</sub> | POST | `/live/v4/user/viewer-label/create-batch` | `../document-center/docs/live/api/v4/user/viewerrecord/label/create.md` | json-body | labels | no | - |
+| 创建标签<br><sub>1、创建标签</sub> | POST | `/live/v4/user/label/save` | `../document-center/docs/live/api/v4/user/label/create_label.md` | json-body | labelName | yes: V4UserService#createLabel (packages/sdk/src/services/v4/user.service.ts) | - |
+| 创建标签<br><sub>1、创建标签</sub> | POST | `/live/v4/user/viewer-label/create-batch` | `../document-center/docs/live/api/v4/user/viewerrecord/label/create.md` | json-body | labels | yes: V4UserService#createViewerLabel (packages/sdk/src/services/v4/user.service.ts) | - |
 | 创建商品<br><sub>1、创建标签</sub> | POST | `/live/v4/user/product/save` | `../document-center/docs/live/api/v4/user/product/product_add.md` | json-body | link, linkType, name | no | - |
 | 创建商品标签<br><sub>1、创建商品标签</sub> | POST | `/live/v4/user/product/tag/create` | `../document-center/docs/live/api/v4/user/product/product_tag_create.md` | json-body | name | yes: V4UserService#createProductTag (packages/sdk/src/services/v4/user.service.ts) | - |
 | 发送阿里云短信通知<br><sub>1、根据用户配置的模板发送短信通知</sub> | POST | `/live/v4/user/sms/send` | `../document-center/docs/live/api/v4/user/sms_send.md` | json-body | phoneNumbers, templateParamNames, templateParamValues | yes: V4UserService#sendSms (packages/sdk/src/services/v4/user.service.ts) | - |
-| 分页查询标签<br><sub>1、分页查询标签</sub> | GET | `/live/v4/user/label/page` | `../document-center/docs/live/api/v4/user/label/list_label.md` | query | pageNumber, pageSize | no | - |
+| 分页查询标签<br><sub>1、分页查询标签</sub> | GET | `/live/v4/user/label/page` | `../document-center/docs/live/api/v4/user/label/list_label.md` | query | pageNumber, pageSize | yes: V4UserService#listLabels (packages/sdk/src/services/v4/user.service.ts) | - |
 | 分页查询商品<br><sub>1、分页查询标签</sub> | GET | `/live/v4/user/product/list` | `../document-center/docs/live/api/v4/user/product/product_list.md` | query | pageNumber, pageSize | yes: V4UserService#listProducts (packages/sdk/src/services/v4/user.service.ts) | - |
 | 分页查询商品标签<br><sub>1、分页查询商品标签</sub> | GET | `/live/v4/user/product/tag/list` | `../document-center/docs/live/api/v4/user/product/product_tag_list.md` | query | channelId, pageNumber, pageSize | yes: V4UserService#listProductTags (packages/sdk/src/services/v4/user.service.ts) | - |
 | 分页查询自定义字段<br><sub>1、分页查询自定义字段</sub> | GET | `/live/v4/user/custom-field/list` | `../document-center/docs/live/api/v4/user/customfield/list_custom_field.md` | query | - | no | - |
-| 更新标签信息<br><sub>1、更新标签信息</sub> | POST | `/live/v4/user/viewer-label/update` | `../document-center/docs/live/api/v4/user/viewerrecord/label/update.md` | json-body | id | no | - |
+| 更新标签信息<br><sub>1、更新标签信息</sub> | POST | `/live/v4/user/viewer-label/update` | `../document-center/docs/live/api/v4/user/viewerrecord/label/update.md` | json-body | id | yes: V4UserService#updateViewerLabel (packages/sdk/src/services/v4/user.service.ts) | - |
 | 更新商品标签<br><sub>1、更新商品标签</sub> | POST | `/live/v4/user/product/tag/update` | `../document-center/docs/live/api/v4/user/product/product_tag_update.md` | json-body | id, name | yes: V4UserService#updateProductTag (packages/sdk/src/services/v4/user.service.ts) | - |
 | 更新用户身份信息<br><sub>1、更新用户身份信息</sub> | POST | `/live/v4/user/viewer-record/update` | `../document-center/docs/live/api/v4/user/viewerrecord/update.md` | json-body | area, device, email, latestAccessIp, name, viewerUnionId | yes: V4UserService#updateViewerRecord (packages/sdk/src/services/v4/user.service.ts) | - |
 | 观众自定义信息同步<br><sub>1、观众自定义信息同步</sub> | POST | `/live/v4/user/custom-field/viewer-value/save` | `../document-center/docs/live/api/v4/user/customfield/add_custom_field_viewer_value.md` | json-body | - | no | - |
@@ -637,10 +637,10 @@
 | 获取邀请员列表<br><sub>1、支持按特定的条件去过滤、获取账号下的邀请员列表</sub> | GET | `/live/v4/user/invite-sales/list` | `../document-center/docs/live/api/v4/user/invitesales/list.md` | query | - | no | - |
 | 获取账号MR并发详情信息<br><sub>1、获取账号MR并发详情信息</sub> | GET | `/live/v4/user/mr/concurrency-detail/get` | `../document-center/docs/live/api/v4/user/mr_concurrency_detail.md` | query | - | no | - |
 | 批量更新订单状态<br><sub>1、量更新订单状态</sub> | POST | `/live/v4/user/product/order/update-batch-status` | `../document-center/docs/live/api/v4/user/product/order/batch_update_status.md` | json-body | orderNos, status | no | - |
-| 频道批量添加标签<br><sub>1、频道批量添加标签</sub> | POST | `/live/v4/channel/label-ref/save-batch` | `../document-center/docs/live/api/v4/user/label/add_channel_label_refs.md` | json-body | channelIds, labelIds | no | - |
-| 删除标签<br><sub>1、删除标签</sub> | GET | `/live/v4/user/label/delete` | `../document-center/docs/live/api/v4/user/label/delete_label.md` | query | labelId | no: path exists as POST in V4UserService#deleteLabel | - |
-| 删除标签信息<br><sub>1、删除标签信息</sub> | POST | `/live/v4/user/viewer-label/delete` | `../document-center/docs/live/api/v4/user/viewerrecord/label/delete.md` | query/form | id | no | - |
-| 删除观众信息<br><sub>1、删除观众信息</sub> | GET | `/live/v4/user/viewer-record/delete` | `../document-center/docs/live/api/v4/user/viewerrecord/delete.md` | query | viewerUnionId | no: path exists as POST in V4UserService#deleteViewerRecord | - |
+| 频道批量添加标签<br><sub>1、频道批量添加标签</sub> | POST | `/live/v4/channel/label-ref/save-batch` | `../document-center/docs/live/api/v4/user/label/add_channel_label_refs.md` | json-body | channelIds, labelIds | yes: V4UserService#addChannelLabelRefs (packages/sdk/src/services/v4/user.service.ts) | - |
+| 删除标签<br><sub>1、删除标签</sub> | GET | `/live/v4/user/label/delete` | `../document-center/docs/live/api/v4/user/label/delete_label.md` | query | labelId | yes: V4UserService#deleteLabel (packages/sdk/src/services/v4/user.service.ts) | - |
+| 删除标签信息<br><sub>1、删除标签信息</sub> | POST | `/live/v4/user/viewer-label/delete` | `../document-center/docs/live/api/v4/user/viewerrecord/label/delete.md` | query/form | id | yes: V4UserService#deleteViewerLabel (packages/sdk/src/services/v4/user.service.ts) | - |
+| 删除观众信息<br><sub>1、删除观众信息</sub> | GET | `/live/v4/user/viewer-record/delete` | `../document-center/docs/live/api/v4/user/viewerrecord/delete.md` | query | viewerUnionId | yes: V4UserService#deleteViewerRecord (packages/sdk/src/services/v4/user.service.ts) | - |
 | 删除商品<br><sub>1、删除标签</sub> | POST | `/live/v4/user/product/delete` | `../document-center/docs/live/api/v4/user/product/product_del.md` | query/form | productId | yes: V4UserService#deleteProduct (packages/sdk/src/services/v4/user.service.ts) | - |
 | 删除商品标签<br><sub>1、删除商品标签</sub> | POST | `/live/v4/user/product/tag/delete` | `../document-center/docs/live/api/v4/user/product/product_tag_delete.md` | json-body | id | yes: V4UserService#deleteProductTag (packages/sdk/src/services/v4/user.service.ts) | - |
 | 删除用户标签关联<br><sub>1、删除用户标签关联</sub> | POST | `/live/v4/user/viewer-label/remove-viewers-label` | `../document-center/docs/live/api/v4/user/viewerrecord/label/del_viewer_label.md` | json-body | labelIds, viewerUnionIds | yes: V4UserService#deleteViewerLabelRef (packages/sdk/src/services/v4/user.service.ts) | - |
@@ -648,7 +648,7 @@
 | 删除组织<br><sub>1、通过组织ID删除组织</sub> | POST | `/live/v4/user/organization/delete` | `../document-center/docs/live/api/v4/user/organization/delete.md` | query/form | organizationId | yes: V4UserService#deleteOrganization (packages/sdk/src/services/v4/user.service.ts) | - |
 | 添加邀请员<br><sub>1、将账号下的某些用户，添加、设置为邀请员</sub> | POST | `/live/v4/user/invite-sales/add` | `../document-center/docs/live/api/v4/user/invitesales/add.md` | json-body | viewerUnionIds | no | - |
 | 通过手机号导入用户<br><sub>1、通过手机号导入用户</sub> | POST | `/live/v4/user/viewer-record/create` | `../document-center/docs/live/api/v4/user/viewerrecord/create.md` | json-body | mobile, nickname | yes: V4UserService#createViewerRecord (packages/sdk/src/services/v4/user.service.ts) | - |
-| 通过外部ID导入用户<br><sub>1、通过外部ID导入用户</sub> | POST | `/live/v4/user/viewer-record/import-external-viewer` | `../document-center/docs/live/api/v4/user/viewerrecord/import_external_viewer.md` | json-body | externalViewerId, nickname | no | - |
+| 通过外部ID导入用户<br><sub>1、通过外部ID导入用户</sub> | POST | `/live/v4/user/viewer-record/import-external-viewer` | `../document-center/docs/live/api/v4/user/viewerrecord/import_external_viewer.md` | json-body | externalViewerId, nickname | yes: V4UserService#importExternalViewer (packages/sdk/src/services/v4/user.service.ts) | - |
 | 新增子账号<br><sub>1、新增子账号</sub> | POST | `/live/v4/user/children/create` | `../document-center/docs/live/api/v4/user/children/create.md` | json-body | childEmail, childName, password, roleId | yes: V4UserService#createChildAccount (packages/sdk/src/services/v4/user.service.ts) | - |
 | 新增自定义字段<br><sub>1、添加自定义字段</sub> | POST | `/live/v4/user/custom-field/save` | `../document-center/docs/live/api/v4/user/customfield/add_custom_field.md` | json-body | customFieldId, customFieldName, customFieldType | no | - |
 | 新增组织<br><sub>1、组织架构新增子节点（排在第一位）</sub> | POST | `/live/v4/user/organization/create` | `../document-center/docs/live/api/v4/user/organization/create.md` | json-body | name, parentId | yes: V4UserService#createOrganization (packages/sdk/src/services/v4/user.service.ts) | - |
@@ -659,7 +659,7 @@
 | 修改默认模板内容保护（防录屏）设置<br><sub>1、更新内容保护默认模板设置</sub> | POST | `/live/v4/user/template/marquee/update` | `../document-center/docs/live/api/v4/user/template/update_marquee.md` | json-body | enable | yes: V4UserService#updateMarqueeTemplate (packages/sdk/src/services/v4/user.service.ts) | - |
 | 修改默认模板视频审核<br><sub>1、修改视频审核默认模板设置</sub> | POST | `/live/v4/user/template/video-moderation/update` | `../document-center/docs/live/api/v4/user/template/update_video_moderation_setting.md` | json-body | illegalNotify, imageFrequency, moderationEnabled, moderationStrategy | yes: V4UserService#updateVideoModerationSetting (packages/sdk/src/services/v4/user.service.ts) | - |
 | 修改默认模板音频审核<br><sub>1、修改音频审核默认模板设置</sub> | POST | `/live/v4/user/template/audio-moderation/update` | `../document-center/docs/live/api/v4/user/template/update_audio_moderation_setting.md` | json-body | badwordEnabled, illegalNotify, moderationEnabled, moderationStrategy | yes: V4UserService#updateAudioModerationSetting (packages/sdk/src/services/v4/user.service.ts) | - |
-| 修改配置信息<br><sub>1、修改配置信息</sub> | POST | `/live/v4/user/viewer-user-system/update-config` | `../document-center/docs/live/api/v4/user/viewerrecord/update_config.md` | json-body | mobileLoginEnabled, wxWorkLoginEnabled | no | - |
+| 修改配置信息<br><sub>1、修改配置信息</sub> | POST | `/live/v4/user/viewer-user-system/update-config` | `../document-center/docs/live/api/v4/user/viewerrecord/update_config.md` | json-body | mobileLoginEnabled, wxWorkLoginEnabled | yes: V4UserService#updateViewerUserSystemConfig (packages/sdk/src/services/v4/user.service.ts) | - |
 | 修改全局回调设置<br><sub>1、修改全局回调设置</sub> | POST | `/live/v4/user/global-setting/callback/update` | `../document-center/docs/live/api/v4/user/update_callback.md` | json-body | - | no | - |
 | 修改全局频道设置<br><sub>1、修改全局频道设置</sub> | POST | `/live/v4/user/global-setting/switch/update` | `../document-center/docs/live/api/v4/user/update_global_switch.md` | json-body | - | yes: V4UserService#updateGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | - |
 | 修改邀请员信息<br><sub>1、修改账号下的某些邀请员的信息</sub> | POST | `/live/v4/user/invite-sales/update` | `../document-center/docs/live/api/v4/user/invitesales/update.md` | json-body | organizationId, viewerUnionIds | no | - |
