@@ -1427,7 +1427,7 @@ export class WebService {
    * });
    * ```
    */
-  async downloadWhiteList(params: DownloadWhiteListParams): Promise<unknown> {
+  async downloadWhiteList(params: DownloadWhiteListParams): Promise<ArrayBuffer> {
     // Validate rank
     if (params.rank !== 1 && params.rank !== 2) {
       throw new PolyVValidationError('rank must be 1 or 2');
@@ -1438,11 +1438,11 @@ export class WebService {
       apiParams.channelId = params.channelId;
     }
 
-    const response = await this.client.httpClient.get<unknown>(
+    const response = await this.client.httpClient.get<ArrayBuffer>(
       '/live/v3/channel/auth/download-white-list',
       { params: apiParams, responseType: 'arraybuffer' }
     );
-    return response as unknown as unknown;
+    return response as unknown as ArrayBuffer;
   }
 
   /**
@@ -1666,14 +1666,14 @@ export class WebService {
    * const result = await client.web.downloadRecordInfo({ channelId: '123456' });
    * ```
    */
-  async downloadRecordInfo(params: DownloadRecordInfoParams): Promise<unknown> {
+  async downloadRecordInfo(params: DownloadRecordInfoParams): Promise<ArrayBuffer> {
     this.validateChannelId(params.channelId);
 
-    const response = await this.client.httpClient.get<unknown>(
+    const response = await this.client.httpClient.get<ArrayBuffer>(
       '/live/v3/channel/auth/download-record-info',
       { params: { channelId: params.channelId }, responseType: 'arraybuffer' }
     );
-    return response as unknown as unknown;
+    return response as unknown as ArrayBuffer;
   }
 
   /**

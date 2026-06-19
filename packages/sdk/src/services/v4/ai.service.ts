@@ -30,6 +30,7 @@ import type {
   UploadVideoProducePptParams,
   UploadVideoProducePptResponse,
   TtsVoice,
+  ListTtsVoicesParams,
 } from '../../types/v4-ai.js';
 import { PolyVValidationError } from '../../errors/polyv-validation-error.js';
 
@@ -374,18 +375,34 @@ export class V4AiService {
   /**
    * Query available TTS voices
    *
+   * @param params - Optional pagination parameters. When omitted the server
+   * returns its default page.
    * @returns TTS voice list
    *
    * @example
    * ```typescript
    * const voices = await client.v4Ai.listTtsVoices();
    * console.log(voices);
+   *
+   * // explicit pagination
+   * const page = await client.v4Ai.listTtsVoices({ pageNumber: 1, pageSize: 20 });
    * ```
    */
-  async listTtsVoices(): Promise<TtsVoice[]> {
-    const response = await this.client.httpClient.get<TtsVoice[]>(
-      '/live/v4/ai/video-produce/tts-voice/list'
-    );
+  async listTtsVoices(params?: ListTtsVoicesParams): Promise<TtsVoice[]> {
+    if (params?.pageNumber !== undefined && params.pageNumber < 1) {
+      throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', params.pageNumber);
+    }
+    if (
+      params?.pageSize !== undefined &&
+      (params.pageSize < 1 || params.pageSize > 1000)
+    ) {
+      throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
+    }
+
+    const url = '/live/v4/ai/video-produce/tts-voice/list';
+    const response = params
+      ? await this.client.httpClient.get<TtsVoice[]>(url, { params })
+      : await this.client.httpClient.get<TtsVoice[]>(url);
     return response as unknown as TtsVoice[];
   }
 

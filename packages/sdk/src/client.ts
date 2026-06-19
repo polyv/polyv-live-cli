@@ -295,6 +295,16 @@ export class PolyVClient {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client.interceptors.response.use(
       (response: any): any => {
+        // Binary downloads (e.g. .xls file streams requested with
+        // responseType: 'arraybuffer') are not wrapped in the { code, data }
+        // envelope, so return the raw buffer untouched.
+        if (
+          response.config?.responseType === 'arraybuffer' ||
+          response.data instanceof ArrayBuffer
+        ) {
+          return response.data;
+        }
+
         // Some historical endpoints return a raw text body instead of the standard
         // { code, data } envelope. /live_status/query returns exactly "live" or "end".
         if (typeof response.data === 'string') {

@@ -400,5 +400,26 @@ describe('V4AiService', () => {
         '/live/v4/ai/video-produce/tts-voice/list'
       );
     });
+
+    it('[P1] should forward pagination params when provided', async () => {
+      mockHttpClient.get.mockResolvedValueOnce([]);
+
+      await service.listTtsVoices({ pageNumber: 1, pageSize: 20 });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/ai/video-produce/tts-voice/list',
+        { params: { pageNumber: 1, pageSize: 20 } }
+      );
+    });
+
+    it('[P1] should reject invalid pagination', async () => {
+      await expect(service.listTtsVoices({ pageNumber: 0, pageSize: 10 })).rejects.toThrow(
+        'pageNumber must be >= 1'
+      );
+      await expect(service.listTtsVoices({ pageNumber: 1, pageSize: 0 })).rejects.toThrow(
+        'pageSize must be between 1 and 1000'
+      );
+      expect(mockHttpClient.get).not.toHaveBeenCalled();
+    });
   });
 });

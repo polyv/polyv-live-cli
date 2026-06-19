@@ -2515,7 +2515,7 @@ export class V4ChannelService {
   /**
    * Batch update playback subtitles for one channel.
    */
-  async updateChannelSubtitleBatch(params: UpdateChannelSubtitleBatchParams): Promise<unknown> {
+  async updateChannelSubtitleBatch(params: UpdateChannelSubtitleBatchParams): Promise<void> {
     this.validateChannelId(params.channelId);
     if (!Array.isArray(params.body) || params.body.length === 0) {
       throw new PolyVValidationError('body is required and cannot be empty', 'body');
@@ -2526,12 +2526,11 @@ export class V4ChannelService {
       }
     });
 
-    const response = await this.client.httpClient.post<unknown>(
+    await this.client.httpClient.post(
       '/live/v4/channel/subtitle/update-batch',
       params.body,
       { params: { channelId: params.channelId } }
     );
-    return response as unknown;
   }
 
   /**
@@ -2552,18 +2551,17 @@ export class V4ChannelService {
   /**
    * Update role-viewer settings.
    */
-  async updateAccountViewerConfig(params: UpdateAccountViewerConfigParams): Promise<unknown> {
+  async updateAccountViewerConfig(params: UpdateAccountViewerConfigParams): Promise<void> {
     this.validateChannelId(params.channelId);
     this.validateOptionalYn(params.actorEnabled, 'actorEnabled');
     this.validateOptionalYn(params.questionStudentTitleEnabled, 'questionStudentTitleEnabled');
 
     const { channelId, ...body } = params;
-    const response = await this.client.httpClient.post<unknown>(
+    await this.client.httpClient.post(
       '/live/v4/channel/account/viewer/update',
       body,
       { params: { channelId } }
     );
-    return response as unknown;
   }
 
   /**
@@ -2585,7 +2583,7 @@ export class V4ChannelService {
   /**
    * Set channel pull bitrate.
    */
-  async setPullBitrate(params: SetPullBitrateExactParams): Promise<unknown> {
+  async setPullBitrate(params: SetPullBitrateExactParams): Promise<void> {
     this.validateChannelId(params.channelId);
     const allowedBitrates = [-1, 400, 600, 800, 1000, 1500, 2000, 2500];
     if (!allowedBitrates.includes(params.pullBitRate)) {
@@ -2596,27 +2594,25 @@ export class V4ChannelService {
       );
     }
 
-    const response = await this.client.httpClient.post<unknown>(
+    await this.client.httpClient.post(
       '/live/v4/channel/set-pull-bitrate',
       null,
       { params }
     );
-    return response as unknown;
   }
 
   /**
    * Update channel live template.
    */
-  async updateTemplate(params: UpdateTemplateExactParams): Promise<unknown> {
+  async updateTemplate(params: UpdateTemplateExactParams): Promise<void> {
     this.validateChannelId(params.channelId);
     this.validateRequiredString(params.template, 'template');
 
-    const response = await this.client.httpClient.post<unknown>(
+    await this.client.httpClient.post(
       '/live/v4/channel/update-template',
       null,
       { params }
     );
-    return response as unknown;
   }
 
   /**

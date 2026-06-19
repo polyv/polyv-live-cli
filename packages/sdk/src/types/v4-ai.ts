@@ -430,6 +430,20 @@ export enum TtsVoiceTag {
 }
 
 /**
+ * Query parameters for listing TTS voices.
+ *
+ * Both fields are optional: the server applies its own defaults when they are
+ * omitted, so callers that want every voice can call `listTtsVoices()` with no
+ * arguments.
+ */
+export interface ListTtsVoicesParams {
+  /** Page number, must be >= 1. */
+  pageNumber?: number;
+  /** Page size, must be between 1 and 1000. */
+  pageSize?: number;
+}
+
+/**
  * TTS voice entity
  */
 export interface TtsVoice {

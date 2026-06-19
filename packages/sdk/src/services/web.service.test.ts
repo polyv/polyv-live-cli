@@ -1181,6 +1181,19 @@ describe('WebService', () => {
         channelId: '123456',
       })).rejects.toThrow('rank must be 1 or 2');
     });
+
+    it('should download whitelist as an ArrayBuffer', async () => {
+      const buffer = new ArrayBuffer(8);
+      mockClient.httpClient.get.mockResolvedValueOnce(buffer);
+
+      const result = await service.downloadWhiteList({ rank: 1, channelId: '123456' });
+
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+        '/live/v3/channel/auth/download-white-list',
+        { params: { rank: 1, channelId: '123456' }, responseType: 'arraybuffer' }
+      );
+      expect(result).toBe(buffer);
+    });
   });
 
   describe('setExternalAuth', () => {

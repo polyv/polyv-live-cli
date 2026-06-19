@@ -152,6 +152,22 @@ describe('PolyVClient', () => {
       const mockInstance = mockAxiosCreate();
       expect(mockInstance.interceptors.response.use).toHaveBeenCalled();
     });
+
+    it('[P1] should pass through arraybuffer (binary) responses untouched', () => {
+      const mockAxiosCreate = vi.mocked(axios.create);
+      new PolyVClient(mockConfig);
+      const mockInstance = mockAxiosCreate();
+      const successHandler = vi.mocked(mockInstance.interceptors.response.use).mock.calls[0][0] as (
+        response: any
+      ) => any;
+
+      const buffer = new ArrayBuffer(8);
+      const response = { data: buffer, config: { responseType: 'arraybuffer' as const } };
+
+      // Binary file streams are not wrapped in { code, data }, so the buffer must
+      // be returned as-is rather than triggering the API-error branch.
+      expect(successHandler(response)).toBe(buffer);
+    });
   });
 
   describe('HTTP methods', () => {
