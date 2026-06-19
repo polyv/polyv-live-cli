@@ -47,7 +47,9 @@ import type {
   PlaybackListResponse,
   PlaybackVideoItem,
   ChannelSession,
+  ChannelSessionsResponse,
   RecordFileResponse,
+  ListRecordFilesResponse,
   RecordInfo,
   PlaybackEnabledResponse,
   PlaybackSettingResponse,
@@ -176,6 +178,280 @@ describe('ChannelService Playback + Player APIs', () => {
     ;(axios.create as ReturnType<typeof vi.fn>).mockReturnValue(mockAxiosInstance)
     client = new PolyVClient(testConfig)
     channelService = new ChannelService(client)
+  })
+
+  // ============================================
+  // Historical playback APIs
+  // ============================================
+  describe('Historical playback APIs from channel/playback docs', () => {
+    it('should list channel sessions through /live/v3/channel/session/list', async () => {
+      const mockResponse: ChannelSessionsResponse = {
+        pageSize: 10,
+        pageNumber: 1,
+        totalItems: 1,
+        contents: [{
+          sessionId: 'session123',
+          channelId: 'ch123456',
+          userId: 'user123',
+          startTime: 1709875200000,
+          endTime: 1709878800000,
+        }],
+        startRow: 1,
+        firstPage: true,
+        lastPage: true,
+        prePageNumber: 0,
+        nextPageNumber: 0,
+        limit: 10,
+        totalPages: 1,
+        endRow: 1,
+        offset: 0,
+      }
+      mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
+
+      const result = await channelService.listChannelSessions({
+        channelId: 'ch123456',
+        startDate: '2024-03-01',
+        endDate: '2024-03-02',
+        page: 1,
+        pageSize: 10,
+      })
+
+      expect(mockAxiosInstance.get).toHaveBeenCalledWith(
+        '/live/v3/channel/session/list',
+        {
+          params: {
+            channelId: 'ch123456',
+            startDate: '2024-03-01',
+            endDate: '2024-03-02',
+            page: 1,
+            pageSize: 10,
+          },
+        }
+      )
+      expect(result.contents[0].sessionId).toBe('session123')
+    })
+
+    it('should list historical record files through /live/v2/channels/{channelId}/recordFiles', async () => {
+      const mockResponse: ListRecordFilesResponse = [{
+        channelId: 'ch123456',
+        fileId: 'file123',
+        url: 'https://example.com/record.mp4',
+        startTime: '20240301100000',
+        endTime: '20240301110000',
+        fileSize: 1024000,
+        duration: 3600,
+        bitrate: 1024,
+        resolution: '1280x720',
+        channelSessionId: 'session123',
+        fileName: 'record.mp4',
+        daysLeft: -1,
+      }]
+      mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
+
+      const result = await channelService.listRecordFiles({
+        channelId: 'ch123456',
+        userId: 'user123',
+        startDate: '2024-03-01',
+        endDate: '2024-03-02',
+        sessionIds: 'session123',
+      })
+
+      expect(mockAxiosInstance.get).toHaveBeenCalledWith(
+        '/live/v2/channels/ch123456/recordFiles',
+        {
+          params: {
+            userId: 'user123',
+            startDate: '2024-03-01',
+            endDate: '2024-03-02',
+            sessionIds: 'session123',
+          },
+        }
+      )
+      expect(result[0].fileId).toBe('file123')
+    })
+
+    it('should merge historical record files by fileIds', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('https://example.com/merged.mp4')
+
+      const result = await channelService.mergeRecordFiles({
+        channelId: 'ch123456',
+        fileIds: ['file1', 'file2'],
+        fileName: 'merged',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v2/channel/recordFile/ch123456/merge',
+        null,
+        { params: { fileIds: 'file1,file2', fileName: 'merged' } }
+      )
+      expect(result).toBe('https://example.com/merged.mp4')
+    })
+
+    it('should add VOD video to playback library', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce(mockPlaybackVideoItem)
+
+      const result = await channelService.addVodPlaybackToLibrary({
+        channelId: 'ch123456',
+        vid: 'vod123',
+        setAsDefault: 'Y',
+        listType: 'vod',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v3/channel/playback/add',
+        null,
+        {
+          params: {
+            channelId: 'ch123456',
+            vid: 'vod123',
+            setAsDefault: 'Y',
+            listType: 'vod',
+          },
+        }
+      )
+      expect(result.videoId).toBe('vid123')
+    })
+
+    it('should delete historical record file by sessionId', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('')
+
+      await channelService.deleteRecordFile({
+        channelId: 'ch123456',
+        sessionId: 'session123',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v2/channel/recordFile/ch123456/delete-record',
+        null,
+        { params: { sessionId: 'session123' } }
+      )
+    })
+
+    it('should convert historical record file to VOD', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('vod123')
+
+      const result = await channelService.convertRecordFileToVod({
+        channelId: 'ch123456',
+        userId: 'user123',
+        fileName: 'converted',
+        sessionId: 'session123',
+        toPlayList: 'Y',
+        setAsDefault: 'N',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v2/channel/recordFile/ch123456/convert',
+        null,
+        {
+          params: {
+            userId: 'user123',
+            fileName: 'converted',
+            sessionId: 'session123',
+            toPlayList: 'Y',
+            setAsDefault: 'N',
+          },
+        }
+      )
+      expect(result).toBe('vod123')
+    })
+
+    it('should set playback enabled by user scope', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('ch123456')
+
+      const result = await channelService.setUserPlaybackEnabled({
+        userId: 'user123',
+        channelId: 'ch123456',
+        playBackEnabled: 'Y',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v2/channelSetting/user123/setPlayBackEnabled',
+        null,
+        { params: { playBackEnabled: 'Y', channelId: 'ch123456' } }
+      )
+      expect(result).toBe('ch123456')
+    })
+
+    it('should move playback video up or down', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('')
+
+      await channelService.movePlaybackVideo({
+        channelId: 'ch123456',
+        videoId: 'vid123',
+        type: 'up',
+        listType: 'playback',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v3/channel/playback/single-sort',
+        null,
+        {
+          params: {
+            channelId: 'ch123456',
+            videoId: 'vid123',
+            type: 'up',
+            listType: 'playback',
+          },
+        }
+      )
+    })
+
+    it('should set default playback video', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('success')
+
+      const result = await channelService.setDefaultPlaybackVideo({
+        channelId: 'ch123456',
+        videoId: 'vid123',
+        listType: 'vod',
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v2/channel/recordFile/ch123456/playback/set-Default',
+        null,
+        { params: { videoId: 'vid123', listType: 'vod' } }
+      )
+      expect(result).toBe('success')
+    })
+
+    it('should sort playback videos with JSON body and signed query params', async () => {
+      mockAxiosInstance.post.mockResolvedValueOnce('')
+
+      await channelService.sortPlaybackVideos({
+        channelId: 'ch123456',
+        listType: 'vod',
+        videoIds: ['vid1', 'vid2'],
+      })
+
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
+        '/live/v3/channel/playback/sort',
+        { videoIds: ['vid1', 'vid2'] },
+        { params: { channelId: 'ch123456', listType: 'vod' } }
+      )
+    })
+
+    it('should validate historical playback params', async () => {
+      await expect(channelService.listChannelSessions({ channelId: '' })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.listRecordFiles({
+        channelId: 'ch123456',
+        userId: 'user123',
+        startDate: '2024-03-01',
+      })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.mergeRecordFiles({ channelId: 'ch123456' })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.deleteRecordFile({ channelId: 'ch123456' })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.setUserPlaybackEnabled({
+        userId: 'user123',
+        playBackEnabled: 'INVALID' as 'Y',
+      })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.movePlaybackVideo({
+        channelId: 'ch123456',
+        videoId: 'vid123',
+        type: 'left' as 'up',
+      })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.sortPlaybackVideos({
+        channelId: 'ch123456',
+        videoIds: [],
+      })).rejects.toThrow(PolyVValidationError)
+    })
   })
 
   // ============================================

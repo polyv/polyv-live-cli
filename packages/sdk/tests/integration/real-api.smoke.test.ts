@@ -340,6 +340,36 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expectPaginatedResponse(receiveList);
   });
 
+  it('calls historical channel playback read-only APIs when a channel can be discovered', async () => {
+    const channelId = await discoverChannelId(client);
+
+    if (!channelId) {
+      console.warn('Skipping historical playback assertions: no POLYV_CHANNEL_ID and no channel found via list APIs.');
+      return;
+    }
+
+    const config = getIntegrationConfig();
+    const sessions = await client.channel.listChannelSessions({
+      channelId,
+      page: 1,
+      pageSize: 1,
+    });
+
+    expectPaginatedResponse(sessions);
+
+    if (!config.userId) {
+      console.warn('Skipping historical record-file list assertion: POLYV_USER_ID is not configured.');
+      return;
+    }
+
+    const recordFiles = await client.channel.listRecordFiles({
+      channelId,
+      userId: config.userId,
+    });
+
+    expect(recordFiles).toEqual(expect.any(Array));
+  });
+
   it('calls live interaction read-only APIs when a channel can be discovered', async () => {
     const channelId = await discoverChannelId(client);
 

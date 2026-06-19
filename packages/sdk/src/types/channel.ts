@@ -1235,6 +1235,192 @@ export interface RecordAddBreakpointRequestOld {
   time: number;
 }
 
+/**
+ * Playback video move type.
+ */
+export type PlaybackVideoMoveType = 'up' | 'down';
+
+/**
+ * List channel sessions request.
+ */
+export interface ListChannelSessionsParams extends ChannelSessionsRequest {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+}
+
+/**
+ * Historical record file subtitle item.
+ */
+export interface HistoricalRecordFileSubtitle {
+  id: number;
+  name: string;
+  srtUrl: string;
+  language: string;
+  status: string;
+}
+
+/**
+ * Historical record file item from /live/v2/channels/{channelId}/recordFiles.
+ */
+export interface HistoricalRecordFileItem {
+  channelId: string;
+  fileId: string;
+  url: string;
+  startTime: string;
+  endTime: string;
+  fileSize: number;
+  duration: number;
+  bitrate: number;
+  resolution?: string;
+  channelSessionId: string;
+  fileName: string;
+  daysLeft: number;
+  origin?: 'manual' | 'auto' | 'merge' | 'clip' | 'smart-clip' | string;
+  originSessionId?: string;
+  recordFileType?: 'complete' | 'part' | 'merge' | 'clip' | string;
+  subtitleList?: HistoricalRecordFileSubtitle[];
+}
+
+/**
+ * List historical record files request.
+ */
+export interface ListRecordFilesParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** POLYV user ID - REQUIRED */
+  userId: string;
+  /** Start date, yyyy-MM-dd */
+  startDate?: string;
+  /** End date, yyyy-MM-dd */
+  endDate?: string;
+  /** Live session IDs, comma-separated */
+  sessionIds?: string;
+}
+
+export type ListRecordFilesResponse = HistoricalRecordFileItem[];
+
+/**
+ * Merge historical record files request.
+ */
+export interface MergeRecordFilesParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Record file URLs, comma-separated or array. Takes precedence when both urls and fileIds are provided. */
+  urls?: string | string[];
+  /** Record file IDs, comma-separated or array */
+  fileIds?: string | string[];
+  /** Merged file name */
+  fileName?: string;
+}
+
+export type MergeRecordFilesResponse = string;
+
+/**
+ * Add VOD video to playback library request.
+ */
+export interface AddVodPlaybackToLibraryParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** VOD video ID - REQUIRED */
+  vid: string;
+  /** Whether to set as default playback video */
+  setAsDefault?: YNFlag;
+  /** Playback list type */
+  listType?: PlaybackListType;
+}
+
+export type AddVodPlaybackToLibraryResponse = PlaybackVideoItem;
+
+/**
+ * Delete historical record files request.
+ */
+export interface DeleteRecordFileParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Live session ID */
+  sessionId?: string;
+  /** Record start time, yyyyMMddHHmmss */
+  startTime?: string;
+}
+
+/**
+ * Convert historical record file to VOD request.
+ */
+export interface ConvertRecordFileToVodParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** POLYV user ID - REQUIRED */
+  userId: string;
+  /** VOD video name after conversion - REQUIRED */
+  fileName: string;
+  /** Record file URL */
+  fileUrl?: string;
+  /** Live session ID */
+  sessionId?: string;
+  /** VOD category ID */
+  cataid?: string;
+  /** VOD category name */
+  cataname?: string;
+  /** Whether to put converted video into playback list */
+  toPlayList?: YNFlag;
+  /** Whether to set as default playback video */
+  setAsDefault?: YNFlag;
+}
+
+export type ConvertRecordFileToVodResponse = string;
+
+/**
+ * Set playback enabled by user scope request.
+ */
+export interface SetUserPlaybackEnabledParams {
+  /** POLYV user ID - REQUIRED */
+  userId: string;
+  /** Playback enabled flag - REQUIRED */
+  playBackEnabled: YNFlag;
+  /** Channel ID. Omit or pass -1 to update all channels under the user. */
+  channelId?: string;
+}
+
+export type SetUserPlaybackEnabledResponse = string;
+
+/**
+ * Move one playback or VOD video up/down request.
+ */
+export interface MovePlaybackVideoParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Video ID - REQUIRED */
+  videoId: string;
+  /** Move direction - REQUIRED */
+  type: PlaybackVideoMoveType;
+  /** Playback list type */
+  listType?: PlaybackListType;
+}
+
+/**
+ * Set default playback or VOD video request.
+ */
+export interface SetDefaultPlaybackVideoParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Video ID - REQUIRED */
+  videoId: string;
+  /** Playback list type */
+  listType?: PlaybackListType;
+}
+
+/**
+ * Sort playback or VOD videos request.
+ */
+export interface SortPlaybackVideosParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Complete ordered video ID list - REQUIRED */
+  videoIds: string[];
+  /** Playback list type */
+  listType?: PlaybackListType;
+}
+
 // ============================================
 // Player Types (Story 2-4)
 // ============================================

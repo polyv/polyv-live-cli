@@ -44,6 +44,21 @@ import type {
   AddVodPlaybackRequest,
   ClipRecordFileRequest,
   RecordAddBreakpointRequest,
+  ListChannelSessionsParams,
+  ListRecordFilesParams,
+  ListRecordFilesResponse,
+  MergeRecordFilesParams,
+  MergeRecordFilesResponse,
+  AddVodPlaybackToLibraryParams,
+  AddVodPlaybackToLibraryResponse,
+  DeleteRecordFileParams,
+  ConvertRecordFileToVodParams,
+  ConvertRecordFileToVodResponse,
+  SetUserPlaybackEnabledParams,
+  SetUserPlaybackEnabledResponse,
+  MovePlaybackVideoParams,
+  SetDefaultPlaybackVideoParams,
+  SortPlaybackVideosParams,
   PlayerLogoSettings,
   PlayerHeadSettings,
   PlayerStopSettings,
@@ -245,6 +260,20 @@ export class ChannelService {
         throw PolyVValidationError.required(`viewerIds[${index}]`);
       }
     });
+  }
+
+  private normalizeCommaSeparated(value: string | string[] | undefined): string | undefined {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (Array.isArray(value)) {
+      const validValues = value.filter(item => item && item.trim() !== '');
+      return validValues.length > 0 ? validValues.join(',') : undefined;
+    }
+
+    const trimmed = value.trim();
+    return trimmed === '' ? undefined : trimmed;
   }
 
   private validateChannelViewerListParams(params: ListChannelViewersParams): void {
@@ -1684,6 +1713,289 @@ export class ChannelService {
   // ============================================
   // Playback APIs (Story 2-4)
   // ============================================
+
+  /**
+   * List channel live sessions using the historical playback API.
+   */
+  async listChannelSessions(params: ListChannelSessionsParams): Promise<ChannelSessionsResponse> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+
+    const query: Record<string, unknown> = { channelId: params.channelId };
+    if (params.startDate !== undefined) {
+      query.startDate = params.startDate;
+    }
+    if (params.endDate !== undefined) {
+      query.endDate = params.endDate;
+    }
+    if (params.page !== undefined) {
+      query.page = params.page;
+    }
+    if (params.pageSize !== undefined) {
+      query.pageSize = params.pageSize;
+    }
+
+    const response = await this.client.httpClient.get<ChannelSessionsResponse>(
+      '/live/v3/channel/session/list',
+      { params: query }
+    );
+
+    return response as unknown as ChannelSessionsResponse;
+  }
+
+  /**
+   * List historical recording files for a channel.
+   */
+  async listRecordFiles(params: ListRecordFilesParams): Promise<ListRecordFilesResponse> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.userId, 'userId');
+
+    if ((params.startDate && !params.endDate) || (!params.startDate && params.endDate)) {
+      throw new PolyVValidationError('startDate and endDate must be provided together');
+    }
+
+    const query: Record<string, unknown> = { userId: params.userId };
+    if (params.startDate !== undefined) {
+      query.startDate = params.startDate;
+    }
+    if (params.endDate !== undefined) {
+      query.endDate = params.endDate;
+    }
+    if (params.sessionIds !== undefined) {
+      query.sessionIds = params.sessionIds;
+    }
+
+    const response = await this.client.httpClient.get<ListRecordFilesResponse>(
+      `/live/v2/channels/${params.channelId}/recordFiles`,
+      { params: query }
+    );
+
+    return response as unknown as ListRecordFilesResponse;
+  }
+
+  /**
+   * Merge historical recording files by URL or file ID.
+   */
+  async mergeRecordFiles(params: MergeRecordFilesParams): Promise<MergeRecordFilesResponse> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+
+    const urls = this.normalizeCommaSeparated(params.urls);
+    const fileIds = this.normalizeCommaSeparated(params.fileIds);
+    if (!urls && !fileIds) {
+      throw PolyVValidationError.required('urls or fileIds');
+    }
+
+    const query: Record<string, unknown> = {};
+    if (urls !== undefined) {
+      query.urls = urls;
+    }
+    if (fileIds !== undefined) {
+      query.fileIds = fileIds;
+    }
+    if (params.fileName !== undefined) {
+      query.fileName = params.fileName;
+    }
+
+    const response = await this.client.httpClient.post<MergeRecordFilesResponse>(
+      `/live/v2/channel/recordFile/${params.channelId}/merge`,
+      null,
+      { params: query }
+    );
+
+    return response as unknown as MergeRecordFilesResponse;
+  }
+
+  /**
+   * Add a VOD video to a channel playback library.
+   */
+  async addVodPlaybackToLibrary(
+    params: AddVodPlaybackToLibraryParams
+  ): Promise<AddVodPlaybackToLibraryResponse> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.vid, 'vid');
+    this.validateOptionalYn(params.setAsDefault, 'setAsDefault');
+
+    const query: Record<string, unknown> = {
+      channelId: params.channelId,
+      vid: params.vid,
+    };
+    if (params.setAsDefault !== undefined) {
+      query.setAsDefault = params.setAsDefault;
+    }
+    if (params.listType !== undefined) {
+      query.listType = params.listType;
+    }
+
+    const response = await this.client.httpClient.post<AddVodPlaybackToLibraryResponse>(
+      '/live/v3/channel/playback/add',
+      null,
+      { params: query }
+    );
+
+    return response as unknown as AddVodPlaybackToLibraryResponse;
+  }
+
+  /**
+   * Delete historical recording files by session ID or start time.
+   */
+  async deleteRecordFile(params: DeleteRecordFileParams): Promise<void> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+
+    if (!params.sessionId && !params.startTime) {
+      throw PolyVValidationError.required('sessionId or startTime');
+    }
+
+    const query: Record<string, unknown> = {};
+    if (params.sessionId !== undefined) {
+      query.sessionId = params.sessionId;
+    }
+    if (params.startTime !== undefined) {
+      query.startTime = params.startTime;
+    }
+
+    await this.client.httpClient.post(
+      `/live/v2/channel/recordFile/${params.channelId}/delete-record`,
+      null,
+      { params: query }
+    );
+  }
+
+  /**
+   * Convert a historical recording file to VOD synchronously.
+   */
+  async convertRecordFileToVod(params: ConvertRecordFileToVodParams): Promise<ConvertRecordFileToVodResponse> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.userId, 'userId');
+    this.validateRequiredValue(params.fileName, 'fileName');
+    this.validateOptionalYn(params.toPlayList, 'toPlayList');
+    this.validateOptionalYn(params.setAsDefault, 'setAsDefault');
+
+    const query: Record<string, unknown> = {
+      userId: params.userId,
+      fileName: params.fileName,
+    };
+    if (params.fileUrl !== undefined) {
+      query.fileUrl = params.fileUrl;
+    }
+    if (params.sessionId !== undefined) {
+      query.sessionId = params.sessionId;
+    }
+    if (params.cataid !== undefined) {
+      query.cataid = params.cataid;
+    }
+    if (params.cataname !== undefined) {
+      query.cataname = params.cataname;
+    }
+    if (params.toPlayList !== undefined) {
+      query.toPlayList = params.toPlayList;
+    }
+    if (params.setAsDefault !== undefined) {
+      query.setAsDefault = params.setAsDefault;
+    }
+
+    const response = await this.client.httpClient.post<ConvertRecordFileToVodResponse>(
+      `/live/v2/channel/recordFile/${params.channelId}/convert`,
+      null,
+      { params: query }
+    );
+
+    return response as unknown as ConvertRecordFileToVodResponse;
+  }
+
+  /**
+   * Set playback enabled by user scope.
+   */
+  async setUserPlaybackEnabled(params: SetUserPlaybackEnabledParams): Promise<SetUserPlaybackEnabledResponse> {
+    this.validateRequiredValue(params.userId, 'userId');
+    this.validateRequiredValue(params.playBackEnabled, 'playBackEnabled');
+    this.validateOptionalYn(params.playBackEnabled, 'playBackEnabled');
+
+    const query: Record<string, unknown> = { playBackEnabled: params.playBackEnabled };
+    if (params.channelId !== undefined) {
+      query.channelId = params.channelId;
+    }
+
+    const response = await this.client.httpClient.post<SetUserPlaybackEnabledResponse>(
+      `/live/v2/channelSetting/${params.userId}/setPlayBackEnabled`,
+      null,
+      { params: query }
+    );
+
+    return response as unknown as SetUserPlaybackEnabledResponse;
+  }
+
+  /**
+   * Move a playback or VOD video up/down.
+   */
+  async movePlaybackVideo(params: MovePlaybackVideoParams): Promise<void> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.videoId, 'videoId');
+
+    if (params.type !== 'up' && params.type !== 'down') {
+      throw new PolyVValidationError(
+        'type must be up or down',
+        'type',
+        params.type,
+        { allowedValues: ['up', 'down'] }
+      );
+    }
+
+    const query: Record<string, unknown> = {
+      channelId: params.channelId,
+      videoId: params.videoId,
+      type: params.type,
+    };
+    if (params.listType !== undefined) {
+      query.listType = params.listType;
+    }
+
+    await this.client.httpClient.post(
+      '/live/v3/channel/playback/single-sort',
+      null,
+      { params: query }
+    );
+  }
+
+  /**
+   * Set the default playback or VOD video.
+   */
+  async setDefaultPlaybackVideo(params: SetDefaultPlaybackVideoParams): Promise<string> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.videoId, 'videoId');
+
+    const query: Record<string, unknown> = { videoId: params.videoId };
+    if (params.listType !== undefined) {
+      query.listType = params.listType;
+    }
+
+    const response = await this.client.httpClient.post<string>(
+      `/live/v2/channel/recordFile/${params.channelId}/playback/set-Default`,
+      null,
+      { params: query }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Sort playback or VOD videos with a complete ordered video ID list.
+   */
+  async sortPlaybackVideos(params: SortPlaybackVideosParams): Promise<void> {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    if (!Array.isArray(params.videoIds) || params.videoIds.length === 0) {
+      throw PolyVValidationError.required('videoIds');
+    }
+
+    const query: Record<string, unknown> = { channelId: params.channelId };
+    if (params.listType !== undefined) {
+      query.listType = params.listType;
+    }
+
+    await this.client.httpClient.post(
+      '/live/v3/channel/playback/sort',
+      { videoIds: params.videoIds },
+      { params: query }
+    );
+  }
 
   /**
    * Get playback list
