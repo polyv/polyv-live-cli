@@ -1,5 +1,14 @@
 import { Command } from 'commander';
 import { MonitorHandler } from '../handlers/monitor.handler';
+import { MonitorServiceSdk } from '../services/monitor-service';
+import { logError } from '../utils/errors';
+import {
+  apiParams,
+  commandParentOptions,
+  loadApiCommandConfig,
+  validateOutputFormat,
+} from '../utils/api-command';
+import { formatJSON, formatTable } from '../utils/formatter';
 
 export interface MonitorOptions {
   refresh?: string;
@@ -9,6 +18,25 @@ export interface MonitorOptions {
   output?: string;
   verbose?: boolean;
   debug?: boolean;
+}
+
+function displayApiResult(data: any, output = 'table'): void {
+  if (output === 'json') {
+    console.log(formatJSON(data));
+    return;
+  }
+
+  if (!Array.isArray(data) || data.length === 0 || typeof data[0] !== 'object') {
+    console.log(formatJSON(data));
+    return;
+  }
+
+  const headers = Object.keys(data[0]);
+  const rows = data.map((item) => headers.map((header) => {
+    const value = item?.[header];
+    return typeof value === 'object' && value !== null ? JSON.stringify(value) : String(value ?? '');
+  }));
+  console.log(formatTable({ headers, data: rows }));
 }
 
 export function registerMonitorCommands(program: Command): void {
@@ -28,6 +56,22 @@ export function registerMonitorCommands(program: Command): void {
     });
 
   // Subcommands for monitoring
+  monitorCommand
+    .command('tencent-stream-info-list')
+    .description('List Tencent stream monitoring info')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadApiCommandConfig(commandParentOptions(program));
+        const service = new MonitorServiceSdk(authConfig, serviceConfig);
+        displayApiResult(await service.listTencentStreamInfo(apiParams(options)), options.output);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
   monitorCommand
     .command('status')
     .description('Show monitoring dashboard status')

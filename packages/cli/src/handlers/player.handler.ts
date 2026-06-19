@@ -13,6 +13,8 @@ import {
   PlayerDecorateDisplayItem,
 } from '../types/player';
 import { AuthConfig } from '../types/auth';
+import { PolyVValidationError } from '../utils/errors';
+import { apiParams, confirmWrite } from '../utils/api-command';
 
 /**
  * Interface for player service (enables dependency injection)
@@ -20,6 +22,13 @@ import { AuthConfig } from '../types/auth';
 export interface IPlayerService {
   getChannelDecorate(options: PlayerConfigGetOptions): Promise<PlayerDecorateDisplayItem>;
   updateChannelDecorate(options: PlayerConfigUpdateOptions): Promise<{ success: boolean; updatedFields: string[] }>;
+  getAntiRecordSettings(channelId?: string | number): Promise<any>;
+  setAntiRecordSettings(channelId: string | number, params: any): Promise<any>;
+  setMarqueeUrl(channelId: string | number, params: any): Promise<any>;
+  updateHeadAdvert(channelId: string | number, params: any): Promise<any>;
+  updateStopAdvert(channelId: string | number, params: any): Promise<any>;
+  getWatchFeedbackList(params: any): Promise<any>;
+  updatePlayerLogo(channelId: string | number, params: any): Promise<any>;
 }
 
 /**
@@ -168,6 +177,77 @@ export class PlayerHandler extends BaseHandler {
       // Display results
       this.displayUpdateResult(result, options.channelId, options.output);
     }, 'player.config.update');
+  }
+
+  async getAntiRecord(options: any): Promise<void> {
+    this.requireFields(options, ['channelId']);
+    this.displayData(await this.playerService.getAntiRecordSettings(options.channelId), options.output || 'table');
+  }
+
+  async updateAntiRecord(options: any): Promise<void> {
+    this.requireFields(options, ['channelId', 'antiRecordType', 'modelType', 'content', 'fontSize']);
+    const params = apiParams({ ...options, channelId: undefined });
+    await confirmWrite(options.force, `Update anti-record settings for channel ${options.channelId}?`);
+    this.displayData(
+      { success: true, result: await this.playerService.setAntiRecordSettings(options.channelId, params) },
+      options.output || 'table'
+    );
+  }
+
+  async setMarqueeUrl(options: any): Promise<void> {
+    this.requireFields(options, ['channelId', 'marqueeRestrict']);
+    const params = apiParams({ ...options, channelId: undefined });
+    await confirmWrite(options.force, `Update marquee URL for channel ${options.channelId}?`);
+    this.displayData(
+      { success: true, result: await this.playerService.setMarqueeUrl(options.channelId, params) },
+      options.output || 'table'
+    );
+  }
+
+  async updateHeadAdvert(options: any): Promise<void> {
+    this.requireFields(options, ['channelId', 'headAdvertType']);
+    const params = apiParams({ ...options, channelId: undefined });
+    await confirmWrite(options.force, `Update head advert for channel ${options.channelId}?`);
+    this.displayData(
+      { success: true, result: await this.playerService.updateHeadAdvert(options.channelId, params) },
+      options.output || 'table'
+    );
+  }
+
+  async updateStopAdvert(options: any): Promise<void> {
+    this.requireFields(options, ['channelId']);
+    const params = apiParams({ ...options, channelId: undefined });
+    await confirmWrite(options.force, `Update stop advert for channel ${options.channelId}?`);
+    this.displayData(
+      { success: true, result: await this.playerService.updateStopAdvert(options.channelId, params) },
+      options.output || 'table'
+    );
+  }
+
+  async listWatchFeedback(options: any): Promise<void> {
+    this.displayData(await this.playerService.getWatchFeedbackList(apiParams(options)), options.output || 'table');
+  }
+
+  async updateLogo(options: any): Promise<void> {
+    this.requireFields(options, ['channelId', 'logoImage']);
+    const params = apiParams({ ...options, channelId: undefined });
+    await confirmWrite(options.force, `Update player logo for channel ${options.channelId}?`);
+    this.displayData(
+      { success: await this.playerService.updatePlayerLogo(options.channelId, params), channelId: options.channelId },
+      options.output || 'table'
+    );
+  }
+
+  private requireFields(options: Record<string, unknown>, fields: string[]): void {
+    const missing = fields.filter((field) => options[field] === undefined || options[field] === null || options[field] === '');
+    if (missing.length > 0) {
+      throw new PolyVValidationError(
+        `Missing required option(s): ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
   }
 
   /**

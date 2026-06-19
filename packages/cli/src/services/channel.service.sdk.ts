@@ -229,6 +229,24 @@ export class ChannelServiceSdk {
     }
   }
 
+  async checkChannelStatusValid(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.other.checkChannelStatusValid(params);
+    } catch (error) {
+      throw this.handleError(error, 'checkChannelStatusValid');
+    }
+  }
+
+  async resetCcbFocus(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.other.resetCcbFocus(params);
+    } catch (error) {
+      throw this.handleError(error, 'resetCcbFocus');
+    }
+  }
+
   // ===== Validation Methods =====
 
   private validateCreateRequest(request: ChannelCreateRequest): void {

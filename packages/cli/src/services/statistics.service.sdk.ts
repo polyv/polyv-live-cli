@@ -51,6 +51,16 @@ export class StatisticsServiceSdk {
     this.config = serviceConfig;
   }
 
+  async getSessionStatsSummaryList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Statistics.getSessionStatsSummaryList(params);
+  }
+
+  async getInviterPosterList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.other.getInviterPosterList(params);
+  }
+
   /**
    * Get daily view statistics for a channel
    * @param options Statistics view options from CLI

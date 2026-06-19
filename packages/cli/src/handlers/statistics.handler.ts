@@ -26,11 +26,14 @@ import {
 } from '../types/statistics-export';
 import { AuthConfig } from '../types/auth';
 import * as fs from 'fs';
+import { apiParams } from '../utils/api-command';
 
 /**
  * Interface for statistics service (enables dependency injection)
  */
 export interface IStatisticsService {
+  getSessionStatsSummaryList(params: any): Promise<any>;
+  getInviterPosterList(params: any): Promise<any>;
   getDailyViewStatistics(options: StatisticsViewOptions): Promise<DailyViewStatisticsItem[]>;
   getConcurrencyData(options: StatisticsConcurrencyOptions): Promise<ConcurrencyDataPointItem[]>;
   getMaxConcurrent(options: StatisticsMaxConcurrentOptions): Promise<number>;
@@ -87,6 +90,24 @@ export class StatisticsHandler extends BaseHandler {
       // Display results
       this.displayStatistics(contents, options.channelId, options.output);
     }, 'statistics.view');
+  }
+
+  async listSessionSummary(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.displayData(
+        await this.statisticsService.getSessionStatsSummaryList(apiParams(options)),
+        options.output || 'table'
+      );
+    }, 'statistics.session-summary.list');
+  }
+
+  async listInviterPoster(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.displayData(
+        await this.statisticsService.getInviterPosterList(apiParams(options)),
+        options.output || 'table'
+      );
+    }, 'statistics.inviter-poster.list');
   }
 
   /**

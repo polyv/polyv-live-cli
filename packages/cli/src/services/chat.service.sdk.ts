@@ -238,6 +238,13 @@ export class ChatServiceSdk {
     });
   }
 
+  async getGroupLoginTimes(options: { channelId: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.other.getGroupLoginTimes({
+      channelId: options.channelId,
+    });
+  }
+
   // ===== Validation Methods =====
 
   private validateSendOptions(options: ChatSendOptions): void {

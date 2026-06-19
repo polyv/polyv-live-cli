@@ -6,11 +6,13 @@
 
 import { Command } from 'commander';
 import { ChannelHandler } from '../handlers/channel.handler';
+import { ChannelServiceSdk } from '../services/channel.service.sdk';
 import { ChannelCreateOptions, ChannelListOptions, ChannelGetOptions, ChannelUpdateOptions, ChannelDeleteOptions, ChannelServiceConfig } from '../types/channel';
 import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { apiParams, confirmWrite } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -553,6 +555,39 @@ Note:
   This command allows deleting up to 100 channels in a single operation.
   For single channel deletion with interactive confirmation, use 'channel delete' instead.
 `);
+
+  channelCmd.command('status-valid')
+    .description('Check whether channel statuses are valid')
+    .requiredOption('--channels <ids>', 'channel IDs, comma-separated, max 100')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        const result = await new ChannelServiceSdk(authConfig, serviceConfig).checkChannelStatusValid(apiParams(options));
+        console.log(JSON.stringify(result, null, 2));
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  channelCmd.command('ccb-focus-reset')
+    .description('Reset CCB focus channels')
+    .option('--channel-ids <ids>', 'channel IDs, comma-separated; omit to clear focus')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        await confirmWrite(options.force, 'Reset CCB focus channels?');
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        const params = apiParams(options);
+        const result = await new ChannelServiceSdk(authConfig, serviceConfig).resetCcbFocus(params);
+        console.log(JSON.stringify({ success: true, result }, null, 2));
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
 }
 
 /**

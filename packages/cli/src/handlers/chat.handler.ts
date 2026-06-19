@@ -178,6 +178,20 @@ export class ChatHandler extends BaseHandler {
     }, 'chat.delete');
   }
 
+  async getGroupLoginTimes(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      if (!options.channelId || options.channelId.trim() === '') {
+        throw new PolyVValidationError(
+          'channelId is required',
+          'channelId',
+          options.channelId,
+          'validation_failed'
+        );
+      }
+      this.displayData(await this.chatService.getGroupLoginTimes({ channelId: options.channelId }), options.output || 'table');
+    }, 'chat.group-login-times.get');
+  }
+
   // ===== Private Display Methods =====
 
   private displaySendResult(result: SendAdminMsgResponse, format?: OutputFormat): void {

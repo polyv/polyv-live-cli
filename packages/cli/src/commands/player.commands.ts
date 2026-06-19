@@ -15,6 +15,10 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import {
+  parseNonNegativeNumber,
+  parsePositiveInteger,
+} from '../utils/api-command';
 
 /**
  * Validate watermark position
@@ -55,6 +59,45 @@ export function validateYNValue(value: string): 'Y' | 'N' {
     throw new Error('Value must be "Y" or "N"');
   }
   return value;
+}
+
+function parseFontSize(value: string): number | 'small' | 'middle' | 'large' {
+  if (['small', 'middle', 'large'].includes(value)) {
+    return value as 'small' | 'middle' | 'large';
+  }
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1 || parsed > 256) {
+    throw new Error('font size must be 1-256 or one of small, middle, large');
+  }
+  return parsed;
+}
+
+function validateAntiRecordType(value: string): 'marquee' | 'watermark' {
+  if (value !== 'marquee' && value !== 'watermark') {
+    throw new Error('anti-record type must be marquee or watermark');
+  }
+  return value;
+}
+
+function validateAntiRecordModel(value: string): 'fixed' | 'nickname' | 'diyurl' {
+  if (!['fixed', 'nickname', 'diyurl'].includes(value)) {
+    throw new Error('model type must be fixed, nickname, or diyurl');
+  }
+  return value as 'fixed' | 'nickname' | 'diyurl';
+}
+
+function validateShowMode(value: string): 'roll' | 'flicker' {
+  if (value !== 'roll' && value !== 'flicker') {
+    throw new Error('show mode must be roll or flicker');
+  }
+  return value;
+}
+
+function validateHeadAdvertType(value: string): 'NONE' | 'IMAGE' | 'FLV' {
+  if (!['NONE', 'IMAGE', 'FLV'].includes(value)) {
+    throw new Error('head advert type must be NONE, IMAGE, or FLV');
+  }
+  return value as 'NONE' | 'IMAGE' | 'FLV';
 }
 
 /**
@@ -329,4 +372,138 @@ Output Formats:
   table          Formatted output (default)
   json           JSON format for programmatic use
 `);
+
+  const antiRecordCmd = playerCmd.command('anti-record').description('Manage anti-record settings');
+
+  antiRecordCmd.command('get')
+    .description('Get anti-record settings')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).getAntiRecord(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  antiRecordCmd.command('update')
+    .description('Update anti-record settings')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--anti-record-type <type>', 'anti-record type (marquee|watermark)', validateAntiRecordType)
+    .requiredOption('--model-type <type>', 'model type (fixed|nickname|diyurl)', validateAntiRecordModel)
+    .requiredOption('--content <content>', 'content text or DIY URL')
+    .requiredOption('--font-size <size>', 'font size', parseFontSize)
+    .option('--opacity <opacity>', 'opacity 0-100', parseNonNegativeNumber)
+    .option('--font-color <color>', 'font color, hex format')
+    .option('--show-mode <mode>', 'show mode (roll|flicker)', validateShowMode)
+    .option('--double-enabled <value>', 'double enabled (Y|N)', validateYNValue)
+    .option('--auto-zoom-enabled <value>', 'auto zoom enabled (Y|N)', validateYNValue)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).updateAntiRecord(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  playerCmd.command('marquee-url')
+    .description('Set marquee URL restriction')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--marquee-restrict <value>', 'marquee restrict (Y|N)', validateYNValue)
+    .option('--url <url>', 'marquee URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).setMarqueeUrl(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  const advertCmd = playerCmd.command('advert').description('Manage player adverts');
+  advertCmd.command('head-update')
+    .description('Update player head advert')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--head-advert-type <type>', 'head advert type (NONE|IMAGE|FLV)', validateHeadAdvertType)
+    .option('--head-advert-image <url>', 'head advert image URL')
+    .option('--head-advert-flv <url>', 'head advert FLV URL')
+    .option('--head-advert-href <url>', 'head advert click URL')
+    .option('--head-advert-duration <seconds>', 'duration seconds', parsePositiveInteger)
+    .option('--head-advert-width <width>', 'advert width', parsePositiveInteger)
+    .option('--head-advert-height <height>', 'advert height', parsePositiveInteger)
+    .option('--enabled <value>', 'enabled (Y|N)', validateYNValue)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).updateHeadAdvert(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  advertCmd.command('stop-update')
+    .description('Update player stop advert')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--enabled <value>', 'enabled (Y|N)', validateYNValue)
+    .option('--stop-advert-image <url>', 'stop advert image URL')
+    .option('--stop-advert-href <url>', 'stop advert click URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).updateStopAdvert(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  playerCmd.command('logo-update')
+    .description('Update player logo settings')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--logo-image <url>', 'logo image URL')
+    .option('--logo-opacity <opacity>', 'logo opacity', parseNonNegativeNumber)
+    .option('--logo-position <position>', 'logo position (tl|tr|bl|br)', validateWatermarkPosition)
+    .option('--logo-href <url>', 'logo click URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).updateLogo(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  playerCmd.command('watch-feedback-list')
+    .description('List watch feedback records')
+    .option('-c, --channel-id <channelId>', 'channel ID')
+    .option('--page-number <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).listWatchFeedback(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
 }

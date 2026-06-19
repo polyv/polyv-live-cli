@@ -207,6 +207,22 @@ Note:
   Use --force to skip confirmation prompt.
 `);
 
+  chatCmd
+    .command('group-login-times')
+    .description('Get group login times for a channel')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        await new ChatHandler(authConfig, serviceConfig).getGroupLoginTimes(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
   // ========================================
   // chat ban (Story 11-2, AC #1)
   // ========================================

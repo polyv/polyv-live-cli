@@ -166,6 +166,43 @@ export function registerStatisticsCommands(program: Command): void {
   const statisticsCmd = program.command('statistics');
   statisticsCmd.description('View live streaming statistics data');
 
+  statisticsCmd.command('session-summary-list')
+    .description('List V4 session statistics summaries')
+    .option('-c, --channel-id <channelId>', 'channel ID')
+    .option('--keyword <keyword>', 'keyword')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        await new StatisticsHandler(authConfig, serviceConfig).listSessionSummary(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  statisticsCmd.command('inviter-poster-list')
+    .description('List inviter poster statistics')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        await new StatisticsHandler(authConfig, serviceConfig).listInviterPoster(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
   // Statistics view command
   const viewCmd = statisticsCmd
     .command('view')

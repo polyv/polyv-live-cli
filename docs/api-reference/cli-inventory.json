@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T18:01:27.130Z",
+  "generatedAt": "2026-06-19T18:27:33.765Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,29 +13,29 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 150,
-    "cliMissingLatestApis": 428,
-    "cliCoverage": 26,
-    "cliUsageReferences": 160,
-    "cliSdkServiceUsages": 160,
+    "cliUsedLatestApis": 210,
+    "cliMissingLatestApis": 368,
+    "cliCoverage": 36.3,
+    "cliUsageReferences": 214,
+    "cliSdkServiceUsages": 214,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 148,
+    "matchedApiIds": 202,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 212,
-    "cliTopLevelCommands": 29
+    "cliCommandPaths": 282,
+    "cliTopLevelCommands": 35
   },
   "modules": [
     {
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 56,
-      "cliMissing": 227,
+      "cliUsed": 61,
+      "cliMissing": 222,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 56,
-      "cliCoverage": 19.8
+      "sdkServiceUsed": 61,
+      "cliCoverage": 21.6
     },
     {
       "module": "user",
@@ -51,11 +51,11 @@
       "module": "web",
       "label": "观看页与观看条件",
       "total": 40,
-      "cliUsed": 6,
-      "cliMissing": 34,
+      "cliUsed": 7,
+      "cliMissing": 33,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 6,
-      "cliCoverage": 15
+      "sdkServiceUsed": 7,
+      "cliCoverage": 17.5
     },
     {
       "module": "chat",
@@ -78,96 +78,6 @@
       "cliCoverage": 36.7
     },
     {
-      "module": "group",
-      "label": "组织与套餐",
-      "total": 11,
-      "cliUsed": 0,
-      "cliMissing": 11,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "uncategorized",
-      "label": "未分类",
-      "total": 10,
-      "cliUsed": 0,
-      "cliMissing": 10,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "finance",
-      "label": "财务与审核",
-      "total": 7,
-      "cliUsed": 0,
-      "cliMissing": 7,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "material",
-      "label": "素材库",
-      "total": 7,
-      "cliUsed": 0,
-      "cliMissing": 7,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "player",
-      "label": "播放器",
-      "total": 7,
-      "cliUsed": 0,
-      "cliMissing": 7,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "webapp",
-      "label": "WebApp",
-      "total": 6,
-      "cliUsed": 0,
-      "cliMissing": 6,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "robot",
-      "label": "数字人与机器人",
-      "total": 3,
-      "cliUsed": 0,
-      "cliMissing": 3,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "root",
-      "label": "根目录",
-      "total": 2,
-      "cliUsed": 0,
-      "cliMissing": 2,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
-      "module": "statistics",
-      "label": "数据统计",
-      "total": 1,
-      "cliUsed": 0,
-      "cliMissing": 1,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
       "module": "account",
       "label": "账号与财务",
       "total": 22,
@@ -188,6 +98,16 @@
       "cliCoverage": 100
     },
     {
+      "module": "finance",
+      "label": "财务与审核",
+      "total": 7,
+      "cliUsed": 7,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 7,
+      "cliCoverage": 100
+    },
+    {
       "module": "global",
       "label": "全局设置",
       "total": 4,
@@ -198,6 +118,26 @@
       "cliCoverage": 100
     },
     {
+      "module": "group",
+      "label": "组织与套餐",
+      "total": 11,
+      "cliUsed": 11,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 11,
+      "cliCoverage": 100
+    },
+    {
+      "module": "material",
+      "label": "素材库",
+      "total": 7,
+      "cliUsed": 7,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 7,
+      "cliCoverage": 100
+    },
+    {
       "module": "platform",
       "label": "开放平台",
       "total": 14,
@@ -205,6 +145,66 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 14,
+      "cliCoverage": 100
+    },
+    {
+      "module": "player",
+      "label": "播放器",
+      "total": 7,
+      "cliUsed": 7,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 7,
+      "cliCoverage": 100
+    },
+    {
+      "module": "robot",
+      "label": "数字人与机器人",
+      "total": 3,
+      "cliUsed": 3,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 3,
+      "cliCoverage": 100
+    },
+    {
+      "module": "root",
+      "label": "根目录",
+      "total": 2,
+      "cliUsed": 2,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 2,
+      "cliCoverage": 100
+    },
+    {
+      "module": "statistics",
+      "label": "数据统计",
+      "total": 1,
+      "cliUsed": 1,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 1,
+      "cliCoverage": 100
+    },
+    {
+      "module": "uncategorized",
+      "label": "未分类",
+      "total": 10,
+      "cliUsed": 10,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 10,
+      "cliCoverage": 100
+    },
+    {
+      "module": "webapp",
+      "label": "WebApp",
+      "total": 6,
+      "cliUsed": 6,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 6,
       "cliCoverage": 100
     }
   ],
@@ -859,7 +859,7 @@
       "depth": 1,
       "signature": "channel",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 102
+      "line": 104
     },
     {
       "command": "channel batch-delete",
@@ -870,7 +870,18 @@
       "depth": 2,
       "signature": "batch-delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 492
+      "line": 494
+    },
+    {
+      "command": "channel ccb-focus-reset",
+      "path": [
+        "channel",
+        "ccb-focus-reset"
+      ],
+      "depth": 2,
+      "signature": "ccb-focus-reset",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 574
     },
     {
       "command": "channel create",
@@ -881,7 +892,7 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 106
+      "line": 108
     },
     {
       "command": "channel delete",
@@ -892,7 +903,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 426
+      "line": 428
     },
     {
       "command": "channel get",
@@ -903,7 +914,7 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 276
+      "line": 278
     },
     {
       "command": "channel list",
@@ -914,7 +925,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 197
+      "line": 199
+    },
+    {
+      "command": "channel status-valid",
+      "path": [
+        "channel",
+        "status-valid"
+      ],
+      "depth": 2,
+      "signature": "status-valid",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 559
     },
     {
       "command": "channel update",
@@ -925,7 +947,7 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 340
+      "line": 342
     },
     {
       "command": "chat",
@@ -946,7 +968,7 @@
       "depth": 2,
       "signature": "ban",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 213
+      "line": 229
     },
     {
       "command": "chat banned",
@@ -957,7 +979,7 @@
       "depth": 2,
       "signature": "banned",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 339
+      "line": 355
     },
     {
       "command": "chat delete",
@@ -971,6 +993,17 @@
       "line": 166
     },
     {
+      "command": "chat group-login-times",
+      "path": [
+        "chat",
+        "group-login-times"
+      ],
+      "depth": 2,
+      "signature": "group-login-times",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 210
+    },
+    {
       "command": "chat kick",
       "path": [
         "chat",
@@ -979,7 +1012,7 @@
       "depth": 2,
       "signature": "kick",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 273
+      "line": 289
     },
     {
       "command": "chat kicked",
@@ -990,7 +1023,7 @@
       "depth": 2,
       "signature": "kicked",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 369
+      "line": 385
     },
     {
       "command": "chat list",
@@ -1023,7 +1056,7 @@
       "depth": 2,
       "signature": "unban",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 243
+      "line": 259
     },
     {
       "command": "chat unkick",
@@ -1034,7 +1067,7 @@
       "depth": 2,
       "signature": "unkick",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 306
+      "line": 322
     },
     {
       "command": "chat banned list",
@@ -1046,7 +1079,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 342
+      "line": 358
     },
     {
       "command": "chat kicked list",
@@ -1058,7 +1091,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 372
+      "line": 388
     },
     {
       "command": "checkin",
@@ -1268,6 +1301,121 @@
       "line": 83
     },
     {
+      "command": "finance",
+      "path": [
+        "finance"
+      ],
+      "depth": 1,
+      "signature": "finance",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 39
+    },
+    {
+      "command": "finance audio-moderation",
+      "path": [
+        "finance",
+        "audio-moderation"
+      ],
+      "depth": 2,
+      "signature": "audio-moderation",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 41
+    },
+    {
+      "command": "finance bill-detail-list",
+      "path": [
+        "finance",
+        "bill-detail-list"
+      ],
+      "depth": 2,
+      "signature": "bill-detail-list",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 93
+    },
+    {
+      "command": "finance video-moderation",
+      "path": [
+        "finance",
+        "video-moderation"
+      ],
+      "depth": 2,
+      "signature": "video-moderation",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 67
+    },
+    {
+      "command": "finance audio-moderation get",
+      "path": [
+        "finance",
+        "audio-moderation",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 42
+    },
+    {
+      "command": "finance audio-moderation list",
+      "path": [
+        "finance",
+        "audio-moderation",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 48
+    },
+    {
+      "command": "finance audio-moderation update",
+      "path": [
+        "finance",
+        "audio-moderation",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 53
+    },
+    {
+      "command": "finance video-moderation get",
+      "path": [
+        "finance",
+        "video-moderation",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 68
+    },
+    {
+      "command": "finance video-moderation result-list",
+      "path": [
+        "finance",
+        "video-moderation",
+        "result-list"
+      ],
+      "depth": 3,
+      "signature": "result-list",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 74
+    },
+    {
+      "command": "finance video-moderation update",
+      "path": [
+        "finance",
+        "video-moderation",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 79
+    },
+    {
       "command": "global",
       "path": [
         "global"
@@ -1346,6 +1494,227 @@
       "signature": "update",
       "file": "packages/cli/src/commands/global.commands.ts",
       "line": 126
+    },
+    {
+      "command": "group",
+      "path": [
+        "group"
+      ],
+      "depth": 1,
+      "signature": "group",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 34
+    },
+    {
+      "command": "group allocate-log",
+      "path": [
+        "group",
+        "allocate-log"
+      ],
+      "depth": 2,
+      "signature": "allocate-log",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 36
+    },
+    {
+      "command": "group billing-daily",
+      "path": [
+        "group",
+        "billing-daily"
+      ],
+      "depth": 2,
+      "signature": "billing-daily",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 131
+    },
+    {
+      "command": "group health-check",
+      "path": [
+        "group",
+        "health-check"
+      ],
+      "depth": 2,
+      "signature": "health-check",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 143
+    },
+    {
+      "command": "group resource",
+      "path": [
+        "group",
+        "resource"
+      ],
+      "depth": 2,
+      "signature": "resource",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 43
+    },
+    {
+      "command": "group user",
+      "path": [
+        "group",
+        "user"
+      ],
+      "depth": 2,
+      "signature": "user",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 88
+    },
+    {
+      "command": "group resource set-concurrences",
+      "path": [
+        "group",
+        "resource",
+        "set-concurrences"
+      ],
+      "depth": 3,
+      "signature": "set-concurrences",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 45
+    },
+    {
+      "command": "group resource set-flow",
+      "path": [
+        "group",
+        "resource",
+        "set-flow"
+      ],
+      "depth": 3,
+      "signature": "set-flow",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 54
+    },
+    {
+      "command": "group resource set-live-durations",
+      "path": [
+        "group",
+        "resource",
+        "set-live-durations"
+      ],
+      "depth": 3,
+      "signature": "set-live-durations",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 66
+    },
+    {
+      "command": "group resource set-space",
+      "path": [
+        "group",
+        "resource",
+        "set-space"
+      ],
+      "depth": 3,
+      "signature": "set-space",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 75
+    },
+    {
+      "command": "group user allocation-log",
+      "path": [
+        "group",
+        "user",
+        "allocation-log"
+      ],
+      "depth": 3,
+      "signature": "allocation-log",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 135
+    },
+    {
+      "command": "group user billing-daily",
+      "path": [
+        "group",
+        "user",
+        "billing-daily"
+      ],
+      "depth": 3,
+      "signature": "billing-daily",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 125
+    },
+    {
+      "command": "group user create",
+      "path": [
+        "group",
+        "user",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 90
+    },
+    {
+      "command": "group user isolation-create",
+      "path": [
+        "group",
+        "user",
+        "isolation-create"
+      ],
+      "depth": 3,
+      "signature": "isolation-create",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 148
+    },
+    {
+      "command": "group user package-list",
+      "path": [
+        "group",
+        "user",
+        "package-list"
+      ],
+      "depth": 3,
+      "signature": "package-list",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 106
+    },
+    {
+      "command": "group user package-update",
+      "path": [
+        "group",
+        "user",
+        "package-update"
+      ],
+      "depth": 3,
+      "signature": "package-update",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 110
+    },
+    {
+      "command": "group user package-validity-list",
+      "path": [
+        "group",
+        "user",
+        "package-validity-list"
+      ],
+      "depth": 3,
+      "signature": "package-validity-list",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 167
+    },
+    {
+      "command": "group user package-validity-update",
+      "path": [
+        "group",
+        "user",
+        "package-validity-update"
+      ],
+      "depth": 3,
+      "signature": "package-validity-update",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 171
+    },
+    {
+      "command": "group user secret-reset",
+      "path": [
+        "group",
+        "user",
+        "secret-reset"
+      ],
+      "depth": 3,
+      "signature": "secret-reset",
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 195
     },
     {
       "command": "lottery",
@@ -1435,6 +1804,120 @@
       "line": 262
     },
     {
+      "command": "material",
+      "path": [
+        "material"
+      ],
+      "depth": 1,
+      "signature": "material",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 25
+    },
+    {
+      "command": "material category",
+      "path": [
+        "material",
+        "category"
+      ],
+      "depth": 2,
+      "signature": "category",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 49
+    },
+    {
+      "command": "material delete",
+      "path": [
+        "material",
+        "delete"
+      ],
+      "depth": 2,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 40
+    },
+    {
+      "command": "material label",
+      "path": [
+        "material",
+        "label"
+      ],
+      "depth": 2,
+      "signature": "label",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 57
+    },
+    {
+      "command": "material list",
+      "path": [
+        "material",
+        "list"
+      ],
+      "depth": 2,
+      "signature": "list",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 27
+    },
+    {
+      "command": "material category list",
+      "path": [
+        "material",
+        "category",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 50
+    },
+    {
+      "command": "material label create",
+      "path": [
+        "material",
+        "label",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 66
+    },
+    {
+      "command": "material label delete",
+      "path": [
+        "material",
+        "label",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 81
+    },
+    {
+      "command": "material label list",
+      "path": [
+        "material",
+        "label",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 58
+    },
+    {
+      "command": "material label update",
+      "path": [
+        "material",
+        "label",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 73
+    },
+    {
       "command": "monitor",
       "path": [
         "monitor"
@@ -1442,7 +1925,7 @@
       "depth": 1,
       "signature": "monitor",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 15
+      "line": 43
     },
     {
       "command": "monitor config",
@@ -1453,7 +1936,7 @@
       "depth": 2,
       "signature": "config",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 40
+      "line": 84
     },
     {
       "command": "monitor export",
@@ -1464,7 +1947,7 @@
       "depth": 2,
       "signature": "export <filepath>",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 76
+      "line": 120
     },
     {
       "command": "monitor import",
@@ -1475,7 +1958,7 @@
       "depth": 2,
       "signature": "import <filepath>",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 84
+      "line": 128
     },
     {
       "command": "monitor layouts",
@@ -1486,7 +1969,7 @@
       "depth": 2,
       "signature": "layouts",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 49
+      "line": 93
     },
     {
       "command": "monitor status",
@@ -1497,7 +1980,18 @@
       "depth": 2,
       "signature": "status",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 31
+      "line": 75
+    },
+    {
+      "command": "monitor tencent-stream-info-list",
+      "path": [
+        "monitor",
+        "tencent-stream-info-list"
+      ],
+      "depth": 2,
+      "signature": "tencent-stream-info-list",
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 59
     },
     {
       "command": "monitor test",
@@ -1508,7 +2002,7 @@
       "depth": 2,
       "signature": "test",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 67
+      "line": 111
     },
     {
       "command": "monitor themes",
@@ -1519,7 +2013,51 @@
       "depth": 2,
       "signature": "themes",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 58
+      "line": 102
+    },
+    {
+      "command": "partner",
+      "path": [
+        "partner"
+      ],
+      "depth": 1,
+      "signature": "partner",
+      "file": "packages/cli/src/commands/partner.commands.ts",
+      "line": 24
+    },
+    {
+      "command": "partner tencent-order",
+      "path": [
+        "partner",
+        "tencent-order"
+      ],
+      "depth": 2,
+      "signature": "tencent-order",
+      "file": "packages/cli/src/commands/partner.commands.ts",
+      "line": 38
+    },
+    {
+      "command": "partner user-register",
+      "path": [
+        "partner",
+        "user-register"
+      ],
+      "depth": 2,
+      "signature": "user-register",
+      "file": "packages/cli/src/commands/partner.commands.ts",
+      "line": 26
+    },
+    {
+      "command": "partner tencent-order create",
+      "path": [
+        "partner",
+        "tencent-order",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/partner.commands.ts",
+      "line": 39
     },
     {
       "command": "platform",
@@ -1874,7 +2412,29 @@
       "depth": 1,
       "signature": "player",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 155
+      "line": 198
+    },
+    {
+      "command": "player advert",
+      "path": [
+        "player",
+        "advert"
+      ],
+      "depth": 2,
+      "signature": "advert",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 433
+    },
+    {
+      "command": "player anti-record",
+      "path": [
+        "player",
+        "anti-record"
+      ],
+      "depth": 2,
+      "signature": "anti-record",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 376
     },
     {
       "command": "player config",
@@ -1885,7 +2445,88 @@
       "depth": 2,
       "signature": "config",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 159
+      "line": 202
+    },
+    {
+      "command": "player logo-update",
+      "path": [
+        "player",
+        "logo-update"
+      ],
+      "depth": 2,
+      "signature": "logo-update",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 475
+    },
+    {
+      "command": "player marquee-url",
+      "path": [
+        "player",
+        "marquee-url"
+      ],
+      "depth": 2,
+      "signature": "marquee-url",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 416
+    },
+    {
+      "command": "player watch-feedback-list",
+      "path": [
+        "player",
+        "watch-feedback-list"
+      ],
+      "depth": 2,
+      "signature": "watch-feedback-list",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 494
+    },
+    {
+      "command": "player advert head-update",
+      "path": [
+        "player",
+        "advert",
+        "head-update"
+      ],
+      "depth": 3,
+      "signature": "head-update",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 434
+    },
+    {
+      "command": "player advert stop-update",
+      "path": [
+        "player",
+        "advert",
+        "stop-update"
+      ],
+      "depth": 3,
+      "signature": "stop-update",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 457
+    },
+    {
+      "command": "player anti-record get",
+      "path": [
+        "player",
+        "anti-record",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 378
+    },
+    {
+      "command": "player anti-record update",
+      "path": [
+        "player",
+        "anti-record",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 392
     },
     {
       "command": "player config get",
@@ -1897,7 +2538,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 163
+      "line": 206
     },
     {
       "command": "player config update",
@@ -1909,7 +2550,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 227
+      "line": 270
     },
     {
       "command": "product",
@@ -2151,6 +2792,49 @@
       "line": 227
     },
     {
+      "command": "robot",
+      "path": [
+        "robot"
+      ],
+      "depth": 1,
+      "signature": "robot",
+      "file": "packages/cli/src/commands/robot.commands.ts",
+      "line": 26
+    },
+    {
+      "command": "robot batch-delete",
+      "path": [
+        "robot",
+        "batch-delete"
+      ],
+      "depth": 2,
+      "signature": "batch-delete",
+      "file": "packages/cli/src/commands/robot.commands.ts",
+      "line": 42
+    },
+    {
+      "command": "robot batch-save",
+      "path": [
+        "robot",
+        "batch-save"
+      ],
+      "depth": 2,
+      "signature": "batch-save",
+      "file": "packages/cli/src/commands/robot.commands.ts",
+      "line": 35
+    },
+    {
+      "command": "robot list",
+      "path": [
+        "robot",
+        "list"
+      ],
+      "depth": 2,
+      "signature": "list",
+      "file": "packages/cli/src/commands/robot.commands.ts",
+      "line": 28
+    },
+    {
       "command": "session",
       "path": [
         "session"
@@ -2211,7 +2895,7 @@
       "depth": 2,
       "signature": "audience",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 396
+      "line": 433
     },
     {
       "command": "statistics concurrency",
@@ -2222,7 +2906,7 @@
       "depth": 2,
       "signature": "concurrency",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 251
+      "line": 288
     },
     {
       "command": "statistics export",
@@ -2236,6 +2920,17 @@
       "line": 171
     },
     {
+      "command": "statistics inviter-poster-list",
+      "path": [
+        "statistics",
+        "inviter-poster-list"
+      ],
+      "depth": 2,
+      "signature": "inviter-poster-list",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 189
+    },
+    {
       "command": "statistics max-concurrent",
       "path": [
         "statistics",
@@ -2244,7 +2939,18 @@
       "depth": 2,
       "signature": "max-concurrent",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 320
+      "line": 357
+    },
+    {
+      "command": "statistics session-summary-list",
+      "path": [
+        "statistics",
+        "session-summary-list"
+      ],
+      "depth": 2,
+      "signature": "session-summary-list",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 169
     },
     {
       "command": "statistics view",
@@ -2255,7 +2961,7 @@
       "depth": 2,
       "signature": "view",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 170
+      "line": 207
     },
     {
       "command": "statistics audience device",
@@ -2267,7 +2973,7 @@
       "depth": 3,
       "signature": "device",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 483
+      "line": 520
     },
     {
       "command": "statistics audience region",
@@ -2279,7 +2985,7 @@
       "depth": 3,
       "signature": "region",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 400
+      "line": 437
     },
     {
       "command": "statistics export session",
@@ -2546,6 +3252,98 @@
       "line": 80
     },
     {
+      "command": "webapp",
+      "path": [
+        "webapp"
+      ],
+      "depth": 1,
+      "signature": "webapp",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 32
+    },
+    {
+      "command": "webapp permission-list",
+      "path": [
+        "webapp",
+        "permission-list"
+      ],
+      "depth": 2,
+      "signature": "permission-list",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 34
+    },
+    {
+      "command": "webapp role",
+      "path": [
+        "webapp",
+        "role"
+      ],
+      "depth": 2,
+      "signature": "role",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 39
+    },
+    {
+      "command": "webapp role create",
+      "path": [
+        "webapp",
+        "role",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 54
+    },
+    {
+      "command": "webapp role delete",
+      "path": [
+        "webapp",
+        "role",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 75
+    },
+    {
+      "command": "webapp role get",
+      "path": [
+        "webapp",
+        "role",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 48
+    },
+    {
+      "command": "webapp role list",
+      "path": [
+        "webapp",
+        "role",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 41
+    },
+    {
+      "command": "webapp role update",
+      "path": [
+        "webapp",
+        "role",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 64
+    },
+    {
       "command": "whitelist",
       "path": [
         "whitelist"
@@ -2617,14 +3415,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 227,
+          "missing": 222,
           "total": 283,
-          "coverage": 19.8
+          "coverage": 21.6
         }
       ],
-      "missing": 227,
+      "missing": 222,
       "total": 283,
-      "coverage": 19.8
+      "coverage": 21.6
     },
     {
       "modules": [
@@ -2658,14 +3456,14 @@
         {
           "module": "group",
           "label": "组织与套餐",
-          "missing": 11,
+          "missing": 0,
           "total": 11,
-          "coverage": 0
+          "coverage": 100
         }
       ],
-      "missing": 74,
+      "missing": 63,
       "total": 106,
-      "coverage": 30.2
+      "coverage": 40.6
     },
     {
       "modules": [
@@ -2683,14 +3481,14 @@
         {
           "module": "web",
           "label": "观看页与观看条件",
-          "missing": 34,
+          "missing": 33,
           "total": 40,
-          "coverage": 15
+          "coverage": 17.5
         }
       ],
-      "missing": 34,
+      "missing": 33,
       "total": 40,
-      "coverage": 15
+      "coverage": 17.5
     },
     {
       "modules": [
@@ -2716,63 +3514,14 @@
         {
           "module": "robot",
           "label": "数字人与机器人",
-          "missing": 3,
-          "total": 3,
-          "coverage": 0
-        }
-      ],
-      "missing": 34,
-      "total": 48,
-      "coverage": 29.2
-    },
-    {
-      "modules": [
-        "finance",
-        "material",
-        "webapp",
-        "global"
-      ],
-      "title": "后台运维与审核工具",
-      "command": "新增 `finance`、`material`、`webapp`、`global`",
-      "rationale": "覆盖量不大，但对审核、素材库、WebApp 权限和全局设置的自动化价值高。",
-      "examples": [
-        "`finance audio-moderation *`、`finance video-moderation *`",
-        "`material list/delete`、`material bind-channel`",
-        "`webapp role *`、`global setting *`"
-      ],
-      "relatedModules": [
-        {
-          "module": "finance",
-          "label": "财务与审核",
-          "missing": 7,
-          "total": 7,
-          "coverage": 0
-        },
-        {
-          "module": "material",
-          "label": "素材库",
-          "missing": 7,
-          "total": 7,
-          "coverage": 0
-        },
-        {
-          "module": "webapp",
-          "label": "WebApp",
-          "missing": 6,
-          "total": 6,
-          "coverage": 0
-        },
-        {
-          "module": "global",
-          "label": "全局设置",
           "missing": 0,
-          "total": 4,
+          "total": 3,
           "coverage": 100
         }
       ],
-      "missing": 20,
-      "total": 24,
-      "coverage": 16.7
+      "missing": 31,
+      "total": 48,
+      "coverage": 35.4
     },
     {
       "modules": [
@@ -4832,7 +5581,7 @@
             "reference": "StatisticsService#getRegionDistribution",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 296,
+            "line": 306,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -5196,7 +5945,7 @@
             "reference": "StatisticsService#getConcurrencyData",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 141,
+            "line": 151,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -5235,7 +5984,7 @@
             "reference": "StatisticsService#getMaxConcurrent",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 212,
+            "line": 222,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -5921,7 +6670,7 @@
             "reference": "StatisticsService#getDeviceDistribution",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 378,
+            "line": 388,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -6183,7 +6932,7 @@
             "reference": "StatisticsService#getDailyViewStatistics",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 70,
+            "line": 80,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -7110,7 +7859,7 @@
             "reference": "StatisticsService#exportSessionStats",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 574,
+            "line": 584,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -7325,7 +8074,7 @@
             "reference": "StatisticsService#getViewlog",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 482,
+            "line": 492,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -10726,8 +11475,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#updateHeadAdvert",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 154,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10752,8 +11510,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#updateStopAdvert",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 159,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10811,8 +11578,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updatePlayerLogo",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11528,8 +12304,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updatePlayerLogo",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11556,8 +12341,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updatePlayerLogo",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14178,8 +14972,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#listVideoModerationResults",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 38,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14206,8 +15009,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#getVideoModerationSettings",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 28,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14234,8 +15046,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#listAudioModerationRecords",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14262,8 +15083,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#getAudioModerationSettings",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14292,8 +15122,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#listBillDetails",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 43,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14324,8 +15163,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#updateVideoModerationSettings",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 33,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14352,8 +15200,17 @@
         "file": "packages/sdk/src/services/finance.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "FinanceService#updateAudioModerationSettings",
+            "cliModule": "finance",
+            "file": "packages/cli/src/services/finance-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/finance.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14523,8 +15380,17 @@
         "file": "packages/sdk/src/services/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "GroupService#listAllocateLog",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14549,8 +15415,17 @@
         "file": "packages/sdk/src/services/v4/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GroupService#listGroupUserPackages",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 43,
+            "sdkFile": "packages/sdk/src/services/v4/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14578,8 +15453,17 @@
         "file": "packages/sdk/src/services/v4/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GroupService#listGroupUserBillingDaily",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 58,
+            "sdkFile": "packages/sdk/src/services/v4/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14606,8 +15490,17 @@
         "file": "packages/sdk/src/services/v4/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GroupService#listBillingDaily",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 53,
+            "sdkFile": "packages/sdk/src/services/v4/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14638,8 +15531,17 @@
         "file": "packages/sdk/src/services/v4/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GroupService#createGroupUser",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 38,
+            "sdkFile": "packages/sdk/src/services/v4/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14666,8 +15568,17 @@
         "file": "packages/sdk/src/services/v4/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GroupService#updateGroupUserPackage",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 48,
+            "sdkFile": "packages/sdk/src/services/v4/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14694,8 +15605,17 @@
         "file": "packages/sdk/src/services/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "GroupService#setSpace",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 33,
+            "sdkFile": "packages/sdk/src/services/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14722,8 +15642,17 @@
         "file": "packages/sdk/src/services/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "GroupService#setFlow",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14750,8 +15679,17 @@
         "file": "packages/sdk/src/services/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "GroupService#setConcurrences",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14779,8 +15717,17 @@
         "file": "packages/sdk/src/services/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "GroupService#setLiveDurations",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 28,
+            "sdkFile": "packages/sdk/src/services/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14805,8 +15752,17 @@
         "file": "packages/sdk/src/services/v4/group.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GroupService#listAllocationLogs",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 63,
+            "sdkFile": "packages/sdk/src/services/v4/group.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15802,8 +16758,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#listMaterialLabels",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 28,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15830,8 +16795,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#listMaterialCategories",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15860,8 +16834,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#listMaterials",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15889,8 +16872,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#updateMaterialLabel",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 38,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15917,8 +16909,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#deleteMaterials",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15945,8 +16946,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#deleteMaterialLabel",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 43,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15973,8 +16983,17 @@
         "file": "packages/sdk/src/services/v4/material.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4MaterialService#createMaterialLabel",
+            "cliModule": "material",
+            "file": "packages/cli/src/services/material-service.ts",
+            "line": 33,
+            "sdkFile": "packages/sdk/src/services/v4/material.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16536,8 +17555,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#getAntiRecordSettings",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 139,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16562,8 +17590,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#getWatchFeedbackList",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 164,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16588,8 +17625,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#setMarqueeUrl",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 149,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16620,8 +17666,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#setAntiRecordSettings",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 144,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16646,8 +17701,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#updateHeadAdvert",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 154,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16672,8 +17736,17 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#updateStopAdvert",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 159,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16698,8 +17771,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updatePlayerLogo",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16724,8 +17806,17 @@
         "file": "packages/sdk/src/services/v4/robot.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4RobotService#listRobots",
+            "cliModule": "robot",
+            "file": "packages/cli/src/services/robot-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16752,8 +17843,17 @@
         "file": "packages/sdk/src/services/v4/robot.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4RobotService#batchSaveRobots",
+            "cliModule": "robot",
+            "file": "packages/cli/src/services/robot-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16780,8 +17880,17 @@
         "file": "packages/sdk/src/services/v4/robot.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4RobotService#batchDeleteRobots",
+            "cliModule": "robot",
+            "file": "packages/cli/src/services/robot-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16811,8 +17920,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#registerUser",
+            "cliModule": "partner",
+            "file": "packages/cli/src/services/partner-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16842,8 +17960,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#createTencentOrder",
+            "cliModule": "partner",
+            "file": "packages/cli/src/services/partner-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16868,8 +17995,17 @@
         "file": "packages/sdk/src/services/v4/statistics.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4StatisticsService#getSessionStatsSummaryList",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 56,
+            "sdkFile": "packages/sdk/src/services/v4/statistics.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16894,8 +18030,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#getPackageValidityList",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 78,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16920,8 +18065,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#healthCheck",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 68,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16948,8 +18102,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#listTencentStreamInfo",
+            "cliModule": "monitor",
+            "file": "packages/cli/src/services/monitor-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16977,8 +18140,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#createIsolation",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 73,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17005,8 +18177,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#updatePackageValidity",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 83,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17033,8 +18214,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#getInviterPosterList",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 61,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17061,8 +18251,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#getGroupLoginTimes",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 243,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17089,8 +18288,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#checkChannelStatusValid",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 235,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17115,8 +18323,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#resetCcbFocus",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 244,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17143,8 +18360,17 @@
         "file": "packages/sdk/src/services/other.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "OtherService#resetAppSecret",
+            "cliModule": "group",
+            "file": "packages/cli/src/services/group-service.ts",
+            "line": 88,
+            "sdkFile": "packages/sdk/src/services/other.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20041,8 +21267,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updatePlayerLogo",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20470,8 +21705,17 @@
         "file": "packages/sdk/src/services/v4/webapp.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4WebAppService#listRoles",
+            "cliModule": "webapp",
+            "file": "packages/cli/src/services/webapp-service.ts",
+            "line": 28,
+            "sdkFile": "packages/sdk/src/services/v4/webapp.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20500,8 +21744,17 @@
         "file": "packages/sdk/src/services/v4/webapp.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4WebAppService#updateRole",
+            "cliModule": "webapp",
+            "file": "packages/cli/src/services/webapp-service.ts",
+            "line": 33,
+            "sdkFile": "packages/sdk/src/services/v4/webapp.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20528,8 +21781,17 @@
         "file": "packages/sdk/src/services/v4/webapp.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4WebAppService#getRole",
+            "cliModule": "webapp",
+            "file": "packages/cli/src/services/webapp-service.ts",
+            "line": 23,
+            "sdkFile": "packages/sdk/src/services/v4/webapp.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20556,8 +21818,17 @@
         "file": "packages/sdk/src/services/v4/webapp.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4WebAppService#deleteRole",
+            "cliModule": "webapp",
+            "file": "packages/cli/src/services/webapp-service.ts",
+            "line": 38,
+            "sdkFile": "packages/sdk/src/services/v4/webapp.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20586,8 +21857,17 @@
         "file": "packages/sdk/src/services/v4/webapp.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4WebAppService#createRole",
+            "cliModule": "webapp",
+            "file": "packages/cli/src/services/webapp-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/v4/webapp.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20612,8 +21892,17 @@
         "file": "packages/sdk/src/services/v4/webapp.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4WebAppService#listPermissions",
+            "cliModule": "webapp",
+            "file": "packages/cli/src/services/webapp-service.ts",
+            "line": 13,
+            "sdkFile": "packages/sdk/src/services/v4/webapp.service.ts"
+          }
+        ]
       }
     }
   ]

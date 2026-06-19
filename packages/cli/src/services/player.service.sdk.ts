@@ -134,6 +134,41 @@ export class PlayerServiceSdk {
     };
   }
 
+  async getAntiRecordSettings(channelId?: string | number): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.player.getAntiRecordSettings(channelId === undefined ? undefined : Number(channelId));
+  }
+
+  async setAntiRecordSettings(channelId: string | number, params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.player.setAntiRecordSettings(Number(channelId), params);
+  }
+
+  async setMarqueeUrl(channelId: string | number, params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.player.setMarqueeUrl(Number(channelId), params);
+  }
+
+  async updateHeadAdvert(channelId: string | number, params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.player.updateHeadAdvert(Number(channelId), params);
+  }
+
+  async updateStopAdvert(channelId: string | number, params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.player.updateStopAdvert(Number(channelId), params);
+  }
+
+  async getWatchFeedbackList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.player.getWatchFeedbackList(params);
+  }
+
+  async updatePlayerLogo(channelId: string | number, params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.updatePlayerLogo(String(channelId), params);
+  }
+
   /**
    * Validates player config get options
    * @param options Options to validate
