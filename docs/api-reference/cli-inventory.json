@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T20:43:18.380Z",
+  "generatedAt": "2026-06-19T21:27:24.983Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,18 +13,18 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 326,
-    "cliMissingLatestApis": 252,
-    "cliCoverage": 56.4,
-    "cliUsageReferences": 331,
-    "cliSdkServiceUsages": 331,
+    "cliUsedLatestApis": 357,
+    "cliMissingLatestApis": 221,
+    "cliCoverage": 61.8,
+    "cliUsageReferences": 362,
+    "cliSdkServiceUsages": 362,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 317,
+    "matchedApiIds": 348,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 426,
-    "cliTopLevelCommands": 39
+    "cliCommandPaths": 473,
+    "cliTopLevelCommands": 40
   },
   "modules": [
     {
@@ -36,16 +36,6 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 62,
       "cliCoverage": 21.9
-    },
-    {
-      "module": "user",
-      "label": "用户与观众",
-      "total": 73,
-      "cliUsed": 42,
-      "cliMissing": 31,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 42,
-      "cliCoverage": 57.5
     },
     {
       "module": "account",
@@ -185,6 +175,16 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 10,
+      "cliCoverage": 100
+    },
+    {
+      "module": "user",
+      "label": "用户与观众",
+      "total": 73,
+      "cliUsed": 73,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 73,
       "cliCoverage": 100
     },
     {
@@ -4120,6 +4120,575 @@
       "line": 66
     },
     {
+      "command": "user",
+      "path": [
+        "user"
+      ],
+      "depth": 1,
+      "signature": "user",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 45
+    },
+    {
+      "command": "user bill",
+      "path": [
+        "user",
+        "bill"
+      ],
+      "depth": 2,
+      "signature": "bill",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 139
+    },
+    {
+      "command": "user child",
+      "path": [
+        "user",
+        "child"
+      ],
+      "depth": 2,
+      "signature": "child",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 49
+    },
+    {
+      "command": "user mic-duration",
+      "path": [
+        "user",
+        "mic-duration"
+      ],
+      "depth": 2,
+      "signature": "mic-duration",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 130
+    },
+    {
+      "command": "user mr-concurrency",
+      "path": [
+        "user",
+        "mr-concurrency"
+      ],
+      "depth": 2,
+      "signature": "mr-concurrency",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 135
+    },
+    {
+      "command": "user org",
+      "path": [
+        "user",
+        "org"
+      ],
+      "depth": 2,
+      "signature": "org",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 87
+    },
+    {
+      "command": "user setting",
+      "path": [
+        "user",
+        "setting"
+      ],
+      "depth": 2,
+      "signature": "setting",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 105
+    },
+    {
+      "command": "user sms-send",
+      "path": [
+        "user",
+        "sms-send"
+      ],
+      "depth": 2,
+      "signature": "sms-send",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 124
+    },
+    {
+      "command": "user template",
+      "path": [
+        "user",
+        "template"
+      ],
+      "depth": 2,
+      "signature": "template",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 102
+    },
+    {
+      "command": "user viewlog",
+      "path": [
+        "user",
+        "viewlog"
+      ],
+      "depth": 2,
+      "signature": "viewlog",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 147
+    },
+    {
+      "command": "user bill use-detail",
+      "path": [
+        "user",
+        "bill",
+        "use-detail"
+      ],
+      "depth": 3,
+      "signature": "use-detail",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 140
+    },
+    {
+      "command": "user child create",
+      "path": [
+        "user",
+        "child",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 58
+    },
+    {
+      "command": "user child delete",
+      "path": [
+        "user",
+        "child",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 78
+    },
+    {
+      "command": "user child list",
+      "path": [
+        "user",
+        "child",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 51
+    },
+    {
+      "command": "user child roles",
+      "path": [
+        "user",
+        "child",
+        "roles"
+      ],
+      "depth": 3,
+      "signature": "roles",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 55
+    },
+    {
+      "command": "user child sale-get",
+      "path": [
+        "user",
+        "child",
+        "sale-get"
+      ],
+      "depth": 3,
+      "signature": "sale-get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 82
+    },
+    {
+      "command": "user child update",
+      "path": [
+        "user",
+        "child",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 68
+    },
+    {
+      "command": "user mr-concurrency detail",
+      "path": [
+        "user",
+        "mr-concurrency",
+        "detail"
+      ],
+      "depth": 3,
+      "signature": "detail",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 136
+    },
+    {
+      "command": "user org create",
+      "path": [
+        "user",
+        "org",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 92
+    },
+    {
+      "command": "user org delete",
+      "path": [
+        "user",
+        "org",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 98
+    },
+    {
+      "command": "user org list",
+      "path": [
+        "user",
+        "org",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 89
+    },
+    {
+      "command": "user setting footer",
+      "path": [
+        "user",
+        "setting",
+        "footer"
+      ],
+      "depth": 3,
+      "signature": "footer",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 107
+    },
+    {
+      "command": "user setting pv-show",
+      "path": [
+        "user",
+        "setting",
+        "pv-show"
+      ],
+      "depth": 3,
+      "signature": "pv-show",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 117
+    },
+    {
+      "command": "user template audio-moderation",
+      "path": [
+        "user",
+        "template",
+        "audio-moderation"
+      ],
+      "depth": 3,
+      "signature": "audio-moderation",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 194
+    },
+    {
+      "command": "user template donate",
+      "path": [
+        "user",
+        "template",
+        "donate"
+      ],
+      "depth": 3,
+      "signature": "donate",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 156
+    },
+    {
+      "command": "user template marquee",
+      "path": [
+        "user",
+        "template",
+        "marquee"
+      ],
+      "depth": 3,
+      "signature": "marquee",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 164
+    },
+    {
+      "command": "user template playback",
+      "path": [
+        "user",
+        "template",
+        "playback"
+      ],
+      "depth": 3,
+      "signature": "playback",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 187
+    },
+    {
+      "command": "user template role-config",
+      "path": [
+        "user",
+        "template",
+        "role-config"
+      ],
+      "depth": 3,
+      "signature": "role-config",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 180
+    },
+    {
+      "command": "user template video-moderation",
+      "path": [
+        "user",
+        "template",
+        "video-moderation"
+      ],
+      "depth": 3,
+      "signature": "video-moderation",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 204
+    },
+    {
+      "command": "user viewlog detail",
+      "path": [
+        "user",
+        "viewlog",
+        "detail"
+      ],
+      "depth": 3,
+      "signature": "detail",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 150
+    },
+    {
+      "command": "user viewlog list",
+      "path": [
+        "user",
+        "viewlog",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 148
+    },
+    {
+      "command": "user setting footer get",
+      "path": [
+        "user",
+        "setting",
+        "footer",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 108
+    },
+    {
+      "command": "user setting footer update",
+      "path": [
+        "user",
+        "setting",
+        "footer",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 110
+    },
+    {
+      "command": "user setting pv-show get",
+      "path": [
+        "user",
+        "setting",
+        "pv-show",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 118
+    },
+    {
+      "command": "user setting pv-show update",
+      "path": [
+        "user",
+        "setting",
+        "pv-show",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 120
+    },
+    {
+      "command": "user template audio-moderation get",
+      "path": [
+        "user",
+        "template",
+        "audio-moderation",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 195
+    },
+    {
+      "command": "user template audio-moderation update",
+      "path": [
+        "user",
+        "template",
+        "audio-moderation",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 197
+    },
+    {
+      "command": "user template donate get",
+      "path": [
+        "user",
+        "template",
+        "donate",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 157
+    },
+    {
+      "command": "user template donate update",
+      "path": [
+        "user",
+        "template",
+        "donate",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 159
+    },
+    {
+      "command": "user template marquee get",
+      "path": [
+        "user",
+        "template",
+        "marquee",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 165
+    },
+    {
+      "command": "user template marquee update",
+      "path": [
+        "user",
+        "template",
+        "marquee",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 167
+    },
+    {
+      "command": "user template playback get",
+      "path": [
+        "user",
+        "template",
+        "playback",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 188
+    },
+    {
+      "command": "user template playback update",
+      "path": [
+        "user",
+        "template",
+        "playback",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 190
+    },
+    {
+      "command": "user template role-config get",
+      "path": [
+        "user",
+        "template",
+        "role-config",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 181
+    },
+    {
+      "command": "user template role-config update",
+      "path": [
+        "user",
+        "template",
+        "role-config",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 183
+    },
+    {
+      "command": "user template video-moderation get",
+      "path": [
+        "user",
+        "template",
+        "video-moderation",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 205
+    },
+    {
+      "command": "user template video-moderation update",
+      "path": [
+        "user",
+        "template",
+        "video-moderation",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 207
+    },
+    {
       "command": "viewer",
       "path": [
         "viewer"
@@ -5098,47 +5667,6 @@
       "missing": 221,
       "total": 283,
       "coverage": 21.9
-    },
-    {
-      "modules": [
-        "user",
-        "account",
-        "group"
-      ],
-      "title": "账号、组织与资源管理",
-      "command": "新增 `user`、`group`，扩展 `platform`",
-      "rationale": "这些接口更偏运营后台和批量管理，适合给内部自动化脚本使用。",
-      "examples": [
-        "`account category *`、`account callback *`、`account duration`",
-        "`user product *`、`user viewer-label *`",
-        "`group quota *`、`group allocation-log list`"
-      ],
-      "relatedModules": [
-        {
-          "module": "user",
-          "label": "用户与观众",
-          "missing": 31,
-          "total": 73,
-          "coverage": 57.5
-        },
-        {
-          "module": "account",
-          "label": "账号与财务",
-          "missing": 0,
-          "total": 22,
-          "coverage": 100
-        },
-        {
-          "module": "group",
-          "label": "组织与套餐",
-          "missing": 0,
-          "total": 11,
-          "coverage": 100
-        }
-      ],
-      "missing": 31,
-      "total": 106,
-      "coverage": 70.8
     }
   ],
   "unmatchedUsages": [],
@@ -20556,8 +21084,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getPvShowEnable",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 108,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20582,8 +21119,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getWatchLogList",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 132,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20645,8 +21191,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listChildAccountRoles",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 20,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20671,8 +21226,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getDonateTemplate",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 52,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20697,8 +21261,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getPlaybackSetting",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 76,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20723,8 +21296,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getRoleConfigTemplate",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 68,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20749,8 +21331,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getMarqueeTemplate",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 60,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20775,8 +21366,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getVideoModerationSetting",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 92,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20801,8 +21401,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getAudioModerationSetting",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 84,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20969,8 +21578,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getGlobalFooter",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 100,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20999,8 +21617,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getBillUseDetailList",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 128,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21064,8 +21691,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listChildAccounts",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 16,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21090,8 +21726,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getMicDuration",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 120,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21116,8 +21761,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listOrganizations",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 40,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21296,8 +21950,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#sendSms",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 116,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21669,8 +22332,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getWatchLogDetail",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 136,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21800,8 +22472,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getMrConcurrencyDetail",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 124,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22127,8 +22808,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteChildAccounts",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 32,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22155,8 +22845,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteOrganization",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 48,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22299,8 +22998,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createChildAccount",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 24,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22367,8 +23075,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createOrganization",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 44,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22395,8 +23112,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updatePvShowEnable",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 112,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22421,8 +23147,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updatePlaybackSetting",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 80,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22447,8 +23182,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateRoleConfigTemplate",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 72,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22475,8 +23219,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateDonateTemplate",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 56,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22503,8 +23256,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateMarqueeTemplate",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 64,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22534,8 +23296,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateVideoModerationSetting",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 96,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22565,8 +23336,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateAudioModerationSetting",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 88,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22737,8 +23517,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateGlobalFooter",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 104,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22765,8 +23554,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateChildAccount",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 28,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22791,8 +23589,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#getBySale",
+            "cliModule": "user",
+            "file": "packages/cli/src/services/user.service.ts",
+            "line": 36,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {

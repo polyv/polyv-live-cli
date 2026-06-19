@@ -118,10 +118,14 @@ export interface GetChildAccountParams {
  * Parameters for updating a child account
  */
 export interface UpdateChildAccountParams {
-  /** Child user ID (required) */
-  childUserId: string;
+  /** Sub-account login email (required by current API docs) */
+  childEmail?: string;
+  /** Legacy child user ID alias */
+  childUserId?: string;
   /** Sub-account name */
   childName?: string;
+  /** Password */
+  password?: string;
   /** Phone number */
   telephone?: string;
   /** Description */
@@ -136,8 +140,12 @@ export interface UpdateChildAccountParams {
  * Parameters for deleting child accounts
  */
 export interface DeleteChildAccountsParams {
+  /** Sub-account login email */
+  childEmail?: string;
+  /** Sub-account login emails */
+  childEmails?: string[];
   /** Array of child user IDs to delete */
-  childUserIds: string[];
+  childUserIds?: string[];
 }
 
 /**
@@ -191,17 +199,31 @@ export interface InviteCustomerInfo {
  */
 export interface Organization {
   /** Organization ID */
-  organizationId: number;
+  organizationId?: number;
+  /** Organization ID returned by API */
+  id?: number;
   /** Organization name */
-  organizationName: string;
+  organizationName?: string;
+  /** Organization name returned by API */
+  name?: string;
+  /** Organization description */
+  description?: string;
+  /** Parent organization ID */
+  parentId?: number;
 }
 
 /**
  * Parameters for creating an organization
  */
 export interface CreateOrganizationParams {
-  /** Organization name */
-  organizationName: string;
+  /** Organization name (required by current API docs) */
+  name?: string;
+  /** Parent organization ID (required by current API docs) */
+  parentId?: number;
+  /** Organization description */
+  description?: string;
+  /** Legacy organization name alias */
+  organizationName?: string;
 }
 
 /**
@@ -1291,11 +1313,24 @@ export interface UpdateDonateTemplateParams {
  */
 export interface MarqueeTemplate {
   /** Whether enabled */
-  enabled: boolean;
+  enabled?: boolean;
+  /** Content protection switch */
+  enable?: UserSwitchValue;
+  /** Content protection type */
+  antiRecordType?: string;
+  /** Content protection display model */
+  modelType?: string;
   /** Content */
   content?: string;
+  /** Opacity */
+  opacity?: number | string;
   /** Speed */
   speed?: number;
+  fontSize?: string;
+  fontColor?: string;
+  showMode?: string;
+  doubleEnabled?: UserSwitchValue;
+  autoZoomEnabled?: UserSwitchValue;
 }
 
 /**
@@ -1303,11 +1338,24 @@ export interface MarqueeTemplate {
  */
 export interface UpdateMarqueeTemplateParams {
   /** Whether enabled */
-  enabled: boolean;
+  enabled?: boolean;
+  /** Content protection switch */
+  enable?: UserSwitchValue;
+  /** Content protection type */
+  antiRecordType?: string;
+  /** Content protection display model */
+  modelType?: string;
   /** Content */
   content?: string;
+  /** Opacity */
+  opacity?: number | string;
   /** Speed */
   speed?: number;
+  fontSize?: string;
+  fontColor?: string;
+  showMode?: string;
+  doubleEnabled?: UserSwitchValue;
+  autoZoomEnabled?: UserSwitchValue;
 }
 
 /**
@@ -1315,7 +1363,11 @@ export interface UpdateMarqueeTemplateParams {
  */
 export interface RoleConfigTemplate {
   /** Roles list */
-  roles: string[];
+  roles?: string[];
+  /** Teacher role config */
+  teacherConfig?: Record<string, unknown>;
+  /** Guest role config */
+  guestConfig?: Record<string, unknown>;
 }
 
 /**
@@ -1323,7 +1375,11 @@ export interface RoleConfigTemplate {
  */
 export interface UpdateRoleConfigTemplateParams {
   /** Roles list */
-  roles: string[];
+  roles?: string[];
+  /** Teacher role config */
+  teacherConfig?: Record<string, unknown>;
+  /** Guest role config */
+  guestConfig?: Record<string, unknown>;
 }
 
 /**
@@ -1371,9 +1427,13 @@ export interface UpdatePlaybackSettingParams {
  */
 export interface AudioModerationSetting {
   /** Whether enabled */
-  enabled: boolean;
+  enabled?: boolean;
   /** Moderation level */
   level?: string;
+  moderationEnabled?: UserSwitchValue;
+  moderationStrategy?: string;
+  badwordEnabled?: UserSwitchValue;
+  illegalNotify?: Record<string, unknown>;
 }
 
 /**
@@ -1381,9 +1441,13 @@ export interface AudioModerationSetting {
  */
 export interface UpdateAudioModerationSettingParams {
   /** Whether enabled */
-  enabled: boolean;
+  enabled?: boolean;
   /** Moderation level */
   level?: string;
+  moderationEnabled?: UserSwitchValue;
+  moderationStrategy?: string;
+  badwordEnabled?: UserSwitchValue;
+  illegalNotify?: Record<string, unknown>;
 }
 
 /**
@@ -1391,9 +1455,13 @@ export interface UpdateAudioModerationSettingParams {
  */
 export interface VideoModerationSetting {
   /** Whether enabled */
-  enabled: boolean;
+  enabled?: boolean;
   /** Moderation level */
   level?: string;
+  moderationEnabled?: UserSwitchValue;
+  moderationStrategy?: string;
+  imageFrequency?: number;
+  illegalNotify?: Record<string, unknown>;
 }
 
 /**
@@ -1401,9 +1469,13 @@ export interface VideoModerationSetting {
  */
 export interface UpdateVideoModerationSettingParams {
   /** Whether enabled */
-  enabled: boolean;
+  enabled?: boolean;
   /** Moderation level */
   level?: string;
+  moderationEnabled?: UserSwitchValue;
+  moderationStrategy?: string;
+  imageFrequency?: number;
+  illegalNotify?: Record<string, unknown>;
 }
 
 // ============================================
@@ -1555,10 +1627,16 @@ export interface MrConcurrencyDetailResponse {
  * Parameters for sending SMS
  */
 export interface SendSmsParams {
+  /** Mobile numbers */
+  phoneNumbers?: Array<string | number>;
+  /** SMS template parameter names */
+  templateParamNames?: string[];
+  /** SMS template parameter values */
+  templateParamValues?: Array<string | number>;
   /** Mobile number */
-  mobile: string;
+  mobile?: string;
   /** SMS content */
-  content: string;
+  content?: string;
 }
 
 /**

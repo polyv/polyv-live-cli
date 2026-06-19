@@ -249,7 +249,8 @@ export class V4UserService {
    * ```
    */
   async updateChildAccount(params: UpdateChildAccountParams): Promise<void> {
-    this.validateRequiredString(params.childUserId, 'childUserId');
+    const identifier = params.childEmail ?? params.childUserId;
+    this.validateRequiredString(identifier, params.childEmail ? 'childEmail' : 'childUserId');
 
     await this.client.httpClient.post(
       '/live/v4/user/children/update',
@@ -270,8 +271,24 @@ export class V4UserService {
    * ```
    */
   async deleteChildAccounts(params: DeleteChildAccountsParams): Promise<void> {
+    if (params.childEmail) {
+      await this.client.httpClient.post(
+        '/live/v4/user/children/delete',
+        { childEmail: params.childEmail }
+      );
+      return;
+    }
+
+    if (params.childEmails && params.childEmails.length > 0) {
+      await this.client.httpClient.post(
+        '/live/v4/user/children/delete',
+        { childEmails: params.childEmails }
+      );
+      return;
+    }
+
     if (!params.childUserIds || params.childUserIds.length === 0) {
-      throw new PolyVValidationError('childUserIds is required and cannot be empty');
+      throw new PolyVValidationError('childEmail or childUserIds is required');
     }
 
     await this.client.httpClient.post(
@@ -363,11 +380,24 @@ export class V4UserService {
    * ```
    */
   async createOrganization(params: CreateOrganizationParams): Promise<CreateOrganizationResponse> {
-    this.validateRequiredString(params.organizationName, 'organizationName');
+    const request = params.name !== undefined || params.parentId !== undefined
+      ? {
+          name: params.name,
+          parentId: params.parentId,
+          description: params.description,
+        }
+      : params;
+
+    if (params.name !== undefined || params.parentId !== undefined) {
+      this.validateRequiredString(params.name, 'name');
+      this.validateRequiredNumber(params.parentId, 'parentId');
+    } else {
+      this.validateRequiredString(params.organizationName, 'organizationName');
+    }
 
     const response = await this.client.httpClient.post<CreateOrganizationResponse>(
       '/live/v4/user/organization/create',
-      params
+      request
     );
     return response as unknown as CreateOrganizationResponse;
   }
@@ -1411,6 +1441,10 @@ export class V4UserService {
    * ```
    */
   async updateMarqueeTemplate(params: UpdateMarqueeTemplateParams): Promise<void> {
+    if (params.enable !== undefined) {
+      this.validateYnValue(params.enable, 'enable');
+    }
+
     await this.client.httpClient.post(
       '/live/v4/user/template/marquee/update',
       params
@@ -1523,6 +1557,9 @@ export class V4UserService {
    * ```
    */
   async updateAudioModerationSetting(params: UpdateAudioModerationSettingParams): Promise<void> {
+    this.validateOptionalYnValue(params.moderationEnabled, 'moderationEnabled');
+    this.validateOptionalYnValue(params.badwordEnabled, 'badwordEnabled');
+
     await this.client.httpClient.post(
       '/live/v4/user/template/audio-moderation/update',
       params
@@ -1561,6 +1598,9 @@ export class V4UserService {
    * ```
    */
   async updateVideoModerationSetting(params: UpdateVideoModerationSettingParams): Promise<void> {
+    this.validateOptionalYnValue(params.moderationEnabled, 'moderationEnabled');
+    this.validateOptionalNumber(params.imageFrequency, 'imageFrequency');
+
     await this.client.httpClient.post(
       '/live/v4/user/template/video-moderation/update',
       params
@@ -1778,8 +1818,20 @@ export class V4UserService {
    * ```
    */
   async sendSms(params: SendSmsParams): Promise<void> {
-    this.validateRequiredString(params.mobile, 'mobile');
-    this.validateRequiredString(params.content, 'content');
+    if (params.phoneNumbers !== undefined || params.templateParamNames !== undefined || params.templateParamValues !== undefined) {
+      if (!params.phoneNumbers || params.phoneNumbers.length === 0) {
+        throw new PolyVValidationError('phoneNumbers is required and cannot be empty');
+      }
+      if (!params.templateParamNames || params.templateParamNames.length === 0) {
+        throw new PolyVValidationError('templateParamNames is required and cannot be empty');
+      }
+      if (!params.templateParamValues || params.templateParamValues.length === 0) {
+        throw new PolyVValidationError('templateParamValues is required and cannot be empty');
+      }
+    } else {
+      this.validateRequiredString(params.mobile, 'mobile');
+      this.validateRequiredString(params.content, 'content');
+    }
 
     await this.client.httpClient.post(
       '/live/v4/user/sms/send',

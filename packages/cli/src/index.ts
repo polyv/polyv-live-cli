@@ -47,6 +47,7 @@ import { registerPartnerCommands } from './commands/partner.commands';
 import { registerWebCommands } from './commands/web.commands';
 import { registerInviteSalesCommands } from './commands/invite-sales.commands';
 import { registerCustomFieldCommands } from './commands/custom-field.commands';
+import { registerUserCommands } from './commands/user.commands';
 
 // Global error handlers
 process.on('uncaughtException', handleUncaughtError);
@@ -131,6 +132,7 @@ Commands:
   web                   Manage watch page configuration
   invite-sales          Manage user invite sales
   custom-field          Manage user custom fields
+  user                  Manage user account settings
   interaction           Manage cross-cutting live interaction APIs
 
 Quick Start:
@@ -217,6 +219,7 @@ async function main(): Promise<void> {
   registerWebCommands(program);
   registerInviteSalesCommands(program);
   registerCustomFieldCommands(program);
+  registerUserCommands(program);
 
   // Helper function to get all registered commands dynamically
   function getAllRegisteredCommands(): { topLevel: string[], subCommands: Map<string, string[]> } {

@@ -31,3 +31,6 @@ export { registerInteractionCommands } from './interaction.commands';
 // User product/invite/custom field commands
 export { registerInviteSalesCommands } from './invite-sales.commands';
 export { registerCustomFieldCommands } from './custom-field.commands';
+
+// User settings commands
+export { registerUserCommands } from './user.commands';

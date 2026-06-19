@@ -142,6 +142,17 @@ describe('V4UserService', () => {
         expect.objectContaining({ childUserId: 'child_001' })
       );
     });
+
+    it('should update child account by email', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.updateChildAccount({ childEmail: 'child@example.com', password: 'Password123' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/children/update',
+        expect.objectContaining({ childEmail: 'child@example.com', password: 'Password123' })
+      );
+    });
   });
 
   describe('deleteChildAccounts', () => {
@@ -153,6 +164,17 @@ describe('V4UserService', () => {
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/user/children/delete',
         { childUserIds: ['child_001', 'child_002'] }
+      );
+    });
+
+    it('should delete child account by email', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.deleteChildAccounts({ childEmail: 'child@example.com' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/children/delete',
+        { childEmail: 'child@example.com' }
       );
     });
 
@@ -224,6 +246,19 @@ describe('V4UserService', () => {
       const result = await service.createOrganization({ organizationName: 'New Org' });
 
       expect(result).toEqual(mockResponse);
+    });
+
+    it('should create organization with current document parameters', async () => {
+      const mockResponse = { id: 1, name: 'New Org', parentId: 2 };
+      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.createOrganization({ name: 'New Org', parentId: 2, description: 'Desc' });
+
+      expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/organization/create',
+        { name: 'New Org', parentId: 2, description: 'Desc' }
+      );
     });
   });
 
@@ -1075,6 +1110,22 @@ describe('V4UserService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalled();
     });
+
+    it('should update marquee template with current document parameters', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.updateMarqueeTemplate({
+        enable: 'Y',
+        antiRecordType: 'marquee',
+        modelType: 'fixed',
+        content: 'Notice',
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/template/marquee/update',
+        expect.objectContaining({ enable: 'Y', antiRecordType: 'marquee', modelType: 'fixed' })
+      );
+    });
   });
 
   describe('getRoleConfigTemplate', () => {
@@ -1150,6 +1201,22 @@ describe('V4UserService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalled();
     });
+
+    it('should update audio moderation setting with current document parameters', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.updateAudioModerationSetting({
+        moderationEnabled: 'Y',
+        moderationStrategy: 'finance_serious',
+        badwordEnabled: 'N',
+        illegalNotify: { monitorEnabled: 'Y' },
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/template/audio-moderation/update',
+        expect.objectContaining({ moderationEnabled: 'Y', badwordEnabled: 'N' })
+      );
+    });
   });
 
   describe('getVideoModerationSetting', () => {
@@ -1170,6 +1237,22 @@ describe('V4UserService', () => {
       await service.updateVideoModerationSetting({ enabled: true, level: 'moderate' });
 
       expect(mockHttpClient.post).toHaveBeenCalled();
+    });
+
+    it('should update video moderation setting with current document parameters', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.updateVideoModerationSetting({
+        moderationEnabled: 'Y',
+        moderationStrategy: 'finance_serious',
+        imageFrequency: 5,
+        illegalNotify: { monitorEnabled: 'Y' },
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/template/video-moderation/update',
+        expect.objectContaining({ moderationEnabled: 'Y', imageFrequency: 5 })
+      );
     });
   });
 
@@ -1339,6 +1422,25 @@ describe('V4UserService', () => {
       await service.sendSms({ mobile: '13800138000', content: 'Your code is 123456' });
 
       expect(mockHttpClient.post).toHaveBeenCalled();
+    });
+
+    it('should send SMS with current document parameters', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.sendSms({
+        phoneNumbers: ['13800138000'],
+        templateParamNames: ['code'],
+        templateParamValues: ['123456'],
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/sms/send',
+        {
+          phoneNumbers: ['13800138000'],
+          templateParamNames: ['code'],
+          templateParamValues: ['123456'],
+        }
+      );
     });
   });
 
