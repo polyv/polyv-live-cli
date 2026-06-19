@@ -232,10 +232,9 @@ function createCouponEnabledHandler(client: PolyVClient): ResourceHandler {
         throw new Error('enabled is required for couponEnabled');
       }
 
-      await client.channel.updateChannelConfig({
+      await client.v4Channel.updateCouponEnabled({
         channelId: String(params['channelId']),
-        key: 'couponEnabled',
-        value: params['enabled'],
+        enabled: params['enabled'],
       });
 
       const result = {

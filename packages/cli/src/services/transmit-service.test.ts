@@ -70,7 +70,7 @@ describe('TransmitServiceSdk', () => {
         names,
         {
           params: {
-            channelId: parseInt(channelId, 10),
+            channelId,
           },
         }
       );

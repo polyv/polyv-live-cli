@@ -163,6 +163,9 @@ export class PlatformServiceSdk {
     if (params.url !== undefined) {
       updateParams.streamCallbackUrl = params.url;
     }
+    if (params.enabled !== undefined) {
+      updateParams.rebirthVodCallbackEnabled = params.enabled ? 'Y' : 'N';
+    }
 
     // Call SDK
     await client.v4User.updateCallback(updateParams);

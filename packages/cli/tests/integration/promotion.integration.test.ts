@@ -11,6 +11,10 @@ import { hasRealCredentials, getTestConfig } from '../helpers/integration-config
 const testConfig = getTestConfig();
 const shouldRunTests = hasRealCredentials();
 
+function uniqueName(prefix: string): string {
+  return `${prefix}${Date.now().toString(36).slice(-8)}`.slice(0, 20);
+}
+
 (shouldRunTests ? describe : describe.skip)('Promotion Integration Tests', () => {
   let promotionService: PromotionServiceSdk;
   let testChannelId: string;
@@ -104,7 +108,7 @@ const shouldRunTests = hasRealCredentials();
 
   describe('promotion create', () => {
     it('should create a single promotion', async () => {
-      const name = `Test_${Date.now()}`;
+      const name = uniqueName('Test');
 
       try {
         const result = await promotionService.batchCreatePopularizations({
@@ -137,7 +141,7 @@ const shouldRunTests = hasRealCredentials();
     }, 15000);
 
     it('should create multiple promotions', async () => {
-      const names = [`Batch1_${Date.now()}`, `Batch2_${Date.now()}`, `Batch3_${Date.now()}`];
+      const names = [uniqueName('B1'), uniqueName('B2'), uniqueName('B3')];
 
       try {
         const result = await promotionService.batchCreatePopularizations({
@@ -192,7 +196,8 @@ const shouldRunTests = hasRealCredentials();
     }, 10000);
 
     it('should handle special characters in names', async () => {
-      const names = [`Special_${Date.now()}`, `中文推广_${Date.now()}`, `Emoji 🎉_${Date.now()}`];
+      const suffix = Date.now().toString(36).slice(-6);
+      const names = [`Special_${suffix}`, `中文_${suffix}`, `Emoji_${suffix}`];
 
       try {
         const result = await promotionService.batchCreatePopularizations({
@@ -238,7 +243,7 @@ const shouldRunTests = hasRealCredentials();
         }
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不能为空', '不存在', 'too long', '过长', 'forbidden', 'failed', 'illegal', '不能超过'];
+        const expectedErrors = ['404', 'not found', '不能为空', '不存在', 'too long', '过长', 'forbidden', 'failed', 'illegal', '不能超过', 'cannot exceed'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -250,7 +255,7 @@ const shouldRunTests = hasRealCredentials();
     }, 15000);
 
     it('should handle duplicate names gracefully', async () => {
-      const name = `Dup_${Date.now()}`;
+      const name = uniqueName('Dup');
 
       try {
         // Create first
@@ -325,7 +330,7 @@ const shouldRunTests = hasRealCredentials();
 
   describe('promotion workflow', () => {
     it('should complete create-list workflow', async () => {
-      const name = `Wf_${Date.now()}`;
+      const name = uniqueName('Wf');
 
       // 1. Create promotion
       try {
@@ -372,7 +377,7 @@ const shouldRunTests = hasRealCredentials();
     }, 30000);
 
     it('should complete batch create-list workflow', async () => {
-      const names = [`W1_${Date.now()}`, `W2_${Date.now()}`];
+      const names = [uniqueName('W1'), uniqueName('W2')];
 
       // 1. Create multiple promotions
       try {

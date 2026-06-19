@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T16:30:45.610Z",
+  "generatedAt": "2026-06-19T17:06:09.417Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,15 +13,15 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 97,
-    "cliMissingLatestApis": 481,
-    "cliCoverage": 16.8,
-    "cliUsageReferences": 116,
-    "cliSdkServiceUsages": 101,
-    "cliDirectHttpUsages": 14,
-    "cliUnresolvedSdkUsages": 1,
-    "cliUnmatchedEndpointUsages": 11,
-    "matchedApiIds": 97,
+    "cliUsedLatestApis": 106,
+    "cliMissingLatestApis": 472,
+    "cliCoverage": 18.3,
+    "cliUsageReferences": 117,
+    "cliSdkServiceUsages": 117,
+    "cliDirectHttpUsages": 0,
+    "cliUnresolvedSdkUsages": 0,
+    "cliUnmatchedEndpointUsages": 0,
+    "matchedApiIds": 106,
     "sdkEndpointReferences": 709,
     "cliCommandPaths": 157,
     "cliTopLevelCommands": 28
@@ -31,11 +31,11 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 48,
-      "cliMissing": 235,
-      "directHttpUsed": 11,
-      "sdkServiceUsed": 37,
-      "cliCoverage": 17
+      "cliUsed": 56,
+      "cliMissing": 227,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 56,
+      "cliCoverage": 19.8
     },
     {
       "module": "user",
@@ -68,16 +68,6 @@
       "cliCoverage": 31.1
     },
     {
-      "module": "live_interaction",
-      "label": "直播互动",
-      "total": 30,
-      "cliUsed": 10,
-      "cliMissing": 20,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 10,
-      "cliCoverage": 33.3
-    },
-    {
       "module": "account",
       "label": "账号与财务",
       "total": 22,
@@ -86,6 +76,16 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 3,
       "cliCoverage": 13.6
+    },
+    {
+      "module": "live_interaction",
+      "label": "直播互动",
+      "total": 30,
+      "cliUsed": 11,
+      "cliMissing": 19,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 11,
+      "cliCoverage": 36.7
     },
     {
       "module": "group",
@@ -113,8 +113,8 @@
       "total": 13,
       "cliUsed": 3,
       "cliMissing": 10,
-      "directHttpUsed": 3,
-      "sdkServiceUsed": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 3,
       "cliCoverage": 23.1
     },
     {
@@ -1950,14 +1950,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 235,
+          "missing": 227,
           "total": 283,
-          "coverage": 17
+          "coverage": 19.8
         }
       ],
-      "missing": 235,
+      "missing": 227,
       "total": 283,
-      "coverage": 17
+      "coverage": 19.8
     },
     {
       "modules": [
@@ -2123,158 +2123,17 @@
         {
           "module": "live_interaction",
           "label": "直播互动",
-          "missing": 20,
+          "missing": 19,
           "total": 30,
-          "coverage": 33.3
+          "coverage": 36.7
         }
       ],
-      "missing": 20,
+      "missing": 19,
       "total": 30,
-      "coverage": 33.3
+      "coverage": 36.7
     }
   ],
-  "unmatchedUsages": [
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v4/channel/donate/update",
-      "normalizedPath": "/live/v4/channel/donate/update",
-      "reference": "V4ChannelService#updateDonate",
-      "serviceProp": "v4Channel",
-      "sdkFile": "packages/sdk/src/services/v4/channel.service.ts",
-      "file": "packages/cli/src/services/donate-service.ts",
-      "line": 58,
-      "cliModule": "donate",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-create",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-create",
-      "reference": "V4ChannelService#lotteryActivityCreate",
-      "serviceProp": "v4Channel",
-      "sdkFile": "packages/sdk/src/services/v4/channel.service.ts",
-      "file": "packages/cli/src/services/lottery-service.ts",
-      "line": 48,
-      "cliModule": "lottery",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "GET",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-list",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-list",
-      "reference": "V4ChannelService#lotteryActivityList",
-      "serviceProp": "v4Channel",
-      "sdkFile": "packages/sdk/src/services/v4/channel.service.ts",
-      "file": "packages/cli/src/services/lottery-service.ts",
-      "line": 62,
-      "cliModule": "lottery",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "GET",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-get",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-get",
-      "reference": "V4ChannelService#lotteryActivityGet",
-      "serviceProp": "v4Channel",
-      "sdkFile": "packages/sdk/src/services/v4/channel.service.ts",
-      "file": "packages/cli/src/services/lottery-service.ts",
-      "line": 76,
-      "cliModule": "lottery",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-update",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-update",
-      "reference": "V4ChannelService#lotteryActivityUpdate",
-      "serviceProp": "v4Channel",
-      "sdkFile": "packages/sdk/src/services/v4/channel.service.ts",
-      "file": "packages/cli/src/services/lottery-service.ts",
-      "line": 90,
-      "cliModule": "lottery",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-delete",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-delete",
-      "reference": "V4ChannelService#lotteryActivityDelete",
-      "serviceProp": "v4Channel",
-      "sdkFile": "packages/sdk/src/services/v4/channel.service.ts",
-      "file": "packages/cli/src/services/lottery-service.ts",
-      "line": 104,
-      "cliModule": "lottery",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v3/channel/record/merge-async",
-      "normalizedPath": "/live/v3/channel/record/merge-async",
-      "reference": "ChannelService#recordFileMergeAsync",
-      "serviceProp": "channel",
-      "sdkFile": "packages/sdk/src/services/channel.service.ts",
-      "file": "packages/cli/src/services/playback.service.sdk.ts",
-      "line": 311,
-      "cliModule": "playback",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-unresolved",
-      "reference": "LiveInteractionService#addEditQuestionnaire",
-      "serviceProp": "liveInteraction",
-      "methodName": "addEditQuestionnaire",
-      "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-      "line": 104,
-      "cliModule": "qa-questionnaire",
-      "reason": "SDK service usage could not be resolved to an HTTP endpoint"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v3/channel/record/convert-async",
-      "normalizedPath": "/live/v3/channel/record/convert-async",
-      "reference": "ChannelService#recordConvertAsync",
-      "serviceProp": "channel",
-      "sdkFile": "packages/sdk/src/services/channel.service.ts",
-      "file": "packages/cli/src/services/record.service.sdk.ts",
-      "line": 165,
-      "cliModule": "record",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v3/channel/record/set-default",
-      "normalizedPath": "/live/v3/channel/record/set-default",
-      "reference": "ChannelService#setRecordDefault",
-      "serviceProp": "channel",
-      "sdkFile": "packages/sdk/src/services/channel.service.ts",
-      "file": "packages/cli/src/services/record.service.sdk.ts",
-      "line": 188,
-      "cliModule": "record",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    },
-    {
-      "usageType": "sdk-service",
-      "method": "POST",
-      "path": "/live/v3/channel/config/update",
-      "normalizedPath": "/live/v3/channel/config/update",
-      "reference": "ChannelService#updateChannelConfig",
-      "serviceProp": "channel",
-      "sdkFile": "packages/sdk/src/services/channel.service.ts",
-      "file": "packages/cli/src/setup/resource-handlers.ts",
-      "line": 235,
-      "cliModule": "setup",
-      "reason": "Endpoint is not in the latest de-duplicated API inventory"
-    }
-  ],
+  "unmatchedUsages": [],
   "apis": [
     {
       "id": "GET /live/v3/channel/switch/get",
@@ -3012,11 +2871,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "V4AiService#listDigitalHumans",
             "cliModule": "ai-digital-human",
             "file": "packages/cli/src/services/ai-digital-human-service.ts",
-            "line": 53
+            "line": 55,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
           }
         ]
       }
@@ -3048,11 +2908,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "V4AiService#listOrganizations",
             "cliModule": "ai-digital-human",
             "file": "packages/cli/src/services/ai-digital-human-service.ts",
-            "line": 89
+            "line": 85,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
           }
         ]
       }
@@ -3212,11 +3073,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "V4AiService#setOrganizations",
             "cliModule": "ai-digital-human",
             "file": "packages/cli/src/services/ai-digital-human-service.ts",
-            "line": 116
+            "line": 103,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
           }
         ]
       }
@@ -3359,8 +3221,25 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getLotteryActivityExact",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 78,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getLotteryActivityExact",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 92,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3387,8 +3266,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLotteryActivitiesExact",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 64,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3933,7 +3821,7 @@
             "reference": "V4ChannelService#getDonate",
             "cliModule": "donate",
             "file": "packages/cli/src/services/donate-service.ts",
-            "line": 44,
+            "line": 46,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -4321,11 +4209,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listCardPushes",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 49
+            "line": 51,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -5780,11 +5669,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getTransmitAssociations",
             "cliModule": "transmit",
             "file": "packages/cli/src/services/transmit-service.ts",
-            "line": 79
+            "line": 69,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
       }
@@ -5875,8 +5765,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createLotteryActivityExact",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 48,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -6017,11 +5916,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 108
+            "line": 101,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -6329,11 +6229,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listRewardGifts",
             "cliModule": "donate",
             "file": "packages/cli/src/services/donate-service.ts",
-            "line": 77
+            "line": 87,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -6661,8 +6562,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateLotteryActivityExact",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 97,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -6900,6 +6810,14 @@
             "cliModule": "playback",
             "file": "packages/cli/src/services/playback.service.sdk.ts",
             "line": 252,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#recordFileMerge",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 311,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -7722,11 +7640,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "ChannelService#batchAddTransmit",
             "cliModule": "transmit",
             "file": "packages/cli/src/services/transmit-service.ts",
-            "line": 54
+            "line": 55,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
       }
@@ -7789,11 +7708,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createPopularizations",
             "cliModule": "promotion",
             "file": "packages/cli/src/services/promotion-service.ts",
-            "line": 132
+            "line": 109,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -8279,6 +8199,14 @@
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
             "line": 134,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#recordConvert",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 165,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -9056,11 +8984,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.get",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listPopularizations",
             "cliModule": "promotion",
             "file": "packages/cli/src/services/promotion-service.ts",
-            "line": 76
+            "line": 54,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -9122,11 +9051,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#cancelCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 198
+            "line": 178,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -9214,8 +9144,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteLotteryActivityExact",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 113,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9398,11 +9337,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 220
+            "line": 197,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -10378,11 +10318,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#pushCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 176
+            "line": 159,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -10884,11 +10825,12 @@
         "used": true,
         "usages": [
           {
-            "usageType": "direct-http",
-            "reference": "httpClient.post",
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 153
+            "line": 140,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
       }
@@ -10947,8 +10889,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateDonateGift",
+            "cliModule": "donate",
+            "file": "packages/cli/src/services/donate-service.ts",
+            "line": 65,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11295,8 +11246,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateCouponEnabled",
+            "cliModule": "setup",
+            "file": "packages/cli/src/setup/resource-handlers.ts",
+            "line": 235,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11595,8 +11555,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#setDefaultPlaybackVideo",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 189,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13923,7 +13892,7 @@
             "reference": "LiveInteractionService#listLottery",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 132,
+            "line": 141,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -14202,7 +14171,7 @@
             "reference": "LiveInteractionService#getQuestionnaireDetail",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 151,
+            "line": 175,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -14279,7 +14248,7 @@
             "reference": "LiveInteractionService#getWinnerDetail",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 118,
+            "line": 127,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -14470,7 +14439,7 @@
             "reference": "LiveInteractionService#listQuestionnaireByPage",
             "cliModule": "qa-questionnaire",
             "file": "packages/cli/src/services/qa-questionnaire-service.ts",
-            "line": 130,
+            "line": 154,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -14815,8 +14784,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#createQuestionnaire",
+            "cliModule": "qa-questionnaire",
+            "file": "packages/cli/src/services/qa-questionnaire-service.ts",
+            "line": 104,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15181,7 +15159,7 @@
             "reference": "V4PlatformService#createCoupon",
             "cliModule": "setup",
             "file": "packages/cli/src/setup/resource-handlers.ts",
-            "line": 266,
+            "line": 265,
             "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
           }
         ]
@@ -15284,7 +15262,7 @@
             "reference": "V4PlatformService#deleteCouponsBatch",
             "cliModule": "setup",
             "file": "packages/cli/src/setup/resource-handlers.ts",
-            "line": 285,
+            "line": 284,
             "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
           }
         ]

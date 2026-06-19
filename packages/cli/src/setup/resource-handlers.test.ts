@@ -31,7 +31,8 @@ describe('ResourceHandlers', () => {
         updateChannelConfig: jest.fn()
       },
       v4Channel: {
-        addChannelCoupon: jest.fn()
+        addChannelCoupon: jest.fn(),
+        updateCouponEnabled: jest.fn()
       } as any,
       v4Platform: {
         createCoupon: jest.fn(),
@@ -333,14 +334,13 @@ describe('ResourceHandlers', () => {
         enabled: 'Y'
       };
 
-      mockClient.channel.updateChannelConfig.mockResolvedValue(true);
+      mockClient.v4Channel.updateCouponEnabled.mockResolvedValue(undefined);
 
       const result = await handlers.couponEnabled.create(params);
 
-      expect(mockClient.channel.updateChannelConfig).toHaveBeenCalledWith({
+      expect(mockClient.v4Channel.updateCouponEnabled).toHaveBeenCalledWith({
         channelId: '123456',
-        key: 'couponEnabled',
-        value: 'Y'
+        enabled: 'Y'
       });
       expect(result.success).toBe(true);
       expect(result.channelId).toBe('123456');
@@ -360,7 +360,7 @@ describe('ResourceHandlers', () => {
     });
 
     it('should create with outputConfig', async () => {
-      mockClient.channel.updateChannelConfig.mockResolvedValue(true);
+      mockClient.v4Channel.updateCouponEnabled.mockResolvedValue(undefined);
 
       const result = await handlers.couponEnabled.create(
         { channelId: '123', enabled: 'Y' },

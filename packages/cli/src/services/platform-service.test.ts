@@ -289,7 +289,7 @@ describe('PlatformServiceSdk', () => {
       await service.updateCallbackSettings(params);
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
-        url: 'https://example.com/new-callback',
+        streamCallbackUrl: 'https://example.com/new-callback',
       });
     });
 
@@ -301,7 +301,7 @@ describe('PlatformServiceSdk', () => {
       await service.updateCallbackSettings(params);
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
-        enabled: true,
+        rebirthVodCallbackEnabled: 'Y',
       });
     });
 
@@ -314,8 +314,8 @@ describe('PlatformServiceSdk', () => {
       await service.updateCallbackSettings(params);
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
-        url: 'https://example.com/new-callback',
-        enabled: true,
+        streamCallbackUrl: 'https://example.com/new-callback',
+        rebirthVodCallbackEnabled: 'Y',
       });
     });
 
@@ -327,7 +327,7 @@ describe('PlatformServiceSdk', () => {
       await service.updateCallbackSettings(params);
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
-        enabled: false,
+        rebirthVodCallbackEnabled: 'N',
       });
     });
 
@@ -364,7 +364,7 @@ describe('PlatformServiceSdk', () => {
       await service.updateCallbackSettings(params);
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
-        url: 'http://example.com/callback',
+        streamCallbackUrl: 'http://example.com/callback',
       });
     });
 
@@ -376,7 +376,7 @@ describe('PlatformServiceSdk', () => {
       await service.updateCallbackSettings(params);
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
-        url: 'https://example.com/callback',
+        streamCallbackUrl: 'https://example.com/callback',
       });
     });
 

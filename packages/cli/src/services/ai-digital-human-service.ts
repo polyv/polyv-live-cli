@@ -18,6 +18,7 @@ import {
  */
 export class AIDigitalHumanServiceSdk {
   private readonly client: PolyVClient;
+  private readonly v4Ai: PolyVClient['v4Ai'];
 
   /**
    * Creates a new AIDigitalHumanServiceSdk instance
@@ -30,6 +31,7 @@ export class AIDigitalHumanServiceSdk {
       appSecret: authConfig.appSecret,
       baseUrl: config?.baseUrl || 'https://api.polyv.net',
     });
+    this.v4Ai = this.client.v4Ai;
   }
 
   /**
@@ -50,18 +52,12 @@ export class AIDigitalHumanServiceSdk {
     // Cap pageSize at 1000
     const cappedPageSize = Math.min(pageSize, 1000);
 
-    const response = await this.client.httpClient.get<{ data: AIDigitalHumanListResponse }>(
-      '/live/v4/ai/digital-human/list',
-      {
-        params: {
-          pageNumber,
-          pageSize: cappedPageSize,
-        },
-      }
-    );
+    const result = await this.v4Ai.listDigitalHumans({
+      pageNumber,
+      pageSize: cappedPageSize,
+    });
 
-    const data = response as unknown as { data: AIDigitalHumanListResponse };
-    return data?.data || {
+    return this.unwrapData<AIDigitalHumanListResponse>(result) || {
       pageNumber: 1,
       pageSize: 10,
       totalPages: 0,
@@ -86,17 +82,8 @@ export class AIDigitalHumanServiceSdk {
       throw new Error(`aiDigitalHumanIds count (${ids.length}) exceeds maximum of 100`);
     }
 
-    const response = await this.client.httpClient.get<{ data: AIDigitalHumanOrganization[] }>(
-      '/live/v4/ai/digital-human/list-organization',
-      {
-        params: {
-          aiDigitalHumanIds,
-        },
-      }
-    );
-
-    const data = response as unknown as { data: AIDigitalHumanOrganization[] };
-    return data?.data || [];
+    const result = await this.v4Ai.listOrganizations({ aiDigitalHumanIds });
+    return this.unwrapData<AIDigitalHumanOrganization[]>(result) || [];
   }
 
   /**
@@ -113,11 +100,15 @@ export class AIDigitalHumanServiceSdk {
       throw new Error(`config count (${params.length}) exceeds maximum of 100`);
     }
 
-    await this.client.httpClient.post(
-      '/live/v4/ai/digital-human/set-organizations',
-      params
-    );
+    await this.v4Ai.setOrganizations({ items: params });
 
     return true;
+  }
+
+  private unwrapData<T>(value: unknown): T | undefined {
+    if (value && typeof value === 'object' && 'data' in value) {
+      return (value as { data: T }).data;
+    }
+    return value as T;
   }
 }

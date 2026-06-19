@@ -219,7 +219,7 @@ describe('AIDigitalHumanServiceSdk', () => {
       expect(result).toBe(true);
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/ai/digital-human/set-organizations',
-        params
+        { items: params }
       );
     });
 
@@ -244,7 +244,7 @@ describe('AIDigitalHumanServiceSdk', () => {
       expect(result).toBe(true);
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/ai/digital-human/set-organizations',
-        params
+        { items: params }
       );
     });
 

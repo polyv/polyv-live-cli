@@ -22,6 +22,7 @@ import {
  */
 export class CardPushServiceSdk {
   private readonly client: PolyVClient;
+  private readonly v4Channel: PolyVClient['v4Channel'];
 
   /**
    * Creates a new CardPushServiceSdk instance
@@ -34,6 +35,7 @@ export class CardPushServiceSdk {
       appSecret: authConfig.appSecret,
       baseUrl: config?.baseUrl || 'https://api.polyv.net',
     });
+    this.v4Channel = this.client.v4Channel;
   }
 
   /**
@@ -46,18 +48,9 @@ export class CardPushServiceSdk {
       throw new Error('Channel ID is required (频道ID是必需的)');
     }
 
-    const response = await this.client.httpClient.get<{ contents: CardPush[] }>(
-      '/live/v4/channel/card-push/list',
-      {
-        params: {
-          channelId,
-        },
-      }
-    );
-
-    // Response structure: { data: { contents: CardPush[] } }
-    const data = response as unknown as { data: { contents: CardPush[] } };
-    return data?.data?.contents || [];
+    const result = await this.v4Channel.listCardPushes({ channelId });
+    const data = this.unwrapData<{ contents?: CardPush[] } | CardPush[]>(result);
+    return Array.isArray(data) ? data : (data?.contents ?? []);
   }
 
   /**
@@ -105,16 +98,10 @@ export class CardPushServiceSdk {
     if (params.linkEnabled) requestParams.linkEnabled = params.linkEnabled;
     if (params.redirectType) requestParams.redirectType = params.redirectType;
 
-    const response = await this.client.httpClient.get<CreatedCardPush>(
-      '/live/v4/channel/card-push/create',
-      {
-        params: requestParams,
-      }
+    const result = await this.v4Channel.createCardPushExact(
+      requestParams as unknown as Parameters<PolyVClient['v4Channel']['createCardPushExact']>[0]
     );
-
-    // Response structure: { data: CreatedCardPush }
-    const data = response as unknown as { data: CreatedCardPush };
-    return data?.data || (response as unknown as CreatedCardPush);
+    return this.unwrapData<CreatedCardPush>(result) as CreatedCardPush;
   }
 
   /**
@@ -150,14 +137,10 @@ export class CardPushServiceSdk {
     if (params.linkEnabled) requestBody.linkEnabled = params.linkEnabled;
     if (params.redirectType) requestBody.redirectType = params.redirectType;
 
-    const response = await this.client.httpClient.post<{ id: number; title: string }>(
-      '/live/v4/channel/card-push/update',
-      requestBody
+    const result = await this.v4Channel.updateCardPushExact(
+      requestBody as unknown as Parameters<PolyVClient['v4Channel']['updateCardPushExact']>[0]
     );
-
-    // Response structure: { data: { id, title } }
-    const data = response as unknown as { data: { id: number; title: string } };
-    return data?.data || { id: parseInt(params.cardPushId, 10) };
+    return this.unwrapData<{ id: number; [key: string]: unknown }>(result) || { id: parseInt(params.cardPushId, 10) };
   }
 
   /**
@@ -173,13 +156,10 @@ export class CardPushServiceSdk {
       throw new Error('Card-push ID is required (卡片推送ID是必需的)');
     }
 
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/push',
-      {
-        channelId: parseInt(params.channelId, 10),
-        cardPushId: parseInt(params.cardPushId, 10),
-      }
-    );
+    await this.v4Channel.pushCardPushExact({
+      channelId: parseInt(params.channelId, 10),
+      cardPushId: parseInt(params.cardPushId, 10),
+    });
   }
 
   /**
@@ -195,13 +175,10 @@ export class CardPushServiceSdk {
       throw new Error('Card-push ID is required (卡片推送ID是必需的)');
     }
 
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/cancel-push',
-      {
-        channelId: parseInt(params.channelId, 10),
-        cardPushId: parseInt(params.cardPushId, 10),
-      }
-    );
+    await this.v4Channel.cancelCardPushExact({
+      channelId: parseInt(params.channelId, 10),
+      cardPushId: parseInt(params.cardPushId, 10),
+    });
   }
 
   /**
@@ -217,12 +194,16 @@ export class CardPushServiceSdk {
       throw new Error('Card-push ID is required (卡片推送ID是必需的)');
     }
 
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/delete',
-      {
-        channelId: parseInt(params.channelId, 10),
-        cardPushId: parseInt(params.cardPushId, 10),
-      }
-    );
+    await this.v4Channel.deleteCardPushExact({
+      channelId: parseInt(params.channelId, 10),
+      cardPushId: parseInt(params.cardPushId, 10),
+    });
+  }
+
+  private unwrapData<T>(value: unknown): T | undefined {
+    if (value && typeof value === 'object' && 'data' in value) {
+      return (value as { data: T }).data;
+    }
+    return value as T;
   }
 }

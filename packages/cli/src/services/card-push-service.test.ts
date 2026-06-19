@@ -14,8 +14,18 @@ const mockHttpClient = {
   post: jest.fn(),
 };
 
+const mockV4Channel = {
+  listCardPushes: jest.fn((params) => mockHttpClient.get('/live/v4/channel/card-push/list', { params })),
+  createCardPushExact: jest.fn((params) => mockHttpClient.get('/live/v4/channel/card-push/create', { params })),
+  updateCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/update', params)),
+  pushCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/push', params)),
+  cancelCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/cancel-push', params)),
+  deleteCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/delete', params)),
+};
+
 const mockClient = {
   httpClient: mockHttpClient,
+  v4Channel: mockV4Channel,
 } as unknown as PolyVClient;
 
 jest.mock('polyv-live-api-sdk', () => ({

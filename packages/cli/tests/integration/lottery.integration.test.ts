@@ -18,6 +18,10 @@ function getTimestamp(daysOffset: number = 0): number {
   return date.getTime();
 }
 
+function uniqueName(prefix: string): string {
+  return `${prefix}${Date.now().toString(36).slice(-8)}`.slice(0, 20);
+}
+
 (shouldRunTests ? describe : describe.skip)('Lottery Integration Tests', () => {
   let lotteryService: LotteryServiceSdk;
   let testChannelId: string;
@@ -58,7 +62,7 @@ function getTimestamp(daysOffset: number = 0): number {
       try {
         const result = await lotteryService.createLotteryActivity({
           channelId: testChannelId,
-          activityName: `Test Lottery ${Date.now()}`,
+          activityName: uniqueName('Test'),
           lotteryCondition: 'none',
           amount: 3,
           prizeName: 'Test Prize'
@@ -84,7 +88,7 @@ function getTimestamp(daysOffset: number = 0): number {
       try {
         const result = await lotteryService.createLotteryActivity({
               channelId: testChannelId,
-              activityName: `Invite Lottery ${Date.now()}`,
+              activityName: uniqueName('Invite'),
               lotteryCondition: 'invite',
               amount: 5,
               prizeName: 'Invite Prize',
@@ -111,7 +115,7 @@ function getTimestamp(daysOffset: number = 0): number {
       try {
         const result = await lotteryService.createLotteryActivity({
               channelId: testChannelId,
-              activityName: `Duration Lottery ${Date.now()}`,
+              activityName: uniqueName('Duration'),
           lotteryCondition: 'duration',
           amount: 2,
           prizeName: 'Duration Prize',
@@ -339,7 +343,7 @@ function getTimestamp(daysOffset: number = 0): number {
         const result = await lotteryService.updateLotteryActivity({
           channelId: testChannelId,
           id: testLotteryId,
-          activityName: `Updated Lottery ${Date.now()}`
+          activityName: uniqueName('Updated')
         });
 
         expect(result).toBeDefined();
@@ -581,7 +585,7 @@ function getTimestamp(daysOffset: number = 0): number {
       try {
         const createResult = await lotteryService.createLotteryActivity({
           channelId: testChannelId,
-          activityName: `Lifecycle Lottery ${Date.now()}`,
+          activityName: uniqueName('Life'),
           lotteryCondition: 'none',
           amount: 3,
           prizeName: 'Lifecycle Prize'
@@ -628,7 +632,7 @@ function getTimestamp(daysOffset: number = 0): number {
         const updateResult = await lotteryService.updateLotteryActivity({
           channelId: testChannelId,
           id: lotteryId,
-          activityName: 'Updated Lifecycle Lottery',
+          activityName: uniqueName('LifeUpd'),
           amount: 5
         });
         expect(updateResult).toBeDefined();

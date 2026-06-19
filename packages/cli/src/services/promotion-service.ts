@@ -8,28 +8,6 @@ import { PolyVClient } from 'polyv-live-api-sdk';
 import { AuthConfig } from '../types/auth';
 import { PromotionServiceConfig, PromotionChannel, CreatedPromotion } from '../types/promotion';
 
-// SDK types don't match actual API response, so we define our own
-interface ApiPopularizationInfo {
-  promoteId: string;
-  popularizationName: string;
-  visitsNum?: number;
-  reservationNum?: number;
-  watchNum?: number;
-  viewerNum?: number;
-  averageWatchTime?: string;
-  enrollNum?: number;
-  createdTime?: number;
-}
-
-interface ApiPopularizationListResponse {
-  contents: ApiPopularizationInfo[];
-}
-
-interface ApiBatchCreateResponse {
-  promoteId: string;
-  popularizationName: string;
-}
-
 /**
  * PromotionServiceSdk
  *
@@ -38,6 +16,7 @@ interface ApiBatchCreateResponse {
  */
 export class PromotionServiceSdk {
   private readonly client: PolyVClient;
+  private readonly v4Channel: PolyVClient['v4Channel'];
 
   /**
    * Creates a new PromotionServiceSdk instance
@@ -51,6 +30,7 @@ export class PromotionServiceSdk {
       appSecret: authConfig.appSecret,
       baseUrl: config?.baseUrl || 'https://api.polyv.net',
     });
+    this.v4Channel = this.client.v4Channel;
   }
 
   /**
@@ -71,31 +51,31 @@ export class PromotionServiceSdk {
       throw new Error('Channel ID is required');
     }
 
-    // Use httpClient directly with correct API endpoint
-    // API endpoint: GET /live/v4/channel/popularization/list
-    const response = await this.client.httpClient.get<ApiPopularizationListResponse>(
-      '/live/v4/channel/popularization/list',
-      {
-        params: {
-          channelId,
-          pageNumber: 1,
-          pageSize: 500,
-        },
-      }
-    );
+    const response = await this.v4Channel.listPopularizations({
+      channelId,
+      pageNumber: 1,
+      pageSize: 500,
+    } as unknown as Parameters<PolyVClient['v4Channel']['listPopularizations']>[0]);
 
     // Transform API response to CLI format
-    return response.data.contents.map((item) => ({
-      promoteId: item.promoteId,
-      popularizationName: item.popularizationName,
-      visitsNum: item.visitsNum ?? 0,
-      reservationNum: item.reservationNum ?? 0,
-      watchNum: item.watchNum ?? 0,
-      viewerNum: item.viewerNum ?? 0,
-      averageWatchTime: item.averageWatchTime ?? '',
-      enrollNum: item.enrollNum ?? 0,
-      createdTime: item.createdTime ?? 0,
-    }));
+    const data = this.unwrapData<{ contents?: unknown[] } | unknown[]>(response);
+    const items = Array.isArray(data)
+      ? data
+      : (data?.contents ?? []);
+    return items.map((item) => {
+      const value = item as Record<string, any>;
+      return {
+        promoteId: value['promoteId'] ?? value['id'],
+        popularizationName: value['popularizationName'] ?? value['name'],
+        visitsNum: value['visitsNum'] ?? 0,
+        reservationNum: value['reservationNum'] ?? 0,
+        watchNum: value['watchNum'] ?? 0,
+        viewerNum: value['viewerNum'] ?? 0,
+        averageWatchTime: value['averageWatchTime'] ?? '',
+        enrollNum: value['enrollNum'] ?? 0,
+        createdTime: value['createdTime'] ?? 0,
+      };
+    });
   }
 
   /**
@@ -126,21 +106,23 @@ export class PromotionServiceSdk {
       throw new Error('Names array cannot be empty');
     }
 
-    // Use httpClient directly with correct API endpoint
-    // API endpoint: POST /live/v4/channel/popularization/create-batch
-    // Request body: { channelId: number, names: string[] }
-    const response = await this.client.httpClient.post<ApiBatchCreateResponse[]>(
-      '/live/v4/channel/popularization/create-batch',
-      {
-        channelId: parseInt(params.channelId, 10),
-        names: params.names,
-      }
-    );
+    const response = await this.v4Channel.createPopularizations({
+      channelId: parseInt(params.channelId, 10),
+      names: params.names,
+    });
+    const items = this.unwrapData<Array<Record<string, any>>>(response) ?? [];
 
     // Return created promotions
-    return response.data.map((item) => ({
-      promoteId: item.promoteId,
-      popularizationName: item.popularizationName,
+    return items.map((item) => ({
+      promoteId: (item as Record<string, any>)['promoteId'] ?? item.id,
+      popularizationName: (item as Record<string, any>)['popularizationName'] ?? item.name,
     }));
+  }
+
+  private unwrapData<T>(value: unknown): T | undefined {
+    if (value && typeof value === 'object' && 'data' in value) {
+      return (value as { data: T }).data;
+    }
+    return value as T;
   }
 }

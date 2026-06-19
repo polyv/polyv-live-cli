@@ -4,7 +4,7 @@
  * AUTO-GENERATED FILE - DO NOT EDIT
  * Generated from API docs by scripts/generate-types.ts
  *
- * Last updated: 2026-06-19T06:33:53.018Z
+ * Last updated: 2026-06-19T17:20:59.429Z
  */
 
 export * from './account.js';

@@ -32,6 +32,7 @@ describe('QaQuestionnaireServiceSdk', () => {
     listQuestion: jest.Mock;
     stopQuestion: jest.Mock;
     addEditQuestionnaire: jest.Mock;
+    createQuestionnaire: jest.Mock;
     listQuestionnaireByPage: jest.Mock;
     getQuestionnaireDetail: jest.Mock;
   };
@@ -53,6 +54,19 @@ describe('QaQuestionnaireServiceSdk', () => {
       listQuestion: jest.fn(),
       stopQuestion: jest.fn(),
       addEditQuestionnaire: jest.fn(),
+      createQuestionnaire: jest.fn((payload) => mockLiveInteraction.addEditQuestionnaire(
+        { channelId: payload.channelId },
+        {
+          questionnaireId: payload.customQuestionnaireId,
+          title: payload.questionnaireTitle,
+          items: payload.questions.map((q: any) => ({
+            type: q.type,
+            question: q.name,
+            options: q.options,
+            required: q.required === 'Y',
+          })),
+        }
+      )),
       listQuestionnaireByPage: jest.fn(),
       getQuestionnaireDetail: jest.fn(),
     };

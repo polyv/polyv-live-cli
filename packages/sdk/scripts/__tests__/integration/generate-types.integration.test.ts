@@ -10,35 +10,50 @@
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { execSync } from 'child_process';
-import { existsSync, rmSync, readFileSync } from 'fs';
+import { existsSync, mkdirSync, mkdtempSync, rmSync, readFileSync } from 'fs';
+import { tmpdir } from 'os';
 import { join } from 'path';
 
-const GENERATED_DIR = join(process.cwd(), 'src/types/generated');
 const FIXTURES_DIR = join(process.cwd(), 'scripts/__tests__/fixtures');
 
 describe('Type Generator Integration', () => {
+  let tempRoot: string;
+  let generatedDir: string;
+  let reportPath: string;
+  let emptyDocsDir: string;
+
   beforeAll(() => {
-    // Clean up any previous generated files
-    if (existsSync(GENERATED_DIR)) {
-      rmSync(GENERATED_DIR, { recursive: true, force: true });
-    }
+    tempRoot = mkdtempSync(join(tmpdir(), 'polyv-type-generator-'));
+    generatedDir = join(tempRoot, 'generated');
+    reportPath = join(tempRoot, 'type-generation-report.json');
+    emptyDocsDir = join(tempRoot, 'empty-docs');
+    mkdirSync(emptyDocsDir, { recursive: true });
   });
 
   afterAll(() => {
-    // Clean up generated files after tests
-    if (existsSync(GENERATED_DIR)) {
-      rmSync(GENERATED_DIR, { recursive: true, force: true });
+    if (tempRoot && existsSync(tempRoot)) {
+      rmSync(tempRoot, { recursive: true, force: true });
     }
   });
+
+  function runGenerator(docsDir = FIXTURES_DIR): string {
+    return execSync('npx tsx scripts/generate-types.ts', {
+      cwd: process.cwd(),
+      stdio: 'pipe',
+      encoding: 'utf-8',
+      env: {
+        ...process.env,
+        POLYV_API_DOCS_DIR: docsDir,
+        POLYV_GENERATED_TYPES_DIR: generatedDir,
+        POLYV_TYPE_GENERATION_REPORT_PATH: reportPath,
+      },
+    });
+  }
 
   it('should run without errors even when no source files exist', async () => {
     // Act - run the type generator
     // Script should exit with code 0 even when no markdown files are found
-    const result = execSync('npx tsx scripts/generate-types.ts', {
-      cwd: process.cwd(),
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
+    const result = runGenerator(emptyDocsDir);
 
     // Assert - should complete successfully (exit code 0)
     expect(result).toBeDefined();
@@ -47,13 +62,10 @@ describe('Type Generator Integration', () => {
 
   it('should generate index.ts when source files are processed', async () => {
     // Act - run the type generator
-    execSync('npx tsx scripts/generate-types.ts', {
-      cwd: process.cwd(),
-      stdio: 'pipe',
-    });
+    runGenerator();
 
     // Assert - if files were generated, index.ts should exist and be valid
-    const indexFile = join(GENERATED_DIR, 'index.ts');
+    const indexFile = join(generatedDir, 'index.ts');
     if (existsSync(indexFile)) {
       const indexContent = readFileSync(indexFile, 'utf-8');
       expect(indexContent).toContain('AUTO-GENERATED FILE');
@@ -63,14 +75,11 @@ describe('Type Generator Integration', () => {
 
   it('should generate valid TypeScript interfaces when types are created', async () => {
     // Act - run the type generator
-    execSync('npx tsx scripts/generate-types.ts', {
-      cwd: process.cwd(),
-      stdio: 'pipe',
-    });
+    runGenerator();
 
     // Assert - check generated files if they exist
-    if (existsSync(GENERATED_DIR)) {
-      const indexFile = join(GENERATED_DIR, 'index.ts');
+    if (existsSync(generatedDir)) {
+      const indexFile = join(generatedDir, 'index.ts');
       if (existsSync(indexFile)) {
         const indexContent = readFileSync(indexFile, 'utf-8');
         // Valid TypeScript should have exports
@@ -91,17 +100,12 @@ describe('Type Generator Integration', () => {
 
     // Act - run the type generator
     // This should NOT throw - script handles errors gracefully
-    const result = execSync('npx tsx scripts/generate-types.ts', {
-      cwd: process.cwd(),
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
+    const result = runGenerator();
 
     // Assert - should complete successfully
     expect(result).toBeDefined();
 
     // Parse report should be generated if any processing occurred
-    const reportPath = join(process.cwd(), '_bmad-output/type-generation-report.json');
     if (existsSync(reportPath)) {
       const report = JSON.parse(readFileSync(reportPath, 'utf-8'));
       expect(report).toHaveProperty('failures');
@@ -110,13 +114,9 @@ describe('Type Generator Integration', () => {
 
   it('should generate report file', async () => {
     // Act - run the type generator
-    execSync('npx tsx scripts/generate-types.ts', {
-      cwd: process.cwd(),
-      stdio: 'pipe',
-    });
+    runGenerator();
 
     // Assert - report file should exist
-    const reportPath = join(process.cwd(), '_bmad-output/type-generation-report.json');
     if (existsSync(reportPath)) {
       const report = JSON.parse(readFileSync(reportPath, 'utf-8'));
       expect(report).toHaveProperty('timestamp');

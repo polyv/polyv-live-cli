@@ -17,6 +17,7 @@ import {
  */
 export class TransmitServiceSdk {
   private readonly client: PolyVClient;
+  private readonly channel: PolyVClient['channel'];
 
   /**
    * Creates a new TransmitServiceSdk instance
@@ -29,6 +30,7 @@ export class TransmitServiceSdk {
       appSecret: authConfig.appSecret,
       baseUrl: config?.baseUrl || 'https://api.polyv.net',
     });
+    this.channel = this.client.channel;
   }
 
   /**
@@ -50,20 +52,8 @@ export class TransmitServiceSdk {
       throw new Error('Names count exceeds maximum of 100 (频道名称数量超过最大值100)');
     }
 
-    // According to API docs, names are sent as JSON array in request body
-    const response = await this.client.httpClient.post<{ data: TransmitChannelInfo[] }>(
-      '/live/v3/channel/transmit/batch-create',
-      names,
-      {
-        params: {
-          channelId: parseInt(channelId, 10),
-        },
-      }
-    );
-
-    // Response structure: { data: TransmitChannelInfo[] }
-    const data = response as unknown as { data: TransmitChannelInfo[] };
-    return data?.data || [];
+    const result = await this.channel.batchAddTransmit({ channelId, names });
+    return this.unwrapData<TransmitChannelInfo[]>(result) || [];
   }
 
   /**
@@ -76,17 +66,14 @@ export class TransmitServiceSdk {
       throw new Error('Channel ID is required (频道ID是必需的)');
     }
 
-    const response = await this.client.httpClient.get<{ data: TransmitAssociation[] }>(
-      '/live/v3/channel/transmit/get-associations',
-      {
-        params: {
-          channelId,
-        },
-      }
-    );
+    const result = await this.channel.getTransmitAssociations({ channelId });
+    return this.unwrapData<TransmitAssociation[]>(result) || [];
+  }
 
-    // Response structure: { data: TransmitAssociation[] }
-    const data = response as unknown as { data: TransmitAssociation[] };
-    return data?.data || [];
+  private unwrapData<T>(value: unknown): T | undefined {
+    if (value && typeof value === 'object' && 'data' in value) {
+      return (value as { data: T }).data;
+    }
+    return value as T;
   }
 }

@@ -14,8 +14,14 @@ const mockHttpClient = {
   post: jest.fn(),
 };
 
+const mockV4Channel = {
+  listPopularizations: jest.fn((params) => mockHttpClient.get('/live/v4/channel/popularization/list', { params })),
+  createPopularizations: jest.fn((params) => mockHttpClient.post('/live/v4/channel/popularization/create-batch', params)),
+};
+
 const mockClient = {
   httpClient: mockHttpClient,
+  v4Channel: mockV4Channel,
 } as unknown as PolyVClient;
 
 jest.mock('polyv-live-api-sdk', () => ({

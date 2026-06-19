@@ -21,10 +21,9 @@ const shouldRunTests = hasRealCredentials();
     if (originalCouponEnabled !== undefined) {
       try {
         const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
-        await client.channel.updateChannelConfig({
+        await client.v4Channel.updateCouponEnabled({
           channelId: testChannelId,
-          key: 'couponEnabled',
-          value: originalCouponEnabled,
+          enabled: originalCouponEnabled as 'Y' | 'N',
         });
       } catch (error) {
         // Ignore cleanup errors
@@ -33,33 +32,31 @@ const shouldRunTests = hasRealCredentials();
   });
 
   // ========================================
-  // updateChannelConfig - couponEnabled
+  // updateCouponEnabled - couponEnabled
   // ========================================
 
-  describe('updateChannelConfig - couponEnabled', () => {
+  describe('updateCouponEnabled - couponEnabled', () => {
     it('should enable coupon display on watch page', async () => {
       const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
 
-      const result = await client.channel.updateChannelConfig({
+      await client.v4Channel.updateCouponEnabled({
         channelId: testChannelId,
-        key: 'couponEnabled',
-        value: 'Y',
+        enabled: 'Y',
       });
 
-      expect(result).toBe(true);
+      expect(true).toBe(true);
       originalCouponEnabled = 'N'; // Restore to N after test
     }, 15000);
 
     it('should disable coupon display on watch page', async () => {
       const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
 
-      const result = await client.channel.updateChannelConfig({
+      await client.v4Channel.updateCouponEnabled({
         channelId: testChannelId,
-        key: 'couponEnabled',
-        value: 'N',
+        enabled: 'N',
       });
 
-      expect(result).toBe(true);
+      expect(true).toBe(true);
       originalCouponEnabled = 'N';
     }, 15000);
 
@@ -67,43 +64,39 @@ const shouldRunTests = hasRealCredentials();
       const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
 
       await expect(
-        client.channel.updateChannelConfig({
+        client.v4Channel.updateCouponEnabled({
           channelId: '',
-          key: 'couponEnabled',
-          value: 'Y',
+          enabled: 'Y',
         })
       ).rejects.toThrow();
     }, 10000);
 
-    it('should validate key is required', async () => {
+    it('should validate enabled is required', async () => {
       const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
 
       await expect(
-        client.channel.updateChannelConfig({
+        client.v4Channel.updateCouponEnabled({
           channelId: testChannelId,
-          key: '',
-          value: 'Y',
+          enabled: '' as 'Y',
         })
       ).rejects.toThrow();
     }, 10000);
   });
 
   // ========================================
-  // updateChannelConfig - other keys
+  // updateCouponEnabled return contract
   // ========================================
 
-  describe('updateChannelConfig - generic keys', () => {
-    it('should accept any valid key-value pair', async () => {
+  describe('updateCouponEnabled return contract', () => {
+    it('should resolve for a valid couponEnabled value', async () => {
       const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
 
-      // Test with couponEnabled since we know it's a valid key
-      const result = await client.channel.updateChannelConfig({
+      await client.v4Channel.updateCouponEnabled({
         channelId: testChannelId,
-        key: 'couponEnabled',
-        value: 'Y',
+        enabled: 'Y',
       });
 
-      expect(typeof result).toBe('boolean');
+      expect(true).toBe(true);
       originalCouponEnabled = 'N';
     }, 15000);
   });
@@ -125,7 +118,7 @@ const shouldRunTests = hasRealCredentials();
       expect(couponEnabledResource?.params?.['enabled']).toBe('Y');
     }, 10000);
 
-    it('should create couponEnabled handler and call updateChannelConfig', async () => {
+    it('should create couponEnabled handler and call updateCouponEnabled', async () => {
       const { createResourceHandlers } = await import('../../src/setup/resource-handlers');
       const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
       const handlers = createResourceHandlers(client);

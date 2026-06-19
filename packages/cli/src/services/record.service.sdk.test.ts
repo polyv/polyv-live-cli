@@ -70,6 +70,7 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
         recordConvert: jest.fn(),
         recordConvertAsync: jest.fn(),
         setRecordDefault: jest.fn(),
+        setDefaultPlaybackVideo: jest.fn(),
       },
     };
 
@@ -310,8 +311,8 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
   // ============================================
 
   describe('recordConvertAsync - Async mode (AC4)', () => {
-    it('should call SDK client.channel.recordConvertAsync', async () => {
-      mockSdkClient.channel.recordConvertAsync.mockResolvedValueOnce({});
+    it('should call SDK client.channel.recordConvert', async () => {
+      mockSdkClient.channel.recordConvert.mockResolvedValueOnce({});
 
       const options = {
         sessionId: 'session-123',
@@ -321,7 +322,7 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
 
       await service.recordConvertAsync('2588188', options);
 
-      expect(mockSdkClient.channel.recordConvertAsync).toHaveBeenCalledWith(
+      expect(mockSdkClient.channel.recordConvert).toHaveBeenCalledWith(
         '2588188',
         expect.objectContaining({
           fileId: 'session-123',
@@ -332,7 +333,7 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
     });
 
     it('should return result with async=true', async () => {
-      mockSdkClient.channel.recordConvertAsync.mockResolvedValueOnce({});
+      mockSdkClient.channel.recordConvert.mockResolvedValueOnce({});
 
       const result = await service.recordConvertAsync('2588188', {
         sessionId: 'session-123',
@@ -343,7 +344,7 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
 
     it('should propagate SDK errors', async () => {
       const error = new Error('API Error');
-      mockSdkClient.channel.recordConvertAsync.mockRejectedValueOnce(error);
+      mockSdkClient.channel.recordConvert.mockRejectedValueOnce(error);
 
       await expect(
         service.recordConvertAsync('2588188', { sessionId: 'session-123' })
@@ -356,20 +357,20 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
   // ============================================
 
   describe('setRecordDefault (AC5)', () => {
-    it('should call SDK client.channel.setRecordDefault', async () => {
-      mockSdkClient.channel.setRecordDefault.mockResolvedValueOnce(true);
+    it('should call SDK client.channel.setDefaultPlaybackVideo', async () => {
+      mockSdkClient.channel.setDefaultPlaybackVideo.mockResolvedValueOnce('ok');
 
       await service.setRecordDefault('2588188', '73801f70c8', 'playback');
 
-      expect(mockSdkClient.channel.setRecordDefault).toHaveBeenCalledWith(
-        '2588188',
-        '73801f70c8',
-        'playback'
-      );
+      expect(mockSdkClient.channel.setDefaultPlaybackVideo).toHaveBeenCalledWith({
+        channelId: '2588188',
+        videoId: '73801f70c8',
+        listType: 'playback',
+      });
     });
 
     it('should return true on success', async () => {
-      mockSdkClient.channel.setRecordDefault.mockResolvedValueOnce(true);
+      mockSdkClient.channel.setDefaultPlaybackVideo.mockResolvedValueOnce('ok');
 
       const result = await service.setRecordDefault('2588188', '73801f70c8', 'playback');
 
@@ -377,21 +378,20 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
     });
 
     it('should work without listType', async () => {
-      mockSdkClient.channel.setRecordDefault.mockResolvedValueOnce(true);
+      mockSdkClient.channel.setDefaultPlaybackVideo.mockResolvedValueOnce('ok');
 
       const result = await service.setRecordDefault('2588188', '73801f70c8');
 
-      expect(mockSdkClient.channel.setRecordDefault).toHaveBeenCalledWith(
-        '2588188',
-        '73801f70c8',
-        undefined
-      );
+      expect(mockSdkClient.channel.setDefaultPlaybackVideo).toHaveBeenCalledWith({
+        channelId: '2588188',
+        videoId: '73801f70c8',
+      });
       expect(result).toBe(true);
     });
 
     it('should propagate SDK errors', async () => {
       const error = new Error('API Error');
-      mockSdkClient.channel.setRecordDefault.mockRejectedValueOnce(error);
+      mockSdkClient.channel.setDefaultPlaybackVideo.mockRejectedValueOnce(error);
 
       await expect(
         service.setRecordDefault('2588188', '73801f70c8', 'playback')

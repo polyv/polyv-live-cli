@@ -84,6 +84,9 @@ export class DonateHandler extends BaseHandler {
       if (options.cashEnabled !== undefined) {
         params.donateEnabled = options.cashEnabled;
       }
+      if (options.giftEnabled !== undefined) {
+        params.donateGiftEnabled = options.giftEnabled;
+      }
       if (options.tips !== undefined) {
         params.donateTips = options.tips;
       }

@@ -25,8 +25,8 @@ const REPO_ROOT = join(PACKAGE_ROOT, '../..');
 const DEFAULT_API_DOCS_DIR = resolve(REPO_ROOT, '../document-center/docs/live/api');
 const LEGACY_API_DOCS_DIR = resolve(REPO_ROOT, 'docs/api');
 const DOCS_DIR = resolveApiDocsDir();
-const OUTPUT_DIR = join(PACKAGE_ROOT, 'src/types/generated');
-const REPORT_PATH = join(PACKAGE_ROOT, '_bmad-output/type-generation-report.json');
+const OUTPUT_DIR = resolveGeneratedTypesDir();
+const REPORT_PATH = resolveTypeGenerationReportPath();
 
 function resolveApiDocsDir(): string {
   const configuredDocsDir = process.env['POLYV_API_DOCS_DIR'];
@@ -39,6 +39,24 @@ function resolveApiDocsDir(): string {
   }
 
   return LEGACY_API_DOCS_DIR;
+}
+
+function resolveGeneratedTypesDir(): string {
+  const configuredOutputDir = process.env['POLYV_GENERATED_TYPES_DIR'];
+  if (configuredOutputDir) {
+    return resolve(configuredOutputDir);
+  }
+
+  return join(PACKAGE_ROOT, 'src/types/generated');
+}
+
+function resolveTypeGenerationReportPath(): string {
+  const configuredReportPath = process.env['POLYV_TYPE_GENERATION_REPORT_PATH'];
+  if (configuredReportPath) {
+    return resolve(configuredReportPath);
+  }
+
+  return join(PACKAGE_ROOT, '_bmad-output/type-generation-report.json');
 }
 
 /**
@@ -73,7 +91,7 @@ async function main(): Promise<void> {
 
     // Clean and prepare output directory
     processor.cleanOutputDir();
-    console.log('📁 Created output directory: src/types/generated/\n');
+    console.log(`📁 Created output directory: ${OUTPUT_DIR}\n`);
 
     // Process each module
     const allResults: ParseResult[] = [];

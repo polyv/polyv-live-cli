@@ -307,10 +307,10 @@ export class PlaybackServiceSdk {
       params.orderByCustom = options.orderByCustom ? 'Y' : 'N';
     }
 
-    // Call SDK
-    const result = await client.channel.recordFileMergeAsync(channelId, params);
+    // The latest inventory keeps this API at /record/merge.
+    await client.channel.recordFileMerge(channelId, params);
 
-    return result;
+    return true;
   }
 
   /**

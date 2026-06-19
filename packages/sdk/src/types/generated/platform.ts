@@ -4,7 +4,7 @@
  * AUTO-GENERATED FILE - DO NOT EDIT
  * Generated from API docs module platform by scripts/generate-types.ts
  *
- * Last updated: 2026-06-19T06:33:52.928Z
+ * Last updated: 2026-06-19T17:20:59.339Z
  */
 
 /**

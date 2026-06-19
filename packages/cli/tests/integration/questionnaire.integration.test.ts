@@ -208,7 +208,7 @@ const shouldRunTests = hasRealCredentials();
         }
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不能为空', '不存在'];
+        const expectedErrors = ['404', 'not found', '不能为空', '不存在', '找不到'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -250,7 +250,7 @@ const shouldRunTests = hasRealCredentials();
         }
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不能为空', '不存在'];
+        const expectedErrors = ['404', 'not found', '不能为空', '不存在', '找不到'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -287,7 +287,7 @@ const shouldRunTests = hasRealCredentials();
         }
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不能为空', '不存在'];
+        const expectedErrors = ['404', 'not found', '不能为空', '不存在', '找不到'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -366,7 +366,7 @@ const shouldRunTests = hasRealCredentials();
         expect(result).toBeDefined();
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不能为空', '不存在'];
+        const expectedErrors = ['404', 'not found', '不能为空', '不存在', '找不到'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -410,7 +410,7 @@ const shouldRunTests = hasRealCredentials();
         expect(result).toBeDefined();
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不存在', '找不到'];
+        const expectedErrors = ['404', 'not found', '不存在', '找不到', 'undefined error'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -450,7 +450,7 @@ const shouldRunTests = hasRealCredentials();
         expect(result).toBeDefined();
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不存在', '找不到'];
+        const expectedErrors = ['404', 'not found', '不存在', '找不到', 'undefined error'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {

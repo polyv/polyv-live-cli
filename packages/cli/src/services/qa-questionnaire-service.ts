@@ -101,23 +101,47 @@ export class QaQuestionnaireServiceSdk {
    */
   async createQuestionnaire(params: CreateQuestionnaireParams): Promise<any> {
     try {
-      const result = await this.liveInteraction.addEditQuestionnaire(
-        { channelId: params.channelId },
-        {
-          questionnaireId: params.customQuestionnaireId,
-          title: params.title,
-          items: params.questions.map(q => ({
-            type: q.type,
-            question: q.name,
-            options: q.options,
-            required: q.required === 'Y',
-          })),
-        }
-      );
+      const result = await this.liveInteraction.createQuestionnaire({
+        channelId: params.channelId,
+        questionnaireTitle: params.title,
+        customQuestionnaireId: params.customQuestionnaireId,
+        autoPublishTime: params.autoPublishTime,
+        autoEndTime: params.autoEndTime,
+        privacyEnabled: params.privacyEnabled,
+        privacyContent: params.privacyContent,
+        questions: params.questions.map(q => this.toSdkQuestionnaireQuestion(q)),
+      });
       return result;
     } catch (error) {
       throw this.wrapError(error, 'createQuestionnaire');
     }
+  }
+
+  private toSdkQuestionnaireQuestion(
+    question: CreateQuestionnaireParams['questions'][number]
+  ): Record<string, unknown> {
+    const sdkQuestion: Record<string, unknown> = {
+      name: question.name,
+      type: question.type,
+      options: question.options,
+      answer: question.answer,
+      scoreEnabled: question.scoreEnabled,
+      score: question.score,
+      required: question.required,
+    };
+
+    if (question.options && question.options.length > 0) {
+      sdkQuestion.optionList = question.options.map((name, index) => ({
+        id: String(index + 1),
+        name,
+      }));
+
+      question.options.slice(0, 10).forEach((option, index) => {
+        sdkQuestion[`option${index + 1}`] = option;
+      });
+    }
+
+    return sdkQuestion;
   }
 
   /**

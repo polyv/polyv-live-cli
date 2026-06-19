@@ -41,6 +41,7 @@ describe('PlaybackServiceSdk', () => {
     mockSdkClient = {
       channel: {
         getPlaybackList: jest.fn(),
+        recordFileMerge: jest.fn(),
       },
     };
     (createSdkClient as jest.Mock).mockReturnValue(mockSdkClient);
@@ -396,15 +397,15 @@ describe('PlaybackServiceSdk', () => {
     const mockAsyncResponse = true;
 
     beforeEach(() => {
-      mockSdkClient.channel.recordFileMergeAsync = jest.fn();
+      mockSdkClient.channel.recordFileMerge = jest.fn();
     });
 
     it('should call SDK with correct parameters (basic)', async () => {
-      mockSdkClient.channel.recordFileMergeAsync.mockResolvedValueOnce(mockAsyncResponse);
+      mockSdkClient.channel.recordFileMerge.mockResolvedValueOnce(mockAsyncResponse);
 
       const result = await service.mergePlaybackAsync('3151318', ['file1', 'file2', 'file3']);
 
-      expect(mockSdkClient.channel.recordFileMergeAsync).toHaveBeenCalledWith(
+      expect(mockSdkClient.channel.recordFileMerge).toHaveBeenCalledWith(
         '3151318',
         {
           fileIds: ['file1', 'file2', 'file3'],
@@ -416,7 +417,7 @@ describe('PlaybackServiceSdk', () => {
     });
 
     it('should pass all async options to SDK', async () => {
-      mockSdkClient.channel.recordFileMergeAsync.mockResolvedValueOnce(mockAsyncResponse);
+      mockSdkClient.channel.recordFileMerge.mockResolvedValueOnce(mockAsyncResponse);
 
       await service.mergePlaybackAsync('3151318', ['file1', 'file2'], {
         fileName: '合并回放',
@@ -426,7 +427,7 @@ describe('PlaybackServiceSdk', () => {
         orderByCustom: true,
       });
 
-      expect(mockSdkClient.channel.recordFileMergeAsync).toHaveBeenCalledWith(
+      expect(mockSdkClient.channel.recordFileMerge).toHaveBeenCalledWith(
         '3151318',
         {
           fileIds: ['file1', 'file2'],

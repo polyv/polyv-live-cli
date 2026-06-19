@@ -161,11 +161,12 @@ export class RecordServiceSdk {
       params.callbackUrl = options['callbackUrl'];
     }
 
-    // Call SDK - async mode
-    await client.channel.recordConvertAsync(channelId, params);
+    // The latest inventory keeps this API at /record/convert.
+    const result = await client.channel.recordConvert(channelId, params);
 
     return {
       async: true,
+      vid: result?.['fileId'],
     };
   }
 
@@ -185,8 +186,12 @@ export class RecordServiceSdk {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
 
     // Call SDK
-    const result = await client.channel.setRecordDefault(channelId, videoId, listType);
+    await client.channel.setDefaultPlaybackVideo({
+      channelId,
+      videoId,
+      ...(listType ? { listType } : {}),
+    });
 
-    return result;
+    return true;
   }
 }
