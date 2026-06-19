@@ -117,6 +117,42 @@ import type {
   GetUserChildrenChannelsResponse,
   ListChannelsFollowParams,
   ListChannelsFollowResponse,
+  AddPptRecordTaskParams,
+  PptRecordMutationResponse,
+  UpdatePptRecordSettingParams,
+  DeletePptRecordParams,
+  ViewerApiTokenParams,
+  ViewerApiTokenResponse,
+  ChatTokenParams,
+  ChatTokenResponse,
+  TokenLoginUrlParams,
+  TokenLoginUrlResponse,
+  BatchAddTransmitParams,
+  BatchAddTransmitResponse,
+  BatchAddSubmeetingParams,
+  BatchAddSubmeetingResponse,
+  AssociationReceiveChannelsParams,
+  AssociationReceiveChannelsResponse,
+  RemoveChatContentsParams,
+  BatchDeleteChannelProductParams,
+  BatchAddChannelProductsParams,
+  BatchAddChannelProductsResponse,
+  BatchShelfChannelProductParams,
+  ProductIdParams,
+  ProductStatus,
+  ShelfChannelProductParams,
+  PushChannelProductParams,
+  SortChannelProductOrderParams,
+  ReferenceProductParams,
+  ReferenceProductResponse,
+  DeleteDiskVideosParams,
+  AddDiskVideosParams,
+  SetChannelTokenParams,
+  StopQuestionnaireParams,
+  StopQuestionnaireResponse,
+  BatchUpdateDanmuParams,
+  UpdateChannelsFollowParams,
+  UpdateStreamTypeParams,
   // Story 8-2 Types
   AddChannelProductParams,
   AddChannelProductResponse,
@@ -286,6 +322,75 @@ export class ChannelService {
 
     this.validateRequiredText(values, field);
     return values.trim();
+  }
+
+  private normalizeOptionalCommaSeparatedValues(
+    values: string | number | Array<string | number> | undefined,
+    field: string
+  ): string | undefined {
+    if (values === undefined) {
+      return undefined;
+    }
+
+    if (Array.isArray(values)) {
+      return this.normalizeCommaSeparatedValues(values, field);
+    }
+
+    this.validateRequiredValue(values, field);
+    return String(values).trim();
+  }
+
+  private validateRequiredYn(value: YNFlag | undefined, field: string): void {
+    if (value === undefined) {
+      throw PolyVValidationError.required(field);
+    }
+
+    this.validateOptionalYn(value, field);
+  }
+
+  private validateStringArray(values: string[], field: string, maxLength: number): void {
+    if (!Array.isArray(values) || values.length === 0) {
+      throw PolyVValidationError.required(field);
+    }
+
+    if (values.length > maxLength) {
+      throw PolyVValidationError.outOfRange(field, values.length, { max: maxLength });
+    }
+
+    values.forEach((value, index) => {
+      this.validateRequiredText(value, `${field}[${index}]`);
+    });
+  }
+
+  private validateNumberArray(values: number[], field: string, maxLength: number): void {
+    if (!Array.isArray(values) || values.length === 0) {
+      throw PolyVValidationError.required(field);
+    }
+
+    if (values.length > maxLength) {
+      throw PolyVValidationError.outOfRange(field, values.length, { max: maxLength });
+    }
+
+    values.forEach((value, index) => {
+      if (!Number.isInteger(value) || value < 1) {
+        throw PolyVValidationError.outOfRange(`${field}[${index}]`, value, { min: 1 });
+      }
+    });
+  }
+
+  private validateProductStatus(value: ProductStatus | undefined, field: string): void {
+    if (value === undefined) {
+      throw PolyVValidationError.required(field);
+    }
+
+    if (value !== 1 && value !== 2) {
+      throw new PolyVValidationError(
+        `${field} must be 1 or 2`,
+        field,
+        value,
+        { allowedValues: [1, 2] }
+      );
+    }
   }
 
   private validateViewerIds(viewerIds: string[]): void {
@@ -5379,6 +5484,796 @@ export class ChannelService {
     );
 
     return response as unknown as ListChannelsFollowResponse;
+  }
+
+  // --------------------------------------------
+  // Historical Operate Write APIs
+  // --------------------------------------------
+
+  /**
+   * Capture the current live stream image.
+   *
+   * @param channelId - The channel ID
+   * @returns Screenshot image URL
+   */
+  async getCaptureImage(channelId: string): Promise<string> {
+    this.validateRequiredText(channelId, 'channelId');
+
+    const response = await this.client.httpClient.post<string>(
+      `/live/v2/stream/${channelId}/capture`,
+      null
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Create a PPT record remaking task.
+   *
+   * @param params - Task parameters including channelId and playback videoId
+   * @returns true if task creation succeeded
+   */
+  async addPptRecordTask(params: AddPptRecordTaskParams): Promise<boolean> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.videoId, 'videoId');
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v3/channel/pptRecord/addRecordTask',
+      null,
+      { params: { channelId: params.channelId, videoId: params.videoId } }
+    );
+
+    return response as unknown as boolean;
+  }
+
+  /**
+   * Update PPT record settings.
+   *
+   * @param params - PPT record setting fields
+   * @returns Mutation result
+   */
+  async updatePptRecordSetting(
+    params: UpdatePptRecordSettingParams
+  ): Promise<PptRecordMutationResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateOptionalYn(params.globalSettingEnabled, 'globalSettingEnabled');
+
+    if (params.type !== undefined && params.type !== 0 && params.type !== 1 && params.type !== 2) {
+      throw new PolyVValidationError(
+        'type must be 0, 1, or 2',
+        'type',
+        params.type,
+        { allowedValues: [0, 1, 2] }
+      );
+    }
+
+    if (params.videoRatio !== undefined && params.videoRatio !== 0 && params.videoRatio !== 1) {
+      throw new PolyVValidationError(
+        'videoRatio must be 0 or 1',
+        'videoRatio',
+        params.videoRatio,
+        { allowedValues: [0, 1] }
+      );
+    }
+
+    const { channelId, ...settingParams } = params;
+    const response = await this.client.httpClient.post<PptRecordMutationResponse>(
+      '/live/v3/channel/pptRecord/setting',
+      null,
+      { params: { channelId, ...settingParams } }
+    );
+
+    return response as unknown as PptRecordMutationResponse;
+  }
+
+  /**
+   * Get watch-page SDK API token.
+   *
+   * @param params - Viewer token parameters
+   * @returns Viewer API token
+   */
+  async getWatchApiToken(params: ViewerApiTokenParams): Promise<ViewerApiTokenResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.viewerId, 'viewerId', 64);
+
+    const response = await this.client.httpClient.post<ViewerApiTokenResponse>(
+      '/live/v3/channel/watch/get-watch-api-token',
+      null,
+      { params }
+    );
+
+    return response as unknown as ViewerApiTokenResponse;
+  }
+
+  /**
+   * Get viewer API token.
+   *
+   * @param params - Viewer token parameters
+   * @returns Viewer API token
+   */
+  async getApiToken(params: ViewerApiTokenParams): Promise<ViewerApiTokenResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.viewerId, 'viewerId', 64);
+
+    const response = await this.client.httpClient.post<ViewerApiTokenResponse>(
+      '/live/v3/channel/watch/get-api-token',
+      null,
+      { params }
+    );
+
+    return response as unknown as ViewerApiTokenResponse;
+  }
+
+  /**
+   * Get channel chat-room online count with the historical POST endpoint.
+   *
+   * @param channelId - The channel ID
+   * @returns Online user count
+   */
+  async getChatOnlineCount(channelId: string): Promise<number> {
+    this.validateRequiredText(channelId, 'channelId');
+
+    const response = await this.client.httpClient.post<number>(
+      '/live/v3/channel/chat/count-online-user',
+      null,
+      { params: { channelId } }
+    );
+
+    return response as unknown as number;
+  }
+
+  /**
+   * Get password-free login URL for teacher/admin roles.
+   *
+   * @param params - Channel and optional role account ID
+   * @returns Login URL or token wrapper returned by the API
+   */
+  async getTokenLoginUrl(params: TokenLoginUrlParams): Promise<TokenLoginUrlResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+
+    const response = await this.client.httpClient.post<TokenLoginUrlResponse>(
+      '/live/v3/channel/common/token-login-url',
+      null,
+      { params }
+    );
+
+    return response as unknown as TokenLoginUrlResponse;
+  }
+
+  /**
+   * Get authorization and link-mic chat token.
+   *
+   * @param params - Chat token parameters
+   * @returns Chat token detail
+   */
+  async getChatToken(params: ChatTokenParams): Promise<ChatTokenResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.userId, 'userId');
+
+    const allowedRoles = ['teacher', 'admin', 'guest', 'assistant', 'viewer'];
+    if (!allowedRoles.includes(params.role)) {
+      throw new PolyVValidationError(
+        'role must be teacher, admin, guest, assistant, or viewer',
+        'role',
+        params.role,
+        { allowedValues: allowedRoles }
+      );
+    }
+
+    const response = await this.client.httpClient.post<ChatTokenResponse>(
+      '/live/v3/channel/common/get-chat-token',
+      null,
+      { params }
+    );
+
+    return response as unknown as ChatTokenResponse;
+  }
+
+  /**
+   * Batch create channels that receive a transmit stream.
+   *
+   * @param params - Source channel and receiver channel names
+   * @returns Created receiver channels
+   */
+  async batchAddTransmit(params: BatchAddTransmitParams): Promise<BatchAddTransmitResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateStringArray(params.names, 'names', 100);
+
+    const response = await this.client.httpClient.post<BatchAddTransmitResponse>(
+      '/live/v3/channel/transmit/batch-create',
+      params.names,
+      { params: { channelId: params.channelId } }
+    );
+
+    return response as unknown as BatchAddTransmitResponse;
+  }
+
+  /**
+   * Batch associate submeeting channels.
+   *
+   * @param params - Main channel and submeeting list
+   * @returns Associated submeeting channel IDs
+   */
+  async batchAddSubmeeting(params: BatchAddSubmeetingParams): Promise<BatchAddSubmeetingResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+
+    if (!Array.isArray(params.subChannels) || params.subChannels.length === 0) {
+      throw PolyVValidationError.required('subChannels');
+    }
+
+    if (params.subChannels.length > 60) {
+      throw PolyVValidationError.outOfRange('subChannels', params.subChannels.length, { max: 60 });
+    }
+
+    params.subChannels.forEach((subChannel, index) => {
+      this.validateRequiredValue(subChannel.channelId, `subChannels[${index}].channelId`);
+    });
+
+    const response = await this.client.httpClient.post<BatchAddSubmeetingResponse>(
+      '/live/v3/channel/multi-meeting/batch-save-submeeting',
+      { subChannels: params.subChannels },
+      { params: { channelId: params.channelId } }
+    );
+
+    return response as unknown as BatchAddSubmeetingResponse;
+  }
+
+  /**
+   * Associate or cancel receiver channels for a transmit channel.
+   *
+   * @param params - Transmit association parameters
+   * @returns Receiver channel IDs returned by the API
+   */
+  async associationReceiveChannels(
+    params: AssociationReceiveChannelsParams
+  ): Promise<AssociationReceiveChannelsResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    const receiveChannelIds = this.normalizeCommaSeparatedValues(
+      params.receiveChannelIds,
+      'receiveChannelIds'
+    );
+
+    if (params.type !== undefined && params.type !== 'add' && params.type !== 'cancel') {
+      throw new PolyVValidationError(
+        'type must be add or cancel',
+        'type',
+        params.type,
+        { allowedValues: ['add', 'cancel'] }
+      );
+    }
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      receiveChannelIds,
+    };
+    if (params.type !== undefined) {
+      queryParams.type = params.type;
+    }
+
+    const response = await this.client.httpClient.post<AssociationReceiveChannelsResponse>(
+      '/live/v3/channel/transmit/associations',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as AssociationReceiveChannelsResponse;
+  }
+
+  /**
+   * Batch remove chat records from a channel.
+   *
+   * @param params - Channel and chat message IDs
+   * @returns Success message
+   */
+  async removeChatContents(params: RemoveChatContentsParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    const ids = this.normalizeCommaSeparatedValues(params.ids, 'ids');
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/chat/remove-contents',
+      null,
+      { params: { channelId: params.channelId, ids } }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Batch delete channel products.
+   *
+   * @param params - Channel and product IDs
+   * @returns Success message
+   */
+  async batchDeleteChannelProducts(params: BatchDeleteChannelProductParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateNumberArray(params.productIds, 'productIds', 100);
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/product/batch-delete',
+      { productIds: params.productIds },
+      { params: { channelId: params.channelId } }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Batch add channel products.
+   *
+   * @param params - Channel and product list
+   * @returns Created products
+   */
+  async batchAddChannelProducts(
+    params: BatchAddChannelProductsParams
+  ): Promise<BatchAddChannelProductsResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+
+    if (!Array.isArray(params.products) || params.products.length === 0) {
+      throw PolyVValidationError.required('products');
+    }
+
+    if (params.products.length > 100) {
+      throw PolyVValidationError.outOfRange('products', params.products.length, { max: 100 });
+    }
+
+    params.products.forEach((product, index) => {
+      this.validateRequiredText(product.name, `products[${index}].name`);
+      this.validateProductStatus(product.status, `products[${index}].status`);
+      if (product.linkType !== 10 && product.linkType !== 11) {
+        throw new PolyVValidationError(
+          `products[${index}].linkType must be 10 or 11`,
+          `products[${index}].linkType`,
+          product.linkType,
+          { allowedValues: [10, 11] }
+        );
+      }
+    });
+
+    const response = await this.client.httpClient.post<BatchAddChannelProductsResponse>(
+      '/live/v3/channel/product/batch-add',
+      params.products,
+      { params: { channelId: params.channelId } }
+    );
+
+    return response as unknown as BatchAddChannelProductsResponse;
+  }
+
+  /**
+   * Batch update channel product shelf status.
+   *
+   * @param params - Channel, product IDs, and shelf status
+   * @returns Success message
+   */
+  async batchShelfChannelProducts(params: BatchShelfChannelProductParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateNumberArray(params.productIds, 'productIds', 100);
+    this.validateProductStatus(params.shelf, 'shelf');
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/product/batch-shelf',
+      { productIds: params.productIds },
+      { params: { channelId: params.channelId, shelf: params.shelf } }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Cancel a pushed channel product.
+   *
+   * @param params - Channel and product ID
+   * @returns API result
+   */
+  async cancelPushChannelProduct(params: ProductIdParams): Promise<null | string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateNumberArray([params.productId], 'productId', 1);
+
+    const response = await this.client.httpClient.post<null | string>(
+      '/live/v3/channel/product/cancel-push-product',
+      null,
+      { params: { channelId: params.channelId, productId: params.productId } }
+    );
+
+    return response as unknown as null | string;
+  }
+
+  /**
+   * Push a channel product to viewers.
+   *
+   * @param params - Channel, product ID, and optional card type
+   * @returns API result
+   */
+  async pushChannelProduct(params: PushChannelProductParams): Promise<null | string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateNumberArray([params.productId], 'productId', 1);
+
+    if (
+      params.pushCardType !== undefined &&
+      params.pushCardType !== 'smallCard' &&
+      params.pushCardType !== 'bigCard'
+    ) {
+      throw new PolyVValidationError(
+        'pushCardType must be smallCard or bigCard',
+        'pushCardType',
+        params.pushCardType,
+        { allowedValues: ['smallCard', 'bigCard'] }
+      );
+    }
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      productId: params.productId,
+    };
+    if (params.pushCardType !== undefined) {
+      queryParams.pushCardType = params.pushCardType;
+    }
+
+    const response = await this.client.httpClient.post<null | string>(
+      '/live/v3/channel/product/push-product',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as null | string;
+  }
+
+  /**
+   * Update one channel product shelf status.
+   *
+   * @param params - Channel, product ID, and shelf status
+   * @returns Success message
+   */
+  async shelfChannelProduct(params: ShelfChannelProductParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateNumberArray([params.productId], 'productId', 1);
+    this.validateProductStatus(params.shelf, 'shelf');
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/product/shelf',
+      null,
+      {
+        params: {
+          channelId: params.channelId,
+          productId: params.productId,
+          shelf: params.shelf,
+        },
+      }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Sort a channel product by moving it up, down, or to a rank.
+   *
+   * @param params - Sort parameters
+   * @returns Success message
+   */
+  async sortChannelProduct(params: SortChannelProductOrderParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateNumberArray([params.productId], 'productId', 1);
+
+    if (params.type !== 10 && params.type !== 20 && params.type !== 50) {
+      throw new PolyVValidationError(
+        'type must be 10, 20, or 50',
+        'type',
+        params.type,
+        { allowedValues: [10, 20, 50] }
+      );
+    }
+
+    if (params.type === 50) {
+      this.validateNumberArray([params.sort as number], 'sort', 1);
+    }
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      productId: params.productId,
+      type: params.type,
+    };
+    if (params.sort !== undefined) {
+      queryParams.sort = params.sort;
+    }
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/product/sort',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Reference a platform product into a channel product library.
+   *
+   * @param params - Channel and platform product fields
+   * @returns Referenced channel product
+   */
+  async referenceProduct(params: ReferenceProductParams): Promise<ReferenceProductResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.originId, 'originId');
+    this.validateProductStatus(params.status, 'status');
+
+    const { channelId, ...bodyParams } = params;
+    const response = await this.client.httpClient.post<ReferenceProductResponse>(
+      '/live/v3/channel/product/reference',
+      bodyParams,
+      { params: { channelId } }
+    );
+
+    return response as unknown as ReferenceProductResponse;
+  }
+
+  /**
+   * Delete pseudo-live disk videos.
+   *
+   * @param params - Channel and VOD/material or disk video IDs
+   * @returns API result
+   */
+  async deleteDiskVideos(params: DeleteDiskVideosParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    const vids = this.normalizeOptionalCommaSeparatedValues(params.vids, 'vids');
+    const videoIds = this.normalizeOptionalCommaSeparatedValues(params.videoIds, 'videoIds');
+
+    if (vids === undefined && videoIds === undefined) {
+      throw PolyVValidationError.required('vids or videoIds');
+    }
+
+    const queryParams: Record<string, unknown> = { channelId: params.channelId };
+    if (vids !== undefined) {
+      queryParams.vids = vids;
+    }
+    if (videoIds !== undefined) {
+      queryParams.videoIds = videoIds;
+    }
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/stream/delete-disk-videos',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Delete PPT record remaking tasks.
+   *
+   * @param params - Channel and task IDs
+   * @returns Mutation result
+   */
+  async deletePptRecord(params: DeletePptRecordParams): Promise<PptRecordMutationResponse> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    const taskIds = this.normalizeCommaSeparatedValues(params.taskIds, 'taskIds');
+
+    const response = await this.client.httpClient.post<PptRecordMutationResponse>(
+      '/live/v3/channel/pptRecord/batch-delete',
+      null,
+      { params: { channelId: params.channelId, taskIds } }
+    );
+
+    return response as unknown as PptRecordMutationResponse;
+  }
+
+  /**
+   * Set one-time login token for a channel.
+   *
+   * @param params - Channel and token
+   * @returns Success message
+   */
+  async setChannelToken(params: SetChannelTokenParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.token, 'token');
+
+    const response = await this.client.httpClient.post<string>(
+      `/live/v2/channels/${params.channelId}/set-token`,
+      null,
+      { params: { token: params.token } }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Set one-time login token for a sub-account channel.
+   *
+   * @param params - Channel and token
+   * @returns Success message
+   */
+  async setAccountToken(params: SetChannelTokenParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    this.validateRequiredText(params.token, 'token');
+
+    const response = await this.client.httpClient.post<string>(
+      `/live/v2/channels/${params.channelId}/set-account-token`,
+      null,
+      { params: { token: params.token } }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Manually stop questionnaires for one or more channels.
+   *
+   * @param params - Channel IDs
+   * @returns Mutation result
+   */
+  async channelsStopQuestionnaire(
+    params: StopQuestionnaireParams
+  ): Promise<StopQuestionnaireResponse> {
+    const channelIds = this.normalizeCommaSeparatedValues(params.channelIds, 'channelIds');
+
+    const response = await this.client.httpClient.post<StopQuestionnaireResponse>(
+      '/live/v3/channel/questionnaire/end',
+      null,
+      { params: { channelIds } }
+    );
+
+    return response as unknown as StopQuestionnaireResponse;
+  }
+
+  /**
+   * Batch update channel danmu switches.
+   *
+   * @param params - Channel IDs and switch values
+   * @returns Success message
+   */
+  async batchUpdateDanmu(params: BatchUpdateDanmuParams): Promise<string> {
+    const channelIds = this.normalizeCommaSeparatedValues(params.channelIds, 'channelIds');
+    this.validateRequiredYn(params.closeDanmu, 'closeDanmu');
+    this.validateRequiredYn(params.showDanmuInfoEnabled, 'showDanmuInfoEnabled');
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/basic/batchUpdateDanmu',
+      null,
+      {
+        params: {
+          channelIds,
+          closeDanmu: params.closeDanmu,
+          showDanmuInfoEnabled: params.showDanmuInfoEnabled,
+        },
+      }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Update follow-public-account settings for one or more channels.
+   *
+   * @param params - Channel IDs and follow settings
+   * @returns API result
+   */
+  async updateChannelsFollow(params: UpdateChannelsFollowParams): Promise<null | string> {
+    const channelIds = this.normalizeCommaSeparatedValues(params.channelIds, 'channelIds');
+    this.validateRequiredText(params.qrCodeUrl, 'qrCodeUrl');
+    this.validateOptionalYn(params.enabled, 'enabled');
+    this.validateOptionalYn(params.autoShowEnabled, 'autoShowEnabled');
+    this.validateOptionalText(params.entranceText, 'entranceText', 8);
+    this.validateOptionalText(params.tips, 'tips', 30);
+    this.validateOptionalText(params.pcFollowTips, 'pcFollowTips', 30);
+
+    const queryParams: Record<string, unknown> = {
+      channelIds,
+      qrCodeUrl: params.qrCodeUrl,
+    };
+    if (params.enabled !== undefined) {
+      queryParams.enabled = params.enabled;
+    }
+    if (params.autoShowEnabled !== undefined) {
+      queryParams.autoShowEnabled = params.autoShowEnabled;
+    }
+    if (params.entranceText !== undefined) {
+      queryParams.entranceText = params.entranceText;
+    }
+    if (params.tips !== undefined) {
+      queryParams.tips = params.tips;
+    }
+    if (params.pcFollowTips !== undefined) {
+      queryParams.pcFollowTips = params.pcFollowTips;
+    }
+
+    const response = await this.client.httpClient.post<null | string>(
+      '/live/v3/channel/promotion/update-channels-follow',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as null | string;
+  }
+
+  /**
+   * Update channel stream type.
+   *
+   * @param params - Stream type parameters
+   * @returns API result
+   */
+  async updateStreamType(params: UpdateStreamTypeParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+
+    const allowedStreamTypes = ['client', 'pull', 'thirdpull', 'disk', 'audio'];
+    if (!allowedStreamTypes.includes(params.streamType)) {
+      throw new PolyVValidationError(
+        'streamType must be client, pull, thirdpull, disk, or audio',
+        'streamType',
+        params.streamType,
+        { allowedValues: allowedStreamTypes }
+      );
+    }
+
+    if (params.streamType === 'pull') {
+      this.validateRequiredText(params.pullUrl, 'pullUrl');
+    }
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      streamType: params.streamType,
+    };
+    if (params.pullUrl !== undefined) {
+      queryParams.pullUrl = params.pullUrl;
+    }
+    if (params.pullStreamTime !== undefined) {
+      queryParams.pullStreamTime = params.pullStreamTime;
+    }
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/stream/update',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as string;
+  }
+
+  /**
+   * Configure pseudo-live disk videos.
+   *
+   * @param params - Channel and disk video source
+   * @returns API result
+   */
+  async addDiskVideos(params: AddDiskVideosParams): Promise<string> {
+    this.validateRequiredText(params.channelId, 'channelId');
+    const vids = this.normalizeCommaSeparatedValues(params.vids, 'vids');
+
+    if (
+      params.origin !== undefined &&
+      params.origin !== 'vod' &&
+      params.origin !== 'material' &&
+      params.origin !== 'record'
+    ) {
+      throw new PolyVValidationError(
+        'origin must be vod, material, or record',
+        'origin',
+        params.origin,
+        { allowedValues: ['vod', 'material', 'record'] }
+      );
+    }
+
+    const startTimes = this.normalizeOptionalCommaSeparatedValues(params.startTimes, 'startTimes');
+    if (params.origin === 'record' && startTimes === undefined) {
+      throw PolyVValidationError.required('startTimes');
+    }
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      vids,
+    };
+    if (params.origin !== undefined) {
+      queryParams.origin = params.origin;
+    }
+    if (startTimes !== undefined) {
+      queryParams.startTimes = startTimes;
+    }
+
+    const response = await this.client.httpClient.post<string>(
+      '/live/v3/channel/stream/add-disk-videos',
+      null,
+      { params: queryParams }
+    );
+
+    return response as unknown as string;
   }
 
   // ============================================

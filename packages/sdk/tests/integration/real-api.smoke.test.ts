@@ -438,6 +438,29 @@ describeWithCredentials('SDK real API integration smoke', () => {
   });
 
   describeWithWriteAccess('write API lifecycle', () => {
+    it('calls low-impact historical channel POST APIs when a channel can be discovered', async () => {
+      const channelId = await discoverChannelId(client);
+
+      if (!channelId) {
+        console.warn('Skipping historical channel POST assertions: no POLYV_CHANNEL_ID and no channel found via list APIs.');
+        return;
+      }
+
+      const viewerId = process.env.POLYV_VIEWER_ID ?? `sdk-it-viewer-${Date.now()}`;
+      const [onlineCount, apiToken, watchApiToken, chatToken] = await Promise.all([
+        client.channel.getChatOnlineCount(channelId),
+        client.channel.getApiToken({ channelId, viewerId, nickname: 'SDK integration viewer' }),
+        client.channel.getWatchApiToken({ channelId, viewerId, nickname: 'SDK integration viewer' }),
+        client.channel.getChatToken({ channelId, userId: viewerId, role: 'viewer' }),
+      ]);
+
+      expect(typeof onlineCount).toBe('number');
+      expect(onlineCount).toBeGreaterThanOrEqual(0);
+      expect(apiToken.token).toEqual(expect.any(String));
+      expect(watchApiToken.token).toEqual(expect.any(String));
+      expect(chatToken.token).toEqual(expect.any(String));
+    });
+
     it('sends encoded custom chat message with form body', async () => {
       const channelId = await discoverChannelId(client);
 

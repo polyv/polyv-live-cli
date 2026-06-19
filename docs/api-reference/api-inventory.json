@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T08:14:43.012Z",
+  "generatedAt": "2026-06-19T11:23:48.906Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,18 +18,18 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 586,
-    "sdkImplemented": 452,
-    "sdkMissing": 126
+    "sdkEndpoints": 615,
+    "sdkImplemented": 483,
+    "sdkMissing": 95
   },
   "modules": [
     {
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "implemented": 157,
-      "missing": 126,
-      "coverage": 55.5
+      "implemented": 188,
+      "missing": 95,
+      "coverage": 66.4
     },
     {
       "module": "account",
@@ -2807,12 +2807,12 @@
       "dedupeKey": "channel:查询频道直播截图",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/stream/{param}/capture",
+        "reference": "ChannelService#getCaptureImage",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -4055,12 +4055,12 @@
       "dedupeKey": "channel:创建重制课件任务",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/pptRecord/addRecordTask",
+        "reference": "ChannelService#addPptRecordTask",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -4564,12 +4564,12 @@
       "dedupeKey": "channel:更新频道重制课件设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/pptRecord/setting",
+        "reference": "ChannelService#updatePptRecordSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -4894,12 +4894,12 @@
       "dedupeKey": "channel:获取观看页sdk授权令牌",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/watch/get-watch-api-token",
+        "reference": "ChannelService#getWatchApiToken",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -4953,12 +4953,12 @@
       "dedupeKey": "channel:获取观众观看调用token",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/watch/get-api-token",
+        "reference": "ChannelService#getApiToken",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5040,12 +5040,12 @@
       "dedupeKey": "channel:获取频道聊天室在线人数",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
-        "methodMismatch": true,
-        "sdkMethod": "GET",
+        "implemented": true,
+        "methodMismatch": false,
+        "sdkMethod": "POST",
         "sdkPath": "/live/v3/channel/chat/count-online-user",
-        "reference": "ChatService#countOnlineUser",
-        "file": "packages/sdk/src/services/chat.service.ts"
+        "reference": "ChannelService#getChatOnlineCount",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5268,12 +5268,12 @@
       "dedupeKey": "channel:获取主讲等角色免密登录url",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/common/token-login-url",
+        "reference": "ChannelService#getTokenLoginUrl",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5561,12 +5561,12 @@
       "dedupeKey": "channel:批量创建接收转播的频道",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/transmit/batch-create",
+        "reference": "ChannelService#batchAddTransmit",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5661,12 +5661,12 @@
       "dedupeKey": "channel:批量关联分会场",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/multi-meeting/batch-save-submeeting",
+        "reference": "ChannelService#batchAddSubmeeting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5691,12 +5691,12 @@
       "dedupeKey": "channel:批量关联或者取消关联接收转播频道设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/transmit/associations",
+        "reference": "ChannelService#associationReceiveChannels",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5810,12 +5810,12 @@
       "dedupeKey": "channel:批量删除频道多条聊天记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/chat/remove-contents",
+        "reference": "ChannelService#removeChatContents",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5840,12 +5840,12 @@
       "dedupeKey": "channel:批量删除频道商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/batch-delete",
+        "reference": "ChannelService#batchDeleteChannelProducts",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5898,12 +5898,12 @@
       "dedupeKey": "channel:批量添加频道商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/batch-add",
+        "reference": "ChannelService#batchAddChannelProducts",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -5958,12 +5958,12 @@
       "dedupeKey": "channel:批量修改频道弹幕开关",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/basic/batchUpdateDanmu",
+        "reference": "ChannelService#batchUpdateDanmu",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6048,12 +6048,12 @@
       "dedupeKey": "channel:批量修改频道商品库上下架状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/batch-shelf",
+        "reference": "ChannelService#batchShelfChannelProducts",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6997,12 +6997,12 @@
       "dedupeKey": "channel:取消推送频道商品库商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/cancel-push-product",
+        "reference": "ChannelService#cancelPushChannelProduct",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7440,12 +7440,12 @@
       "dedupeKey": "channel:删除伪直播视频",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/stream/delete-disk-videos",
+        "reference": "ChannelService#deleteDiskVideos",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7557,12 +7557,12 @@
       "dedupeKey": "channel:删除重制课件任务",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/pptRecord/batch-delete",
+        "reference": "ChannelService#deletePptRecord",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7761,12 +7761,12 @@
       "dedupeKey": "channel:设置频道单点登录token",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/channels/{param}/set-token",
+        "reference": "ChannelService#setChannelToken",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7788,12 +7788,12 @@
       "dedupeKey": "channel:设置频道重制课件配置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/pptRecord/setting",
+        "reference": "ChannelService#updatePptRecordSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7818,12 +7818,12 @@
       "dedupeKey": "channel:设置伪直播",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/stream/add-disk-videos",
+        "reference": "ChannelService#addDiskVideos",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7848,12 +7848,12 @@
       "dedupeKey": "channel:设置伪直播",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/stream/add-disk-videos",
+        "reference": "ChannelService#addDiskVideos",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7877,12 +7877,12 @@
       "dedupeKey": "channel:设置子频道单点登录token",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v2/channels/{param}/set-account-token",
+        "reference": "ChannelService#setAccountToken",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7906,12 +7906,12 @@
       "dedupeKey": "channel:手动结束问卷",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/questionnaire/end",
+        "reference": "ChannelService#channelsStopQuestionnaire",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -7937,12 +7937,12 @@
       "dedupeKey": "channel:授权和连麦token",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/common/get-chat-token",
+        "reference": "ChannelService#getChatToken",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -8090,12 +8090,12 @@
       "dedupeKey": "channel:通过上移下移修改频道商品库列表顺序",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/sort",
+        "reference": "ChannelService#sortChannelProduct",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -8208,12 +8208,12 @@
       "dedupeKey": "channel:推送频道商品库商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/push-product",
+        "reference": "ChannelService#pushChannelProduct",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -8515,12 +8515,12 @@
       "dedupeKey": "channel:修改频道关注公众号设置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/promotion/update-channels-follow",
+        "reference": "ChannelService#updateChannelsFollow",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -8872,12 +8872,12 @@
       "dedupeKey": "channel:修改频道商品库上下架状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/shelf",
+        "reference": "ChannelService#shelfChannelProduct",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -8993,12 +8993,12 @@
       "dedupeKey": "channel:修改频道推流方式",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/stream/update",
+        "reference": "ChannelService#updateStreamType",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -9455,12 +9455,12 @@
       "dedupeKey": "channel:引用平台商品到频道商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v3/channel/product/reference",
+        "reference": "ChannelService#referenceProduct",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -18834,6 +18834,267 @@
       "className": "ChannelService",
       "methodName": "listChannelsFollow",
       "reference": "ChannelService#listChannelsFollow"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v2/stream/{param}/capture",
+      "normalizedPath": "/live/v2/stream/{param}/capture",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getCaptureImage",
+      "reference": "ChannelService#getCaptureImage"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/pptRecord/addRecordTask",
+      "normalizedPath": "/live/v3/channel/pptRecord/addRecordTask",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "addPptRecordTask",
+      "reference": "ChannelService#addPptRecordTask"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/pptRecord/setting",
+      "normalizedPath": "/live/v3/channel/pptRecord/setting",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updatePptRecordSetting",
+      "reference": "ChannelService#updatePptRecordSetting"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/watch/get-watch-api-token",
+      "normalizedPath": "/live/v3/channel/watch/get-watch-api-token",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getWatchApiToken",
+      "reference": "ChannelService#getWatchApiToken"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/watch/get-api-token",
+      "normalizedPath": "/live/v3/channel/watch/get-api-token",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getApiToken",
+      "reference": "ChannelService#getApiToken"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/chat/count-online-user",
+      "normalizedPath": "/live/v3/channel/chat/count-online-user",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChatOnlineCount",
+      "reference": "ChannelService#getChatOnlineCount"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/common/token-login-url",
+      "normalizedPath": "/live/v3/channel/common/token-login-url",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getTokenLoginUrl",
+      "reference": "ChannelService#getTokenLoginUrl"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/common/get-chat-token",
+      "normalizedPath": "/live/v3/channel/common/get-chat-token",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChatToken",
+      "reference": "ChannelService#getChatToken"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/transmit/batch-create",
+      "normalizedPath": "/live/v3/channel/transmit/batch-create",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "batchAddTransmit",
+      "reference": "ChannelService#batchAddTransmit"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/multi-meeting/batch-save-submeeting",
+      "normalizedPath": "/live/v3/channel/multi-meeting/batch-save-submeeting",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "batchAddSubmeeting",
+      "reference": "ChannelService#batchAddSubmeeting"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/transmit/associations",
+      "normalizedPath": "/live/v3/channel/transmit/associations",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "associationReceiveChannels",
+      "reference": "ChannelService#associationReceiveChannels"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/chat/remove-contents",
+      "normalizedPath": "/live/v3/channel/chat/remove-contents",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "removeChatContents",
+      "reference": "ChannelService#removeChatContents"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/batch-delete",
+      "normalizedPath": "/live/v3/channel/product/batch-delete",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "batchDeleteChannelProducts",
+      "reference": "ChannelService#batchDeleteChannelProducts"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/batch-add",
+      "normalizedPath": "/live/v3/channel/product/batch-add",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "batchAddChannelProducts",
+      "reference": "ChannelService#batchAddChannelProducts"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/batch-shelf",
+      "normalizedPath": "/live/v3/channel/product/batch-shelf",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "batchShelfChannelProducts",
+      "reference": "ChannelService#batchShelfChannelProducts"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/cancel-push-product",
+      "normalizedPath": "/live/v3/channel/product/cancel-push-product",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "cancelPushChannelProduct",
+      "reference": "ChannelService#cancelPushChannelProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/push-product",
+      "normalizedPath": "/live/v3/channel/product/push-product",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "pushChannelProduct",
+      "reference": "ChannelService#pushChannelProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/shelf",
+      "normalizedPath": "/live/v3/channel/product/shelf",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "shelfChannelProduct",
+      "reference": "ChannelService#shelfChannelProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/sort",
+      "normalizedPath": "/live/v3/channel/product/sort",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "sortChannelProduct",
+      "reference": "ChannelService#sortChannelProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/product/reference",
+      "normalizedPath": "/live/v3/channel/product/reference",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "referenceProduct",
+      "reference": "ChannelService#referenceProduct"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/stream/delete-disk-videos",
+      "normalizedPath": "/live/v3/channel/stream/delete-disk-videos",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "deleteDiskVideos",
+      "reference": "ChannelService#deleteDiskVideos"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/pptRecord/batch-delete",
+      "normalizedPath": "/live/v3/channel/pptRecord/batch-delete",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "deletePptRecord",
+      "reference": "ChannelService#deletePptRecord"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v2/channels/{param}/set-token",
+      "normalizedPath": "/live/v2/channels/{param}/set-token",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "setChannelToken",
+      "reference": "ChannelService#setChannelToken"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v2/channels/{param}/set-account-token",
+      "normalizedPath": "/live/v2/channels/{param}/set-account-token",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "setAccountToken",
+      "reference": "ChannelService#setAccountToken"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/questionnaire/end",
+      "normalizedPath": "/live/v3/channel/questionnaire/end",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "channelsStopQuestionnaire",
+      "reference": "ChannelService#channelsStopQuestionnaire"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/basic/batchUpdateDanmu",
+      "normalizedPath": "/live/v3/channel/basic/batchUpdateDanmu",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "batchUpdateDanmu",
+      "reference": "ChannelService#batchUpdateDanmu"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/promotion/update-channels-follow",
+      "normalizedPath": "/live/v3/channel/promotion/update-channels-follow",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updateChannelsFollow",
+      "reference": "ChannelService#updateChannelsFollow"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/stream/update",
+      "normalizedPath": "/live/v3/channel/stream/update",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updateStreamType",
+      "reference": "ChannelService#updateStreamType"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v3/channel/stream/add-disk-videos",
+      "normalizedPath": "/live/v3/channel/stream/add-disk-videos",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "addDiskVideos",
+      "reference": "ChannelService#addDiskVideos"
     },
     {
       "method": "GET",

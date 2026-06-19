@@ -2705,6 +2705,300 @@ export interface ListChannelsFollowResponse {
   list: ChannelFollowSetting[];
 }
 
+// --------------------------------------------
+// Historical Operate Write Types
+// --------------------------------------------
+
+export type ChannelIdListInput = string | Array<string | number>;
+
+export interface AddPptRecordTaskParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Playback video ID - REQUIRED */
+  videoId: string;
+}
+
+export interface PptRecordMutationResponse {
+  /** Operation result */
+  result: boolean;
+}
+
+export interface UpdatePptRecordSettingParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Whether global setting is enabled */
+  globalSettingEnabled?: YNFlag;
+  /** Video layout type: 0 three-screen, 1 document-only, 2 picture-in-picture */
+  type?: 0 | 1 | 2;
+  /** Camera aspect ratio: 0 = 16:9, 1 = 4:3 */
+  videoRatio?: 0 | 1;
+  /** Display image file or URL */
+  brandImgFile?: string | File | Blob | Buffer;
+  /** Background image file or URL */
+  backgroundImgFile?: string | File | Blob | Buffer;
+}
+
+export interface DeletePptRecordParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** PPT record task IDs - REQUIRED */
+  taskIds: ChannelIdListInput;
+}
+
+export interface ViewerApiTokenParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Viewer ID, 1-64 chars - REQUIRED */
+  viewerId: string;
+  /** Viewer nickname */
+  nickname?: string;
+  /** Viewer avatar URL */
+  avatar?: string;
+  /** WeChat OpenID */
+  openid?: string;
+  /** Viewer actor/title */
+  actor?: string;
+}
+
+export interface ViewerApiTokenResponse {
+  /** API token */
+  token: string;
+}
+
+export interface ChatTokenParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Viewer/user ID - REQUIRED */
+  userId: string;
+  /** Role - REQUIRED */
+  role: 'teacher' | 'admin' | 'guest' | 'assistant' | 'viewer';
+  /** Watch origin */
+  origin?: string;
+}
+
+export interface ChatTokenResponse {
+  token: string;
+  mediaChannelKey?: string;
+  roomId?: string;
+  childRoomEnabled?: YNFlag;
+  chatApiDomain?: string;
+  chatDomain?: string;
+}
+
+export interface TokenLoginUrlParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Role account ID */
+  accountId?: string;
+}
+
+export type TokenLoginUrlResponse = string | { token: string };
+
+export interface BatchAddTransmitParams {
+  /** Source transmit channel ID - REQUIRED */
+  channelId: string;
+  /** Receiver channel names, max 100 - REQUIRED */
+  names: string[];
+}
+
+export interface TransmitChannelInfo {
+  channelId: number;
+  name: string;
+  channelPasswd?: string;
+  authType?: string;
+  playBackEnabled?: YNFlag;
+  streamType?: string;
+  debugEnabled?: YNFlag;
+  stream?: string;
+  status?: string;
+  categoryId?: number;
+  categoryName?: string;
+  isSmallClass?: YNFlag;
+  scene?: string | null;
+  newScene?: string | null;
+  template?: string | null;
+  createdTime?: number;
+  coverImage?: string;
+  type?: string;
+  startTime?: number | null;
+  publisher?: string;
+  splashImg?: string;
+  splashEnabled?: YNFlag;
+  pureRtcEnabled?: YNFlag;
+  roomIds?: string | null;
+}
+
+export type BatchAddTransmitResponse = TransmitChannelInfo[];
+
+export interface SubmeetingChannelInput {
+  /** Submeeting channel ID - REQUIRED */
+  channelId: string | number;
+  /** Submeeting name */
+  name?: string;
+}
+
+export interface BatchAddSubmeetingParams {
+  /** Main meeting channel ID - REQUIRED */
+  channelId: string;
+  /** Submeeting channel list, max 60 - REQUIRED */
+  subChannels: SubmeetingChannelInput[];
+}
+
+export type BatchAddSubmeetingResponse = number[];
+
+export interface AssociationReceiveChannelsParams {
+  /** Source transmit channel ID - REQUIRED */
+  channelId: string;
+  /** Receiver channel IDs - REQUIRED */
+  receiveChannelIds: ChannelIdListInput;
+  /** Operation type, defaults to add */
+  type?: 'add' | 'cancel';
+}
+
+export type AssociationReceiveChannelsResponse = Array<string | number>;
+
+export interface RemoveChatContentsParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Chat message IDs - REQUIRED */
+  ids: string | string[];
+}
+
+export interface BatchDeleteChannelProductParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Product IDs, max 100 - REQUIRED */
+  productIds: number[];
+}
+
+export type BatchAddChannelProductItem = Omit<AddChannelProductParams, 'channelId'>;
+
+export interface BatchAddChannelProductsParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Products - REQUIRED */
+  products: BatchAddChannelProductItem[];
+}
+
+export type BatchAddChannelProductsResponse = AddChannelProductResponse[];
+
+export interface BatchShelfChannelProductParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Product IDs, max 100 - REQUIRED */
+  productIds: number[];
+  /** Shelf status: 1 on shelf, 2 off shelf - REQUIRED */
+  shelf: ProductStatus;
+}
+
+export interface ProductIdParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Product ID - REQUIRED */
+  productId: number;
+}
+
+export interface ShelfChannelProductParams extends ProductIdParams {
+  /** Shelf status: 1 on shelf, 2 off shelf - REQUIRED */
+  shelf: ProductStatus;
+}
+
+export interface PushChannelProductParams extends ProductIdParams {
+  /** Push card type */
+  pushCardType?: 'smallCard' | 'bigCard';
+}
+
+export interface SortChannelProductOrderParams extends ProductIdParams {
+  /** 10 up, 20 down, 50 move to explicit sort */
+  type: 10 | 20 | 50;
+  /** Required when type=50 */
+  sort?: number;
+}
+
+export interface ReferenceProductParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Platform product origin ID - REQUIRED */
+  originId: string;
+  /** Shelf status: 1 on shelf, 2 off shelf - REQUIRED */
+  status: ProductStatus;
+  /** Whether to sync platform tags */
+  withTags?: boolean;
+}
+
+export type ReferenceProductResponse = ChannelProductItem;
+
+export interface DeleteDiskVideosParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** VOD/material video IDs */
+  vids?: string | string[];
+  /** Disk video IDs */
+  videoIds?: string | string[];
+}
+
+export interface AddDiskVideosParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Video IDs or record file IDs - REQUIRED */
+  vids: string | string[];
+  /** Video origin, defaults to vod */
+  origin?: 'vod' | 'material' | 'record';
+  /** Start times in 13-digit ms timestamps */
+  startTimes?: string | number | Array<string | number>;
+}
+
+export interface SetChannelTokenParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** One-time login token - REQUIRED */
+  token: string;
+}
+
+export interface StopQuestionnaireParams {
+  /** Channel IDs - REQUIRED */
+  channelIds: ChannelIdListInput;
+}
+
+export interface StopQuestionnaireResponse {
+  result: boolean | string;
+}
+
+export interface BatchUpdateDanmuParams {
+  /** Channel IDs - REQUIRED */
+  channelIds: ChannelIdListInput;
+  /** Y closes danmu, N opens danmu - REQUIRED */
+  closeDanmu: YNFlag;
+  /** Whether to show danmu info - REQUIRED */
+  showDanmuInfoEnabled: YNFlag;
+}
+
+export interface UpdateChannelsFollowParams {
+  /** Channel IDs - REQUIRED */
+  channelIds: ChannelIdListInput;
+  /** QR code image URL - REQUIRED */
+  qrCodeUrl: string;
+  enabled?: YNFlag;
+  autoShowEnabled?: YNFlag;
+  /** Entry text, max 8 chars */
+  entranceText?: string;
+  /** Popup tips, max 30 chars */
+  tips?: string;
+  /** PC popup tips, max 30 chars */
+  pcFollowTips?: string;
+}
+
+export interface UpdateStreamTypeParams {
+  /** Channel ID - REQUIRED */
+  channelId: string;
+  /** Stream type - REQUIRED */
+  streamType: ChannelStreamType;
+  /** Pull URL, required when streamType=pull */
+  pullUrl?: string;
+  /** Pull stream start time */
+  pullStreamTime?: number;
+}
+
 // ============================================
 // Product Types (Story 8-2)
 // ============================================
