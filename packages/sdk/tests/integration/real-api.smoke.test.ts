@@ -476,6 +476,35 @@ describeWithCredentials('SDK real API integration smoke', () => {
     await client.liveInteraction.listQuestionSendTime({ channelId });
     await client.liveInteraction.listQuestionnaire({ channelId, page: 1, pageSize: 1 });
     await client.liveInteraction.listLottery({ channelId, startTime, endTime: now, page: 1, limit: 1 });
+
+    const [
+      lotteryActivities,
+      lotteryActivityRecords,
+      lotteryViewerGroups,
+      lotteryBlacklistViewers,
+      rewardGifts,
+      rewardLikes,
+      taskRewardActivities,
+      taskRewardStats,
+    ] = await Promise.all([
+      client.v4Channel.listLotteryActivitiesExact({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listLotteryActivityRecords({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listLotteryViewerGroups({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listLotteryBlacklistViewers({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listRewardGifts({ channelId, start: startTime, end: now, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listRewardLikes({ channelId, start: startTime, end: now, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listTaskRewardActivities({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listTaskRewardStats({ channelId, pageNumber: 1, pageSize: 1 }),
+    ]);
+
+    expectPaginatedResponse(lotteryActivities);
+    expectPaginatedResponse(lotteryActivityRecords);
+    expectPaginatedResponse(lotteryViewerGroups);
+    expectPaginatedResponse(lotteryBlacklistViewers);
+    expectPaginatedResponse(rewardGifts);
+    expectPaginatedResponse(rewardLikes);
+    expectPaginatedResponse(taskRewardActivities);
+    expectPaginatedResponse(taskRewardStats);
   });
 
   describeWithWriteAccess('write API lifecycle', () => {

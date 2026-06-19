@@ -233,6 +233,66 @@ import type {
   SetPullBitrateExactParams,
   UpdateTemplateExactParams,
   UpdateSubtitleConfigParams,
+  CreateLotteryActivityExactParams,
+  CreateLotteryActivityExactResponse,
+  GetLotteryActivityExactParams,
+  ListLotteryActivitiesExactParams,
+  ListLotteryActivitiesExactResponse,
+  UpdateLotteryActivityExactParams,
+  DeleteLotteryActivityExactParams,
+  ListLotteryGroupViewersParams,
+  ListLotteryGroupViewersResponse,
+  ListLotteryViewerGroupsParams,
+  ListLotteryViewerGroupsResponse,
+  ListLuckyBagWinnersParams,
+  ListLuckyBagWinnersResponse,
+  ListLotteryBlacklistViewersParams,
+  ListLotteryBlacklistViewersResponse,
+  ListInteractionEventsParams,
+  ListInteractionEventsResponse,
+  CreateTaskRewardActivityParams,
+  CreateTaskRewardActivityResponse,
+  CreateLotteryGroupViewersParams,
+  CreateLotteryGroupViewersResponse,
+  DeleteLotteryGroupViewersParams,
+  UpdateLotteryViewerGroupParams,
+  UpdateLotteryViewerGroupResponse,
+  ListViewerTaskRewardDetailsParams,
+  ListViewerTaskRewardDetailsResponse,
+  SubmitViewerTaskRewardAcceptInfoParams,
+  DeleteLotteryBlacklistViewersParams,
+  CreateLotteryBlacklistViewersParams,
+  CreateLotteryBlacklistViewersResponse,
+  DeleteLotteryViewerGroupParams,
+  DeleteInteractionScriptParams,
+  DeleteTaskRewardActivityParams,
+  UploadDiskVideoCustomScriptParams,
+  UploadDiskVideoCustomScriptResponse,
+  StopTaskRewardActivityParams,
+  CreateConditionWaitLotteryParams,
+  CreateConditionWaitLotteryResponse,
+  CreateLotteryViewerGroupParams,
+  CreateLotteryViewerGroupResponse,
+  UpdateDonateGiftParams,
+  UpdateTaskRewardActivityParams,
+  ListTaskRewardActivitiesParams,
+  ListTaskRewardActivitiesResponse,
+  ListTaskRewardViewerDetailsParams,
+  ListTaskRewardViewerDetailsResponse,
+  ListTaskRewardStatsParams,
+  ListTaskRewardStatsResponse,
+  QueryDiskVideoCustomScriptParams,
+  QueryDiskVideoCustomScriptResponse,
+  InvitePosterCreateParams,
+  InvitePosterCreateResponse,
+  ListLotteryActivityRecordsParams,
+  ListLotteryActivityRecordsResponse,
+  ListRewardGiftsParams,
+  ListRewardGiftsResponse,
+  ListRewardLikesParams,
+  ListRewardLikesResponse,
+  CreateLotteryGroupViewerNamesParams,
+  CreateLotteryGroupViewerNamesResponse,
 } from '../../types/v4-channel.js';
 import { PolyVValidationError } from '../../errors/polyv-validation-error.js';
 
@@ -2539,6 +2599,601 @@ export class V4ChannelService {
   }
 
   // ============================================
+  // V4 Channel Interaction Exact API Paths
+  // ============================================
+
+  /**
+   * Create a lottery activity from the exact V4 activity API.
+   */
+  async createLotteryActivityExact(
+    params: CreateLotteryActivityExactParams
+  ): Promise<CreateLotteryActivityExactResponse> {
+    this.validateLotteryActivityBody(params);
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateLotteryActivityExactResponse>(
+      '/live/v4/channel/lottery-activity/create',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateLotteryActivityExactResponse;
+  }
+
+  /**
+   * Query one lottery activity.
+   */
+  async getLotteryActivityExact(params: GetLotteryActivityExactParams): Promise<CreateLotteryActivityExactResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+
+    const response = await this.client.httpClient.get<CreateLotteryActivityExactResponse>(
+      '/live/v4/channel/lottery-activity/get',
+      { params }
+    );
+    return response as unknown as CreateLotteryActivityExactResponse;
+  }
+
+  /**
+   * List lottery activities.
+   */
+  async listLotteryActivitiesExact(
+    params: ListLotteryActivitiesExactParams
+  ): Promise<ListLotteryActivitiesExactResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListLotteryActivitiesExactResponse>(
+      '/live/v4/channel/lottery-activity/list',
+      { params }
+    );
+    return response as unknown as ListLotteryActivitiesExactResponse;
+  }
+
+  /**
+   * Update a lottery activity.
+   */
+  async updateLotteryActivityExact(params: UpdateLotteryActivityExactParams): Promise<void> {
+    this.validateLotteryActivityBody(params);
+    this.validateRequiredId(params.id, 'id');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/lottery-activity/update',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Delete a lottery activity.
+   */
+  async deleteLotteryActivityExact(params: DeleteLotteryActivityExactParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/lottery-activity/delete',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Start a scheduled lottery from an activity template.
+   */
+  async createConditionWaitLottery(
+    params: CreateConditionWaitLotteryParams
+  ): Promise<CreateConditionWaitLotteryResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    this.validateRequiredNumber(params.lotteryTime, 'lotteryTime');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateConditionWaitLotteryResponse>(
+      '/live/v4/channel/condition-lottery/create-wait-lottery',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateConditionWaitLotteryResponse;
+  }
+
+  /**
+   * List lottery activity statistic records.
+   */
+  async listLotteryActivityRecords(
+    params: ListLotteryActivityRecordsParams
+  ): Promise<ListLotteryActivityRecordsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListLotteryActivityRecordsResponse>(
+      '/live/v4/channel/lottery/activity-record/list',
+      { params }
+    );
+    return response as unknown as ListLotteryActivityRecordsResponse;
+  }
+
+  /**
+   * Create a lottery viewer whitelist group.
+   */
+  async createLotteryViewerGroup(
+    params: CreateLotteryViewerGroupParams
+  ): Promise<CreateLotteryViewerGroupResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.title, 'title');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateLotteryViewerGroupResponse>(
+      '/live/v4/channel/lottery-viewer-group/whitelist/create',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateLotteryViewerGroupResponse;
+  }
+
+  /**
+   * List lottery viewer whitelist groups.
+   */
+  async listLotteryViewerGroups(
+    params: ListLotteryViewerGroupsParams
+  ): Promise<ListLotteryViewerGroupsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListLotteryViewerGroupsResponse>(
+      '/live/v4/channel/lottery-viewer-group/whitelist/list',
+      { params }
+    );
+    return response as unknown as ListLotteryViewerGroupsResponse;
+  }
+
+  /**
+   * Update a lottery viewer whitelist group.
+   */
+  async updateLotteryViewerGroup(
+    params: UpdateLotteryViewerGroupParams
+  ): Promise<UpdateLotteryViewerGroupResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    this.validateRequiredString(params.title, 'title');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<UpdateLotteryViewerGroupResponse>(
+      '/live/v4/channel/lottery-viewer-group/whitelist/update',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as UpdateLotteryViewerGroupResponse;
+  }
+
+  /**
+   * Delete a lottery viewer whitelist group.
+   */
+  async deleteLotteryViewerGroup(params: DeleteLotteryViewerGroupParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/lottery-viewer-group/whitelist/delete',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * Add viewers to a lottery viewer group.
+   */
+  async createLotteryGroupViewers(
+    params: CreateLotteryGroupViewersParams
+  ): Promise<CreateLotteryGroupViewersResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.groupId, 'groupId');
+    this.validateIdArray(params.viewerIds, 'viewerIds');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateLotteryGroupViewersResponse>(
+      '/live/v4/channel/lottery-viewer-list/create',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateLotteryGroupViewersResponse;
+  }
+
+  /**
+   * Add viewer names to a lottery viewer group.
+   */
+  async createLotteryGroupViewerNames(
+    params: CreateLotteryGroupViewerNamesParams
+  ): Promise<CreateLotteryGroupViewerNamesResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.groupId, 'groupId');
+    this.validateNonEmptyArray(params.viewerNames, 'viewerNames');
+    params.viewerNames.forEach((viewer, index) => {
+      this.validateRequiredString(viewer.viewerId, `viewerNames[${index}].viewerId`);
+    });
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateLotteryGroupViewerNamesResponse>(
+      '/live/v4/channel/lottery-viewer-list/create-viewer-name',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateLotteryGroupViewerNamesResponse;
+  }
+
+  /**
+   * Delete viewers from a lottery viewer group by relation IDs.
+   */
+  async deleteLotteryGroupViewers(params: DeleteLotteryGroupViewersParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.groupId, 'groupId');
+    this.validateIdArray(params.ids, 'ids');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/lottery-viewer-list/delete-batch',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * List viewers in a lottery viewer group.
+   */
+  async listLotteryGroupViewers(
+    params: ListLotteryGroupViewersParams
+  ): Promise<ListLotteryGroupViewersResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.groupId, 'groupId');
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListLotteryGroupViewersResponse>(
+      '/live/v4/channel/lottery-viewer-list/list',
+      { params }
+    );
+    return response as unknown as ListLotteryGroupViewersResponse;
+  }
+
+  /**
+   * Add viewers to the lottery blacklist.
+   */
+  async createLotteryBlacklistViewers(
+    params: CreateLotteryBlacklistViewersParams
+  ): Promise<CreateLotteryBlacklistViewersResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateIdArray(params.viewerIds, 'viewerIds');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<CreateLotteryBlacklistViewersResponse>(
+      '/live/v4/channel/lottery-viewer-list/blacklist/create',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as CreateLotteryBlacklistViewersResponse;
+  }
+
+  /**
+   * Delete viewers from the lottery blacklist by relation IDs.
+   */
+  async deleteLotteryBlacklistViewers(params: DeleteLotteryBlacklistViewersParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateIdArray(params.ids, 'ids');
+
+    const { channelId, ...body } = params;
+    await this.client.httpClient.post(
+      '/live/v4/channel/lottery-viewer-list/blacklist/delete-batch',
+      body,
+      { params: { channelId } }
+    );
+  }
+
+  /**
+   * List lottery blacklist viewers.
+   */
+  async listLotteryBlacklistViewers(
+    params: ListLotteryBlacklistViewersParams
+  ): Promise<ListLotteryBlacklistViewersResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListLotteryBlacklistViewersResponse>(
+      '/live/v4/channel/lottery-viewer-list/blacklist/list',
+      { params }
+    );
+    return response as unknown as ListLotteryBlacklistViewersResponse;
+  }
+
+  /**
+   * List lucky bag winners.
+   */
+  async listLuckyBagWinners(params: ListLuckyBagWinnersParams): Promise<ListLuckyBagWinnersResponse> {
+    this.validateRequiredId(params.activityId, 'activityId');
+    this.validateOptionalPaginationParams({
+      pageNumber: params.currentPage,
+      pageSize: params.pageSize,
+    });
+
+    const response = await this.client.httpClient.get<ListLuckyBagWinnersResponse>(
+      '/live/v4/channel/lucky-bag/winner-page',
+      { params }
+    );
+    return response as unknown as ListLuckyBagWinnersResponse;
+  }
+
+  /**
+   * List active interaction event tasks.
+   */
+  async listInteractionEvents(params: ListInteractionEventsParams): Promise<ListInteractionEventsResponse> {
+    this.validateRequiredString(params.roomId, 'roomId');
+
+    const response = await this.client.httpClient.get<ListInteractionEventsResponse>(
+      '/live/v5/chat/redirect/channel/interaction_event/list',
+      { params }
+    );
+    return response as unknown as ListInteractionEventsResponse;
+  }
+
+  /**
+   * Create an invite poster inviter.
+   */
+  async createInvitePoster(params: InvitePosterCreateParams): Promise<InvitePosterCreateResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.openId, 'openId');
+    this.validateRequiredString(params.nickname, 'nickname');
+
+    const response = await this.client.httpClient.post<InvitePosterCreateResponse>(
+      '/live/v4/channel/invite/poster/create',
+      null,
+      { params }
+    );
+    return response as unknown as InvitePosterCreateResponse;
+  }
+
+  /**
+   * Upload a custom script file for a pseudo-live disk video.
+   */
+  async uploadDiskVideoCustomScript(
+    params: UploadDiskVideoCustomScriptParams
+  ): Promise<UploadDiskVideoCustomScriptResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.diskVideoId, 'diskVideoId');
+    if (!params.file) {
+      throw new PolyVValidationError('file is required', 'file');
+    }
+
+    const formData = new FormData();
+    formData.append('file', params.file);
+
+    const queryParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      diskVideoId: params.diskVideoId,
+    };
+    if (params.labelId !== undefined) {
+      queryParams.labelId = params.labelId;
+    }
+
+    const response = await this.client.httpClient.post<UploadDiskVideoCustomScriptResponse>(
+      '/live/v4/channel/interaction-script/upload-disk-video-custom-script',
+      formData,
+      {
+        params: queryParams,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
+    return response as unknown as UploadDiskVideoCustomScriptResponse;
+  }
+
+  /**
+   * Query custom scripts for a pseudo-live disk video.
+   */
+  async queryDiskVideoCustomScript(
+    params: QueryDiskVideoCustomScriptParams
+  ): Promise<QueryDiskVideoCustomScriptResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.diskVideoId, 'diskVideoId');
+
+    const response = await this.client.httpClient.get<QueryDiskVideoCustomScriptResponse>(
+      '/live/v4/channel/interaction-script/query-disk-video-custom-script',
+      { params }
+    );
+    return response as unknown as QueryDiskVideoCustomScriptResponse;
+  }
+
+  /**
+   * Delete an interaction script.
+   */
+  async deleteInteractionScript(params: DeleteInteractionScriptParams): Promise<void> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/interaction-script/delete',
+      { channelId: params.channelId, id: params.id },
+      { params: { channelId: params.channelId } }
+    );
+  }
+
+  /**
+   * List gift reward records.
+   */
+  async listRewardGifts(params: ListRewardGiftsParams): Promise<ListRewardGiftsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredNumber(params.start, 'start');
+    this.validateRequiredNumber(params.end, 'end');
+    this.validateOptionalPaginationParams(params);
+    this.validateMaxPageSize(params.pageSize, 300);
+
+    const response = await this.client.httpClient.get<ListRewardGiftsResponse>(
+      '/live/v4/channel/reward/gift-list',
+      { params }
+    );
+    return response as unknown as ListRewardGiftsResponse;
+  }
+
+  /**
+   * List like reward records.
+   */
+  async listRewardLikes(params: ListRewardLikesParams): Promise<ListRewardLikesResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+    this.validateMaxPageSize(params.pageSize, 300);
+
+    const response = await this.client.httpClient.get<ListRewardLikesResponse>(
+      '/live/v4/channel/reward/like-list',
+      { params }
+    );
+    return response as unknown as ListRewardLikesResponse;
+  }
+
+  /**
+   * Create a task reward activity.
+   */
+  async createTaskRewardActivity(
+    params: CreateTaskRewardActivityParams
+  ): Promise<CreateTaskRewardActivityResponse> {
+    this.validateTaskRewardActivityBody(params, true);
+
+    const response = await this.client.httpClient.post<CreateTaskRewardActivityResponse>(
+      '/live/v4/channel/task-reward-activity/save',
+      params
+    );
+    return response as unknown as CreateTaskRewardActivityResponse;
+  }
+
+  /**
+   * List task reward activities.
+   */
+  async listTaskRewardActivities(
+    params: ListTaskRewardActivitiesParams
+  ): Promise<ListTaskRewardActivitiesResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListTaskRewardActivitiesResponse>(
+      '/live/v4/channel/task-reward-activity/page',
+      { params }
+    );
+    return response as unknown as ListTaskRewardActivitiesResponse;
+  }
+
+  /**
+   * List task reward activity statistics.
+   */
+  async listTaskRewardStats(params: ListTaskRewardStatsParams): Promise<ListTaskRewardStatsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListTaskRewardStatsResponse>(
+      '/live/v4/channel/task-reward-activity/stats',
+      { params }
+    );
+    return response as unknown as ListTaskRewardStatsResponse;
+  }
+
+  /**
+   * List viewer reward details for a task reward activity.
+   */
+  async listTaskRewardViewerDetails(
+    params: ListTaskRewardViewerDetailsParams
+  ): Promise<ListTaskRewardViewerDetailsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.activityId, 'activityId');
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListTaskRewardViewerDetailsResponse>(
+      '/live/v4/channel/task-reward-activity/viewer-detail',
+      { params }
+    );
+    return response as unknown as ListTaskRewardViewerDetailsResponse;
+  }
+
+  /**
+   * Update a task reward activity.
+   */
+  async updateTaskRewardActivity(params: UpdateTaskRewardActivityParams): Promise<void> {
+    this.validateTaskRewardActivityBody(params, false);
+    this.validateRequiredId(params.activityId, 'activityId');
+
+    await this.client.httpClient.post(
+      '/live/v4/channel/task-reward-activity/update',
+      params
+    );
+  }
+
+  /**
+   * Delete a task reward activity.
+   */
+  async deleteTaskRewardActivity(params: DeleteTaskRewardActivityParams): Promise<void> {
+    this.validateRequiredId(params.activityId, 'activityId');
+
+    await this.client.httpClient.get(
+      '/live/v4/channel/task-reward-activity/delete',
+      { params }
+    );
+  }
+
+  /**
+   * Stop a task reward activity.
+   */
+  async stopTaskRewardActivity(params: StopTaskRewardActivityParams): Promise<void> {
+    this.validateRequiredId(params.activityId, 'activityId');
+
+    await this.client.httpClient.get(
+      '/live/v4/channel/task-reward-activity/stop',
+      { params }
+    );
+  }
+
+  /**
+   * List reward details from the viewer side.
+   */
+  async listViewerTaskRewardDetails(
+    params: ListViewerTaskRewardDetailsParams
+  ): Promise<ListViewerTaskRewardDetailsResponse> {
+    this.validateRequiredString(params.viewerId, 'viewerId');
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListViewerTaskRewardDetailsResponse>(
+      '/live/v4/user/viewer-task-reward/page',
+      { params }
+    );
+    return response as unknown as ListViewerTaskRewardDetailsResponse;
+  }
+
+  /**
+   * Submit viewer accept information for a task reward.
+   */
+  async submitViewerTaskRewardAcceptInfo(params: SubmitViewerTaskRewardAcceptInfoParams): Promise<void> {
+    this.validateRequiredId(params.id, 'id');
+    this.validateRequiredString(params.viewerId, 'viewerId');
+    this.validateNonEmptyArray(params.formInfo, 'formInfo');
+
+    await this.client.httpClient.post(
+      '/live/v4/user/viewer-task-reward/submit-accept-info',
+      params
+    );
+  }
+
+  /**
+   * Update channel gift donate settings.
+   */
+  async updateDonateGift(params: UpdateDonateGiftParams): Promise<DonateSettings> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.donateGiftEnabled, 'donateGiftEnabled');
+    this.validateOptionalYn(params.donateGiftEnabled, 'donateGiftEnabled');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<DonateSettings>(
+      '/live/v4/channel/donate/gift/update',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as DonateSettings;
+  }
+
+  // ============================================
   // Private Validation Helpers
   // ============================================
 
@@ -2551,6 +3206,93 @@ export class V4ChannelService {
   private validateOptionalYn(value: string | undefined, field: string): void {
     if (value !== undefined && value !== 'Y' && value !== 'N') {
       throw new PolyVValidationError(`${field} must be Y or N`, field, value);
+    }
+  }
+
+  private validateRequiredId(value: string | number | undefined, field: string): void {
+    if (typeof value === 'string') {
+      this.validateRequiredString(value, field);
+      return;
+    }
+    if (typeof value === 'number') {
+      if (!Number.isFinite(value) || value <= 0) {
+        throw new PolyVValidationError(`${field} must be a positive number`, field, value);
+      }
+      return;
+    }
+    throw new PolyVValidationError(`${field} is required`, field);
+  }
+
+  private validateRequiredNumber(value: number | undefined, field: string): void {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+      throw new PolyVValidationError(`${field} is required and must be a number`, field, value);
+    }
+  }
+
+  private validateNonEmptyArray<T>(values: T[] | undefined, field: string): void {
+    if (!Array.isArray(values) || values.length === 0) {
+      throw new PolyVValidationError(`${field} is required and cannot be empty`, field);
+    }
+  }
+
+  private validateMaxPageSize(pageSize: number | undefined, maxPageSize: number): void {
+    if (pageSize !== undefined && pageSize > maxPageSize) {
+      throw new PolyVValidationError(
+        `pageSize must be between 1 and ${maxPageSize}`,
+        'pageSize',
+        pageSize
+      );
+    }
+  }
+
+  private validateLotteryActivityBody(params: CreateLotteryActivityExactParams): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.activityName, 'activityName');
+    this.validateRequiredString(params.lotteryCondition, 'lotteryCondition');
+    this.validateRequiredNumber(params.amount, 'amount');
+    if (params.amount < 1) {
+      throw new PolyVValidationError('amount must be >= 1', 'amount', params.amount);
+    }
+    this.validateRequiredString(params.prizeName, 'prizeName');
+
+    this.validateOptionalYn(params.hiddenWinnerAmount, 'hiddenWinnerAmount');
+    this.validateOptionalYn(params.hiddenAttendeeNumber, 'hiddenAttendeeNumber');
+    this.validateOptionalYn(params.repeatWinEnabled, 'repeatWinEnabled');
+    this.validateOptionalYn(params.receiveEnabled, 'receiveEnabled');
+    this.validateOptionalYn(params.lotteryOnlineEnabled, 'lotteryOnlineEnabled');
+    this.validateOptionalYn(params.showWinnerCode, 'showWinnerCode');
+    this.validateOptionalYn(params.showWinners, 'showWinners');
+  }
+
+  private validateTaskRewardActivityBody(
+    params: CreateTaskRewardActivityParams | UpdateTaskRewardActivityParams,
+    requireSchedule: boolean
+  ): void {
+    this.validateChannelId(params.channelId);
+    this.validateNonEmptyArray(params.tasks, 'tasks');
+
+    params.tasks.forEach((task, index) => {
+      if (!task.reachCondition) {
+        throw new PolyVValidationError(`tasks[${index}].reachCondition is required`, `tasks[${index}].reachCondition`);
+      }
+      this.validateRequiredString(task.reachCondition.type, `tasks[${index}].reachCondition.type`);
+      this.validateRequiredNumber(task.reachCondition.amount, `tasks[${index}].reachCondition.amount`);
+      if (!task.rewardSetting) {
+        throw new PolyVValidationError(`tasks[${index}].rewardSetting is required`, `tasks[${index}].rewardSetting`);
+      }
+      this.validateRequiredString(task.rewardSetting.type, `tasks[${index}].rewardSetting.type`);
+    });
+
+    if (requireSchedule) {
+      const createParams = params as CreateTaskRewardActivityParams;
+      this.validateRequiredString(createParams.activityName, 'activityName');
+      this.validateRequiredNumber(createParams.taskRule, 'taskRule');
+      this.validateRequiredNumber(createParams.startTime, 'startTime');
+      this.validateRequiredNumber(createParams.endTime, 'endTime');
+    }
+
+    if (params.startTime !== undefined && params.endTime !== undefined && params.endTime <= params.startTime) {
+      throw new PolyVValidationError('endTime must be greater than startTime', 'endTime', params.endTime);
     }
   }
 

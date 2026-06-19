@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T11:51:20.789Z",
+  "generatedAt": "2026-06-19T12:13:22.208Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,18 +18,18 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 643,
-    "sdkImplemented": 511,
-    "sdkMissing": 67
+    "sdkEndpoints": 679,
+    "sdkImplemented": 547,
+    "sdkMissing": 31
   },
   "modules": [
     {
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "implemented": 216,
-      "missing": 67,
-      "coverage": 76.3
+      "implemented": 252,
+      "missing": 31,
+      "coverage": 89
     },
     {
       "module": "account",
@@ -1234,12 +1234,12 @@
       "dedupeKey": "channel:查询抽奖活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery-activity/get",
+        "reference": "V4ChannelService#getLotteryActivityExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1263,12 +1263,12 @@
       "dedupeKey": "channel:查询抽奖活动列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery-activity/list",
+        "reference": "V4ChannelService#listLotteryActivitiesExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1439,12 +1439,12 @@
       "dedupeKey": "channel:查询分组观众列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/list",
+        "reference": "V4ChannelService#listLotteryGroupViewers",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1468,12 +1468,12 @@
       "dedupeKey": "channel:查询分组列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery-viewer-group/whitelist/list",
+        "reference": "V4ChannelService#listLotteryViewerGroups",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1497,12 +1497,12 @@
       "dedupeKey": "channel:查询福袋中奖者分页列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lucky-bag/winner-page",
+        "reference": "V4ChannelService#listLuckyBagWinners",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1557,12 +1557,12 @@
       "dedupeKey": "channel:查询黑名单观众列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/blacklist/list",
+        "reference": "V4ChannelService#listLotteryBlacklistViewers",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1646,12 +1646,12 @@
       "dedupeKey": "channel:查询互动监听事件列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v5/chat/redirect/channel/interaction_event/list",
+        "reference": "V4ChannelService#listInteractionEvents",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3066,12 +3066,12 @@
       "dedupeKey": "channel:查询任务奖励活动分页列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/task-reward-activity/page",
+        "reference": "V4ChannelService#listTaskRewardActivities",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3096,12 +3096,12 @@
       "dedupeKey": "channel:查询任务奖励活动观众奖励明细分页列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/task-reward-activity/viewer-detail",
+        "reference": "V4ChannelService#listTaskRewardViewerDetails",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3125,12 +3125,12 @@
       "dedupeKey": "channel:查询任务奖励活动统计数据分页列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/task-reward-activity/stats",
+        "reference": "V4ChannelService#listTaskRewardStats",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3423,12 +3423,12 @@
       "dedupeKey": "channel:查询伪直播自定义互动脚本",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/interaction-script/query-disk-video-custom-script",
+        "reference": "V4ChannelService#queryDiskVideoCustomScript",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3717,12 +3717,12 @@
       "dedupeKey": "channel:创建抽奖活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-activity/create",
+        "reference": "V4ChannelService#createLotteryActivityExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3935,12 +3935,12 @@
       "dedupeKey": "channel:创建任务奖励活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/task-reward-activity/save",
+        "reference": "V4ChannelService#createTaskRewardActivity",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3996,12 +3996,12 @@
       "dedupeKey": "channel:创建邀请者",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/invite/poster/create",
+        "reference": "V4ChannelService#createInvitePoster",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4143,12 +4143,12 @@
       "dedupeKey": "channel:分页查询频道抽奖统计记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery/activity-record/list",
+        "reference": "V4ChannelService#listLotteryActivityRecords",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4174,12 +4174,12 @@
       "dedupeKey": "channel:分页查询频道打赏记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/reward/gift-list",
+        "reference": "V4ChannelService#listRewardGifts",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4203,12 +4203,12 @@
       "dedupeKey": "channel:分页查询频道点赞记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/reward/like-list",
+        "reference": "V4ChannelService#listRewardLikes",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4349,12 +4349,12 @@
       "dedupeKey": "channel:分组删除观众",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/delete-batch",
+        "reference": "V4ChannelService#deleteLotteryGroupViewers",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4380,12 +4380,12 @@
       "dedupeKey": "channel:分组添加观众",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/create",
+        "reference": "V4ChannelService#createLotteryGroupViewers",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4503,12 +4503,12 @@
       "dedupeKey": "channel:更新抽奖活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-activity/update",
+        "reference": "V4ChannelService#updateLotteryActivityExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4654,12 +4654,12 @@
       "dedupeKey": "channel:观众查询奖励明细分页列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/viewer-task-reward/page",
+        "reference": "V4ChannelService#listViewerTaskRewardDetails",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4685,12 +4685,12 @@
       "dedupeKey": "channel:观众提交任务奖励表单",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/viewer-task-reward/submit-accept-info",
+        "reference": "V4ChannelService#submitViewerTaskRewardAcceptInfo",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4834,12 +4834,12 @@
       "dedupeKey": "channel:黑名单删除观众",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/blacklist/delete-batch",
+        "reference": "V4ChannelService#deleteLotteryBlacklistViewers",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4864,12 +4864,12 @@
       "dedupeKey": "channel:黑名单添加观众",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/blacklist/create",
+        "reference": "V4ChannelService#createLotteryBlacklistViewers",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7057,12 +7057,12 @@
       "dedupeKey": "channel:删除抽奖活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-activity/delete",
+        "reference": "V4ChannelService#deleteLotteryActivityExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7116,12 +7116,12 @@
       "dedupeKey": "channel:删除分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-group/whitelist/delete",
+        "reference": "V4ChannelService#deleteLotteryViewerGroup",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7176,12 +7176,12 @@
       "dedupeKey": "channel:删除互动脚本",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/interaction-script/delete",
+        "reference": "V4ChannelService#deleteInteractionScript",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7354,12 +7354,12 @@
       "dedupeKey": "channel:删除任务奖励活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/task-reward-activity/delete",
+        "reference": "V4ChannelService#deleteTaskRewardActivity",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7588,12 +7588,12 @@
       "dedupeKey": "channel:上传伪直播互动脚本词条文本",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/interaction-script/upload-disk-video-custom-script",
+        "reference": "V4ChannelService#uploadDiskVideoCustomScript",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -7998,12 +7998,12 @@
       "dedupeKey": "channel:停止任务奖励活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/task-reward-activity/stop",
+        "reference": "V4ChannelService#stopTaskRewardActivity",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8059,12 +8059,12 @@
       "dedupeKey": "channel:通过抽奖活动模板发起定时抽奖抽奖",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/condition-lottery/create-wait-lottery",
+        "reference": "V4ChannelService#createConditionWaitLottery",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8238,12 +8238,12 @@
       "dedupeKey": "channel:新建分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-group/whitelist/create",
+        "reference": "V4ChannelService#createLotteryViewerGroup",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8298,12 +8298,12 @@
       "dedupeKey": "channel:修改分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-group/whitelist/update",
+        "reference": "V4ChannelService#updateLotteryViewerGroup",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8753,12 +8753,12 @@
       "dedupeKey": "channel:修改频道礼物打赏设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/donate/gift/update",
+        "reference": "V4ChannelService#updateDonateGift",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9314,12 +9314,12 @@
       "dedupeKey": "channel:修改任务奖励活动",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/task-reward-activity/update",
+        "reference": "V4ChannelService#updateTaskRewardActivity",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9577,12 +9577,12 @@
       "dedupeKey": "channel:/channel/lottery_viewer/group_create_viewer_name",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/lottery-viewer-list/create-viewer-name",
+        "reference": "V4ChannelService#createLotteryGroupViewerNames",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -21561,6 +21561,330 @@
       "className": "V4ChannelService",
       "methodName": "updateSubtitleConfig",
       "reference": "V4ChannelService#updateSubtitleConfig"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-activity/create",
+      "normalizedPath": "/live/v4/channel/lottery-activity/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createLotteryActivityExact",
+      "reference": "V4ChannelService#createLotteryActivityExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery-activity/get",
+      "normalizedPath": "/live/v4/channel/lottery-activity/get",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getLotteryActivityExact",
+      "reference": "V4ChannelService#getLotteryActivityExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery-activity/list",
+      "normalizedPath": "/live/v4/channel/lottery-activity/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLotteryActivitiesExact",
+      "reference": "V4ChannelService#listLotteryActivitiesExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-activity/update",
+      "normalizedPath": "/live/v4/channel/lottery-activity/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateLotteryActivityExact",
+      "reference": "V4ChannelService#updateLotteryActivityExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-activity/delete",
+      "normalizedPath": "/live/v4/channel/lottery-activity/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteLotteryActivityExact",
+      "reference": "V4ChannelService#deleteLotteryActivityExact"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/condition-lottery/create-wait-lottery",
+      "normalizedPath": "/live/v4/channel/condition-lottery/create-wait-lottery",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createConditionWaitLottery",
+      "reference": "V4ChannelService#createConditionWaitLottery"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery/activity-record/list",
+      "normalizedPath": "/live/v4/channel/lottery/activity-record/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLotteryActivityRecords",
+      "reference": "V4ChannelService#listLotteryActivityRecords"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-group/whitelist/create",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-group/whitelist/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createLotteryViewerGroup",
+      "reference": "V4ChannelService#createLotteryViewerGroup"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery-viewer-group/whitelist/list",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-group/whitelist/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLotteryViewerGroups",
+      "reference": "V4ChannelService#listLotteryViewerGroups"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-group/whitelist/update",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-group/whitelist/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateLotteryViewerGroup",
+      "reference": "V4ChannelService#updateLotteryViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-group/whitelist/delete",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-group/whitelist/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteLotteryViewerGroup",
+      "reference": "V4ChannelService#deleteLotteryViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-list/create",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createLotteryGroupViewers",
+      "reference": "V4ChannelService#createLotteryGroupViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-list/create-viewer-name",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/create-viewer-name",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createLotteryGroupViewerNames",
+      "reference": "V4ChannelService#createLotteryGroupViewerNames"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-list/delete-batch",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/delete-batch",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteLotteryGroupViewers",
+      "reference": "V4ChannelService#deleteLotteryGroupViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery-viewer-list/list",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLotteryGroupViewers",
+      "reference": "V4ChannelService#listLotteryGroupViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-list/blacklist/create",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/blacklist/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createLotteryBlacklistViewers",
+      "reference": "V4ChannelService#createLotteryBlacklistViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/lottery-viewer-list/blacklist/delete-batch",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/blacklist/delete-batch",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteLotteryBlacklistViewers",
+      "reference": "V4ChannelService#deleteLotteryBlacklistViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery-viewer-list/blacklist/list",
+      "normalizedPath": "/live/v4/channel/lottery-viewer-list/blacklist/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLotteryBlacklistViewers",
+      "reference": "V4ChannelService#listLotteryBlacklistViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lucky-bag/winner-page",
+      "normalizedPath": "/live/v4/channel/lucky-bag/winner-page",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLuckyBagWinners",
+      "reference": "V4ChannelService#listLuckyBagWinners"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v5/chat/redirect/channel/interaction_event/list",
+      "normalizedPath": "/live/v5/chat/redirect/channel/interaction_event/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listInteractionEvents",
+      "reference": "V4ChannelService#listInteractionEvents"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/invite/poster/create",
+      "normalizedPath": "/live/v4/channel/invite/poster/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createInvitePoster",
+      "reference": "V4ChannelService#createInvitePoster"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/interaction-script/upload-disk-video-custom-script",
+      "normalizedPath": "/live/v4/channel/interaction-script/upload-disk-video-custom-script",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "uploadDiskVideoCustomScript",
+      "reference": "V4ChannelService#uploadDiskVideoCustomScript"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/interaction-script/query-disk-video-custom-script",
+      "normalizedPath": "/live/v4/channel/interaction-script/query-disk-video-custom-script",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "queryDiskVideoCustomScript",
+      "reference": "V4ChannelService#queryDiskVideoCustomScript"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/interaction-script/delete",
+      "normalizedPath": "/live/v4/channel/interaction-script/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteInteractionScript",
+      "reference": "V4ChannelService#deleteInteractionScript"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/reward/gift-list",
+      "normalizedPath": "/live/v4/channel/reward/gift-list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listRewardGifts",
+      "reference": "V4ChannelService#listRewardGifts"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/reward/like-list",
+      "normalizedPath": "/live/v4/channel/reward/like-list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listRewardLikes",
+      "reference": "V4ChannelService#listRewardLikes"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/task-reward-activity/save",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/save",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createTaskRewardActivity",
+      "reference": "V4ChannelService#createTaskRewardActivity"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/task-reward-activity/page",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/page",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listTaskRewardActivities",
+      "reference": "V4ChannelService#listTaskRewardActivities"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/task-reward-activity/stats",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/stats",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listTaskRewardStats",
+      "reference": "V4ChannelService#listTaskRewardStats"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/task-reward-activity/viewer-detail",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/viewer-detail",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listTaskRewardViewerDetails",
+      "reference": "V4ChannelService#listTaskRewardViewerDetails"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/task-reward-activity/update",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateTaskRewardActivity",
+      "reference": "V4ChannelService#updateTaskRewardActivity"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/task-reward-activity/delete",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/delete",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteTaskRewardActivity",
+      "reference": "V4ChannelService#deleteTaskRewardActivity"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/task-reward-activity/stop",
+      "normalizedPath": "/live/v4/channel/task-reward-activity/stop",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "stopTaskRewardActivity",
+      "reference": "V4ChannelService#stopTaskRewardActivity"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/user/viewer-task-reward/page",
+      "normalizedPath": "/live/v4/user/viewer-task-reward/page",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listViewerTaskRewardDetails",
+      "reference": "V4ChannelService#listViewerTaskRewardDetails"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/user/viewer-task-reward/submit-accept-info",
+      "normalizedPath": "/live/v4/user/viewer-task-reward/submit-accept-info",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "submitViewerTaskRewardAcceptInfo",
+      "reference": "V4ChannelService#submitViewerTaskRewardAcceptInfo"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/donate/gift/update",
+      "normalizedPath": "/live/v4/channel/donate/gift/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateDonateGift",
+      "reference": "V4ChannelService#updateDonateGift"
     },
     {
       "method": "POST",

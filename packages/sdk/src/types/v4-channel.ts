@@ -3028,6 +3028,547 @@ export interface UpdateSubtitleConfigParams extends SubtitleConfig {
 }
 
 // ============================================
+// V4 Channel Interaction Exact API Types
+// ============================================
+
+export interface LotteryReceiveInfo {
+  type?: 'userName' | 'userPhone' | 'custom' | string;
+  field: string;
+  tips: string;
+  required?: boolean;
+}
+
+export interface LotteryPrizeInfo {
+  prizeItem: string;
+  correctAnswerCount: number;
+  prizeName: string;
+  thumbnail?: string;
+  realPrice?: number;
+  price?: number;
+  acceptType: 'form' | 'link' | 'qrCode' | string;
+  formInfo?: LotteryReceiveInfo[];
+  prizeUrl?: string;
+  qrCode?: string;
+  qrCodeTips?: string;
+  amount: number;
+  hiddenWinnerAmount?: YNFlag;
+}
+
+export interface LotteryActivityExact {
+  id: number;
+  activityName: string;
+  lotteryCondition: 'none' | 'invite' | 'duration' | 'comment' | 'question' | string;
+  status?: string;
+  amount: number;
+  hiddenWinnerAmount?: YNFlag;
+  lotteryRange?: 'all' | 'customGroup' | string;
+  customGroup?: LotteryViewerGroup[];
+  customGroupIds?: Array<string | number>;
+  customGroupLotteryType?: 'average' | 'random' | string;
+  customGroupLotteryAmount?: number;
+  hiddenAttendeeNumber?: YNFlag;
+  repeatWinEnabled?: YNFlag;
+  receiveEnabled?: YNFlag;
+  receiveInfo?: LotteryReceiveInfo[];
+  prizeName: string;
+  thumbnail?: string;
+  activityDuration?: string;
+  activityDurationType?: 'second' | 'minute' | 'hour' | string;
+  inviteType?: 'poster' | 'external' | string;
+  externalListLink?: string;
+  externalInviteNumLink?: string;
+  inviteNum?: number;
+  duration?: number;
+  comment?: string;
+  acceptType?: 'form' | 'link' | 'qrCode' | string;
+  formInfo?: LotteryReceiveInfo[];
+  prizeUrl?: string;
+  qrCode?: string;
+  qrCodeTips?: string;
+  realPrice?: number;
+  price?: number;
+  prizeInfo?: LotteryPrizeInfo[];
+  questionGroupId?: number;
+  perAnswerDuration?: number;
+  lotteryOnlineEnabled?: YNFlag;
+  answerType?: 'pushQuestion' | 'autonomyAnswer' | string;
+  showWinnerCode?: YNFlag;
+  showWinners?: YNFlag;
+  [key: string]: unknown;
+}
+
+export interface CreateLotteryActivityExactParams {
+  channelId: string | number;
+  activityName: string;
+  lotteryCondition: 'none' | 'invite' | 'duration' | 'comment' | 'question' | string;
+  amount: number;
+  prizeName: string;
+  hiddenWinnerAmount?: YNFlag;
+  lotteryRange?: 'all' | 'customGroup' | string;
+  customGroupIds?: Array<string | number>;
+  customGroupLotteryType?: 'average' | 'random' | string;
+  customGroupLotteryAmount?: number;
+  hiddenAttendeeNumber?: YNFlag;
+  repeatWinEnabled?: YNFlag;
+  receiveEnabled?: YNFlag;
+  receiveInfo?: LotteryReceiveInfo[];
+  thumbnail?: string;
+  activityDuration?: string;
+  activityDurationType?: 'second' | 'minute' | 'hour' | string;
+  inviteType?: 'poster' | 'external' | string;
+  externalListLink?: string;
+  externalInviteNumLink?: string;
+  inviteNum?: number;
+  duration?: number;
+  comment?: string;
+  acceptType?: 'form' | 'link' | 'qrCode' | string;
+  formInfo?: LotteryReceiveInfo[];
+  prizeUrl?: string;
+  qrCode?: string;
+  qrCodeTips?: string;
+  realPrice?: number;
+  price?: number;
+  prizeInfo?: LotteryPrizeInfo[];
+  questionGroupId?: number;
+  perAnswerDuration?: number;
+  lotteryOnlineEnabled?: YNFlag;
+  answerType?: 'pushQuestion' | 'autonomyAnswer' | string;
+  showWinnerCode?: YNFlag;
+  showWinners?: YNFlag;
+}
+
+export type CreateLotteryActivityExactResponse = LotteryActivityExact;
+
+export interface GetLotteryActivityExactParams {
+  channelId: string | number;
+  id: string | number;
+}
+
+export interface ListLotteryActivitiesExactParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export type ListLotteryActivitiesExactResponse = V4ChannelPageResponse<LotteryActivityExact>;
+
+export interface UpdateLotteryActivityExactParams extends CreateLotteryActivityExactParams {
+  id: string | number;
+}
+
+export interface DeleteLotteryActivityExactParams {
+  channelId: string | number;
+  id: string | number;
+}
+
+export interface LotteryViewerGroup {
+  id: number;
+  title: string;
+  type?: string;
+  count?: number | string;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface CreateLotteryViewerGroupParams {
+  channelId: string | number;
+  title: string;
+}
+
+export type CreateLotteryViewerGroupResponse = LotteryViewerGroup;
+
+export interface UpdateLotteryViewerGroupParams {
+  channelId: string | number;
+  id: string | number;
+  title: string;
+}
+
+export type UpdateLotteryViewerGroupResponse = LotteryViewerGroup;
+
+export interface DeleteLotteryViewerGroupParams {
+  channelId: string | number;
+  id: string | number;
+}
+
+export interface ListLotteryViewerGroupsParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export type ListLotteryViewerGroupsResponse = V4ChannelPageResponse<LotteryViewerGroup>;
+
+export interface LotteryGroupViewer {
+  id: number;
+  groupId: string | number;
+  viewerId: string;
+  viewerName?: string;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListLotteryGroupViewersParams extends V4PaginationParams {
+  channelId: string | number;
+  groupId: string | number;
+}
+
+export type ListLotteryGroupViewersResponse = V4ChannelPageResponse<LotteryGroupViewer>;
+
+export interface CreateLotteryGroupViewersParams {
+  channelId: string | number;
+  groupId: string | number;
+  viewerIds: Array<string | number>;
+}
+
+export type CreateLotteryGroupViewersResponse = LotteryGroupViewer[];
+
+export interface DeleteLotteryGroupViewersParams {
+  channelId: string | number;
+  groupId: string | number;
+  ids: Array<string | number>;
+}
+
+export interface LotteryGroupViewerName {
+  viewerId: string;
+  viewerName: string;
+}
+
+export interface CreateLotteryGroupViewerNamesParams {
+  channelId: string | number;
+  groupId: string | number;
+  viewerNames: LotteryGroupViewerName[];
+}
+
+export type CreateLotteryGroupViewerNamesResponse = LotteryGroupViewer[];
+
+export interface LotteryBlacklistViewer {
+  id: number;
+  viewerId: string;
+  viewerName?: string;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListLotteryBlacklistViewersParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export type ListLotteryBlacklistViewersResponse = V4ChannelPageResponse<LotteryBlacklistViewer>;
+
+export interface CreateLotteryBlacklistViewersParams {
+  channelId: string | number;
+  viewerIds: Array<string | number>;
+}
+
+export type CreateLotteryBlacklistViewersResponse = LotteryBlacklistViewer[];
+
+export interface DeleteLotteryBlacklistViewersParams {
+  channelId: string | number;
+  ids: Array<string | number>;
+}
+
+export interface LuckyBagWinner {
+  viewerId?: string;
+  viewerName?: string;
+  nickname?: string;
+  mobile?: string;
+  winTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListLuckyBagWinnersParams {
+  activityId: string | number;
+  sessionId?: string;
+  currentPage?: number;
+  pageSize?: number;
+}
+
+export type ListLuckyBagWinnersResponse = V4ChannelPageResponse<LuckyBagWinner>;
+
+export interface InteractionEventTask {
+  taskId: string;
+  activityId: string;
+  type: string;
+  startTime: number;
+  endTime: number;
+  status: 'waiting' | 'running' | 'ended' | string;
+  userTags?: string[];
+  payload?: string;
+  onlineTime?: number;
+  signCount?: number;
+  likesCount?: number;
+  speakCount?: number;
+  speakContent?: string;
+  customCount?: number;
+  eventType?: string;
+  loginDays?: number;
+  minOnlineTimePerDay?: number;
+  logicType?: 'AND' | 'OR' | string;
+  allDone?: YNFlag;
+  isUnlock?: YNFlag;
+  parentTaskId?: string;
+  [key: string]: unknown;
+}
+
+export interface ListInteractionEventsParams {
+  roomId: string;
+}
+
+export interface ListInteractionEventsResponse {
+  list: InteractionEventTask[];
+}
+
+export interface DiskVideoCustomScript {
+  id: number | string;
+  channelId?: number | string;
+  diskVideoId?: string;
+  labelId?: number;
+  [key: string]: unknown;
+}
+
+export interface QueryDiskVideoCustomScriptParams {
+  channelId: string | number;
+  diskVideoId: string;
+}
+
+export type QueryDiskVideoCustomScriptResponse = DiskVideoCustomScript[];
+
+export interface UploadDiskVideoCustomScriptParams {
+  channelId: string | number;
+  diskVideoId: string;
+  file: File | Blob;
+  labelId?: string | number;
+}
+
+export interface UploadDiskVideoCustomScriptResponse {
+  id: number | string;
+}
+
+export interface DeleteInteractionScriptParams {
+  channelId: string | number;
+  id: string | number;
+}
+
+export interface InvitePosterCreateParams {
+  channelId: string | number;
+  openId: string;
+  nickname: string;
+  avatar?: string;
+  viewerId?: string;
+  invitee?: string;
+}
+
+export interface InvitePosterCreateResponse {
+  [key: string]: unknown;
+}
+
+export interface LotteryActivityRecord {
+  id?: number | string;
+  channelId?: number | string;
+  lotteryId?: string;
+  sessionId?: string;
+  activityName?: string;
+  startTime?: number;
+  winnerCount?: number;
+  totalUsers?: number;
+  [key: string]: unknown;
+}
+
+export interface ListLotteryActivityRecordsParams extends V4PaginationParams {
+  channelId: string | number;
+  sessionId?: string;
+  startTimeBegin?: number;
+  startTimeEnd?: number;
+  lotteryId?: string;
+}
+
+export type ListLotteryActivityRecordsResponse = V4ChannelPageResponse<LotteryActivityRecord>;
+
+export interface CreateConditionWaitLotteryParams {
+  channelId: string | number;
+  id: string | number;
+  lotteryTime: number;
+}
+
+export interface CreateConditionWaitLotteryResponse {
+  [key: string]: unknown;
+}
+
+export interface RewardGiftRecord {
+  viewerId?: string;
+  viewerName?: string;
+  giftName?: string;
+  price?: number;
+  count?: number;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListRewardGiftsParams extends V4PaginationParams {
+  channelId: string | number;
+  start: number;
+  end: number;
+}
+
+export type ListRewardGiftsResponse = V4ChannelPageResponse<RewardGiftRecord>;
+
+export interface RewardLikeRecord {
+  viewerId?: string;
+  viewerName?: string;
+  likeCount?: number;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListRewardLikesParams extends V4PaginationParams {
+  channelId: string | number;
+  start?: number;
+  end?: number;
+}
+
+export type ListRewardLikesResponse = V4ChannelPageResponse<RewardLikeRecord>;
+
+export interface TaskRewardReachCondition {
+  type: 'sign' | 'online' | 'questionnaire' | 'custom' | string;
+  amount: number;
+  templateId?: number;
+  customEvent?: string;
+  customEventName?: string;
+  customIcon?: string;
+  customUnit?: string;
+  customButtonText?: string;
+  customReachText?: string;
+}
+
+export interface TaskRewardSetting {
+  type: 'cash' | 'custom' | 'nothing' | 'externalPoint' | string;
+  amount?: number;
+  limit?: number;
+  customReward?: string;
+}
+
+export interface TaskRewardActivityTask {
+  sort?: number;
+  reachCondition: TaskRewardReachCondition;
+  rewardSetting: TaskRewardSetting;
+}
+
+export interface TaskRewardActivity {
+  activityId: number;
+  channelId?: number | string;
+  activityName?: string;
+  taskRule?: number;
+  startTime?: number;
+  endTime?: number;
+  status?: string;
+  tasks?: TaskRewardActivityTask[];
+  [key: string]: unknown;
+}
+
+export interface CreateTaskRewardActivityParams {
+  channelId: string | number;
+  activityName: string;
+  taskRule: number;
+  startTime: number;
+  endTime: number;
+  tasks: TaskRewardActivityTask[];
+}
+
+export type CreateTaskRewardActivityResponse = number;
+
+export interface UpdateTaskRewardActivityParams {
+  channelId: string | number;
+  activityId: string | number;
+  tasks: TaskRewardActivityTask[];
+  activityName?: string;
+  taskRule?: number;
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface ListTaskRewardActivitiesParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export type ListTaskRewardActivitiesResponse = V4ChannelPageResponse<TaskRewardActivity>;
+
+export interface DeleteTaskRewardActivityParams {
+  activityId: string | number;
+}
+
+export interface StopTaskRewardActivityParams {
+  activityId: string | number;
+}
+
+export interface ListTaskRewardStatsParams extends V4PaginationParams {
+  channelId: string | number;
+}
+
+export interface TaskRewardStatsRecord {
+  activityId?: number | string;
+  activityName?: string;
+  submitCount?: number;
+  rewardCount?: number;
+  [key: string]: unknown;
+}
+
+export type ListTaskRewardStatsResponse = V4ChannelPageResponse<TaskRewardStatsRecord>;
+
+export interface ListTaskRewardViewerDetailsParams extends V4PaginationParams {
+  channelId: string | number;
+  activityId: string | number;
+  viewerId?: string;
+}
+
+export interface TaskRewardViewerDetailRecord {
+  id?: number | string;
+  activityId?: number | string;
+  viewerId?: string;
+  formInfo?: TaskRewardAcceptFormInfo[];
+  [key: string]: unknown;
+}
+
+export type ListTaskRewardViewerDetailsResponse = V4ChannelPageResponse<TaskRewardViewerDetailRecord>;
+
+export interface ListViewerTaskRewardDetailsParams extends V4PaginationParams {
+  viewerId: string;
+}
+
+export type ListViewerTaskRewardDetailsResponse = V4ChannelPageResponse<TaskRewardViewerDetailRecord>;
+
+export interface TaskRewardAcceptFormInfo {
+  field: string;
+  value?: string;
+  type?: string;
+  [key: string]: unknown;
+}
+
+export interface SubmitViewerTaskRewardAcceptInfoParams {
+  id: string | number;
+  viewerId: string;
+  formInfo: TaskRewardAcceptFormInfo[];
+}
+
+export interface GiftDonatePayItem {
+  name?: string;
+  enabled?: YNFlag;
+  imgType?: 'STATIC' | 'DYNAMIC' | string;
+  img?: string;
+  dynamicImg?: string;
+  dynamicFile?: string;
+  price?: number | string;
+}
+
+export interface GiftDonateConfig {
+  payWay?: 'CASH' | 'POINT' | string;
+  pointUnit?: string;
+  cashPays?: GiftDonatePayItem[];
+  pointPays?: GiftDonatePayItem[];
+}
+
+export interface UpdateDonateGiftParams {
+  channelId: string | number;
+  donateGiftEnabled: YNFlag;
+  giftDonate?: GiftDonateConfig;
+}
+
+// ============================================
 // Type Aliases for Backward Compatibility
 // ============================================
 
