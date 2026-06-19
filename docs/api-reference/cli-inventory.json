@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T17:06:09.417Z",
+  "generatedAt": "2026-06-19T17:36:13.220Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 106,
-    "cliMissingLatestApis": 472,
-    "cliCoverage": 18.3,
-    "cliUsageReferences": 117,
-    "cliSdkServiceUsages": 117,
+    "cliUsedLatestApis": 116,
+    "cliMissingLatestApis": 462,
+    "cliCoverage": 20.1,
+    "cliUsageReferences": 126,
+    "cliSdkServiceUsages": 126,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 106,
-    "sdkEndpointReferences": 709,
-    "cliCommandPaths": 157,
+    "matchedApiIds": 115,
+    "sdkEndpointReferences": 710,
+    "cliCommandPaths": 169,
     "cliTopLevelCommands": 28
   },
   "modules": [
@@ -106,16 +106,6 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 3,
       "cliCoverage": 21.4
-    },
-    {
-      "module": "ai",
-      "label": "AI 与数字人",
-      "total": 13,
-      "cliUsed": 3,
-      "cliMissing": 10,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 3,
-      "cliCoverage": 23.1
     },
     {
       "module": "uncategorized",
@@ -206,6 +196,16 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 0,
       "cliCoverage": 0
+    },
+    {
+      "module": "ai",
+      "label": "AI 与数字人",
+      "total": 13,
+      "cliUsed": 13,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 13,
+      "cliCoverage": 100
     }
   ],
   "commands": [
@@ -304,7 +304,7 @@
       "depth": 1,
       "signature": "ai",
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 86
+      "line": 139
     },
     {
       "command": "ai digital-human",
@@ -315,7 +315,18 @@
       "depth": 2,
       "signature": "digital-human",
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 91
+      "line": 144
+    },
+    {
+      "command": "ai video-produce",
+      "path": [
+        "ai",
+        "video-produce"
+      ],
+      "depth": 2,
+      "signature": "video-produce",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 214
     },
     {
       "command": "ai digital-human list",
@@ -327,7 +338,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 96
+      "line": 149
     },
     {
       "command": "ai digital-human list-org",
@@ -339,7 +350,7 @@
       "depth": 3,
       "signature": "list-org",
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 118
+      "line": 170
     },
     {
       "command": "ai digital-human set-org",
@@ -351,7 +362,144 @@
       "depth": 3,
       "signature": "set-org",
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 138
+      "line": 189
+    },
+    {
+      "command": "ai video-produce create",
+      "path": [
+        "ai",
+        "video-produce",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 290
+    },
+    {
+      "command": "ai video-produce delete",
+      "path": [
+        "ai",
+        "video-produce",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 310
+    },
+    {
+      "command": "ai video-produce get",
+      "path": [
+        "ai",
+        "video-produce",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 272
+    },
+    {
+      "command": "ai video-produce list",
+      "path": [
+        "ai",
+        "video-produce",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 242
+    },
+    {
+      "command": "ai video-produce ppt",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt"
+      ],
+      "depth": 3,
+      "signature": "ppt",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 330
+    },
+    {
+      "command": "ai video-produce tts-voice",
+      "path": [
+        "ai",
+        "video-produce",
+        "tts-voice"
+      ],
+      "depth": 3,
+      "signature": "tts-voice",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 218
+    },
+    {
+      "command": "ai video-produce ppt async-upload",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "async-upload"
+      ],
+      "depth": 4,
+      "signature": "async-upload",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 394
+    },
+    {
+      "command": "ai video-produce ppt get",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 354
+    },
+    {
+      "command": "ai video-produce ppt list",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "list"
+      ],
+      "depth": 4,
+      "signature": "list",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 334
+    },
+    {
+      "command": "ai video-produce ppt upload",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "upload"
+      ],
+      "depth": 4,
+      "signature": "upload",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 372
+    },
+    {
+      "command": "ai video-produce tts-voice list",
+      "path": [
+        "ai",
+        "video-produce",
+        "tts-voice",
+        "list"
+      ],
+      "depth": 4,
+      "signature": "list",
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 222
     },
     {
       "command": "card-push",
@@ -2782,8 +2930,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#listTtsVoices",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 55,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2810,8 +2967,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#getVideoProduce",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 81,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2839,8 +3005,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#listVideoProduces",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 75,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2942,8 +3117,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#getVideoProducePpt",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 115,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2971,8 +3155,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#listVideoProducePpts",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 109,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3006,8 +3199,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#batchCreateVideoProduces",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 93,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3041,8 +3243,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#batchCreateVideoProduces",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 93,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3107,8 +3318,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#deleteVideoProduce",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 103,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3135,8 +3355,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#uploadVideoProducePpt",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 121,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -3163,8 +3392,17 @@
         "file": "packages/sdk/src/services/v4/ai.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4AiService#asyncUploadVideoProducePpt",
+            "cliModule": "ai-video-produce",
+            "file": "packages/cli/src/services/ai-video-produce-service.ts",
+            "line": 129,
+            "sdkFile": "packages/sdk/src/services/v4/ai.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16463,7 +16701,7 @@
             "reference": "V4UserService#getGlobalChannelSettings",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 223,
+            "line": 226,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -17970,7 +18208,7 @@
             "reference": "V4UserService#updateCallback",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 168,
+            "line": 171,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -18005,7 +18243,7 @@
             "reference": "V4UserService#updateGlobalChannelSettings",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 266,
+            "line": 269,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]

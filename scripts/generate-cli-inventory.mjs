@@ -760,6 +760,7 @@ function isActiveCliModule(cliModule, activeCommandModules) {
 
   const aliases = {
     'ai-digital-human': ['ai'],
+    'ai-video-produce': ['ai'],
     'qa-questionnaire': ['qa', 'questionnaire'],
     setup: ['setup']
   };

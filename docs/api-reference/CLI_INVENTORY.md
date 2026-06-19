@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-19T17:06:09.417Z
+生成时间：2026-06-19T17:36:13.220Z
 
 ## 来源与规则
 
@@ -15,15 +15,15 @@
 | 指标 | 数值 |
 | --- | ---: |
 | 最新 API 数 | 578 |
-| CLI 已使用最新 API 数 | 106 |
-| CLI 未使用最新 API 数 | 472 |
-| CLI 最新 API 覆盖率 | 18.3% |
-| CLI 调用引用数 | 117 |
-| 其中 SDK service 调用 | 117 |
+| CLI 已使用最新 API 数 | 116 |
+| CLI 未使用最新 API 数 | 462 |
+| CLI 最新 API 覆盖率 | 20.1% |
+| CLI 调用引用数 | 126 |
+| 其中 SDK service 调用 | 126 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 157 |
+| CLI 命令路径数 | 169 |
 | CLI 一级命令数 | 28 |
 
 ## 模块覆盖率
@@ -38,7 +38,6 @@
 | `live_interaction` | 直播互动 | 30 | 11 | 19 | 36.7% | 11 | 0 |
 | `group` | 组织与套餐 | 11 | 0 | 11 | 0% | 0 | 0 |
 | `platform` | 开放平台 | 14 | 3 | 11 | 21.4% | 3 | 0 |
-| `ai` | AI 与数字人 | 13 | 3 | 10 | 23.1% | 3 | 0 |
 | `uncategorized` | 未分类 | 10 | 0 | 10 | 0% | 0 | 0 |
 | `finance` | 财务与审核 | 7 | 0 | 7 | 0% | 0 | 0 |
 | `material` | 素材库 | 7 | 0 | 7 | 0% | 0 | 0 |
@@ -48,10 +47,11 @@
 | `robot` | 数字人与机器人 | 3 | 0 | 3 | 0% | 0 | 0 |
 | `root` | 根目录 | 2 | 0 | 2 | 0% | 0 | 0 |
 | `statistics` | 数据统计 | 1 | 0 | 1 | 0% | 0 | 0 |
+| `ai` | AI 与数字人 | 13 | 13 | 0 | 100% | 13 | 0 |
 
 ## 补齐建议
 
-- 缺口最大的模块：`channel` 227/283、`user` 63/73、`web` 34/40、`chat` 31/45、`account` 19/22、`live_interaction` 19/30、`group` 11/11、`platform` 11/14、`ai` 10/13、`uncategorized` 10/10。
+- 缺口最大的模块：`channel` 227/283、`user` 63/73、`web` 34/40、`chat` 31/45、`account` 19/22、`live_interaction` 19/30、`group` 11/11、`platform` 11/14、`uncategorized` 10/10、`finance` 7/7。
 - 频道高级能力：`channel` 子命令扩展。缺口：`channel` 227/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
 - 账号、组织与资源管理：新增 `user`、`group`，扩展 `platform`。缺口：`user` 63/73、`account` 19/22、`group` 11/11。这些接口更偏运营后台和批量管理，适合给内部自动化脚本使用。 建议入口：`account category *`、`account callback *`、`account duration`；`user product *`、`user viewer-label *`；`group quota *`、`group allocation-log list`。
 - 观看页配置：新增 `web` 或扩展 `player`/`watch-condition`。缺口：`web` 34/40。观看页菜单、暖场、点赞、图文、授权、登记表等配置适合 CLI 自动化，但当前只覆盖观看条件和白名单的一部分。 建议入口：`web splash get/set`、`web menu add/update/delete`；`web share get/update`、`web likes get/update`；`web record-field get`、`web enroll list/export`。
@@ -71,11 +71,23 @@
 | `account remove` | `packages/cli/src/commands/account.commands.ts:503` |
 | `account set-default` | `packages/cli/src/commands/account.commands.ts:532` |
 | `account unset-default` | `packages/cli/src/commands/account.commands.ts:538` |
-| `ai` | `packages/cli/src/commands/ai.commands.ts:86` |
-| `ai digital-human` | `packages/cli/src/commands/ai.commands.ts:91` |
-| `ai digital-human list` | `packages/cli/src/commands/ai.commands.ts:96` |
-| `ai digital-human list-org` | `packages/cli/src/commands/ai.commands.ts:118` |
-| `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:138` |
+| `ai` | `packages/cli/src/commands/ai.commands.ts:139` |
+| `ai digital-human` | `packages/cli/src/commands/ai.commands.ts:144` |
+| `ai video-produce` | `packages/cli/src/commands/ai.commands.ts:214` |
+| `ai digital-human list` | `packages/cli/src/commands/ai.commands.ts:149` |
+| `ai digital-human list-org` | `packages/cli/src/commands/ai.commands.ts:170` |
+| `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |
+| `ai video-produce create` | `packages/cli/src/commands/ai.commands.ts:290` |
+| `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:310` |
+| `ai video-produce get` | `packages/cli/src/commands/ai.commands.ts:272` |
+| `ai video-produce list` | `packages/cli/src/commands/ai.commands.ts:242` |
+| `ai video-produce ppt` | `packages/cli/src/commands/ai.commands.ts:330` |
+| `ai video-produce tts-voice` | `packages/cli/src/commands/ai.commands.ts:218` |
+| `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |
+| `ai video-produce ppt get` | `packages/cli/src/commands/ai.commands.ts:354` |
+| `ai video-produce ppt list` | `packages/cli/src/commands/ai.commands.ts:334` |
+| `ai video-produce ppt upload` | `packages/cli/src/commands/ai.commands.ts:372` |
+| `ai video-produce tts-voice list` | `packages/cli/src/commands/ai.commands.ts:222` |
 | `card-push` | `packages/cli/src/commands/card-push.commands.ts:132` |
 | `card-push cancel` | `packages/cli/src/commands/card-push.commands.ts:273` |
 | `card-push create` | `packages/cli/src/commands/card-push.commands.ts:157` |
@@ -258,19 +270,19 @@
 
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 查询可用于视频创作的声音列表<br><sub>1、查询可用于视频创作的声音列表</sub> | GET | `/live/v4/ai/video-produce/tts-voice/list` | query | pageNumber, pageSize | V4AiService#listTtsVoices (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 查询视频创作任务<br><sub>1、查询视频创作任务</sub> | GET | `/live/v4/ai/video-produce/get` | query | aiPPTVideoId | V4AiService#getVideoProduce (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 查询视频创作任务列表<br><sub>1、分页查询视频创作任务列表</sub> | GET | `/live/v4/ai/video-produce/list` | query | pageNumber, pageSize | V4AiService#listVideoProduces (packages/sdk/src/services/v4/ai.service.ts) | no |
+| 查询可用于视频创作的声音列表<br><sub>1、查询可用于视频创作的声音列表</sub> | GET | `/live/v4/ai/video-produce/tts-voice/list` | query | pageNumber, pageSize | V4AiService#listTtsVoices (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#listTtsVoices (packages/cli/src/services/ai-video-produce-service.ts:55) |
+| 查询视频创作任务<br><sub>1、查询视频创作任务</sub> | GET | `/live/v4/ai/video-produce/get` | query | aiPPTVideoId | V4AiService#getVideoProduce (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#getVideoProduce (packages/cli/src/services/ai-video-produce-service.ts:81) |
+| 查询视频创作任务列表<br><sub>1、分页查询视频创作任务列表</sub> | GET | `/live/v4/ai/video-produce/list` | query | pageNumber, pageSize | V4AiService#listVideoProduces (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#listVideoProduces (packages/cli/src/services/ai-video-produce-service.ts:75) |
 | 查询数字人<br><sub>1、查询数字人列表</sub> | GET | `/live/v4/ai/digital-human/list` | query | pageNumber, pageSize | V4AiService#listDigitalHumans (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#listDigitalHumans (packages/cli/src/services/ai-digital-human-service.ts:55) |
 | 查询数字人组织<br><sub>1、查询数字人关联的组织，最多支持100个数字人ID</sub> | GET | `/live/v4/ai/digital-human/list-organization` | query | aiDigitalHumanIds | V4AiService#listOrganizations (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#listOrganizations (packages/cli/src/services/ai-digital-human-service.ts:85) |
-| 查询用于视频创作的ppt<br><sub>1、根据ppt文件id查询用于视频创作的ppt信息</sub> | GET | `/live/v4/ai/video-produce/ppt/get` | query | fileId | V4AiService#getVideoProducePpt (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 查询用于视频创作的ppt列表<br><sub>1、查询用于视频创作的ppt列表</sub> | GET | `/live/v4/ai/video-produce/ppt/list` | query | pageNumber, pageSize | V4AiService#listVideoProducePpts (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 创建视频创作任务<br><sub>1、创建视频创作任务, 接口支持批量创建任务, 单次最多支持20个</sub> | POST | `/live/v4/ai/video-produce/create-batch` | json-body | backgroundImage, enableSubtitle, hasDigitalHuman, rate, subtitleInfo, ttsVoiceId, +2 | V4AiService#batchCreateVideoProduces (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 创建视频创作任务<br><sub>1、创建视频创作任务, 接口支持批量创建任务, 单次最多支持20个</sub> | POST | `/live/v4/ai/video-produce/create-batch` | json-body | backgroundImage, enableSubtitle, hasDigitalHuman, rate, subtitleInfo, ttsVoiceId, +2 | V4AiService#batchCreateVideoProduces (packages/sdk/src/services/v4/ai.service.ts) | no |
+| 查询用于视频创作的ppt<br><sub>1、根据ppt文件id查询用于视频创作的ppt信息</sub> | GET | `/live/v4/ai/video-produce/ppt/get` | query | fileId | V4AiService#getVideoProducePpt (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#getVideoProducePpt (packages/cli/src/services/ai-video-produce-service.ts:115) |
+| 查询用于视频创作的ppt列表<br><sub>1、查询用于视频创作的ppt列表</sub> | GET | `/live/v4/ai/video-produce/ppt/list` | query | pageNumber, pageSize | V4AiService#listVideoProducePpts (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#listVideoProducePpts (packages/cli/src/services/ai-video-produce-service.ts:109) |
+| 创建视频创作任务<br><sub>1、创建视频创作任务, 接口支持批量创建任务, 单次最多支持20个</sub> | POST | `/live/v4/ai/video-produce/create-batch` | json-body | backgroundImage, enableSubtitle, hasDigitalHuman, rate, subtitleInfo, ttsVoiceId, +2 | V4AiService#batchCreateVideoProduces (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#batchCreateVideoProduces (packages/cli/src/services/ai-video-produce-service.ts:93) |
+| 创建视频创作任务<br><sub>1、创建视频创作任务, 接口支持批量创建任务, 单次最多支持20个</sub> | POST | `/live/v4/ai/video-produce/create-batch` | json-body | backgroundImage, enableSubtitle, hasDigitalHuman, rate, subtitleInfo, ttsVoiceId, +2 | V4AiService#batchCreateVideoProduces (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#batchCreateVideoProduces (packages/cli/src/services/ai-video-produce-service.ts:93) |
 | 关联数字人组织<br><sub>1、将数字人和组织架构关联，单次请求最多100个数字人，对应子账号</sub> | POST | `/live/v4/ai/digital-human/set-organizations` | json-body | aiDigitalHumanId, organizationIds | V4AiService#setOrganizations (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#setOrganizations (packages/cli/src/services/ai-digital-human-service.ts:103) |
-| 删除视频创作任务<br><sub>1、接口支持https协议</sub> | POST | `/live/v4/ai/video-produce/delete` | json-body | aiPPTVideoId | V4AiService#deleteVideoProduce (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 上传用于视频创作的ppt<br><sub>1、上传用于视频创作的ppt, 等待ppt转码解析完成后, 即可将该ppt用于视频创作</sub> | POST | `/live/v4/ai/video-produce/ppt/upload` | query/form | url | V4AiService#uploadVideoProducePpt (packages/sdk/src/services/v4/ai.service.ts) | no |
-| 异步上传用于视频创作的ppt<br><sub>1、异步上传制课ppt, 调用接口后，直接返回结果，异步获取ppt并上传</sub> | POST | `/live/v4/ai/video-produce/ppt/async-upload` | query/form | url | V4AiService#asyncUploadVideoProducePpt (packages/sdk/src/services/v4/ai.service.ts) | no |
+| 删除视频创作任务<br><sub>1、接口支持https协议</sub> | POST | `/live/v4/ai/video-produce/delete` | json-body | aiPPTVideoId | V4AiService#deleteVideoProduce (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#deleteVideoProduce (packages/cli/src/services/ai-video-produce-service.ts:103) |
+| 上传用于视频创作的ppt<br><sub>1、上传用于视频创作的ppt, 等待ppt转码解析完成后, 即可将该ppt用于视频创作</sub> | POST | `/live/v4/ai/video-produce/ppt/upload` | query/form | url | V4AiService#uploadVideoProducePpt (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#uploadVideoProducePpt (packages/cli/src/services/ai-video-produce-service.ts:121) |
+| 异步上传用于视频创作的ppt<br><sub>1、异步上传制课ppt, 调用接口后，直接返回结果，异步获取ppt并上传</sub> | POST | `/live/v4/ai/video-produce/ppt/async-upload` | query/form | url | V4AiService#asyncUploadVideoProducePpt (packages/sdk/src/services/v4/ai.service.ts) | sdk: V4AiService#asyncUploadVideoProducePpt (packages/cli/src/services/ai-video-produce-service.ts:129) |
 
 ### channel - 频道
 
@@ -778,7 +790,7 @@
 | 查询默认模板视频审核<br><sub>1、查询视频审核默认模板设置</sub> | GET | `/live/v4/user/template/video-moderation/get` | query | - | V4UserService#getVideoModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询默认模板音频审核<br><sub>1、查询音频审核默认模板设置</sub> | GET | `/live/v4/user/template/audio-moderation/get` | query | - | V4UserService#getAudioModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询全局回调设置<br><sub>1、查询全局回调设置</sub> | GET | `/live/v4/user/global-setting/callback/get` | query | - | V4UserService#getCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getCallback (packages/cli/src/services/platform-service.ts:138) |
-| 查询全局频道设置<br><sub>1、查询全局频道设置</sub> | GET | `/live/v4/user/global-setting/switch/get` | query | - | V4UserService#getGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getGlobalChannelSettings (packages/cli/src/services/platform-service.ts:223) |
+| 查询全局频道设置<br><sub>1、查询全局频道设置</sub> | GET | `/live/v4/user/global-setting/switch/get` | query | - | V4UserService#getGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getGlobalChannelSettings (packages/cli/src/services/platform-service.ts:226) |
 | 查询商品订单列表<br><sub>1、查询商品订单列表</sub> | GET | `/live/v4/user/product/order/list` | query | - | V4UserService#listProductOrders (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询商品订单详情<br><sub>1、查询商品订单详情</sub> | GET | `/live/v4/user/product/order/get` | query | orderNo | V4UserService#getProductOrder (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询页脚设置<br><sub>1、查询全局页脚设置</sub> | GET | `/live/v4/user/global-setting/footer/get` | query | - | V4UserService#getGlobalFooter (packages/sdk/src/services/v4/user.service.ts) | no |
@@ -830,8 +842,8 @@
 | 修改默认模板视频审核<br><sub>1、修改视频审核默认模板设置</sub> | POST | `/live/v4/user/template/video-moderation/update` | json-body | illegalNotify, imageFrequency, moderationEnabled, moderationStrategy | V4UserService#updateVideoModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改默认模板音频审核<br><sub>1、修改音频审核默认模板设置</sub> | POST | `/live/v4/user/template/audio-moderation/update` | json-body | badwordEnabled, illegalNotify, moderationEnabled, moderationStrategy | V4UserService#updateAudioModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改配置信息<br><sub>1、修改配置信息</sub> | POST | `/live/v4/user/viewer-user-system/update-config` | json-body | mobileLoginEnabled, wxWorkLoginEnabled | V4UserService#updateViewerUserSystemConfig (packages/sdk/src/services/v4/user.service.ts) | no |
-| 修改全局回调设置<br><sub>1、修改全局回调设置</sub> | POST | `/live/v4/user/global-setting/callback/update` | json-body | - | V4UserService#updateCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateCallback (packages/cli/src/services/platform-service.ts:168) |
-| 修改全局频道设置<br><sub>1、修改全局频道设置</sub> | POST | `/live/v4/user/global-setting/switch/update` | json-body | - | V4UserService#updateGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateGlobalChannelSettings (packages/cli/src/services/platform-service.ts:266) |
+| 修改全局回调设置<br><sub>1、修改全局回调设置</sub> | POST | `/live/v4/user/global-setting/callback/update` | json-body | - | V4UserService#updateCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateCallback (packages/cli/src/services/platform-service.ts:171) |
+| 修改全局频道设置<br><sub>1、修改全局频道设置</sub> | POST | `/live/v4/user/global-setting/switch/update` | json-body | - | V4UserService#updateGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateGlobalChannelSettings (packages/cli/src/services/platform-service.ts:269) |
 | 修改邀请员信息<br><sub>1、修改账号下的某些邀请员的信息</sub> | POST | `/live/v4/user/invite-sales/update` | json-body | organizationId, viewerUnionIds | V4UserService#updateInviteSale (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改页脚设置<br><sub>1、修改全局页脚设置</sub> | POST | `/live/v4/user/global-setting/footer/update` | json-body | - | V4UserService#updateGlobalFooter (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改子账号<br><sub>1、通过子账号登录邮箱修改子账号信息</sub> | POST | `/live/v4/user/children/update` | json-body | childEmail | V4UserService#updateChildAccount (packages/sdk/src/services/v4/user.service.ts) | no |

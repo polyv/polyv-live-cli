@@ -5,7 +5,7 @@
  */
 
 import { Command } from 'commander';
-import { registerAiCommands, validateOutputFormat } from './ai.commands';
+import { parsePositiveInteger, registerAiCommands, validateOutputFormat } from './ai.commands';
 import { authAdapter } from '../config/auth-adapter';
 import { configManager } from '../config/manager';
 import { suppressConsole, mockProcessExit, mockAuthSuccess } from '../utils/test-helpers';
@@ -14,6 +14,7 @@ import { suppressConsole, mockProcessExit, mockAuthSuccess } from '../utils/test
 jest.mock('../config/auth-adapter');
 jest.mock('../config/manager');
 jest.mock('../handlers/ai-digital-human.handler');
+jest.mock('../handlers/ai-video-produce.handler');
 jest.mock('../utils/errors', () => ({
   logError: jest.fn(),
 }));
@@ -39,6 +40,53 @@ describe('AI Commands', () => {
 
       expect(digitalHumanCmd).toBeDefined();
       expect(digitalHumanCmd?.description()).toMatch(/数字人|digital/i);
+    });
+
+    it('[AI-VIDEO] should register video-produce subcommand group', () => {
+      const aiCmd = program.commands.find(cmd => cmd.name() === 'ai');
+      const videoProduceCmd = aiCmd?.commands.find(cmd => cmd.name() === 'video-produce');
+
+      expect(videoProduceCmd).toBeDefined();
+      expect(videoProduceCmd?.description()).toMatch(/video|视频/i);
+    });
+
+    it('[AI-VIDEO] should register tts-voice list subcommand with pagination and output', () => {
+      const aiCmd = program.commands.find(cmd => cmd.name() === 'ai');
+      const videoProduceCmd = aiCmd?.commands.find(cmd => cmd.name() === 'video-produce');
+      const ttsVoiceCmd = videoProduceCmd?.commands.find(cmd => cmd.name() === 'tts-voice');
+      const listCmd = ttsVoiceCmd?.commands.find(cmd => cmd.name() === 'list');
+      const options = listCmd?.options || [];
+
+      expect(listCmd).toBeDefined();
+      expect(options.some(opt => opt.long === '--page')).toBe(true);
+      expect(options.some(opt => opt.long === '--size')).toBe(true);
+      expect(options.find(opt => opt.long === '--output')?.short).toBe('-o');
+    });
+
+    it('[AI-VIDEO] should register task list/get/create/delete commands', () => {
+      const aiCmd = program.commands.find(cmd => cmd.name() === 'ai');
+      const videoProduceCmd = aiCmd?.commands.find(cmd => cmd.name() === 'video-produce');
+
+      expect(videoProduceCmd?.commands.find(cmd => cmd.name() === 'list')).toBeDefined();
+      expect(videoProduceCmd?.commands.find(cmd => cmd.name() === 'get')).toBeDefined();
+      expect(videoProduceCmd?.commands.find(cmd => cmd.name() === 'create')).toBeDefined();
+      expect(videoProduceCmd?.commands.find(cmd => cmd.name() === 'delete')).toBeDefined();
+      expect(videoProduceCmd?.commands.find(cmd => cmd.name() === 'create')?.options.some(opt => opt.long === '--force')).toBe(true);
+      expect(videoProduceCmd?.commands.find(cmd => cmd.name() === 'delete')?.options.some(opt => opt.long === '--force')).toBe(true);
+    });
+
+    it('[AI-VIDEO] should register PPT list/get/upload/async-upload commands', () => {
+      const aiCmd = program.commands.find(cmd => cmd.name() === 'ai');
+      const videoProduceCmd = aiCmd?.commands.find(cmd => cmd.name() === 'video-produce');
+      const pptCmd = videoProduceCmd?.commands.find(cmd => cmd.name() === 'ppt');
+
+      expect(pptCmd).toBeDefined();
+      expect(pptCmd?.commands.find(cmd => cmd.name() === 'list')).toBeDefined();
+      expect(pptCmd?.commands.find(cmd => cmd.name() === 'get')).toBeDefined();
+      expect(pptCmd?.commands.find(cmd => cmd.name() === 'upload')).toBeDefined();
+      expect(pptCmd?.commands.find(cmd => cmd.name() === 'async-upload')).toBeDefined();
+      expect(pptCmd?.commands.find(cmd => cmd.name() === 'upload')?.options.some(opt => opt.long === '--force')).toBe(true);
+      expect(pptCmd?.commands.find(cmd => cmd.name() === 'async-upload')?.options.some(opt => opt.long === '--force')).toBe(true);
     });
 
     // ========================================
@@ -299,6 +347,17 @@ describe('AI Commands', () => {
     });
   });
 
+  describe('parsePositiveInteger', () => {
+    it('should parse positive integers', () => {
+      expect(parsePositiveInteger('10')).toBe(10);
+    });
+
+    it('should reject invalid positive integers', () => {
+      expect(() => parsePositiveInteger('0')).toThrow('positive integer');
+      expect(() => parsePositiveInteger('abc')).toThrow('positive integer');
+    });
+  });
+
   // ========================================
   // Action handler execution tests
   // ========================================
@@ -348,6 +407,7 @@ describe('action execution', () => {
   let restoreConsole: () => void;
   let restoreExit: () => void;
   let MockAIDigitalHumanHandler: jest.Mock;
+  let MockAIVideoProduceHandler: jest.Mock;
 
   const createTestProgram = (): Command => {
     const program = new Command();
@@ -359,7 +419,9 @@ describe('action execution', () => {
     restoreConsole = suppressConsole();
     restoreExit = mockProcessExit();
     MockAIDigitalHumanHandler = require('../handlers/ai-digital-human.handler').AIDigitalHumanHandler;
+    MockAIVideoProduceHandler = require('../handlers/ai-video-produce.handler').AIVideoProduceHandler;
     MockAIDigitalHumanHandler.mockClear();
+    MockAIVideoProduceHandler.mockClear();
     mockAuthSuccess(authAdapter as jest.Mocked<typeof authAdapter>, configManager as jest.Mocked<typeof configManager>);
   });
 
@@ -528,6 +590,131 @@ describe('action execution', () => {
       ])).rejects.toThrow('process.exit:1');
 
       expect(logError).toHaveBeenCalled();
+    });
+  });
+
+  describe('video-produce actions', () => {
+    it('should call tts voice list handler with pagination and json output', async () => {
+      const mockHandler = { listTtsVoices: jest.fn().mockResolvedValue(undefined) };
+      MockAIVideoProduceHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerAiCommands(program);
+      await program.parseAsync([
+        'node', 'test', 'ai', 'video-produce', 'tts-voice', 'list',
+        '--page', '2',
+        '--size', '25',
+        '-o', 'json',
+      ]);
+
+      expect(mockHandler.listTtsVoices).toHaveBeenCalledWith({
+        page: 2,
+        size: 25,
+        output: 'json',
+      });
+    });
+
+    it('should call video task list handler with filters', async () => {
+      const mockHandler = { listVideoProduces: jest.fn().mockResolvedValue(undefined) };
+      MockAIVideoProduceHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerAiCommands(program);
+      await program.parseAsync([
+        'node', 'test', 'ai', 'video-produce', 'list',
+        '--page', '1',
+        '--size', '20',
+        '--video-name', 'demo',
+        '--status', '20',
+        '--create-time-start', '1700000000000',
+        '--create-time-end', '1700100000000',
+        '--tags', 'a,b',
+      ]);
+
+      expect(mockHandler.listVideoProduces).toHaveBeenCalledWith({
+        page: 1,
+        size: 20,
+        videoName: 'demo',
+        status: 20,
+        createTimeStart: 1700000000000,
+        createTimeEnd: 1700100000000,
+        tags: 'a,b',
+        output: 'table',
+      });
+    });
+
+    it('should call video task get/create/delete handlers', async () => {
+      const mockHandler = {
+        getVideoProduce: jest.fn().mockResolvedValue(undefined),
+        createVideoProduces: jest.fn().mockResolvedValue(undefined),
+        deleteVideoProduce: jest.fn().mockResolvedValue(undefined),
+      };
+      MockAIVideoProduceHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerAiCommands(program);
+      await program.parseAsync(['node', 'test', 'ai', 'video-produce', 'get', '--id', '100', '-o', 'json']);
+      await program.parseAsync(['node', 'test', 'ai', 'video-produce', 'create', '--tasks', '[{"videoName":"demo"}]', '--force']);
+      await program.parseAsync(['node', 'test', 'ai', 'video-produce', 'delete', '--id', '100', '--force']);
+
+      expect(mockHandler.getVideoProduce).toHaveBeenCalledWith({ id: 100, output: 'json' });
+      expect(mockHandler.createVideoProduces).toHaveBeenCalledWith({
+        tasks: '[{"videoName":"demo"}]',
+        force: true,
+        output: 'table',
+      });
+      expect(mockHandler.deleteVideoProduce).toHaveBeenCalledWith({
+        id: 100,
+        force: true,
+        output: 'table',
+      });
+    });
+
+    it('should call PPT list/get/upload/async-upload handlers', async () => {
+      const mockHandler = {
+        listVideoProducePpts: jest.fn().mockResolvedValue(undefined),
+        getVideoProducePpt: jest.fn().mockResolvedValue(undefined),
+        uploadVideoProducePpt: jest.fn().mockResolvedValue(undefined),
+        asyncUploadVideoProducePpt: jest.fn().mockResolvedValue(undefined),
+      };
+      MockAIVideoProduceHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerAiCommands(program);
+      await program.parseAsync(['node', 'test', 'ai', 'video-produce', 'ppt', 'list', '--page', '2', '--size', '10']);
+      await program.parseAsync(['node', 'test', 'ai', 'video-produce', 'ppt', 'get', '--file-id', 'file-1', '-o', 'json']);
+      await program.parseAsync([
+        'node', 'test', 'ai', 'video-produce', 'ppt', 'upload',
+        '--url', 'https://example.com/demo.pptx',
+        '--doc-name', 'demo',
+        '--force',
+      ]);
+      await program.parseAsync([
+        'node', 'test', 'ai', 'video-produce', 'ppt', 'async-upload',
+        '--url', 'https://example.com/demo.pptx',
+        '--type', 'animate',
+        '--callback-url', 'https://example.com/callback',
+        '--child-user-id', 'child-1',
+        '--force',
+      ]);
+
+      expect(mockHandler.listVideoProducePpts).toHaveBeenCalledWith({ page: 2, size: 10, output: 'table' });
+      expect(mockHandler.getVideoProducePpt).toHaveBeenCalledWith({ fileId: 'file-1', output: 'json' });
+      expect(mockHandler.uploadVideoProducePpt).toHaveBeenCalledWith({
+        url: 'https://example.com/demo.pptx',
+        docName: 'demo',
+        force: true,
+        output: 'table',
+      });
+      expect(mockHandler.asyncUploadVideoProducePpt).toHaveBeenCalledWith({
+        url: 'https://example.com/demo.pptx',
+        docName: undefined,
+        type: 'animate',
+        callbackUrl: 'https://example.com/callback',
+        childUserId: 'child-1',
+        force: true,
+        output: 'table',
+      });
     });
   });
 });

@@ -399,10 +399,14 @@ export class V4AiService {
       throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
     }
 
-    const url = '/live/v4/ai/video-produce/tts-voice/list';
     const response = params
-      ? await this.client.httpClient.get<TtsVoice[]>(url, { params })
-      : await this.client.httpClient.get<TtsVoice[]>(url);
+      ? await this.client.httpClient.get<TtsVoice[]>(
+        '/live/v4/ai/video-produce/tts-voice/list',
+        { params }
+      )
+      : await this.client.httpClient.get<TtsVoice[]>(
+        '/live/v4/ai/video-produce/tts-voice/list'
+      );
     return response as unknown as TtsVoice[];
   }
 
