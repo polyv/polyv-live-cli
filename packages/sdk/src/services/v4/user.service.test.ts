@@ -504,12 +504,16 @@ describe('V4UserService', () => {
       const result = await service.listProducts({ pageNumber: 1, pageSize: 10 });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/product/list',
+        { params: { pageNumber: 1, pageSize: 10 } }
+      );
     });
   });
 
   describe('createProduct', () => {
     it('should create product', async () => {
-      const mockResponse = { productId: 'prod_001' };
+      const mockResponse = 'prod_001';
       mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
       const result = await service.createProduct({
@@ -519,6 +523,22 @@ describe('V4UserService', () => {
       });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/save',
+        {
+          name: 'New Product',
+          linkType: 10,
+          link: 'https://example.com/product',
+        }
+      );
+    });
+
+    it('should throw validation error when link is empty', async () => {
+      await expect(service.createProduct({
+        name: 'New Product',
+        linkType: 10,
+        link: '',
+      })).rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -528,7 +548,10 @@ describe('V4UserService', () => {
 
       await service.updateProduct({ productId: 'prod_001', name: 'Updated' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/update',
+        { productId: 'prod_001', name: 'Updated' }
+      );
     });
   });
 
@@ -538,7 +561,10 @@ describe('V4UserService', () => {
 
       await service.deleteProduct({ productId: 'prod_001' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/delete',
+        { productId: 'prod_001' }
+      );
     });
   });
 
@@ -600,34 +626,55 @@ describe('V4UserService', () => {
       const result = await service.listProductOrders({ pageNumber: 1, pageSize: 10 });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/product/order/list',
+        { params: { pageNumber: 1, pageSize: 10 } }
+      );
     });
   });
 
   describe('getProductOrder', () => {
     it('should get product order by ID', async () => {
-      const mockResponse = { orderId: 'order_001' };
+      const mockResponse = { orderNo: 'order_001', status: 'finish' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.getProductOrder({ orderId: 'order_001' });
+      const result = await service.getProductOrder({ orderNo: 'order_001' });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/product/order/get',
+        { params: { orderNo: 'order_001' } }
+      );
     });
   });
 
   describe('batchUpdateOrderStatus', () => {
     it('should batch update order status', async () => {
-      mockHttpClient.post.mockResolvedValueOnce(undefined);
+      const mockResponse = { successOrderNos: ['order_001', 'order_002'], failOrderList: [] };
+      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
-      await service.batchUpdateOrderStatus({
-        orderIds: ['order_001', 'order_002'],
-        status: 'completed',
+      const result = await service.batchUpdateOrderStatus({
+        orderNos: ['order_001', 'order_002'],
+        status: 'delivering',
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/product/order/update-batch-status',
+        {
+          orderNos: ['order_001', 'order_002'],
+          status: 'delivering',
+        }
+      );
     });
 
-    it('should throw validation error when orderIds is empty', async () => {
-      await expect(service.batchUpdateOrderStatus({ orderIds: [], status: 'completed' }))
+    it('should throw validation error when orderNos is empty', async () => {
+      await expect(service.batchUpdateOrderStatus({ orderNos: [], status: 'delivering' }))
+        .rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should throw validation error when status is empty', async () => {
+      await expect(service.batchUpdateOrderStatus({ orderNos: ['order_001'], status: '' }))
         .rejects.toThrow(PolyVValidationError);
     });
   });
@@ -742,23 +789,46 @@ describe('V4UserService', () => {
 
   describe('listInviteSales', () => {
     it('should list invite sales', async () => {
-      const mockResponse = { contents: [] };
+      const mockResponse = { contents: [], pageNumber: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.listInviteSales();
+      const result = await service.listInviteSales({ mobile: '18112345678', pageNumber: 1, pageSize: 10 });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/invite-sales/list',
+        { params: { mobile: '18112345678', pageNumber: 1, pageSize: 10 } }
+      );
+    });
+
+    it('should throw validation error when pageSize is invalid', async () => {
+      await expect(service.listInviteSales({ pageSize: 1001 }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
   describe('addInviteSale', () => {
     it('should add invite sale', async () => {
-      const mockResponse = { inviteId: 1 };
-      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      const result = await service.addInviteSale({ nickname: 'New Sales' });
+      const result = await service.addInviteSale({
+        viewerUnionIds: ['viewer_001', 'viewer_002'],
+        organizationId: 123,
+      });
 
-      expect(result).toEqual(mockResponse);
+      expect(result).toBeUndefined();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/invite-sales/add',
+        {
+          viewerUnionIds: ['viewer_001', 'viewer_002'],
+          organizationId: 123,
+        }
+      );
+    });
+
+    it('should throw validation error when viewerUnionIds is empty', async () => {
+      await expect(service.addInviteSale({ viewerUnionIds: [] }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -766,9 +836,25 @@ describe('V4UserService', () => {
     it('should update invite sale', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateInviteSale({ inviteId: 1, nickname: 'Updated' });
+      await service.updateInviteSale({
+        viewerUnionIds: ['viewer_001'],
+        organizationId: 123,
+      });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/invite-sales/update',
+        {
+          viewerUnionIds: ['viewer_001'],
+          organizationId: 123,
+        }
+      );
+    });
+
+    it('should throw validation error when organizationId is missing', async () => {
+      await expect(service.updateInviteSale({
+        viewerUnionIds: ['viewer_001'],
+        organizationId: undefined as unknown as number,
+      })).rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -776,20 +862,50 @@ describe('V4UserService', () => {
     it('should remove invite sale', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.removeInviteSale({ inviteId: 1 });
+      await service.removeInviteSale({
+        viewerUnionIds: ['viewer_001'],
+        newViewerUnionId: 'viewer_002',
+      });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/invite-sales/remove',
+        {
+          viewerUnionIds: ['viewer_001'],
+          newViewerUnionId: 'viewer_002',
+        }
+      );
+    });
+
+    it('should throw validation error when viewerUnionIds contains an empty value', async () => {
+      await expect(service.removeInviteSale({ viewerUnionIds: [''] }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
   describe('listFollowViewers', () => {
     it('should list follow viewers', async () => {
-      const mockResponse = { contents: [] };
+      const mockResponse = { contents: [], pageNumber: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.listFollowViewers({ inviteId: 1 });
+      const result = await service.listFollowViewers({
+        inviteCustomerId: 'viewer_001',
+        telephone: '18112345678',
+        pageNumber: 1,
+        pageSize: 10,
+      });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/invite-sales/follow-viewer/list',
+        {
+          params: {
+            inviteCustomerId: 'viewer_001',
+            telephone: '18112345678',
+            pageNumber: 1,
+            pageSize: 10,
+          },
+        }
+      );
     });
   });
 
@@ -799,23 +915,46 @@ describe('V4UserService', () => {
 
   describe('listCustomFields', () => {
     it('should list custom fields', async () => {
-      const mockResponse = { contents: [] };
+      const mockResponse = [{ customFieldId: 'PAY_STATUS', customFieldName: '支付状态', customFieldType: 'text' }];
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.listCustomFields();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/custom-field/list',
+        {}
+      );
     });
   });
 
   describe('addCustomField', () => {
     it('should add custom field', async () => {
-      const mockResponse = { fieldId: 1 };
-      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      const result = await service.addCustomField({ fieldName: 'Company', fieldType: 'text' });
+      const result = await service.addCustomField({
+        customFieldId: 'PAY_STATUS',
+        customFieldName: '支付状态',
+        customFieldType: 'text',
+      });
 
-      expect(result).toEqual(mockResponse);
+      expect(result).toBeUndefined();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/custom-field/save',
+        {
+          customFieldId: 'PAY_STATUS',
+          customFieldName: '支付状态',
+          customFieldType: 'text',
+        }
+      );
+    });
+
+    it('should throw validation error when customFieldId is empty', async () => {
+      await expect(service.addCustomField({
+        customFieldId: '',
+        customFieldName: '支付状态',
+        customFieldType: 'text',
+      })).rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -823,13 +962,29 @@ describe('V4UserService', () => {
     it('should add custom field value', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.addCustomFieldValue({
-        fieldId: 1,
-        viewerUnionId: 'viewer_001',
-        value: 'Tech Corp',
-      });
+      await service.addCustomFieldValue([
+        {
+          viewerId: 'viewer_001',
+          customFieldId: 'PAY_STATUS',
+          customFieldValue: '已支付',
+        },
+      ]);
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/custom-field/viewer-value/save',
+        [
+          {
+            viewerId: 'viewer_001',
+            customFieldId: 'PAY_STATUS',
+            customFieldValue: '已支付',
+          },
+        ]
+      );
+    });
+
+    it('should throw validation error when custom field values are empty', async () => {
+      await expect(service.addCustomFieldValue([]))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 

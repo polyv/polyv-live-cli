@@ -106,6 +106,43 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expect(Number(labels.pageSize)).toBeGreaterThanOrEqual(1);
   });
 
+  it('calls V4 user product and custom-field read-only APIs without mock responses', async () => {
+    const products = await client.v4User.listProducts({
+      pageNumber: 1,
+      pageSize: 10,
+    });
+    const customFields = await client.v4User.listCustomFields();
+
+    expect(products).toEqual(expect.objectContaining({
+      contents: expect.any(Array),
+    }));
+    expect(Number(products.pageNumber)).toBeGreaterThanOrEqual(1);
+    expect(Number(products.pageSize)).toBeGreaterThanOrEqual(1);
+    expect(customFields).toEqual(expect.any(Array));
+  });
+
+  it('calls V4 user invite-sales read-only APIs without mock responses', async () => {
+    const inviteSales = await client.v4User.listInviteSales({
+      pageNumber: 1,
+      pageSize: 10,
+    });
+    const followViewers = await client.v4User.listFollowViewers({
+      pageNumber: 1,
+      pageSize: 10,
+    });
+
+    expect(inviteSales).toEqual(expect.objectContaining({
+      contents: expect.any(Array),
+    }));
+    expect(Number(inviteSales.pageNumber)).toBeGreaterThanOrEqual(1);
+    expect(Number(inviteSales.pageSize)).toBeGreaterThanOrEqual(1);
+    expect(followViewers).toEqual(expect.objectContaining({
+      contents: expect.any(Array),
+    }));
+    expect(Number(followViewers.pageNumber)).toBeGreaterThanOrEqual(1);
+    expect(Number(followViewers.pageSize)).toBeGreaterThanOrEqual(1);
+  });
+
   it('calls viewer lottery win list when a viewer ID is configured', async () => {
     const viewerId = process.env.POLYV_VIEWER_ID;
 

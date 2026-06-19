@@ -512,12 +512,56 @@ export interface Product {
   link?: string;
   /** Product type (normal, finance, position) */
   productType?: string;
+  /** PC link */
+  pcLink?: string;
+  /** Mobile link */
+  mobileLink?: string;
+  /** WeChat mini program original ID */
+  wxMiniprogramOriginalId?: string;
+  /** WeChat mini program link */
+  wxMiniprogramLink?: string;
+  /** Mobile app link */
+  mobileAppLink?: string;
+  /** iOS link */
+  iosLink?: string;
+  /** Android link */
+  androidLink?: string;
+  /** Other platform link */
+  otherLink?: string;
+  /** Product features as a JSON array string */
+  features?: string;
   /** Original price */
   price?: number;
   /** Actual price */
   realPrice?: number;
+  /** Actual price type */
+  priceType?: string;
+  /** Custom actual price */
+  customPrice?: string;
+  /** Original price type */
+  originalPriceType?: string;
+  /** Custom original price */
+  customOriginalPrice?: string;
+  /** API typo preserved for compatibility with the source document */
+  customOrignalPrice?: string;
   /** Product tag IDs */
   tagIds?: number[];
+  /** Button label */
+  btnShow?: string;
+  /** Product description */
+  productDesc?: string;
+  /** Product detail */
+  productDetail?: string;
+  /** Extended product information as a JSON object string */
+  ext?: string;
+  /** Product rank */
+  rank?: number;
+  /** Legacy type field returned by some APIs */
+  type?: string;
+  /** Extra returned params */
+  params?: unknown;
+  /** Yield/rate for finance products */
+  yield?: string | number | null;
 }
 
 /**
@@ -549,18 +593,54 @@ export interface CreateProductParams {
   cover?: string;
   /** Product type */
   productType?: string;
+  /** PC link */
+  pcLink?: string;
+  /** Mobile link */
+  mobileLink?: string;
+  /** WeChat mini program original ID */
+  wxMiniprogramOriginalId?: string;
+  /** WeChat mini program link */
+  wxMiniprogramLink?: string;
+  /** Mobile app link */
+  mobileAppLink?: string;
+  /** iOS link */
+  iosLink?: string;
+  /** Android link */
+  androidLink?: string;
+  /** Other platform link */
+  otherLink?: string;
+  /** Product features as a JSON array string */
+  features?: string;
   /** Original price */
   price?: number;
   /** Actual price */
   realPrice?: number;
+  /** Actual price type */
+  priceType?: string;
+  /** Custom actual price */
+  customPrice?: string;
+  /** Original price type */
+  originalPriceType?: string;
+  /** Custom original price */
+  customOriginalPrice?: string;
+  /** API typo preserved for compatibility with the source document */
+  customOrignalPrice?: string;
   /** Product tag IDs */
   tagIds?: number[];
+  /** Button label */
+  btnShow?: string;
+  /** Product description */
+  productDesc?: string;
+  /** Product detail */
+  productDetail?: string;
+  /** Extended product information as a JSON object string */
+  ext?: string;
 }
 
 /**
  * Response for creating a product
  */
-export interface CreateProductResponse extends Product {}
+export type CreateProductResponse = string | null;
 
 /**
  * Parameters for updating a product
@@ -578,12 +658,48 @@ export interface UpdateProductParams {
   cover?: string;
   /** Product type */
   productType?: string;
+  /** PC link */
+  pcLink?: string;
+  /** Mobile link */
+  mobileLink?: string;
+  /** WeChat mini program original ID */
+  wxMiniprogramOriginalId?: string;
+  /** WeChat mini program link */
+  wxMiniprogramLink?: string;
+  /** Mobile app link */
+  mobileAppLink?: string;
+  /** iOS link */
+  iosLink?: string;
+  /** Android link */
+  androidLink?: string;
+  /** Other platform link */
+  otherLink?: string;
+  /** Product features as a JSON array string */
+  features?: string;
   /** Original price */
   price?: number;
   /** Actual price */
   realPrice?: number;
+  /** Actual price type */
+  priceType?: string;
+  /** Custom actual price */
+  customPrice?: string;
+  /** Original price type */
+  originalPriceType?: string;
+  /** Custom original price */
+  customOriginalPrice?: string;
+  /** API typo preserved for compatibility with the source document */
+  customOrignalPrice?: string;
   /** Product tag IDs */
   tagIds?: number[];
+  /** Button label */
+  btnShow?: string;
+  /** Product description */
+  productDesc?: string;
+  /** Product detail */
+  productDetail?: string;
+  /** Extended product information as a JSON object string */
+  ext?: string;
 }
 
 /**
@@ -655,14 +771,66 @@ export interface DeleteProductTagParams {
  * Product order entity
  */
 export interface ProductOrder {
-  /** Order ID */
-  orderId: string;
-  /** Product ID */
-  productId: string;
+  /** Order number */
+  orderNo: string;
+  /** Channel ID */
+  channelId?: number;
+  /** Viewer ID */
+  viewerId?: string;
+  /** Viewer nickname */
+  viewerNickName?: string;
+  /** WeChat transaction ID */
+  transactionId?: string;
+  /** Order amount */
+  amount?: number;
+  /** Whether express delivery is enabled */
+  expressEnabled?: string;
   /** Status */
   status: string;
   /** Created timestamp */
   createTime?: number;
+  /** Paid timestamp */
+  payTime?: number;
+  /** Delivery timestamp */
+  deliveryTime?: number;
+  /** Finish timestamp */
+  finishTime?: number;
+  /** Shipping address */
+  addressExt?: ProductOrderAddress;
+  /** Ordered products */
+  products?: ProductOrderProduct[];
+}
+
+/**
+ * Product order address
+ */
+export interface ProductOrderAddress {
+  /** Mobile phone number */
+  mobile?: string;
+  /** Receiver name */
+  name?: string;
+  /** Province/city/area */
+  area?: string;
+  /** Detailed address */
+  address?: string;
+}
+
+/**
+ * Product item in an order
+ */
+export interface ProductOrderProduct {
+  /** Product snapshot ID */
+  productSnapshotId?: number;
+  /** Product amount */
+  amount?: number;
+  /** Quantity */
+  quantity?: number;
+  /** Total amount */
+  totalAmount?: number;
+  /** Product name */
+  productName?: string;
+  /** Product cover image */
+  productCover?: string;
 }
 
 /**
@@ -679,18 +847,40 @@ export interface ListProductOrdersResponse extends UserPaginatedResponse<Product
  * Parameters for getting a product order
  */
 export interface GetProductOrderParams {
-  /** Order ID */
-  orderId: string;
+  /** Order number */
+  orderNo: string;
 }
 
 /**
  * Parameters for batch updating order status
  */
 export interface BatchUpdateOrderStatusParams {
-  /** Order IDs */
-  orderIds: string[];
+  /** Order numbers, maximum 1000 */
+  orderNos: string[];
   /** New status */
   status: string;
+}
+
+/**
+ * Failed order status update result
+ */
+export interface BatchUpdateOrderStatusFailOrder {
+  /** Order number */
+  orderNo: string;
+  /** Error code */
+  errCode: number;
+  /** Error message */
+  errMsg: string;
+}
+
+/**
+ * Response for batch updating order status
+ */
+export interface BatchUpdateOrderStatusResponse {
+  /** Successfully updated order numbers */
+  successOrderNos?: string[];
+  /** Failed order updates */
+  failOrderList?: BatchUpdateOrderStatusFailOrder[];
 }
 
 // ============================================
@@ -766,76 +956,146 @@ export interface AddChannelLabelRefsParams {
  * Invite sale entity
  */
 export interface InviteSale {
-  /** Invite ID */
-  inviteId: number;
+  /** Invite sale user ID */
+  viewerUnionId: string;
   /** Nickname */
   nickname: string;
+  /** WeChat nickname */
+  wxNickName?: string | null;
+  /** WeChat avatar */
+  wxAvatar?: string | null;
+  /** Mobile phone number */
+  mobile?: string | null;
+  /** Source */
+  inviteSalesSource?: string;
+  /** Granted timestamp */
+  inviteSalesGrantedTime?: number;
+  /** Organization ID */
+  organizationId?: number;
+  /** Organization name */
+  organizationName?: string;
+  /** Whether the user is an invite sales admin */
+  inviteSalesAdmin?: string;
+  /** Bound customer count */
+  customerNum?: number;
+}
+
+/**
+ * Parameters for listing invite sales
+ */
+export interface ListInviteSalesParams {
+  /** Invite sale user ID, exact match */
+  viewerUnionId?: string;
+  /** Mobile phone number, exact match */
+  mobile?: string;
+  /** Nickname keyword */
+  keyword?: string;
+  /** Organization ID */
+  organizationId?: number;
+  /** Page size */
+  pageSize?: number;
+  /** Page number */
+  pageNumber?: number;
 }
 
 /**
  * Response for listing invite sales
  */
-export interface ListInviteSalesResponse {
-  /** Invite sales list */
-  contents: InviteSale[];
-}
+export interface ListInviteSalesResponse extends UserPaginatedResponse<InviteSale> {}
 
 /**
  * Parameters for adding an invite sale
  */
 export interface AddInviteSaleParams {
-  /** Nickname */
-  nickname: string;
+  /** User IDs to add as invite sales, maximum 200 */
+  viewerUnionIds: string[];
+  /** Organization ID, defaults to headquarters when omitted */
+  organizationId?: number;
 }
 
 /**
  * Response for adding an invite sale
  */
-export interface AddInviteSaleResponse extends InviteSale {}
+export type AddInviteSaleResponse = void;
 
 /**
  * Parameters for updating an invite sale
  */
 export interface UpdateInviteSaleParams {
-  /** Invite ID */
-  inviteId: number;
-  /** Nickname */
-  nickname: string;
+  /** Invite sale user IDs to update, maximum 200 */
+  viewerUnionIds: string[];
+  /** Organization ID */
+  organizationId: number;
 }
+
+/**
+ * Response for updating invite sales
+ */
+export type UpdateInviteSaleResponse = void;
 
 /**
  * Parameters for removing an invite sale
  */
 export interface RemoveInviteSaleParams {
-  /** Invite ID */
-  inviteId: number;
+  /** Invite sale user IDs to remove, maximum 100 */
+  viewerUnionIds: string[];
+  /** New invite sale user ID to receive followed viewers */
+  newViewerUnionId?: string;
+  /** Legacy/example field accepted by the API documentation examples */
+  followViewersToNewViewerUnionId?: string;
 }
+
+/**
+ * Response for removing invite sales
+ */
+export type RemoveInviteSaleResponse = void;
 
 /**
  * Follow viewer entity
  */
 export interface FollowViewer {
+  /** Invite sale user ID */
+  inviteCustomerId: string;
+  /** Invite sale nickname */
+  inviteCustomerNickname?: string;
   /** Viewer ID */
   viewerId: string;
   /** Nickname */
   nickname: string;
+  /** Viewer phone number */
+  telephone?: string;
+  /** Follow status: 0=pending, 1=bound, 2=unbound */
+  followStatus?: number;
+  /** Follow timestamp */
+  followTime?: number;
 }
 
 /**
  * Parameters for listing follow viewers
  */
 export interface ListFollowViewersParams {
-  /** Invite ID */
-  inviteId: number;
+  /** Invite sale user ID, exact match */
+  inviteCustomerId?: string;
+  /** Invite sale nickname keyword */
+  inviteCustomerNickname?: string;
+  /** Viewer ID, exact match */
+  viewerId?: string;
+  /** Viewer nickname keyword */
+  username?: string;
+  /** Viewer phone number, exact match */
+  telephone?: string;
+  /** Follow statuses joined by commas, e.g. "0,1" */
+  followStatusList?: string;
+  /** Page size */
+  pageSize?: number;
+  /** Page number */
+  pageNumber?: number;
 }
 
 /**
  * Response for listing follow viewers
  */
-export interface ListFollowViewersResponse {
-  /** Follow viewers list */
-  contents: FollowViewer[];
-}
+export interface ListFollowViewersResponse extends UserPaginatedResponse<FollowViewer> {}
 
 // ============================================
 // AC10: Custom Field Types
@@ -846,47 +1106,56 @@ export interface ListFollowViewersResponse {
  */
 export interface CustomField {
   /** Field ID */
-  fieldId: number;
+  customFieldId: string;
   /** Field name */
-  fieldName: string;
+  customFieldName: string;
   /** Field type (text, select, etc.) */
-  fieldType: string;
+  customFieldType: string;
 }
 
 /**
  * Response for listing custom fields
  */
-export interface ListCustomFieldsResponse {
-  /** Custom fields list */
-  contents: CustomField[];
-}
+export type ListCustomFieldsResponse = CustomField[];
 
 /**
  * Parameters for adding a custom field
  */
 export interface AddCustomFieldParams {
-  /** Field name */
-  fieldName: string;
-  /** Field type */
-  fieldType: string;
+  /** Custom field ID, maximum 64 characters */
+  customFieldId: string;
+  /** Custom field name, maximum 64 characters */
+  customFieldName: string;
+  /** Custom field type, such as text, image, or link */
+  customFieldType: string;
 }
 
 /**
  * Response for adding a custom field
  */
-export interface AddCustomFieldResponse extends CustomField {}
+export type AddCustomFieldResponse = void;
+
+/**
+ * Viewer custom field value
+ */
+export interface CustomFieldViewerValue {
+  /** Viewer ID */
+  viewerId: string;
+  /** Custom field ID */
+  customFieldId: string;
+  /** Custom field value */
+  customFieldValue: string;
+}
 
 /**
  * Parameters for adding a custom field value
  */
-export interface AddCustomFieldValueParams {
-  /** Field ID */
-  fieldId: number;
-  /** Viewer union ID */
-  viewerUnionId: string;
-  /** Field value */
-  value: string;
-}
+export type AddCustomFieldValueParams = CustomFieldViewerValue[];
+
+/**
+ * Response for adding custom field viewer values
+ */
+export type AddCustomFieldValueResponse = void;
 
 // ============================================
 // AC11: Template Types

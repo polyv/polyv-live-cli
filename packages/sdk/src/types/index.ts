@@ -598,10 +598,14 @@ export type {
 // V4 User types - AC7: Product Order
 export type {
   ProductOrder,
+  ProductOrderAddress,
+  ProductOrderProduct,
   ListProductOrdersParams,
   ListProductOrdersResponse,
   GetProductOrderParams,
   BatchUpdateOrderStatusParams,
+  BatchUpdateOrderStatusResponse,
+  BatchUpdateOrderStatusFailOrder,
 } from './v4-user.js';
 
 // V4 User types - AC8: Label
@@ -619,11 +623,14 @@ export type {
 // V4 User types - AC9: Invite Sales
 export type {
   InviteSale,
+  ListInviteSalesParams,
   ListInviteSalesResponse,
   AddInviteSaleParams,
   AddInviteSaleResponse,
   UpdateInviteSaleParams,
+  UpdateInviteSaleResponse,
   RemoveInviteSaleParams,
+  RemoveInviteSaleResponse,
   FollowViewer,
   ListFollowViewersParams,
   ListFollowViewersResponse,
@@ -635,7 +642,9 @@ export type {
   ListCustomFieldsResponse,
   AddCustomFieldParams,
   AddCustomFieldResponse,
+  CustomFieldViewerValue,
   AddCustomFieldValueParams,
+  AddCustomFieldValueResponse,
 } from './v4-user.js';
 
 // V4 User types - AC11: Template

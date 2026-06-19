@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T01:09:58.192Z",
+  "generatedAt": "2026-06-19T05:07:52.507Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -19,8 +19,8 @@
     "latestApis": 578,
     "supersededApis": 12,
     "sdkEndpoints": 542,
-    "sdkImplemented": 379,
-    "sdkMissing": 199
+    "sdkImplemented": 389,
+    "sdkMissing": 189
   },
   "modules": [
     {
@@ -35,9 +35,9 @@
       "module": "user",
       "label": "用户与观众",
       "total": 73,
-      "implemented": 46,
-      "missing": 27,
-      "coverage": 63
+      "implemented": 56,
+      "missing": 17,
+      "coverage": 76.7
     },
     {
       "module": "account",
@@ -14470,12 +14470,12 @@
       "dedupeKey": "user:创建商品",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/product/save",
+        "reference": "V4UserService#createProduct",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14648,12 +14648,12 @@
       "dedupeKey": "user:分页查询自定义字段",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/custom-field/list",
+        "reference": "V4UserService#listCustomFields",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14768,12 +14768,12 @@
       "dedupeKey": "user:观众自定义信息同步",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/custom-field/viewer-value/save",
+        "reference": "V4UserService#addCustomFieldValue",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14878,12 +14878,12 @@
       "dedupeKey": "user:获取邀请员的绑定观众列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/invite-sales/follow-viewer/list",
+        "reference": "V4UserService#listFollowViewers",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14905,12 +14905,12 @@
       "dedupeKey": "user:获取邀请员列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/invite-sales/list",
+        "reference": "V4UserService#listInviteSales",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14962,12 +14962,12 @@
       "dedupeKey": "user:批量更新订单状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/product/order/update-batch-status",
+        "reference": "V4UserService#batchUpdateOrderStatus",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15254,12 +15254,12 @@
       "dedupeKey": "user:添加邀请员",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/invite-sales/add",
+        "reference": "V4UserService#addInviteSale",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15377,12 +15377,12 @@
       "dedupeKey": "user:新增自定义字段",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/custom-field/save",
+        "reference": "V4UserService#addCustomField",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15726,12 +15726,12 @@
       "dedupeKey": "user:修改邀请员信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/invite-sales/update",
+        "reference": "V4UserService#updateInviteSale",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15838,12 +15838,12 @@
       "dedupeKey": "user:移除邀请员",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/invite-sales/remove",
+        "reference": "V4UserService#removeInviteSale",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -21276,8 +21276,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/product/create",
-      "normalizedPath": "/live/v4/user/product/create",
+      "path": "/live/v4/user/product/save",
+      "normalizedPath": "/live/v4/user/product/save",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "createProduct",
@@ -21357,8 +21357,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/product/order/batch-update-status",
-      "normalizedPath": "/live/v4/user/product/order/batch-update-status",
+      "path": "/live/v4/user/product/order/update-batch-status",
+      "normalizedPath": "/live/v4/user/product/order/update-batch-status",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "batchUpdateOrderStatus",
@@ -21411,8 +21411,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/invitesales/list",
-      "normalizedPath": "/live/v4/user/invitesales/list",
+      "path": "/live/v4/user/invite-sales/list",
+      "normalizedPath": "/live/v4/user/invite-sales/list",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "listInviteSales",
@@ -21420,8 +21420,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/invitesales/add",
-      "normalizedPath": "/live/v4/user/invitesales/add",
+      "path": "/live/v4/user/invite-sales/add",
+      "normalizedPath": "/live/v4/user/invite-sales/add",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "addInviteSale",
@@ -21429,8 +21429,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/invitesales/update",
-      "normalizedPath": "/live/v4/user/invitesales/update",
+      "path": "/live/v4/user/invite-sales/update",
+      "normalizedPath": "/live/v4/user/invite-sales/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updateInviteSale",
@@ -21438,8 +21438,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/invitesales/remove",
-      "normalizedPath": "/live/v4/user/invitesales/remove",
+      "path": "/live/v4/user/invite-sales/remove",
+      "normalizedPath": "/live/v4/user/invite-sales/remove",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "removeInviteSale",
@@ -21447,8 +21447,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/invitesales/follow-viewers",
-      "normalizedPath": "/live/v4/user/invitesales/follow-viewers",
+      "path": "/live/v4/user/invite-sales/follow-viewer/list",
+      "normalizedPath": "/live/v4/user/invite-sales/follow-viewer/list",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "listFollowViewers",
@@ -21456,8 +21456,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/customfield/list",
-      "normalizedPath": "/live/v4/user/customfield/list",
+      "path": "/live/v4/user/custom-field/list",
+      "normalizedPath": "/live/v4/user/custom-field/list",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "listCustomFields",
@@ -21465,8 +21465,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/customfield/add",
-      "normalizedPath": "/live/v4/user/customfield/add",
+      "path": "/live/v4/user/custom-field/save",
+      "normalizedPath": "/live/v4/user/custom-field/save",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "addCustomField",
@@ -21474,8 +21474,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/customfield/add-value",
-      "normalizedPath": "/live/v4/user/customfield/add-value",
+      "path": "/live/v4/user/custom-field/viewer-value/save",
+      "normalizedPath": "/live/v4/user/custom-field/viewer-value/save",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "addCustomFieldValue",

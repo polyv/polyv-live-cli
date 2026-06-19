@@ -63,6 +63,7 @@ import type {
   GetProductOrderParams,
   ProductOrder,
   BatchUpdateOrderStatusParams,
+  BatchUpdateOrderStatusResponse,
   // AC8: Label types
   ListLabelsParams,
   ListLabelsResponse,
@@ -72,11 +73,14 @@ import type {
   DeleteLabelParams,
   AddChannelLabelRefsParams,
   // AC9: Invite Sales types
+  ListInviteSalesParams,
   ListInviteSalesResponse,
   AddInviteSaleParams,
   AddInviteSaleResponse,
   UpdateInviteSaleParams,
+  UpdateInviteSaleResponse,
   RemoveInviteSaleParams,
+  RemoveInviteSaleResponse,
   ListFollowViewersParams,
   ListFollowViewersResponse,
   // AC10: Custom Field types
@@ -84,6 +88,7 @@ import type {
   AddCustomFieldParams,
   AddCustomFieldResponse,
   AddCustomFieldValueParams,
+  AddCustomFieldValueResponse,
   // AC11: Template types
   DonateTemplate,
   UpdateDonateTemplateParams,
@@ -776,7 +781,7 @@ export class V4UserService {
     this.validateRequiredString(params.link, 'link');
 
     const response = await this.client.httpClient.post<CreateProductResponse>(
-      '/live/v4/user/product/create',
+      '/live/v4/user/product/save',
       params
     );
     return response as unknown as CreateProductResponse;
@@ -946,12 +951,12 @@ export class V4UserService {
    * @example
    * ```typescript
    * const order = await client.v4User.getProductOrder({
-   *   orderId: 'order_001',
+   *   orderNo: 'order_001',
    * });
    * ```
    */
   async getProductOrder(params: GetProductOrderParams): Promise<ProductOrder> {
-    this.validateRequiredString(params.orderId, 'orderId');
+    this.validateRequiredString(params.orderNo, 'orderNo');
 
     const response = await this.client.httpClient.get<ProductOrder>(
       '/live/v4/user/product/order/get',
@@ -968,20 +973,23 @@ export class V4UserService {
    * @example
    * ```typescript
    * await client.v4User.batchUpdateOrderStatus({
-   *   orderIds: ['order_001', 'order_002'],
-   *   status: 'completed',
+   *   orderNos: ['order_001', 'order_002'],
+   *   status: 'delivering',
    * });
    * ```
    */
-  async batchUpdateOrderStatus(params: BatchUpdateOrderStatusParams): Promise<void> {
-    if (!params.orderIds || params.orderIds.length === 0) {
-      throw new PolyVValidationError('orderIds is required and cannot be empty');
-    }
+  async batchUpdateOrderStatus(params: BatchUpdateOrderStatusParams): Promise<BatchUpdateOrderStatusResponse | null> {
+    this.validateNonEmptyArray(params.orderNos, 'orderNos');
+    params.orderNos.forEach((orderNo, index) => {
+      this.validateRequiredString(orderNo, `orderNos[${index}]`);
+    });
+    this.validateRequiredString(params.status, 'status');
 
-    await this.client.httpClient.post(
-      '/live/v4/user/product/order/batch-update-status',
+    const response = await this.client.httpClient.post<BatchUpdateOrderStatusResponse | null>(
+      '/live/v4/user/product/order/update-batch-status',
       params
     );
+    return response as unknown as BatchUpdateOrderStatusResponse | null;
   }
 
   // ============================================
@@ -1113,10 +1121,12 @@ export class V4UserService {
    * const sales = await client.v4User.listInviteSales();
    * ```
    */
-  async listInviteSales(): Promise<ListInviteSalesResponse> {
+  async listInviteSales(params: ListInviteSalesParams = {}): Promise<ListInviteSalesResponse> {
+    this.validateOptionalPaginationParams(params);
+
     const response = await this.client.httpClient.get<ListInviteSalesResponse>(
-      '/live/v4/user/invitesales/list',
-      {}
+      '/live/v4/user/invite-sales/list',
+      { params }
     );
     return response as unknown as ListInviteSalesResponse;
   }
@@ -1130,15 +1140,19 @@ export class V4UserService {
    * @example
    * ```typescript
    * const sale = await client.v4User.addInviteSale({
-   *   nickname: 'New Sales',
+   *   viewerUnionIds: ['viewer_001', 'viewer_002'],
+   *   organizationId: 123,
    * });
    * ```
    */
   async addInviteSale(params: AddInviteSaleParams): Promise<AddInviteSaleResponse> {
-    this.validateRequiredString(params.nickname, 'nickname');
+    this.validateNonEmptyArray(params.viewerUnionIds, 'viewerUnionIds');
+    params.viewerUnionIds.forEach((viewerUnionId, index) => {
+      this.validateRequiredString(viewerUnionId, `viewerUnionIds[${index}]`);
+    });
 
     const response = await this.client.httpClient.post<AddInviteSaleResponse>(
-      '/live/v4/user/invitesales/add',
+      '/live/v4/user/invite-sales/add',
       params
     );
     return response as unknown as AddInviteSaleResponse;
@@ -1152,16 +1166,20 @@ export class V4UserService {
    * @example
    * ```typescript
    * await client.v4User.updateInviteSale({
-   *   inviteId: 1,
-   *   nickname: 'Updated Sales',
+   *   viewerUnionIds: ['viewer_001', 'viewer_002'],
+   *   organizationId: 123,
    * });
    * ```
    */
-  async updateInviteSale(params: UpdateInviteSaleParams): Promise<void> {
-    this.validateRequiredNumber(params.inviteId, 'inviteId');
+  async updateInviteSale(params: UpdateInviteSaleParams): Promise<UpdateInviteSaleResponse> {
+    this.validateNonEmptyArray(params.viewerUnionIds, 'viewerUnionIds');
+    params.viewerUnionIds.forEach((viewerUnionId, index) => {
+      this.validateRequiredString(viewerUnionId, `viewerUnionIds[${index}]`);
+    });
+    this.validateRequiredNumber(params.organizationId, 'organizationId');
 
     await this.client.httpClient.post(
-      '/live/v4/user/invitesales/update',
+      '/live/v4/user/invite-sales/update',
       params
     );
   }
@@ -1173,14 +1191,26 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.removeInviteSale({ inviteId: 1 });
+   * await client.v4User.removeInviteSale({ viewerUnionIds: ['viewer_001'] });
    * ```
    */
-  async removeInviteSale(params: RemoveInviteSaleParams): Promise<void> {
-    this.validateRequiredNumber(params.inviteId, 'inviteId');
+  async removeInviteSale(params: RemoveInviteSaleParams): Promise<RemoveInviteSaleResponse> {
+    this.validateNonEmptyArray(params.viewerUnionIds, 'viewerUnionIds');
+    params.viewerUnionIds.forEach((viewerUnionId, index) => {
+      this.validateRequiredString(viewerUnionId, `viewerUnionIds[${index}]`);
+    });
+    if (params.newViewerUnionId !== undefined) {
+      this.validateRequiredString(params.newViewerUnionId, 'newViewerUnionId');
+    }
+    if (params.followViewersToNewViewerUnionId !== undefined) {
+      this.validateRequiredString(
+        params.followViewersToNewViewerUnionId,
+        'followViewersToNewViewerUnionId'
+      );
+    }
 
     await this.client.httpClient.post(
-      '/live/v4/user/invitesales/remove',
+      '/live/v4/user/invite-sales/remove',
       params
     );
   }
@@ -1193,14 +1223,14 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * const viewers = await client.v4User.listFollowViewers({ inviteId: 1 });
+   * const viewers = await client.v4User.listFollowViewers({ inviteCustomerId: 'viewer_001' });
    * ```
    */
   async listFollowViewers(params: ListFollowViewersParams): Promise<ListFollowViewersResponse> {
-    this.validateRequiredNumber(params.inviteId, 'inviteId');
+    this.validateOptionalPaginationParams(params);
 
     const response = await this.client.httpClient.get<ListFollowViewersResponse>(
-      '/live/v4/user/invitesales/follow-viewers',
+      '/live/v4/user/invite-sales/follow-viewer/list',
       { params }
     );
     return response as unknown as ListFollowViewersResponse;
@@ -1222,7 +1252,7 @@ export class V4UserService {
    */
   async listCustomFields(): Promise<ListCustomFieldsResponse> {
     const response = await this.client.httpClient.get<ListCustomFieldsResponse>(
-      '/live/v4/user/customfield/list',
+      '/live/v4/user/custom-field/list',
       {}
     );
     return response as unknown as ListCustomFieldsResponse;
@@ -1237,16 +1267,19 @@ export class V4UserService {
    * @example
    * ```typescript
    * const field = await client.v4User.addCustomField({
-   *   fieldName: 'Company',
-   *   fieldType: 'text',
+   *   customFieldId: 'PAY_STATUS',
+   *   customFieldName: '支付状态',
+   *   customFieldType: 'text',
    * });
    * ```
    */
   async addCustomField(params: AddCustomFieldParams): Promise<AddCustomFieldResponse> {
-    this.validateRequiredString(params.fieldName, 'fieldName');
+    this.validateRequiredString(params.customFieldId, 'customFieldId');
+    this.validateRequiredString(params.customFieldName, 'customFieldName');
+    this.validateRequiredString(params.customFieldType, 'customFieldType');
 
     const response = await this.client.httpClient.post<AddCustomFieldResponse>(
-      '/live/v4/user/customfield/add',
+      '/live/v4/user/custom-field/save',
       params
     );
     return response as unknown as AddCustomFieldResponse;
@@ -1259,20 +1292,25 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.addCustomFieldValue({
-   *   fieldId: 1,
-   *   viewerUnionId: 'viewer_001',
-   *   value: 'Tech Corp',
-   * });
+   * await client.v4User.addCustomFieldValue([
+   *   {
+   *     viewerId: 'viewer_001',
+   *     customFieldId: 'PAY_STATUS',
+   *     customFieldValue: '已支付',
+   *   },
+   * ]);
    * ```
    */
-  async addCustomFieldValue(params: AddCustomFieldValueParams): Promise<void> {
-    this.validateRequiredNumber(params.fieldId, 'fieldId');
-    this.validateRequiredString(params.viewerUnionId, 'viewerUnionId');
-    this.validateRequiredString(params.value, 'value');
+  async addCustomFieldValue(params: AddCustomFieldValueParams): Promise<AddCustomFieldValueResponse> {
+    this.validateNonEmptyArray(params, 'params');
+    params.forEach((fieldValue, index) => {
+      this.validateRequiredString(fieldValue.viewerId, `params[${index}].viewerId`);
+      this.validateRequiredString(fieldValue.customFieldId, `params[${index}].customFieldId`);
+      this.validateRequiredString(fieldValue.customFieldValue, `params[${index}].customFieldValue`);
+    });
 
     await this.client.httpClient.post(
-      '/live/v4/user/customfield/add-value',
+      '/live/v4/user/custom-field/viewer-value/save',
       params
     );
   }
@@ -1885,6 +1923,22 @@ export class V4UserService {
       throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', params.pageNumber);
     }
     if (params.pageSize === undefined || params.pageSize === null || params.pageSize < 1 || params.pageSize > 1000) {
+      throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
+    }
+  }
+
+  /**
+   * Validate optional pagination parameters
+   */
+  private validateOptionalPaginationParams(params: { pageNumber?: number; pageSize?: number }): void {
+    if (params.pageNumber !== undefined && params.pageNumber !== null && params.pageNumber < 1) {
+      throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', params.pageNumber);
+    }
+    if (
+      params.pageSize !== undefined &&
+      params.pageSize !== null &&
+      (params.pageSize < 1 || params.pageSize > 1000)
+    ) {
       throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
     }
   }
