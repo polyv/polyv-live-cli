@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-19T17:36:13.220Z
+生成时间：2026-06-19T18:01:27.130Z
 
 ## 来源与规则
 
@@ -15,16 +15,16 @@
 | 指标 | 数值 |
 | --- | ---: |
 | 最新 API 数 | 578 |
-| CLI 已使用最新 API 数 | 116 |
-| CLI 未使用最新 API 数 | 462 |
-| CLI 最新 API 覆盖率 | 20.1% |
-| CLI 调用引用数 | 126 |
-| 其中 SDK service 调用 | 126 |
+| CLI 已使用最新 API 数 | 150 |
+| CLI 未使用最新 API 数 | 428 |
+| CLI 最新 API 覆盖率 | 26% |
+| CLI 调用引用数 | 160 |
+| 其中 SDK service 调用 | 160 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 169 |
-| CLI 一级命令数 | 28 |
+| CLI 命令路径数 | 212 |
+| CLI 一级命令数 | 29 |
 
 ## 模块覆盖率
 
@@ -34,43 +34,65 @@
 | `user` | 用户与观众 | 73 | 10 | 63 | 13.7% | 10 | 0 |
 | `web` | 观看页与观看条件 | 40 | 6 | 34 | 15% | 6 | 0 |
 | `chat` | 聊天 | 45 | 14 | 31 | 31.1% | 14 | 0 |
-| `account` | 账号与财务 | 22 | 3 | 19 | 13.6% | 3 | 0 |
 | `live_interaction` | 直播互动 | 30 | 11 | 19 | 36.7% | 11 | 0 |
 | `group` | 组织与套餐 | 11 | 0 | 11 | 0% | 0 | 0 |
-| `platform` | 开放平台 | 14 | 3 | 11 | 21.4% | 3 | 0 |
 | `uncategorized` | 未分类 | 10 | 0 | 10 | 0% | 0 | 0 |
 | `finance` | 财务与审核 | 7 | 0 | 7 | 0% | 0 | 0 |
 | `material` | 素材库 | 7 | 0 | 7 | 0% | 0 | 0 |
 | `player` | 播放器 | 7 | 0 | 7 | 0% | 0 | 0 |
 | `webapp` | WebApp | 6 | 0 | 6 | 0% | 0 | 0 |
-| `global` | 全局设置 | 4 | 0 | 4 | 0% | 0 | 0 |
 | `robot` | 数字人与机器人 | 3 | 0 | 3 | 0% | 0 | 0 |
 | `root` | 根目录 | 2 | 0 | 2 | 0% | 0 | 0 |
 | `statistics` | 数据统计 | 1 | 0 | 1 | 0% | 0 | 0 |
+| `account` | 账号与财务 | 22 | 22 | 0 | 100% | 22 | 0 |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% | 13 | 0 |
+| `global` | 全局设置 | 4 | 4 | 0 | 100% | 4 | 0 |
+| `platform` | 开放平台 | 14 | 14 | 0 | 100% | 14 | 0 |
 
 ## 补齐建议
 
-- 缺口最大的模块：`channel` 227/283、`user` 63/73、`web` 34/40、`chat` 31/45、`account` 19/22、`live_interaction` 19/30、`group` 11/11、`platform` 11/14、`uncategorized` 10/10、`finance` 7/7。
+- 缺口最大的模块：`channel` 227/283、`user` 63/73、`web` 34/40、`chat` 31/45、`live_interaction` 19/30、`group` 11/11、`uncategorized` 10/10、`finance` 7/7、`material` 7/7、`player` 7/7。
 - 频道高级能力：`channel` 子命令扩展。缺口：`channel` 227/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
-- 账号、组织与资源管理：新增 `user`、`group`，扩展 `platform`。缺口：`user` 63/73、`account` 19/22、`group` 11/11。这些接口更偏运营后台和批量管理，适合给内部自动化脚本使用。 建议入口：`account category *`、`account callback *`、`account duration`；`user product *`、`user viewer-label *`；`group quota *`、`group allocation-log list`。
+- 账号、组织与资源管理：新增 `user`、`group`，扩展 `platform`。缺口：`user` 63/73、`account` 0/22、`group` 11/11。这些接口更偏运营后台和批量管理，适合给内部自动化脚本使用。 建议入口：`account category *`、`account callback *`、`account duration`；`user product *`、`user viewer-label *`；`group quota *`、`group allocation-log list`。
 - 观看页配置：新增 `web` 或扩展 `player`/`watch-condition`。缺口：`web` 34/40。观看页菜单、暖场、点赞、图文、授权、登记表等配置适合 CLI 自动化，但当前只覆盖观看条件和白名单的一部分。 建议入口：`web splash get/set`、`web menu add/update/delete`；`web share get/update`、`web likes get/update`；`web record-field get`、`web enroll list/export`。
 - 聊天治理与机器人：扩展 `chat`，新增 `robot`。缺口：`chat` 31/45、`robot` 3/3。当前已有消息、禁言、踢人，但敏感词、公告、审核、角色、机器人配置仍大量缺失。 建议入口：`chat badword *`、`chat notice *`、`chat audit *`；`chat role teacher/admin get/update`；`robot setting get/update`、`robot stats`。
-- 后台运维与审核工具：新增 `finance`、`material`、`webapp`、`global`。缺口：`finance` 7/7、`material` 7/7、`webapp` 6/6、`global` 4/4。覆盖量不大，但对审核、素材库、WebApp 权限和全局设置的自动化价值高。 建议入口：`finance audio-moderation *`、`finance video-moderation *`；`material list/delete`、`material bind-channel`；`webapp role *`、`global setting *`。
+- 后台运维与审核工具：新增 `finance`、`material`、`webapp`、`global`。缺口：`finance` 7/7、`material` 7/7、`webapp` 6/6、`global` 0/4。覆盖量不大，但对审核、素材库、WebApp 权限和全局设置的自动化价值高。 建议入口：`finance audio-moderation *`、`finance video-moderation *`；`material list/delete`、`material bind-channel`；`webapp role *`、`global setting *`。
 - 互动活动补齐：扩展 `checkin`、`qa`、`questionnaire`、`lottery`，新增活动子命令。缺口：`live_interaction` 19/30。CLI 已有基础签到/问答/问卷/抽奖，但红包、福袋、邀请、任务奖励、观众分组等活动运营能力仍缺。 建议入口：`lottery group *`、`lottery blacklist *`；`interaction lucky-bag winners`、`interaction red-pack stats`；`interaction task-reward *`。
 
 ## CLI 命令面
 
 | 命令路径 | 源码 |
 | --- | --- |
-| `account` | `packages/cli/src/commands/account.commands.ts:487` |
-| `account add` | `packages/cli/src/commands/account.commands.ts:492` |
-| `account current` | `packages/cli/src/commands/account.commands.ts:517` |
-| `account list` | `packages/cli/src/commands/account.commands.ts:510` |
-| `account migrate` | `packages/cli/src/commands/account.commands.ts:523` |
-| `account remove` | `packages/cli/src/commands/account.commands.ts:503` |
-| `account set-default` | `packages/cli/src/commands/account.commands.ts:532` |
-| `account unset-default` | `packages/cli/src/commands/account.commands.ts:538` |
+| `account` | `packages/cli/src/commands/account.commands.ts:570` |
+| `account add` | `packages/cli/src/commands/account.commands.ts:575` |
+| `account api` | `packages/cli/src/commands/account.commands.ts:628` |
+| `account current` | `packages/cli/src/commands/account.commands.ts:600` |
+| `account list` | `packages/cli/src/commands/account.commands.ts:593` |
+| `account migrate` | `packages/cli/src/commands/account.commands.ts:606` |
+| `account remove` | `packages/cli/src/commands/account.commands.ts:586` |
+| `account set-default` | `packages/cli/src/commands/account.commands.ts:615` |
+| `account unset-default` | `packages/cli/src/commands/account.commands.ts:621` |
+| `account api callback` | `packages/cli/src/commands/account.commands.ts:858` |
+| `account api category` | `packages/cli/src/commands/account.commands.ts:776` |
+| `account api channel` | `packages/cli/src/commands/account.commands.ts:668` |
+| `account api channels` | `packages/cli/src/commands/account.commands.ts:632` |
+| `account api durations` | `packages/cli/src/commands/account.commands.ts:724` |
+| `account api income-list` | `packages/cli/src/commands/account.commands.ts:740` |
+| `account api mic-duration` | `packages/cli/src/commands/account.commands.ts:732` |
+| `account api playback` | `packages/cli/src/commands/account.commands.ts:646` |
+| `account api receive-list` | `packages/cli/src/commands/account.commands.ts:760` |
+| `account api sso` | `packages/cli/src/commands/account.commands.ts:840` |
+| `account api callback set` | `packages/cli/src/commands/account.commands.ts:862` |
+| `account api category create` | `packages/cli/src/commands/account.commands.ts:788` |
+| `account api category delete` | `packages/cli/src/commands/account.commands.ts:800` |
+| `account api category list` | `packages/cli/src/commands/account.commands.ts:780` |
+| `account api category update-name` | `packages/cli/src/commands/account.commands.ts:812` |
+| `account api category update-rank` | `packages/cli/src/commands/account.commands.ts:826` |
+| `account api channel basic-list` | `packages/cli/src/commands/account.commands.ts:672` |
+| `account api channel detail-list` | `packages/cli/src/commands/account.commands.ts:706` |
+| `account api channel list` | `packages/cli/src/commands/account.commands.ts:688` |
+| `account api playback list` | `packages/cli/src/commands/account.commands.ts:650` |
+| `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `ai` | `packages/cli/src/commands/ai.commands.ts:139` |
 | `ai digital-human` | `packages/cli/src/commands/ai.commands.ts:144` |
 | `ai video-produce` | `packages/cli/src/commands/ai.commands.ts:214` |
@@ -133,6 +155,13 @@
 | `donate list` | `packages/cli/src/commands/donate.commands.ts:132` |
 | `donate config get` | `packages/cli/src/commands/donate.commands.ts:45` |
 | `donate config update` | `packages/cli/src/commands/donate.commands.ts:83` |
+| `global` | `packages/cli/src/commands/global.commands.ts:86` |
+| `global auth` | `packages/cli/src/commands/global.commands.ts:90` |
+| `global page-setting` | `packages/cli/src/commands/global.commands.ts:114` |
+| `global auth get` | `packages/cli/src/commands/global.commands.ts:94` |
+| `global auth update` | `packages/cli/src/commands/global.commands.ts:102` |
+| `global page-setting get` | `packages/cli/src/commands/global.commands.ts:118` |
+| `global page-setting update` | `packages/cli/src/commands/global.commands.ts:126` |
 | `lottery` | `packages/cli/src/commands/lottery.commands.ts:33` |
 | `lottery create` | `packages/cli/src/commands/lottery.commands.ts:39` |
 | `lottery delete` | `packages/cli/src/commands/lottery.commands.ts:225` |
@@ -149,17 +178,31 @@
 | `monitor status` | `packages/cli/src/commands/monitor.commands.ts:31` |
 | `monitor test` | `packages/cli/src/commands/monitor.commands.ts:67` |
 | `monitor themes` | `packages/cli/src/commands/monitor.commands.ts:58` |
-| `platform` | `packages/cli/src/commands/platform.commands.ts:131` |
-| `platform callback` | `packages/cli/src/commands/platform.commands.ts:280` |
-| `platform get` | `packages/cli/src/commands/platform.commands.ts:137` |
-| `platform setting` | `packages/cli/src/commands/platform.commands.ts:390` |
-| `platform switch` | `packages/cli/src/commands/platform.commands.ts:177` |
-| `platform callback get` | `packages/cli/src/commands/platform.commands.ts:286` |
-| `platform callback update` | `packages/cli/src/commands/platform.commands.ts:326` |
-| `platform setting get` | `packages/cli/src/commands/platform.commands.ts:396` |
-| `platform setting update` | `packages/cli/src/commands/platform.commands.ts:436` |
-| `platform switch get` | `packages/cli/src/commands/platform.commands.ts:183` |
-| `platform switch update` | `packages/cli/src/commands/platform.commands.ts:223` |
+| `platform` | `packages/cli/src/commands/platform.commands.ts:219` |
+| `platform anchor` | `packages/cli/src/commands/platform.commands.ts:605` |
+| `platform callback` | `packages/cli/src/commands/platform.commands.ts:371` |
+| `platform content-group` | `packages/cli/src/commands/platform.commands.ts:804` |
+| `platform coupon` | `packages/cli/src/commands/platform.commands.ts:829` |
+| `platform get` | `packages/cli/src/commands/platform.commands.ts:225` |
+| `platform setting` | `packages/cli/src/commands/platform.commands.ts:484` |
+| `platform switch` | `packages/cli/src/commands/platform.commands.ts:265` |
+| `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:663` |
+| `platform anchor get` | `packages/cli/src/commands/platform.commands.ts:642` |
+| `platform anchor list` | `packages/cli/src/commands/platform.commands.ts:609` |
+| `platform anchor relation-list` | `packages/cli/src/commands/platform.commands.ts:754` |
+| `platform anchor unrelation-list` | `packages/cli/src/commands/platform.commands.ts:779` |
+| `platform anchor update` | `packages/cli/src/commands/platform.commands.ts:694` |
+| `platform anchor update-status` | `packages/cli/src/commands/platform.commands.ts:729` |
+| `platform callback get` | `packages/cli/src/commands/platform.commands.ts:377` |
+| `platform callback update` | `packages/cli/src/commands/platform.commands.ts:417` |
+| `platform content-group list` | `packages/cli/src/commands/platform.commands.ts:808` |
+| `platform coupon status-batch` | `packages/cli/src/commands/platform.commands.ts:887` |
+| `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
+| `platform coupon viewer-list` | `packages/cli/src/commands/platform.commands.ts:833` |
+| `platform setting get` | `packages/cli/src/commands/platform.commands.ts:490` |
+| `platform setting update` | `packages/cli/src/commands/platform.commands.ts:530` |
+| `platform switch get` | `packages/cli/src/commands/platform.commands.ts:271` |
+| `platform switch update` | `packages/cli/src/commands/platform.commands.ts:311` |
 | `playback` | `packages/cli/src/commands/playback.commands.ts:122` |
 | `playback delete` | `packages/cli/src/commands/playback.commands.ts:289` |
 | `playback get` | `packages/cli/src/commands/playback.commands.ts:211` |
@@ -243,28 +286,28 @@
 
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 查询频道的功能开关状态<br><sub>1、查询开关状态，可查询全局开关状态或频道开关状态</sub> | GET | `/live/v3/channel/switch/get` | query | - | AccountService#switchGet (packages/sdk/src/services/account.service.ts) | sdk: AccountService#switchGet (packages/cli/src/services/platform-service.ts:63) |
-| 查询频道列表<br><sub>1、根据分类id和频道名称查询频道号列表</sub> | GET | `/live/v3/user/channels` | query | - | AccountService#channels (packages/sdk/src/services/account.service.ts) | no |
-| 查询所有频道的回放视频<br><sub>1、查询账号下回放列表和点播列表, 注意：不包括暂存列表</sub> | GET | `/live/v3/user/playback/list` | query | - | AccountService#userPlaybackList (packages/sdk/src/services/account.service.ts) | no |
-| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表</sub> | GET | `/live/v3/channel/basic/list` | query | - | AccountService#userChannelBasicList (packages/sdk/src/services/account.service.ts) | no |
-| 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表</sub> | GET | `/live/v3/channel/management/list` | query | - | AccountService#getSimpleChannelList (packages/sdk/src/services/account.service.ts) | no |
-| 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表</sub> | POST | `/live/v3/channel/management/list-detail` | query/form | - | AccountService#channelDetailList (packages/sdk/src/services/account.service.ts) | no |
-| 查询账号可用直播分钟数<br><sub>1、查询账号可用直播分钟数</sub> | POST | `/live/v2/user/get-user-durations` | query/form | - | AccountService#getUserDurations (packages/sdk/src/services/account.service.ts) | no |
-| 查询账号连麦分钟数<br><sub>1、查询账号连麦分钟数</sub> | GET | `/live/v3/channel/statistics/mic/get-duration` | query | - | AccountService#micDuration (packages/sdk/src/services/account.service.ts) | no |
-| 查询账号收入详情<br><sub>1、接口URL中的{userId}为直播账号ID</sub> | POST | `/live/v2/user/{param}/get-income-detail` | query/form | endDate, startDate | AccountService#getIncomeDetail (packages/sdk/src/services/account.service.ts) | no |
-| 查询账号信息<br><sub>1、查询用户账号信息接口</sub> | GET | `/live/v3/user/get-info` | query | - | AccountService#getUserInfo (packages/sdk/src/services/account.service.ts) | sdk: AccountService#getUserInfo (packages/cli/src/services/platform-service.ts:47) |
-| 查询直播分类<br><sub>1、查询直播分类信息</sub> | POST | `/live/v3/user/category/list` | query/form | - | AccountService#getCategoryList (packages/sdk/src/services/account.service.ts) | no |
-| 创建直播分类<br><sub>1、创建直播分类</sub> | POST | `/live/v3/user/category/create` | query/form | categoryName | AccountService#createCategory (packages/sdk/src/services/account.service.ts) | no |
-| 分页查询频道可设置接收转播频道列表<br><sub>1、通过一个（发起转播的）频道分页查询能够被它设置接收转播的频道列表</sub> | GET | `/live/v3/channel/basic/receive/list` | query | channelId | AccountService#receiveList (packages/sdk/src/services/account.service.ts) | no |
-| 删除直播分类<br><sub>1、删除直播频道分类</sub> | POST | `/live/v3/user/category/delete` | query/form | categoryId | AccountService#deleteCategory (packages/sdk/src/services/account.service.ts) | no |
-| 设置账号单点登录token<br><sub>1、设置账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | query/form | token | AccountService#setUserLoginToken (packages/sdk/src/services/account.service.ts) | no |
-| 设置直播子账号单点登录token<br><sub>1、设置直播子账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | query/form | childEmail, token | AccountService#setUserLoginToken (packages/sdk/src/services/account.service.ts) | no |
-| 修改录制生成回调设置<br><sub>1、设置账号下录制视频通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-record-callback` | query/form | - | AccountService#setRecordCallback (packages/sdk/src/services/account.service.ts) | no |
-| 修改频道的功能开关状态<br><sub>1、修改功能开关设置，可修改全局开关设置或频道开关设置</sub> | POST | `/live/v3/channel/switch/update` | query/form | enabled, type | AccountService#switchUpdate (packages/sdk/src/services/account.service.ts) | sdk: AccountService#switchUpdate (packages/cli/src/services/platform-service.ts:87) |
-| 修改直播分类名称<br><sub>1、修改直播频道分类的名称</sub> | POST | `/live/v3/user/category/update-name` | query/form | categoryId, categoryName | AccountService#updateCategoryName (packages/sdk/src/services/account.service.ts) | no |
-| 修改直播分类顺序<br><sub>1、修改直播频道分类的顺序</sub> | POST | `/live/v3/user/category/update-rank` | query/form | afterCategoryId, categoryId | AccountService#updateCategoryRank (packages/sdk/src/services/account.service.ts) | no |
-| 修改直播状态改变回调设置<br><sub>1、设置账号下频道直播状态改变通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-stream-callback` | query/form | - | AccountService#setStreamCallback (packages/sdk/src/services/account.service.ts) | no |
-| 修改转存成功回调设置<br><sub>1、设置账号下转存回放视频成功通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-playback-callback` | query/form | - | AccountService#setPlaybackCallback (packages/sdk/src/services/account.service.ts) | no |
+| 查询频道的功能开关状态<br><sub>1、查询开关状态，可查询全局开关状态或频道开关状态</sub> | GET | `/live/v3/channel/switch/get` | query | - | AccountService#switchGet (packages/sdk/src/services/account.service.ts) | sdk: AccountService#switchGet (packages/cli/src/services/platform-service.ts:71) |
+| 查询频道列表<br><sub>1、根据分类id和频道名称查询频道号列表</sub> | GET | `/live/v3/user/channels` | query | - | AccountService#channels (packages/sdk/src/services/account.service.ts) | sdk: AccountService#channels (packages/cli/src/services/account-service.ts:31) |
+| 查询所有频道的回放视频<br><sub>1、查询账号下回放列表和点播列表, 注意：不包括暂存列表</sub> | GET | `/live/v3/user/playback/list` | query | - | AccountService#userPlaybackList (packages/sdk/src/services/account.service.ts) | sdk: AccountService#userPlaybackList (packages/cli/src/services/account-service.ts:36) |
+| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表</sub> | GET | `/live/v3/channel/basic/list` | query | - | AccountService#userChannelBasicList (packages/sdk/src/services/account.service.ts) | sdk: AccountService#userChannelBasicList (packages/cli/src/services/account-service.ts:41) |
+| 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表</sub> | GET | `/live/v3/channel/management/list` | query | - | AccountService#getSimpleChannelList (packages/sdk/src/services/account.service.ts) | sdk: AccountService#getSimpleChannelList (packages/cli/src/services/account-service.ts:46) |
+| 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表</sub> | POST | `/live/v3/channel/management/list-detail` | query/form | - | AccountService#channelDetailList (packages/sdk/src/services/account.service.ts) | sdk: AccountService#channelDetailList (packages/cli/src/services/account-service.ts:51) |
+| 查询账号可用直播分钟数<br><sub>1、查询账号可用直播分钟数</sub> | POST | `/live/v2/user/get-user-durations` | query/form | - | AccountService#getUserDurations (packages/sdk/src/services/account.service.ts) | sdk: AccountService#getUserDurations (packages/cli/src/services/account-service.ts:56) |
+| 查询账号连麦分钟数<br><sub>1、查询账号连麦分钟数</sub> | GET | `/live/v3/channel/statistics/mic/get-duration` | query | - | AccountService#micDuration (packages/sdk/src/services/account.service.ts) | sdk: AccountService#micDuration (packages/cli/src/services/account-service.ts:61) |
+| 查询账号收入详情<br><sub>1、接口URL中的{userId}为直播账号ID</sub> | POST | `/live/v2/user/{param}/get-income-detail` | query/form | endDate, startDate | AccountService#getIncomeDetail (packages/sdk/src/services/account.service.ts) | sdk: AccountService#getIncomeDetail (packages/cli/src/services/account-service.ts:66) |
+| 查询账号信息<br><sub>1、查询用户账号信息接口</sub> | GET | `/live/v3/user/get-info` | query | - | AccountService#getUserInfo (packages/sdk/src/services/account.service.ts) | sdk: AccountService#getUserInfo (packages/cli/src/services/platform-service.ts:55) |
+| 查询直播分类<br><sub>1、查询直播分类信息</sub> | POST | `/live/v3/user/category/list` | query/form | - | AccountService#getCategoryList (packages/sdk/src/services/account.service.ts) | sdk: AccountService#getCategoryList (packages/cli/src/services/account-service.ts:71) |
+| 创建直播分类<br><sub>1、创建直播分类</sub> | POST | `/live/v3/user/category/create` | query/form | categoryName | AccountService#createCategory (packages/sdk/src/services/account.service.ts) | sdk: AccountService#createCategory (packages/cli/src/services/account-service.ts:76) |
+| 分页查询频道可设置接收转播频道列表<br><sub>1、通过一个（发起转播的）频道分页查询能够被它设置接收转播的频道列表</sub> | GET | `/live/v3/channel/basic/receive/list` | query | channelId | AccountService#receiveList (packages/sdk/src/services/account.service.ts) | sdk: AccountService#receiveList (packages/cli/src/services/account-service.ts:81) |
+| 删除直播分类<br><sub>1、删除直播频道分类</sub> | POST | `/live/v3/user/category/delete` | query/form | categoryId | AccountService#deleteCategory (packages/sdk/src/services/account.service.ts) | sdk: AccountService#deleteCategory (packages/cli/src/services/account-service.ts:86) |
+| 设置账号单点登录token<br><sub>1、设置账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | query/form | token | AccountService#setUserLoginToken (packages/sdk/src/services/account.service.ts) | sdk: AccountService#setUserLoginToken (packages/cli/src/services/account-service.ts:101)<br>sdk: AccountService#setUserChildrenLoginToken (packages/cli/src/services/account-service.ts:106) |
+| 设置直播子账号单点登录token<br><sub>1、设置直播子账号单点登录的token</sub> | POST | `/live/v3/user/set-sso-token` | query/form | childEmail, token | AccountService#setUserLoginToken (packages/sdk/src/services/account.service.ts) | sdk: AccountService#setUserLoginToken (packages/cli/src/services/account-service.ts:101)<br>sdk: AccountService#setUserChildrenLoginToken (packages/cli/src/services/account-service.ts:106) |
+| 修改录制生成回调设置<br><sub>1、设置账号下录制视频通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-record-callback` | query/form | - | AccountService#setRecordCallback (packages/sdk/src/services/account.service.ts) | sdk: AccountService#setRecordCallback (packages/cli/src/services/account-service.ts:116) |
+| 修改频道的功能开关状态<br><sub>1、修改功能开关设置，可修改全局开关设置或频道开关设置</sub> | POST | `/live/v3/channel/switch/update` | query/form | enabled, type | AccountService#switchUpdate (packages/sdk/src/services/account.service.ts) | sdk: AccountService#switchUpdate (packages/cli/src/services/platform-service.ts:95) |
+| 修改直播分类名称<br><sub>1、修改直播频道分类的名称</sub> | POST | `/live/v3/user/category/update-name` | query/form | categoryId, categoryName | AccountService#updateCategoryName (packages/sdk/src/services/account.service.ts) | sdk: AccountService#updateCategoryName (packages/cli/src/services/account-service.ts:91) |
+| 修改直播分类顺序<br><sub>1、修改直播频道分类的顺序</sub> | POST | `/live/v3/user/category/update-rank` | query/form | afterCategoryId, categoryId | AccountService#updateCategoryRank (packages/sdk/src/services/account.service.ts) | sdk: AccountService#updateCategoryRank (packages/cli/src/services/account-service.ts:96) |
+| 修改直播状态改变回调设置<br><sub>1、设置账号下频道直播状态改变通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-stream-callback` | query/form | - | AccountService#setStreamCallback (packages/sdk/src/services/account.service.ts) | sdk: AccountService#setStreamCallback (packages/cli/src/services/account-service.ts:111) |
+| 修改转存成功回调设置<br><sub>1、设置账号下转存回放视频成功通知回调地址的接口</sub> | POST | `/live/v2/user/{param}/set-playback-callback` | query/form | - | AccountService#setPlaybackCallback (packages/sdk/src/services/account.service.ts) | sdk: AccountService#setPlaybackCallback (packages/cli/src/services/account-service.ts:121) |
 
 ### ai - AI 与数字人
 
@@ -638,10 +681,10 @@
 
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 查询观看页默认模板设置<br><sub>1、查询观看页默认模板设置</sub> | GET | `/live/v4/user/template/page-setting/get` | query | - | V4GlobalService#getPageSetting (packages/sdk/src/services/v4/global.service.ts) | no |
-| 查询默认模板-观看条件<br><sub>1、查询默认模板-观看条件</sub> | GET | `/live/v4/global/auth/get` | query | - | V4GlobalService#getAuth (packages/sdk/src/services/v4/global.service.ts) | no |
-| 修改观看页默认模板设置<br><sub>1、修改观看页默认模板设置</sub> | POST | `/live/v4/user/template/page-setting/update` | query/form | - | V4GlobalService#updatePageSetting (packages/sdk/src/services/v4/global.service.ts) | no |
-| 修改默认模板-观看条件<br><sub>1、修改默认模板-观看条件</sub> | POST | `/live/v4/global/auth/update` | json-body | authEnabled, authType | V4GlobalService#updateAuth (packages/sdk/src/services/v4/global.service.ts) | no |
+| 查询观看页默认模板设置<br><sub>1、查询观看页默认模板设置</sub> | GET | `/live/v4/user/template/page-setting/get` | query | - | V4GlobalService#getPageSetting (packages/sdk/src/services/v4/global.service.ts) | sdk: V4GlobalService#getPageSetting (packages/cli/src/services/global-service.ts:31) |
+| 查询默认模板-观看条件<br><sub>1、查询默认模板-观看条件</sub> | GET | `/live/v4/global/auth/get` | query | - | V4GlobalService#getAuth (packages/sdk/src/services/v4/global.service.ts) | sdk: V4GlobalService#getAuth (packages/cli/src/services/global-service.ts:21) |
+| 修改观看页默认模板设置<br><sub>1、修改观看页默认模板设置</sub> | POST | `/live/v4/user/template/page-setting/update` | query/form | - | V4GlobalService#updatePageSetting (packages/sdk/src/services/v4/global.service.ts) | sdk: V4GlobalService#updatePageSetting (packages/cli/src/services/global-service.ts:36) |
+| 修改默认模板-观看条件<br><sub>1、修改默认模板-观看条件</sub> | POST | `/live/v4/global/auth/update` | json-body | authEnabled, authType | V4GlobalService#updateAuth (packages/sdk/src/services/v4/global.service.ts) | sdk: V4GlobalService#updateAuth (packages/cli/src/services/global-service.ts:26) |
 
 ### group - 组织与套餐
 
@@ -710,20 +753,20 @@
 
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 查询未关联主播的频道<br><sub>1、查询未关联主播的频道</sub> | GET | `/live/v4/channel/anchor/list-unrelation` | json-body | - | PlatformService#listAnchorUnrelations (packages/sdk/src/services/platform.service.ts) | no |
+| 查询未关联主播的频道<br><sub>1、查询未关联主播的频道</sub> | GET | `/live/v4/channel/anchor/list-unrelation` | json-body | - | PlatformService#listAnchorUnrelations (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#listAnchorUnrelations (packages/cli/src/services/platform-service.ts:302) |
 | 查询优惠券列表<br><sub>1、查询优惠券列表</sub> | GET | `/live/v4/user/coupon/search` | json-body | - | V4PlatformService#searchCoupons (packages/sdk/src/services/v4/platform.service.ts) | sdk: V4PlatformService#searchCoupons (packages/cli/src/handlers/coupon.handler.ts:194) |
-| 查询优惠券领取列表<br><sub>1、查询优惠券领取列表</sub> | GET | `/live/v4/user/coupon/search-viewer` | json-body | couponId | V4PlatformService#searchCouponViewers (packages/sdk/src/services/v4/platform.service.ts) | no |
-| 查询主播已关联的频道<br><sub>1、查询主播频道关联关系</sub> | GET | `/live/v4/channel/anchor/list-relation` | json-body | anchorId | PlatformService#listAnchorRelations (packages/sdk/src/services/platform.service.ts) | no |
+| 查询优惠券领取列表<br><sub>1、查询优惠券领取列表</sub> | GET | `/live/v4/user/coupon/search-viewer` | json-body | couponId | V4PlatformService#searchCouponViewers (packages/sdk/src/services/v4/platform.service.ts) | sdk: V4PlatformService#searchCouponViewers (packages/cli/src/services/platform-service.ts:322) |
+| 查询主播已关联的频道<br><sub>1、查询主播频道关联关系</sub> | GET | `/live/v4/channel/anchor/list-relation` | json-body | anchorId | PlatformService#listAnchorRelations (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#listAnchorRelations (packages/cli/src/services/platform-service.ts:297) |
 | 创建优惠券<br><sub>1、创建优惠券</sub> | POST | `/live/v4/user/coupon/create` | json-body | availableAmount, name, receiveEndTime, receiveStartTime, rule, type, +1 | V4PlatformService#createCoupon (packages/sdk/src/services/v4/platform.service.ts) | sdk: V4PlatformService#createCoupon (packages/cli/src/handlers/coupon.handler.ts:158)<br>sdk: V4PlatformService#createCoupon (packages/cli/src/setup/resource-handlers.ts:265) |
-| 创建主播<br><sub>1、创建主播</sub> | POST | `/live/v4/channel/anchor/create` | json-body | avatar, nickname, sex | PlatformService#createAnchor (packages/sdk/src/services/platform.service.ts) | no |
-| 平台内容库分组列表<br><sub>1、平台内容库分组列表</sub> | GET | `/live/v4/global/robot/label/list` | json-body | type | PlatformService#listContentGroups (packages/sdk/src/services/platform.service.ts) | no |
+| 创建主播<br><sub>1、创建主播</sub> | POST | `/live/v4/channel/anchor/create` | json-body | avatar, nickname, sex | PlatformService#createAnchor (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#createAnchor (packages/cli/src/services/platform-service.ts:282) |
+| 平台内容库分组列表<br><sub>1、平台内容库分组列表</sub> | GET | `/live/v4/global/robot/label/list` | json-body | type | PlatformService#listContentGroups (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#listContentGroups (packages/cli/src/services/platform-service.ts:317) |
 | 删除优惠券<br><sub>1、删除优惠券</sub> | POST | `/live/v4/user/coupon/delete-batch` | json-body | couponIds | V4PlatformService#deleteCouponsBatch (packages/sdk/src/services/v4/platform.service.ts) | sdk: V4PlatformService#deleteCouponsBatch (packages/cli/src/handlers/coupon.handler.ts:225)<br>sdk: V4PlatformService#deleteCouponsBatch (packages/cli/src/setup/resource-handlers.ts:284) |
-| 停止优惠券<br><sub>1、停止优惠券 (修改状态)</sub> | POST | `/live/v4/user/coupon/update-status-batch` | json-body | couponIds | V4PlatformService#updateCouponsStatusBatch (packages/sdk/src/services/v4/platform.service.ts) | no |
-| 修改优惠券<br><sub>1、修改优惠券</sub> | POST | `/live/v4/user/coupon/update` | json-body | couponId | V4PlatformService#updateCoupon (packages/sdk/src/services/v4/platform.service.ts) | no |
-| 修改主播<br><sub>1、修改主播</sub> | POST | `/live/v4/channel/anchor/update` | json-body | anchorId | PlatformService#updateAnchor (packages/sdk/src/services/platform.service.ts) | no |
-| 修改主播状态<br><sub>1、修改直播状态</sub> | POST | `/live/v4/channel/anchor/update-status` | json-body | anchorId, status | PlatformService#updateAnchorStatus (packages/sdk/src/services/platform.service.ts) | no |
-| 主播列表<br><sub>1、查询主播列表</sub> | GET | `/live/v4/channel/anchor/list` | json-body | - | PlatformService#listAnchors (packages/sdk/src/services/platform.service.ts) | no |
-| 主播详情<br><sub>1、查询主播详情</sub> | GET | `/live/v4/channel/anchor/get` | json-body | anchorId | PlatformService#getAnchor (packages/sdk/src/services/platform.service.ts) | no |
+| 停止优惠券<br><sub>1、停止优惠券 (修改状态)</sub> | POST | `/live/v4/user/coupon/update-status-batch` | json-body | couponIds | V4PlatformService#updateCouponsStatusBatch (packages/sdk/src/services/v4/platform.service.ts) | sdk: V4PlatformService#updateCouponsStatusBatch (packages/cli/src/services/platform-service.ts:332) |
+| 修改优惠券<br><sub>1、修改优惠券</sub> | POST | `/live/v4/user/coupon/update` | json-body | couponId | V4PlatformService#updateCoupon (packages/sdk/src/services/v4/platform.service.ts) | sdk: V4PlatformService#updateCoupon (packages/cli/src/services/platform-service.ts:327) |
+| 修改主播<br><sub>1、修改主播</sub> | POST | `/live/v4/channel/anchor/update` | json-body | anchorId | PlatformService#updateAnchor (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#updateAnchor (packages/cli/src/services/platform-service.ts:307) |
+| 修改主播状态<br><sub>1、修改直播状态</sub> | POST | `/live/v4/channel/anchor/update-status` | json-body | anchorId, status | PlatformService#updateAnchorStatus (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#updateAnchorStatus (packages/cli/src/services/platform-service.ts:312) |
+| 主播列表<br><sub>1、查询主播列表</sub> | GET | `/live/v4/channel/anchor/list` | json-body | - | PlatformService#listAnchors (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#listAnchors (packages/cli/src/services/platform-service.ts:292) |
+| 主播详情<br><sub>1、查询主播详情</sub> | GET | `/live/v4/channel/anchor/get` | json-body | anchorId | PlatformService#getAnchor (packages/sdk/src/services/platform.service.ts) | sdk: PlatformService#getAnchor (packages/cli/src/services/platform-service.ts:287) |
 
 ### player - 播放器
 
@@ -789,8 +832,8 @@
 | 查询默认模板内容保护（防录屏）设置<br><sub>1、查询内容保护默认模板设置</sub> | GET | `/live/v4/user/template/marquee/get` | query | - | V4UserService#getMarqueeTemplate (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询默认模板视频审核<br><sub>1、查询视频审核默认模板设置</sub> | GET | `/live/v4/user/template/video-moderation/get` | query | - | V4UserService#getVideoModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询默认模板音频审核<br><sub>1、查询音频审核默认模板设置</sub> | GET | `/live/v4/user/template/audio-moderation/get` | query | - | V4UserService#getAudioModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
-| 查询全局回调设置<br><sub>1、查询全局回调设置</sub> | GET | `/live/v4/user/global-setting/callback/get` | query | - | V4UserService#getCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getCallback (packages/cli/src/services/platform-service.ts:138) |
-| 查询全局频道设置<br><sub>1、查询全局频道设置</sub> | GET | `/live/v4/user/global-setting/switch/get` | query | - | V4UserService#getGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getGlobalChannelSettings (packages/cli/src/services/platform-service.ts:226) |
+| 查询全局回调设置<br><sub>1、查询全局回调设置</sub> | GET | `/live/v4/user/global-setting/callback/get` | query | - | V4UserService#getCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getCallback (packages/cli/src/services/platform-service.ts:146) |
+| 查询全局频道设置<br><sub>1、查询全局频道设置</sub> | GET | `/live/v4/user/global-setting/switch/get` | query | - | V4UserService#getGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getGlobalChannelSettings (packages/cli/src/services/platform-service.ts:234) |
 | 查询商品订单列表<br><sub>1、查询商品订单列表</sub> | GET | `/live/v4/user/product/order/list` | query | - | V4UserService#listProductOrders (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询商品订单详情<br><sub>1、查询商品订单详情</sub> | GET | `/live/v4/user/product/order/get` | query | orderNo | V4UserService#getProductOrder (packages/sdk/src/services/v4/user.service.ts) | no |
 | 查询页脚设置<br><sub>1、查询全局页脚设置</sub> | GET | `/live/v4/user/global-setting/footer/get` | query | - | V4UserService#getGlobalFooter (packages/sdk/src/services/v4/user.service.ts) | no |
@@ -842,8 +885,8 @@
 | 修改默认模板视频审核<br><sub>1、修改视频审核默认模板设置</sub> | POST | `/live/v4/user/template/video-moderation/update` | json-body | illegalNotify, imageFrequency, moderationEnabled, moderationStrategy | V4UserService#updateVideoModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改默认模板音频审核<br><sub>1、修改音频审核默认模板设置</sub> | POST | `/live/v4/user/template/audio-moderation/update` | json-body | badwordEnabled, illegalNotify, moderationEnabled, moderationStrategy | V4UserService#updateAudioModerationSetting (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改配置信息<br><sub>1、修改配置信息</sub> | POST | `/live/v4/user/viewer-user-system/update-config` | json-body | mobileLoginEnabled, wxWorkLoginEnabled | V4UserService#updateViewerUserSystemConfig (packages/sdk/src/services/v4/user.service.ts) | no |
-| 修改全局回调设置<br><sub>1、修改全局回调设置</sub> | POST | `/live/v4/user/global-setting/callback/update` | json-body | - | V4UserService#updateCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateCallback (packages/cli/src/services/platform-service.ts:171) |
-| 修改全局频道设置<br><sub>1、修改全局频道设置</sub> | POST | `/live/v4/user/global-setting/switch/update` | json-body | - | V4UserService#updateGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateGlobalChannelSettings (packages/cli/src/services/platform-service.ts:269) |
+| 修改全局回调设置<br><sub>1、修改全局回调设置</sub> | POST | `/live/v4/user/global-setting/callback/update` | json-body | - | V4UserService#updateCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateCallback (packages/cli/src/services/platform-service.ts:179) |
+| 修改全局频道设置<br><sub>1、修改全局频道设置</sub> | POST | `/live/v4/user/global-setting/switch/update` | json-body | - | V4UserService#updateGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateGlobalChannelSettings (packages/cli/src/services/platform-service.ts:277) |
 | 修改邀请员信息<br><sub>1、修改账号下的某些邀请员的信息</sub> | POST | `/live/v4/user/invite-sales/update` | json-body | organizationId, viewerUnionIds | V4UserService#updateInviteSale (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改页脚设置<br><sub>1、修改全局页脚设置</sub> | POST | `/live/v4/user/global-setting/footer/update` | json-body | - | V4UserService#updateGlobalFooter (packages/sdk/src/services/v4/user.service.ts) | no |
 | 修改子账号<br><sub>1、通过子账号登录邮箱修改子账号信息</sub> | POST | `/live/v4/user/children/update` | json-body | childEmail | V4UserService#updateChildAccount (packages/sdk/src/services/v4/user.service.ts) | no |

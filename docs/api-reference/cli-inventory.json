@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T17:36:13.220Z",
+  "generatedAt": "2026-06-19T18:01:27.130Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,18 +13,18 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 116,
-    "cliMissingLatestApis": 462,
-    "cliCoverage": 20.1,
-    "cliUsageReferences": 126,
-    "cliSdkServiceUsages": 126,
+    "cliUsedLatestApis": 150,
+    "cliMissingLatestApis": 428,
+    "cliCoverage": 26,
+    "cliUsageReferences": 160,
+    "cliSdkServiceUsages": 160,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 115,
+    "matchedApiIds": 148,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 169,
-    "cliTopLevelCommands": 28
+    "cliCommandPaths": 212,
+    "cliTopLevelCommands": 29
   },
   "modules": [
     {
@@ -68,16 +68,6 @@
       "cliCoverage": 31.1
     },
     {
-      "module": "account",
-      "label": "账号与财务",
-      "total": 22,
-      "cliUsed": 3,
-      "cliMissing": 19,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 3,
-      "cliCoverage": 13.6
-    },
-    {
       "module": "live_interaction",
       "label": "直播互动",
       "total": 30,
@@ -96,16 +86,6 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 0,
       "cliCoverage": 0
-    },
-    {
-      "module": "platform",
-      "label": "开放平台",
-      "total": 14,
-      "cliUsed": 3,
-      "cliMissing": 11,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 3,
-      "cliCoverage": 21.4
     },
     {
       "module": "uncategorized",
@@ -158,16 +138,6 @@
       "cliCoverage": 0
     },
     {
-      "module": "global",
-      "label": "全局设置",
-      "total": 4,
-      "cliUsed": 0,
-      "cliMissing": 4,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 0,
-      "cliCoverage": 0
-    },
-    {
       "module": "robot",
       "label": "数字人与机器人",
       "total": 3,
@@ -198,6 +168,16 @@
       "cliCoverage": 0
     },
     {
+      "module": "account",
+      "label": "账号与财务",
+      "total": 22,
+      "cliUsed": 22,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 22,
+      "cliCoverage": 100
+    },
+    {
       "module": "ai",
       "label": "AI 与数字人",
       "total": 13,
@@ -205,6 +185,26 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 13,
+      "cliCoverage": 100
+    },
+    {
+      "module": "global",
+      "label": "全局设置",
+      "total": 4,
+      "cliUsed": 4,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 4,
+      "cliCoverage": 100
+    },
+    {
+      "module": "platform",
+      "label": "开放平台",
+      "total": 14,
+      "cliUsed": 14,
+      "cliMissing": 0,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 14,
       "cliCoverage": 100
     }
   ],
@@ -217,7 +217,7 @@
       "depth": 1,
       "signature": "account",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 487
+      "line": 570
     },
     {
       "command": "account add",
@@ -228,7 +228,18 @@
       "depth": 2,
       "signature": "add <name>",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 492
+      "line": 575
+    },
+    {
+      "command": "account api",
+      "path": [
+        "account",
+        "api"
+      ],
+      "depth": 2,
+      "signature": "api",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 628
     },
     {
       "command": "account current",
@@ -239,7 +250,7 @@
       "depth": 2,
       "signature": "current",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 517
+      "line": 600
     },
     {
       "command": "account list",
@@ -250,7 +261,7 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 510
+      "line": 593
     },
     {
       "command": "account migrate",
@@ -261,7 +272,7 @@
       "depth": 2,
       "signature": "migrate",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 523
+      "line": 606
     },
     {
       "command": "account remove",
@@ -272,7 +283,7 @@
       "depth": 2,
       "signature": "remove <name>",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 503
+      "line": 586
     },
     {
       "command": "account set-default",
@@ -283,7 +294,7 @@
       "depth": 2,
       "signature": "set-default <name>",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 532
+      "line": 615
     },
     {
       "command": "account unset-default",
@@ -294,7 +305,270 @@
       "depth": 2,
       "signature": "unset-default",
       "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 538
+      "line": 621
+    },
+    {
+      "command": "account api callback",
+      "path": [
+        "account",
+        "api",
+        "callback"
+      ],
+      "depth": 3,
+      "signature": "callback",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 858
+    },
+    {
+      "command": "account api category",
+      "path": [
+        "account",
+        "api",
+        "category"
+      ],
+      "depth": 3,
+      "signature": "category",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 776
+    },
+    {
+      "command": "account api channel",
+      "path": [
+        "account",
+        "api",
+        "channel"
+      ],
+      "depth": 3,
+      "signature": "channel",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 668
+    },
+    {
+      "command": "account api channels",
+      "path": [
+        "account",
+        "api",
+        "channels"
+      ],
+      "depth": 3,
+      "signature": "channels",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 632
+    },
+    {
+      "command": "account api durations",
+      "path": [
+        "account",
+        "api",
+        "durations"
+      ],
+      "depth": 3,
+      "signature": "durations",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 724
+    },
+    {
+      "command": "account api income-list",
+      "path": [
+        "account",
+        "api",
+        "income-list"
+      ],
+      "depth": 3,
+      "signature": "income-list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 740
+    },
+    {
+      "command": "account api mic-duration",
+      "path": [
+        "account",
+        "api",
+        "mic-duration"
+      ],
+      "depth": 3,
+      "signature": "mic-duration",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 732
+    },
+    {
+      "command": "account api playback",
+      "path": [
+        "account",
+        "api",
+        "playback"
+      ],
+      "depth": 3,
+      "signature": "playback",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 646
+    },
+    {
+      "command": "account api receive-list",
+      "path": [
+        "account",
+        "api",
+        "receive-list"
+      ],
+      "depth": 3,
+      "signature": "receive-list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 760
+    },
+    {
+      "command": "account api sso",
+      "path": [
+        "account",
+        "api",
+        "sso"
+      ],
+      "depth": 3,
+      "signature": "sso",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 840
+    },
+    {
+      "command": "account api callback set",
+      "path": [
+        "account",
+        "api",
+        "callback",
+        "set"
+      ],
+      "depth": 4,
+      "signature": "set",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 862
+    },
+    {
+      "command": "account api category create",
+      "path": [
+        "account",
+        "api",
+        "category",
+        "create"
+      ],
+      "depth": 4,
+      "signature": "create",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 788
+    },
+    {
+      "command": "account api category delete",
+      "path": [
+        "account",
+        "api",
+        "category",
+        "delete"
+      ],
+      "depth": 4,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 800
+    },
+    {
+      "command": "account api category list",
+      "path": [
+        "account",
+        "api",
+        "category",
+        "list"
+      ],
+      "depth": 4,
+      "signature": "list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 780
+    },
+    {
+      "command": "account api category update-name",
+      "path": [
+        "account",
+        "api",
+        "category",
+        "update-name"
+      ],
+      "depth": 4,
+      "signature": "update-name",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 812
+    },
+    {
+      "command": "account api category update-rank",
+      "path": [
+        "account",
+        "api",
+        "category",
+        "update-rank"
+      ],
+      "depth": 4,
+      "signature": "update-rank",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 826
+    },
+    {
+      "command": "account api channel basic-list",
+      "path": [
+        "account",
+        "api",
+        "channel",
+        "basic-list"
+      ],
+      "depth": 4,
+      "signature": "basic-list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 672
+    },
+    {
+      "command": "account api channel detail-list",
+      "path": [
+        "account",
+        "api",
+        "channel",
+        "detail-list"
+      ],
+      "depth": 4,
+      "signature": "detail-list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 706
+    },
+    {
+      "command": "account api channel list",
+      "path": [
+        "account",
+        "api",
+        "channel",
+        "list"
+      ],
+      "depth": 4,
+      "signature": "list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 688
+    },
+    {
+      "command": "account api playback list",
+      "path": [
+        "account",
+        "api",
+        "playback",
+        "list"
+      ],
+      "depth": 4,
+      "signature": "list",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 650
+    },
+    {
+      "command": "account api sso set",
+      "path": [
+        "account",
+        "api",
+        "sso",
+        "set"
+      ],
+      "depth": 4,
+      "signature": "set",
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 844
     },
     {
       "command": "ai",
@@ -994,6 +1268,86 @@
       "line": 83
     },
     {
+      "command": "global",
+      "path": [
+        "global"
+      ],
+      "depth": 1,
+      "signature": "global",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 86
+    },
+    {
+      "command": "global auth",
+      "path": [
+        "global",
+        "auth"
+      ],
+      "depth": 2,
+      "signature": "auth",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 90
+    },
+    {
+      "command": "global page-setting",
+      "path": [
+        "global",
+        "page-setting"
+      ],
+      "depth": 2,
+      "signature": "page-setting",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 114
+    },
+    {
+      "command": "global auth get",
+      "path": [
+        "global",
+        "auth",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 94
+    },
+    {
+      "command": "global auth update",
+      "path": [
+        "global",
+        "auth",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 102
+    },
+    {
+      "command": "global page-setting get",
+      "path": [
+        "global",
+        "page-setting",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 118
+    },
+    {
+      "command": "global page-setting update",
+      "path": [
+        "global",
+        "page-setting",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 126
+    },
+    {
       "command": "lottery",
       "path": [
         "lottery"
@@ -1175,7 +1529,18 @@
       "depth": 1,
       "signature": "platform",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 131
+      "line": 219
+    },
+    {
+      "command": "platform anchor",
+      "path": [
+        "platform",
+        "anchor"
+      ],
+      "depth": 2,
+      "signature": "anchor",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 605
     },
     {
       "command": "platform callback",
@@ -1186,7 +1551,29 @@
       "depth": 2,
       "signature": "callback",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 280
+      "line": 371
+    },
+    {
+      "command": "platform content-group",
+      "path": [
+        "platform",
+        "content-group"
+      ],
+      "depth": 2,
+      "signature": "content-group",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 804
+    },
+    {
+      "command": "platform coupon",
+      "path": [
+        "platform",
+        "coupon"
+      ],
+      "depth": 2,
+      "signature": "coupon",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 829
     },
     {
       "command": "platform get",
@@ -1197,7 +1584,7 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 137
+      "line": 225
     },
     {
       "command": "platform setting",
@@ -1208,7 +1595,7 @@
       "depth": 2,
       "signature": "setting",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 390
+      "line": 484
     },
     {
       "command": "platform switch",
@@ -1219,7 +1606,91 @@
       "depth": 2,
       "signature": "switch",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 177
+      "line": 265
+    },
+    {
+      "command": "platform anchor create",
+      "path": [
+        "platform",
+        "anchor",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 663
+    },
+    {
+      "command": "platform anchor get",
+      "path": [
+        "platform",
+        "anchor",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 642
+    },
+    {
+      "command": "platform anchor list",
+      "path": [
+        "platform",
+        "anchor",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 609
+    },
+    {
+      "command": "platform anchor relation-list",
+      "path": [
+        "platform",
+        "anchor",
+        "relation-list"
+      ],
+      "depth": 3,
+      "signature": "relation-list",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 754
+    },
+    {
+      "command": "platform anchor unrelation-list",
+      "path": [
+        "platform",
+        "anchor",
+        "unrelation-list"
+      ],
+      "depth": 3,
+      "signature": "unrelation-list",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 779
+    },
+    {
+      "command": "platform anchor update",
+      "path": [
+        "platform",
+        "anchor",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 694
+    },
+    {
+      "command": "platform anchor update-status",
+      "path": [
+        "platform",
+        "anchor",
+        "update-status"
+      ],
+      "depth": 3,
+      "signature": "update-status",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 729
     },
     {
       "command": "platform callback get",
@@ -1231,7 +1702,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 286
+      "line": 377
     },
     {
       "command": "platform callback update",
@@ -1243,7 +1714,55 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 326
+      "line": 417
+    },
+    {
+      "command": "platform content-group list",
+      "path": [
+        "platform",
+        "content-group",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 808
+    },
+    {
+      "command": "platform coupon status-batch",
+      "path": [
+        "platform",
+        "coupon",
+        "status-batch"
+      ],
+      "depth": 3,
+      "signature": "status-batch",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 887
+    },
+    {
+      "command": "platform coupon update",
+      "path": [
+        "platform",
+        "coupon",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 862
+    },
+    {
+      "command": "platform coupon viewer-list",
+      "path": [
+        "platform",
+        "coupon",
+        "viewer-list"
+      ],
+      "depth": 3,
+      "signature": "viewer-list",
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 833
     },
     {
       "command": "platform setting get",
@@ -1255,7 +1774,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 396
+      "line": 490
     },
     {
       "command": "platform setting update",
@@ -1267,7 +1786,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 436
+      "line": 530
     },
     {
       "command": "platform switch get",
@@ -1279,7 +1798,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 183
+      "line": 271
     },
     {
       "command": "platform switch update",
@@ -1291,7 +1810,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 223
+      "line": 311
     },
     {
       "command": "playback",
@@ -2132,9 +2651,9 @@
         {
           "module": "account",
           "label": "账号与财务",
-          "missing": 19,
+          "missing": 0,
           "total": 22,
-          "coverage": 13.6
+          "coverage": 100
         },
         {
           "module": "group",
@@ -2144,9 +2663,9 @@
           "coverage": 0
         }
       ],
-      "missing": 93,
+      "missing": 74,
       "total": 106,
-      "coverage": 12.3
+      "coverage": 30.2
     },
     {
       "modules": [
@@ -2246,14 +2765,14 @@
         {
           "module": "global",
           "label": "全局设置",
-          "missing": 4,
+          "missing": 0,
           "total": 4,
-          "coverage": 0
+          "coverage": 100
         }
       ],
-      "missing": 24,
+      "missing": 20,
       "total": 24,
-      "coverage": 0
+      "coverage": 16.7
     },
     {
       "modules": [
@@ -2312,7 +2831,7 @@
             "reference": "AccountService#switchGet",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 63,
+            "line": 71,
             "sdkFile": "packages/sdk/src/services/account.service.ts"
           }
         ]
@@ -2340,8 +2859,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#channels",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 31,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2366,8 +2894,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#userPlaybackList",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 36,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2392,8 +2929,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#userChannelBasicList",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 41,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2418,8 +2964,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#getSimpleChannelList",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 46,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2444,8 +2999,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#channelDetailList",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 51,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2470,8 +3034,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#getUserDurations",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 56,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2496,8 +3069,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#micDuration",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 61,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2525,8 +3107,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#getIncomeDetail",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 66,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2558,7 +3149,7 @@
             "reference": "AccountService#getUserInfo",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 47,
+            "line": 55,
             "sdkFile": "packages/sdk/src/services/account.service.ts"
           }
         ]
@@ -2586,8 +3177,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#getCategoryList",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 71,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2614,8 +3214,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#createCategory",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 76,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2642,8 +3251,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#receiveList",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 81,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2670,8 +3288,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#deleteCategory",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 86,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2698,8 +3325,25 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setUserLoginToken",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 101,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setUserChildrenLoginToken",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 106,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2727,8 +3371,25 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setUserLoginToken",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 101,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setUserChildrenLoginToken",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 106,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2753,8 +3414,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setRecordCallback",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 116,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2789,7 +3459,7 @@
             "reference": "AccountService#switchUpdate",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 87,
+            "line": 95,
             "sdkFile": "packages/sdk/src/services/account.service.ts"
           }
         ]
@@ -2820,8 +3490,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#updateCategoryName",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 91,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2849,8 +3528,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#updateCategoryRank",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 96,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2875,8 +3563,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setStreamCallback",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 111,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -2901,8 +3598,17 @@
         "file": "packages/sdk/src/services/account.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "AccountService#setPlaybackCallback",
+            "cliModule": "account",
+            "file": "packages/cli/src/services/account-service.ts",
+            "line": 121,
+            "sdkFile": "packages/sdk/src/services/account.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13672,8 +14378,17 @@
         "file": "packages/sdk/src/services/v4/global.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GlobalService#getPageSetting",
+            "cliModule": "global",
+            "file": "packages/cli/src/services/global-service.ts",
+            "line": 31,
+            "sdkFile": "packages/sdk/src/services/v4/global.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13698,8 +14413,17 @@
         "file": "packages/sdk/src/services/v4/global.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GlobalService#getAuth",
+            "cliModule": "global",
+            "file": "packages/cli/src/services/global-service.ts",
+            "line": 21,
+            "sdkFile": "packages/sdk/src/services/v4/global.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13724,8 +14448,17 @@
         "file": "packages/sdk/src/services/v4/global.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GlobalService#updatePageSetting",
+            "cliModule": "global",
+            "file": "packages/cli/src/services/global-service.ts",
+            "line": 36,
+            "sdkFile": "packages/sdk/src/services/v4/global.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13753,8 +14486,17 @@
         "file": "packages/sdk/src/services/v4/global.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4GlobalService#updateAuth",
+            "cliModule": "global",
+            "file": "packages/cli/src/services/global-service.ts",
+            "line": 26,
+            "sdkFile": "packages/sdk/src/services/v4/global.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15257,8 +15999,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#listAnchorUnrelations",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 302,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15320,8 +16071,17 @@
         "file": "packages/sdk/src/services/v4/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4PlatformService#searchCouponViewers",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 322,
+            "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15348,8 +16108,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#listAnchorRelations",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 297,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15429,8 +16198,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#createAnchor",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 282,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15457,8 +16235,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#listContentGroups",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 317,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15530,8 +16317,17 @@
         "file": "packages/sdk/src/services/v4/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4PlatformService#updateCouponsStatusBatch",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 332,
+            "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15558,8 +16354,17 @@
         "file": "packages/sdk/src/services/v4/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4PlatformService#updateCoupon",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 327,
+            "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15586,8 +16391,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#updateAnchor",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 307,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15615,8 +16429,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#updateAnchorStatus",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 312,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15641,8 +16464,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#listAnchors",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 292,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15669,8 +16501,17 @@
         "file": "packages/sdk/src/services/platform.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "PlatformService#getAnchor",
+            "cliModule": "platform",
+            "file": "packages/cli/src/services/platform-service.ts",
+            "line": 287,
+            "sdkFile": "packages/sdk/src/services/platform.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16666,7 +17507,7 @@
             "reference": "V4UserService#getCallback",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 138,
+            "line": 146,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -16701,7 +17542,7 @@
             "reference": "V4UserService#getGlobalChannelSettings",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 226,
+            "line": 234,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -18208,7 +19049,7 @@
             "reference": "V4UserService#updateCallback",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 171,
+            "line": 179,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -18243,7 +19084,7 @@
             "reference": "V4UserService#updateGlobalChannelSettings",
             "cliModule": "platform",
             "file": "packages/cli/src/services/platform-service.ts",
-            "line": 269,
+            "line": 277,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]

@@ -9,6 +9,7 @@ import { PlatformHandler } from '../handlers/platform.handler';
 import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
+import { confirmDeletion } from '../utils/confirmation';
 import { AuthConfig } from '../types/auth';
 import {
   PlatformGetOptions,
@@ -18,6 +19,16 @@ import {
   PlatformCallbackUpdateOptions,
   PlatformSettingGetOptions,
   PlatformSettingUpdateOptions,
+  PlatformAnchorCreateOptions,
+  PlatformAnchorGetOptions,
+  PlatformAnchorRelationOptions,
+  PlatformAnchorUpdateOptions,
+  PlatformAnchorUpdateStatusOptions,
+  PlatformContentGroupListOptions,
+  PlatformCouponStatusBatchOptions,
+  PlatformCouponUpdateOptions,
+  PlatformCouponViewerListOptions,
+  PlatformListAnchorsOptions,
   PlatformServiceConfig,
   VALID_SWITCH_PARAMS,
 } from '../types/platform';
@@ -120,6 +131,83 @@ export function validateUrlFormat(value: string): string {
     throw new Error('url 必须以 http:// 或 https:// 开头');
   }
   return value;
+}
+
+function parsePositiveInteger(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed <= 0) {
+    throw new Error('value must be a positive integer');
+  }
+  return parsed;
+}
+
+function parseNonNegativeInteger(value: string): 0 | 1 {
+  const parsed = Number(value);
+  if (parsed !== 0 && parsed !== 1) {
+    throw new Error('value must be 0 or 1');
+  }
+  return parsed as 0 | 1;
+}
+
+function parseTimestamp(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    throw new Error('timestamp must be a positive number');
+  }
+  return parsed;
+}
+
+function parseIdList(value: string): number[] {
+  const ids = value.split(',').map(item => Number(item.trim())).filter(Number.isFinite);
+  if (ids.length === 0 || ids.some(id => !Number.isInteger(id) || id <= 0)) {
+    throw new Error('ids must be positive integers separated by comma');
+  }
+  return ids;
+}
+
+function parseStringList(value: string): string[] {
+  const ids = value.split(',').map(item => item.trim()).filter(Boolean);
+  if (ids.length === 0) {
+    throw new Error('ids must not be empty');
+  }
+  return ids;
+}
+
+function parseJsonObject(value: string): Record<string, unknown> {
+  const parsed = JSON.parse(value);
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error('config must be a JSON object');
+  }
+  return parsed as Record<string, unknown>;
+}
+
+function validateSex(value: string): 'M' | 'W' {
+  if (value !== 'M' && value !== 'W') {
+    throw new Error('sex must be M or W');
+  }
+  return value;
+}
+
+function validateContentGroupType(value: string): 'script' | 'robot' {
+  if (value !== 'script' && value !== 'robot') {
+    throw new Error('type must be script or robot');
+  }
+  return value;
+}
+
+function validateReceiveSource(value: string): 'CHANNEL' | 'AGGREGATE_PAGE' {
+  if (value !== 'CHANNEL' && value !== 'AGGREGATE_PAGE') {
+    throw new Error('receive-source must be CHANNEL or AGGREGATE_PAGE');
+  }
+  return value;
+}
+
+async function confirmPlatformWrite(force: boolean | undefined, message: string): Promise<void> {
+  if (force) return;
+  const confirmed = await confirmDeletion(message);
+  if (!confirmed) {
+    throw new Error('Operation cancelled.');
+  }
 }
 
 /**
@@ -225,6 +313,7 @@ Output Formats:
     .description('Update switch configuration (更新开关配置)')
     .requiredOption('--param <name>', `switch parameter name (${VALID_SWITCH_PARAMS.join('|')})`)
     .requiredOption('--enabled <value>', 'enable status (Y|N)', validateEnabledValue)
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -241,6 +330,8 @@ Output Formats:
           enabled: options.enabled,
           output: options.output,
         };
+
+        await confirmPlatformWrite(options.force, `Update platform switch ${options.param}?`);
 
         // Execute update switch config
         await platformHandler.updateSwitchConfig(updateOptions);
@@ -328,6 +419,7 @@ Output Formats:
     .description('Update callback settings (更新回调设置)')
     .option('--url <url>', 'callback URL (must start with http:// or https://)', validateUrlFormat)
     .option('--enabled <value>', 'enable status (Y|N)', validateEnabledValue)
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -344,6 +436,8 @@ Output Formats:
           enabled: options.enabled,
           output: options.output,
         };
+
+        await confirmPlatformWrite(options.force, 'Update platform callback settings?');
 
         // Execute update callback settings
         await platformHandler.updateCallbackSettings(updateOptions);
@@ -444,6 +538,7 @@ const settingUpdateCmd = settingCmd
   .option('--ppt-covered-enabled <value>', 'enable PPT full screen (Y|N)', validateGlobalSettingEnabledValue)
   .option('--cover-img-type <value>', 'cover image type (contain|cover)', validateCoverImgType)
   .option('--test-mode-button-enabled <value>', 'enable test mode button (Y|N)', validateGlobalSettingEnabledValue)
+  .option('-f, --force', 'skip confirmation prompt')
   .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
   .action(async (options) => {
     try {
@@ -466,6 +561,8 @@ const settingUpdateCmd = settingCmd
         testModeButtonEnabled: options.testModeButtonEnabled,
         output: options.output,
       };
+
+      await confirmPlatformWrite(options.force, 'Update global channel settings?');
 
       // Execute update global settings
       await platformHandler.updateGlobalSettings(updateOptions);
@@ -504,6 +601,311 @@ Cover Image Types:
 Note:
   At least one parameter must be provided
 `);
+
+  const anchorCmd = platformCmd
+    .command('anchor')
+    .description('Anchor management (主播管理)');
+
+  anchorCmd
+    .command('list')
+    .description('List anchors')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('--status <status>', 'status (0|1)', parseNonNegativeInteger)
+    .option('--sex <sex>', 'sex (M|W)', validateSex)
+    .option('--nickname <nickname>', 'nickname keyword')
+    .option('--start-time <timestamp>', 'start timestamp', parseTimestamp)
+    .option('--end-time <timestamp>', 'end timestamp', parseTimestamp)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const listOptions: PlatformListAnchorsOptions = {
+          pageNumber: options.page,
+          pageSize: options.pageSize,
+          status: options.status,
+          sex: options.sex,
+          nickname: options.nickname,
+          startTime: options.startTime,
+          endTime: options.endTime,
+          output: options.output,
+        };
+        await platformHandler.listAnchors(listOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  anchorCmd
+    .command('get')
+    .description('Get anchor detail')
+    .requiredOption('--anchor-id <id>', 'anchor ID', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const getOptions: PlatformAnchorGetOptions = {
+          anchorId: options.anchorId,
+          output: options.output,
+        };
+        await platformHandler.getAnchor(getOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  anchorCmd
+    .command('create')
+    .description('Create anchor')
+    .requiredOption('--nickname <nickname>', 'anchor nickname')
+    .requiredOption('--sex <sex>', 'sex (M|W)', validateSex)
+    .requiredOption('--avatar <url>', 'avatar URL')
+    .option('--description <text>', 'description')
+    .option('--add-channel-ids <ids>', 'channel IDs to associate, comma-separated', parseIdList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const createOptions: PlatformAnchorCreateOptions = {
+          nickname: options.nickname,
+          sex: options.sex,
+          avatar: options.avatar,
+          description: options.description,
+          addChannelIds: options.addChannelIds,
+          force: options.force,
+          output: options.output,
+        };
+        await platformHandler.createAnchor(createOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  anchorCmd
+    .command('update')
+    .description('Update anchor')
+    .requiredOption('--anchor-id <id>', 'anchor ID', parsePositiveInteger)
+    .option('--nickname <nickname>', 'anchor nickname')
+    .option('--sex <sex>', 'sex (M|W)', validateSex)
+    .option('--avatar <url>', 'avatar URL')
+    .option('--description <text>', 'description')
+    .option('--add-channel-ids <ids>', 'channel IDs to add, comma-separated', parseIdList)
+    .option('--del-channel-ids <ids>', 'channel IDs to remove, comma-separated', parseIdList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const updateOptions: PlatformAnchorUpdateOptions = {
+          anchorId: options.anchorId,
+          nickname: options.nickname,
+          sex: options.sex,
+          avatar: options.avatar,
+          description: options.description,
+          addChannelIds: options.addChannelIds,
+          delChannelIds: options.delChannelIds,
+          force: options.force,
+          output: options.output,
+        };
+        await platformHandler.updateAnchor(updateOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  anchorCmd
+    .command('update-status')
+    .description('Update anchor status')
+    .requiredOption('--anchor-id <id>', 'anchor ID', parsePositiveInteger)
+    .requiredOption('--status <status>', 'status (0|1)', parseNonNegativeInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const updateOptions: PlatformAnchorUpdateStatusOptions = {
+          anchorId: options.anchorId,
+          status: options.status,
+          force: options.force,
+          output: options.output,
+        };
+        await platformHandler.updateAnchorStatus(updateOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  anchorCmd
+    .command('relation-list')
+    .description('List channels related to an anchor')
+    .requiredOption('--anchor-id <id>', 'anchor ID', parsePositiveInteger)
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const relationOptions: PlatformAnchorRelationOptions = {
+          anchorId: options.anchorId,
+          pageNumber: options.page,
+          pageSize: options.pageSize,
+          output: options.output,
+        };
+        await platformHandler.listAnchorRelations(relationOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  anchorCmd
+    .command('unrelation-list')
+    .description('List channels not related to an anchor')
+    .requiredOption('--anchor-id <id>', 'anchor ID', parsePositiveInteger)
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const relationOptions: PlatformAnchorRelationOptions = {
+          anchorId: options.anchorId,
+          pageNumber: options.page,
+          pageSize: options.pageSize,
+          output: options.output,
+        };
+        await platformHandler.listAnchorUnrelations(relationOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  const contentGroupCmd = platformCmd
+    .command('content-group')
+    .description('Content group management');
+
+  contentGroupCmd
+    .command('list')
+    .description('List content groups')
+    .requiredOption('--type <type>', 'content type (script|robot)', validateContentGroupType)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const listOptions: PlatformContentGroupListOptions = {
+          type: options.type,
+          output: options.output,
+        };
+        await platformHandler.listContentGroups(listOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  const couponCmd = platformCmd
+    .command('coupon')
+    .description('Platform coupon operations');
+
+  couponCmd
+    .command('viewer-list')
+    .description('List viewers that received a coupon')
+    .requiredOption('--coupon-id <id>', 'coupon ID')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('--keyword <keyword>', 'viewer keyword')
+    .option('--receive-source <source>', 'receive source (CHANNEL|AGGREGATE_PAGE)', validateReceiveSource)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const listOptions: PlatformCouponViewerListOptions = {
+          couponId: options.couponId,
+          pageNumber: options.page,
+          pageSize: options.pageSize,
+          keyword: options.keyword,
+          receiveSource: options.receiveSource,
+          output: options.output,
+        };
+        await platformHandler.listCouponViewers(listOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  couponCmd
+    .command('update')
+    .description('Update coupon fields from a JSON object')
+    .requiredOption('--coupon-id <id>', 'coupon ID')
+    .requiredOption('--config <json>', 'coupon update JSON object', parseJsonObject)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const updateOptions: PlatformCouponUpdateOptions = {
+          couponId: options.couponId,
+          config: options.config,
+          force: options.force,
+          output: options.output,
+        };
+        await platformHandler.updateCoupon(updateOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  couponCmd
+    .command('status-batch')
+    .description('Batch update coupon status')
+    .requiredOption('--coupon-ids <ids>', 'coupon IDs, comma-separated', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const updateOptions: PlatformCouponStatusBatchOptions = {
+          couponIds: options.couponIds,
+          force: options.force,
+          output: options.output,
+        };
+        await platformHandler.updateCouponsStatusBatch(updateOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
 }
 
 // ========================================

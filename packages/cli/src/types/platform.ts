@@ -126,3 +126,82 @@ export interface PlatformSettingUpdateOptions {
   /** output format (table or json) */
   output?: OutputFormat;
 }
+
+export interface PlatformListAnchorsOptions {
+  pageNumber?: number;
+  pageSize?: number;
+  status?: 0 | 1;
+  sex?: 'M' | 'W';
+  nickname?: string;
+  startTime?: number;
+  endTime?: number;
+  output?: OutputFormat;
+}
+
+export interface PlatformAnchorGetOptions {
+  anchorId: number;
+  output?: OutputFormat;
+}
+
+export interface PlatformAnchorCreateOptions {
+  nickname: string;
+  sex: 'M' | 'W';
+  avatar: string;
+  description?: string;
+  addChannelIds?: number[];
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface PlatformAnchorUpdateOptions {
+  anchorId: number;
+  nickname?: string;
+  sex?: 'M' | 'W';
+  avatar?: string;
+  description?: string;
+  addChannelIds?: number[];
+  delChannelIds?: number[];
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface PlatformAnchorUpdateStatusOptions {
+  anchorId: number;
+  status: 0 | 1;
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface PlatformAnchorRelationOptions {
+  anchorId: number;
+  pageNumber?: number;
+  pageSize?: number;
+  output?: OutputFormat;
+}
+
+export interface PlatformContentGroupListOptions {
+  type: 'script' | 'robot';
+  output?: OutputFormat;
+}
+
+export interface PlatformCouponViewerListOptions {
+  couponId: string;
+  pageNumber?: number;
+  pageSize?: number;
+  keyword?: string;
+  receiveSource?: 'CHANNEL' | 'AGGREGATE_PAGE';
+  output?: OutputFormat;
+}
+
+export interface PlatformCouponUpdateOptions {
+  couponId: string;
+  config?: Record<string, unknown>;
+  force?: boolean;
+  output?: OutputFormat;
+}
+
+export interface PlatformCouponStatusBatchOptions {
+  couponIds: string[];
+  force?: boolean;
+  output?: OutputFormat;
+}

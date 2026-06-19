@@ -8,10 +8,18 @@ import { Command } from 'commander';
 import { AccountConfigManager } from '../config/account-config';
 import { SessionStateManager } from '../config/session-state';
 import { validateOutputFormat } from '../types/config';
+import { authAdapter } from '../config/auth-adapter';
+import { configManager } from '../config/manager';
+import { AccountApiHandler } from '../handlers/account-api.handler';
 import { AccountListOptions } from '../types/account.types';
+import type { AuthConfig } from '../types/auth';
+import type { PlatformServiceConfig } from '../types/platform';
+import { logError } from '../utils/errors';
 import { createInterface } from 'readline';
 import { globalConfig } from '../config/global';
 import { unlinkSync, existsSync } from 'fs';
+
+const DEFAULT_TIMEOUT_MS = 30000;
 
 /**
  * Create readline interface for interactive input
@@ -33,6 +41,81 @@ function promptConfirmation(rl: any, question: string): Promise<boolean> {
       resolve(trimmed === 'y' || trimmed === 'yes');
     });
   });
+}
+
+async function loadAccountApiConfig(parentOptions: Record<string, unknown>): Promise<{
+  authConfig: AuthConfig;
+  serviceConfig: PlatformServiceConfig;
+}> {
+  const authResult = authAdapter.tryGetAuthConfig(parentOptions);
+  if (!authResult) {
+    throw new Error(authAdapter.getStatusMessage(parentOptions));
+  }
+
+  let configResult;
+  try {
+    configResult = await configManager.load({ cliOptions: parentOptions });
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('Auth configuration is incomplete')) {
+      configResult = {
+        config: {
+          baseUrl: 'https://api.polyv.net',
+          timeout: DEFAULT_TIMEOUT_MS,
+          debug: false,
+        },
+      };
+    } else {
+      throw error;
+    }
+  }
+
+  return {
+    authConfig: authResult.config,
+    serviceConfig: {
+      baseUrl: configResult.config.baseUrl,
+      timeout: configResult.config.timeout,
+      debug: configResult.config.debug,
+    },
+  };
+}
+
+function parsePositiveInteger(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed <= 0) {
+    throw new Error('Value must be a positive integer');
+  }
+  return parsed;
+}
+
+function validateCallbackType(value: string): 'stream' | 'record' | 'playback' {
+  if (!['stream', 'record', 'playback'].includes(value)) {
+    throw new Error('type must be one of: stream, record, playback');
+  }
+  return value as 'stream' | 'record' | 'playback';
+}
+
+function validateAccountApiUrl(value: string): string {
+  if (!value.startsWith('http://') && !value.startsWith('https://')) {
+    throw new Error('url must start with http:// or https://');
+  }
+  return value;
+}
+
+function withAccountApiHandler(
+  program: Command,
+  run: (handler: AccountApiHandler) => Promise<void>
+): Promise<void> {
+  return (async () => {
+    try {
+      const parentOptions = program.opts();
+      const { authConfig, serviceConfig } = await loadAccountApiConfig(parentOptions);
+      const handler = new AccountApiHandler(authConfig, serviceConfig);
+      await run(handler);
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  })();
 }
 
 /**
@@ -539,4 +622,256 @@ export function registerAccountCommands(program: Command): void {
     .command('unset-default')
     .description('Remove the current default account setting')
     .action(handleAccountUnsetDefault);
+
+  // Server-side account API commands. Kept under "api" to avoid changing local
+  // account configuration workflows such as add/list/use/current.
+  const apiCmd = accountCmd
+    .command('api')
+    .description('Manage server-side account APIs');
+
+  apiCmd
+    .command('channels')
+    .description('List channel IDs under the current account')
+    .option('--category-id <id>', 'category ID')
+    .option('--keyword <keyword>', 'channel name keyword')
+    .option('--label-id <id>', 'label ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listChannels({
+      categoryId: options.categoryId,
+      keyword: options.keyword,
+      labelId: options.labelId,
+      output: options.output,
+    })));
+
+  const apiPlaybackCmd = apiCmd
+    .command('playback')
+    .description('Account playback APIs');
+
+  apiPlaybackCmd
+    .command('list')
+    .description('List playback records under the current account')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('--start-date <date>', 'start date, yyyy-MM-dd')
+    .option('--end-date <date>', 'end date, yyyy-MM-dd')
+    .option('--keyword <keyword>', 'playback keyword')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listPlayback({
+      page: options.page,
+      pageSize: options.pageSize,
+      startDate: options.startDate,
+      endDate: options.endDate,
+      keyword: options.keyword,
+      output: options.output,
+    })));
+
+  const apiChannelCmd = apiCmd
+    .command('channel')
+    .description('Account channel list APIs');
+
+  apiChannelCmd
+    .command('basic-list')
+    .description('List account channel basic data')
+    .option('--category-ids <ids>', 'category IDs, comma-separated')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('--keyword <keyword>', 'keyword')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listChannelBasic({
+      categoryIds: options.categoryIds,
+      page: options.page,
+      pageSize: options.pageSize,
+      keyword: options.keyword,
+      output: options.output,
+    })));
+
+  apiChannelCmd
+    .command('list')
+    .description('List account channels with management fields')
+    .option('--category-id <id>', 'category ID')
+    .option('--watch-status <status>', 'watch status filter')
+    .option('--keyword <keyword>', 'keyword')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listSimpleChannels({
+      categoryId: options.categoryId,
+      watchStatus: options.watchStatus,
+      keyword: options.keyword,
+      page: options.page,
+      pageSize: options.pageSize,
+      output: options.output,
+    })));
+
+  apiChannelCmd
+    .command('detail-list')
+    .description('List account channel details')
+    .option('--category-id <id>', 'category ID')
+    .option('--watch-status <status>', 'watch status filter')
+    .option('--keyword <keyword>', 'keyword')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listChannelDetails({
+      categoryId: options.categoryId,
+      watchStatus: options.watchStatus,
+      keyword: options.keyword,
+      page: options.page,
+      pageSize: options.pageSize,
+      output: options.output,
+    })));
+
+  apiCmd
+    .command('durations')
+    .description('Get available account live minutes')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.getUserDurations({
+      output: options.output,
+    })));
+
+  apiCmd
+    .command('mic-duration')
+    .description('Get account link-mic minute usage')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.getMicDuration({
+      output: options.output,
+    })));
+
+  apiCmd
+    .command('income-list')
+    .description('List income details')
+    .requiredOption('--user-id <id>', 'account user ID')
+    .requiredOption('--start-date <date>', 'start date, yyyy-MM-dd')
+    .requiredOption('--end-date <date>', 'end date, yyyy-MM-dd')
+    .option('--channel-id <id>', 'channel ID')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listIncome({
+      userId: options.userId,
+      startDate: options.startDate,
+      endDate: options.endDate,
+      channelId: options.channelId,
+      page: options.page,
+      pageSize: options.pageSize,
+      output: options.output,
+    })));
+
+  apiCmd
+    .command('receive-list')
+    .description('List channels receiving another channel stream')
+    .requiredOption('--channel-id <id>', 'source channel ID')
+    .option('--keyword <keyword>', 'keyword')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listReceiveChannels({
+      channelId: options.channelId,
+      keyword: options.keyword,
+      page: options.page,
+      pageSize: options.pageSize,
+      output: options.output,
+    })));
+
+  const apiCategoryCmd = apiCmd
+    .command('category')
+    .description('Live category management APIs');
+
+  apiCategoryCmd
+    .command('list')
+    .description('List live categories')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.listCategories({
+      output: options.output,
+    })));
+
+  apiCategoryCmd
+    .command('create')
+    .description('Create live category')
+    .requiredOption('--name <name>', 'category name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.createCategory({
+      name: options.name,
+      force: options.force,
+      output: options.output,
+    })));
+
+  apiCategoryCmd
+    .command('delete')
+    .description('Delete live category')
+    .requiredOption('--category-id <id>', 'category ID', parsePositiveInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.deleteCategory({
+      categoryId: options.categoryId,
+      force: options.force,
+      output: options.output,
+    })));
+
+  apiCategoryCmd
+    .command('update-name')
+    .description('Update live category name')
+    .requiredOption('--category-id <id>', 'category ID', parsePositiveInteger)
+    .requiredOption('--name <name>', 'new category name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.updateCategoryName({
+      categoryId: options.categoryId,
+      name: options.name,
+      force: options.force,
+      output: options.output,
+    })));
+
+  apiCategoryCmd
+    .command('update-rank')
+    .description('Update live category rank')
+    .requiredOption('--category-id <id>', 'category ID', parsePositiveInteger)
+    .requiredOption('--rank <rank>', 'new rank', parsePositiveInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.updateCategoryRank({
+      categoryId: options.categoryId,
+      rank: options.rank,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const apiSsoCmd = apiCmd
+    .command('sso')
+    .description('SSO token APIs');
+
+  apiSsoCmd
+    .command('set')
+    .description('Set account or child account SSO token')
+    .requiredOption('--token <token>', 'SSO token')
+    .option('--child-email <email>', 'child account email')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.setSsoToken({
+      token: options.token,
+      childEmail: options.childEmail,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const apiCallbackCmd = apiCmd
+    .command('callback')
+    .description('Account callback APIs');
+
+  apiCallbackCmd
+    .command('set')
+    .description('Set stream, record, or playback callback URL')
+    .requiredOption('--type <type>', 'callback type (stream|record|playback)', validateCallbackType)
+    .requiredOption('--user-id <id>', 'account user ID')
+    .option('--url <url>', 'callback URL', validateAccountApiUrl)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withAccountApiHandler(program, handler => handler.setCallback({
+      type: options.type,
+      userId: options.userId,
+      url: options.url,
+      force: options.force,
+      output: options.output,
+    })));
 }

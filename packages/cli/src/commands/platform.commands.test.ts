@@ -145,6 +145,35 @@ describe('Platform Commands', () => {
       const outputOption = options.find(opt => opt.long === '--output');
       expect(outputOption?.short).toBe('-o');
     });
+
+    it('should register platform anchor, content-group, and coupon commands', () => {
+      const platformCmd = program.commands.find(cmd => cmd.name() === 'platform');
+      const anchorCmd = platformCmd?.commands.find(cmd => cmd.name() === 'anchor');
+      const contentGroupCmd = platformCmd?.commands.find(cmd => cmd.name() === 'content-group');
+      const couponCmd = platformCmd?.commands.find(cmd => cmd.name() === 'coupon');
+
+      expect(anchorCmd).toBeDefined();
+      expect(anchorCmd?.commands.some(cmd => cmd.name() === 'list')).toBe(true);
+      expect(anchorCmd?.commands.some(cmd => cmd.name() === 'create')).toBe(true);
+      expect(anchorCmd?.commands.find(cmd => cmd.name() === 'create')?.options.some(opt => opt.long === '--force')).toBe(true);
+      expect(anchorCmd?.commands.find(cmd => cmd.name() === 'update-status')?.options.some(opt => opt.long === '--force')).toBe(true);
+
+      expect(contentGroupCmd?.commands.some(cmd => cmd.name() === 'list')).toBe(true);
+      expect(couponCmd?.commands.some(cmd => cmd.name() === 'viewer-list')).toBe(true);
+      expect(couponCmd?.commands.find(cmd => cmd.name() === 'update')?.options.some(opt => opt.long === '--force')).toBe(true);
+      expect(couponCmd?.commands.find(cmd => cmd.name() === 'status-batch')?.options.some(opt => opt.long === '--force')).toBe(true);
+    });
+
+    it('should add force option to existing platform write commands', () => {
+      const platformCmd = program.commands.find(cmd => cmd.name() === 'platform');
+      const switchUpdate = platformCmd?.commands.find(cmd => cmd.name() === 'switch')?.commands.find(cmd => cmd.name() === 'update');
+      const callbackUpdate = platformCmd?.commands.find(cmd => cmd.name() === 'callback')?.commands.find(cmd => cmd.name() === 'update');
+      const settingUpdate = platformCmd?.commands.find(cmd => cmd.name() === 'setting')?.commands.find(cmd => cmd.name() === 'update');
+
+      expect(switchUpdate?.options.some(opt => opt.long === '--force')).toBe(true);
+      expect(callbackUpdate?.options.some(opt => opt.long === '--force')).toBe(true);
+      expect(settingUpdate?.options.some(opt => opt.long === '--force')).toBe(true);
+    });
   });
 
   describe('help information', () => {
@@ -787,6 +816,7 @@ describe('action execution', () => {
         'node', 'test', 'platform', 'switch', 'update',
         '--param', 'authEnabled',
         '--enabled', 'Y',
+        '--force',
       ]);
 
       expect(MockPlatformHandler).toHaveBeenCalled();
@@ -808,6 +838,7 @@ describe('action execution', () => {
         'node', 'test', 'platform', 'switch', 'update',
         '--param', 'authEnabled',
         '--enabled', 'N',
+        '--force',
       ])).rejects.toThrow('process.exit:1');
 
       expect(logError).toHaveBeenCalled();
@@ -853,6 +884,7 @@ describe('action execution', () => {
         'node', 'test', 'platform', 'callback', 'update',
         '--url', 'https://example.com/callback',
         '--enabled', 'Y',
+        '--force',
       ]);
 
       expect(MockPlatformHandler).toHaveBeenCalled();
@@ -873,6 +905,7 @@ describe('action execution', () => {
       await expect(program.parseAsync([
         'node', 'test', 'platform', 'callback', 'update',
         '--enabled', 'N',
+        '--force',
       ])).rejects.toThrow('process.exit:1');
 
       expect(logError).toHaveBeenCalled();
@@ -918,6 +951,7 @@ describe('action execution', () => {
         'node', 'test', 'platform', 'setting', 'update',
         '--donate-enabled', 'Y',
         '--cover-img-type', 'contain',
+        '--force',
       ]);
 
       expect(MockPlatformHandler).toHaveBeenCalled();
@@ -944,6 +978,7 @@ describe('action execution', () => {
       await expect(program.parseAsync([
         'node', 'test', 'platform', 'setting', 'update',
         '--donate-enabled', 'N',
+        '--force',
       ])).rejects.toThrow('process.exit:1');
 
       expect(logError).toHaveBeenCalled();

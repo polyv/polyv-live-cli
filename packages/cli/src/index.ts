@@ -36,6 +36,7 @@ import { registerPromotionCommands } from './commands/promotion.commands';
 import { registerCardPushCommands } from './commands/card-push.commands';
 import { registerTransmitCommands } from './commands/transmit.commands';
 import { registerAiCommands } from './commands/ai.commands';
+import { registerGlobalCommands } from './commands/global.commands';
 
 // Global error handlers
 process.on('uncaughtException', handleUncaughtError);
@@ -110,6 +111,7 @@ Commands:
   setup                 Initialize a scene with predefined resources
   monitor               Live monitoring dashboard
   statistics            View live streaming statistics data
+  global                Manage global account settings
 
 Quick Start:
   $ polyv-live-cli account add <name> --app-id <id> --app-secret <secret>  # Add account
@@ -184,6 +186,7 @@ async function main(): Promise<void> {
   registerCardPushCommands(program);
   registerTransmitCommands(program);
   registerAiCommands(program);
+  registerGlobalCommands(program);
 
   // Helper function to get all registered commands dynamically
   function getAllRegisteredCommands(): { topLevel: string[], subCommands: Map<string, string[]> } {
@@ -215,6 +218,7 @@ Quick Start:
   $ polyv-live-cli coupon --help     # Coupon operations
   $ polyv-live-cli setup --list      # List available scenes
   $ polyv-live-cli monitor --help    # Live monitoring dashboard
+  $ polyv-live-cli global --help     # Global settings
 
 Authentication:
   - Use 'polyv-live-cli account add' to add accounts
@@ -245,7 +249,7 @@ Authentication:
   }
   
   // Check if this is a valid command that should execute normally
-  const hasValidCommand = args.includes('channel') || args.includes('stream') || args.includes('product') || args.includes('coupon') || args.includes('setup') || args.includes('monitor') || args.includes('account') || args.includes('use') || args.includes('statistics') || args.includes('player') || args.includes('playback') || args.includes('document') || args.includes('session') || args.includes('record') || args.includes('chat') || args.includes('checkin') || args.includes('qa') || args.includes('questionnaire') || args.includes('lottery') || args.includes('donate') || args.includes('viewer') || args.includes('watch-condition') || args.includes('whitelist') || args.includes('platform') || args.includes('promotion') || args.includes('card-push') || args.includes('transmit') || args.includes('ai');
+  const hasValidCommand = args.includes('channel') || args.includes('stream') || args.includes('product') || args.includes('coupon') || args.includes('setup') || args.includes('monitor') || args.includes('account') || args.includes('use') || args.includes('statistics') || args.includes('player') || args.includes('playback') || args.includes('document') || args.includes('session') || args.includes('record') || args.includes('chat') || args.includes('checkin') || args.includes('qa') || args.includes('questionnaire') || args.includes('lottery') || args.includes('donate') || args.includes('viewer') || args.includes('watch-condition') || args.includes('whitelist') || args.includes('platform') || args.includes('promotion') || args.includes('card-push') || args.includes('transmit') || args.includes('ai') || args.includes('global');
   if (hasValidCommand) {
     // Let Commander.js handle the command execution
     try {
@@ -278,7 +282,7 @@ Authentication:
     );
     
     const hasCommands = args.some(arg =>
-      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'help' || arg === 'watch-condition' || arg === 'whitelist' || arg === 'transmit'
+      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'help' || arg === 'watch-condition' || arg === 'whitelist' || arg === 'transmit' || arg === 'global'
     );
     
     // Check for any potential command (even unknown ones)
@@ -567,8 +571,8 @@ Authentication:
   if (!isHelpOrVersion) {
     // Check if we have any actual commands
     const hasActualCommands = args.some(arg =>
-      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'whitelist' ||
-      arg.startsWith('channel ') || arg.startsWith('stream ') || arg.startsWith('product ') || arg.startsWith('coupon ') || arg.startsWith('setup ') || arg.startsWith('monitor ') || arg.startsWith('account ') || arg.startsWith('use ') || arg.startsWith('statistics ') || arg.startsWith('player ') || arg.startsWith('playback ') || arg.startsWith('document ') || arg.startsWith('session ') || arg.startsWith('checkin ') || arg.startsWith('whitelist ')
+      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'whitelist' || arg === 'global' ||
+      arg.startsWith('channel ') || arg.startsWith('stream ') || arg.startsWith('product ') || arg.startsWith('coupon ') || arg.startsWith('setup ') || arg.startsWith('monitor ') || arg.startsWith('account ') || arg.startsWith('use ') || arg.startsWith('statistics ') || arg.startsWith('player ') || arg.startsWith('playback ') || arg.startsWith('document ') || arg.startsWith('session ') || arg.startsWith('checkin ') || arg.startsWith('whitelist ') || arg.startsWith('global ')
     );
     
 

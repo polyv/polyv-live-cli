@@ -18,7 +18,12 @@ const mockCreateSdkClient = sdkModule.createSdkClient as jest.MockedFunction<typ
 
 describe('PlatformServiceSdk', () => {
   let service: PlatformServiceSdk;
-  let mockSdkClient: { account: { [key: string]: jest.Mock } };
+  let mockSdkClient: {
+    account: { [key: string]: jest.Mock };
+    platform: { [key: string]: jest.Mock };
+    v4Platform: { [key: string]: jest.Mock };
+    v4User?: { [key: string]: jest.Mock };
+  };
   const mockAuthConfig: AuthConfig = {
     appId: 'test-app-id',
     appSecret: 'test-app-secret',
@@ -39,6 +44,21 @@ describe('PlatformServiceSdk', () => {
         getUserInfo: jest.fn(),
         switchGet: jest.fn(),
         switchUpdate: jest.fn(),
+      },
+      platform: {
+        createAnchor: jest.fn(),
+        getAnchor: jest.fn(),
+        listAnchors: jest.fn(),
+        listAnchorRelations: jest.fn(),
+        listAnchorUnrelations: jest.fn(),
+        updateAnchor: jest.fn(),
+        updateAnchorStatus: jest.fn(),
+        listContentGroups: jest.fn(),
+      },
+      v4Platform: {
+        searchCouponViewers: jest.fn(),
+        updateCoupon: jest.fn(),
+        updateCouponsStatusBatch: jest.fn(),
       },
     };
 
@@ -226,6 +246,52 @@ describe('PlatformServiceSdk', () => {
       mockSdkClient.account.switchUpdate.mockRejectedValueOnce(apiError);
 
       await expect(service.updateSwitchConfig(validParams)).rejects.toThrow('API error: Update failed');
+    });
+  });
+
+  describe('anchor and coupon APIs', () => {
+    beforeEach(() => {
+      mockSdkClient.platform.createAnchor.mockResolvedValue({ anchorId: 1 });
+      mockSdkClient.platform.getAnchor.mockResolvedValue({ anchorId: 1 });
+      mockSdkClient.platform.listAnchors.mockResolvedValue({ contents: [] });
+      mockSdkClient.platform.listAnchorRelations.mockResolvedValue({ contents: [] });
+      mockSdkClient.platform.listAnchorUnrelations.mockResolvedValue({ contents: [] });
+      mockSdkClient.platform.updateAnchor.mockResolvedValue(undefined);
+      mockSdkClient.platform.updateAnchorStatus.mockResolvedValue(undefined);
+      mockSdkClient.platform.listContentGroups.mockResolvedValue([]);
+      mockSdkClient.v4Platform.searchCouponViewers.mockResolvedValue({ contents: [] });
+      mockSdkClient.v4Platform.updateCoupon.mockResolvedValue(undefined);
+      mockSdkClient.v4Platform.updateCouponsStatusBatch.mockResolvedValue(undefined);
+    });
+
+    it('should call platform anchor APIs', async () => {
+      await service.createAnchor({ nickname: 'host', sex: 'M', avatar: 'https://example.com/a.png' });
+      await service.getAnchor(1);
+      await service.listAnchors({ pageNumber: 1 });
+      await service.listAnchorRelations({ anchorId: 1 });
+      await service.listAnchorUnrelations({ anchorId: 1 });
+      await service.updateAnchor({ anchorId: 1, nickname: 'new host' });
+      await service.updateAnchorStatus({ anchorId: 1, status: 1 });
+
+      expect(mockSdkClient.platform.createAnchor).toHaveBeenCalledWith({ nickname: 'host', sex: 'M', avatar: 'https://example.com/a.png' });
+      expect(mockSdkClient.platform.getAnchor).toHaveBeenCalledWith(1);
+      expect(mockSdkClient.platform.listAnchors).toHaveBeenCalledWith({ pageNumber: 1 });
+      expect(mockSdkClient.platform.listAnchorRelations).toHaveBeenCalledWith({ anchorId: 1 });
+      expect(mockSdkClient.platform.listAnchorUnrelations).toHaveBeenCalledWith({ anchorId: 1 });
+      expect(mockSdkClient.platform.updateAnchor).toHaveBeenCalledWith({ anchorId: 1, nickname: 'new host' });
+      expect(mockSdkClient.platform.updateAnchorStatus).toHaveBeenCalledWith({ anchorId: 1, status: 1 });
+    });
+
+    it('should call content group and coupon APIs', async () => {
+      await service.listContentGroups('script');
+      await service.searchCouponViewers({ couponId: 'coupon-1', pageNumber: 1 });
+      await service.updateCoupon({ couponId: 'coupon-1', name: 'new coupon' });
+      await service.updateCouponsStatusBatch({ couponIds: ['coupon-1'] });
+
+      expect(mockSdkClient.platform.listContentGroups).toHaveBeenCalledWith('script');
+      expect(mockSdkClient.v4Platform.searchCouponViewers).toHaveBeenCalledWith({ couponId: 'coupon-1', pageNumber: 1 });
+      expect(mockSdkClient.v4Platform.updateCoupon).toHaveBeenCalledWith({ couponId: 'coupon-1', name: 'new coupon' });
+      expect(mockSdkClient.v4Platform.updateCouponsStatusBatch).toHaveBeenCalledWith({ couponIds: ['coupon-1'] });
     });
   });
 

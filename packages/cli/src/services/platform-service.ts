@@ -14,6 +14,14 @@ import {
   SwitchUpdateResponse,
   CallbackSettings,
   UpdateCallbackParams,
+  CreateAnchorParams,
+  ListAnchorsParams,
+  ListAnchorRelationsParams,
+  UpdateAnchorParams,
+  UpdateAnchorStatusParams,
+  SearchCouponViewersParams,
+  UpdateCouponParams,
+  UpdateCouponsStatusBatchParams,
 } from 'polyv-live-api-sdk';
 
 /**
@@ -267,6 +275,61 @@ export class PlatformServiceSdk {
 
     // Call SDK
     await client.v4User.updateGlobalChannelSettings(updateParams);
+  }
+
+  async createAnchor(params: CreateAnchorParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.createAnchor(params);
+  }
+
+  async getAnchor(anchorId: number) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.getAnchor(anchorId);
+  }
+
+  async listAnchors(params: ListAnchorsParams = {}) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.listAnchors(params);
+  }
+
+  async listAnchorRelations(params: ListAnchorRelationsParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.listAnchorRelations(params);
+  }
+
+  async listAnchorUnrelations(params: ListAnchorRelationsParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.listAnchorUnrelations(params);
+  }
+
+  async updateAnchor(params: UpdateAnchorParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.updateAnchor(params);
+  }
+
+  async updateAnchorStatus(params: UpdateAnchorStatusParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.updateAnchorStatus(params);
+  }
+
+  async listContentGroups(type: 'script' | 'robot') {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.platform.listContentGroups(type);
+  }
+
+  async searchCouponViewers(params: SearchCouponViewersParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Platform.searchCouponViewers(params);
+  }
+
+  async updateCoupon(params: UpdateCouponParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Platform.updateCoupon(params);
+  }
+
+  async updateCouponsStatusBatch(params: UpdateCouponsStatusBatchParams) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Platform.updateCouponsStatusBatch(params);
   }
 
   /**

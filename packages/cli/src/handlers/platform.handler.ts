@@ -7,6 +7,7 @@
 import { BaseHandler, OutputFormat } from './base.handler';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmDeletion } from '../utils/confirmation';
 import {
   PlatformServiceSdk,
   GlobalChannelSettingsResponse,
@@ -23,6 +24,16 @@ import {
   VALID_SWITCH_PARAMS,
   PlatformSettingGetOptions,
   PlatformSettingUpdateOptions,
+  PlatformAnchorCreateOptions,
+  PlatformAnchorGetOptions,
+  PlatformAnchorRelationOptions,
+  PlatformAnchorUpdateOptions,
+  PlatformAnchorUpdateStatusOptions,
+  PlatformContentGroupListOptions,
+  PlatformCouponStatusBatchOptions,
+  PlatformCouponUpdateOptions,
+  PlatformCouponViewerListOptions,
+  PlatformListAnchorsOptions,
 } from '../types/platform';
 
 export type {
@@ -33,6 +44,16 @@ export type {
   PlatformCallbackUpdateOptions,
   PlatformSettingGetOptions,
   PlatformSettingUpdateOptions,
+  PlatformAnchorCreateOptions,
+  PlatformAnchorGetOptions,
+  PlatformAnchorRelationOptions,
+  PlatformAnchorUpdateOptions,
+  PlatformAnchorUpdateStatusOptions,
+  PlatformContentGroupListOptions,
+  PlatformCouponStatusBatchOptions,
+  PlatformCouponUpdateOptions,
+  PlatformCouponViewerListOptions,
+  PlatformListAnchorsOptions,
 };
 
 /**
@@ -283,6 +304,160 @@ export class PlatformHandler extends BaseHandler {
         this.displayUpdatedGlobalSettingsTable(updateParams as GlobalChannelSettingsUpdateParams);
       }
     }, 'platform.updateGlobalSettings');
+  }
+
+  async listAnchors(options: PlatformListAnchorsOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.platformService.listAnchors(this.compact({
+        pageNumber: options.pageNumber,
+        pageSize: options.pageSize,
+        status: options.status,
+        sex: options.sex,
+        nickname: options.nickname,
+        startTime: options.startTime,
+        endTime: options.endTime,
+      }) as any);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.listAnchors');
+  }
+
+  async getAnchor(options: PlatformAnchorGetOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.anchorId, 'anchorId');
+      const result = await this.platformService.getAnchor(options.anchorId);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.getAnchor');
+  }
+
+  async createAnchor(options: PlatformAnchorCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateAnchorCreateOptions(options);
+      await this.confirmWrite(options.force, `Create anchor "${options.nickname}"?`);
+      const result = await this.platformService.createAnchor(this.compact({
+        nickname: options.nickname,
+        sex: options.sex,
+        avatar: options.avatar,
+        description: options.description,
+        addChannelIds: options.addChannelIds,
+      }) as any);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.createAnchor');
+  }
+
+  async updateAnchor(options: PlatformAnchorUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.anchorId, 'anchorId');
+      if (
+        options.nickname === undefined &&
+        options.sex === undefined &&
+        options.avatar === undefined &&
+        options.description === undefined &&
+        options.addChannelIds === undefined &&
+        options.delChannelIds === undefined
+      ) {
+        throw this.validationError('At least one update option is required', 'options', options);
+      }
+      await this.confirmWrite(options.force, `Update anchor ${options.anchorId}?`);
+      await this.platformService.updateAnchor(this.compact({
+        anchorId: options.anchorId,
+        nickname: options.nickname,
+        sex: options.sex,
+        avatar: options.avatar,
+        description: options.description,
+        addChannelIds: options.addChannelIds,
+        delChannelIds: options.delChannelIds,
+      }) as any);
+      this.displayData({ success: true, anchorId: options.anchorId }, options.output || 'table');
+    }, 'platform.updateAnchor');
+  }
+
+  async updateAnchorStatus(options: PlatformAnchorUpdateStatusOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.anchorId, 'anchorId');
+      if (options.status !== 0 && options.status !== 1) {
+        throw this.validationError('status must be 0 or 1', 'status', options.status);
+      }
+      await this.confirmWrite(options.force, `Update anchor ${options.anchorId} status?`);
+      await this.platformService.updateAnchorStatus({
+        anchorId: options.anchorId,
+        status: options.status,
+      });
+      this.displayData({ success: true, anchorId: options.anchorId, status: options.status }, options.output || 'table');
+    }, 'platform.updateAnchorStatus');
+  }
+
+  async listAnchorRelations(options: PlatformAnchorRelationOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.anchorId, 'anchorId');
+      const result = await this.platformService.listAnchorRelations(this.compact({
+        anchorId: options.anchorId,
+        pageNumber: options.pageNumber,
+        pageSize: options.pageSize,
+      }) as any);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.listAnchorRelations');
+  }
+
+  async listAnchorUnrelations(options: PlatformAnchorRelationOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.anchorId, 'anchorId');
+      const result = await this.platformService.listAnchorUnrelations(this.compact({
+        anchorId: options.anchorId,
+        pageNumber: options.pageNumber,
+        pageSize: options.pageSize,
+      }) as any);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.listAnchorUnrelations');
+  }
+
+  async listContentGroups(options: PlatformContentGroupListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.platformService.listContentGroups(options.type);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.listContentGroups');
+  }
+
+  async listCouponViewers(options: PlatformCouponViewerListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredString(options.couponId, 'couponId');
+      const result = await this.platformService.searchCouponViewers(this.compact({
+        couponId: options.couponId,
+        pageNumber: options.pageNumber,
+        pageSize: options.pageSize,
+        keyword: options.keyword,
+        receiveSource: options.receiveSource,
+      }) as any);
+      this.displayData(result, options.output || 'table');
+    }, 'platform.listCouponViewers');
+  }
+
+  async updateCoupon(options: PlatformCouponUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredString(options.couponId, 'couponId');
+      const config = options.config || {};
+      if (Object.keys(config).length === 0) {
+        throw this.validationError('At least one coupon update field is required', 'config', config);
+      }
+      await this.confirmWrite(options.force, `Update coupon ${options.couponId}?`);
+      await this.platformService.updateCoupon({
+        couponId: options.couponId,
+        ...config,
+      } as any);
+      this.displayData({ success: true, couponId: options.couponId }, options.output || 'table');
+    }, 'platform.updateCoupon');
+  }
+
+  async updateCouponsStatusBatch(options: PlatformCouponStatusBatchOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      if (!options.couponIds || options.couponIds.length === 0) {
+        throw this.validationError('couponIds is required', 'couponIds', options.couponIds);
+      }
+      await this.confirmWrite(options.force, `Update status for ${options.couponIds.length} coupon(s)?`);
+      await this.platformService.updateCouponsStatusBatch({
+        couponIds: options.couponIds,
+      });
+      this.displayData({ success: true, couponIds: options.couponIds }, options.output || 'table');
+    }, 'platform.updateCouponsStatusBatch');
   }
 
   /**
@@ -547,6 +722,44 @@ export class PlatformHandler extends BaseHandler {
         options,
         'validation_failed'
       );
+    }
+  }
+
+  private validatePositiveNumber(value: number | undefined, field: string): void {
+    if (!Number.isFinite(value) || Number(value) <= 0) {
+      throw this.validationError(`${field} must be a positive number`, field, value);
+    }
+  }
+
+  private validateRequiredString(value: string | undefined, field: string): void {
+    if (!value || value.trim().length === 0) {
+      throw this.validationError(`${field} is required`, field, value);
+    }
+  }
+
+  private validateAnchorCreateOptions(options: PlatformAnchorCreateOptions): void {
+    this.validateRequiredString(options.nickname, 'nickname');
+    this.validateRequiredString(options.avatar, 'avatar');
+    if (options.sex !== 'M' && options.sex !== 'W') {
+      throw this.validationError('sex must be M or W', 'sex', options.sex);
+    }
+  }
+
+  private compact<T extends Record<string, unknown>>(params: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined)
+    ) as Partial<T>;
+  }
+
+  private validationError(message: string, field: string, value: unknown): PolyVValidationError {
+    return new PolyVValidationError(message, field, value, 'validation_failed');
+  }
+
+  private async confirmWrite(force: boolean | undefined, message: string): Promise<void> {
+    if (force) return;
+    const confirmed = await confirmDeletion(message);
+    if (!confirmed) {
+      throw new Error('Operation cancelled.');
     }
   }
 }

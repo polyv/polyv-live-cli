@@ -101,6 +101,7 @@ describe('Account Commands', () => {
       expect(subcommands.some(cmd => cmd.name() === 'migrate')).toBe(true);
       expect(subcommands.some(cmd => cmd.name() === 'set-default')).toBe(true);
       expect(subcommands.some(cmd => cmd.name() === 'unset-default')).toBe(true);
+      expect(subcommands.some(cmd => cmd.name() === 'api')).toBe(true);
     });
 
     it('should register add command with correct options', () => {
@@ -127,6 +128,21 @@ describe('Account Commands', () => {
       
       const outputOption = listCommand?.options.find(opt => opt.long === '--output');
       expect(outputOption).toBeDefined();
+    });
+
+    it('should register account api server-side commands', () => {
+      const accountCommand = program.commands.find(cmd => cmd.name() === 'account');
+      const apiCommand = accountCommand?.commands.find(cmd => cmd.name() === 'api');
+      expect(apiCommand).toBeDefined();
+
+      expect(apiCommand?.commands.some(cmd => cmd.name() === 'channels')).toBe(true);
+      expect(apiCommand?.commands.some(cmd => cmd.name() === 'category')).toBe(true);
+      expect(apiCommand?.commands.some(cmd => cmd.name() === 'sso')).toBe(true);
+      expect(apiCommand?.commands.some(cmd => cmd.name() === 'callback')).toBe(true);
+
+      const categoryCommand = apiCommand?.commands.find(cmd => cmd.name() === 'category');
+      const createCommand = categoryCommand?.commands.find(cmd => cmd.name() === 'create');
+      expect(createCommand?.options.some(opt => opt.long === '--force')).toBe(true);
     });
   });
 
