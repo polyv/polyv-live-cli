@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T11:23:48.906Z",
+  "generatedAt": "2026-06-19T11:51:20.789Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,18 +18,18 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 615,
-    "sdkImplemented": 483,
-    "sdkMissing": 95
+    "sdkEndpoints": 643,
+    "sdkImplemented": 511,
+    "sdkMissing": 67
   },
   "modules": [
     {
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "implemented": 188,
-      "missing": 95,
-      "coverage": 66.4
+      "implemented": 216,
+      "missing": 67,
+      "coverage": 76.3
     },
     {
       "module": "account",
@@ -1351,12 +1351,12 @@
       "dedupeKey": "channel:查询多个频道回放设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/playback/list",
+        "reference": "V4ChannelService#listPlaybackSettings",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1705,12 +1705,12 @@
       "dedupeKey": "channel:查询频道场次对应自定义场次id",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/session/external-by-session",
+        "reference": "V4ChannelService#getSessionExternalBySession",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -1792,12 +1792,12 @@
       "dedupeKey": "channel:查询频道抽奖记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/lottery/list",
+        "reference": "V4ChannelService#listChannelLotteryRecords",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -2140,12 +2140,12 @@
       "dedupeKey": "channel:查询频道角色观众设置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/account/viewer/get",
+        "reference": "V4ChannelService#getAccountViewerConfig",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -2836,12 +2836,12 @@
       "dedupeKey": "channel:查询频道直播数据",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/statistics/live-data",
+        "reference": "V4ChannelService#getLiveData",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3037,12 +3037,12 @@
       "dedupeKey": "channel:查询频道字幕配置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/subtitle/config/get",
+        "reference": "V4ChannelService#getSubtitleConfig",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3212,12 +3212,12 @@
       "dedupeKey": "channel:查询时间内直播场次数据",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/statistics/session-stats/list",
+        "reference": "V4ChannelService#listSessionStats",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3239,12 +3239,12 @@
       "dedupeKey": "channel:查询实时字幕语言类型枚举",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/subtitle/language/list-all",
+        "reference": "V4ChannelService#listSubtitleLanguages",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3310,12 +3310,12 @@
         }
       ],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/basic/list",
+        "reference": "V4ChannelService#listChannelBasicExact",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3337,12 +3337,12 @@
       "dedupeKey": "channel:查询所有频道的缩略信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/simple/list",
+        "reference": "V4ChannelService#listChannelSimple",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3393,12 +3393,12 @@
       "dedupeKey": "channel:查询微信预约数据",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/booking/list",
+        "reference": "V4ChannelService#listWeixinBookings",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3510,12 +3510,12 @@
       "dedupeKey": "channel:查询邀请海报明细数据",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/invite/list",
+        "reference": "V4ChannelService#listInviteStats",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3568,12 +3568,12 @@
       "dedupeKey": "channel:查询云分发数据信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/distribute/get/statistic",
+        "reference": "V4ChannelService#getDistributeStatistic",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3684,12 +3684,12 @@
       "dedupeKey": "channel:创建并初始化频道",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/create-init",
+        "reference": "V4ChannelService#createInit",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -3787,12 +3787,12 @@
         }
       ],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/account/create",
+        "reference": "V4ChannelService#createAccount",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -4084,12 +4084,12 @@
       "dedupeKey": "channel:创建mr频道",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/mr/create",
+        "reference": "V4ChannelService#createMrChannel",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5297,12 +5297,12 @@
       "dedupeKey": "channel:获取cdn频道的直播实时推流信息阿里腾讯cdn",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/monitor/list-stream-info",
+        "reference": "V4ChannelService#listMonitorStreamInfo",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5416,12 +5416,12 @@
       "dedupeKey": "channel:批量查询频道回放信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/play-back/get",
+        "reference": "V4ChannelService#getPlaybackVideoInfo",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5474,12 +5474,12 @@
       "dedupeKey": "channel:批量查询频道直播状态",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/live-status/list",
+        "reference": "V4ChannelService#listLiveStatus",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5503,12 +5503,12 @@
       "dedupeKey": "channel:批量查询主讲信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/account/teacher-list",
+        "reference": "V4ChannelService#teacherList",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5751,12 +5751,12 @@
       "dedupeKey": "channel:批量删除角色",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/account/delete-batch",
+        "reference": "V4ChannelService#deleteAccountsBatch",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -5988,12 +5988,12 @@
       "dedupeKey": "channel:批量修改频道回放字幕",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/subtitle/update-batch",
+        "reference": "V4ChannelService#updateChannelSubtitleBatch",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -6018,12 +6018,12 @@
       "dedupeKey": "channel:批量修改频道皮肤",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/decorate/skin/update-batch",
+        "reference": "V4ChannelService#updateSkinBatch",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8358,12 +8358,12 @@
       "dedupeKey": "channel:修改角色观众设置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/account/viewer/update",
+        "reference": "V4ChannelService#updateAccountViewerConfig",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8397,12 +8397,12 @@
         }
       ],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/account/update",
+        "reference": "V4ChannelService#updateAccountInfo",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -8723,12 +8723,12 @@
       "dedupeKey": "channel:修改频道拉流码率",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/set-pull-bitrate",
+        "reference": "V4ChannelService#setPullBitrate",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9115,12 +9115,12 @@
       "dedupeKey": "channel:修改频道直播模版",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/update-template",
+        "reference": "V4ChannelService#updateTemplate",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -9283,12 +9283,12 @@
       "dedupeKey": "channel:修改频道字幕配置信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/channel/subtitle/config/update",
+        "reference": "V4ChannelService#updateSubtitleConfig",
+        "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
     {
@@ -21309,6 +21309,258 @@
       "className": "V4ChannelService",
       "methodName": "popularizationList",
       "reference": "V4ChannelService#popularizationList"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/playback/list",
+      "normalizedPath": "/live/v4/channel/playback/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listPlaybackSettings",
+      "reference": "V4ChannelService#listPlaybackSettings"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/session/external-by-session",
+      "normalizedPath": "/live/v4/channel/session/external-by-session",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getSessionExternalBySession",
+      "reference": "V4ChannelService#getSessionExternalBySession"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/lottery/list",
+      "normalizedPath": "/live/v4/channel/lottery/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listChannelLotteryRecords",
+      "reference": "V4ChannelService#listChannelLotteryRecords"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/account/viewer/get",
+      "normalizedPath": "/live/v4/channel/account/viewer/get",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getAccountViewerConfig",
+      "reference": "V4ChannelService#getAccountViewerConfig"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/statistics/live-data",
+      "normalizedPath": "/live/v4/channel/statistics/live-data",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getLiveData",
+      "reference": "V4ChannelService#getLiveData"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/subtitle/config/get",
+      "normalizedPath": "/live/v4/channel/subtitle/config/get",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getSubtitleConfig",
+      "reference": "V4ChannelService#getSubtitleConfig"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/statistics/session-stats/list",
+      "normalizedPath": "/live/v4/statistics/session-stats/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listSessionStats",
+      "reference": "V4ChannelService#listSessionStats"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/subtitle/language/list-all",
+      "normalizedPath": "/live/v4/channel/subtitle/language/list-all",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listSubtitleLanguages",
+      "reference": "V4ChannelService#listSubtitleLanguages"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/basic/list",
+      "normalizedPath": "/live/v4/channel/basic/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listChannelBasicExact",
+      "reference": "V4ChannelService#listChannelBasicExact"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/simple/list",
+      "normalizedPath": "/live/v4/channel/simple/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listChannelSimple",
+      "reference": "V4ChannelService#listChannelSimple"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/booking/list",
+      "normalizedPath": "/live/v4/channel/booking/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listWeixinBookings",
+      "reference": "V4ChannelService#listWeixinBookings"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/invite/list",
+      "normalizedPath": "/live/v4/channel/invite/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listInviteStats",
+      "reference": "V4ChannelService#listInviteStats"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/distribute/get/statistic",
+      "normalizedPath": "/live/v4/channel/distribute/get/statistic",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getDistributeStatistic",
+      "reference": "V4ChannelService#getDistributeStatistic"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/create-init",
+      "normalizedPath": "/live/v4/channel/create-init",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createInit",
+      "reference": "V4ChannelService#createInit"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/account/create",
+      "normalizedPath": "/live/v4/channel/account/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createAccount",
+      "reference": "V4ChannelService#createAccount"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/mr/create",
+      "normalizedPath": "/live/v4/channel/mr/create",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "createMrChannel",
+      "reference": "V4ChannelService#createMrChannel"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/monitor/list-stream-info",
+      "normalizedPath": "/live/v4/channel/monitor/list-stream-info",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listMonitorStreamInfo",
+      "reference": "V4ChannelService#listMonitorStreamInfo"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/play-back/get",
+      "normalizedPath": "/live/v4/channel/play-back/get",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "getPlaybackVideoInfo",
+      "reference": "V4ChannelService#getPlaybackVideoInfo"
+    },
+    {
+      "method": "GET",
+      "path": "/live/v4/channel/live-status/list",
+      "normalizedPath": "/live/v4/channel/live-status/list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "listLiveStatus",
+      "reference": "V4ChannelService#listLiveStatus"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/account/teacher-list",
+      "normalizedPath": "/live/v4/channel/account/teacher-list",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "teacherList",
+      "reference": "V4ChannelService#teacherList"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/account/delete-batch",
+      "normalizedPath": "/live/v4/channel/account/delete-batch",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "deleteAccountsBatch",
+      "reference": "V4ChannelService#deleteAccountsBatch"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/subtitle/update-batch",
+      "normalizedPath": "/live/v4/channel/subtitle/update-batch",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateChannelSubtitleBatch",
+      "reference": "V4ChannelService#updateChannelSubtitleBatch"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/decorate/skin/update-batch",
+      "normalizedPath": "/live/v4/channel/decorate/skin/update-batch",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateSkinBatch",
+      "reference": "V4ChannelService#updateSkinBatch"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/account/viewer/update",
+      "normalizedPath": "/live/v4/channel/account/viewer/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateAccountViewerConfig",
+      "reference": "V4ChannelService#updateAccountViewerConfig"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/account/update",
+      "normalizedPath": "/live/v4/channel/account/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateAccountInfo",
+      "reference": "V4ChannelService#updateAccountInfo"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/set-pull-bitrate",
+      "normalizedPath": "/live/v4/channel/set-pull-bitrate",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "setPullBitrate",
+      "reference": "V4ChannelService#setPullBitrate"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/update-template",
+      "normalizedPath": "/live/v4/channel/update-template",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateTemplate",
+      "reference": "V4ChannelService#updateTemplate"
+    },
+    {
+      "method": "POST",
+      "path": "/live/v4/channel/subtitle/config/update",
+      "normalizedPath": "/live/v4/channel/subtitle/config/update",
+      "file": "packages/sdk/src/services/v4/channel.service.ts",
+      "className": "V4ChannelService",
+      "methodName": "updateSubtitleConfig",
+      "reference": "V4ChannelService#updateSubtitleConfig"
     },
     {
       "method": "POST",

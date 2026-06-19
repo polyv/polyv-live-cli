@@ -2558,6 +2558,476 @@ export interface LiveSessionInfo {
 }
 
 // ============================================
+// V4 Channel Core Exact API Types
+// ============================================
+
+export type ChannelIdListInput = string | Array<string | number>;
+
+export interface V4ChannelPageResponse<T> {
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalItems: number;
+  contents: T[];
+}
+
+export interface BatchPlaybackListParams {
+  /** Channel IDs, max 100 */
+  channelIds: ChannelIdListInput;
+}
+
+export interface PlaybackVideoListItem {
+  videoId?: string | null;
+  videoPoolId?: string | null;
+  fileId?: string | null;
+  duration?: string | null;
+  name?: string | null;
+  watchUrl?: string | null;
+}
+
+export interface ChannelPlaybackSetting {
+  channelId: number;
+  playBackEnabled: YNFlag;
+  origin?: 'record' | 'playback' | 'vod' | string;
+  type?: 'single' | 'list' | string;
+  videoList?: PlaybackVideoListItem[];
+  globalSettingEnabled?: YNFlag;
+}
+
+export type BatchPlaybackListResponse = ChannelPlaybackSetting[];
+
+export interface SessionExternalBySessionParams extends GetRelevanceParams {}
+
+export interface SessionExternalBySessionResponse {
+  channelId: number;
+  sessionId: string;
+  externalSessionId?: string;
+}
+
+export interface ChannelLotteryListParams extends V4PaginationParams {
+  channelId: string;
+  lotteryId?: string;
+  sessionId?: string;
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface ChannelLotteryCollectInfo {
+  field: string;
+  tips: string;
+}
+
+export interface ChannelLotteryRecord {
+  winnerCount: number;
+  totalUsers: number;
+  lotteryId: string;
+  channelId: number;
+  userId: string;
+  sessionId: string;
+  lotteryRange?: string;
+  actor?: string;
+  prize?: string;
+  amount?: number;
+  preset?: string;
+  lotteryExt?: {
+    collectInfo?: ChannelLotteryCollectInfo[];
+    [key: string]: unknown;
+  };
+  createdTime: number;
+}
+
+export type ChannelLotteryListResponse = V4ChannelPageResponse<ChannelLotteryRecord>;
+
+export interface AccountViewerConfig {
+  actor?: string;
+  actorEnabled?: YNFlag;
+  questionStudentTitle?: string;
+  questionStudentTitleEnabled?: YNFlag;
+}
+
+export interface LiveDataParams {
+  channelId: string;
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface LiveDataSummary {
+  watchData?: {
+    viewers?: number;
+    plays?: number;
+    playDuration?: number;
+    averagePlayDuration?: number;
+    pageView?: number;
+    likes?: number;
+  };
+  realTimeData?: {
+    maxConcurrent?: number;
+    date?: number;
+  };
+  provinceData?: Array<{
+    province?: string;
+    viewers?: number;
+    averagePlayDuration?: number;
+  }>;
+}
+
+export interface SubtitleConfigParams {
+  channelId: string | number;
+}
+
+export interface SubtitleConfig {
+  realTimeSubtitleEnabled?: YNFlag;
+  realTimeSubtitleDisplayEnabled?: YNFlag;
+  sourceLanguage?: string;
+  subtitleTranslationEnabled?: YNFlag;
+  translationLanguage?: string;
+  translationLanguages?: string[];
+  subtitleCallbackEnabled?: YNFlag;
+  subtitleCallbackUrl?: string;
+  realTimeSubtitleDisplayNumberLimitEnabled?: YNFlag;
+  realTimeSubtitleDisplayNumber?: number;
+}
+
+export interface SubtitleLanguageInfo {
+  code: string;
+  text: string;
+  type: 'source' | 'translate' | 'all' | string;
+}
+
+export interface SessionStatsListParams extends V4PaginationParams {
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface LiveSessionStatsItem {
+  channelId: number;
+  sessionId: string;
+  name?: string;
+  startTime?: number;
+  endTime?: number;
+  userId?: string;
+}
+
+export type SessionStatsListResponse = V4ChannelPageResponse<LiveSessionStatsItem>;
+
+export interface ListChannelBasicExactParams extends V4PaginationParams {
+  categoryIds?: string | Array<string | number>;
+  channelIds?: ChannelIdListInput;
+  watchStatus?: WatchStatus | 'banpush' | string;
+  startTime?: number;
+  endTime?: number;
+  orderBy?: 'startTimeDesc' | 'startTimeAsc' | 'channelCreatedTimeDesc' | string;
+}
+
+export interface ChannelSimpleListExactParams extends V4PaginationParams {
+  categoryId?: string | number;
+  watchStatus?: WatchStatus | 'banpush' | string;
+  keyword?: string;
+  orderBy?: 'startTimeDesc' | 'startTimeAsc' | 'channelCreatedTimeDesc' | string;
+}
+
+export interface ChannelSimpleListItemExact {
+  channelId: string;
+  name: string;
+  channelPasswd?: string;
+  categoryId?: string;
+  scene?: string;
+  sceneText?: string;
+  watchStatus?: string;
+  watchStatusText?: string;
+  watchUrl?: string;
+}
+
+export type ChannelBasicListExactResponse = V4ChannelPageResponse<ChannelBasicInfo>;
+export type ChannelSimpleListExactResponse = V4ChannelPageResponse<ChannelSimpleListItemExact>;
+
+export interface WeixinBookingListParams extends V4PaginationParams {
+  channelId: string;
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface WeixinBookingItem {
+  channelId: string | number;
+  channelName?: string;
+  openId: string;
+  nickname?: string | null;
+  createdTime: number;
+  TBname?: string | null;
+  TBnumber?: string | null;
+}
+
+export type WeixinBookingListResponse = V4ChannelPageResponse<WeixinBookingItem>;
+
+export interface InviteListParams extends V4PaginationParams {
+  channelId: string;
+  senderViewerId?: string;
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface InviteListItem {
+  invitee?: string | null;
+  openId?: string;
+  viewerId?: string;
+  nickname?: string;
+  avatar?: string;
+  createdTime?: number;
+  receiverNickname?: string;
+  receiverOpenId?: string;
+  receiverViewerId?: string;
+  receiverTime?: number;
+  receiverAvatar?: string;
+  receiverPlayDuration?: number;
+  receiverLivePlayDuration?: number;
+  receiverPlaybackPlayDuration?: number;
+  receiverCheckInCount?: number;
+  receiverRegion?: string;
+  receiverCity?: string;
+}
+
+export type InviteListResponse = V4ChannelPageResponse<InviteListItem>;
+
+export interface DistributeStatisticExactParams {
+  channelId: string;
+  sessionIds?: string | string[];
+  startTime?: number;
+  endTime?: number;
+}
+
+export interface DistributeStatisticItem {
+  channelId: number;
+  sessionId?: string;
+  liveStartTime?: number;
+  liveEndTime?: number;
+  distributeUrl?: string;
+  distributeStartTime?: number;
+  distributeEndTime?: number;
+  duration?: number;
+  desc?: string;
+}
+
+export type DistributeStatisticExactResponse = DistributeStatisticItem[];
+
+export interface CreateInitBasicSetting extends CreateChannelParams {
+  streamType?: 'client' | 'disk' | string;
+  logoImg?: string;
+  description?: string;
+}
+
+export interface CreateInitMasterAuthSetting {
+  enabled: YNFlag;
+  authType?: string;
+  authCode?: string;
+  codeAuthTips?: string;
+  qCodeTips?: string;
+  qCodeImg?: string;
+  payAuthTips?: string;
+  price?: number;
+  watchEndTime?: number;
+  validTimePeriod?: number;
+  customKey?: string;
+  customUri?: string;
+  externalKey?: string;
+  externalUri?: string;
+  externalRedirectUri?: string;
+  externalEntryText?: string;
+  directKey?: string;
+}
+
+export interface CreateInitPlaybackSetting {
+  playbackEnabled?: YNFlag;
+  sectionEnabled?: YNFlag;
+  type?: 'single' | 'list' | string;
+  origin?: 'record' | 'playback' | 'vod' | string;
+}
+
+export interface ChannelRoleInput {
+  role: 'Teacher' | 'Assistant' | 'Guest' | string;
+  nickName?: string;
+  actor?: string;
+  passwd?: string;
+  avatar?: string;
+}
+
+export interface CreateInitChannelParams {
+  basicSetting: CreateInitBasicSetting;
+  masterAuthSetting?: CreateInitMasterAuthSetting;
+  playbackSetting?: CreateInitPlaybackSetting;
+  roles?: ChannelRoleInput[];
+}
+
+export interface CreateInitChannelResponse extends CreateChannelResponse {
+  name?: string;
+  publisher?: string;
+  description?: string;
+  newScene?: string;
+  template?: string;
+  linkMicLimit?: number;
+  pureRtcEnabled?: YNFlag;
+  type?: string;
+  currentTimeMillis?: number;
+}
+
+export interface AccountPurview {
+  code: string;
+  enabled: YNFlag;
+}
+
+export interface CreateAccountParams {
+  channelId: string;
+  role: 'Assistant' | 'Guest' | string;
+  actor?: string;
+  nickName?: string;
+  avatar?: string;
+  passwd?: string;
+  purviewList?: AccountPurview[];
+}
+
+export interface ChannelRoleAccount {
+  account: string;
+  userId?: string;
+  channelId: number;
+  passwd?: string;
+  nickname?: string;
+  stream?: string;
+  status?: YNFlag;
+  createdTime?: number;
+  lastModified?: number;
+  sort?: number;
+  avatar?: string;
+  actor?: string;
+  role?: string;
+  monitorEnabled?: YNFlag;
+  pageTurnEnabled?: YNFlag;
+  chatListEnabled?: YNFlag;
+  chatAuditEnabled?: YNFlag;
+}
+
+export interface UpdateAccountInfoParams {
+  channelId: string;
+  account: string;
+  actor?: string;
+  nickName?: string;
+  avatar?: string;
+  passwd?: string;
+  purviewList?: AccountPurview[];
+}
+
+export interface DeleteAccountsBatchParams {
+  channelId: string;
+  accounts: string | string[];
+}
+
+export interface CreateMrChannelExactParams extends CreateMrChannelParams {
+  startTime?: number;
+  channelPasswd?: string;
+  assistantPasswd?: string;
+  splashImg?: string;
+  subAccount?: string;
+}
+
+export interface CreateMrChannelExactResponse {
+  channelId: string;
+  name: string;
+  userId: string;
+  channelPasswd?: string;
+  assistantAccount?: string;
+  assistantPasswd?: string;
+}
+
+export interface MonitorListStreamInfoParams {
+  channelId: string;
+  startTime?: string | number;
+  endTime?: string | number;
+}
+
+export interface MonitorStreamInfoPoint {
+  audioFrameRate?: string;
+  bitRate?: string;
+  streamUrl?: string;
+  time?: string;
+  timestamp?: number;
+  videoFrameRate?: string;
+}
+
+export interface BatchPlaybackVideoInfoParams {
+  channelIds: ChannelIdListInput;
+}
+
+export interface PlaybackVideoInfoByChannel {
+  channelId: number;
+  vid?: string | null;
+  videoId?: string | null;
+  videoPoolId?: string | null;
+  videoName?: string | null;
+  firstImg?: string | null;
+  duration?: string | null;
+}
+
+export interface LiveStatusListParams {
+  channelIds: ChannelIdListInput;
+}
+
+export interface ChannelLiveStatusItem {
+  channelId: number;
+  liveStatus: WatchStatus | 'banpush' | string;
+}
+
+export interface TeacherListParams {
+  channelIds: Array<string | number>;
+}
+
+export interface TeacherInfo {
+  channelId: number;
+  passwd?: string;
+  userId?: string;
+  nickname?: string;
+  customTeacherId?: string;
+  actor?: string;
+  avatar?: string;
+  globalSettingEnabled?: YNFlag;
+  notifyEnabled?: YNFlag;
+  checkinEnabled?: YNFlag;
+  voteEnabled?: YNFlag;
+  lotteryEnabled?: YNFlag;
+}
+
+export interface ChannelSubtitleBatchItem {
+  id: number;
+  name?: string;
+  status?: 'publish' | 'finish' | string;
+}
+
+export interface UpdateChannelSubtitleBatchParams {
+  channelId: string | number;
+  body: ChannelSubtitleBatchItem[];
+}
+
+export interface UpdateSkinBatchParams {
+  channelIds: ChannelIdListInput;
+  skin: 'black' | 'red' | 'blue' | 'white' | 'green' | 'golden' | string;
+}
+
+export interface UpdateAccountViewerConfigParams extends AccountViewerConfig {
+  channelId: string;
+}
+
+export interface SetPullBitrateExactParams {
+  channelId: string;
+  pullBitRate: -1 | 400 | 600 | 800 | 1000 | 1500 | 2000 | 2500 | number;
+}
+
+export interface UpdateTemplateExactParams {
+  channelId: string;
+  template: ChannelTemplate | string;
+}
+
+export interface UpdateSubtitleConfigParams extends SubtitleConfig {
+  channelId: string | number;
+}
+
+// ============================================
 // Type Aliases for Backward Compatibility
 // ============================================
 

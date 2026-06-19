@@ -419,6 +419,47 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expect(recordFiles).toEqual(expect.any(Array));
   });
 
+  it('calls V4 channel core read-only APIs when a channel can be discovered', async () => {
+    const channelId = await discoverChannelId(client);
+
+    if (!channelId) {
+      console.warn('Skipping V4 channel core assertions: no POLYV_CHANNEL_ID and no channel found via list APIs.');
+      return;
+    }
+
+    const [
+      basicChannels,
+      simpleChannels,
+      liveStatuses,
+      playbackSettings,
+      playbackVideoInfo,
+      subtitleLanguages,
+      liveData,
+      accountViewerConfig,
+      sessionStats,
+    ] = await Promise.all([
+      client.v4Channel.listChannelBasicExact({ pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listChannelSimple({ pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listLiveStatus({ channelIds: [channelId] }),
+      client.v4Channel.listPlaybackSettings({ channelIds: [channelId] }),
+      client.v4Channel.getPlaybackVideoInfo({ channelIds: [channelId] }),
+      client.v4Channel.listSubtitleLanguages(),
+      client.v4Channel.getLiveData({ channelId }),
+      client.v4Channel.getAccountViewerConfig({ channelId }),
+      client.v4Channel.listSessionStats({ pageNumber: 1, pageSize: 1 }),
+    ]);
+
+    expectPaginatedResponse(basicChannels);
+    expectPaginatedResponse(simpleChannels);
+    expect(liveStatuses).toEqual(expect.any(Array));
+    expect(playbackSettings).toEqual(expect.any(Array));
+    expect(playbackVideoInfo).toEqual(expect.any(Array));
+    expect(subtitleLanguages).toEqual(expect.any(Array));
+    expect(liveData).toEqual(expect.any(Object));
+    expect(accountViewerConfig).toEqual(expect.any(Object));
+    expectPaginatedResponse(sessionStats);
+  });
+
   it('calls live interaction read-only APIs when a channel can be discovered', async () => {
     const channelId = await discoverChannelId(client);
 

@@ -186,6 +186,53 @@ import type {
   PopularizationListParams,
   V4PaginationParams,
   AddChannelCouponParams,
+  ChannelIdListInput,
+  BatchPlaybackListParams,
+  BatchPlaybackListResponse,
+  SessionExternalBySessionParams,
+  SessionExternalBySessionResponse,
+  ChannelLotteryListParams,
+  ChannelLotteryListResponse,
+  AccountViewerConfig,
+  LiveDataParams,
+  LiveDataSummary,
+  SubtitleConfigParams,
+  SubtitleConfig,
+  SubtitleLanguageInfo,
+  SessionStatsListParams,
+  SessionStatsListResponse,
+  ListChannelBasicExactParams,
+  ChannelBasicListExactResponse,
+  ChannelSimpleListExactParams,
+  ChannelSimpleListExactResponse,
+  WeixinBookingListParams,
+  WeixinBookingListResponse,
+  InviteListParams,
+  InviteListResponse,
+  DistributeStatisticExactParams,
+  DistributeStatisticExactResponse,
+  CreateInitChannelParams,
+  CreateInitChannelResponse,
+  CreateAccountParams,
+  ChannelRoleAccount,
+  UpdateAccountInfoParams,
+  DeleteAccountsBatchParams,
+  CreateMrChannelExactParams,
+  CreateMrChannelExactResponse,
+  MonitorListStreamInfoParams,
+  MonitorStreamInfoPoint,
+  BatchPlaybackVideoInfoParams,
+  PlaybackVideoInfoByChannel,
+  LiveStatusListParams,
+  ChannelLiveStatusItem,
+  TeacherListParams,
+  TeacherInfo,
+  UpdateChannelSubtitleBatchParams,
+  UpdateSkinBatchParams,
+  UpdateAccountViewerConfigParams,
+  SetPullBitrateExactParams,
+  UpdateTemplateExactParams,
+  UpdateSubtitleConfigParams,
 } from '../../types/v4-channel.js';
 import { PolyVValidationError } from '../../errors/polyv-validation-error.js';
 
@@ -2058,8 +2105,531 @@ export class V4ChannelService {
   }
 
   // ============================================
+  // V4 Channel Core Exact API Paths
+  // ============================================
+
+  /**
+   * Query playback settings for multiple channels.
+   */
+  async listPlaybackSettings(params: BatchPlaybackListParams): Promise<BatchPlaybackListResponse> {
+    const channelIds = this.normalizeIdList(params.channelIds, 'channelIds', 100);
+
+    const response = await this.client.httpClient.get<BatchPlaybackListResponse>(
+      '/live/v4/channel/playback/list',
+      { params: { channelIds } }
+    );
+    return response as unknown as BatchPlaybackListResponse;
+  }
+
+  /**
+   * Query the external session ID bound to one channel session.
+   */
+  async getSessionExternalBySession(
+    params: SessionExternalBySessionParams
+  ): Promise<SessionExternalBySessionResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.sessionId, 'sessionId');
+
+    const response = await this.client.httpClient.get<SessionExternalBySessionResponse>(
+      '/live/v4/channel/session/external-by-session',
+      { params }
+    );
+    return response as unknown as SessionExternalBySessionResponse;
+  }
+
+  /**
+   * Query channel lottery records.
+   */
+  async listChannelLotteryRecords(
+    params: ChannelLotteryListParams
+  ): Promise<ChannelLotteryListResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ChannelLotteryListResponse>(
+      '/live/v4/channel/lottery/list',
+      { params }
+    );
+    return response as unknown as ChannelLotteryListResponse;
+  }
+
+  /**
+   * Query channel role-viewer settings.
+   */
+  async getAccountViewerConfig(params: GetAccountViewerParams): Promise<AccountViewerConfig> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<AccountViewerConfig>(
+      '/live/v4/channel/account/viewer/get',
+      { params }
+    );
+    return response as unknown as AccountViewerConfig;
+  }
+
+  /**
+   * Query channel live data summary.
+   */
+  async getLiveData(params: LiveDataParams): Promise<LiveDataSummary> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<LiveDataSummary>(
+      '/live/v4/channel/statistics/live-data',
+      { params }
+    );
+    return response as unknown as LiveDataSummary;
+  }
+
+  /**
+   * Query channel subtitle config.
+   */
+  async getSubtitleConfig(params: SubtitleConfigParams): Promise<SubtitleConfig> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<SubtitleConfig>(
+      '/live/v4/channel/subtitle/config/get',
+      { params }
+    );
+    return response as unknown as SubtitleConfig;
+  }
+
+  /**
+   * Query live session statistics in a time range.
+   */
+  async listSessionStats(params: SessionStatsListParams = {}): Promise<SessionStatsListResponse> {
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.post<SessionStatsListResponse>(
+      '/live/v4/statistics/session-stats/list',
+      null,
+      { params }
+    );
+    return response as unknown as SessionStatsListResponse;
+  }
+
+  /**
+   * List all realtime subtitle languages.
+   */
+  async listSubtitleLanguages(): Promise<SubtitleLanguageInfo[]> {
+    const response = await this.client.httpClient.get<SubtitleLanguageInfo[]>(
+      '/live/v4/channel/subtitle/language/list-all'
+    );
+    return response as unknown as SubtitleLanguageInfo[];
+  }
+
+  /**
+   * Query all channels' basic information.
+   */
+  async listChannelBasicExact(
+    params: ListChannelBasicExactParams = {}
+  ): Promise<ChannelBasicListExactResponse> {
+    this.validateOptionalPaginationParams(params);
+    const queryParams = this.buildListChannelBasicParams(params);
+
+    const response = await this.client.httpClient.get<ChannelBasicListExactResponse>(
+      '/live/v4/channel/basic/list',
+      { params: queryParams }
+    );
+    return response as unknown as ChannelBasicListExactResponse;
+  }
+
+  /**
+   * Query all channels' compact information.
+   */
+  async listChannelSimple(params: ChannelSimpleListExactParams = {}): Promise<ChannelSimpleListExactResponse> {
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ChannelSimpleListExactResponse>(
+      '/live/v4/channel/simple/list',
+      { params }
+    );
+    return response as unknown as ChannelSimpleListExactResponse;
+  }
+
+  /**
+   * Query WeChat booking records.
+   */
+  async listWeixinBookings(params: WeixinBookingListParams): Promise<WeixinBookingListResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<WeixinBookingListResponse>(
+      '/live/v4/channel/booking/list',
+      { params }
+    );
+    return response as unknown as WeixinBookingListResponse;
+  }
+
+  /**
+   * Query invite poster detail records.
+   */
+  async listInviteStats(params: InviteListParams): Promise<InviteListResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<InviteListResponse>(
+      '/live/v4/channel/invite/list',
+      { params }
+    );
+    return response as unknown as InviteListResponse;
+  }
+
+  /**
+   * Query cloud distribution statistics.
+   */
+  async getDistributeStatistic(
+    params: DistributeStatisticExactParams
+  ): Promise<DistributeStatisticExactResponse> {
+    this.validateChannelId(params.channelId);
+    if (params.sessionIds === undefined && (params.startTime === undefined || params.endTime === undefined)) {
+      throw new PolyVValidationError(
+        'sessionIds or startTime/endTime is required',
+        'sessionIds'
+      );
+    }
+
+    const queryParams: Record<string, unknown> = { ...params };
+    if (params.sessionIds !== undefined) {
+      queryParams.sessionIds = this.normalizeIdList(params.sessionIds, 'sessionIds');
+    }
+
+    const response = await this.client.httpClient.get<DistributeStatisticExactResponse>(
+      '/live/v4/channel/distribute/get/statistic',
+      { params: queryParams }
+    );
+    return response as unknown as DistributeStatisticExactResponse;
+  }
+
+  /**
+   * Create and initialize a channel with settings.
+   */
+  async createInit(params: CreateInitChannelParams): Promise<CreateInitChannelResponse> {
+    this.validateCreateInitParams(params);
+
+    const response = await this.client.httpClient.post<CreateInitChannelResponse>(
+      '/live/v4/channel/create-init',
+      params
+    );
+    return response as unknown as CreateInitChannelResponse;
+  }
+
+  /**
+   * Create an assistant or guest role account.
+   */
+  async createAccount(params: CreateAccountParams): Promise<ChannelRoleAccount> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.role, 'role');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<ChannelRoleAccount>(
+      '/live/v4/channel/account/create',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as ChannelRoleAccount;
+  }
+
+  /**
+   * Create an MR channel.
+   */
+  async createMrChannel(params: CreateMrChannelExactParams): Promise<CreateMrChannelExactResponse> {
+    this.validateChannelName(params.name);
+
+    const response = await this.client.httpClient.post<CreateMrChannelExactResponse>(
+      '/live/v4/channel/mr/create',
+      params
+    );
+    return response as unknown as CreateMrChannelExactResponse;
+  }
+
+  /**
+   * Query CDN realtime stream information for one channel.
+   */
+  async listMonitorStreamInfo(params: MonitorListStreamInfoParams): Promise<MonitorStreamInfoPoint[]> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<MonitorStreamInfoPoint[]>(
+      '/live/v4/channel/monitor/list-stream-info',
+      { params }
+    );
+    return response as unknown as MonitorStreamInfoPoint[];
+  }
+
+  /**
+   * Batch query each channel's single playback video info.
+   */
+  async getPlaybackVideoInfo(
+    params: BatchPlaybackVideoInfoParams
+  ): Promise<PlaybackVideoInfoByChannel[]> {
+    const channelIds = this.normalizeIdList(params.channelIds, 'channelIds');
+
+    const response = await this.client.httpClient.get<PlaybackVideoInfoByChannel[]>(
+      '/live/v4/channel/play-back/get',
+      { params: { channelIds } }
+    );
+    return response as unknown as PlaybackVideoInfoByChannel[];
+  }
+
+  /**
+   * Batch query live status for channels.
+   */
+  async listLiveStatus(params: LiveStatusListParams): Promise<ChannelLiveStatusItem[]> {
+    const channelIds = this.normalizeIdList(params.channelIds, 'channelIds', 200);
+
+    const response = await this.client.httpClient.get<ChannelLiveStatusItem[]>(
+      '/live/v4/channel/live-status/list',
+      { params: { channelIds } }
+    );
+    return response as unknown as ChannelLiveStatusItem[];
+  }
+
+  /**
+   * Batch query teacher information.
+   */
+  async teacherList(params: TeacherListParams): Promise<TeacherInfo[]> {
+    this.validateIdArray(params.channelIds, 'channelIds');
+
+    const response = await this.client.httpClient.post<TeacherInfo[]>(
+      '/live/v4/channel/account/teacher-list',
+      { channelIds: params.channelIds }
+    );
+    return response as unknown as TeacherInfo[];
+  }
+
+  /**
+   * Batch delete role accounts.
+   */
+  async deleteAccountsBatch(params: DeleteAccountsBatchParams): Promise<boolean> {
+    this.validateChannelId(params.channelId);
+    const accounts = this.normalizeIdList(params.accounts, 'accounts', 150);
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v4/channel/account/delete-batch',
+      null,
+      { params: { channelId: params.channelId, accounts } }
+    );
+    return response as unknown as boolean;
+  }
+
+  /**
+   * Batch update playback subtitles for one channel.
+   */
+  async updateChannelSubtitleBatch(params: UpdateChannelSubtitleBatchParams): Promise<unknown> {
+    this.validateChannelId(params.channelId);
+    if (!Array.isArray(params.body) || params.body.length === 0) {
+      throw new PolyVValidationError('body is required and cannot be empty', 'body');
+    }
+    params.body.forEach((item, index) => {
+      if (!item.id || item.id <= 0) {
+        throw new PolyVValidationError(`body[${index}].id must be a positive number`, `body[${index}].id`);
+      }
+    });
+
+    const response = await this.client.httpClient.post<unknown>(
+      '/live/v4/channel/subtitle/update-batch',
+      params.body,
+      { params: { channelId: params.channelId } }
+    );
+    return response as unknown;
+  }
+
+  /**
+   * Batch update channel skin.
+   */
+  async updateSkinBatch(params: UpdateSkinBatchParams): Promise<boolean> {
+    const channelIds = this.normalizeIdList(params.channelIds, 'channelIds', 500);
+    this.validateRequiredString(params.skin, 'skin');
+
+    const response = await this.client.httpClient.post<boolean>(
+      '/live/v4/channel/decorate/skin/update-batch',
+      null,
+      { params: { channelIds, skin: params.skin } }
+    );
+    return response as unknown as boolean;
+  }
+
+  /**
+   * Update role-viewer settings.
+   */
+  async updateAccountViewerConfig(params: UpdateAccountViewerConfigParams): Promise<unknown> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalYn(params.actorEnabled, 'actorEnabled');
+    this.validateOptionalYn(params.questionStudentTitleEnabled, 'questionStudentTitleEnabled');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<unknown>(
+      '/live/v4/channel/account/viewer/update',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown;
+  }
+
+  /**
+   * Update role account information.
+   */
+  async updateAccountInfo(params: UpdateAccountInfoParams): Promise<ChannelRoleAccount> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.account, 'account');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<ChannelRoleAccount>(
+      '/live/v4/channel/account/update',
+      body,
+      { params: { channelId } }
+    );
+    return response as unknown as ChannelRoleAccount;
+  }
+
+  /**
+   * Set channel pull bitrate.
+   */
+  async setPullBitrate(params: SetPullBitrateExactParams): Promise<unknown> {
+    this.validateChannelId(params.channelId);
+    const allowedBitrates = [-1, 400, 600, 800, 1000, 1500, 2000, 2500];
+    if (!allowedBitrates.includes(params.pullBitRate)) {
+      throw new PolyVValidationError(
+        'pullBitRate must be one of -1, 400, 600, 800, 1000, 1500, 2000, or 2500',
+        'pullBitRate',
+        params.pullBitRate
+      );
+    }
+
+    const response = await this.client.httpClient.post<unknown>(
+      '/live/v4/channel/set-pull-bitrate',
+      null,
+      { params }
+    );
+    return response as unknown;
+  }
+
+  /**
+   * Update channel live template.
+   */
+  async updateTemplate(params: UpdateTemplateExactParams): Promise<unknown> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.template, 'template');
+
+    const response = await this.client.httpClient.post<unknown>(
+      '/live/v4/channel/update-template',
+      null,
+      { params }
+    );
+    return response as unknown;
+  }
+
+  /**
+   * Update channel subtitle config.
+   */
+  async updateSubtitleConfig(params: UpdateSubtitleConfigParams): Promise<SubtitleConfig> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalYn(params.realTimeSubtitleEnabled, 'realTimeSubtitleEnabled');
+    this.validateOptionalYn(params.realTimeSubtitleDisplayEnabled, 'realTimeSubtitleDisplayEnabled');
+    this.validateOptionalYn(
+      params.realTimeSubtitleDisplayNumberLimitEnabled,
+      'realTimeSubtitleDisplayNumberLimitEnabled'
+    );
+    this.validateOptionalYn(params.subtitleTranslationEnabled, 'subtitleTranslationEnabled');
+    this.validateOptionalYn(params.subtitleCallbackEnabled, 'subtitleCallbackEnabled');
+
+    const response = await this.client.httpClient.post<SubtitleConfig>(
+      '/live/v4/channel/subtitle/config/update',
+      params
+    );
+    return response as unknown as SubtitleConfig;
+  }
+
+  // ============================================
   // Private Validation Helpers
   // ============================================
+
+  private validateRequiredString(value: string | undefined, field: string): void {
+    if (!value || value.trim() === '') {
+      throw new PolyVValidationError(`${field} is required and cannot be empty`, field);
+    }
+  }
+
+  private validateOptionalYn(value: string | undefined, field: string): void {
+    if (value !== undefined && value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(`${field} must be Y or N`, field, value);
+    }
+  }
+
+  private normalizeIdList(
+    values: ChannelIdListInput,
+    field: string,
+    maxLength?: number
+  ): string {
+    if (Array.isArray(values)) {
+      this.validateIdArray(values, field, maxLength);
+      return values.map((value) => String(value).trim()).join(',');
+    }
+
+    this.validateRequiredString(values, field);
+    const normalized = values
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean);
+
+    if (normalized.length === 0) {
+      throw new PolyVValidationError(`${field} is required and cannot be empty`, field);
+    }
+    if (maxLength !== undefined && normalized.length > maxLength) {
+      throw new PolyVValidationError(`${field} cannot contain more than ${maxLength} items`, field, values);
+    }
+
+    return normalized.join(',');
+  }
+
+  private validateIdArray(
+    values: Array<string | number>,
+    field: string,
+    maxLength?: number
+  ): void {
+    if (!Array.isArray(values) || values.length === 0) {
+      throw new PolyVValidationError(`${field} is required and cannot be empty`, field);
+    }
+    if (maxLength !== undefined && values.length > maxLength) {
+      throw new PolyVValidationError(`${field} cannot contain more than ${maxLength} items`, field, values);
+    }
+
+    values.forEach((value, index) => {
+      if (value === undefined || value === null || String(value).trim() === '') {
+        throw new PolyVValidationError(`${field}[${index}] is required`, `${field}[${index}]`);
+      }
+    });
+  }
+
+  private validateCreateInitParams(params: CreateInitChannelParams): void {
+    if (!params.basicSetting) {
+      throw new PolyVValidationError('basicSetting is required', 'basicSetting');
+    }
+
+    this.validateChannelName(params.basicSetting.name, 'basicSetting.name');
+    this.validateRequiredString(params.basicSetting.newScene, 'basicSetting.newScene');
+    this.validateRequiredString(params.basicSetting.template, 'basicSetting.template');
+
+    if (params.roles && params.roles.length > 10) {
+      throw new PolyVValidationError('roles cannot contain more than 10 items', 'roles', params.roles);
+    }
+    params.roles?.forEach((role, index) => {
+      this.validateRequiredString(role.role, `roles[${index}].role`);
+    });
+  }
+
+  private buildListChannelBasicParams(params: ListChannelBasicExactParams): Record<string, unknown> {
+    const queryParams: Record<string, unknown> = { ...params };
+
+    if (params.categoryIds !== undefined) {
+      queryParams.categoryIds = Array.isArray(params.categoryIds)
+        ? this.normalizeIdList(params.categoryIds, 'categoryIds', 200)
+        : this.normalizeIdList(params.categoryIds, 'categoryIds', 200);
+    }
+    if (params.channelIds !== undefined) {
+      queryParams.channelIds = this.normalizeIdList(params.channelIds, 'channelIds');
+    }
+
+    return queryParams;
+  }
 
   /**
    * Validate channel ID
@@ -2140,6 +2710,16 @@ export class V4ChannelService {
       throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', params.pageNumber);
     }
     if (params.pageSize === undefined || params.pageSize === null || params.pageSize < 1 || params.pageSize > 1000) {
+      throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
+    }
+  }
+
+  private validateOptionalPaginationParams(params: V4PaginationParams): void {
+    const pageNumber = params.pageNumber ?? params.page;
+    if (pageNumber !== undefined && pageNumber < 1) {
+      throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', pageNumber);
+    }
+    if (params.pageSize !== undefined && (params.pageSize < 1 || params.pageSize > 1000)) {
       throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
     }
   }
