@@ -49,6 +49,7 @@ const VERSION_BASE_URLS: Record<ApiVersion, string> = {
  */
 const DEFAULT_CONFIG: Omit<ResolvedClientConfig, 'appId' | 'appSecret'> = {
   baseUrl: 'https://api.polyv.net',
+  liveBgBaseUrl: 'https://live.polyv.net',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -205,6 +206,7 @@ export class PolyVClient {
       appId: config.appId,
       appSecret: config.appSecret,
       baseUrl: config.baseUrl ?? DEFAULT_CONFIG.baseUrl,
+      liveBgBaseUrl: config.liveBgBaseUrl ?? DEFAULT_CONFIG.liveBgBaseUrl,
       timeout: config.timeout ?? DEFAULT_CONFIG.timeout,
       headers: {
         ...DEFAULT_CONFIG.headers,

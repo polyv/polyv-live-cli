@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T06:44:22.604Z",
+  "generatedAt": "2026-06-19T07:05:41.139Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,18 +18,18 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 542,
-    "sdkImplemented": 406,
-    "sdkMissing": 172
+    "sdkEndpoints": 568,
+    "sdkImplemented": 432,
+    "sdkMissing": 146
   },
   "modules": [
     {
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "implemented": 111,
-      "missing": 172,
-      "coverage": 39.2
+      "implemented": 137,
+      "missing": 146,
+      "coverage": 48.4
     },
     {
       "module": "account",
@@ -3452,12 +3452,12 @@
       "dedupeKey": "channel:查询未加入频道分组的观众列表-查询未加入频道分组的观众列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer",
+        "reference": "ChannelService#listUnrelatedChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -3481,12 +3481,12 @@
       "dedupeKey": "channel:查询未加入频道分组的观众列表-查询未加入频道分组的观众列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer",
+        "reference": "ChannelService#listUnrelatedChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6165,12 +6165,12 @@
       "dedupeKey": "channel:频道所属用户列表-导出频道所属用户列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/list/export",
+        "reference": "ChannelService#exportChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6194,12 +6194,12 @@
       "dedupeKey": "channel:频道所属用户列表-导出频道所属用户列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/list/export",
+        "reference": "ChannelService#exportChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6224,12 +6224,12 @@
       "dedupeKey": "channel:频道所属用户列表-导入频道所属用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/list/import",
+        "reference": "ChannelService#importChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6254,12 +6254,12 @@
       "dedupeKey": "channel:频道所属用户列表-导入频道所属用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/list/import",
+        "reference": "ChannelService#importChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6283,12 +6283,12 @@
       "dedupeKey": "channel:频道所属用户列表-分页查询频道所属用户列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/list/list",
+        "reference": "ChannelService#listChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6312,12 +6312,12 @@
       "dedupeKey": "channel:频道所属用户列表-分页查询频道所属用户列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/list/list",
+        "reference": "ChannelService#listChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6342,12 +6342,12 @@
       "dedupeKey": "channel:频道所属用户列表-批量转移频道所属用户到指定分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/list/transfer",
+        "reference": "ChannelService#transferChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6372,12 +6372,12 @@
       "dedupeKey": "channel:频道所属用户列表-批量转移频道所属用户到指定分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/list/transfer",
+        "reference": "ChannelService#transferChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6402,12 +6402,12 @@
       "dedupeKey": "channel:频道所属用户列表-删除频道所属用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/list/delete",
+        "reference": "ChannelService#deleteChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6432,12 +6432,12 @@
       "dedupeKey": "channel:频道所属用户列表-删除频道所属用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/list/delete",
+        "reference": "ChannelService#deleteChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6462,12 +6462,12 @@
       "dedupeKey": "channel:频道所属用户列表-新增频道所属用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/list/save",
+        "reference": "ChannelService#addChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6492,12 +6492,12 @@
       "dedupeKey": "channel:频道所属用户列表-新增频道所属用户",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/list/save",
+        "reference": "ChannelService#addChannelViewers",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6521,12 +6521,12 @@
       "dedupeKey": "channel:频道用户分组-查询频道下的分组列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/group/list",
+        "reference": "ChannelService#listChannelViewerGroups",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6550,12 +6550,12 @@
       "dedupeKey": "channel:频道用户分组-查询频道下的分组列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/group/list",
+        "reference": "ChannelService#listChannelViewerGroups",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6581,12 +6581,12 @@
       "dedupeKey": "channel:频道用户分组-更新频道分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/group/update",
+        "reference": "ChannelService#updateChannelViewerGroup",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6612,12 +6612,12 @@
       "dedupeKey": "channel:频道用户分组-更新频道分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/group/update",
+        "reference": "ChannelService#updateChannelViewerGroup",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6642,12 +6642,12 @@
       "dedupeKey": "channel:频道用户分组-删除频道分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/group/delete",
+        "reference": "ChannelService#deleteChannelViewerGroup",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6672,12 +6672,12 @@
       "dedupeKey": "channel:频道用户分组-删除频道分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/group/delete",
+        "reference": "ChannelService#deleteChannelViewerGroup",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6702,12 +6702,12 @@
       "dedupeKey": "channel:频道用户分组-新增频道分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/group/save",
+        "reference": "ChannelService#createChannelViewerGroup",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6732,12 +6732,12 @@
       "dedupeKey": "channel:频道用户分组-新增频道分组",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/group/save",
+        "reference": "ChannelService#createChannelViewerGroup",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6761,12 +6761,12 @@
       "dedupeKey": "channel:频道用户分组配置-保存频道用户分组配置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/group-setting/update",
+        "reference": "ChannelService#updateChannelViewerGroupSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6790,12 +6790,12 @@
       "dedupeKey": "channel:频道用户分组配置-保存频道用户分组配置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/group-setting/update",
+        "reference": "ChannelService#updateChannelViewerGroupSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6819,12 +6819,12 @@
       "dedupeKey": "channel:频道用户分组配置-查询频道用户分组配置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/teacher/channel-viewer/group-setting/get",
+        "reference": "ChannelService#getChannelViewerGroupSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -6848,12 +6848,12 @@
       "dedupeKey": "channel:频道用户分组配置-查询频道用户分组配置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live-bg/v3/user/channel-viewer/group-setting/get",
+        "reference": "ChannelService#getChannelViewerGroupSetting",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -18330,6 +18330,240 @@
       "className": "ChannelService",
       "methodName": "relevanceSession",
       "reference": "ChannelService#relevanceSession"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/teacher/channel-viewer/group/list",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/group/list",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listChannelViewerGroups",
+      "reference": "ChannelService#listChannelViewerGroups"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/user/channel-viewer/group/list",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/group/list",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listChannelViewerGroups",
+      "reference": "ChannelService#listChannelViewerGroups"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/group/save",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/group/save",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "createChannelViewerGroup",
+      "reference": "ChannelService#createChannelViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/group/save",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/group/save",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "createChannelViewerGroup",
+      "reference": "ChannelService#createChannelViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/group/update",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/group/update",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updateChannelViewerGroup",
+      "reference": "ChannelService#updateChannelViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/group/update",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/group/update",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updateChannelViewerGroup",
+      "reference": "ChannelService#updateChannelViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/group/delete",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/group/delete",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "deleteChannelViewerGroup",
+      "reference": "ChannelService#deleteChannelViewerGroup"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/group/delete",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/group/delete",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "deleteChannelViewerGroup",
+      "reference": "ChannelService#deleteChannelViewerGroup"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/teacher/channel-viewer/group-setting/get",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/group-setting/get",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChannelViewerGroupSetting",
+      "reference": "ChannelService#getChannelViewerGroupSetting"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/user/channel-viewer/group-setting/get",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/group-setting/get",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChannelViewerGroupSetting",
+      "reference": "ChannelService#getChannelViewerGroupSetting"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/group-setting/update",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/group-setting/update",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updateChannelViewerGroupSetting",
+      "reference": "ChannelService#updateChannelViewerGroupSetting"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/group-setting/update",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/group-setting/update",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "updateChannelViewerGroupSetting",
+      "reference": "ChannelService#updateChannelViewerGroupSetting"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/teacher/channel-viewer/list/list",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/list/list",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listChannelViewers",
+      "reference": "ChannelService#listChannelViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/user/channel-viewer/list/list",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/list/list",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listChannelViewers",
+      "reference": "ChannelService#listChannelViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/teacher/channel-viewer/list/export",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/list/export",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "exportChannelViewers",
+      "reference": "ChannelService#exportChannelViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/user/channel-viewer/list/export",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/list/export",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "exportChannelViewers",
+      "reference": "ChannelService#exportChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/list/save",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/list/save",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "addChannelViewers",
+      "reference": "ChannelService#addChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/list/save",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/list/save",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "addChannelViewers",
+      "reference": "ChannelService#addChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/list/delete",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/list/delete",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "deleteChannelViewers",
+      "reference": "ChannelService#deleteChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/list/delete",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/list/delete",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "deleteChannelViewers",
+      "reference": "ChannelService#deleteChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/list/transfer",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/list/transfer",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "transferChannelViewers",
+      "reference": "ChannelService#transferChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/list/transfer",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/list/transfer",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "transferChannelViewers",
+      "reference": "ChannelService#transferChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/teacher/channel-viewer/list/import",
+      "normalizedPath": "/live-bg/v3/teacher/channel-viewer/list/import",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "importChannelViewers",
+      "reference": "ChannelService#importChannelViewers"
+    },
+    {
+      "method": "POST",
+      "path": "/live-bg/v3/user/channel-viewer/list/import",
+      "normalizedPath": "/live-bg/v3/user/channel-viewer/list/import",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "importChannelViewers",
+      "reference": "ChannelService#importChannelViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer",
+      "normalizedPath": "/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listUnrelatedChannelViewers",
+      "reference": "ChannelService#listUnrelatedChannelViewers"
+    },
+    {
+      "method": "GET",
+      "path": "/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer",
+      "normalizedPath": "/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "listUnrelatedChannelViewers",
+      "reference": "ChannelService#listUnrelatedChannelViewers"
     },
     {
       "method": "POST",

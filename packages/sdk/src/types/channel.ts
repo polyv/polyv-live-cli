@@ -2670,3 +2670,282 @@ export interface ListChannelProductsResponse {
   /** Has more pages */
   hasMore?: boolean;
 }
+
+// ============================================
+// Channel Viewer Management Types
+// ============================================
+
+/**
+ * Backend login-state endpoint scope for channel viewer APIs.
+ */
+export type ChannelViewerApiScope = 'user' | 'teacher';
+
+/**
+ * Common params for backend login-state channel viewer APIs.
+ */
+export interface ChannelViewerScopedParams {
+  /** Endpoint scope, defaults to user */
+  scope?: ChannelViewerApiScope;
+}
+
+/**
+ * Generic page response used by channel viewer backend APIs.
+ */
+export interface ChannelViewerPageResponse<T> {
+  /** Current page number */
+  pageNumber: number;
+  /** Page size */
+  pageSize: number;
+  /** Total pages */
+  totalPages: number;
+  /** Total item count */
+  totalItems: number;
+  /** Page items */
+  contents: T[];
+}
+
+/**
+ * Channel viewer group item.
+ */
+export interface ChannelViewerGroup {
+  /** Group ID */
+  id: number;
+  /** Channel ID */
+  channelId: number;
+  /** Group name */
+  name: string;
+  /** Number of viewers associated with this group */
+  viewerCount: number;
+}
+
+export interface ListChannelViewerGroupsParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+}
+
+export type ListChannelViewerGroupsResponse = ChannelViewerGroup[];
+
+export interface CreateChannelViewerGroupParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Group name, max 128 chars - REQUIRED */
+  name: string;
+}
+
+export interface UpdateChannelViewerGroupParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Group ID - REQUIRED */
+  id: string | number;
+  /** New group name, max 128 chars - REQUIRED */
+  name: string;
+}
+
+export interface DeleteChannelViewerGroupParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Group ID - REQUIRED */
+  id: string | number;
+}
+
+export interface ChannelViewerGroupSetting {
+  /** Channel viewer group switch */
+  channelViewerGroupEnabled: YNFlag;
+  /** Allow viewers outside groups to watch */
+  notInGroupWatchEnabled: YNFlag;
+}
+
+export interface GetChannelViewerGroupSettingParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+}
+
+export interface UpdateChannelViewerGroupSettingParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Channel viewer group switch */
+  channelViewerGroupEnabled?: YNFlag;
+  /** Allow viewers outside groups to watch */
+  notInGroupWatchEnabled?: YNFlag;
+}
+
+/**
+ * Channel-owned viewer item.
+ */
+export interface ChannelViewerItem {
+  /** Primary key */
+  id: number;
+  /** Channel ID */
+  channelId: number;
+  /** Viewer ID */
+  viewerId: string;
+  /** Group ID */
+  groupId?: number;
+  /** Group name */
+  groupName?: string;
+  /** Viewer nickname */
+  nickname?: string;
+  /** WeChat avatar */
+  wxAvatar?: string;
+  /** WeCom avatar */
+  qwAvatar?: string;
+  /** Mobile number */
+  mobile?: string;
+}
+
+export interface ListChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Group ID */
+  groupId?: string | number;
+  /** Viewer ID, max 64 chars */
+  viewerId?: string;
+  /** Viewer nickname, max 128 chars */
+  nickname?: string;
+  /** Mobile number, max 32 chars */
+  mobile?: string;
+  /** Page number, default 1 */
+  pageNumber?: number;
+  /** Page size, default 10, max 1000 */
+  pageSize?: number;
+}
+
+export type ListChannelViewersResponse = ChannelViewerPageResponse<ChannelViewerItem>;
+
+export interface ExportChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Group ID */
+  groupId?: string | number;
+  /** Viewer ID */
+  viewerId?: string;
+  /** Viewer nickname */
+  nickname?: string;
+  /** Mobile number */
+  mobile?: string;
+}
+
+export type ExportChannelViewersResponse = string;
+
+export interface AddChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Target group ID */
+  groupId?: string | number;
+  /** Viewer IDs, max 1000 - REQUIRED */
+  viewerIds: string[];
+}
+
+export interface DeleteChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Viewer IDs, max 1000 - REQUIRED */
+  viewerIds: string[];
+}
+
+export interface TransferChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Target group ID; omit to clear group association */
+  targetGroupId?: string | number;
+  /** Viewer IDs, max 1000 - REQUIRED */
+  viewerIds: string[];
+}
+
+export type ChannelViewerImportFile = File | Blob | Buffer;
+
+export interface ImportChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  /** Target group ID */
+  groupId?: string | number;
+  /** Excel file - REQUIRED */
+  file: ChannelViewerImportFile;
+}
+
+export interface ImportChannelViewersResponse {
+  /** Successful import count */
+  successCount: number;
+  /** Failed import count */
+  failCount: number;
+  /** Failed detail file URL */
+  failFileUrl?: string;
+}
+
+/**
+ * Viewer not associated with any channel group.
+ */
+export interface UnrelatedChannelViewerItem {
+  /** Viewer unique ID */
+  viewerUnionId: string;
+  /** Viewer nickname */
+  nickname?: string;
+  /** WeChat nickname */
+  wxNickName?: string;
+  /** Mobile number */
+  mobile?: string;
+  /** External viewer ID */
+  externalViewerId?: string;
+  /** WeChat OpenID */
+  wxOpenId?: string;
+  /** WeChat UnionID */
+  wxUnionId?: string;
+  /** Viewer source */
+  source?: string;
+  /** Name */
+  name?: string;
+  /** Last collected mobile number */
+  lastCollectMobile?: string;
+  /** Email */
+  email?: string;
+  /** Area */
+  area?: string;
+  /** Latest access IP */
+  latestAccessIp?: string;
+  /** Device information */
+  device?: string;
+  /** Total watch duration in seconds */
+  watchDuration?: number;
+  /** Watched channel count */
+  watchChannelCount?: number;
+  /** Label IDs */
+  labelIds?: Array<string | number>;
+  /** Label names */
+  labelNames?: string[];
+  /** Viewer status */
+  status?: string;
+  /** Creation time */
+  createTime?: string;
+}
+
+export interface ListUnrelatedChannelViewersParams extends ChannelViewerScopedParams {
+  /** Channel ID - REQUIRED */
+  channelId: string | number;
+  name?: string;
+  mobile?: string;
+  externalViewerId?: string;
+  wxOpenId?: string;
+  wxUnionId?: string;
+  nickname?: string;
+  wxNickName?: string;
+  source?: string;
+  email?: string;
+  area?: string;
+  lastCollectMobile?: string;
+  /** Search keyword matching nickname and wxNickName */
+  searchKeyword?: string;
+  viewerId?: string;
+  status?: string;
+  /** Registration start time, yyyy-MM-dd HH:mm:ss */
+  startCreateTime?: string;
+  /** Registration end time, yyyy-MM-dd HH:mm:ss */
+  endCreateTime?: string;
+  /** Label IDs, max 10 */
+  labelIds?: Array<string | number>;
+  /** Page number, default 1, max 1000 */
+  pageNumber?: number;
+  /** Page size, default 10, max 1000 */
+  pageSize?: number;
+}
+
+export type ListUnrelatedChannelViewersResponse = ChannelViewerPageResponse<UnrelatedChannelViewerItem>;

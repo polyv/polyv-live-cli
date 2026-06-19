@@ -58,6 +58,7 @@ describe('PolyVClient', () => {
       expect(testClient.config.appId).toBe('test-app-id');
       expect(testClient.config.appSecret).toBe('test-app-secret');
       expect(testClient.config.baseUrl).toBe('https://api.polyv.net');
+      expect(testClient.config.liveBgBaseUrl).toBe('https://live.polyv.net');
       expect(testClient.config.timeout).toBe(30000);
     });
 
@@ -65,12 +66,14 @@ describe('PolyVClient', () => {
       const testClient = new PolyVClient({
         ...mockConfig,
         baseUrl: 'https://custom.api.com',
+        liveBgBaseUrl: 'https://custom.live-bg.com',
         timeout: 60000,
         headers: { 'X-Custom': 'value' },
         version: 'v4',
       });
 
       expect(testClient.config.baseUrl).toBe('https://custom.api.com');
+      expect(testClient.config.liveBgBaseUrl).toBe('https://custom.live-bg.com');
       expect(testClient.config.timeout).toBe(60000);
       expect(testClient.config.headers).toMatchObject({ 'X-Custom': 'value' });
       expect(testClient.config.version).toBe('v4');

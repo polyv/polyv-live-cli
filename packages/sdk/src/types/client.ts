@@ -16,8 +16,10 @@ export interface PolyVClientConfig {
   appId: string;
   /** PolyV App Secret */
   appSecret: string;
-  /** API Base URL (default: https://api.polyv.net/live/v3) */
+  /** API Base URL (default: https://api.polyv.net) */
   baseUrl?: string;
+  /** Live backend login-state API base URL (default: https://live.polyv.net) */
+  liveBgBaseUrl?: string;
   /** Request timeout in milliseconds (default: 30000) */
   timeout?: number;
   /** Custom headers to include in all requests */
@@ -34,8 +36,10 @@ export interface ResolvedClientConfig {
   appId: string;
   /** PolyV App Secret */
   appSecret: string;
-  /** API Base URL with version */
+  /** API Base URL */
   baseUrl: string;
+  /** Live backend login-state API base URL */
+  liveBgBaseUrl?: string;
   /** Request timeout in milliseconds */
   timeout: number;
   /** Custom headers */

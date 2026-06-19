@@ -11,6 +11,7 @@ import type { PolyVClient } from '../client.js';
 import type {
   ChannelModel,
   ChannelDetail,
+  YNFlag,
   CreateChannelRequest,
   CreateChannelV4Request,
   CreateChannelV4Response,
@@ -99,6 +100,27 @@ import type {
   UpdateChannelConfigParams,
   ListChannelProductsParams,
   ListChannelProductsResponse,
+  ChannelViewerApiScope,
+  ListChannelViewerGroupsParams,
+  ListChannelViewerGroupsResponse,
+  CreateChannelViewerGroupParams,
+  UpdateChannelViewerGroupParams,
+  DeleteChannelViewerGroupParams,
+  ChannelViewerGroup,
+  GetChannelViewerGroupSettingParams,
+  UpdateChannelViewerGroupSettingParams,
+  ChannelViewerGroupSetting,
+  ListChannelViewersParams,
+  ListChannelViewersResponse,
+  ExportChannelViewersParams,
+  ExportChannelViewersResponse,
+  AddChannelViewersParams,
+  DeleteChannelViewersParams,
+  TransferChannelViewersParams,
+  ImportChannelViewersParams,
+  ImportChannelViewersResponse,
+  ListUnrelatedChannelViewersParams,
+  ListUnrelatedChannelViewersResponse,
 } from '../types/channel.js';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
 import { generateSignature } from '../auth/signature.js';
@@ -128,6 +150,120 @@ export class ChannelService {
    */
   constructor(client: PolyVClient) {
     this.client = client;
+  }
+
+  private validateChannelViewerScope(scope?: ChannelViewerApiScope): ChannelViewerApiScope {
+    if (scope === undefined) {
+      return 'user';
+    }
+
+    if (scope !== 'user' && scope !== 'teacher') {
+      throw new PolyVValidationError(
+        'scope must be user or teacher',
+        'scope',
+        scope,
+        { allowedValues: ['user', 'teacher'] }
+      );
+    }
+
+    return scope;
+  }
+
+  private buildLiveBgConfig(params?: Record<string, unknown>): {
+    params?: Record<string, unknown>;
+    baseURL: string;
+    headers: Record<string, string>;
+  } {
+    const baseURL = this.client.config.liveBgBaseUrl ?? 'https://live.polyv.net';
+
+    return params
+      ? {
+          params,
+          baseURL,
+          headers: { 'X-Skip-Auth': 'true' },
+        }
+      : {
+          baseURL,
+          headers: { 'X-Skip-Auth': 'true' },
+        };
+  }
+
+  private validateRequiredValue(value: unknown, field: string): void {
+    if (value === undefined || value === null || String(value).trim() === '') {
+      throw PolyVValidationError.required(field);
+    }
+  }
+
+  private validateRequiredText(value: string | undefined, field: string, maxLength?: number): void {
+    if (!value || value.trim() === '') {
+      throw PolyVValidationError.required(field);
+    }
+
+    if (maxLength !== undefined && value.length > maxLength) {
+      throw PolyVValidationError.outOfRange(field, value.length, { max: maxLength });
+    }
+  }
+
+  private validateOptionalText(value: string | undefined, field: string, maxLength: number): void {
+    if (value !== undefined && value.length > maxLength) {
+      throw PolyVValidationError.outOfRange(field, value.length, { max: maxLength });
+    }
+  }
+
+  private validateOptionalYn(value: YNFlag | undefined, field: string): void {
+    if (value !== undefined && value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(
+        `${field} must be Y or N`,
+        field,
+        value,
+        { allowedValues: ['Y', 'N'] }
+      );
+    }
+  }
+
+  private validateOptionalPage(value: number | undefined, field: string): void {
+    if (value === undefined) {
+      return;
+    }
+
+    if (!Number.isInteger(value) || value < 1 || value > 1000) {
+      throw PolyVValidationError.outOfRange(field, value, { min: 1, max: 1000 });
+    }
+  }
+
+  private validateViewerIds(viewerIds: string[]): void {
+    if (!Array.isArray(viewerIds) || viewerIds.length === 0) {
+      throw PolyVValidationError.required('viewerIds');
+    }
+
+    if (viewerIds.length > 1000) {
+      throw PolyVValidationError.outOfRange('viewerIds', viewerIds.length, { max: 1000 });
+    }
+
+    viewerIds.forEach((viewerId, index) => {
+      if (!viewerId || viewerId.trim() === '') {
+        throw PolyVValidationError.required(`viewerIds[${index}]`);
+      }
+    });
+  }
+
+  private validateChannelViewerListParams(params: ListChannelViewersParams): void {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateOptionalText(params.viewerId, 'viewerId', 64);
+    this.validateOptionalText(params.nickname, 'nickname', 128);
+    this.validateOptionalText(params.mobile, 'mobile', 32);
+    this.validateOptionalPage(params.pageNumber, 'pageNumber');
+    this.validateOptionalPage(params.pageSize, 'pageSize');
+  }
+
+  private validateUnrelatedChannelViewerParams(params: ListUnrelatedChannelViewersParams): void {
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateOptionalPage(params.pageNumber, 'pageNumber');
+    this.validateOptionalPage(params.pageSize, 'pageSize');
+
+    if (params.labelIds && params.labelIds.length > 10) {
+      throw PolyVValidationError.outOfRange('labelIds', params.labelIds.length, { max: 10 });
+    }
   }
 
   /**
@@ -3884,6 +4020,359 @@ export class ChannelService {
     );
 
     return response as unknown as string;
+  }
+
+  // --------------------------------------------
+  // Channel Viewer Backend APIs
+  // --------------------------------------------
+
+  /**
+   * List channel viewer groups.
+   */
+  async listChannelViewerGroups(
+    params: ListChannelViewerGroupsParams
+  ): Promise<ListChannelViewerGroupsResponse> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    const { scope: _scope, ...query } = params;
+    const config = this.buildLiveBgConfig(query);
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.get<ListChannelViewerGroupsResponse>(
+        '/live-bg/v3/teacher/channel-viewer/group/list',
+        config
+      );
+      return response as unknown as ListChannelViewerGroupsResponse;
+    }
+
+    const response = await this.client.httpClient.get<ListChannelViewerGroupsResponse>(
+      '/live-bg/v3/user/channel-viewer/group/list',
+      config
+    );
+    return response as unknown as ListChannelViewerGroupsResponse;
+  }
+
+  /**
+   * Create a channel viewer group.
+   */
+  async createChannelViewerGroup(params: CreateChannelViewerGroupParams): Promise<ChannelViewerGroup> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredText(params.name, 'name', 128);
+    const { scope: _scope, ...body } = params;
+    const config = this.buildLiveBgConfig();
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.post<ChannelViewerGroup>(
+        '/live-bg/v3/teacher/channel-viewer/group/save',
+        body,
+        config
+      );
+      return response as unknown as ChannelViewerGroup;
+    }
+
+    const response = await this.client.httpClient.post<ChannelViewerGroup>(
+      '/live-bg/v3/user/channel-viewer/group/save',
+      body,
+      config
+    );
+    return response as unknown as ChannelViewerGroup;
+  }
+
+  /**
+   * Update a channel viewer group.
+   */
+  async updateChannelViewerGroup(params: UpdateChannelViewerGroupParams): Promise<void> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.id, 'id');
+    this.validateRequiredText(params.name, 'name', 128);
+    const { scope: _scope, ...body } = params;
+    const config = this.buildLiveBgConfig();
+
+    if (scope === 'teacher') {
+      await this.client.httpClient.post(
+        '/live-bg/v3/teacher/channel-viewer/group/update',
+        body,
+        config
+      );
+      return;
+    }
+
+    await this.client.httpClient.post(
+      '/live-bg/v3/user/channel-viewer/group/update',
+      body,
+      config
+    );
+  }
+
+  /**
+   * Delete a channel viewer group.
+   */
+  async deleteChannelViewerGroup(params: DeleteChannelViewerGroupParams): Promise<void> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateRequiredValue(params.id, 'id');
+    const { scope: _scope, ...body } = params;
+    const config = this.buildLiveBgConfig();
+
+    if (scope === 'teacher') {
+      await this.client.httpClient.post(
+        '/live-bg/v3/teacher/channel-viewer/group/delete',
+        body,
+        config
+      );
+      return;
+    }
+
+    await this.client.httpClient.post(
+      '/live-bg/v3/user/channel-viewer/group/delete',
+      body,
+      config
+    );
+  }
+
+  /**
+   * Get channel viewer group setting.
+   */
+  async getChannelViewerGroupSetting(
+    params: GetChannelViewerGroupSettingParams
+  ): Promise<ChannelViewerGroupSetting> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    const { scope: _scope, ...query } = params;
+    const config = this.buildLiveBgConfig(query);
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.get<ChannelViewerGroupSetting>(
+        '/live-bg/v3/teacher/channel-viewer/group-setting/get',
+        config
+      );
+      return response as unknown as ChannelViewerGroupSetting;
+    }
+
+    const response = await this.client.httpClient.get<ChannelViewerGroupSetting>(
+      '/live-bg/v3/user/channel-viewer/group-setting/get',
+      config
+    );
+    return response as unknown as ChannelViewerGroupSetting;
+  }
+
+  /**
+   * Update channel viewer group setting.
+   */
+  async updateChannelViewerGroupSetting(params: UpdateChannelViewerGroupSettingParams): Promise<void> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateOptionalYn(params.channelViewerGroupEnabled, 'channelViewerGroupEnabled');
+    this.validateOptionalYn(params.notInGroupWatchEnabled, 'notInGroupWatchEnabled');
+    const { scope: _scope, channelId, ...body } = params;
+    const config = this.buildLiveBgConfig({ channelId });
+
+    if (scope === 'teacher') {
+      await this.client.httpClient.post(
+        '/live-bg/v3/teacher/channel-viewer/group-setting/update',
+        body,
+        config
+      );
+      return;
+    }
+
+    await this.client.httpClient.post(
+      '/live-bg/v3/user/channel-viewer/group-setting/update',
+      body,
+      config
+    );
+  }
+
+  /**
+   * List viewers belonging to a channel.
+   */
+  async listChannelViewers(params: ListChannelViewersParams): Promise<ListChannelViewersResponse> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateChannelViewerListParams(params);
+    const { scope: _scope, ...query } = params;
+    const config = this.buildLiveBgConfig(query);
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.get<ListChannelViewersResponse>(
+        '/live-bg/v3/teacher/channel-viewer/list/list',
+        config
+      );
+      return response as unknown as ListChannelViewersResponse;
+    }
+
+    const response = await this.client.httpClient.get<ListChannelViewersResponse>(
+      '/live-bg/v3/user/channel-viewer/list/list',
+      config
+    );
+    return response as unknown as ListChannelViewersResponse;
+  }
+
+  /**
+   * Export viewers belonging to a channel.
+   */
+  async exportChannelViewers(params: ExportChannelViewersParams): Promise<ExportChannelViewersResponse> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    const { scope: _scope, ...query } = params;
+    const config = this.buildLiveBgConfig(query);
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.get<ExportChannelViewersResponse>(
+        '/live-bg/v3/teacher/channel-viewer/list/export',
+        config
+      );
+      return response as unknown as ExportChannelViewersResponse;
+    }
+
+    const response = await this.client.httpClient.get<ExportChannelViewersResponse>(
+      '/live-bg/v3/user/channel-viewer/list/export',
+      config
+    );
+    return response as unknown as ExportChannelViewersResponse;
+  }
+
+  /**
+   * Add viewers to a channel, optionally assigning a group.
+   */
+  async addChannelViewers(params: AddChannelViewersParams): Promise<void> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateViewerIds(params.viewerIds);
+    const { scope: _scope, ...body } = params;
+    const config = this.buildLiveBgConfig();
+
+    if (scope === 'teacher') {
+      await this.client.httpClient.post(
+        '/live-bg/v3/teacher/channel-viewer/list/save',
+        body,
+        config
+      );
+      return;
+    }
+
+    await this.client.httpClient.post(
+      '/live-bg/v3/user/channel-viewer/list/save',
+      body,
+      config
+    );
+  }
+
+  /**
+   * Delete viewers from a channel.
+   */
+  async deleteChannelViewers(params: DeleteChannelViewersParams): Promise<void> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateViewerIds(params.viewerIds);
+    const { scope: _scope, ...body } = params;
+    const config = this.buildLiveBgConfig();
+
+    if (scope === 'teacher') {
+      await this.client.httpClient.post(
+        '/live-bg/v3/teacher/channel-viewer/list/delete',
+        body,
+        config
+      );
+      return;
+    }
+
+    await this.client.httpClient.post(
+      '/live-bg/v3/user/channel-viewer/list/delete',
+      body,
+      config
+    );
+  }
+
+  /**
+   * Transfer channel viewers to a target group.
+   */
+  async transferChannelViewers(params: TransferChannelViewersParams): Promise<void> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    this.validateViewerIds(params.viewerIds);
+    const { scope: _scope, ...body } = params;
+    const config = this.buildLiveBgConfig();
+
+    if (scope === 'teacher') {
+      await this.client.httpClient.post(
+        '/live-bg/v3/teacher/channel-viewer/list/transfer',
+        body,
+        config
+      );
+      return;
+    }
+
+    await this.client.httpClient.post(
+      '/live-bg/v3/user/channel-viewer/list/transfer',
+      body,
+      config
+    );
+  }
+
+  /**
+   * Import channel viewers from an Excel file.
+   */
+  async importChannelViewers(params: ImportChannelViewersParams): Promise<ImportChannelViewersResponse> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateRequiredValue(params.channelId, 'channelId');
+    if (!params.file) {
+      throw PolyVValidationError.required('file');
+    }
+
+    const formData = new FormData();
+    formData.append('file', params.file);
+
+    const query: Record<string, unknown> = { channelId: params.channelId };
+    if (params.groupId !== undefined) {
+      query.groupId = params.groupId;
+    }
+
+    const config = this.buildLiveBgConfig(query);
+    config.headers['Content-Type'] = 'multipart/form-data';
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.post<ImportChannelViewersResponse>(
+        '/live-bg/v3/teacher/channel-viewer/list/import',
+        formData,
+        config
+      );
+      return response as unknown as ImportChannelViewersResponse;
+    }
+
+    const response = await this.client.httpClient.post<ImportChannelViewersResponse>(
+      '/live-bg/v3/user/channel-viewer/list/import',
+      formData,
+      config
+    );
+    return response as unknown as ImportChannelViewersResponse;
+  }
+
+  /**
+   * List viewers that have not joined any channel group.
+   */
+  async listUnrelatedChannelViewers(
+    params: ListUnrelatedChannelViewersParams
+  ): Promise<ListUnrelatedChannelViewersResponse> {
+    const scope = this.validateChannelViewerScope(params.scope);
+    this.validateUnrelatedChannelViewerParams(params);
+    const { scope: _scope, ...query } = params;
+    const config = this.buildLiveBgConfig(query);
+
+    if (scope === 'teacher') {
+      const response = await this.client.httpClient.get<ListUnrelatedChannelViewersResponse>(
+        '/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer',
+        config
+      );
+      return response as unknown as ListUnrelatedChannelViewersResponse;
+    }
+
+    const response = await this.client.httpClient.get<ListUnrelatedChannelViewersResponse>(
+      '/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer',
+      config
+    );
+    return response as unknown as ListUnrelatedChannelViewersResponse;
   }
 
   // --------------------------------------------
