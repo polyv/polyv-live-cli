@@ -13,9 +13,28 @@ import type {
   ViewerRecord,
   ListViewerRecordsParams,
   ListViewerRecordsResponse,
+  CreateViewerRecordParams,
+  UpdateViewerRecordParams,
+  DeleteViewerRecordParams,
+  ImportExternalViewerParams,
+  ImportExternalViewerResponse,
+  UpdateViewerUserSystemConfigParams,
   ListViewerLabelsResponse,
+  CreateViewerLabelParams,
+  CreateViewerLabelResponse,
+  UpdateViewerLabelParams,
+  DeleteViewerLabelParams,
   AddViewerLabelParams,
   DeleteViewerLabelRefParams,
+  ListLabelsParams,
+  ListLabelsResponse,
+  CreateLabelParams,
+  CreateLabelResponse,
+  UpdateLabelParams,
+  DeleteLabelParams,
+  AddChannelLabelRefsParams,
+  ViewerLotteryWinParams,
+  ViewerLotteryWinResponse,
 } from 'polyv-live-api-sdk';
 
 /**
@@ -89,6 +108,73 @@ export class ViewerServiceSdk {
     }
   }
 
+  /**
+   * Create a viewer record.
+   * @param params Create viewer parameters
+   * @returns Promise resolving to created viewer record
+   */
+  async createViewerRecord(params: CreateViewerRecordParams): Promise<ViewerRecord> {
+    try {
+      const result = await this.v4User.createViewerRecord(params);
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'createViewerRecord');
+    }
+  }
+
+  /**
+   * Update a viewer record.
+   * @param params Update viewer parameters
+   * @returns Promise resolving when update completes
+   */
+  async updateViewerRecord(params: UpdateViewerRecordParams & Record<string, unknown>): Promise<void> {
+    try {
+      await this.v4User.updateViewerRecord(params);
+    } catch (error) {
+      throw this.wrapError(error, 'updateViewerRecord');
+    }
+  }
+
+  /**
+   * Delete a viewer record.
+   * @param params Delete viewer parameters
+   * @returns Promise resolving when delete completes
+   */
+  async deleteViewerRecord(params: DeleteViewerRecordParams): Promise<void> {
+    try {
+      await this.v4User.deleteViewerRecord(params);
+    } catch (error) {
+      throw this.wrapError(error, 'deleteViewerRecord');
+    }
+  }
+
+  /**
+   * Import external viewers.
+   * @param params External viewer items
+   * @returns Promise resolving to imported viewers
+   */
+  async importExternalViewer(params: ImportExternalViewerParams): Promise<ImportExternalViewerResponse> {
+    try {
+      const result = await this.v4User.importExternalViewer(params);
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'importExternalViewer');
+    }
+  }
+
+  /**
+   * Update viewer user system config.
+   * @param params Config parameters
+   * @returns Promise resolving when update completes
+   */
+  async updateViewerUserSystemConfig(params: UpdateViewerUserSystemConfigParams): Promise<void> {
+    try {
+      await this.v4User.updateViewerUserSystemConfig(params);
+    } catch (error) {
+      throw this.wrapError(error, 'updateViewerUserSystemConfig');
+    }
+  }
+
   // ========================================
   // Story 12-2: Viewer Tag Methods
   // ========================================
@@ -103,6 +189,127 @@ export class ViewerServiceSdk {
       return result;
     } catch (error) {
       throw this.wrapError(error, 'listViewerLabels');
+    }
+  }
+
+  /**
+   * Create viewer labels.
+   * @param params Viewer label names
+   * @returns Promise resolving to created labels
+   */
+  async createViewerLabel(params: CreateViewerLabelParams): Promise<CreateViewerLabelResponse> {
+    try {
+      const result = await this.v4User.createViewerLabel(params);
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'createViewerLabel');
+    }
+  }
+
+  /**
+   * Update a viewer label.
+   * @param params Viewer label update parameters
+   * @returns Promise resolving when update completes
+   */
+  async updateViewerLabel(params: UpdateViewerLabelParams): Promise<void> {
+    try {
+      await this.v4User.updateViewerLabel(params);
+    } catch (error) {
+      throw this.wrapError(error, 'updateViewerLabel');
+    }
+  }
+
+  /**
+   * Delete a viewer label.
+   * @param params Viewer label delete parameters
+   * @returns Promise resolving when delete completes
+   */
+  async deleteViewerLabel(params: DeleteViewerLabelParams): Promise<void> {
+    try {
+      await this.v4User.deleteViewerLabel(params);
+    } catch (error) {
+      throw this.wrapError(error, 'deleteViewerLabel');
+    }
+  }
+
+  /**
+   * List account labels.
+   * @param params Pagination parameters
+   * @returns Promise resolving to paginated labels
+   */
+  async listLabels(params: ListLabelsParams): Promise<ListLabelsResponse> {
+    try {
+      const result = await this.v4User.listLabels(params);
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'listLabels');
+    }
+  }
+
+  /**
+   * Create an account label.
+   * @param params Account label parameters
+   * @returns Promise resolving to created label
+   */
+  async createLabel(params: CreateLabelParams): Promise<CreateLabelResponse> {
+    try {
+      const result = await this.v4User.createLabel(params);
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'createLabel');
+    }
+  }
+
+  /**
+   * Update an account label.
+   * @param params Account label update parameters
+   * @returns Promise resolving when update completes
+   */
+  async updateLabel(params: UpdateLabelParams): Promise<void> {
+    try {
+      await this.v4User.updateLabel(params);
+    } catch (error) {
+      throw this.wrapError(error, 'updateLabel');
+    }
+  }
+
+  /**
+   * Delete an account label.
+   * @param params Account label delete parameters
+   * @returns Promise resolving when delete completes
+   */
+  async deleteLabel(params: DeleteLabelParams): Promise<void> {
+    try {
+      await this.v4User.deleteLabel(params);
+    } catch (error) {
+      throw this.wrapError(error, 'deleteLabel');
+    }
+  }
+
+  /**
+   * Add label refs to channels.
+   * @param params Channel and label IDs
+   * @returns Promise resolving when add completes
+   */
+  async addChannelLabelRefs(params: AddChannelLabelRefsParams): Promise<void> {
+    try {
+      await this.v4User.addChannelLabelRefs(params);
+    } catch (error) {
+      throw this.wrapError(error, 'addChannelLabelRefs');
+    }
+  }
+
+  /**
+   * List viewer lottery wins.
+   * @param params Viewer lottery win query
+   * @returns Promise resolving to paginated wins
+   */
+  async viewerLotteryWin(params: ViewerLotteryWinParams): Promise<ViewerLotteryWinResponse> {
+    try {
+      const result = await this.v4User.viewerLotteryWin(params);
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'viewerLotteryWin');
     }
   }
 

@@ -10,16 +10,33 @@ import {
   ViewerServiceConfig,
   ViewerGetOptions,
   ViewerListOptions,
+  ViewerCreateOptions,
+  ViewerUpdateOptions,
+  ViewerDeleteOptions,
+  ViewerImportExternalOptions,
+  ViewerConfigUpdateOptions,
+  ViewerLotteryWinsOptions,
   ViewerTagAddOptions,
   ViewerTagRemoveOptions,
   ViewerTagListOptions,
+  ViewerTagCreateOptions,
+  ViewerTagUpdateOptions,
+  ViewerTagDeleteOptions,
+  ViewerLabelListOptions,
+  ViewerLabelCreateOptions,
+  ViewerLabelUpdateOptions,
+  ViewerLabelDeleteOptions,
+  ViewerChannelLabelRefsOptions,
 } from '../types/viewer';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 import type {
   ListViewerRecordsParams,
   ListViewerRecordsResponse,
   ViewerRecord,
+  ImportExternalViewerParams,
+  ViewerLotteryWinResponse,
   ViewerLabel as SdkViewerLabel,
 } from 'polyv-live-api-sdk';
 
@@ -34,6 +51,11 @@ interface PaginationOptions {
   page?: number;
   size?: number;
   output?: 'table' | 'json';
+}
+
+interface AccountLabel {
+  id?: string | number;
+  name?: string;
 }
 
 /**
@@ -126,6 +148,150 @@ export class ViewerHandler extends BaseHandler {
     }, 'viewer.list');
   }
 
+  /**
+   * Create a viewer record
+   * @param options Viewer create options
+   * @returns Promise that resolves when viewer is created
+   */
+  async createViewer(options: ViewerCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['nickname', 'mobile']);
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Create viewer "${options.nickname}"?`);
+
+      const params = this.compactParams({
+        nickname: options.nickname,
+        mobile: options.mobile,
+        name: options.name,
+        lastCollectMobile: options.lastCollectMobile,
+        email: options.email,
+        area: options.area,
+        latestAccessIp: options.latestAccessIp,
+        device: options.device,
+        followUsers: options.followUsers ? this.parseJsonObject(options.followUsers, 'followUsers') : undefined,
+      });
+
+      const result = await this.viewerService.createViewerRecord(params as any);
+      this.displayWriteResult('观众创建成功', result, options.output);
+    }, 'viewer.create');
+  }
+
+  /**
+   * Update a viewer record
+   * @param options Viewer update options
+   * @returns Promise that resolves when viewer is updated
+   */
+  async updateViewer(options: ViewerUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['viewerUnionId']);
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Update viewer ${options.viewerUnionId}?`);
+
+      const params = this.compactParams({
+        viewerUnionId: options.viewerUnionId,
+        nickname: options.nickname,
+        mobile: options.mobile,
+        name: options.name,
+        lastCollectMobile: options.lastCollectMobile,
+        email: options.email,
+        area: options.area,
+        latestAccessIp: options.latestAccessIp,
+        device: options.device,
+      });
+
+      await this.viewerService.updateViewerRecord(params as any);
+      this.displayWriteResult('观众更新成功', params, options.output);
+    }, 'viewer.update');
+  }
+
+  /**
+   * Delete a viewer record
+   * @param options Viewer delete options
+   * @returns Promise that resolves when viewer is deleted
+   */
+  async deleteViewer(options: ViewerDeleteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['viewerUnionId']);
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Delete viewer ${options.viewerUnionId}?`);
+
+      await this.viewerService.deleteViewerRecord({ viewerUnionId: options.viewerUnionId });
+      this.displayWriteResult('观众删除成功', { viewerUnionId: options.viewerUnionId }, options.output);
+    }, 'viewer.delete');
+  }
+
+  /**
+   * Import external viewer records
+   * @param options External import options
+   * @returns Promise that resolves when import finishes
+   */
+  async importExternalViewers(options: ViewerImportExternalOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateOutputOption(options.output);
+      const viewers = this.buildExternalViewers(options);
+      await confirmWrite(options.force, `Import ${viewers.length} external viewer(s)?`);
+
+      const result = await this.viewerService.importExternalViewer(viewers);
+      this.displayWriteResult('外部观众导入成功', result, options.output);
+    }, 'viewer.importExternal');
+  }
+
+  /**
+   * Update viewer user system config
+   * @param options Config update options
+   * @returns Promise that resolves when config is updated
+   */
+  async updateViewerConfig(options: ViewerConfigUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['mobileLoginEnabled', 'wxWorkLoginEnabled']);
+      this.validateYnOptions(options, [
+        'mobileLoginEnabled',
+        'wxWorkLoginEnabled',
+        'collectMobileEnabled',
+        'guestModeEnabled',
+        'touristExternalHrefEnabled',
+      ]);
+      this.validateViewerConfigOptions(options);
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, 'Update viewer user system config?');
+
+      const params = this.compactParams({
+        mobileLoginEnabled: options.mobileLoginEnabled,
+        wxWorkLoginEnabled: options.wxWorkLoginEnabled,
+        viewerWeixinAuthExpired: options.viewerWeixinAuthExpired,
+        collectMobileEnabled: options.collectMobileEnabled,
+        guestModeEnabled: options.guestModeEnabled,
+        touristExternalHrefEnabled: options.touristExternalHrefEnabled,
+        touristExternalHrefConfig: options.touristExternalHrefConfig
+          ? this.parseJsonObject(options.touristExternalHrefConfig, 'touristExternalHrefConfig')
+          : undefined,
+      });
+
+      await this.viewerService.updateViewerUserSystemConfig(params as any);
+      this.displayWriteResult('观众系统配置更新成功', params, options.output);
+    }, 'viewer.config.update');
+  }
+
+  /**
+   * List viewer lottery wins
+   * @param options Viewer lottery win query options
+   * @returns Promise that resolves when results are displayed
+   */
+  async listViewerLotteryWins(options: ViewerLotteryWinsOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['viewerId']);
+      this.validatePaginationOptions(options);
+
+      const result = await this.viewerService.viewerLotteryWin({
+        viewerId: options.viewerId,
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 10,
+      });
+
+      this.displayViewerLotteryWins(result, options);
+    }, 'viewer.lotteryWins');
+  }
+
   // ========================================
   // Story 12-2: Viewer Tag Management
   // ========================================
@@ -179,6 +345,56 @@ export class ViewerHandler extends BaseHandler {
   }
 
   /**
+   * Create viewer tags
+   * @param options Viewer tag create options
+   * @returns Promise that resolves when tags are created
+   */
+  async createViewerTag(options: ViewerTagCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['labels']);
+      this.validateOutputOption(options.output);
+      const labels = this.parseStringList(options.labels, '标签名称列表');
+      await confirmWrite(options.force, `Create ${labels.length} viewer tag(s)?`);
+
+      const result = await this.viewerService.createViewerLabel({ labels });
+      this.displayWriteResult('观众标签创建成功', result, options.output);
+    }, 'viewer.tag.create');
+  }
+
+  /**
+   * Update a viewer tag
+   * @param options Viewer tag update options
+   * @returns Promise that resolves when tag is updated
+   */
+  async updateViewerTag(options: ViewerTagUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.id, '标签ID');
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Update viewer tag ${options.id}?`);
+
+      const params = this.compactParams({ id: options.id, label: options.label }) as { id: number; label?: string };
+      await this.viewerService.updateViewerLabel(params);
+      this.displayWriteResult('观众标签更新成功', params, options.output);
+    }, 'viewer.tag.update');
+  }
+
+  /**
+   * Delete a viewer tag
+   * @param options Viewer tag delete options
+   * @returns Promise that resolves when tag is deleted
+   */
+  async deleteViewerTag(options: ViewerTagDeleteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.id, '标签ID');
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Delete viewer tag ${options.id}?`);
+
+      await this.viewerService.deleteViewerLabel({ id: options.id });
+      this.displayWriteResult('观众标签删除成功', { id: options.id }, options.output);
+    }, 'viewer.tag.delete');
+  }
+
+  /**
    * Add tags to viewers (batch operation with progress)
    * @param options Tag add options
    * @returns Promise that resolves when tags are added
@@ -190,6 +406,7 @@ export class ViewerHandler extends BaseHandler {
     return this.executeWithErrorHandling(async () => {
       // Validate and parse input options
       const { viewerIds, labelIds } = this.parseAndValidateTagOptions(options);
+      await confirmWrite(options.force, `Add ${labelIds.length} tag(s) to ${viewerIds.length} viewer(s)?`);
 
       // Show progress for large batches
       const total = viewerIds.length * labelIds.length;
@@ -226,6 +443,7 @@ export class ViewerHandler extends BaseHandler {
     return this.executeWithErrorHandling(async () => {
       // Validate and parse input options
       const { viewerIds, labelIds } = this.parseAndValidateTagOptions(options);
+      await confirmWrite(options.force, `Remove ${labelIds.length} tag(s) from ${viewerIds.length} viewer(s)?`);
 
       // Show progress for large batches
       const total = viewerIds.length * labelIds.length;
@@ -250,7 +468,307 @@ export class ViewerHandler extends BaseHandler {
     }, 'viewer.tag.remove');
   }
 
+  /**
+   * List account labels
+   * @param options Account label list options
+   * @returns Promise that resolves when labels are displayed
+   */
+  async listLabels(options: ViewerLabelListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePaginationOptions(options);
+      const result = await this.viewerService.listLabels({
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 10,
+      });
+      this.displayAccountLabels(result, options);
+    }, 'viewer.label.list');
+  }
+
+  /**
+   * Create account label
+   * @param options Account label create options
+   * @returns Promise that resolves when label is created
+   */
+  async createLabel(options: ViewerLabelCreateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['labelName']);
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Create account label "${options.labelName}"?`);
+
+      const result = await this.viewerService.createLabel({ labelName: options.labelName });
+      this.displayWriteResult('账号标签创建成功', result, options.output);
+    }, 'viewer.label.create');
+  }
+
+  /**
+   * Update account label
+   * @param options Account label update options
+   * @returns Promise that resolves when label is updated
+   */
+  async updateLabel(options: ViewerLabelUpdateOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.labelId, '标签ID');
+      this.validateRequiredStringOptions(options, ['labelName']);
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Update account label ${options.labelId}?`);
+
+      const params = { labelId: String(options.labelId), labelName: options.labelName };
+      await this.viewerService.updateLabel(params);
+      this.displayWriteResult('账号标签更新成功', params, options.output);
+    }, 'viewer.label.update');
+  }
+
+  /**
+   * Delete account label
+   * @param options Account label delete options
+   * @returns Promise that resolves when label is deleted
+   */
+  async deleteLabel(options: ViewerLabelDeleteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validatePositiveNumber(options.labelId, '标签ID');
+      this.validateOutputOption(options.output);
+      await confirmWrite(options.force, `Delete account label ${options.labelId}?`);
+
+      await this.viewerService.deleteLabel({ labelId: String(options.labelId) });
+      this.displayWriteResult('账号标签删除成功', { labelId: options.labelId }, options.output);
+    }, 'viewer.label.delete');
+  }
+
+  /**
+   * Add account label refs to channels
+   * @param options Channel label refs options
+   * @returns Promise that resolves when refs are added
+   */
+  async addChannelLabelRefs(options: ViewerChannelLabelRefsOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredStringOptions(options, ['channelIds', 'labelIds']);
+      this.validateOutputOption(options.output);
+      const channelIds = this.parseStringList(options.channelIds, '频道ID列表');
+      const labelIds = this.parseStringList(options.labelIds, '标签ID列表');
+      this.validateChannelLabelRefs(channelIds, labelIds);
+      await confirmWrite(options.force, `Add ${labelIds.length} label(s) to ${channelIds.length} channel(s)?`);
+
+      const params = { channelIds, labelIds };
+      await this.viewerService.addChannelLabelRefs(params);
+      this.displayWriteResult('频道标签关联成功', params, options.output);
+    }, 'viewer.label.channelRef.add');
+  }
+
   // ===== Private Validation Methods =====
+
+  private compactParams<T extends Record<string, unknown>>(params: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== '')
+    ) as Partial<T>;
+  }
+
+  private validateRequiredStringOptions(options: object, fields: string[]): void {
+    const record = options as Record<string, unknown>;
+    const errors = fields
+      .filter(field => typeof record[field] !== 'string' || String(record[field]).trim() === '')
+      .map(field => `${field} 是必需的`);
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        errors.join(', '),
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateOutputOption(output: string | undefined): void {
+    if (output && !['table', 'json'].includes(output)) {
+      throw new PolyVValidationError(
+        '输出格式必须是 "table" 或 "json"',
+        'output',
+        output,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateYnOptions(options: object, fields: string[]): void {
+    const record = options as Record<string, unknown>;
+    const invalid = fields.filter(field => {
+      const value = record[field];
+      return value !== undefined && value !== 'Y' && value !== 'N';
+    });
+
+    if (invalid.length > 0) {
+      throw new PolyVValidationError(
+        `${invalid.join(', ')} 必须是 Y 或 N`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validatePositiveNumber(value: number | undefined, fieldName: string): void {
+    if (typeof value !== 'number' || !Number.isInteger(value) || value <= 0) {
+      throw new PolyVValidationError(
+        `${fieldName}必须是正整数`,
+        fieldName,
+        value,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateViewerConfigOptions(options: ViewerConfigUpdateOptions): void {
+    const errors: string[] = [];
+
+    if (options.viewerWeixinAuthExpired !== undefined) {
+      const value = options.viewerWeixinAuthExpired;
+      if (!Number.isInteger(value) || value < 0 || value > 180) {
+        errors.push('微信授权有效期必须是 0 到 180 之间的整数');
+      }
+    }
+
+    if (options.touristExternalHrefConfig) {
+      try {
+        this.parseJsonObject(options.touristExternalHrefConfig, 'touristExternalHrefConfig');
+      } catch (error) {
+        errors.push(error instanceof Error ? error.message : String(error));
+      }
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        errors.join(', '),
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateChannelLabelRefs(channelIds: string[], labelIds: string[]): void {
+    const errors: string[] = [];
+
+    if (channelIds.length > 100) {
+      errors.push('频道ID数量不能超过 100');
+    }
+    if (labelIds.length > 50) {
+      errors.push('标签ID数量不能超过 50');
+    }
+
+    const invalidLabelIds = labelIds.filter(id => !/^[1-9]\d*$/.test(id));
+    if (invalidLabelIds.length > 0) {
+      errors.push(`标签ID必须是正整数: ${invalidLabelIds.join(', ')}`);
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        errors.join(', '),
+        'options',
+        { channelIds, labelIds },
+        'validation_failed'
+      );
+    }
+  }
+
+  private parseJsonObject(value: string, fieldName: string): Record<string, unknown> {
+    try {
+      const parsed = JSON.parse(value);
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        throw new Error(`${fieldName} 必须是 JSON 对象`);
+      }
+      return parsed as Record<string, unknown>;
+    } catch (error) {
+      if (error instanceof PolyVValidationError) {
+        throw error;
+      }
+      throw new PolyVValidationError(
+        error instanceof Error ? error.message : `${fieldName} JSON 解析失败`,
+        fieldName,
+        value,
+        'validation_failed'
+      );
+    }
+  }
+
+  private parseStringList(value: string, fieldName: string): string[] {
+    const list = value.split(',').map(item => item.trim()).filter(Boolean);
+    if (list.length === 0) {
+      throw new PolyVValidationError(
+        `${fieldName}不能为空`,
+        fieldName,
+        value,
+        'validation_failed'
+      );
+    }
+    return Array.from(new Set(list));
+  }
+
+  private buildExternalViewers(options: ViewerImportExternalOptions): ImportExternalViewerParams {
+    const errors: string[] = [];
+
+    if (options.viewers) {
+      try {
+        const parsed = JSON.parse(options.viewers);
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          errors.push('viewers 必须是非空 JSON 数组');
+        } else {
+          for (const [index, item] of parsed.entries()) {
+            if (!item || typeof item !== 'object' || Array.isArray(item)) {
+              errors.push(`viewers[${index}] 必须是 JSON 对象`);
+              continue;
+            }
+            const viewer = item as Record<string, unknown>;
+            if (typeof viewer.externalViewerId !== 'string' || viewer.externalViewerId.trim() === '') {
+              errors.push(`viewers[${index}].externalViewerId 是必需的`);
+            }
+            if (typeof viewer.nickname !== 'string' || viewer.nickname.trim() === '') {
+              errors.push(`viewers[${index}].nickname 是必需的`);
+            }
+          }
+
+          if (errors.length === 0) {
+            return parsed as ImportExternalViewerParams;
+          }
+        }
+      } catch (error) {
+        errors.push(error instanceof Error ? error.message : 'viewers JSON 解析失败');
+      }
+    } else {
+      if (!options.externalViewerId || options.externalViewerId.trim() === '') {
+        errors.push('externalViewerId 是必需的');
+      }
+      if (!options.nickname || options.nickname.trim() === '') {
+        errors.push('nickname 是必需的');
+      }
+
+      if (errors.length === 0) {
+        const viewer: Record<string, unknown> = {
+          externalViewerId: options.externalViewerId,
+          nickname: options.nickname,
+        };
+
+        if (options.labelIds) {
+          viewer.labelIds = this.parseStringList(options.labelIds, '标签ID列表');
+        }
+
+        if (options.followUserId) {
+          viewer.followUsers = {
+            userId: options.followUserId,
+            ...(options.followUserType ? { type: options.followUserType } : {}),
+          };
+        }
+
+        return [viewer] as unknown as ImportExternalViewerParams;
+      }
+    }
+
+    throw new PolyVValidationError(
+      errors.join(', '),
+      'options',
+      options,
+      'validation_failed'
+    );
+  }
 
   private validateGetOptions(options: ViewerGetOptions): void {
     const errors: string[] = [];
@@ -344,21 +862,22 @@ export class ViewerHandler extends BaseHandler {
     // Parse and validate label IDs
     let labelIds: number[] = [];
     if (options.labelIds && options.labelIds.trim() !== '') {
-      const parsedIds = options.labelIds
+      const rawIds = options.labelIds
         .split(',')
-        .map(id => {
-          const trimmed = id.trim();
-          if (trimmed === '') return NaN;
-          return parseInt(trimmed, 10);
-        });
+        .map(id => id.trim())
+        .filter(id => id.length > 0);
+      const parsedIds = rawIds.map(id => {
+        if (!/^[1-9]\d*$/.test(id)) return NaN;
+        return parseInt(id, 10);
+      });
 
       // Check for invalid formats
       const invalidIds = parsedIds.filter(id => isNaN(id));
       if (invalidIds.length > 0) {
-        errors.push('标签ID格式无效，必须是数字');
+        errors.push('标签ID格式无效，必须是正整数');
       }
 
-      labelIds = parsedIds.filter(id => !isNaN(id));
+      labelIds = Array.from(new Set(parsedIds.filter(id => !isNaN(id))));
 
       // MEDIUM-3: Validate empty array after parsing
       if (labelIds.length === 0 && invalidIds.length === 0) {
@@ -450,6 +969,75 @@ export class ViewerHandler extends BaseHandler {
         this.displayAsTable(tableData);
       }
     }
+  }
+
+  private displayWriteResult(message: string, data: unknown, output?: 'table' | 'json'): void {
+    const format = output || 'table';
+    if (format === 'json') {
+      this.displayData({
+        success: true,
+        data,
+      }, 'json');
+    } else {
+      this.displaySuccess(message, data, 'table');
+    }
+  }
+
+  private displayViewerLotteryWins(
+    result: ViewerLotteryWinResponse,
+    options: ViewerLotteryWinsOptions
+  ): void {
+    const contents = result?.contents || [];
+    const totalItems = result?.totalItems || 0;
+    const output = options.output || 'table';
+
+    if (output === 'json') {
+      this.displayData(result, 'json');
+      return;
+    }
+
+    if (totalItems === 0) {
+      this.displayInfo('未找到中奖记录');
+      return;
+    }
+
+    console.log(`找到 ${totalItems} 条中奖记录`);
+    console.log(`页码: ${result.pageNumber}, 每页: ${result.pageSize}`);
+    this.displayAsTable(contents.map(item => ({
+      '频道ID': item.channelId?.toString() || '-',
+      '频道名称': this.truncate(item.channelName || '-', 24),
+      '活动名称': this.truncate(item.activityName || '-', 24),
+      '奖品': this.truncate(item.prize || '-', 24),
+      '中奖码': item.winnerCode || '-',
+      '已领奖': item.received === undefined ? '-' : (item.received ? '是' : '否'),
+      '中奖时间': this.formatTime(item.createdTime),
+    })));
+  }
+
+  private displayAccountLabels(
+    result: { contents?: AccountLabel[]; totalItems?: number; pageNumber?: number; pageSize?: number; totalPages?: number },
+    options: ViewerLabelListOptions
+  ): void {
+    const contents = result?.contents || [];
+    const totalItems = result?.totalItems || 0;
+    const output = options.output || 'table';
+
+    if (output === 'json') {
+      this.displayData(result, 'json');
+      return;
+    }
+
+    if (totalItems === 0) {
+      this.displayInfo('未找到账号标签');
+      return;
+    }
+
+    console.log(`找到 ${totalItems} 个账号标签`);
+    console.log(`页码: ${result.pageNumber}, 每页: ${result.pageSize}`);
+    this.displayAsTable(contents.map(item => ({
+      '标签ID': item.id?.toString() || '-',
+      '标签名称': this.truncate(item.name || '-', 30),
+    })));
   }
 
   // ===== Private Display Methods for Tags =====

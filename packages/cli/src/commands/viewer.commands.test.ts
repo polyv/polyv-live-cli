@@ -661,6 +661,7 @@ describe('action execution', () => {
       expect(mockHandler.addViewerTag).toHaveBeenCalledWith({
         viewerIds: 'viewer1,viewer2',
         labelIds: '1,2',
+        force: undefined,
         output: 'table',
       });
     });
@@ -681,6 +682,7 @@ describe('action execution', () => {
       expect(mockHandler.addViewerTag).toHaveBeenCalledWith({
         viewerIds: 'viewer1',
         labelIds: '1',
+        force: undefined,
         output: 'json',
       });
     });
@@ -719,6 +721,7 @@ describe('action execution', () => {
       expect(mockHandler.removeViewerTag).toHaveBeenCalledWith({
         viewerIds: 'viewer1,viewer2',
         labelIds: '1,2',
+        force: undefined,
         output: 'table',
       });
     });
@@ -739,6 +742,7 @@ describe('action execution', () => {
       expect(mockHandler.removeViewerTag).toHaveBeenCalledWith({
         viewerIds: 'viewer1',
         labelIds: '1',
+        force: undefined,
         output: 'json',
       });
     });

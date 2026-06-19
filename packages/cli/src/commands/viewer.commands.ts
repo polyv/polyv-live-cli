@@ -12,6 +12,7 @@ import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
 import { OutputFormat } from '../handlers/base.handler';
+import { parsePositiveInteger, validateYn } from '../utils/api-command';
 
 /**
  * Validate output format
@@ -137,6 +138,151 @@ Output Formats:
 `);
 
   // ========================================
+  // viewer create/update/delete/import/config/lottery-wins
+  // ========================================
+  viewerCmd
+    .command('create')
+    .description('Create a viewer record')
+    .requiredOption('--nickname <nickname>', 'viewer nickname')
+    .requiredOption('--mobile <mobile>', 'viewer mobile number')
+    .option('--name <name>', 'viewer real name')
+    .option('--last-collect-mobile <mobile>', 'last collected mobile number')
+    .option('--email <email>', 'viewer email')
+    .option('--area <area>', 'viewer area')
+    .option('--latest-access-ip <ip>', 'latest access IP')
+    .option('--device <device>', 'viewer device')
+    .option('--follow-users <json>', 'follow users JSON object')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.createViewer({
+        nickname: options.nickname,
+        mobile: options.mobile,
+        name: options.name,
+        lastCollectMobile: options.lastCollectMobile,
+        email: options.email,
+        area: options.area,
+        latestAccessIp: options.latestAccessIp,
+        device: options.device,
+        followUsers: options.followUsers,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  viewerCmd
+    .command('update')
+    .description('Update a viewer record')
+    .requiredOption('-u, --viewer-union-id <id>', 'viewer union ID')
+    .option('--nickname <nickname>', 'viewer nickname')
+    .option('--mobile <mobile>', 'viewer mobile number')
+    .option('--name <name>', 'viewer real name')
+    .option('--last-collect-mobile <mobile>', 'last collected mobile number')
+    .option('--email <email>', 'viewer email')
+    .option('--area <area>', 'viewer area')
+    .option('--latest-access-ip <ip>', 'latest access IP')
+    .option('--device <device>', 'viewer device')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.updateViewer({
+        viewerUnionId: options.viewerUnionId,
+        nickname: options.nickname,
+        mobile: options.mobile,
+        name: options.name,
+        lastCollectMobile: options.lastCollectMobile,
+        email: options.email,
+        area: options.area,
+        latestAccessIp: options.latestAccessIp,
+        device: options.device,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  viewerCmd
+    .command('delete')
+    .description('Delete a viewer record')
+    .requiredOption('-u, --viewer-union-id <id>', 'viewer union ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.deleteViewer({
+        viewerUnionId: options.viewerUnionId,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  viewerCmd
+    .command('import-external')
+    .description('Import external viewer records')
+    .option('--viewers <json>', 'JSON array of external viewer objects')
+    .option('--external-viewer-id <id>', 'external viewer ID for single import')
+    .option('--nickname <nickname>', 'viewer nickname for single import')
+    .option('--label-ids <ids>', 'comma-separated label IDs for single import')
+    .option('--follow-user-id <id>', 'follow user ID for single import')
+    .option('--follow-user-type <type>', 'follow user type for single import')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.importExternalViewers({
+        viewers: options.viewers,
+        externalViewerId: options.externalViewerId,
+        nickname: options.nickname,
+        labelIds: options.labelIds,
+        followUserId: options.followUserId,
+        followUserType: options.followUserType,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  const configCmd = viewerCmd.command('config');
+  configCmd.description('Manage viewer user system config');
+  configCmd
+    .command('update')
+    .description('Update viewer user system config')
+    .requiredOption('--mobile-login-enabled <Y|N>', 'mobile login enabled', validateYn)
+    .requiredOption('--wx-work-login-enabled <Y|N>', 'WeCom login enabled', validateYn)
+    .option('--viewer-weixin-auth-expired <days>', 'WeChat auth expiry days (0-180)', parseZeroBasedInteger)
+    .option('--collect-mobile-enabled <Y|N>', 'collect mobile enabled', validateYn)
+    .option('--guest-mode-enabled <Y|N>', 'guest mode enabled', validateYn)
+    .option('--tourist-external-href-enabled <Y|N>', 'external tourist link enabled', validateYn)
+    .option('--tourist-external-href-config <json>', 'external tourist link config JSON object')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.updateViewerConfig({
+        mobileLoginEnabled: options.mobileLoginEnabled,
+        wxWorkLoginEnabled: options.wxWorkLoginEnabled,
+        viewerWeixinAuthExpired: options.viewerWeixinAuthExpired,
+        collectMobileEnabled: options.collectMobileEnabled,
+        guestModeEnabled: options.guestModeEnabled,
+        touristExternalHrefEnabled: options.touristExternalHrefEnabled,
+        touristExternalHrefConfig: options.touristExternalHrefConfig,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  viewerCmd
+    .command('lottery-wins')
+    .description('List viewer lottery win records')
+    .requiredOption('-i, --viewer-id <id>', 'viewer ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.listViewerLotteryWins({
+        viewerId: options.viewerId,
+        page: options.page,
+        size: options.size,
+        output: options.output,
+      }));
+    });
+
+  // ========================================
   // viewer tag (Story 12-2)
   // ========================================
   const tagCmd = viewerCmd.command('tag');
@@ -187,6 +333,53 @@ Examples:
 `);
 
   // ========================================
+  // viewer tag create/update/delete
+  // ========================================
+  tagCmd
+    .command('create')
+    .description('Create viewer tags')
+    .requiredOption('-l, --labels <names>', 'comma-separated tag names')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.createViewerTag({
+        labels: options.labels,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  tagCmd
+    .command('update')
+    .description('Update a viewer tag')
+    .requiredOption('--id <id>', 'viewer tag ID', parsePositiveInteger)
+    .option('-l, --label <name>', 'new tag name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.updateViewerTag({
+        id: options.id,
+        label: options.label,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  tagCmd
+    .command('delete')
+    .description('Delete a viewer tag')
+    .requiredOption('--id <id>', 'viewer tag ID', parsePositiveInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.deleteViewerTag({
+        id: options.id,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  // ========================================
   // viewer tag add (AC #1)
   // ========================================
   const tagAddCmd = tagCmd
@@ -194,6 +387,7 @@ Examples:
     .description('Add tags to viewers')
     .requiredOption('-V, --viewer-ids <ids>', 'comma-separated viewer IDs')
     .requiredOption('-l, --label-ids <ids>', 'comma-separated label IDs')
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -205,6 +399,7 @@ Examples:
         await viewerHandler.addViewerTag({
           viewerIds: options.viewerIds,
           labelIds: options.labelIds,
+          force: options.force,
           output: options.output,
         });
       } catch (error) {
@@ -236,6 +431,7 @@ Examples:
     .description('Remove tags from viewers')
     .requiredOption('-V, --viewer-ids <ids>', 'comma-separated viewer IDs')
     .requiredOption('-l, --label-ids <ids>', 'comma-separated label IDs')
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -247,6 +443,7 @@ Examples:
         await viewerHandler.removeViewerTag({
           viewerIds: options.viewerIds,
           labelIds: options.labelIds,
+          force: options.force,
           output: options.output,
         });
       } catch (error) {
@@ -269,11 +466,116 @@ Examples:
   # JSON output
   $ polyv-live-cli viewer tag remove -V "viewer1" -l 1 -o json
 `);
+
+  // ========================================
+  // viewer label: account labels and channel refs
+  // ========================================
+  const labelCmd = viewerCmd.command('label');
+  labelCmd.description('Manage account labels and channel label refs');
+
+  labelCmd
+    .command('list')
+    .description('List account labels')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.listLabels({
+        page: options.page,
+        size: options.size,
+        output: options.output,
+      }));
+    });
+
+  labelCmd
+    .command('create')
+    .description('Create an account label')
+    .requiredOption('--label-name <name>', 'account label name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.createLabel({
+        labelName: options.labelName,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  labelCmd
+    .command('update')
+    .description('Update an account label')
+    .requiredOption('--label-id <id>', 'account label ID', parsePositiveInteger)
+    .requiredOption('--label-name <name>', 'account label name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.updateLabel({
+        labelId: options.labelId,
+        labelName: options.labelName,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  labelCmd
+    .command('delete')
+    .description('Delete an account label')
+    .requiredOption('--label-id <id>', 'account label ID', parsePositiveInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.deleteLabel({
+        labelId: options.labelId,
+        force: options.force,
+        output: options.output,
+      }));
+    });
+
+  const channelRefCmd = labelCmd.command('channel-ref');
+  channelRefCmd.description('Manage channel label refs');
+  channelRefCmd
+    .command('add')
+    .description('Add account label refs to channels')
+    .requiredOption('-c, --channel-ids <ids>', 'comma-separated channel IDs')
+    .requiredOption('-l, --label-ids <ids>', 'comma-separated label IDs')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      await executeViewerCommand(program, (viewerHandler) => viewerHandler.addChannelLabelRefs({
+        channelIds: options.channelIds,
+        labelIds: options.labelIds,
+        force: options.force,
+        output: options.output,
+      }));
+    });
 }
 
 // ========================================
 // Common helper
 // ========================================
+function parseZeroBasedInteger(value: string): number {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 0) {
+    throw new Error('value must be a non-negative integer');
+  }
+  return parsed;
+}
+
+async function executeViewerCommand(
+  program: Command,
+  action: (viewerHandler: ViewerHandler) => Promise<void>
+): Promise<void> {
+  try {
+    const parentOptions = program.opts();
+    const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+    const viewerHandler = new ViewerHandler(authConfig, serviceConfig);
+    await action(viewerHandler);
+  } catch (error) {
+    logError(error instanceof Error ? error : new Error(String(error)));
+    process.exit(1);
+  }
+}
+
 async function loadAuthAndServiceConfig(parentOptions: any): Promise<{
   authConfig: AuthConfig;
   serviceConfig: ViewerServiceConfig;

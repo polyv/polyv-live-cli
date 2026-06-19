@@ -937,6 +937,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1',
           labelIds: '1',
+          force: true,
           output: 'table' as const,
         };
 
@@ -961,6 +962,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1,viewer2,viewer3',
           labelIds: '1,2,3',
+          force: true,
           output: 'table' as const,
         };
 
@@ -1010,13 +1012,25 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         };
 
         await expect(viewerHandler.addViewerTag(options)).rejects.toThrow(PolyVValidationError);
-        await expect(viewerHandler.addViewerTag(options)).rejects.toThrow('标签ID格式无效，必须是数字');
+        await expect(viewerHandler.addViewerTag(options)).rejects.toThrow('标签ID格式无效，必须是正整数');
+      });
+
+      it('should reject zero and negative label IDs before calling the API', async () => {
+        const options = {
+          viewerIds: 'viewer1',
+          labelIds: '0,-1',
+          output: 'table' as const,
+        };
+
+        await expect(viewerHandler.addViewerTag(options)).rejects.toThrow(PolyVValidationError);
+        expect(mockViewerService.addViewersLabels).not.toHaveBeenCalled();
       });
 
       it('12.2-UNIT-012: should output add result in JSON format', async () => {
         const options = {
           viewerIds: 'viewer1,viewer2',
           labelIds: '1,2',
+          force: true,
           output: 'json' as const,
         };
 
@@ -1040,6 +1054,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1',
           labelIds: '1',
+          force: true,
           output: 'table' as const,
         };
 
@@ -1064,6 +1079,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1,viewer2',
           labelIds: '1,2,3',
+          force: true,
           output: 'table' as const,
         };
 
@@ -1109,6 +1125,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1,viewer2',
           labelIds: '1,2',
+          force: true,
           output: 'json' as const,
         };
 
@@ -1132,6 +1149,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1',
           labelIds: '1',
+          force: true,
           output: 'table' as const,
         };
 
@@ -1156,6 +1174,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         const options = {
           viewerIds: 'viewer1',
           labelIds: '1',
+          force: true,
           output: 'table' as const,
         };
 

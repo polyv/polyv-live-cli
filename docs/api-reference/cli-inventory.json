@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T20:01:18.817Z",
+  "generatedAt": "2026-06-19T20:19:50.025Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 294,
-    "cliMissingLatestApis": 284,
-    "cliCoverage": 50.9,
-    "cliUsageReferences": 298,
-    "cliSdkServiceUsages": 298,
+    "cliUsedLatestApis": 308,
+    "cliMissingLatestApis": 270,
+    "cliCoverage": 53.3,
+    "cliUsageReferences": 312,
+    "cliSdkServiceUsages": 312,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 285,
+    "matchedApiIds": 299,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 383,
+    "cliCommandPaths": 400,
     "cliTopLevelCommands": 37
   },
   "modules": [
@@ -41,11 +41,11 @@
       "module": "user",
       "label": "用户与观众",
       "total": 73,
-      "cliUsed": 10,
-      "cliMissing": 63,
+      "cliUsed": 24,
+      "cliMissing": 49,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 10,
-      "cliCoverage": 13.7
+      "sdkServiceUsed": 24,
+      "cliCoverage": 32.9
     },
     {
       "module": "account",
@@ -3830,7 +3830,40 @@
       "depth": 1,
       "signature": "viewer",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 33
+      "line": 34
+    },
+    {
+      "command": "viewer config",
+      "path": [
+        "viewer",
+        "config"
+      ],
+      "depth": 2,
+      "signature": "config",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 241
+    },
+    {
+      "command": "viewer create",
+      "path": [
+        "viewer",
+        "create"
+      ],
+      "depth": 2,
+      "signature": "create",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 143
+    },
+    {
+      "command": "viewer delete",
+      "path": [
+        "viewer",
+        "delete"
+      ],
+      "depth": 2,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 203
     },
     {
       "command": "viewer get",
@@ -3841,7 +3874,29 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 39
+      "line": 40
+    },
+    {
+      "command": "viewer import-external",
+      "path": [
+        "viewer",
+        "import-external"
+      ],
+      "depth": 2,
+      "signature": "import-external",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 217
+    },
+    {
+      "command": "viewer label",
+      "path": [
+        "viewer",
+        "label"
+      ],
+      "depth": 2,
+      "signature": "label",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 473
     },
     {
       "command": "viewer list",
@@ -3852,7 +3907,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 77
+      "line": 78
+    },
+    {
+      "command": "viewer lottery-wins",
+      "path": [
+        "viewer",
+        "lottery-wins"
+      ],
+      "depth": 2,
+      "signature": "lottery-wins",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 269
     },
     {
       "command": "viewer tag",
@@ -3863,7 +3929,90 @@
       "depth": 2,
       "signature": "tag",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 142
+      "line": 288
+    },
+    {
+      "command": "viewer update",
+      "path": [
+        "viewer",
+        "update"
+      ],
+      "depth": 2,
+      "signature": "update",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 173
+    },
+    {
+      "command": "viewer config update",
+      "path": [
+        "viewer",
+        "config",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 243
+    },
+    {
+      "command": "viewer label channel-ref",
+      "path": [
+        "viewer",
+        "label",
+        "channel-ref"
+      ],
+      "depth": 3,
+      "signature": "channel-ref",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 534
+    },
+    {
+      "command": "viewer label create",
+      "path": [
+        "viewer",
+        "label",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 490
+    },
+    {
+      "command": "viewer label delete",
+      "path": [
+        "viewer",
+        "label",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 520
+    },
+    {
+      "command": "viewer label list",
+      "path": [
+        "viewer",
+        "label",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 476
+    },
+    {
+      "command": "viewer label update",
+      "path": [
+        "viewer",
+        "label",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 504
     },
     {
       "command": "viewer tag add",
@@ -3875,7 +4024,31 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 192
+      "line": 385
+    },
+    {
+      "command": "viewer tag create",
+      "path": [
+        "viewer",
+        "tag",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 338
+    },
+    {
+      "command": "viewer tag delete",
+      "path": [
+        "viewer",
+        "tag",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 368
     },
     {
       "command": "viewer tag list",
@@ -3887,7 +4060,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 148
+      "line": 294
     },
     {
       "command": "viewer tag remove",
@@ -3899,7 +4072,32 @@
       "depth": 3,
       "signature": "remove",
       "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 234
+      "line": 429
+    },
+    {
+      "command": "viewer tag update",
+      "path": [
+        "viewer",
+        "tag",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 352
+    },
+    {
+      "command": "viewer label channel-ref add",
+      "path": [
+        "viewer",
+        "label",
+        "channel-ref",
+        "add"
+      ],
+      "depth": 4,
+      "signature": "add",
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 536
     },
     {
       "command": "watch-condition",
@@ -4622,9 +4820,9 @@
         {
           "module": "user",
           "label": "用户与观众",
-          "missing": 63,
+          "missing": 49,
           "total": 73,
-          "coverage": 13.7
+          "coverage": 32.9
         },
         {
           "module": "account",
@@ -4641,9 +4839,9 @@
           "coverage": 100
         }
       ],
-      "missing": 63,
+      "missing": 49,
       "total": 106,
-      "coverage": 40.6
+      "coverage": 53.8
     }
   ],
   "unmatchedUsages": [],
@@ -19986,8 +20184,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateLabel",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 270,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20104,7 +20311,7 @@
             "reference": "V4UserService#getViewerRecord",
             "cliModule": "viewer",
             "file": "packages/cli/src/services/viewer-service.ts",
-            "line": 71,
+            "line": 90,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -20498,8 +20705,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#viewerLotteryWin",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 309,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20604,8 +20820,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createLabel",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 256,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20632,8 +20857,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createViewerLabel",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 202,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20749,8 +20983,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#listLabels",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 242,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20871,8 +21114,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateViewerLabel",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 216,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20933,8 +21185,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateViewerRecord",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 132,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -20992,7 +21253,7 @@
             "reference": "V4UserService#listViewerLabels",
             "cliModule": "viewer",
             "file": "packages/cli/src/services/viewer-service.ts",
-            "line": 102,
+            "line": 188,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -21055,7 +21316,7 @@
             "reference": "V4UserService#listViewerRecords",
             "cliModule": "viewer",
             "file": "packages/cli/src/services/viewer-service.ts",
-            "line": 85,
+            "line": 104,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -21193,8 +21454,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#addChannelLabelRefs",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 296,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21221,8 +21491,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteLabel",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 283,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21249,8 +21528,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteViewerLabel",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 229,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21277,8 +21565,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#deleteViewerRecord",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 145,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21369,7 +21666,7 @@
             "reference": "V4UserService#deleteViewerLabelRef",
             "cliModule": "viewer",
             "file": "packages/cli/src/services/viewer-service.ts",
-            "line": 147,
+            "line": 354,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
@@ -21484,8 +21781,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#createViewerRecord",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 118,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21513,8 +21819,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#importExternalViewer",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 158,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21830,8 +22145,17 @@
         "file": "packages/sdk/src/services/v4/user.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4UserService#updateViewerUserSystemConfig",
+            "cliModule": "viewer",
+            "file": "packages/cli/src/services/viewer-service.ts",
+            "line": 172,
+            "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
+          }
+        ]
       }
     },
     {
@@ -22073,7 +22397,7 @@
             "reference": "V4UserService#addViewerLabel",
             "cliModule": "viewer",
             "file": "packages/cli/src/services/viewer-service.ts",
-            "line": 125,
+            "line": 332,
             "sdkFile": "packages/sdk/src/services/v4/user.service.ts"
           }
         ]
