@@ -5,6 +5,7 @@
  */
 
 export { ChannelService } from './channel.service.js';
+export { StatisticsService } from './statistics.service.js';
 export { ChatService } from './chat.service.js';
 export { LiveInteractionService } from './live-interaction.service.js';
 export { AccountService } from './account.service.js';

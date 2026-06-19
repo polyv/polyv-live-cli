@@ -55,4 +55,4 @@ export {
 } from './constants/index.js';
 
 // Services
-export { ChannelService } from './services/index.js';
+export * from './services/index.js';
