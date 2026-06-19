@@ -145,17 +145,41 @@ export interface DeleteChildAccountsParams {
  */
 export interface ChildAccountRole {
   /** Role ID */
-  roleId: number;
+  id: number;
   /** Role name */
-  roleName: string;
+  name: string;
+  /** Role description */
+  description?: string;
+  /** Comma-separated permission names */
+  permissionName?: string;
 }
 
 /**
  * Parameters for getting child account by sale
  */
 export interface GetBySaleParams {
-  /** Sale identifier */
-  sale: string;
+  /** Sale ID. Required when saleCode is omitted. */
+  saleId?: string;
+  /** Sale invitation code. Required when saleId is omitted. */
+  saleCode?: string;
+}
+
+/**
+ * Invite customer sale account information
+ */
+export interface InviteCustomerInfo {
+  /** PolyV user ID */
+  userId?: string;
+  /** Child account user ID */
+  childUserId?: string;
+  /** Child account name */
+  childName?: string;
+  /** Child account email */
+  childEmail?: string;
+  /** Child account avatar */
+  avatar?: string;
+  /** Child account telephone */
+  telephone?: string;
 }
 
 // ============================================
@@ -1165,24 +1189,74 @@ export type AddCustomFieldValueResponse = void;
  * Donate template settings
  */
 export interface DonateTemplate {
-  /** Whether enabled */
-  enabled: boolean;
-  /** Minimum amount */
-  minAmount?: number;
-  /** Maximum amount */
-  maxAmount?: number;
+  /** Cash donate switch */
+  donateCashEnabled?: UserSwitchValue;
+  /** Cash donate settings */
+  cashDonate?: TemplateCashDonate;
+  /** Gift donate switch */
+  donateGiftEnabled?: UserSwitchValue;
+  /** Gift donate settings */
+  giftDonate?: TemplateGiftDonate;
+}
+
+/**
+ * Cash donate settings
+ */
+export interface TemplateCashDonate {
+  /** Fixed donate amounts */
+  cashs?: number[];
+  /** Minimum custom donate amount */
+  cashMin?: number;
+}
+
+/**
+ * Gift donate settings
+ */
+export interface TemplateGiftDonate {
+  /** Pay way */
+  payWay?: 'CASH' | 'POINT' | string;
+  /** Cash unit */
+  cashUnit?: string | null;
+  /** Point unit */
+  pointUnit?: string | null;
+  /** Cash pay gifts */
+  cashPays?: GiftDonate[];
+  /** Point pay gifts */
+  pointPays?: GiftDonate[];
+}
+
+/**
+ * Gift donate item
+ */
+export interface GiftDonate {
+  /** Gift name */
+  name?: string;
+  /** Gift image URL */
+  img: string;
+  /** Dynamic thumbnail URL */
+  dynamicImg?: string | null;
+  /** Dynamic file URL */
+  dynamicFile?: string | null;
+  /** Gift price */
+  price?: number;
+  /** Gift sequence */
+  sequence?: number;
+  /** Gift switch */
+  enabled?: UserSwitchValue;
+  /** Gift unit */
+  unit?: string | null;
+  /** Image type */
+  imgType?: 'STATIC' | 'DYNAMIC' | string | null;
 }
 
 /**
  * Parameters for updating donate template
  */
 export interface UpdateDonateTemplateParams {
-  /** Whether enabled */
-  enabled: boolean;
-  /** Minimum amount */
-  minAmount?: number;
-  /** Maximum amount */
-  maxAmount?: number;
+  /** Gift donate switch */
+  donateGiftEnabled: UserSwitchValue;
+  /** Gift donate settings */
+  giftDonate?: TemplateGiftDonate;
 }
 
 /**
@@ -1229,20 +1303,40 @@ export interface UpdateRoleConfigTemplateParams {
  * Playback setting
  */
 export interface PlaybackSetting {
-  /** Auto play */
-  autoPlay?: boolean;
-  /** Quality */
-  quality?: string;
+  playbackEnabled?: UserSwitchValue;
+  type?: 'single' | 'list' | string;
+  origin?: 'record' | 'playback' | 'vod' | string;
+  sectionEnabled?: UserSwitchValue;
+  chatPlaybackEnabled?: UserSwitchValue;
+  playbackMultiplierEnabled?: UserSwitchValue;
+  playbackProgressBarEnabled?: UserSwitchValue;
+  playbackProgressBarOperationType?: 'drag' | 'prohibitDrag' | 'dragHistoryOnly' | string;
+  showPlayButtonEnabled?: UserSwitchValue;
+  productPlaybackEnabled?: UserSwitchValue;
+  questionnairePlaybackEnabled?: UserSwitchValue;
+  qaPlaybackEnabled?: UserSwitchValue;
+  cardPushPlaybackEnabled?: UserSwitchValue;
+  checkInPlaybackEnabled?: UserSwitchValue;
 }
 
 /**
  * Parameters for updating playback setting
  */
 export interface UpdatePlaybackSettingParams {
-  /** Auto play */
-  autoPlay?: boolean;
-  /** Quality */
-  quality?: string;
+  playbackEnabled?: UserSwitchValue;
+  type?: 'single' | 'list' | string;
+  origin?: 'record' | 'playback' | 'vod' | string;
+  sectionEnabled?: UserSwitchValue;
+  playbackMultiplierEnabled?: UserSwitchValue;
+  playbackProgressBarEnabled?: UserSwitchValue;
+  playbackProgressBarOperationType?: 'drag' | 'prohibitDrag' | 'dragHistoryOnly' | string;
+  showPlayButtonEnabled?: UserSwitchValue;
+  chatPlaybackEnabled?: UserSwitchValue;
+  productPlaybackEnabled?: UserSwitchValue;
+  questionnairePlaybackEnabled?: UserSwitchValue;
+  qaPlaybackEnabled?: UserSwitchValue;
+  cardPushPlaybackEnabled?: UserSwitchValue;
+  checkInPlaybackEnabled?: UserSwitchValue;
 }
 
 /**
@@ -1293,20 +1387,41 @@ export interface UpdateVideoModerationSettingParams {
  * Callback settings
  */
 export interface CallbackSettings {
-  /** Callback URL */
-  url?: string;
-  /** Whether enabled */
-  enabled?: boolean;
+  recordCallbackUrl?: string;
+  recordFileCallBackType?: 'all' | 'last' | string;
+  recordCallbackVideoType?: 'm3u8' | 'mp4' | 'm3u8,mp4' | string;
+  playbackCallbackUrl?: string;
+  rebirthVodCallbackEnabled?: UserSwitchValue;
+  pptRecordCallbackUrl?: string;
+  streamCallbackUrl?: string;
+  channelBasicUpdateCallbackUrl?: string;
+  liveScanCallbackUrl?: string;
+  chatUserStatusCallbackUrl?: string;
+  interactionCallbackUrl?: string;
+  playbackCacheCallbackUrl?: string;
+  playbackSettingCallbackUrl?: string;
+  aiPptVideoCallbackUrl?: string;
+  liveViolationCutoffCallbackUrl?: string;
+  liveStatsCallbackUrl?: string;
 }
 
 /**
  * Parameters for updating callback settings
  */
 export interface UpdateCallbackParams {
-  /** Callback URL */
-  url?: string;
-  /** Whether enabled */
-  enabled?: boolean;
+  recordCallbackUrl?: string;
+  recordFileCallBackType?: 'all' | 'last' | string;
+  recordCallbackVideoType?: 'm3u8' | 'mp4' | 'm3u8,mp4' | string;
+  playbackCallbackUrl?: string;
+  rebirthVodCallbackEnabled?: UserSwitchValue;
+  pptRecordCallbackUrl?: string;
+  streamCallbackUrl?: string;
+  channelBasicUpdateCallbackUrl?: string;
+  liveScanCallbackUrl?: string;
+  playbackCacheCallbackUrl?: string;
+  aiPptVideoCallbackUrl?: string;
+  liveViolationCutoffCallbackUrl?: string;
+  liveStatsCallbackUrl?: string;
 }
 
 /**
@@ -1333,36 +1448,42 @@ export interface UpdateGlobalSwitchParams {
  * Global footer settings
  */
 export interface GlobalFooterSettings {
-  /** Whether enabled */
-  enabled?: boolean;
-  /** Footer content */
-  content?: string;
+  /** PolyV user ID */
+  userId?: string;
+  /** Footer switch */
+  showFooterEnabled?: UserSwitchValue;
+  /** Footer text */
+  footerText?: string;
+  /** Footer link protocol */
+  footTextLinkProtocol?: 'http://' | 'https://' | string;
+  /** Footer link URL without protocol */
+  footTextLinkUrl?: string;
 }
 
 /**
  * Parameters for updating global footer settings
  */
 export interface UpdateGlobalFooterParams {
-  /** Whether enabled */
-  enabled?: boolean;
-  /** Footer content */
-  content?: string;
+  showFooterEnabled?: UserSwitchValue;
+  footerText?: string;
+  footTextLinkProtocol?: 'http://' | 'https://' | string;
+  footTextLinkUrl?: string;
 }
 
 /**
  * PV show enable settings
  */
 export interface PvShowEnableSettings {
-  /** Whether enabled */
-  enabled?: boolean;
+  /** PV show switch */
+  enabled?: UserSwitchValue;
 }
 
 /**
  * Parameters for updating PV show enable settings
  */
 export interface UpdatePvShowEnableParams {
-  /** Whether enabled */
-  enabled?: boolean;
+  /** PV show switch */
+  enabled: UserSwitchValue;
 }
 
 // ============================================
@@ -1373,32 +1494,34 @@ export interface UpdatePvShowEnableParams {
  * Parameters for getting mic duration
  */
 export interface GetMicDurationParams {
-  /** Channel ID */
-  channelId: string;
-  /** Session ID */
-  sessionId: string;
+  /** Start timestamp in milliseconds */
+  startTime?: number;
+  /** End timestamp in milliseconds */
+  endTime?: number;
 }
 
 /**
  * Mic duration response
  */
 export interface MicDurationResponse {
-  /** Duration */
-  duration: number;
-  /** Unit */
-  unit?: string;
+  /** User ID */
+  userId: string;
+  /** Used mic minutes */
+  history: number;
 }
 
 /**
  * MR concurrency detail response
  */
 export interface MrConcurrencyDetailResponse {
-  /** Current concurrency */
-  current: number;
-  /** Max concurrency */
-  max: number;
-  /** Peak concurrency */
-  peak: number;
+  /** Total MR concurrency */
+  mrLiveConcurrency: number;
+  /** Currently used concurrency */
+  usedCount: number;
+  /** Residual concurrency */
+  residualConcurrency: number;
+  /** Channel IDs occupying concurrency */
+  channelIds: string[];
 }
 
 /**
@@ -1415,31 +1538,47 @@ export interface SendSmsParams {
  * Parameters for getting bill use detail list
  */
 export interface GetBillUseDetailListParams {
+  /** Billing item category */
+  itemCategory: string;
   /** Start date (YYYY-MM-DD) */
   startDate: string;
   /** End date (YYYY-MM-DD) */
   endDate: string;
+  /** Channel ID */
+  channelId?: string;
+  /** Page number */
+  pageNumber?: number;
+  /** Page size */
+  pageSize?: number;
 }
 
 /**
  * Bill use detail item
  */
 export interface BillUseDetailItem {
-  /** Bill ID */
-  billId: number;
-  /** Type */
-  type: string;
-  /** Amount */
-  amount: number;
-  /** Created timestamp */
-  createTime: number;
+  channelId?: number;
+  consumeUnit?: string;
+  consumed?: number;
+  endTime?: string;
+  itemCategory?: string;
+  itemName?: string;
+  production?: string;
+  recordId?: string;
+  remark?: string;
+  sessionId?: string;
+  avgBitRate?: string;
+  startTime?: string;
+  statDate?: string;
 }
 
 /**
  * Response for getting bill use detail list
  */
 export interface GetBillUseDetailListResponse {
-  /** Bill use details list */
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalItems: number;
   contents: BillUseDetailItem[];
 }
 
@@ -1492,28 +1631,59 @@ export interface ViewerLotteryWinResponse extends UserPaginatedResponse<ViewerLo
  * Parameters for getting watch log detail
  */
 export interface GetWatchLogDetailParams {
-  /** Log ID */
-  logId: number;
+  /** Viewer ID */
+  viewerId: string;
+  /** Start date (YYYY-MM-DD) */
+  startDate?: string;
+  /** End date (YYYY-MM-DD) */
+  endDate?: string;
+  /** Page number */
+  pageNumber?: number;
+  /** Page size */
+  pageSize?: number;
+}
+
+/**
+ * Watch log detail item
+ */
+export interface WatchLogDetailItem {
+  area?: string;
+  browser?: string;
+  ip?: string;
+  nick?: string;
+  playDuration?: string;
+  channelId?: number;
+  sessionId?: string;
+  startTime?: string | number;
+  viewType?: string;
+  /** Viewer ID */
+  viewerId: string;
+  param4?: string;
+  param5?: string;
 }
 
 /**
  * Watch log detail response
  */
-export interface WatchLogDetailResponse {
-  /** Log ID */
-  logId: number;
-  /** Viewer ID */
-  viewerId: string;
-  /** Duration */
-  duration: number;
-  /** Start time */
-  startTime: number;
-}
+export interface WatchLogDetailResponse extends UserPaginatedResponse<WatchLogDetailItem> {}
 
 /**
  * Parameters for getting watch log list
  */
-export interface GetWatchLogListParams extends UserPaginationParams {}
+export interface GetWatchLogListParams {
+  /** Start date (YYYY-MM-DD) */
+  startDate?: string;
+  /** End date (YYYY-MM-DD) */
+  endDate?: string;
+  /** Page number */
+  pageNumber?: number;
+  /** Page size */
+  pageSize?: number;
+  /** Viewer ID */
+  viewerId?: string;
+  /** Channel ID */
+  channelId?: number;
+}
 
 // ============================================
 // AC14: Global Channel Settings Types
@@ -1567,14 +1737,14 @@ export interface UpdateGlobalChannelSettingsParams {
  * Watch log item
  */
 export interface WatchLogItem {
-  /** Log ID */
-  logId: number;
+  avgDuration?: string;
+  nick?: string;
+  totalDuration?: string;
+  viewCount?: number;
   /** Viewer ID */
   viewerId: string;
-  /** Channel ID */
-  channelId: string;
-  /** Duration */
-  duration: number;
+  param4?: string;
+  param5?: string;
 }
 
 /**

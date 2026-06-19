@@ -530,6 +530,7 @@ export type {
   DeleteChildAccountsParams,
   ChildAccountRole,
   GetBySaleParams,
+  InviteCustomerInfo,
 } from './v4-user.js';
 
 // V4 User types - AC2: Organization
@@ -650,6 +651,9 @@ export type {
 // V4 User types - AC11: Template
 export type {
   DonateTemplate,
+  TemplateCashDonate,
+  TemplateGiftDonate,
+  GiftDonate,
   UpdateDonateTemplateParams,
   MarqueeTemplate,
   UpdateMarqueeTemplateParams,
@@ -688,6 +692,7 @@ export type {
   ViewerLotteryWinItem,
   ViewerLotteryWinResponse,
   GetWatchLogDetailParams,
+  WatchLogDetailItem,
   WatchLogDetailResponse,
   GetWatchLogListParams,
   WatchLogItem,

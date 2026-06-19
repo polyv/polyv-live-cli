@@ -19,6 +19,7 @@ import type {
   DeleteChildAccountsParams,
   ChildAccountRole,
   GetBySaleParams,
+  InviteCustomerInfo,
   // AC2: Organization types
   ListOrganizationsResponse,
   CreateOrganizationParams,
@@ -290,7 +291,7 @@ export class V4UserService {
    */
   async listChildAccountRoles(): Promise<ChildAccountRole[]> {
     const response = await this.client.httpClient.get<ChildAccountRole[]>(
-      '/live/v4/user/children/roles',
+      '/live/v4/user/children/role/list',
       {}
     );
     return response as unknown as ChildAccountRole[];
@@ -304,17 +305,25 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * const account = await client.v4User.getBySale({ sale: '100' });
+   * const account = await client.v4User.getBySale({ saleId: '100' });
    * ```
    */
-  async getBySale(params: GetBySaleParams): Promise<ChildAccount> {
-    this.validateRequiredString(params.sale, 'sale');
+  async getBySale(params: GetBySaleParams): Promise<InviteCustomerInfo> {
+    if (!params.saleId && !params.saleCode) {
+      throw new PolyVValidationError('saleId or saleCode is required');
+    }
+    if (params.saleId !== undefined) {
+      this.validateRequiredString(params.saleId, 'saleId');
+    }
+    if (params.saleCode !== undefined) {
+      this.validateRequiredString(params.saleCode, 'saleCode');
+    }
 
-    const response = await this.client.httpClient.get<ChildAccount>(
-      '/live/v4/user/children/get-by-sale',
+    const response = await this.client.httpClient.get<InviteCustomerInfo>(
+      '/live/v4/user/invite-customer/get',
       { params }
     );
-    return response as unknown as ChildAccount;
+    return response as unknown as InviteCustomerInfo;
   }
 
   // ============================================
@@ -1331,7 +1340,7 @@ export class V4UserService {
    */
   async getDonateTemplate(): Promise<DonateTemplate> {
     const response = await this.client.httpClient.get<DonateTemplate>(
-      '/live/v4/user/template/donate/get',
+      '/live/v4/user/donate/get',
       {}
     );
     return response as unknown as DonateTemplate;
@@ -1344,16 +1353,15 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.updateDonateTemplate({
-   *   enabled: true,
-   *   minAmount: 1,
-   *   maxAmount: 10000,
-   * });
+   * await client.v4User.updateDonateTemplate({ donateGiftEnabled: 'Y' });
    * ```
    */
   async updateDonateTemplate(params: UpdateDonateTemplateParams): Promise<void> {
+    this.validateYnValue(params.donateGiftEnabled, 'donateGiftEnabled');
+    this.validateGiftDonateParams(params);
+
     await this.client.httpClient.post(
-      '/live/v4/user/template/donate/update',
+      '/live/v4/user/donate/gift/update',
       params
     );
   }
@@ -1445,7 +1453,7 @@ export class V4UserService {
    */
   async getPlaybackSetting(): Promise<PlaybackSetting> {
     const response = await this.client.httpClient.get<PlaybackSetting>(
-      '/live/v4/user/template/playback/get',
+      '/live/v4/user/template/playback-setting/get',
       {}
     );
     return response as unknown as PlaybackSetting;
@@ -1458,15 +1466,14 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.updatePlaybackSetting({
-   *   autoPlay: false,
-   *   quality: 'medium',
-   * });
+   * await client.v4User.updatePlaybackSetting({ playbackEnabled: 'Y' });
    * ```
    */
   async updatePlaybackSetting(params: UpdatePlaybackSettingParams): Promise<void> {
+    this.validatePlaybackSettingParams(params);
+
     await this.client.httpClient.post(
-      '/live/v4/user/template/playback/update',
+      '/live/v4/user/template/playback-setting/update',
       params
     );
   }
@@ -1563,7 +1570,7 @@ export class V4UserService {
    */
   async getCallback(): Promise<CallbackSettings> {
     const response = await this.client.httpClient.get<CallbackSettings>(
-      '/live/v4/user/callback/get',
+      '/live/v4/user/global-setting/callback/get',
       {}
     );
     return response as unknown as CallbackSettings;
@@ -1576,15 +1583,14 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.updateCallback({
-   *   url: 'https://example.com/new-callback',
-   *   enabled: true,
-   * });
+   * await client.v4User.updateCallback({ streamCallbackUrl: 'https://example.com/callback' });
    * ```
    */
   async updateCallback(params: UpdateCallbackParams): Promise<void> {
+    this.validateOptionalYnValue(params.rebirthVodCallbackEnabled, 'rebirthVodCallbackEnabled');
+
     await this.client.httpClient.post(
-      '/live/v4/user/callback/update',
+      '/live/v4/user/global-setting/callback/update',
       params
     );
   }
@@ -1639,7 +1645,7 @@ export class V4UserService {
    */
   async getGlobalFooter(): Promise<GlobalFooterSettings> {
     const response = await this.client.httpClient.get<GlobalFooterSettings>(
-      '/live/v4/user/global-footer/get',
+      '/live/v4/user/global-setting/footer/get',
       {}
     );
     return response as unknown as GlobalFooterSettings;
@@ -1652,15 +1658,14 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.updateGlobalFooter({
-   *   enabled: true,
-   *   content: 'New footer text',
-   * });
+   * await client.v4User.updateGlobalFooter({ showFooterEnabled: 'Y', footerText: 'PolyV' });
    * ```
    */
   async updateGlobalFooter(params: UpdateGlobalFooterParams): Promise<void> {
+    this.validateGlobalFooterParams(params);
+
     await this.client.httpClient.post(
-      '/live/v4/user/global-footer/update',
+      '/live/v4/user/global-setting/footer/update',
       params
     );
   }
@@ -1677,7 +1682,7 @@ export class V4UserService {
    */
   async getPvShowEnable(): Promise<PvShowEnableSettings> {
     const response = await this.client.httpClient.get<PvShowEnableSettings>(
-      '/live/v4/user/pv-show-enable/get',
+      '/live/v4/user/global-setting/pv-show/get',
       {}
     );
     return response as unknown as PvShowEnableSettings;
@@ -1690,12 +1695,14 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * await client.v4User.updatePvShowEnable({ enabled: false });
+   * await client.v4User.updatePvShowEnable({ enabled: 'Y' });
    * ```
    */
   async updatePvShowEnable(params: UpdatePvShowEnableParams): Promise<void> {
+    this.validateYnValue(params.enabled, 'enabled');
+
     await this.client.httpClient.post(
-      '/live/v4/user/pv-show-enable/update',
+      '/live/v4/user/global-setting/pv-show/update',
       params
     );
   }
@@ -1712,18 +1719,15 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * const duration = await client.v4User.getMicDuration({
-   *   channelId: '123456',
-   *   sessionId: 'session_001',
-   * });
+   * const duration = await client.v4User.getMicDuration({ startTime, endTime });
    * ```
    */
-  async getMicDuration(params: GetMicDurationParams): Promise<MicDurationResponse> {
-    this.validateRequiredString(params.channelId, 'channelId');
-    this.validateRequiredString(params.sessionId, 'sessionId');
+  async getMicDuration(params: GetMicDurationParams = {}): Promise<MicDurationResponse> {
+    this.validateOptionalNumber(params.startTime, 'startTime');
+    this.validateOptionalNumber(params.endTime, 'endTime');
 
     const response = await this.client.httpClient.get<MicDurationResponse>(
-      '/live/v4/user/mic-duration/get',
+      '/live/v4/statistics/mic/history/get',
       { params }
     );
     return response as unknown as MicDurationResponse;
@@ -1741,7 +1745,7 @@ export class V4UserService {
    */
   async getMrConcurrencyDetail(): Promise<MrConcurrencyDetailResponse> {
     const response = await this.client.httpClient.get<MrConcurrencyDetailResponse>(
-      '/live/v4/user/mr-concurrency-detail/get',
+      '/live/v4/user/mr/concurrency-detail/get',
       {}
     );
     return response as unknown as MrConcurrencyDetailResponse;
@@ -1779,17 +1783,20 @@ export class V4UserService {
    * @example
    * ```typescript
    * const bills = await client.v4User.getBillUseDetailList({
+   *   itemCategory: 'duration',
    *   startDate: '2024-01-01',
    *   endDate: '2024-01-31',
    * });
    * ```
    */
   async getBillUseDetailList(params: GetBillUseDetailListParams): Promise<GetBillUseDetailListResponse> {
+    this.validateRequiredString(params.itemCategory, 'itemCategory');
     this.validateRequiredString(params.startDate, 'startDate');
     this.validateRequiredString(params.endDate, 'endDate');
+    this.validateOptionalPaginationParams(params);
 
     const response = await this.client.httpClient.get<GetBillUseDetailListResponse>(
-      '/live/v4/user/bill-use-detail/list',
+      '/live/v4/channel/use-detail/list',
       { params }
     );
     return response as unknown as GetBillUseDetailListResponse;
@@ -1829,14 +1836,15 @@ export class V4UserService {
    *
    * @example
    * ```typescript
-   * const log = await client.v4User.getWatchLogDetail({ logId: 1 });
+   * const logs = await client.v4User.getWatchLogDetail({ viewerId: 'viewer_001' });
    * ```
    */
   async getWatchLogDetail(params: GetWatchLogDetailParams): Promise<WatchLogDetailResponse> {
-    this.validateRequiredNumber(params.logId, 'logId');
+    this.validateRequiredString(params.viewerId, 'viewerId');
+    this.validateOptionalPaginationParams(params);
 
     const response = await this.client.httpClient.get<WatchLogDetailResponse>(
-      '/live/v4/user/watch-log/detail',
+      '/live/v4/user/viewlog/detail',
       { params }
     );
     return response as unknown as WatchLogDetailResponse;
@@ -1856,11 +1864,11 @@ export class V4UserService {
    * });
    * ```
    */
-  async getWatchLogList(params: GetWatchLogListParams): Promise<GetWatchLogListResponse> {
-    this.validatePaginationParams(params);
+  async getWatchLogList(params: GetWatchLogListParams = {}): Promise<GetWatchLogListResponse> {
+    this.validateOptionalPaginationParams(params);
 
     const response = await this.client.httpClient.get<GetWatchLogListResponse>(
-      '/live/v4/user/watch-log/list',
+      '/live/v4/user/viewlog/list',
       { params }
     );
     return response as unknown as GetWatchLogListResponse;
@@ -1962,6 +1970,15 @@ export class V4UserService {
   }
 
   /**
+   * Validate optional number parameter
+   */
+  private validateOptionalNumber(value: number | undefined, fieldName: string): void {
+    if (value !== undefined && (typeof value !== 'number' || Number.isNaN(value))) {
+      throw new PolyVValidationError(`${fieldName} must be a number`, fieldName, value);
+    }
+  }
+
+  /**
    * Validate required string or number ID parameter
    */
   private validateRequiredId(value: string | number | undefined, fieldName: string): void {
@@ -1997,6 +2014,60 @@ export class V4UserService {
   private validateOptionalYnValue(value: string | undefined, fieldName: string): void {
     if (value !== undefined) {
       this.validateYnValue(value, fieldName);
+    }
+  }
+
+  /**
+   * Validate donate gift update parameters
+   */
+  private validateGiftDonateParams(params: UpdateDonateTemplateParams): void {
+    const gifts = [
+      ...(params.giftDonate?.cashPays ?? []),
+      ...(params.giftDonate?.pointPays ?? []),
+    ];
+
+    gifts.forEach((gift, index) => {
+      this.validateRequiredString(gift.img, `giftDonate.gifts[${index}].img`);
+      this.validateOptionalYnValue(gift.enabled, `giftDonate.gifts[${index}].enabled`);
+    });
+  }
+
+  /**
+   * Validate playback setting update parameters
+   */
+  private validatePlaybackSettingParams(params: UpdatePlaybackSettingParams): void {
+    const switchFields = [
+      'playbackEnabled',
+      'sectionEnabled',
+      'playbackMultiplierEnabled',
+      'playbackProgressBarEnabled',
+      'showPlayButtonEnabled',
+      'chatPlaybackEnabled',
+      'productPlaybackEnabled',
+      'questionnairePlaybackEnabled',
+      'qaPlaybackEnabled',
+      'cardPushPlaybackEnabled',
+      'checkInPlaybackEnabled',
+    ] as const;
+
+    switchFields.forEach((field) => this.validateOptionalYnValue(params[field], field));
+  }
+
+  /**
+   * Validate global footer update parameters
+   */
+  private validateGlobalFooterParams(params: UpdateGlobalFooterParams): void {
+    this.validateOptionalYnValue(params.showFooterEnabled, 'showFooterEnabled');
+
+    if (params.footerText !== undefined && params.footerText.length > 12) {
+      throw new PolyVValidationError('footerText must be at most 12 characters', 'footerText', params.footerText);
+    }
+    if (params.footTextLinkUrl !== undefined && params.footTextLinkUrl.length > 50) {
+      throw new PolyVValidationError(
+        'footTextLinkUrl must be at most 50 characters',
+        'footTextLinkUrl',
+        params.footTextLinkUrl
+      );
     }
   }
 

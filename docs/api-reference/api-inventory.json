@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T05:07:52.507Z",
+  "generatedAt": "2026-06-19T06:44:22.604Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -19,8 +19,8 @@
     "latestApis": 578,
     "supersededApis": 12,
     "sdkEndpoints": 542,
-    "sdkImplemented": 389,
-    "sdkMissing": 189
+    "sdkImplemented": 406,
+    "sdkMissing": 172
   },
   "modules": [
     {
@@ -30,14 +30,6 @@
       "implemented": 111,
       "missing": 172,
       "coverage": 39.2
-    },
-    {
-      "module": "user",
-      "label": "用户与观众",
-      "total": 73,
-      "implemented": 56,
-      "missing": 17,
-      "coverage": 76.7
     },
     {
       "module": "account",
@@ -148,6 +140,14 @@
       "label": "未分类",
       "total": 10,
       "implemented": 10,
+      "missing": 0,
+      "coverage": 100
+    },
+    {
+      "module": "user",
+      "label": "用户与观众",
+      "total": 73,
+      "implemented": 73,
       "missing": 0,
       "coverage": 100
     },
@@ -13856,12 +13856,12 @@
       "dedupeKey": "user:查询观看次数显示开关",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/global-setting/pv-show/get",
+        "reference": "V4UserService#getPvShowEnable",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -13883,12 +13883,12 @@
       "dedupeKey": "user:查询观看记录",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/viewlog/list",
+        "reference": "V4UserService#getWatchLogList",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -13939,12 +13939,12 @@
       "dedupeKey": "user:查询角色列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/children/role/list",
+        "reference": "V4UserService#listChildAccountRoles",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -13966,12 +13966,12 @@
       "dedupeKey": "user:查询默认模板打赏设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/donate/get",
+        "reference": "V4UserService#getDonateTemplate",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -13993,12 +13993,12 @@
       "dedupeKey": "user:查询默认模板回放设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/template/playback-setting/get",
+        "reference": "V4UserService#getPlaybackSetting",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14128,12 +14128,12 @@
       "dedupeKey": "user:查询全局回调设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/global-setting/callback/get",
+        "reference": "V4UserService#getCallback",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14238,12 +14238,12 @@
       "dedupeKey": "user:查询页脚设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/global-setting/footer/get",
+        "reference": "V4UserService#getGlobalFooter",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14269,12 +14269,12 @@
       "dedupeKey": "user:查询用户账单使用明细数据",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/channel/use-detail/list",
+        "reference": "V4UserService#getBillUseDetailList",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14354,12 +14354,12 @@
       "dedupeKey": "user:查询账号时间范围连麦使用量",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/statistics/mic/history/get",
+        "reference": "V4UserService#getMicDuration",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14824,12 +14824,12 @@
       "dedupeKey": "user:获取观众观看详情列表",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/viewlog/detail",
+        "reference": "V4UserService#getWatchLogDetail",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -14932,12 +14932,12 @@
       "dedupeKey": "user:获取账号mr并发详情信息",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/mr/concurrency-detail/get",
+        "reference": "V4UserService#getMrConcurrencyDetail",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15436,12 +15436,12 @@
       "dedupeKey": "user:修改观看次数显示开关",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/global-setting/pv-show/update",
+        "reference": "V4UserService#updatePvShowEnable",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15463,12 +15463,12 @@
       "dedupeKey": "user:修改默认模板回放设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/template/playback-setting/update",
+        "reference": "V4UserService#updatePlaybackSetting",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15519,12 +15519,12 @@
       "dedupeKey": "user:修改默认模板礼物打赏设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/donate/gift/update",
+        "reference": "V4UserService#updateDonateTemplate",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15669,12 +15669,12 @@
       "dedupeKey": "user:修改全局回调设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/global-setting/callback/update",
+        "reference": "V4UserService#updateCallback",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15753,12 +15753,12 @@
       "dedupeKey": "user:修改页脚设置",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "POST",
+        "sdkPath": "/live/v4/user/global-setting/footer/update",
+        "reference": "V4UserService#updateGlobalFooter",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -15809,12 +15809,12 @@
       "dedupeKey": "user:一客一码邀请销售信息查询",
       "supersededBy": [],
       "sdk": {
-        "implemented": false,
+        "implemented": true,
         "methodMismatch": false,
-        "sdkMethod": "",
-        "sdkPath": "",
-        "reference": "",
-        "file": ""
+        "sdkMethod": "GET",
+        "sdkPath": "/live/v4/user/invite-customer/get",
+        "reference": "V4UserService#getBySale",
+        "file": "packages/sdk/src/services/v4/user.service.ts"
       }
     },
     {
@@ -21096,8 +21096,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/children/roles",
-      "normalizedPath": "/live/v4/user/children/roles",
+      "path": "/live/v4/user/children/role/list",
+      "normalizedPath": "/live/v4/user/children/role/list",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "listChildAccountRoles",
@@ -21105,8 +21105,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/children/get-by-sale",
-      "normalizedPath": "/live/v4/user/children/get-by-sale",
+      "path": "/live/v4/user/invite-customer/get",
+      "normalizedPath": "/live/v4/user/invite-customer/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getBySale",
@@ -21483,8 +21483,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/template/donate/get",
-      "normalizedPath": "/live/v4/user/template/donate/get",
+      "path": "/live/v4/user/donate/get",
+      "normalizedPath": "/live/v4/user/donate/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getDonateTemplate",
@@ -21492,8 +21492,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/template/donate/update",
-      "normalizedPath": "/live/v4/user/template/donate/update",
+      "path": "/live/v4/user/donate/gift/update",
+      "normalizedPath": "/live/v4/user/donate/gift/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updateDonateTemplate",
@@ -21537,8 +21537,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/template/playback/get",
-      "normalizedPath": "/live/v4/user/template/playback/get",
+      "path": "/live/v4/user/template/playback-setting/get",
+      "normalizedPath": "/live/v4/user/template/playback-setting/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getPlaybackSetting",
@@ -21546,8 +21546,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/template/playback/update",
-      "normalizedPath": "/live/v4/user/template/playback/update",
+      "path": "/live/v4/user/template/playback-setting/update",
+      "normalizedPath": "/live/v4/user/template/playback-setting/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updatePlaybackSetting",
@@ -21591,8 +21591,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/callback/get",
-      "normalizedPath": "/live/v4/user/callback/get",
+      "path": "/live/v4/user/global-setting/callback/get",
+      "normalizedPath": "/live/v4/user/global-setting/callback/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getCallback",
@@ -21600,8 +21600,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/callback/update",
-      "normalizedPath": "/live/v4/user/callback/update",
+      "path": "/live/v4/user/global-setting/callback/update",
+      "normalizedPath": "/live/v4/user/global-setting/callback/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updateCallback",
@@ -21627,8 +21627,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/global-footer/get",
-      "normalizedPath": "/live/v4/user/global-footer/get",
+      "path": "/live/v4/user/global-setting/footer/get",
+      "normalizedPath": "/live/v4/user/global-setting/footer/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getGlobalFooter",
@@ -21636,8 +21636,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/global-footer/update",
-      "normalizedPath": "/live/v4/user/global-footer/update",
+      "path": "/live/v4/user/global-setting/footer/update",
+      "normalizedPath": "/live/v4/user/global-setting/footer/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updateGlobalFooter",
@@ -21645,8 +21645,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/pv-show-enable/get",
-      "normalizedPath": "/live/v4/user/pv-show-enable/get",
+      "path": "/live/v4/user/global-setting/pv-show/get",
+      "normalizedPath": "/live/v4/user/global-setting/pv-show/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getPvShowEnable",
@@ -21654,8 +21654,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/user/pv-show-enable/update",
-      "normalizedPath": "/live/v4/user/pv-show-enable/update",
+      "path": "/live/v4/user/global-setting/pv-show/update",
+      "normalizedPath": "/live/v4/user/global-setting/pv-show/update",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "updatePvShowEnable",
@@ -21663,8 +21663,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/mic-duration/get",
-      "normalizedPath": "/live/v4/user/mic-duration/get",
+      "path": "/live/v4/statistics/mic/history/get",
+      "normalizedPath": "/live/v4/statistics/mic/history/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getMicDuration",
@@ -21672,8 +21672,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/mr-concurrency-detail/get",
-      "normalizedPath": "/live/v4/user/mr-concurrency-detail/get",
+      "path": "/live/v4/user/mr/concurrency-detail/get",
+      "normalizedPath": "/live/v4/user/mr/concurrency-detail/get",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getMrConcurrencyDetail",
@@ -21690,8 +21690,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/bill-use-detail/list",
-      "normalizedPath": "/live/v4/user/bill-use-detail/list",
+      "path": "/live/v4/channel/use-detail/list",
+      "normalizedPath": "/live/v4/channel/use-detail/list",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getBillUseDetailList",
@@ -21708,8 +21708,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/watch-log/detail",
-      "normalizedPath": "/live/v4/user/watch-log/detail",
+      "path": "/live/v4/user/viewlog/detail",
+      "normalizedPath": "/live/v4/user/viewlog/detail",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getWatchLogDetail",
@@ -21717,8 +21717,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/user/watch-log/list",
-      "normalizedPath": "/live/v4/user/watch-log/list",
+      "path": "/live/v4/user/viewlog/list",
+      "normalizedPath": "/live/v4/user/viewlog/list",
       "file": "packages/sdk/src/services/v4/user.service.ts",
       "className": "V4UserService",
       "methodName": "getWatchLogList",

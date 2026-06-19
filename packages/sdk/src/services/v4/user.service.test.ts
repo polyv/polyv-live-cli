@@ -164,14 +164,14 @@ describe('V4UserService', () => {
 
   describe('listChildAccountRoles', () => {
     it('should list child account roles', async () => {
-      const mockResponse = [{ roleId: 1, roleName: 'Admin' }];
+      const mockResponse = [{ id: 1, name: 'Admin', permissionName: '新建直播' }];
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.listChildAccountRoles();
 
       expect(result).toEqual(mockResponse);
       expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v4/user/children/roles',
+        '/live/v4/user/children/role/list',
         {}
       );
     });
@@ -179,16 +179,21 @@ describe('V4UserService', () => {
 
   describe('getBySale', () => {
     it('should get child account by sale', async () => {
-      const mockResponse = { childUserId: 'child_001' };
+      const mockResponse = { childUserId: 'child_001', childEmail: 'child@example.com' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.getBySale({ sale: '100' });
+      const result = await service.getBySale({ saleId: '100' });
 
       expect(result).toEqual(mockResponse);
       expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v4/user/children/get-by-sale',
-        { params: { sale: '100' } }
+        '/live/v4/user/invite-customer/get',
+        { params: { saleId: '100' } }
       );
+    });
+
+    it('should throw validation error when saleId and saleCode are missing', async () => {
+      await expect(service.getBySale({}))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -994,12 +999,16 @@ describe('V4UserService', () => {
 
   describe('getDonateTemplate', () => {
     it('should get donate template', async () => {
-      const mockResponse = { enabled: true };
+      const mockResponse = { donateGiftEnabled: 'Y' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getDonateTemplate();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/donate/get',
+        {}
+      );
     });
   });
 
@@ -1007,9 +1016,29 @@ describe('V4UserService', () => {
     it('should update donate template', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateDonateTemplate({ enabled: true, minAmount: 1, maxAmount: 10000 });
+      await service.updateDonateTemplate({
+        donateGiftEnabled: 'Y',
+        giftDonate: {
+          payWay: 'POINT',
+          pointPays: [{ img: 'https://example.com/gift.png', name: '礼物' }],
+        },
+      });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/donate/gift/update',
+        {
+          donateGiftEnabled: 'Y',
+          giftDonate: {
+            payWay: 'POINT',
+            pointPays: [{ img: 'https://example.com/gift.png', name: '礼物' }],
+          },
+        }
+      );
+    });
+
+    it('should throw validation error when donateGiftEnabled is invalid', async () => {
+      await expect(service.updateDonateTemplate({ donateGiftEnabled: 'invalid' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -1057,12 +1086,16 @@ describe('V4UserService', () => {
 
   describe('getPlaybackSetting', () => {
     it('should get playback setting', async () => {
-      const mockResponse = { autoPlay: true };
+      const mockResponse = { playbackEnabled: 'Y' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getPlaybackSetting();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/template/playback-setting/get',
+        {}
+      );
     });
   });
 
@@ -1070,9 +1103,17 @@ describe('V4UserService', () => {
     it('should update playback setting', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updatePlaybackSetting({ autoPlay: false, quality: 'medium' });
+      await service.updatePlaybackSetting({ playbackEnabled: 'N', type: 'single' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/template/playback-setting/update',
+        { playbackEnabled: 'N', type: 'single' }
+      );
+    });
+
+    it('should throw validation error when playback switch is invalid', async () => {
+      await expect(service.updatePlaybackSetting({ playbackEnabled: 'bad' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -1124,12 +1165,16 @@ describe('V4UserService', () => {
 
   describe('getCallback', () => {
     it('should get callback settings', async () => {
-      const mockResponse = { url: 'https://example.com/callback' };
+      const mockResponse = { streamCallbackUrl: 'https://example.com/callback' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getCallback();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/callback/get',
+        {}
+      );
     });
   });
 
@@ -1137,9 +1182,18 @@ describe('V4UserService', () => {
     it('should update callback settings', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateCallback({ url: 'https://example.com/new-callback', enabled: true });
+      await service.updateCallback({
+        streamCallbackUrl: 'https://example.com/new-callback',
+        rebirthVodCallbackEnabled: 'Y',
+      });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/callback/update',
+        {
+          streamCallbackUrl: 'https://example.com/new-callback',
+          rebirthVodCallbackEnabled: 'Y',
+        }
+      );
     });
   });
 
@@ -1166,12 +1220,16 @@ describe('V4UserService', () => {
 
   describe('getGlobalFooter', () => {
     it('should get global footer settings', async () => {
-      const mockResponse = { enabled: true, content: 'Footer' };
+      const mockResponse = { showFooterEnabled: 'Y', footerText: 'Footer' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getGlobalFooter();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/footer/get',
+        {}
+      );
     });
   });
 
@@ -1179,20 +1237,32 @@ describe('V4UserService', () => {
     it('should update global footer settings', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updateGlobalFooter({ enabled: true, content: 'New footer' });
+      await service.updateGlobalFooter({ showFooterEnabled: 'Y', footerText: 'New footer' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/footer/update',
+        { showFooterEnabled: 'Y', footerText: 'New footer' }
+      );
+    });
+
+    it('should throw validation error when footerText is too long', async () => {
+      await expect(service.updateGlobalFooter({ footerText: 'this footer is too long' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
   describe('getPvShowEnable', () => {
     it('should get PV show enable settings', async () => {
-      const mockResponse = { enabled: true };
+      const mockResponse = { enabled: 'Y' };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getPvShowEnable();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/pv-show/get',
+        {}
+      );
     });
   });
 
@@ -1200,9 +1270,17 @@ describe('V4UserService', () => {
     it('should update PV show enable settings', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
-      await service.updatePvShowEnable({ enabled: false });
+      await service.updatePvShowEnable({ enabled: 'N' });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/pv-show/update',
+        { enabled: 'N' }
+      );
+    });
+
+    it('should throw validation error when enabled is invalid', async () => {
+      await expect(service.updatePvShowEnable({ enabled: 'bad' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -1212,23 +1290,31 @@ describe('V4UserService', () => {
 
   describe('getMicDuration', () => {
     it('should get mic duration', async () => {
-      const mockResponse = { duration: 100 };
+      const mockResponse = { userId: 'user_001', history: 100 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.getMicDuration({ channelId: '123456', sessionId: 'session_001' });
+      const result = await service.getMicDuration({ startTime: 1704067200000, endTime: 1704153600000 });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/statistics/mic/history/get',
+        { params: { startTime: 1704067200000, endTime: 1704153600000 } }
+      );
     });
   });
 
   describe('getMrConcurrencyDetail', () => {
     it('should get MR concurrency detail', async () => {
-      const mockResponse = { concurrency: 100 };
+      const mockResponse = { mrLiveConcurrency: 100, usedCount: 20, residualConcurrency: 80, channelIds: [] };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getMrConcurrencyDetail();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/mr/concurrency-detail/get',
+        {}
+      );
     });
   });
 
@@ -1248,11 +1334,34 @@ describe('V4UserService', () => {
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
       const result = await service.getBillUseDetailList({
+        itemCategory: 'duration',
         startDate: '2024-01-01',
         endDate: '2024-01-31',
+        pageNumber: 1,
+        pageSize: 10,
       });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/channel/use-detail/list',
+        {
+          params: {
+            itemCategory: 'duration',
+            startDate: '2024-01-01',
+            endDate: '2024-01-31',
+            pageNumber: 1,
+            pageSize: 10,
+          },
+        }
+      );
+    });
+
+    it('should throw validation error when itemCategory is empty', async () => {
+      await expect(service.getBillUseDetailList({
+        itemCategory: '',
+        startDate: '2024-01-01',
+        endDate: '2024-01-31',
+      })).rejects.toThrow(PolyVValidationError);
     });
   });
 
@@ -1285,23 +1394,49 @@ describe('V4UserService', () => {
 
   describe('getWatchLogDetail', () => {
     it('should get watch log detail', async () => {
-      const mockResponse = { logId: 1 };
+      const mockResponse = { contents: [], pageNumber: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.getWatchLogDetail({ logId: 1 });
+      const result = await service.getWatchLogDetail({
+        viewerId: 'viewer_001',
+        pageNumber: 1,
+        pageSize: 10,
+      });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/viewlog/detail',
+        { params: { viewerId: 'viewer_001', pageNumber: 1, pageSize: 10 } }
+      );
+    });
+
+    it('should throw validation error when viewerId is empty', async () => {
+      await expect(service.getWatchLogDetail({ viewerId: '' }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 
   describe('getWatchLogList', () => {
     it('should get watch log list', async () => {
-      const mockResponse = { contents: [], totalElements: 0 };
+      const mockResponse = { contents: [], pageNumber: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.getWatchLogList({ pageNumber: 1, pageSize: 10 });
+      const result = await service.getWatchLogList({
+        pageNumber: 1,
+        pageSize: 10,
+        channelId: 10001,
+      });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/viewlog/list',
+        { params: { pageNumber: 1, pageSize: 10, channelId: 10001 } }
+      );
+    });
+
+    it('should throw validation error when pageSize is invalid', async () => {
+      await expect(service.getWatchLogList({ pageSize: 1001 }))
+        .rejects.toThrow(PolyVValidationError);
     });
   });
 

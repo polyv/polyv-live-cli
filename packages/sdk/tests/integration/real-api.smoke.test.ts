@@ -39,6 +39,12 @@ function isExpectedGroupAccountRestriction(error: unknown): boolean {
     && error.message.includes('找不到集团账号');
 }
 
+function isExpectedMrPermissionRestriction(error: unknown): boolean {
+  return error instanceof PolyVAPIError
+    && error.statusCode === 400
+    && error.message.includes('没有开启MR直播权限');
+}
+
 describeWithCredentials('SDK real API integration smoke', () => {
   const client = createIntegrationClient();
 
@@ -143,6 +149,91 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expect(Number(followViewers.pageSize)).toBeGreaterThanOrEqual(1);
   });
 
+  it('calls V4 user settings/template read-only APIs without mock responses', async () => {
+    const [
+      roles,
+      donateTemplate,
+      playbackSetting,
+      callbackSettings,
+      footerSettings,
+      pvShow,
+      micDuration,
+    ] = await Promise.all([
+      client.v4User.listChildAccountRoles(),
+      client.v4User.getDonateTemplate(),
+      client.v4User.getPlaybackSetting(),
+      client.v4User.getCallback(),
+      client.v4User.getGlobalFooter(),
+      client.v4User.getPvShowEnable(),
+      client.v4User.getMicDuration(),
+    ]);
+
+    expect(roles).toEqual(expect.any(Array));
+    expect(donateTemplate).toEqual(expect.any(Object));
+    expect(playbackSetting).toEqual(expect.any(Object));
+    expect(callbackSettings).toEqual(expect.any(Object));
+    expect(footerSettings).toEqual(expect.any(Object));
+    expect(pvShow).toEqual(expect.objectContaining({
+      enabled: expect.stringMatching(/^[YN]$/),
+    }));
+    expect(micDuration).toEqual(expect.objectContaining({
+      userId: expect.any(String),
+    }));
+  });
+
+  it('calls MR concurrency detail when the account has MR permissions', async () => {
+    try {
+      const mrConcurrency = await client.v4User.getMrConcurrencyDetail();
+
+      expect(mrConcurrency).toEqual(expect.objectContaining({
+        mrLiveConcurrency: expect.any(Number),
+      }));
+    } catch (error) {
+      if (isExpectedMrPermissionRestriction(error)) {
+        console.warn('Skipping MR concurrency assertion: configured account has not enabled MR live permissions.');
+        return;
+      }
+
+      throw error;
+    }
+  });
+
+  it('calls V4 user billing and watch-log read-only APIs without mock responses', async () => {
+    const dateRange = currentMonthDateRange();
+    const useDetails = await client.v4User.getBillUseDetailList({
+      itemCategory: 'duration',
+      pageNumber: 1,
+      pageSize: 10,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    });
+    const watchLogs = await client.v4User.getWatchLogList({
+      pageNumber: 1,
+      pageSize: 10,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    });
+
+    expectPaginatedResponse(useDetails);
+    expectPaginatedResponse(watchLogs);
+  });
+
+  it('calls invite-customer lookup when a sale identifier is configured', async () => {
+    const saleId = process.env.POLYV_SALE_ID;
+    const saleCode = process.env.POLYV_SALE_CODE;
+
+    if (!saleId && !saleCode) {
+      console.warn('Skipping invite-customer assertion: POLYV_SALE_ID or POLYV_SALE_CODE is not configured.');
+      return;
+    }
+
+    const result = await client.v4User.getBySale({ saleId, saleCode });
+
+    expect(result).toEqual(expect.objectContaining({
+      childUserId: expect.any(String),
+    }));
+  });
+
   it('calls viewer lottery win list when a viewer ID is configured', async () => {
     const viewerId = process.env.POLYV_VIEWER_ID;
 
@@ -160,6 +251,26 @@ describeWithCredentials('SDK real API integration smoke', () => {
     expect(wins).toEqual(expect.objectContaining({
       contents: expect.any(Array),
     }));
+  });
+
+  it('calls viewer watch-log detail when a viewer ID is configured', async () => {
+    const viewerId = process.env.POLYV_VIEWER_ID;
+
+    if (!viewerId) {
+      console.warn('Skipping viewer watch-log detail assertion: POLYV_VIEWER_ID is not configured.');
+      return;
+    }
+
+    const dateRange = currentMonthDateRange();
+    const details = await client.v4User.getWatchLogDetail({
+      viewerId,
+      pageNumber: 1,
+      pageSize: 10,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    });
+
+    expectPaginatedResponse(details);
   });
 
   it('calls AI video-produce PPT list without mock responses', async () => {
