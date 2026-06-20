@@ -1,4 +1,12 @@
 import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealChannelTests = hasRealCredentials();
 
 describe('live interaction CLI integration', () => {
   it('shows extended live interaction command help', () => {
@@ -39,4 +47,35 @@ describe('live interaction CLI integration', () => {
       expect(result.output).toContain('--output');
     }
   });
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs live interaction read commands against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Interaction Read Smoke');
+      const id = channelId;
+
+      const readCommands = [
+        ['checkin', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['checkin', 'sessions', '--channel-id', id, '--output', 'json'],
+        ['qa', 'list', '--channel-id', id, '--output', 'json'],
+        ['qa', 'send-times', '--channel-id', id, '--output', 'json'],
+        ['qa', 'answers', '--channel-id', id, '--output', 'json'],
+        ['qa', 'question-list', '--channel-id', id, '--output', 'json'],
+        ['questionnaire', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['questionnaire', 'legacy-list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['questionnaire', 'results', '--channel-id', id, '--output', 'json'],
+        ['interaction', 'task-reward', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['interaction', 'event', 'list', '--room-id', id, '--output', 'json'],
+      ];
+
+      for (const args of readCommands) {
+        runCliSuccess(args);
+      }
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

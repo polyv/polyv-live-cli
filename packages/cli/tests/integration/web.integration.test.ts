@@ -1,4 +1,12 @@
 import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealChannelTests = hasRealCredentials();
 
 describe('web CLI integration', () => {
   it('shows web command group help', () => {
@@ -44,4 +52,32 @@ describe('web CLI integration', () => {
       expect(result.output).toContain('--output');
     }
   });
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs web read commands against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Read Smoke');
+      const id = channelId;
+
+      const readCommands = [
+        ['web', 'info', 'splash-get', '--channel-id', id, '--output', 'json'],
+        ['web', 'info', 'likes-get', '--channel-ids', id, '--output', 'json'],
+        ['web', 'info', 'countdown-get', '--channel-id', id, '--output', 'json'],
+        ['web', 'menu', 'list', '--channel-id', id, '--output', 'json'],
+        ['web', 'menu', 'tuwen-list', '--channel-id', id, '--output', 'json'],
+        ['web', 'donate', 'get', '--channel-id', id, '--output', 'json'],
+        ['web', 'share', 'get', '--channel-id', id, '--output', 'json'],
+        ['web', 'auth', 'record-info-list', '--channel-id', id, '--output', 'json'],
+      ];
+
+      for (const args of readCommands) {
+        runCliSuccess(args);
+      }
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });
