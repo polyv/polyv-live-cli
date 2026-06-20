@@ -7,8 +7,23 @@ import {
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const expectedGroupCapabilityFailures = ['找不到集团账号', 'not found', 'forbidden', 'failed', 'illegal'];
 
 describe('small module CLI integration', () => {
+  function runCliWithDummyAuth(args: string[]) {
+    return runCli(args, {
+      includeTestEnv: false,
+      env: {
+        POLYV_APP_ID: 'dummyappid12345',
+        POLYV_APP_SECRET: 'dummysecret123456789',
+        POLYV_USER_ID: '',
+        POLYV_TEST_APP_ID: '',
+        POLYV_TEST_APP_SECRET: '',
+        POLYV_TEST_USER_ID: '',
+      },
+    });
+  }
+
   it('shows help for new utility command groups', () => {
     for (const command of ['group', 'finance', 'material', 'webapp', 'robot', 'partner']) {
       const result = runCli([command, '--help'], { includeTestEnv: false });
@@ -71,10 +86,60 @@ describe('small module CLI integration', () => {
       for (const args of readCommands) {
         runCliSuccess(args);
       }
+
+      const groupResult = runCli(['group', 'health-check', '--output', 'json'], { timeout: 60000 });
+      if (groupResult.exitCode !== 0) {
+        expect(expectedGroupCapabilityFailures.some((text) => groupResult.output.includes(text))).toBe(true);
+      } else {
+        expect(groupResult.output).toContain('{');
+      }
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);
       }
     }
   }, 240000);
+
+  it('requires confirmation or force for partner write commands in non-TTY mode', () => {
+    const commands = [
+      [
+        'partner',
+        'user-register',
+        '--company',
+        'Test Company',
+        '--mobile',
+        '13800138000',
+        '--contact',
+        'Test User',
+        '--email',
+        'test@example.com',
+        '--output',
+        'json',
+      ],
+      [
+        'partner',
+        'tencent-order',
+        'create',
+        '--uin',
+        '100000000001',
+        '--order-id',
+        `cli-order-${Date.now()}`,
+        '--email',
+        'test@example.com',
+        '--mobile',
+        '13800138000',
+        '--basic-service',
+        '[{"product":"live","quantity":1}]',
+        '--output',
+        'json',
+      ],
+    ];
+
+    for (const args of commands) {
+      const result = runCliWithDummyAuth(args);
+      expect(result.exitCode).toBe(1);
+      expect(result.output).toContain('Interactive confirmation not available in non-TTY environment');
+      expect(result.output).toContain('--force');
+    }
+  });
 });
