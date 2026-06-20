@@ -5,6 +5,8 @@
  */
 
 import { SessionServiceSdk } from '../../src/services/session.service.sdk';
+import { ChannelServiceSdk } from '../../src/services/channel.service.sdk';
+import { ChannelCreateRequest } from '../../src/types/channel';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
 
 // Use test config from CLI accounts or environment
@@ -13,16 +15,51 @@ const shouldRunTests = hasRealCredentials();
 
 (shouldRunTests ? describe : describe.skip)('Session Integration Tests', () => {
   let sessionService: SessionServiceSdk;
+  let channelService: ChannelServiceSdk;
   let testChannelId: string;
+  let createdChannelIds: string[] = [];
 
-  beforeAll(() => {
+  beforeAll(async () => {
     sessionService = new SessionServiceSdk(testConfig.authConfig, {
       baseUrl: testConfig.baseUrl,
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
-  });
+    channelService = new ChannelServiceSdk(testConfig.authConfig, {
+      baseUrl: testConfig.baseUrl,
+      timeout: 30000,
+      maxRetries: 3,
+      debug: false
+    });
+
+    const createRequest: ChannelCreateRequest = {
+      name: `Session Integration Test ${Date.now()}`,
+      newScene: 'topclass',
+      template: 'ppt'
+    };
+    const createdChannel = await channelService.createChannel(createRequest);
+    testChannelId = String(createdChannel.channelId);
+    createdChannelIds.push(testChannelId);
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }, 30000);
+
+  afterAll(async () => {
+    const channelIds = [...createdChannelIds];
+    createdChannelIds = [];
+
+    if (channelIds.length === 0) {
+      return;
+    }
+
+    try {
+      await channelService.batchDeleteChannels({ channelIds });
+      console.log(`Cleaned up session integration test channels: ${channelIds.join(', ')}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`Failed to clean up session integration test channels ${channelIds.join(', ')}: ${message}`);
+    }
+  }, 30000);
 
   // ========================================
   // Session List Tests

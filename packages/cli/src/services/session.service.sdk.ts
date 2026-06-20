@@ -109,6 +109,76 @@ export class SessionServiceSdk {
     return this.transformToDisplayItem(result);
   }
 
+  async listLegacyChannelSessions(options: {
+    channelId: string;
+    startDate?: string;
+    endDate?: string;
+    page?: number;
+    pageSize?: number;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.listChannelSessions(options);
+  }
+
+  async getSessionDataList(options: {
+    channelId: string;
+    startDate?: string;
+    endDate?: string;
+    page?: number;
+    pageSize?: number;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getSessionDataList(options);
+  }
+
+  async getSessionExternalBySession(channelId: string, sessionId: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getSessionExternalBySession({ channelId, sessionId });
+  }
+
+  async createSession(options: {
+    channelId: string;
+    name: string;
+    planStartTime?: number;
+    planEndTime?: number;
+    splashImg?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.sessionCreate(options);
+  }
+
+  async updateSession(options: {
+    channelId: string;
+    sessionId: string;
+    name?: string;
+    planStartTime?: number;
+    planEndTime?: number;
+    splashImg?: string;
+  }): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.v4Channel.sessionUpdate(options);
+  }
+
+  async deleteSession(channelId: string, sessionId: string): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.v4Channel.sessionDelete({ channelId, sessionId });
+  }
+
+  async getSessionByExternal(channelId: string, externalSessionId: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getSessionByExternal({ channelId, externalSessionId });
+  }
+
+  async listFileIdByExternal(channelId: string, externalSessionId: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.listFileIdByExternal({ channelId, externalSessionId });
+  }
+
+  async relevanceSession(channelId: string, externalSessionId: string): Promise<string> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.relevanceSession({ channelId, externalSessionId });
+  }
+
   /**
    * Transform SDK SessionInfo to CLI SessionDisplayItem
    * @param item SDK SessionInfo object

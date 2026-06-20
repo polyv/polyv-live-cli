@@ -16,6 +16,7 @@ import {
 } from '../types/playback';
 import { AuthConfig } from '../types/auth';
 import { confirmDeletion, isInteractiveEnvironment } from '../utils/confirmation';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Interface for playback service (enables dependency injection)
@@ -36,6 +37,15 @@ export interface IPlaybackService {
     autoConvert?: boolean;
     mergeMp4?: boolean;
   }): Promise<boolean>;
+  listPlaybackSettings(channelIds: string[]): Promise<any>;
+  getPlaybackVideoInfo(channelIds: string[]): Promise<any>;
+  updateChannelSubtitles(channelId: string, body: any[]): Promise<void>;
+  getPlaybackEnabled(channelId: string): Promise<any>;
+  setPlaybackEnabled(params: any): Promise<any>;
+  addVodPlayback(params: any): Promise<any>;
+  updatePlaybackTitle(channelId: string, videoId: string, title: string): Promise<boolean>;
+  movePlaybackVideo(params: any): Promise<void>;
+  sortPlaybackVideos(params: any): Promise<void>;
 }
 
 /**
@@ -214,6 +224,94 @@ export class PlaybackHandler extends BaseHandler {
     }, 'playback.delete');
   }
 
+  async listPlaybackSettings(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.playbackService.listPlaybackSettings(this.normalizeStringList(options.channelIds));
+      this.displayResult(result, options.output);
+    }, 'playback.setting-list');
+  }
+
+  async getPlaybackVideoInfo(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.playbackService.getPlaybackVideoInfo(this.normalizeStringList(options.channelIds));
+      this.displayResult(result, options.output);
+    }, 'playback.video-info');
+  }
+
+  async updateChannelSubtitles(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Update playback subtitles for channel ${options.channelId}?`);
+      await this.playbackService.updateChannelSubtitles(options.channelId, options.body);
+      this.displayResult({ channelId: options.channelId, updated: true }, options.output);
+    }, 'playback.subtitle.update-batch');
+  }
+
+  async getPlaybackEnabled(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.playbackService.getPlaybackEnabled(options.channelId);
+      this.displayResult(result, options.output);
+    }, 'playback.enabled.get');
+  }
+
+  async setPlaybackEnabled(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Set playback enabled to ${options.playBackEnabled} for user ${options.userId}?`);
+      const result = await this.playbackService.setPlaybackEnabled({
+        userId: options.userId,
+        playBackEnabled: options.playBackEnabled,
+        channelId: options.channelId,
+      });
+      this.displayResult(result ?? { updated: true }, options.output);
+    }, 'playback.enabled.set');
+  }
+
+  async addVodPlayback(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Add VOD ${options.vid} to channel ${options.channelId} playback library?`);
+      const result = await this.playbackService.addVodPlayback({
+        channelId: options.channelId,
+        vid: options.vid,
+        setAsDefault: options.setAsDefault,
+        listType: options.listType,
+      });
+      this.displayResult(result, options.output);
+    }, 'playback.add-vod');
+  }
+
+  async updatePlaybackTitle(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Update playback ${options.videoId} title?`);
+      await this.playbackService.updatePlaybackTitle(options.channelId, options.videoId, options.title);
+      this.displayResult({ channelId: options.channelId, videoId: options.videoId, title: options.title, updated: true }, options.output);
+    }, 'playback.title.update');
+  }
+
+  async movePlaybackVideo(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Move playback video ${options.videoId} ${options.type}?`);
+      await this.playbackService.movePlaybackVideo({
+        channelId: options.channelId,
+        videoId: options.videoId,
+        type: options.type,
+        listType: options.listType,
+      });
+      this.displayResult({ channelId: options.channelId, videoId: options.videoId, type: options.type, moved: true }, options.output);
+    }, 'playback.sort.move');
+  }
+
+  async sortPlaybackVideos(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const videoIds = this.normalizeStringList(options.videoIds);
+      await confirmWrite(options.force, `Sort ${videoIds.length} playback video(s) for channel ${options.channelId}?`);
+      await this.playbackService.sortPlaybackVideos({
+        channelId: options.channelId,
+        videoIds,
+        listType: options.listType,
+      });
+      this.displayResult({ channelId: options.channelId, videoIds, sorted: true }, options.output);
+    }, 'playback.sort.set');
+  }
+
   /**
    * Displays playback list in the specified format
    * @param contents Array of playback items
@@ -325,6 +423,19 @@ export class PlaybackHandler extends BaseHandler {
     } else {
       this.displayDeleteResultTable(resultData);
     }
+  }
+
+  private normalizeStringList(value: unknown): string[] {
+    const items = Array.isArray(value) ? value : String(value ?? '').split(',');
+    const list = items.map((item) => String(item).trim()).filter(Boolean);
+    if (list.length === 0) {
+      throw new Error('list must not be empty');
+    }
+    return list;
+  }
+
+  private displayResult(result: any, format: OutputFormat = 'table'): void {
+    this.displayData(result ?? { success: true }, format);
   }
 
   /**

@@ -16,6 +16,7 @@ import {
 } from '../types/document';
 import { AuthConfig } from '../types/auth';
 import { confirmDeletion, isInteractiveEnvironment } from '../utils/confirmation';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Interface for document service (enables dependency injection)
@@ -43,6 +44,13 @@ export interface IDocumentService {
     imageCount: number;
     htmlUrl?: string;
   }[]>;
+  updateTeacherDocRelation(teacherId: string, fileIds: string, operation: 1 | 2): Promise<boolean>;
+  getChannelMultimediaResourceList(channelId: string, options?: any): Promise<any>;
+  getChannelMultimediaResourceDetail(channelId: string, options?: any): Promise<any>;
+  linkChannelMultimediaResource(channelId: string, vids: string): Promise<boolean>;
+  unlinkChannelMultimediaResource(channelId: string, vids: string): Promise<boolean>;
+  getUserMultimediaResourceDetail(vids: string): Promise<any>;
+  deleteUserMultimediaResource(vids: string): Promise<boolean>;
 }
 
 /**
@@ -272,6 +280,74 @@ export class DocumentHandler extends BaseHandler {
     }, 'document.status');
   }
 
+  async updateTeacherDocRelation(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Update teacher ${options.teacherId} document relation?`);
+      const result = await this.documentService.updateTeacherDocRelation(
+        options.teacherId,
+        this.normalizeStringList(options.fileIds).join(','),
+        options.operation
+      );
+      this.displayResult({ teacherId: options.teacherId, operation: options.operation, success: result }, options.output);
+    }, 'document.teacher-doc.relation');
+  }
+
+  async listChannelMultimediaResourceVids(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.documentService.getChannelMultimediaResourceList(
+        options.channelId,
+        this.paginationOptions(options)
+      );
+      this.displayResult(result, options.output);
+    }, 'document.media.vids');
+  }
+
+  async listChannelMultimediaResourceDetails(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.documentService.getChannelMultimediaResourceDetail(
+        options.channelId,
+        this.paginationOptions(options)
+      );
+      this.displayResult(result, options.output);
+    }, 'document.media.details');
+  }
+
+  async linkChannelMultimediaResource(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const vids = this.normalizeStringList(options.vids).join(',');
+      await confirmWrite(options.force, `Link ${vids} to channel ${options.channelId}?`);
+      const result = await this.documentService.linkChannelMultimediaResource(options.channelId, vids);
+      this.displayResult({ channelId: options.channelId, vids, success: result }, options.output);
+    }, 'document.media.link');
+  }
+
+  async unlinkChannelMultimediaResource(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const vids = this.normalizeStringList(options.vids).join(',');
+      await confirmWrite(options.force, `Unlink ${vids} from channel ${options.channelId}?`);
+      const result = await this.documentService.unlinkChannelMultimediaResource(options.channelId, vids);
+      this.displayResult({ channelId: options.channelId, vids, success: result }, options.output);
+    }, 'document.media.unlink');
+  }
+
+  async getUserMultimediaResourceDetail(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.documentService.getUserMultimediaResourceDetail(
+        this.normalizeStringList(options.vids).join(',')
+      );
+      this.displayResult(result, options.output);
+    }, 'document.media.user-detail');
+  }
+
+  async deleteUserMultimediaResource(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const vids = this.normalizeStringList(options.vids).join(',');
+      await confirmWrite(options.force, `Delete user multimedia resource(s) ${vids}?`);
+      const result = await this.documentService.deleteUserMultimediaResource(vids);
+      this.displayResult({ vids, success: result }, options.output);
+    }, 'document.media.user-delete');
+  }
+
   /**
    * Displays document list in the specified format
    * @param contents Array of document items
@@ -298,6 +374,26 @@ export class DocumentHandler extends BaseHandler {
     } else {
       this.displayDocumentTable(contents);
     }
+  }
+
+  private normalizeStringList(value: unknown): string[] {
+    const items = Array.isArray(value) ? value : String(value ?? '').split(',');
+    const list = items.map((item) => String(item).trim()).filter(Boolean);
+    if (list.length === 0) {
+      throw new Error('list must not be empty');
+    }
+    return list;
+  }
+
+  private paginationOptions(options: any): { pageNumber?: number; pageSize?: number } {
+    return {
+      ...(options.page !== undefined ? { pageNumber: options.page } : {}),
+      ...(options.pageSize !== undefined ? { pageSize: options.pageSize } : {}),
+    };
+  }
+
+  private displayResult(result: any, format: OutputFormat = 'table'): void {
+    this.displayData(result ?? { success: true }, format);
   }
 
   /**

@@ -10,6 +10,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parsePositiveInteger, parseTimestamp } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -98,6 +99,20 @@ export function validateOutputFormat(value: string): 'table' | 'json' {
     throw new Error('Output format must be either "table" or "json"');
   }
   return value as 'table' | 'json';
+}
+
+async function runSessionAction(
+  program: Command,
+  action: (handler: import('../handlers/session.handler').SessionHandler) => Promise<void>
+): Promise<void> {
+  try {
+    const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+    const { SessionHandler } = await import('../handlers/session.handler');
+    await action(new SessionHandler(authConfig, serviceConfig));
+  } catch (error) {
+    logError(error instanceof Error ? error : new Error(String(error)));
+    process.exit(1);
+  }
 }
 
 /**
@@ -272,4 +287,97 @@ Notes:
   - 频道ID和场次ID都是必填参数
   - 如果场次不存在，会显示友好的错误提示
 `);
+
+  sessionCmd
+    .command('legacy-list')
+    .description('查询频道历史场次信息')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--start-date <date>', '开始日期 (YYYY-MM-DD)')
+    .option('--end-date <date>', '结束日期 (YYYY-MM-DD)')
+    .option('--page <number>', '页码', parsePositiveInteger)
+    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.listLegacyChannelSessions(options)));
+
+  sessionCmd
+    .command('data-list')
+    .description('查询频道场次数据列表')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--start-date <date>', '开始日期 (YYYY-MM-DD)')
+    .option('--end-date <date>', '结束日期 (YYYY-MM-DD)')
+    .option('--page <number>', '页码', parsePositiveInteger)
+    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.getSessionDataList(options)));
+
+  sessionCmd
+    .command('create')
+    .description('创建频道新版场次')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--name <name>', '场次名称')
+    .requiredOption('--plan-start-time <timestamp>', '计划开始时间戳', parseTimestamp)
+    .requiredOption('--plan-end-time <timestamp>', '计划结束时间戳', parseTimestamp)
+    .option('--splash-img <url>', '暖场图 URL')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.createSession(options)));
+
+  sessionCmd
+    .command('update')
+    .description('更新频道新版场次')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--session-id <sessionId>', '场次ID')
+    .requiredOption('--name <name>', '场次名称')
+    .requiredOption('--plan-start-time <timestamp>', '计划开始时间戳', parseTimestamp)
+    .requiredOption('--plan-end-time <timestamp>', '计划结束时间戳', parseTimestamp)
+    .option('--splash-img <url>', '暖场图 URL')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.updateSession(options)));
+
+  sessionCmd
+    .command('delete')
+    .description('删除频道新版场次')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--session-id <sessionId>', '场次ID')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.deleteSession(options)));
+
+  const externalCmd = sessionCmd
+    .command('external')
+    .description('管理外部场次 ID 关联');
+
+  externalCmd
+    .command('get')
+    .description('查询频道场次对应自定义场次ID')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--session-id <sessionId>', '场次ID')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.getSessionExternalBySession(options)));
+
+  externalCmd
+    .command('session-list')
+    .description('根据自定义场次ID查询直播场次')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--external-session-id <externalSessionId>', '自定义场次ID')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.getSessionByExternal(options)));
+
+  externalCmd
+    .command('file-ids')
+    .description('根据自定义场次ID查询频道暂存文件ID')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--external-session-id <externalSessionId>', '自定义场次ID')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.listFileIdByExternal(options)));
+
+  externalCmd
+    .command('relevance')
+    .description('直播场次关联自定义ID')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--external-session-id <externalSessionId>', '自定义场次ID')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runSessionAction(program, (handler) => handler.relevanceSession(options)));
 }

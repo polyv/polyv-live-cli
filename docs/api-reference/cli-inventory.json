@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T23:24:53.609Z",
+  "generatedAt": "2026-06-20T01:10:08.498Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 383,
-    "cliMissingLatestApis": 195,
-    "cliCoverage": 66.3,
-    "cliUsageReferences": 388,
-    "cliSdkServiceUsages": 388,
+    "cliUsedLatestApis": 421,
+    "cliMissingLatestApis": 157,
+    "cliCoverage": 72.8,
+    "cliUsageReferences": 426,
+    "cliSdkServiceUsages": 426,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 374,
+    "matchedApiIds": 412,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 489,
+    "cliCommandPaths": 538,
     "cliTopLevelCommands": 40
   },
   "modules": [
@@ -31,11 +31,11 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 88,
-      "cliMissing": 195,
+      "cliUsed": 126,
+      "cliMissing": 157,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 88,
-      "cliCoverage": 31.1
+      "sdkServiceUsed": 126,
+      "cliCoverage": 44.5
     },
     {
       "module": "account",
@@ -1910,7 +1910,7 @@
       "depth": 1,
       "signature": "document",
       "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 142
+      "line": 165
     },
     {
       "command": "document delete",
@@ -1921,7 +1921,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 319
+      "line": 342
     },
     {
       "command": "document list",
@@ -1932,7 +1932,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 146
+      "line": 169
+    },
+    {
+      "command": "document media",
+      "path": [
+        "document",
+        "media"
+      ],
+      "depth": 2,
+      "signature": "media",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 512
     },
     {
       "command": "document status",
@@ -1943,7 +1954,18 @@
       "depth": 2,
       "signature": "status",
       "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 401
+      "line": 424
+    },
+    {
+      "command": "document teacher-doc",
+      "path": [
+        "document",
+        "teacher-doc"
+      ],
+      "depth": 2,
+      "signature": "teacher-doc",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 498
     },
     {
       "command": "document upload",
@@ -1954,7 +1976,91 @@
       "depth": 2,
       "signature": "upload",
       "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 230
+      "line": 253
+    },
+    {
+      "command": "document media details",
+      "path": [
+        "document",
+        "media",
+        "details"
+      ],
+      "depth": 3,
+      "signature": "details",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 525
+    },
+    {
+      "command": "document media link",
+      "path": [
+        "document",
+        "media",
+        "link"
+      ],
+      "depth": 3,
+      "signature": "link",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 534
+    },
+    {
+      "command": "document media unlink",
+      "path": [
+        "document",
+        "media",
+        "unlink"
+      ],
+      "depth": 3,
+      "signature": "unlink",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 543
+    },
+    {
+      "command": "document media user-delete",
+      "path": [
+        "document",
+        "media",
+        "user-delete"
+      ],
+      "depth": 3,
+      "signature": "user-delete",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 559
+    },
+    {
+      "command": "document media user-detail",
+      "path": [
+        "document",
+        "media",
+        "user-detail"
+      ],
+      "depth": 3,
+      "signature": "user-detail",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 552
+    },
+    {
+      "command": "document media vids",
+      "path": [
+        "document",
+        "media",
+        "vids"
+      ],
+      "depth": 3,
+      "signature": "vids",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 516
+    },
+    {
+      "command": "document teacher-doc relation",
+      "path": [
+        "document",
+        "teacher-doc",
+        "relation"
+      ],
+      "depth": 3,
+      "signature": "relation",
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 502
     },
     {
       "command": "donate",
@@ -3270,7 +3376,18 @@
       "depth": 1,
       "signature": "playback",
       "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 122
+      "line": 152
+    },
+    {
+      "command": "playback add-vod",
+      "path": [
+        "playback",
+        "add-vod"
+      ],
+      "depth": 2,
+      "signature": "add-vod",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 543
     },
     {
       "command": "playback delete",
@@ -3281,7 +3398,18 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 289
+      "line": 319
+    },
+    {
+      "command": "playback enabled",
+      "path": [
+        "playback",
+        "enabled"
+      ],
+      "depth": 2,
+      "signature": "enabled",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 522
     },
     {
       "command": "playback get",
@@ -3292,7 +3420,7 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 211
+      "line": 241
     },
     {
       "command": "playback list",
@@ -3303,7 +3431,7 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 126
+      "line": 156
     },
     {
       "command": "playback merge",
@@ -3314,7 +3442,134 @@
       "depth": 2,
       "signature": "merge",
       "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 375
+      "line": 405
+    },
+    {
+      "command": "playback setting-list",
+      "path": [
+        "playback",
+        "setting-list"
+      ],
+      "depth": 2,
+      "signature": "setting-list",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 508
+    },
+    {
+      "command": "playback sort",
+      "path": [
+        "playback",
+        "sort"
+      ],
+      "depth": 2,
+      "signature": "sort",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 568
+    },
+    {
+      "command": "playback subtitle",
+      "path": [
+        "playback",
+        "subtitle"
+      ],
+      "depth": 2,
+      "signature": "subtitle",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 593
+    },
+    {
+      "command": "playback title",
+      "path": [
+        "playback",
+        "title"
+      ],
+      "depth": 2,
+      "signature": "title",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 554
+    },
+    {
+      "command": "playback video-info",
+      "path": [
+        "playback",
+        "video-info"
+      ],
+      "depth": 2,
+      "signature": "video-info",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 515
+    },
+    {
+      "command": "playback enabled get",
+      "path": [
+        "playback",
+        "enabled",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 526
+    },
+    {
+      "command": "playback enabled set",
+      "path": [
+        "playback",
+        "enabled",
+        "set"
+      ],
+      "depth": 3,
+      "signature": "set",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 533
+    },
+    {
+      "command": "playback sort move",
+      "path": [
+        "playback",
+        "sort",
+        "move"
+      ],
+      "depth": 3,
+      "signature": "move",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 572
+    },
+    {
+      "command": "playback sort set",
+      "path": [
+        "playback",
+        "sort",
+        "set"
+      ],
+      "depth": 3,
+      "signature": "set",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 583
+    },
+    {
+      "command": "playback subtitle update-batch",
+      "path": [
+        "playback",
+        "subtitle",
+        "update-batch"
+      ],
+      "depth": 3,
+      "signature": "update-batch",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 597
+    },
+    {
+      "command": "playback title update",
+      "path": [
+        "playback",
+        "title",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 558
     },
     {
       "command": "player",
@@ -3908,7 +4163,29 @@
       "depth": 1,
       "signature": "record",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 168
+      "line": 183
+    },
+    {
+      "command": "record breakpoint",
+      "path": [
+        "record",
+        "breakpoint"
+      ],
+      "depth": 2,
+      "signature": "breakpoint",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 568
+    },
+    {
+      "command": "record clip",
+      "path": [
+        "record",
+        "clip"
+      ],
+      "depth": 2,
+      "signature": "clip",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 481
     },
     {
       "command": "record convert",
@@ -3919,7 +4196,62 @@
       "depth": 2,
       "signature": "convert",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 308
+      "line": 323
+    },
+    {
+      "command": "record file",
+      "path": [
+        "record",
+        "file"
+      ],
+      "depth": 2,
+      "signature": "file",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 516
+    },
+    {
+      "command": "record material-list",
+      "path": [
+        "record",
+        "material-list"
+      ],
+      "depth": 2,
+      "signature": "material-list",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 472
+    },
+    {
+      "command": "record merge-mp4",
+      "path": [
+        "record",
+        "merge-mp4"
+      ],
+      "depth": 2,
+      "signature": "merge-mp4",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 494
+    },
+    {
+      "command": "record merge-mp4-start",
+      "path": [
+        "record",
+        "merge-mp4-start"
+      ],
+      "depth": 2,
+      "signature": "merge-mp4-start",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 505
+    },
+    {
+      "command": "record outline",
+      "path": [
+        "record",
+        "outline"
+      ],
+      "depth": 2,
+      "signature": "outline",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 582
     },
     {
       "command": "record set-default",
@@ -3930,7 +4262,7 @@
       "depth": 2,
       "signature": "set-default",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 388
+      "line": 405
     },
     {
       "command": "record setting",
@@ -3941,7 +4273,113 @@
       "depth": 2,
       "signature": "setting",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 172
+      "line": 187
+    },
+    {
+      "command": "record subtitle",
+      "path": [
+        "record",
+        "subtitle"
+      ],
+      "depth": 2,
+      "signature": "subtitle",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 605
+    },
+    {
+      "command": "record temp-list",
+      "path": [
+        "record",
+        "temp-list"
+      ],
+      "depth": 2,
+      "signature": "temp-list",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 463
+    },
+    {
+      "command": "record breakpoint add",
+      "path": [
+        "record",
+        "breakpoint",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 572
+    },
+    {
+      "command": "record file convert",
+      "path": [
+        "record",
+        "file",
+        "convert"
+      ],
+      "depth": 3,
+      "signature": "convert",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 552
+    },
+    {
+      "command": "record file delete",
+      "path": [
+        "record",
+        "file",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 542
+    },
+    {
+      "command": "record file list",
+      "path": [
+        "record",
+        "file",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 520
+    },
+    {
+      "command": "record file merge",
+      "path": [
+        "record",
+        "file",
+        "merge"
+      ],
+      "depth": 3,
+      "signature": "merge",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 531
+    },
+    {
+      "command": "record outline create",
+      "path": [
+        "record",
+        "outline",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 586
+    },
+    {
+      "command": "record outline get",
+      "path": [
+        "record",
+        "outline",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 597
     },
     {
       "command": "record setting get",
@@ -3953,7 +4391,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 176
+      "line": 191
     },
     {
       "command": "record setting set",
@@ -3965,7 +4403,19 @@
       "depth": 3,
       "signature": "set",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 227
+      "line": 242
+    },
+    {
+      "command": "record subtitle publish",
+      "path": [
+        "record",
+        "subtitle",
+        "publish"
+      ],
+      "depth": 3,
+      "signature": "publish",
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 609
     },
     {
       "command": "robot",
@@ -4018,7 +4468,51 @@
       "depth": 1,
       "signature": "session",
       "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 109
+      "line": 124
+    },
+    {
+      "command": "session create",
+      "path": [
+        "session",
+        "create"
+      ],
+      "depth": 2,
+      "signature": "create",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 313
+    },
+    {
+      "command": "session data-list",
+      "path": [
+        "session",
+        "data-list"
+      ],
+      "depth": 2,
+      "signature": "data-list",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 302
+    },
+    {
+      "command": "session delete",
+      "path": [
+        "session",
+        "delete"
+      ],
+      "depth": 2,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 338
+    },
+    {
+      "command": "session external",
+      "path": [
+        "session",
+        "external"
+      ],
+      "depth": 2,
+      "signature": "external",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 347
     },
     {
       "command": "session get",
@@ -4029,7 +4523,18 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 206
+      "line": 221
+    },
+    {
+      "command": "session legacy-list",
+      "path": [
+        "session",
+        "legacy-list"
+      ],
+      "depth": 2,
+      "signature": "legacy-list",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 291
     },
     {
       "command": "session list",
@@ -4040,7 +4545,66 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 113
+      "line": 128
+    },
+    {
+      "command": "session update",
+      "path": [
+        "session",
+        "update"
+      ],
+      "depth": 2,
+      "signature": "update",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 325
+    },
+    {
+      "command": "session external file-ids",
+      "path": [
+        "session",
+        "external",
+        "file-ids"
+      ],
+      "depth": 3,
+      "signature": "file-ids",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 367
+    },
+    {
+      "command": "session external get",
+      "path": [
+        "session",
+        "external",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 351
+    },
+    {
+      "command": "session external relevance",
+      "path": [
+        "session",
+        "external",
+        "relevance"
+      ],
+      "depth": 3,
+      "signature": "relevance",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 375
+    },
+    {
+      "command": "session external session-list",
+      "path": [
+        "session",
+        "external",
+        "session-list"
+      ],
+      "depth": 3,
+      "signature": "session-list",
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 359
     },
     {
       "command": "setup",
@@ -5856,14 +6420,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 195,
+          "missing": 157,
           "total": 283,
-          "coverage": 31.1
+          "coverage": 44.5
         }
       ],
-      "missing": 195,
+      "missing": 157,
       "total": 283,
-      "coverage": 31.1
+      "coverage": 44.5
     }
   ],
   "unmatchedUsages": [],
@@ -7202,8 +7766,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#clipRecordFile",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 231,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7370,8 +7943,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listPlaybackSettings",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 107,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7712,8 +8294,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getSessionExternalBySession",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 136,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7740,8 +8331,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getSessionDataList",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 131,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7768,8 +8368,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listChannelSessions",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 120,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7861,8 +8470,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getRecordFile",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 200,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7928,8 +8546,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getChannelMultimediaResourceList",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 239,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -7956,8 +8583,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getChannelMultimediaResourceDetail",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 247,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -8094,8 +8730,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getPlaybackEnabled",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 122,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -8950,8 +9595,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listRecordFiles",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 211,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9612,8 +10266,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getUserMultimediaResourceDetail",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 262,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9981,8 +10644,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#sessionCreate",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 147,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10101,8 +10773,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createRecordFileOutline",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 298,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10373,8 +11054,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listMaterialRecordFiles",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 220,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10528,8 +11218,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listFileIdByExternal",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 174,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10557,8 +11256,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getSessionByExternal",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 169,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10630,8 +11338,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#sessionUpdate",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 159,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10717,8 +11434,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#linkChannelMultimediaResource",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 252,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10801,8 +11527,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#mergeRecordFiles",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 241,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10837,7 +11572,7 @@
             "reference": "ChannelService#recordFileMerge",
             "cliModule": "playback",
             "file": "packages/cli/src/services/playback.service.sdk.ts",
-            "line": 252,
+            "line": 315,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -10845,7 +11580,7 @@
             "reference": "ChannelService#recordFileMerge",
             "cliModule": "playback",
             "file": "packages/cli/src/services/playback.service.sdk.ts",
-            "line": 311,
+            "line": 374,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -10877,8 +11612,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#recordMergeMp4",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 250,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10907,8 +11651,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#recordMergeMp4Start",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 259,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11448,8 +12201,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#addVodPlaybackToLibrary",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 141,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11478,8 +12240,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updateTeacherDocRelation",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 231,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11534,8 +12305,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getPlaybackVideoInfo",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 112,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12113,8 +12893,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateChannelSubtitleBatch",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 117,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13206,8 +13995,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#recordAddBreakpoint",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 288,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13272,8 +14070,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#unlinkChannelMultimediaResource",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 257,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13671,8 +14478,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#sessionDelete",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 164,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13790,7 +14606,7 @@
             "reference": "ChannelService#deletePlayback",
             "cliModule": "playback",
             "file": "packages/cli/src/services/playback.service.sdk.ts",
-            "line": 180,
+            "line": 243,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -13887,8 +14703,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#deleteUserMultimediaResource",
+            "cliModule": "document",
+            "file": "packages/cli/src/services/document.service.sdk.ts",
+            "line": 267,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13913,8 +14738,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#deleteRecordFile",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 268,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14574,8 +15408,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#convertRecordFileToVod",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 283,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -14758,8 +15601,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updatePlaybackTitle",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 146,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15048,8 +15900,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#setUserPlaybackEnabled",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 131,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15851,8 +16712,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#movePlaybackVideo",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 156,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15912,8 +16782,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#sortPlaybackVideos",
+            "cliModule": "playback",
+            "file": "packages/cli/src/services/playback.service.sdk.ts",
+            "line": 165,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16000,8 +16879,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#batchPublishRecordFileSubtitles",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 308,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16029,8 +16917,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#relevanceSession",
+            "cliModule": "session",
+            "file": "packages/cli/src/services/session.service.sdk.ts",
+            "line": 179,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16117,8 +17014,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getRecordFileOutline",
+            "cliModule": "record",
+            "file": "packages/cli/src/services/record.service.sdk.ts",
+            "line": 303,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {

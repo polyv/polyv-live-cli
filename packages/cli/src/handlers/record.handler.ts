@@ -16,6 +16,7 @@ import {
   RecordConvertResult,
 } from '../types/record';
 import { AuthConfig } from '../types/auth';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Interface for record service (enables dependency injection)
@@ -26,6 +27,19 @@ export interface IRecordService {
   recordConvert(channelId: string, options: RecordConvertOptions): Promise<RecordConvertResult>;
   recordConvertAsync(channelId: string, options: RecordConvertOptions): Promise<RecordConvertResult>;
   setRecordDefault(channelId: string, videoId: string, listType?: 'playback' | 'vod'): Promise<boolean>;
+  getRecordFile(channelId: string, options?: any): Promise<any>;
+  listRecordFiles(params: any): Promise<any>;
+  listMaterialRecordFiles(params: any): Promise<any>;
+  clipRecordFile(channelId: string, options: any): Promise<any>;
+  mergeRecordFiles(params: any): Promise<any>;
+  recordMergeMp4(channelId: string, options: any): Promise<any>;
+  recordMergeMp4Start(channelId: string, options: any): Promise<boolean>;
+  deleteRecordFile(params: any): Promise<void>;
+  convertRecordFileToVod(params: any): Promise<any>;
+  recordAddBreakpoint(channelId: string, options: any): Promise<boolean>;
+  createRecordFileOutline(params: any): Promise<any>;
+  getRecordFileOutline(channelId: string, fileId: string): Promise<any>;
+  batchPublishRecordFileSubtitles(subtitles: Array<{ id: string | number; status: string }>): Promise<void>;
 }
 
 // Mapping constants for display
@@ -170,6 +184,8 @@ export class RecordHandler extends BaseHandler {
         throw new Error('fileName is required');
       }
 
+      await confirmWrite(options.force, `Convert record file for channel ${options.channelId}?`);
+
       let result: RecordConvertResult;
 
       if (options.async) {
@@ -225,6 +241,152 @@ export class RecordHandler extends BaseHandler {
     }, 'record.set-default');
   }
 
+  async getRecordFile(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.recordService.getRecordFile(options.channelId, {
+        page: options.page,
+        pageSize: options.pageSize,
+      });
+      this.displayResult(result, options.output);
+    }, 'record.temp-list');
+  }
+
+  async listRecordFiles(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.recordService.listRecordFiles(this.compactOptions(options));
+      this.displayResult(result, options.output);
+    }, 'record.file.list');
+  }
+
+  async listMaterialRecordFiles(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.recordService.listMaterialRecordFiles(this.compactOptions(options));
+      this.displayResult(result, options.output);
+    }, 'record.material-list');
+  }
+
+  async clipRecordFile(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Clip record file ${options.fileId} for channel ${options.channelId}?`);
+      const result = await this.recordService.clipRecordFile(options.channelId, this.compactOptions({
+        fileId: options.fileId,
+        startTime: options.startTime,
+        endTime: options.endTime,
+        fileName: options.fileName,
+        callbackUrl: options.callbackUrl,
+      }));
+      this.displayResult(result, options.output);
+    }, 'record.clip');
+  }
+
+  async mergeRecordFiles(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Merge record files for channel ${options.channelId}?`);
+      const result = await this.recordService.mergeRecordFiles(this.compactOptions({
+        channelId: options.channelId,
+        urls: options.urls,
+        fileIds: options.fileIds,
+        fileName: options.fileName,
+      }));
+      this.displayResult(result, options.output);
+    }, 'record.file.merge');
+  }
+
+  async recordMergeMp4(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const fileIds = this.normalizeStringList(options.fileIds);
+      await confirmWrite(options.force, `Merge ${fileIds.length} record file(s) to MP4 for channel ${options.channelId}?`);
+      const result = await this.recordService.recordMergeMp4(options.channelId, this.compactOptions({
+        fileIds,
+        fileName: options.fileName,
+        callbackUrl: options.callbackUrl,
+      }));
+      this.displayResult(result, options.output);
+    }, 'record.merge-mp4');
+  }
+
+  async recordMergeMp4Start(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const fileIds = this.normalizeStringList(options.fileIds);
+      await confirmWrite(options.force, `Start MP4 merge for ${fileIds.length} record file(s) in channel ${options.channelId}?`);
+      const result = await this.recordService.recordMergeMp4Start(options.channelId, this.compactOptions({
+        fileIds,
+        fileName: options.fileName,
+        callbackUrl: options.callbackUrl,
+      }));
+      this.displayResult({ channelId: options.channelId, fileIds, submitted: result }, options.output);
+    }, 'record.merge-mp4-start');
+  }
+
+  async deleteRecordFile(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Delete record file(s) from channel ${options.channelId}?`);
+      await this.recordService.deleteRecordFile(this.compactOptions({
+        channelId: options.channelId,
+        sessionId: options.sessionId,
+        startTime: options.startTime,
+      }));
+      this.displayResult({ channelId: options.channelId, sessionId: options.sessionId, startTime: options.startTime, deleted: true }, options.output);
+    }, 'record.file.delete');
+  }
+
+  async convertRecordFileToVod(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Convert historical record file for channel ${options.channelId}?`);
+      const result = await this.recordService.convertRecordFileToVod(this.compactOptions({
+        channelId: options.channelId,
+        userId: options.userId,
+        fileName: options.fileName,
+        fileUrl: options.fileUrl,
+        sessionId: options.sessionId,
+        cataid: options.cataid,
+        cataname: options.cataname,
+        toPlayList: options.toPlayList,
+        setAsDefault: options.setAsDefault,
+      }));
+      this.displayResult(result, options.output);
+    }, 'record.file.convert');
+  }
+
+  async recordAddBreakpoint(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Add breakpoint to record file ${options.fileId}?`);
+      const result = await this.recordService.recordAddBreakpoint(options.channelId, {
+        fileId: options.fileId,
+        time: options.time,
+      });
+      this.displayResult({ channelId: options.channelId, fileId: options.fileId, time: options.time, success: result }, options.output);
+    }, 'record.breakpoint.add');
+  }
+
+  async createRecordFileOutline(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Create outline for record file ${options.fileId}?`);
+      const result = await this.recordService.createRecordFileOutline(this.compactOptions({
+        fileId: options.fileId,
+        aiKnowledgeQuizEnabled: options.aiKnowledgeQuizEnabled,
+        aiSummaryAuditEnabled: options.aiSummaryAuditEnabled,
+        syncToPlaybackDotEnabled: options.syncToPlaybackDotEnabled,
+      }));
+      this.displayResult(result, options.output);
+    }, 'record.outline.create');
+  }
+
+  async getRecordFileOutline(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.recordService.getRecordFileOutline(options.channelId, options.fileId);
+      this.displayResult(result, options.output);
+    }, 'record.outline.get');
+  }
+
+  async batchPublishRecordFileSubtitles(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Publish ${options.subtitles.length} record file subtitle(s)?`);
+      await this.recordService.batchPublishRecordFileSubtitles(options.subtitles);
+      this.displayResult({ published: true, subtitles: options.subtitles }, options.output);
+    }, 'record.subtitle.publish');
+  }
+
   /**
    * Displays playback setting in the specified format
    * @param setting Playback setting item
@@ -245,6 +407,25 @@ export class RecordHandler extends BaseHandler {
     } else {
       this.displayPlaybackSettingTable(setting);
     }
+  }
+
+  private normalizeStringList(value: unknown): string[] {
+    const items = Array.isArray(value) ? value : String(value ?? '').split(',');
+    const list = items.map((item) => String(item).trim()).filter(Boolean);
+    if (list.length === 0) {
+      throw new Error('list must not be empty');
+    }
+    return list;
+  }
+
+  private compactOptions(options: any): any {
+    return Object.fromEntries(
+      Object.entries(options).filter(([, value]) => value !== undefined && value !== '')
+    );
+  }
+
+  private displayResult(result: any, format: OutputFormat = 'table'): void {
+    this.displayData(result ?? { success: true }, format);
   }
 
   /**

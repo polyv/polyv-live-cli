@@ -194,4 +194,117 @@ export class RecordServiceSdk {
 
     return true;
   }
+
+  async getRecordFile(channelId: string, options?: { page?: number; pageSize?: number }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getRecordFile(channelId, options);
+  }
+
+  async listRecordFiles(params: {
+    channelId: string;
+    userId: string;
+    startDate?: string;
+    endDate?: string;
+    sessionIds?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.listRecordFiles(params);
+  }
+
+  async listMaterialRecordFiles(params: {
+    channelId: string;
+    page?: number;
+    pageSize?: number;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listMaterialRecordFiles(params);
+  }
+
+  async clipRecordFile(channelId: string, options: {
+    fileId: string;
+    startTime: number;
+    endTime: number;
+    fileName?: string;
+    callbackUrl?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.clipRecordFile(channelId, options);
+  }
+
+  async mergeRecordFiles(params: {
+    channelId: string;
+    urls?: string;
+    fileIds?: string;
+    fileName?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.mergeRecordFiles(params);
+  }
+
+  async recordMergeMp4(channelId: string, options: {
+    fileIds: string[];
+    fileName?: string;
+    callbackUrl?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.recordMergeMp4(channelId, options);
+  }
+
+  async recordMergeMp4Start(channelId: string, options: {
+    fileIds: string[];
+    fileName?: string;
+    callbackUrl?: string;
+  }): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.recordMergeMp4Start(channelId, options);
+  }
+
+  async deleteRecordFile(params: {
+    channelId: string;
+    sessionId?: string;
+    startTime?: string;
+  }): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.channel.deleteRecordFile(params);
+  }
+
+  async convertRecordFileToVod(params: {
+    channelId: string;
+    userId: string;
+    fileName: string;
+    fileUrl?: string;
+    sessionId?: string;
+    cataid?: string;
+    cataname?: string;
+    toPlayList?: 'Y' | 'N';
+    setAsDefault?: 'Y' | 'N';
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.convertRecordFileToVod(params);
+  }
+
+  async recordAddBreakpoint(channelId: string, options: { fileId: string; time: number }): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.recordAddBreakpoint(channelId, options);
+  }
+
+  async createRecordFileOutline(params: {
+    fileId: string;
+    aiKnowledgeQuizEnabled?: 'Y' | 'N';
+    aiSummaryAuditEnabled?: 'Y' | 'N';
+    syncToPlaybackDotEnabled?: 'Y' | 'N';
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.createRecordFileOutline(params);
+  }
+
+  async getRecordFileOutline(channelId: string, fileId: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getRecordFileOutline({ channelId, fileId });
+  }
+
+  async batchPublishRecordFileSubtitles(subtitles: Array<{ id: string | number; status: string }>): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.v4Channel.batchPublishRecordFileSubtitles({ subtitles });
+  }
 }

@@ -13,6 +13,7 @@ import {
   SessionGetOptions,
 } from '../types/session';
 import { AuthConfig } from '../types/auth';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Session status mapping for display
@@ -37,6 +38,15 @@ export interface ISessionService {
     totalPages: number;
   }>;
   getSession(channelId: string, sessionId: string): Promise<SessionDisplayItem>;
+  listLegacyChannelSessions(options: any): Promise<any>;
+  getSessionDataList(options: any): Promise<any>;
+  getSessionExternalBySession(channelId: string, sessionId: string): Promise<any>;
+  createSession(options: any): Promise<any>;
+  updateSession(options: any): Promise<void>;
+  deleteSession(channelId: string, sessionId: string): Promise<void>;
+  getSessionByExternal(channelId: string, externalSessionId: string): Promise<any>;
+  listFileIdByExternal(channelId: string, externalSessionId: string): Promise<any>;
+  relevanceSession(channelId: string, externalSessionId: string): Promise<string>;
 }
 
 /**
@@ -130,6 +140,73 @@ export class SessionHandler extends BaseHandler {
     }
   }
 
+  async listLegacyChannelSessions(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.sessionService.listLegacyChannelSessions(this.compactOptions(options));
+      this.displayResult(result, options.output);
+    }, 'session.legacy-list');
+  }
+
+  async getSessionDataList(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.sessionService.getSessionDataList(this.compactOptions(options));
+      this.displayResult(result, options.output);
+    }, 'session.data-list');
+  }
+
+  async getSessionExternalBySession(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.sessionService.getSessionExternalBySession(options.channelId, options.sessionId);
+      this.displayResult(result, options.output);
+    }, 'session.external.get');
+  }
+
+  async createSession(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Create session "${options.name}" for channel ${options.channelId}?`);
+      const result = await this.sessionService.createSession(this.compactOptions(options));
+      this.displayResult(result, options.output);
+    }, 'session.create');
+  }
+
+  async updateSession(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Update session ${options.sessionId}?`);
+      await this.sessionService.updateSession(this.compactOptions(options));
+      this.displayResult({ channelId: options.channelId, sessionId: options.sessionId, updated: true }, options.output);
+    }, 'session.update');
+  }
+
+  async deleteSession(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Delete session ${options.sessionId} from channel ${options.channelId}?`);
+      await this.sessionService.deleteSession(options.channelId, options.sessionId);
+      this.displayResult({ channelId: options.channelId, sessionId: options.sessionId, deleted: true }, options.output);
+    }, 'session.delete');
+  }
+
+  async getSessionByExternal(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.sessionService.getSessionByExternal(options.channelId, options.externalSessionId);
+      this.displayResult(result, options.output);
+    }, 'session.external.session-list');
+  }
+
+  async listFileIdByExternal(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.sessionService.listFileIdByExternal(options.channelId, options.externalSessionId);
+      this.displayResult(result, options.output);
+    }, 'session.external.file-ids');
+  }
+
+  async relevanceSession(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await confirmWrite(options.force, `Bind external session ID ${options.externalSessionId} to channel ${options.channelId}?`);
+      const result = await this.sessionService.relevanceSession(options.channelId, options.externalSessionId);
+      this.displayResult({ channelId: options.channelId, externalSessionId: options.externalSessionId, result }, options.output);
+    }, 'session.external.relevance');
+  }
+
   /**
    * Displays session list in the specified format
    * @param contents Array of session items
@@ -173,6 +250,19 @@ export class SessionHandler extends BaseHandler {
 
     // Display session list as table
     this.displaySessionTable(contents);
+  }
+
+  private compactOptions(options: any): any {
+    const { output, force, ...rest } = options;
+    void output;
+    void force;
+    return Object.fromEntries(
+      Object.entries(rest).filter(([, value]) => value !== undefined && value !== '')
+    );
+  }
+
+  private displayResult(result: any, format: OutputFormat = 'table'): void {
+    this.displayData(result ?? { success: true }, format);
   }
 
   /**

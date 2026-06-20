@@ -89,6 +89,8 @@ export interface RecordConvertOptions {
   async?: boolean;
   /** Callback URL for async mode */
   callbackUrl?: string;
+  /** Force flag to skip confirmation */
+  force?: boolean;
   /** Output format */
   output?: 'table' | 'json';
 }

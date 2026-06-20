@@ -16,6 +16,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parseJsonArray, parseNonNegativeNumber, parsePositiveInteger, parseStringList } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -157,6 +158,20 @@ export function validateListType(value: string): 'playback' | 'vod' {
     throw new Error('List type must be either "playback" or "vod"');
   }
   return value as 'playback' | 'vod';
+}
+
+async function runRecordAction(
+  program: Command,
+  action: (handler: import('../handlers/record.handler').RecordHandler) => Promise<void>
+): Promise<void> {
+  try {
+    const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+    const { RecordHandler } = await import('../handlers/record.handler');
+    await action(new RecordHandler(authConfig, serviceConfig));
+  } catch (error) {
+    logError(error instanceof Error ? error : new Error(String(error)));
+    process.exit(1);
+  }
 }
 
 /**
@@ -320,6 +335,7 @@ Examples:
     .option('--set-as-default <value>', '是否设为默认回放视频 (Y|N)', validateYN)
     .option('--async', '使用异步转存模式', false)
     .option('--callback-url <url>', '转存完成后的回调URL（异步模式）')
+    .option('-f, --force', '跳过确认提示')
     .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
     .action(async function(this: Command, options) {
       try {
@@ -338,6 +354,7 @@ Examples:
           channelId: options.channelId,
           fileName: options.fileName,
           async: options.async,
+          force: options.force,
           output: options.output
         };
 
@@ -442,4 +459,162 @@ Options:
   --list-type         视频列表类型: playback(回放列表) 或 vod(点播列表)
   -o, --output        输出格式: table 或 json，默认为table
 `);
+
+  recordCmd
+    .command('temp-list')
+    .description('查询频道单个直播暂存信息')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--page <number>', '页码', parsePositiveInteger)
+    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.getRecordFile(options)));
+
+  recordCmd
+    .command('material-list')
+    .description('分页查询素材库频道直播回放列表')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--page <number>', '页码', parsePositiveInteger)
+    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.listMaterialRecordFiles(options)));
+
+  recordCmd
+    .command('clip')
+    .description('裁剪录制文件')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--file-id <fileId>', '暂存文件ID')
+    .requiredOption('--start-time <seconds>', '裁剪开始时间，秒', parseNonNegativeNumber)
+    .requiredOption('--end-time <seconds>', '裁剪结束时间，秒', parseNonNegativeNumber)
+    .option('--file-name <fileName>', '裁剪后文件名')
+    .option('--callback-url <url>', '回调地址')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.clipRecordFile(options)));
+
+  recordCmd
+    .command('merge-mp4')
+    .description('合并直播录制文件并回调 MP4 下载地址')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--file-ids <fileIds>', '暂存文件ID，逗号分隔', parseStringList)
+    .option('--file-name <fileName>', '合并后文件名')
+    .option('--callback-url <url>', '回调地址')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.recordMergeMp4(options)));
+
+  recordCmd
+    .command('merge-mp4-start')
+    .description('提交异步 MP4 合并任务')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--file-ids <fileIds>', '暂存文件ID，逗号分隔', parseStringList)
+    .option('--file-name <fileName>', '合并后文件名')
+    .option('--callback-url <url>', '回调地址')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.recordMergeMp4Start(options)));
+
+  const fileCmd = recordCmd
+    .command('file')
+    .description('管理历史录制文件');
+
+  fileCmd
+    .command('list')
+    .description('查询频道直播暂存列表')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--user-id <userId>', '用户ID')
+    .option('--start-date <date>', '开始日期 (YYYY-MM-DD)')
+    .option('--end-date <date>', '结束日期 (YYYY-MM-DD)')
+    .option('--session-ids <ids>', '场次ID，逗号分隔')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.listRecordFiles(options)));
+
+  fileCmd
+    .command('merge')
+    .description('合并录制文件')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--urls <urls>', '录制文件 URL，逗号分隔')
+    .option('--file-ids <fileIds>', '录制文件ID，逗号分隔')
+    .option('--file-name <fileName>', '合并后文件名')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.mergeRecordFiles(options)));
+
+  fileCmd
+    .command('delete')
+    .description('删除直播暂存中的录制视频')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--session-id <sessionId>', '场次ID')
+    .option('--start-time <time>', '录制开始时间 yyyyMMddHHmmss')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.deleteRecordFile(options)));
+
+  fileCmd
+    .command('convert')
+    .description('同步转存历史录制文件到点播')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--user-id <userId>', '用户ID')
+    .requiredOption('--file-name <fileName>', '转存后视频名称')
+    .option('--file-url <url>', '录制文件 URL')
+    .option('--session-id <sessionId>', '场次ID')
+    .option('--cataid <cataid>', '点播分类ID')
+    .option('--cataname <cataname>', '点播分类名称')
+    .option('--to-play-list <value>', '是否存入回放列表 (Y|N)', validateYN)
+    .option('--set-as-default <value>', '是否设为默认回放 (Y|N)', validateYN)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.convertRecordFileToVod(options)));
+
+  const breakpointCmd = recordCmd
+    .command('breakpoint')
+    .description('管理录制打点');
+
+  breakpointCmd
+    .command('add')
+    .description('频道直播录制打点')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--file-id <fileId>', '暂存文件ID')
+    .requiredOption('--time <seconds>', '打点时间，秒', parseNonNegativeNumber)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.recordAddBreakpoint(options)));
+
+  const outlineCmd = recordCmd
+    .command('outline')
+    .description('管理暂存视频大纲');
+
+  outlineCmd
+    .command('create')
+    .description('创建暂存视频大纲')
+    .requiredOption('--file-id <fileId>', '暂存文件ID')
+    .option('--ai-knowledge-quiz-enabled <value>', 'AI 知识问答开关 (Y|N)', validateYN)
+    .option('--ai-summary-audit-enabled <value>', 'AI 总结审核开关 (Y|N)', validateYN)
+    .option('--sync-to-playback-dot-enabled <value>', '同步到回放打点开关 (Y|N)', validateYN)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.createRecordFileOutline(options)));
+
+  outlineCmd
+    .command('get')
+    .description('查询暂存视频大纲')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--file-id <fileId>', '暂存文件ID')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.getRecordFileOutline(options)));
+
+  const subtitleCmd = recordCmd
+    .command('subtitle')
+    .description('管理暂存视频字幕');
+
+  subtitleCmd
+    .command('publish')
+    .description('暂存视频字幕文件批量发布')
+    .requiredOption('--subtitles-json <json>', '字幕数组 JSON，例如 [{"id":1,"status":"publish"}]', parseJsonArray)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runRecordAction(program, (handler) => handler.batchPublishRecordFileSubtitles({
+      subtitles: options.subtitlesJson,
+      force: options.force,
+      output: options.output,
+    })));
 }

@@ -226,6 +226,47 @@ export class DocumentServiceSdk {
     }));
   }
 
+  async updateTeacherDocRelation(teacherId: string, fileIds: string, operation: 1 | 2): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.updateTeacherDocRelation(teacherId, fileIds, operation);
+  }
+
+  async getChannelMultimediaResourceList(
+    channelId: string,
+    options?: { pageNumber?: number; pageSize?: number }
+  ): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getChannelMultimediaResourceList(channelId, options);
+  }
+
+  async getChannelMultimediaResourceDetail(
+    channelId: string,
+    options?: { pageNumber?: number; pageSize?: number }
+  ): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getChannelMultimediaResourceDetail(channelId, options);
+  }
+
+  async linkChannelMultimediaResource(channelId: string, vids: string): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.linkChannelMultimediaResource(channelId, vids);
+  }
+
+  async unlinkChannelMultimediaResource(channelId: string, vids: string): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.unlinkChannelMultimediaResource(channelId, vids);
+  }
+
+  async getUserMultimediaResourceDetail(vids: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getUserMultimediaResourceDetail(vids);
+  }
+
+  async deleteUserMultimediaResource(vids: string): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.deleteUserMultimediaResource(vids);
+  }
+
   /**
    * Validates document list options
    * @param options Options to validate

@@ -16,6 +16,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parsePositiveInteger, parseStringList } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -131,6 +132,28 @@ export function validateDocType(value: string): 'common' | 'animate' {
     throw new Error('Document type must be either "common" or "animate"');
   }
   return value as 'common' | 'animate';
+}
+
+function validateRelationOperation(value: string): 1 | 2 {
+  const parsed = parsePositiveInteger(value);
+  if (parsed !== 1 && parsed !== 2) {
+    throw new Error('operation must be 1 or 2');
+  }
+  return parsed as 1 | 2;
+}
+
+async function runDocumentAction(
+  program: Command,
+  action: (handler: import('../handlers/document.handler').DocumentHandler) => Promise<void>
+): Promise<void> {
+  try {
+    const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+    const { DocumentHandler } = await import('../handlers/document.handler');
+    await action(new DocumentHandler(authConfig, serviceConfig));
+  } catch (error) {
+    logError(error instanceof Error ? error : new Error(String(error)));
+    process.exit(1);
+  }
 }
 
 /**
@@ -471,4 +494,73 @@ Notes:
   - 频道ID和文件ID是必填参数
   - 文件ID可以用英文逗号分隔来查询多个文档
 `);
+
+  const teacherDocCmd = documentCmd
+    .command('teacher-doc')
+    .description('管理讲师与文档关系');
+
+  teacherDocCmd
+    .command('relation')
+    .description('新增或移除讲师文档关系')
+    .requiredOption('--teacher-id <teacherId>', '讲师ID')
+    .requiredOption('--file-ids <fileIds>', '文档ID，逗号分隔', parseStringList)
+    .requiredOption('--operation <operation>', '操作类型：1 新增关系，2 移除关系', validateRelationOperation)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.updateTeacherDocRelation(options)));
+
+  const mediaCmd = documentCmd
+    .command('media')
+    .description('管理频道关联音视频资源');
+
+  mediaCmd
+    .command('vids')
+    .description('查询频道关联音视频 VID 列表')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--page <number>', '页码', parsePositiveInteger)
+    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.listChannelMultimediaResourceVids(options)));
+
+  mediaCmd
+    .command('details')
+    .description('查询频道关联音视频文件详情')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('--page <number>', '页码', parsePositiveInteger)
+    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.listChannelMultimediaResourceDetails(options)));
+
+  mediaCmd
+    .command('link')
+    .description('关联音视频文件到频道')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--vids <vids>', '音视频 VID，逗号分隔', parseStringList)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.linkChannelMultimediaResource(options)));
+
+  mediaCmd
+    .command('unlink')
+    .description('取消频道关联音视频文件')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--vids <vids>', '音视频 VID，逗号分隔', parseStringList)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.unlinkChannelMultimediaResource(options)));
+
+  mediaCmd
+    .command('user-detail')
+    .description('查询用户音视频文件详情')
+    .requiredOption('--vids <vids>', '音视频 VID，逗号分隔，最多100个', parseStringList)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.getUserMultimediaResourceDetail(options)));
+
+  mediaCmd
+    .command('user-delete')
+    .description('删除用户音视频文件')
+    .requiredOption('--vids <vids>', '音视频 VID，逗号分隔，最多100个', parseStringList)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runDocumentAction(program, (handler) => handler.deleteUserMultimediaResource(options)));
 }

@@ -10,6 +10,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parseStringList, parseJsonArray } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -111,6 +112,35 @@ export function validateListType(value: string): 'playback' | 'vod' {
     throw new Error('List type must be either "playback" or "vod"');
   }
   return value as 'playback' | 'vod';
+}
+
+function validateYN(value: string): 'Y' | 'N' {
+  const upper = value.toUpperCase();
+  if (upper !== 'Y' && upper !== 'N') {
+    throw new Error('Value must be Y or N');
+  }
+  return upper as 'Y' | 'N';
+}
+
+function validateMoveType(value: string): 'up' | 'down' {
+  if (value !== 'up' && value !== 'down') {
+    throw new Error('Move type must be up or down');
+  }
+  return value;
+}
+
+async function runPlaybackAction(
+  program: Command,
+  action: (handler: import('../handlers/playback.handler').PlaybackHandler) => Promise<void>
+): Promise<void> {
+  try {
+    const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+    const { PlaybackHandler } = await import('../handlers/playback.handler');
+    await action(new PlaybackHandler(authConfig, serviceConfig));
+  } catch (error) {
+    logError(error instanceof Error ? error : new Error(String(error)));
+    process.exit(1);
+  }
 }
 
 /**
@@ -474,4 +504,107 @@ Notes:
   - 同步合并会等待合并完成后返回结果
   - 异步合并会立即返回，合并完成后可通过回调URL通知
 `);
+
+  playbackCmd
+    .command('setting-list')
+    .description('批量查询频道回放设置')
+    .requiredOption('--channel-ids <ids>', '频道ID，逗号分隔', parseStringList)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.listPlaybackSettings(options)));
+
+  playbackCmd
+    .command('video-info')
+    .description('批量查询频道单个回放信息')
+    .requiredOption('--channel-ids <ids>', '频道ID，逗号分隔', parseStringList)
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.getPlaybackVideoInfo(options)));
+
+  const enabledCmd = playbackCmd
+    .command('enabled')
+    .description('管理频道回放开关');
+
+  enabledCmd
+    .command('get')
+    .description('查询频道回放开关')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.getPlaybackEnabled(options)));
+
+  enabledCmd
+    .command('set')
+    .description('修改用户或频道回放开关')
+    .requiredOption('--user-id <userId>', '用户ID')
+    .requiredOption('--play-back-enabled <value>', '回放开关 (Y|N)', validateYN)
+    .option('-c, --channel-id <channelId>', '频道ID')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.setPlaybackEnabled(options)));
+
+  playbackCmd
+    .command('add-vod')
+    .description('将点播视频添加到频道回放视频库')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--vid <vid>', '点播视频ID')
+    .option('--set-as-default <value>', '是否设为默认回放 (Y|N)', validateYN)
+    .option('--list-type <type>', '列表类型 (playback|vod)', validateListType)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.addVodPlayback(options)));
+
+  const titleCmd = playbackCmd
+    .command('title')
+    .description('管理回放标题');
+
+  titleCmd
+    .command('update')
+    .description('修改回放视频名称')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--video-id <videoId>', '回放视频ID')
+    .requiredOption('--title <title>', '新标题')
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.updatePlaybackTitle(options)));
+
+  const sortCmd = playbackCmd
+    .command('sort')
+    .description('管理回放视频排序');
+
+  sortCmd
+    .command('move')
+    .description('上移或下移单个回放视频')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--video-id <videoId>', '回放视频ID')
+    .requiredOption('--type <type>', '移动方向 (up|down)', validateMoveType)
+    .option('--list-type <type>', '列表类型 (playback|vod)', validateListType)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.movePlaybackVideo(options)));
+
+  sortCmd
+    .command('set')
+    .description('按完整视频 ID 列表设置回放排序')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--video-ids <ids>', '回放视频ID，逗号分隔', parseStringList)
+    .option('--list-type <type>', '列表类型 (playback|vod)', validateListType)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.sortPlaybackVideos(options)));
+
+  const subtitleCmd = playbackCmd
+    .command('subtitle')
+    .description('管理回放字幕');
+
+  subtitleCmd
+    .command('update-batch')
+    .description('批量修改频道回放字幕')
+    .requiredOption('-c, --channel-id <channelId>', '频道ID')
+    .requiredOption('--body-json <json>', '字幕数组 JSON，例如 [{"id":1,"name":"字幕","status":"publish"}]', parseJsonArray)
+    .option('-f, --force', '跳过确认提示')
+    .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
+    .action((options) => runPlaybackAction(program, (handler) => handler.updateChannelSubtitles({
+      channelId: options.channelId,
+      body: options.bodyJson,
+      force: options.force,
+      output: options.output,
+    })));
 }

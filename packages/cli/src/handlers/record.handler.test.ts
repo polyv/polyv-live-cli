@@ -275,6 +275,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         channelId: '2588188',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
+        force: true,
       };
 
       await handler.recordConvert(options);
@@ -298,6 +299,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         channelId: '2588188',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
+        force: true,
       };
 
       await handler.recordConvert(options);
@@ -316,6 +318,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         channelId: '2588188',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
+        force: true,
       };
 
       await handler.recordConvert(options);
@@ -350,6 +353,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
         async: true,
+        force: true,
       };
 
       await handler.recordConvert(options);
@@ -373,6 +377,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
         async: true,
+        force: true,
       };
 
       await handler.recordConvert(options);
@@ -392,6 +397,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
         async: true,
+        force: true,
         output: 'json',
       };
 
@@ -412,6 +418,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         sessionId: 'fvlyin8qz3',
         fileName: '测试转存',
         async: true,
+        force: true,
       };
 
       await handler.recordConvert(options);
@@ -540,6 +547,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         channelId: '2588188',
         sessionId: 'test-session',
         fileName: 'test',
+        force: true,
         output: 'table',
       };
 
@@ -559,6 +567,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         channelId: '2588188',
         sessionId: 'test-session',
         fileName: 'test',
+        force: true,
         output: 'json',
       };
 
@@ -607,6 +616,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
         channelId: '2588188',
         sessionId: 'test-session',
         fileName: 'test',
+        force: true,
       };
 
       await expect(handler.recordConvert(options)).rejects.toThrow('API Error');

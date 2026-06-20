@@ -102,6 +102,69 @@ export class PlaybackServiceSdk {
     };
   }
 
+  async listPlaybackSettings(channelIds: string[]): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listPlaybackSettings({ channelIds });
+  }
+
+  async getPlaybackVideoInfo(channelIds: string[]): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getPlaybackVideoInfo({ channelIds });
+  }
+
+  async updateChannelSubtitles(channelId: string, body: any[]): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.v4Channel.updateChannelSubtitleBatch({ channelId, body });
+  }
+
+  async getPlaybackEnabled(channelId: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getPlaybackEnabled(channelId);
+  }
+
+  async setPlaybackEnabled(params: {
+    userId: string;
+    playBackEnabled: 'Y' | 'N';
+    channelId?: string;
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.setUserPlaybackEnabled(params);
+  }
+
+  async addVodPlayback(params: {
+    channelId: string;
+    vid: string;
+    setAsDefault?: 'Y' | 'N';
+    listType?: 'playback' | 'vod';
+  }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.addVodPlaybackToLibrary(params);
+  }
+
+  async updatePlaybackTitle(channelId: string, videoId: string, title: string): Promise<boolean> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.updatePlaybackTitle(channelId, videoId, title);
+  }
+
+  async movePlaybackVideo(params: {
+    channelId: string;
+    videoId: string;
+    type: 'up' | 'down';
+    listType?: 'playback' | 'vod';
+  }): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.channel.movePlaybackVideo(params);
+  }
+
+  async sortPlaybackVideos(params: {
+    channelId: string;
+    videoIds: string[];
+    listType?: 'playback' | 'vod';
+  }): Promise<void> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    await client.channel.sortPlaybackVideos(params);
+  }
+
   /**
    * Formats duration from seconds to HH:MM:SS format
    * @param seconds Duration in seconds
