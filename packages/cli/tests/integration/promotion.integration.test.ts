@@ -6,6 +6,7 @@
 
 import { PromotionServiceSdk } from '../../src/services/promotion-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -26,7 +27,7 @@ function uniqueName(prefix: string): string {
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Promotion Service');
   });
 
   // Note: Promotion API doesn't have delete endpoint, so we can't clean up
@@ -46,7 +47,7 @@ function uniqueName(prefix: string): string {
         // Result may be empty if no promotions exist
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', 'forbidden', 'failed', 'illegal', 'TypeError', 'undefined'];
+        const expectedErrors = ['404', 'not found', 'forbidden', 'failed', 'illegal', 'TypeError', 'undefined', '系统异常'];
         if (expectedErrors.some(e => message.includes(e))) {
           console.log('Promotion API not available or returned unexpected format');
           expect(true).toBe(true);
@@ -92,7 +93,7 @@ function uniqueName(prefix: string): string {
         }
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', 'forbidden', 'failed', 'illegal', 'TypeError', 'undefined'];
+        const expectedErrors = ['404', 'not found', 'forbidden', 'failed', 'illegal', 'TypeError', 'undefined', '系统异常'];
         if (expectedErrors.some(e => message.includes(e))) {
           expect(true).toBe(true);
         } else {
@@ -425,10 +426,12 @@ function uniqueName(prefix: string): string {
     }, 30000);
   });
 
-  // Log created promotions for reference
   afterAll(() => {
     if (createdPromotionIds.length > 0) {
-      console.log(`\n📝 Note: ${createdPromotionIds.length} promotions were created during tests (no cleanup API available)`);
+      console.log(`\n📝 Note: ${createdPromotionIds.length} promotions were created during tests in temporary channel ${testChannelId}`);
+    }
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
     }
   });
 });

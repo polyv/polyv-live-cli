@@ -6,6 +6,7 @@
 
 import { LotteryServiceSdk } from '../../src/services/lottery-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -33,7 +34,7 @@ function uniqueName(prefix: string): string {
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Lottery Service');
   });
 
   afterAll(async () => {
@@ -50,6 +51,9 @@ function uniqueName(prefix: string): string {
           // Ignore cleanup errors
         }
       }
+    }
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
     }
   });
 

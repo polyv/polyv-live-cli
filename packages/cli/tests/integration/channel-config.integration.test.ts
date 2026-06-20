@@ -6,28 +6,21 @@
 
 import { createSdkClient } from '../../src/sdk';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 const testConfig = getTestConfig();
 const shouldRunTests = hasRealCredentials();
 
 (shouldRunTests ? describe : describe.skip)('Channel Config Integration Tests', () => {
-  const testChannelId = testConfig.testChannelId;
+  let testChannelId: string;
 
-  // Track original config states for cleanup
-  let originalCouponEnabled: string | undefined;
+  beforeAll(() => {
+    testChannelId = createTemporaryChannel('Channel Config Service');
+  });
 
-  afterAll(async () => {
-    // Restore original couponEnabled state
-    if (originalCouponEnabled !== undefined) {
-      try {
-        const client = createSdkClient(testConfig.authConfig, testConfig.baseUrl);
-        await client.v4Channel.updateCouponEnabled({
-          channelId: testChannelId,
-          enabled: originalCouponEnabled as 'Y' | 'N',
-        });
-      } catch (error) {
-        // Ignore cleanup errors
-      }
+  afterAll(() => {
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
     }
   });
 
@@ -45,7 +38,6 @@ const shouldRunTests = hasRealCredentials();
       });
 
       expect(true).toBe(true);
-      originalCouponEnabled = 'N'; // Restore to N after test
     }, 15000);
 
     it('should disable coupon display on watch page', async () => {
@@ -57,7 +49,6 @@ const shouldRunTests = hasRealCredentials();
       });
 
       expect(true).toBe(true);
-      originalCouponEnabled = 'N';
     }, 15000);
 
     it('should validate channelId is required', async () => {
@@ -97,7 +88,6 @@ const shouldRunTests = hasRealCredentials();
       });
 
       expect(true).toBe(true);
-      originalCouponEnabled = 'N';
     }, 15000);
   });
 
@@ -140,7 +130,6 @@ const shouldRunTests = hasRealCredentials();
       expect(result.success).toBe(true);
       expect(result.channelId).toBe(testChannelId);
       expect(result.enabled).toBe('Y');
-      originalCouponEnabled = 'N';
     }, 15000);
 
     it('should throw error when channelId is missing', async () => {

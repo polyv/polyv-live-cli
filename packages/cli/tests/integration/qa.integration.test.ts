@@ -6,6 +6,7 @@
 
 import { QaQuestionnaireServiceSdk } from '../../src/services/qa-questionnaire-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -21,7 +22,13 @@ const shouldRunTests = hasRealCredentials();
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('QA Service');
+  });
+
+  afterAll(() => {
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
+    }
   });
 
   // ========================================
@@ -265,13 +272,16 @@ const shouldRunTests = hasRealCredentials();
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Questionnaire Service');
   });
 
-  afterAll(async () => {
+  afterAll(() => {
     // Note: Questionnaire cleanup may not be available via API
     if (createdQuestionnaireIds.length > 0) {
-      console.log(`📝 Created ${createdQuestionnaireIds.length} questionnaires (cleanup may require manual action)`);
+      console.log(`📝 Created ${createdQuestionnaireIds.length} questionnaires in temporary channel ${testChannelId}`);
+    }
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
     }
   });
 

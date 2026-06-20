@@ -6,6 +6,7 @@
 
 import { DonateServiceSdk } from '../../src/services/donate-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -29,7 +30,13 @@ function getTimestamp(daysOffset: number = 0): number {
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Donate Service');
+  });
+
+  afterAll(() => {
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
+    }
   });
 
   // ========================================
