@@ -99,6 +99,7 @@ describe('v4 channel interaction CLI integration', () => {
     const checks = [
       { args: ['lottery', 'winners', '--help'], text: '--lottery-id' },
       { args: ['lottery', 'records', '--help'], text: '--start-time' },
+      { args: ['lottery', 'legacy-records', '--help'], text: '--end-time' },
       { args: ['lottery', 'wait', 'create', '--help'], text: '--force' },
       { args: ['lottery', 'group', 'list', '--help'], text: '--channel-id' },
       { args: ['lottery', 'group', 'create', '--help'], text: '--force' },
@@ -135,6 +136,7 @@ describe('v4 channel interaction CLI integration', () => {
       const readCommands = [
         ['lottery', 'list', '--channel-id', id, '--output', 'json'],
         ['lottery', 'records', '--channel-id', id, '--start-time', startTime, '--end-time', endTime, '--output', 'json'],
+        ['lottery', 'legacy-records', '--channel-id', id, '--start-time', startTime, '--end-time', endTime, '--output', 'json'],
         ['lottery', 'group', 'list', '--channel-id', id, '--output', 'json'],
         ['lottery', 'blacklist', 'list', '--channel-id', id, '--output', 'json'],
         ['donate', 'likes', '--channel-id', id, '--start', startTime, '--end', endTime, '--output', 'json'],

@@ -28,6 +28,7 @@ jest.mock('../handlers/lottery.handler', () => ({
     deleteLottery: jest.fn().mockResolvedValue(undefined),
     getWinners: jest.fn().mockResolvedValue(undefined),
     getRecords: jest.fn().mockResolvedValue(undefined),
+    getLegacyRecords: jest.fn().mockResolvedValue(undefined),
   })),
 }));
 
@@ -297,6 +298,26 @@ describe('Lottery Commands', () => {
     });
   });
 
+  describe('11.5-CMD-008B: should register lottery legacy-records command', () => {
+    it('should register legacy-records subcommand with required time range options', () => {
+      const prog = createTestProgram();
+      registerLotteryCommands(prog);
+
+      const command = prog.commands.find(cmd => cmd.name() === 'lottery');
+      const legacyRecordsSubcommand = command?.commands.find(cmd => cmd.name() === 'legacy-records');
+      expect(legacyRecordsSubcommand).toBeDefined();
+
+      const options = legacyRecordsSubcommand?.options || [];
+      expect(options.some(opt => opt.long === '--channel-id')).toBe(true);
+      expect(options.find(opt => opt.long === '--start-time')?.required).toBe(true);
+      expect(options.find(opt => opt.long === '--end-time')?.required).toBe(true);
+      expect(options.some(opt => opt.long === '--session-id')).toBe(true);
+      expect(options.some(opt => opt.long === '--page')).toBe(true);
+      expect(options.some(opt => opt.long === '--limit')).toBe(true);
+      expect(options.some(opt => opt.long === '--output')).toBe(true);
+    });
+  });
+
   // ============================================================
   // Help text tests
   // ============================================================
@@ -384,6 +405,7 @@ describe('Lottery Commands', () => {
       expect(subcommandNames).toContain('delete');
       expect(subcommandNames).toContain('winners');
       expect(subcommandNames).toContain('records');
+      expect(subcommandNames).toContain('legacy-records');
       expect(subcommandNames).toContain('channel-records');
       expect(subcommandNames).toContain('download-winners');
       expect(subcommandNames).toContain('receive-info');
@@ -393,7 +415,7 @@ describe('Lottery Commands', () => {
       expect(subcommandNames).toContain('blacklist');
       expect(subcommandNames).toContain('lucky-bag');
 
-      expect(subcommandNames).toHaveLength(15);
+      expect(subcommandNames).toHaveLength(16);
     });
   });
 
@@ -521,6 +543,42 @@ describe('Lottery Commands', () => {
 
       expect(mockHandler.getRecords).toHaveBeenCalledWith(
         expect.objectContaining({ channelId: '123456' })
+      );
+    });
+
+    it('[P0] should call getLegacyRecords handler with correct params', async () => {
+      const { LotteryHandler } = await import('../handlers/lottery.handler');
+      const mockHandler = {
+        getLegacyRecords: jest.fn().mockResolvedValue(undefined),
+      };
+      (LotteryHandler as jest.Mock).mockImplementation(() => mockHandler);
+
+      const prog = createProgramWithLottery();
+      await prog.parseAsync([
+        'node',
+        'test',
+        'lottery',
+        'legacy-records',
+        '-c',
+        '123456',
+        '--start-time',
+        '1704067200000',
+        '--end-time',
+        '1706745599000',
+        '--page',
+        '1',
+        '--limit',
+        '10',
+      ]);
+
+      expect(mockHandler.getLegacyRecords).toHaveBeenCalledWith(
+        expect.objectContaining({
+          channelId: '123456',
+          startTime: 1704067200000,
+          endTime: 1706745599000,
+          page: 1,
+          limit: 10,
+        })
       );
     });
 

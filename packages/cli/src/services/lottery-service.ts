@@ -173,6 +173,27 @@ export class LotteryServiceSdk {
   }
 
   /**
+   * List lottery records for a single channel using legacy LiveInteraction V3 API.
+   * @param params List lottery records parameters
+   * @returns API response with lottery records
+   */
+  async listLegacyLottery(params: ListLotteryRecordsParams): Promise<any> {
+    try {
+      const result = await this.liveInteraction.listLottery({
+        channelId: params.channelId,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        sessionId: params.sessionId,
+        page: params.page,
+        limit: params.limit,
+      });
+      return result;
+    } catch (error) {
+      throw this.wrapError(error, 'listLegacyLottery');
+    }
+  }
+
+  /**
    * List lottery records across channels using LiveInteraction V3 API
    * @param params List parameters
    * @returns API response with lottery records

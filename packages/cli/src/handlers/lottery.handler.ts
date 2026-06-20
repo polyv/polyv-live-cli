@@ -15,6 +15,7 @@ import {
   LotteryDeleteOptions,
   LotteryWinnersOptions,
   LotteryRecordsOptions,
+  LotteryLegacyRecordsOptions,
   LotteryChannelRecordsOptions,
   LotteryDownloadWinnersOptions,
   LotteryReceiveInfoOptions,
@@ -318,6 +319,25 @@ export class LotteryHandler extends BaseHandler {
 
       this.displayGenericResult(result, options.output);
     }, 'lottery.channel-records');
+  }
+
+  async getLegacyRecords(options: LotteryLegacyRecordsOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateLegacyRecordsOptions(options);
+
+      const params: any = {
+        channelId: options.channelId,
+        startTime: options.startTime,
+        endTime: options.endTime,
+      };
+      if (options.sessionId !== undefined) params.sessionId = options.sessionId;
+      if (options.page !== undefined) params.page = options.page;
+      if (options.limit !== undefined) params.limit = options.limit;
+
+      const result = await this.lotteryService.listLegacyLottery(params);
+
+      this.displayRecordsResult(result, options);
+    }, 'lottery.legacy-records');
   }
 
   async downloadWinners(options: LotteryDownloadWinnersOptions): Promise<void> {
@@ -704,6 +724,31 @@ export class LotteryHandler extends BaseHandler {
     if (errors.length > 0) {
       throw new PolyVValidationError(
         `Lottery channel records options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateLegacyRecordsOptions(options: LotteryLegacyRecordsOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+    this.validatePositiveNumber(errors, 'startTime', options.startTime);
+    this.validatePositiveNumber(errors, 'endTime', options.endTime);
+    this.validateOptionalPositiveInteger(errors, 'page', options.page);
+    this.validateOptionalPositiveInteger(errors, 'limit', options.limit);
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Lottery legacy records options validation failed: ${errors.join(', ')}`,
         'options',
         options,
         'validation_failed'

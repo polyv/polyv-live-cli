@@ -150,6 +150,26 @@ export interface LotteryRecordsOptions {
 }
 
 /**
+ * Options for getting legacy lottery records through the LiveInteraction V3 API
+ */
+export interface LotteryLegacyRecordsOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Start time (timestamp in milliseconds, required) */
+  startTime: number;
+  /** End time (timestamp in milliseconds, required) */
+  endTime: number;
+  /** Session ID filter */
+  sessionId?: string;
+  /** Page number */
+  page?: number;
+  /** Items per page */
+  limit?: number;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
  * Options for listing lottery records across channels
  */
 export interface LotteryChannelRecordsOptions {

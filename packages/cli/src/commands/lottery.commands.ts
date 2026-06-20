@@ -399,6 +399,47 @@ Output Formats:
 `);
 
   // ========================================
+  // lottery legacy-records
+  // ========================================
+  const legacyRecordsCmd = lotteryCmd
+    .command('legacy-records')
+    .description('Get legacy V3 lottery records for a single channel')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parsePositiveNumber)
+    .requiredOption('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parsePositiveNumber)
+    .option('--session-id <id>', 'session ID filter')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--limit <number>', 'items per page', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const lotteryHandler = new LotteryHandler(authConfig, serviceConfig);
+
+        await lotteryHandler.getLegacyRecords({
+          channelId: options.channelId,
+          startTime: options.startTime,
+          endTime: options.endTime,
+          sessionId: options.sessionId,
+          page: options.page,
+          limit: options.limit,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  legacyRecordsCmd.addHelpText('after', `
+Examples:
+  # Get legacy V3 lottery records for a single channel
+  $ polyv-live-cli lottery legacy-records -c "3151318" --start-time 1704067200000 --end-time 1706745599000
+`);
+
+  // ========================================
   // lottery channel-records
   // ========================================
   const channelRecordsCmd = lotteryCmd
