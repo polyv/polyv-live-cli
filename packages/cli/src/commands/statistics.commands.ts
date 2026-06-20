@@ -284,6 +284,163 @@ export function registerStatisticsCommands(program: Command): void {
       (service) => service.listInviteStats(apiParams(options))
     ));
 
+  statisticsCmd.command('channel-play-summary')
+    .description('Get multi-channel play summary statistics')
+    .requiredOption('--start-date <date>', 'start date (yyyy-MM-dd)', validateDateFormat)
+    .requiredOption('--end-date <date>', 'end date (yyyy-MM-dd)', validateDateFormat)
+    .option('--user-id <id>', 'account user ID; defaults to configured userId')
+    .option('--channel-ids <ids>', 'channel IDs, comma-separated')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getChannelPlaySummary(apiParams(options))
+    ));
+
+  statisticsCmd.command('realtime-viewers')
+    .description('Get realtime viewer counts for channels')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getRealtimeViewers(apiParams(options))
+    ));
+
+  statisticsCmd.command('channel-statistic')
+    .description('Get channel statistic data')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--start-date <date>', 'start date (yyyy-MM-dd)', validateDateFormat)
+    .requiredOption('--end-date <date>', 'end date (yyyy-MM-dd)', validateDateFormat)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getChannelStatistic(apiParams(options))
+    ));
+
+  statisticsCmd.command('channel-session-stats')
+    .description('Get channel session statistics')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--session-ids <ids>', 'session IDs, comma-separated')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getSessionStats(apiParams(options))
+    ));
+
+  statisticsCmd.command('mic-list')
+    .description('List channel mic detail statistics')
+    .option('--channel-ids <ids>', 'channel IDs, comma-separated')
+    .option('--start-day <date>', 'start date (yyyy-MM-dd)', validateDateFormat)
+    .option('--end-day <date>', 'end date (yyyy-MM-dd)', validateDateFormat)
+    .option('--page <page>', 'page number', parseInt)
+    .option('--size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getMicDetailList(apiParams(options))
+    ));
+
+  statisticsCmd.command('link-mic-list')
+    .description('List channel link-mic detail logs')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--start-date <date>', 'start date (yyyy-MM-dd)', validateDateFormat)
+    .requiredOption('--end-date <date>', 'end date (yyyy-MM-dd)', validateDateFormat)
+    .option('--page <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getLinkMicDetailList(apiParams(options))
+    ));
+
+  statisticsCmd.command('channel-summary')
+    .description('Get channel view summary statistics')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--start-day <date>', 'start date (yyyy-MM-dd)', validateDateFormat)
+    .requiredOption('--end-day <date>', 'end date (yyyy-MM-dd)', validateDateFormat)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getSummary(apiParams(options))
+    ));
+
+  statisticsCmd.command('product-click')
+    .description('List product click statistics')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--session-id <id>', 'session ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getProductClickStats(apiParams(options))
+    ));
+
+  statisticsCmd.command('product-list-click')
+    .description('List product-list click statistics')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--session-id <id>', 'session ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getProductListStats(apiParams(options))
+    ));
+
+  statisticsCmd.command('redpack-list')
+    .description('List redpack statistics')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--session-id <id>', 'session ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getRedpackStats(apiParams(options))
+    ));
+
+  statisticsCmd.command('realtime-v1')
+    .description('Get realtime viewers using the legacy V1 statistics API')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--user-id <id>', 'account user ID; defaults to configured userId')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getRealtimeViewersV1(apiParams(options))
+    ));
+
+  statisticsCmd.command('viewlog-v1')
+    .description('Get V1 viewlog records')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--current-day <date>', 'query date (yyyy-MM-dd)', validateDateFormat)
+    .option('--user-id <id>', 'account user ID; defaults to configured userId')
+    .option('--param1 <value>', 'legacy API param1 value')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getViewlogV1(apiParams(options))
+    ));
+
+  statisticsCmd.command('viewlog-v2')
+    .description('Get V2 paged viewlog records')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--current-day <date>', 'query date (yyyy-MM-dd)', validateDateFormat)
+    .option('--page <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getViewlog2(apiParams(options))
+    ));
+
   // Statistics view command
   const viewCmd = statisticsCmd
     .command('view')

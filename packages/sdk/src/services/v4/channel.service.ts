@@ -412,8 +412,8 @@ export class V4ChannelService {
     if (!params.channels || params.channels.length === 0) {
       throw new PolyVValidationError('channels is required and cannot be empty');
     }
-    if (params.channels.length > 100) {
-      throw new PolyVValidationError('channels cannot contain more than 100 items');
+    if (params.channels.length > 30) {
+      throw new PolyVValidationError('channels cannot contain more than 30 items');
     }
 
     // Validate each channel name
@@ -423,7 +423,7 @@ export class V4ChannelService {
 
     const response = await this.client.httpClient.post<BatchCreateChannelsResponse>(
       '/live/v4/channel/create-batch',
-      params
+      params.channels
     );
     return response as unknown as BatchCreateChannelsResponse;
   }
@@ -475,11 +475,16 @@ export class V4ChannelService {
    */
   async update(params: UpdateChannelParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    const { channelId, channelPasswd, ...body } = params;
+    const requestBody: Record<string, unknown> = { ...body };
+    if (channelPasswd !== undefined) {
+      requestBody.password = channelPasswd;
+    }
 
     await this.client.httpClient.post(
       '/live/v4/channel/update',
-      null,
-      { params }
+      requestBody,
+      { params: { channelId } }
     );
   }
 

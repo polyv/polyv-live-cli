@@ -190,6 +190,12 @@ Usage in OBS/Streaming Software:
   3. Start streaming to begin live broadcast
 `);
 
+  streamCmd.command('hls-pull-url')
+    .description('Get the channel monitor HLS pull URL')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler((handler) => handler.getHlsPullUrl(options)));
+
   // Stream start command
   const startCmd = streamCmd
     .command('start')

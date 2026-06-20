@@ -741,6 +741,28 @@ export class ChannelServiceSdk {
     return client.v4Channel.updateTemplate(params);
   }
 
+  async getChannelApiAccessToken(params: any): Promise<any> {
+    const { channelId, ...options } = params;
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getChannelApiAccessToken(channelId, this.compactOptions(options));
+  }
+
+  async getTestModeToken(params: any): Promise<any> {
+    const { channelId, ...options } = params;
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getTestModeToken(channelId, this.compactOptions(options));
+  }
+
+  async createBatch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.createBatch(params);
+  }
+
+  async updateV4(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.update(params);
+  }
+
   // ===== Validation Methods =====
 
   private validateCreateRequest(request: ChannelCreateRequest): void {
@@ -878,6 +900,12 @@ export class ChannelServiceSdk {
     if ('maxViewerRestrict' in setting && setting['maxViewerRestrict'] !== undefined) result['maxViewerRestrict'] = setting['maxViewerRestrict'];
 
     return result;
+  }
+
+  private compactOptions<T extends Record<string, unknown>>(params: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== '')
+    ) as Partial<T>;
   }
 
   private handleError(error: unknown, operation: string): Error {

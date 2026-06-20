@@ -29,6 +29,7 @@ export interface IPlayerService {
   updateStopAdvert(channelId: string | number, params: any): Promise<any>;
   getWatchFeedbackList(params: any): Promise<any>;
   updatePlayerLogo(channelId: string | number, params: any): Promise<any>;
+  updateWarmupSwitch(params: { channelId: string; warmUpEnabled: 'Y' | 'N' }): Promise<any>;
   updateSkinBatch(params: any): Promise<any>;
 }
 
@@ -235,6 +236,21 @@ export class PlayerHandler extends BaseHandler {
     await confirmWrite(options.force, `Update player logo for channel ${options.channelId}?`);
     this.displayData(
       { success: await this.playerService.updatePlayerLogo(options.channelId, params), channelId: options.channelId },
+      options.output || 'table'
+    );
+  }
+
+  async updateWarmupSwitch(options: any): Promise<void> {
+    this.requireFields(options, ['channelId', 'warmUpEnabled']);
+    await confirmWrite(options.force, `Update warmup switch for channel ${options.channelId}?`);
+    this.displayData(
+      {
+        success: true,
+        result: await this.playerService.updateWarmupSwitch({
+          channelId: options.channelId,
+          warmUpEnabled: options.warmUpEnabled,
+        }),
+      },
       options.output || 'table'
     );
   }

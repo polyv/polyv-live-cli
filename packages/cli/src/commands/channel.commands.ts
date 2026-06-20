@@ -848,6 +848,59 @@ Scope:
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => runChannelApiCommand(options, (service) => service.listLiveStatus(apiParams(options))));
 
+  channelCmd.command('batch-create')
+    .description('Batch create V4 live channels')
+    .requiredOption('--channels-json <json>', 'channels JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Create ${options.channelsJson.length} channel(s)?`,
+      (service) => service.createBatch(apiParams({
+        ...options,
+        channels: options.channelsJson,
+        channelsJson: undefined,
+      }))
+    ));
+
+  channelCmd.command('v4-update')
+    .description('Update V4 channel basic information')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--name <name>', 'channel name')
+    .option('--publisher <publisher>', 'publisher name')
+    .option('--channel-passwd <password>', 'channel password')
+    .option('--start-time <timestamp>', 'start timestamp', parseInteger)
+    .option('--end-time <timestamp>', 'end timestamp', parseInteger)
+    .option('--cover-img <url>', 'cover image URL')
+    .option('--splash-img <url>', 'splash image URL')
+    .option('--desc <description>', 'channel description')
+    .option('--publishing-region <region>', 'publishing region')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        ensureAtLeastOneOption(options, [
+          'name',
+          'publisher',
+          'channelPasswd',
+          'startTime',
+          'endTime',
+          'coverImg',
+          'splashImg',
+          'desc',
+          'publishingRegion',
+        ]);
+        await runChannelApiWriteCommand(
+          options,
+          `Update V4 channel ${options.channelId}?`,
+          (service) => service.updateV4(apiParams(options))
+        );
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
   channelCmd.command('create-init')
     .description('Create and initialize a V4 channel')
     .requiredOption('--basic-setting-json <json>', 'basicSetting JSON object', parseJsonObject)
@@ -1294,6 +1347,27 @@ Scope:
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => runChannelViewerCommand((handler) => handler.setAccountToken(options)));
 
+  const authCmd = channelCmd.command('auth').description('Manage channel auth tokens');
+  authCmd.command('api-token')
+    .description('Get a channel API access token')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--disposable <true|false>', 'whether the token is disposable', parseBoolean)
+    .option('--expire-seconds <seconds>', 'token expiration seconds', parseInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(
+      options,
+      (service) => service.getChannelApiAccessToken(apiParams(options))
+    ));
+  authCmd.command('test-mode-token')
+    .description('Get a watch-page test mode token')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--expire-time <seconds>', 'token validity seconds, max 30 days', parseInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(
+      options,
+      (service) => service.getTestModeToken(apiParams(options))
+    ));
+
   const followCmd = channelCmd.command('follow').description('Manage follow-public-account settings');
   followCmd.command('list')
     .description('List channel follow settings')
@@ -1414,6 +1488,19 @@ function parseInteger(value: string): number {
   return parsed;
 }
 
+function parseBoolean(value: string): boolean {
+  if (['true', '1', 'Y', 'y', 'yes'].includes(value)) return true;
+  if (['false', '0', 'N', 'n', 'no'].includes(value)) return false;
+  throw new Error(`Invalid boolean: ${value}. Must be true or false.`);
+}
+
+function ensureAtLeastOneOption(options: Record<string, unknown>, fields: string[]): void {
+  const hasValue = fields.some((field) => options[field] !== undefined && options[field] !== null && options[field] !== '');
+  if (!hasValue) {
+    throw new Error(`At least one update option is required: ${fields.join(', ')}`);
+  }
+}
+
 /**
  * Validates scene option values (V4 API)
  * @param value Scene value from CLI
@@ -1501,5 +1588,7 @@ export {
   validateOutputFormat,
   validateChannelViewerScope,
   validateYnFlag,
-  validateChatTokenRole
+  validateChatTokenRole,
+  parseBoolean,
+  ensureAtLeastOneOption
 };

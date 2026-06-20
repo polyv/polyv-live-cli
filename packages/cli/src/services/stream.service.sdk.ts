@@ -343,6 +343,16 @@ export class StreamServiceSdk {
     }
   }
 
+  async getHlsPullUrl(channelId: string): Promise<string> {
+    try {
+      this.validateChannelId(channelId);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getHlsPullUrl(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getHlsPullUrl');
+    }
+  }
+
   async listDiskVideo(options: any): Promise<any> {
     try {
       const client = createSdkClient(this.authConfig, this.config.baseUrl);

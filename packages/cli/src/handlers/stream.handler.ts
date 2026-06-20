@@ -348,6 +348,28 @@ export class StreamHandler extends BaseHandler {
     }, 'stream.getStreamStatus');
   }
 
+  async getHlsPullUrl(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      if (!options.channelId || typeof options.channelId !== 'string' || options.channelId.trim() === '') {
+        throw new PolyVValidationError(
+          'Channel ID cannot be empty',
+          'channelId',
+          options.channelId,
+          'required'
+        );
+      }
+
+      const hlsPullUrl = await this.streamService.getHlsPullUrl(options.channelId);
+      this.displayData(
+        {
+          channelId: options.channelId,
+          hlsPullUrl,
+        },
+        options.output || 'table'
+      );
+    }, 'stream.getHlsPullUrl');
+  }
+
   /**
    * Validates stream status options
    * @param options Options to validate

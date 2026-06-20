@@ -64,6 +64,13 @@ describe('V4ChannelService', () => {
       });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/create-batch',
+        [
+          { name: 'Channel 1', newScene: 'topclass', template: 'ppt' },
+          { name: 'Channel 2', newScene: 'topclass', template: 'ppt' },
+        ]
+      );
     });
 
     it('[P1] should throw error when channels is empty', async () => {
@@ -85,8 +92,20 @@ describe('V4ChannelService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/channel/update',
-        null,
-        { params: { channelId: '12345678', name: 'Updated Channel' } }
+        { name: 'Updated Channel' },
+        { params: { channelId: '12345678' } }
+      );
+    });
+
+    it('[P1] should map channelPasswd to JSON body password', async () => {
+      mockHttpClient.post.mockResolvedValueOnce(undefined);
+
+      await service.update({ channelId: '12345678', channelPasswd: 'abc12345' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/update',
+        { password: 'abc12345' },
+        { params: { channelId: '12345678' } }
       );
     });
 

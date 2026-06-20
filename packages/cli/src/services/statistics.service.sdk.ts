@@ -86,6 +86,87 @@ export class StatisticsServiceSdk {
     return client.v4Channel.listInviteStats(params);
   }
 
+  async getChannelPlaySummary(params: any): Promise<any> {
+    const userId = params.userId || this.authConfig.userId;
+    if (!userId) {
+      throw new PolyVValidationError('userId is required', 'userId', userId, 'required');
+    }
+    const { userId: _userId, ...options } = params;
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getChannelPlaySummary(String(userId), this.compact(options) as any);
+  }
+
+  async getRealtimeViewers(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getRealtimeViewers(params);
+  }
+
+  async getRedpackStats(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getRedpackStats(params);
+  }
+
+  async getChannelStatistic(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getChannelStatistic(params);
+  }
+
+  async getSessionStats(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getSessionStats(params);
+  }
+
+  async getMicDetailList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getMicDetailList(params);
+  }
+
+  async getLinkMicDetailList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getLinkMicDetailList(params);
+  }
+
+  async getSummary(params: any): Promise<any> {
+    const { channelId, ...options } = params;
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getSummary(channelId, options);
+  }
+
+  async getProductClickStats(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getProductClickStats(params);
+  }
+
+  async getProductListStats(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getProductListStats(params);
+  }
+
+  async getRealtimeViewersV1(params: any): Promise<any> {
+    const userId = params.userId || this.authConfig.userId;
+    if (!userId) {
+      throw new PolyVValidationError('userId is required', 'userId', userId, 'required');
+    }
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getRealtimeViewersV1(params.channelId, String(userId));
+  }
+
+  async getViewlogV1(params: any): Promise<any> {
+    const userId = params.userId || this.authConfig.userId;
+    if (!userId) {
+      throw new PolyVValidationError('userId is required', 'userId', userId, 'required');
+    }
+    const { channelId, userId: _userId, ...options } = params;
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getViewlogV1(channelId, { ...this.compact(options), userId: String(userId) } as any);
+  }
+
+  async getViewlog2(params: any): Promise<any> {
+    const { channelId, ...options } = params;
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.channel.getViewlog2(channelId, options);
+  }
+
   /**
    * Get daily view statistics for a channel
    * @param options Statistics view options from CLI
@@ -646,5 +727,11 @@ export class StatisticsServiceSdk {
         'validation_failed'
       );
     }
+  }
+
+  private compact<T extends Record<string, unknown>>(params: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== '')
+    ) as Partial<T>;
   }
 }

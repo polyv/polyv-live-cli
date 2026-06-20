@@ -47,32 +47,30 @@ describe('V4ChannelService - Batch Operations', () => {
       expect(result).toEqual(mockResponse);
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/channel/create-batch',
-        expect.objectContaining({
-          channels: expect.arrayContaining([
-            expect.objectContaining({ name: 'Channel 1' }),
-            expect.objectContaining({ name: 'Channel 2' })
-          ])
-        })
+        expect.arrayContaining([
+          expect.objectContaining({ name: 'Channel 1' }),
+          expect.objectContaining({ name: 'Channel 2' })
+        ])
       );
     });
 
-    it('[P0] should batch create maximum 100 channels', async () => {
-      const channels = Array.from({ length: 100 }, (_, i) => ({
+    it('[P0] should batch create maximum 30 channels', async () => {
+      const channels = Array.from({ length: 30 }, (_, i) => ({
         name: `Channel ${i + 1}`,
         newScene: 'topclass' as const,
         template: 'ppt' as const
       }));
 
-      const mockResponse = { createdCount: 100 };
+      const mockResponse = { createdCount: 30 };
       mockHttpClient.post.mockResolvedValueOnce(mockResponse);
 
       const result = await service.createBatch({ channels });
 
-      expect(result.createdCount).toBe(100);
+      expect(result.createdCount).toBe(30);
     });
 
-    it('[P1] should throw error when channels exceeds 100', async () => {
-      const channels = Array.from({ length: 101 }, (_, i) => ({
+    it('[P1] should throw error when channels exceeds 30', async () => {
+      const channels = Array.from({ length: 31 }, (_, i) => ({
         name: `Channel ${i + 1}`,
         newScene: 'topclass' as const,
         template: 'ppt' as const
@@ -80,7 +78,7 @@ describe('V4ChannelService - Batch Operations', () => {
 
       await expect(
         service.createBatch({ channels })
-      ).rejects.toThrow('channels cannot contain more than 100 items');
+      ).rejects.toThrow('channels cannot contain more than 30 items');
     });
 
     it('[P1] should throw error when channels array is empty', async () => {

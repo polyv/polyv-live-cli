@@ -374,6 +374,23 @@ Output Formats:
   json           JSON format for programmatic use
 `);
 
+  const warmupCmd = playerCmd.command('warmup').description('Manage player warmup settings');
+  warmupCmd.command('switch-update')
+    .description('Update the warmup enabled switch')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--warm-up-enabled <value>', 'warmup enabled (Y|N)', validateYNValue)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).updateWarmupSwitch(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
   const skinCmd = playerCmd.command('skin').description('Manage V4 player skin settings');
   skinCmd.command('update-batch')
     .description('Batch update channel player skin')
