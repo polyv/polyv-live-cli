@@ -247,6 +247,123 @@ export class ChannelServiceSdk {
     }
   }
 
+  async listChannelViewerGroups(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.listChannelViewerGroups(params);
+    } catch (error) {
+      throw this.handleError(error, 'listChannelViewerGroups');
+    }
+  }
+
+  async createChannelViewerGroup(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.createChannelViewerGroup(params);
+    } catch (error) {
+      throw this.handleError(error, 'createChannelViewerGroup');
+    }
+  }
+
+  async updateChannelViewerGroup(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateChannelViewerGroup(params);
+    } catch (error) {
+      throw this.handleError(error, 'updateChannelViewerGroup');
+    }
+  }
+
+  async deleteChannelViewerGroup(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.deleteChannelViewerGroup(params);
+    } catch (error) {
+      throw this.handleError(error, 'deleteChannelViewerGroup');
+    }
+  }
+
+  async getChannelViewerGroupSetting(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getChannelViewerGroupSetting(params);
+    } catch (error) {
+      throw this.handleError(error, 'getChannelViewerGroupSetting');
+    }
+  }
+
+  async updateChannelViewerGroupSetting(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateChannelViewerGroupSetting(params);
+    } catch (error) {
+      throw this.handleError(error, 'updateChannelViewerGroupSetting');
+    }
+  }
+
+  async listChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.listChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'listChannelViewers');
+    }
+  }
+
+  async exportChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.exportChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'exportChannelViewers');
+    }
+  }
+
+  async addChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.addChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'addChannelViewers');
+    }
+  }
+
+  async deleteChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.deleteChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'deleteChannelViewers');
+    }
+  }
+
+  async transferChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.transferChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'transferChannelViewers');
+    }
+  }
+
+  async importChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.importChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'importChannelViewers');
+    }
+  }
+
+  async listUnrelatedChannelViewers(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.listUnrelatedChannelViewers(params);
+    } catch (error) {
+      throw this.handleError(error, 'listUnrelatedChannelViewers');
+    }
+  }
+
   // ===== Validation Methods =====
 
   private validateCreateRequest(request: ChannelCreateRequest): void {

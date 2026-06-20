@@ -27,7 +27,20 @@ const mockChannelHandler = {
   getChannelDetail: jest.fn(),
   updateChannel: jest.fn(),
   deleteChannel: jest.fn(),
-  deleteChannels: jest.fn()
+  deleteChannels: jest.fn(),
+  listChannelViewerGroups: jest.fn(),
+  createChannelViewerGroup: jest.fn(),
+  updateChannelViewerGroup: jest.fn(),
+  deleteChannelViewerGroup: jest.fn(),
+  getChannelViewerGroupSetting: jest.fn(),
+  updateChannelViewerGroupSetting: jest.fn(),
+  listChannelViewers: jest.fn(),
+  exportChannelViewers: jest.fn(),
+  addChannelViewers: jest.fn(),
+  deleteChannelViewers: jest.fn(),
+  transferChannelViewers: jest.fn(),
+  importChannelViewers: jest.fn(),
+  listUnrelatedChannelViewers: jest.fn()
 };
 
 const mockConfigManager = {
@@ -202,6 +215,103 @@ describe('Channel Commands', () => {
       
       // Test that the command has the help text added (this is added via addHelpText)
       expect(channelCommand).toBeDefined();
+    });
+  });
+
+  describe('Channel viewer commands', () => {
+    it('should register channel viewer command groups and actions', () => {
+      registerChannelCommands(program);
+
+      const channelCommand = program.commands.find(cmd => cmd.name() === 'channel');
+      const viewerCommand = channelCommand?.commands.find(cmd => cmd.name() === 'viewer');
+      const groupCommand = viewerCommand?.commands.find(cmd => cmd.name() === 'group');
+      const groupSettingCommand = viewerCommand?.commands.find(cmd => cmd.name() === 'group-setting');
+
+      expect(viewerCommand).toBeDefined();
+      expect(groupCommand?.commands.map(cmd => cmd.name())).toEqual(
+        expect.arrayContaining(['list', 'create', 'update', 'delete'])
+      );
+      expect(groupSettingCommand?.commands.map(cmd => cmd.name())).toEqual(
+        expect.arrayContaining(['get', 'update'])
+      );
+      expect(viewerCommand?.commands.map(cmd => cmd.name())).toEqual(
+        expect.arrayContaining(['list', 'export', 'add', 'delete', 'transfer', 'import', 'unrelated-list'])
+      );
+    });
+
+    it('should expose force and output options on channel viewer write commands', () => {
+      registerChannelCommands(program);
+
+      const channelCommand = program.commands.find(cmd => cmd.name() === 'channel');
+      const viewerCommand = channelCommand?.commands.find(cmd => cmd.name() === 'viewer');
+      const groupCommand = viewerCommand?.commands.find(cmd => cmd.name() === 'group');
+      const groupSettingCommand = viewerCommand?.commands.find(cmd => cmd.name() === 'group-setting');
+      const writeCommands = [
+        groupCommand?.commands.find(cmd => cmd.name() === 'create'),
+        groupCommand?.commands.find(cmd => cmd.name() === 'update'),
+        groupCommand?.commands.find(cmd => cmd.name() === 'delete'),
+        groupSettingCommand?.commands.find(cmd => cmd.name() === 'update'),
+        viewerCommand?.commands.find(cmd => cmd.name() === 'add'),
+        viewerCommand?.commands.find(cmd => cmd.name() === 'delete'),
+        viewerCommand?.commands.find(cmd => cmd.name() === 'transfer'),
+        viewerCommand?.commands.find(cmd => cmd.name() === 'import'),
+      ];
+
+      writeCommands.forEach((command) => {
+        expect(command?.options.find(opt => opt.long === '--force')).toBeDefined();
+        expect(command?.options.find(opt => opt.long === '--output')).toBeDefined();
+      });
+    });
+
+    it('should execute channel viewer list through the channel handler', async () => {
+      registerChannelCommands(program);
+      program.opts = jest.fn().mockReturnValue({
+        appId: 'test-app-id',
+        appSecret: 'test-app-secret'
+      });
+
+      await program.parseAsync([
+        'node', 'test', 'channel', 'viewer', 'list',
+        '--channel-id', '3151318',
+        '--scope', 'teacher',
+        '--page', '2',
+        '--size', '50',
+        '-o', 'json'
+      ]);
+
+      expect(mockChannelHandler.listChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        scope: 'teacher',
+        page: 2,
+        size: 50,
+        output: 'json'
+      });
+    });
+
+    it('should execute channel viewer add with force through the channel handler', async () => {
+      registerChannelCommands(program);
+      program.opts = jest.fn().mockReturnValue({
+        appId: 'test-app-id',
+        appSecret: 'test-app-secret'
+      });
+
+      await program.parseAsync([
+        'node', 'test', 'channel', 'viewer', 'add',
+        '--channel-id', '3151318',
+        '--viewer-ids', 'viewer-1,viewer-2',
+        '--group-id', '10',
+        '--force',
+        '-o', 'json'
+      ]);
+
+      expect(mockChannelHandler.addChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        viewerIds: 'viewer-1,viewer-2',
+        groupId: 10,
+        force: true,
+        scope: 'user',
+        output: 'json'
+      });
     });
   });
 

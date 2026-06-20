@@ -35,6 +35,19 @@ describe('ChannelServiceSdk', () => {
     channel: {
       updateChannel: jest.Mock;
       batchDeleteChannels: jest.Mock;
+      listChannelViewerGroups: jest.Mock;
+      createChannelViewerGroup: jest.Mock;
+      updateChannelViewerGroup: jest.Mock;
+      deleteChannelViewerGroup: jest.Mock;
+      getChannelViewerGroupSetting: jest.Mock;
+      updateChannelViewerGroupSetting: jest.Mock;
+      listChannelViewers: jest.Mock;
+      exportChannelViewers: jest.Mock;
+      addChannelViewers: jest.Mock;
+      deleteChannelViewers: jest.Mock;
+      transferChannelViewers: jest.Mock;
+      importChannelViewers: jest.Mock;
+      listUnrelatedChannelViewers: jest.Mock;
     };
   };
   const mockAuthConfig: AuthConfig = {
@@ -61,6 +74,19 @@ describe('ChannelServiceSdk', () => {
       channel: {
         updateChannel: jest.fn(),
         batchDeleteChannels: jest.fn(),
+        listChannelViewerGroups: jest.fn(),
+        createChannelViewerGroup: jest.fn(),
+        updateChannelViewerGroup: jest.fn(),
+        deleteChannelViewerGroup: jest.fn(),
+        getChannelViewerGroupSetting: jest.fn(),
+        updateChannelViewerGroupSetting: jest.fn(),
+        listChannelViewers: jest.fn(),
+        exportChannelViewers: jest.fn(),
+        addChannelViewers: jest.fn(),
+        deleteChannelViewers: jest.fn(),
+        transferChannelViewers: jest.fn(),
+        importChannelViewers: jest.fn(),
+        listUnrelatedChannelViewers: jest.fn(),
       },
     };
 
@@ -631,6 +657,133 @@ describe('ChannelServiceSdk', () => {
       mockSdkClient.channel.batchDeleteChannels.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(service.batchDeleteChannels(validRequest)).rejects.toThrow();
+    });
+  });
+
+  describe('channel viewer live-bg wrappers', () => {
+    it('should list channel viewer groups through SDK channel service', async () => {
+      mockSdkClient.channel.listChannelViewerGroups.mockResolvedValueOnce([{ id: 1 }]);
+
+      const result = await service.listChannelViewerGroups({ scope: 'teacher', channelId: '3151318' });
+
+      expect(result).toEqual([{ id: 1 }]);
+      expect(mockSdkClient.channel.listChannelViewerGroups).toHaveBeenCalledWith({
+        scope: 'teacher',
+        channelId: '3151318'
+      });
+    });
+
+    it('should create, update, and delete channel viewer groups', async () => {
+      mockSdkClient.channel.createChannelViewerGroup.mockResolvedValueOnce({ id: 1, name: 'VIP' });
+      mockSdkClient.channel.updateChannelViewerGroup.mockResolvedValueOnce(undefined);
+      mockSdkClient.channel.deleteChannelViewerGroup.mockResolvedValueOnce(undefined);
+
+      await expect(service.createChannelViewerGroup({ channelId: '3151318', name: 'VIP' }))
+        .resolves.toEqual({ id: 1, name: 'VIP' });
+      await expect(service.updateChannelViewerGroup({ channelId: '3151318', id: 1, name: 'Core' }))
+        .resolves.toBeUndefined();
+      await expect(service.deleteChannelViewerGroup({ channelId: '3151318', id: 1 }))
+        .resolves.toBeUndefined();
+
+      expect(mockSdkClient.channel.createChannelViewerGroup).toHaveBeenCalledWith({
+        channelId: '3151318',
+        name: 'VIP'
+      });
+      expect(mockSdkClient.channel.updateChannelViewerGroup).toHaveBeenCalledWith({
+        channelId: '3151318',
+        id: 1,
+        name: 'Core'
+      });
+      expect(mockSdkClient.channel.deleteChannelViewerGroup).toHaveBeenCalledWith({
+        channelId: '3151318',
+        id: 1
+      });
+    });
+
+    it('should get and update channel viewer group settings', async () => {
+      mockSdkClient.channel.getChannelViewerGroupSetting.mockResolvedValueOnce({
+        channelViewerGroupEnabled: 'Y',
+        notInGroupWatchEnabled: 'N'
+      });
+      mockSdkClient.channel.updateChannelViewerGroupSetting.mockResolvedValueOnce(undefined);
+
+      await expect(service.getChannelViewerGroupSetting({ channelId: '3151318' }))
+        .resolves.toEqual({
+          channelViewerGroupEnabled: 'Y',
+          notInGroupWatchEnabled: 'N'
+        });
+      await expect(service.updateChannelViewerGroupSetting({
+        channelId: '3151318',
+        channelViewerGroupEnabled: 'Y'
+      })).resolves.toBeUndefined();
+
+      expect(mockSdkClient.channel.getChannelViewerGroupSetting).toHaveBeenCalledWith({ channelId: '3151318' });
+      expect(mockSdkClient.channel.updateChannelViewerGroupSetting).toHaveBeenCalledWith({
+        channelId: '3151318',
+        channelViewerGroupEnabled: 'Y'
+      });
+    });
+
+    it('should list and export channel viewers', async () => {
+      mockSdkClient.channel.listChannelViewers.mockResolvedValueOnce({ contents: [], totalItems: 0 });
+      mockSdkClient.channel.exportChannelViewers.mockResolvedValueOnce('https://download.example/viewers.xlsx');
+
+      await expect(service.listChannelViewers({ channelId: '3151318', pageNumber: 1, pageSize: 10 }))
+        .resolves.toEqual({ contents: [], totalItems: 0 });
+      await expect(service.exportChannelViewers({ channelId: '3151318', groupId: 1 }))
+        .resolves.toBe('https://download.example/viewers.xlsx');
+
+      expect(mockSdkClient.channel.listChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        pageNumber: 1,
+        pageSize: 10
+      });
+      expect(mockSdkClient.channel.exportChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        groupId: 1
+      });
+    });
+
+    it('should add, delete, transfer, import, and list unrelated channel viewers', async () => {
+      const file = Buffer.from('viewerId');
+      mockSdkClient.channel.addChannelViewers.mockResolvedValueOnce(undefined);
+      mockSdkClient.channel.deleteChannelViewers.mockResolvedValueOnce(undefined);
+      mockSdkClient.channel.transferChannelViewers.mockResolvedValueOnce(undefined);
+      mockSdkClient.channel.importChannelViewers.mockResolvedValueOnce({ successCount: 1, failCount: 0 });
+      mockSdkClient.channel.listUnrelatedChannelViewers.mockResolvedValueOnce({ contents: [], totalItems: 0 });
+
+      await expect(service.addChannelViewers({ channelId: '3151318', viewerIds: ['u1'] }))
+        .resolves.toBeUndefined();
+      await expect(service.deleteChannelViewers({ channelId: '3151318', viewerIds: ['u1'] }))
+        .resolves.toBeUndefined();
+      await expect(service.transferChannelViewers({ channelId: '3151318', targetGroupId: 2, viewerIds: ['u1'] }))
+        .resolves.toBeUndefined();
+      await expect(service.importChannelViewers({ channelId: '3151318', file }))
+        .resolves.toEqual({ successCount: 1, failCount: 0 });
+      await expect(service.listUnrelatedChannelViewers({ channelId: '3151318', labelIds: ['1'] }))
+        .resolves.toEqual({ contents: [], totalItems: 0 });
+
+      expect(mockSdkClient.channel.addChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        viewerIds: ['u1']
+      });
+      expect(mockSdkClient.channel.deleteChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        viewerIds: ['u1']
+      });
+      expect(mockSdkClient.channel.transferChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        targetGroupId: 2,
+        viewerIds: ['u1']
+      });
+      expect(mockSdkClient.channel.importChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        file
+      });
+      expect(mockSdkClient.channel.listUnrelatedChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        labelIds: ['1']
+      });
     });
   });
 

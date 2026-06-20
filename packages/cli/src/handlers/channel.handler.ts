@@ -4,6 +4,9 @@
  * @since 2.1.0
  */
 
+import { Blob } from 'buffer';
+import { existsSync, readFileSync, statSync } from 'fs';
+import { extname, resolve } from 'path';
 import { BaseHandler, OutputFormat } from './base.handler';
 import { ChannelServiceSdk } from '../services/channel.service.sdk';
 import {
@@ -256,6 +259,148 @@ export class ChannelHandler extends BaseHandler {
       this.displayChannelsDeleted(options);
 
     }, 'channel.delete');
+  }
+
+  async listChannelViewerGroups(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.channelService.listChannelViewerGroups(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer groups', result, options.output);
+    }, 'channel.viewer.group.list');
+  }
+
+  async createChannelViewerGroup(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.channelService.createChannelViewerGroup(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer group created', result, options.output);
+    }, 'channel.viewer.group.create');
+  }
+
+  async updateChannelViewerGroup(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await this.channelService.updateChannelViewerGroup(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer group updated', { success: true }, options.output);
+    }, 'channel.viewer.group.update');
+  }
+
+  async deleteChannelViewerGroup(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await this.channelService.deleteChannelViewerGroup(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer group deleted', { success: true }, options.output);
+    }, 'channel.viewer.group.delete');
+  }
+
+  async getChannelViewerGroupSetting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.channelService.getChannelViewerGroupSetting(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer group setting', result, options.output);
+    }, 'channel.viewer.group-setting.get');
+  }
+
+  async updateChannelViewerGroupSetting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      if (options.channelViewerGroupEnabled === undefined && options.notInGroupWatchEnabled === undefined) {
+        throw new PolyVValidationError(
+          'At least one group setting field must be provided',
+          'options',
+          options,
+          'validation_failed'
+        );
+      }
+
+      await this.channelService.updateChannelViewerGroupSetting(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer group setting updated', { success: true }, options.output);
+    }, 'channel.viewer.group-setting.update');
+  }
+
+  async listChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.channelService.listChannelViewers(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewers', result, options.output);
+    }, 'channel.viewer.list');
+  }
+
+  async exportChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.channelService.exportChannelViewers(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewer export', { exportUrl: result }, options.output);
+    }, 'channel.viewer.export');
+  }
+
+  async addChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await this.channelService.addChannelViewers(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewers added', {
+        success: true,
+        viewerIds: this.requireStringList(options.viewerIds, 'viewerIds')
+      }, options.output);
+    }, 'channel.viewer.add');
+  }
+
+  async deleteChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await this.channelService.deleteChannelViewers(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewers deleted', {
+        success: true,
+        viewerIds: this.requireStringList(options.viewerIds, 'viewerIds')
+      }, options.output);
+    }, 'channel.viewer.delete');
+  }
+
+  async transferChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      await this.channelService.transferChannelViewers(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Channel viewers transferred', {
+        success: true,
+        viewerIds: this.requireStringList(options.viewerIds, 'viewerIds'),
+        targetGroupId: options.targetGroupId ?? null
+      }, options.output);
+    }, 'channel.viewer.transfer');
+  }
+
+  async importChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const importFile = this.readChannelViewerImportFile(options.file);
+      const result = await this.channelService.importChannelViewers({
+        ...this.buildChannelViewerParams(options),
+        file: importFile.file
+      });
+      this.displayChannelViewerResult('Channel viewers imported', {
+        ...result,
+        filePath: importFile.path,
+        fileSize: importFile.size
+      }, options.output);
+    }, 'channel.viewer.import');
+  }
+
+  async listUnrelatedChannelViewers(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      const result = await this.channelService.listUnrelatedChannelViewers(
+        this.buildChannelViewerParams(options)
+      );
+      this.displayChannelViewerResult('Unrelated channel viewers', result, options.output);
+    }, 'channel.viewer.unrelated-list');
   }
 
   /**
@@ -1060,6 +1205,146 @@ export class ChannelHandler extends BaseHandler {
         this.displayInfo('Images:\n' + urls.join('\n'));
       }
     }
+  }
+
+  private buildChannelViewerParams(options: any): Record<string, unknown> {
+    const params: Record<string, unknown> = {};
+    const source = options ?? {};
+    const skipped = new Set(['output', 'force', 'file', 'page', 'size', 'viewerIds', 'labelIds']);
+
+    Object.entries(source).forEach(([key, value]) => {
+      if (!skipped.has(key) && value !== undefined && value !== '') {
+        params[key] = value;
+      }
+    });
+
+    if (source.scope !== undefined) {
+      params['scope'] = this.normalizeChannelViewerScope(source.scope);
+    }
+
+    if (source.page !== undefined) {
+      params['pageNumber'] = source.page;
+    }
+
+    if (source.size !== undefined) {
+      params['pageSize'] = source.size;
+    }
+
+    if (source.viewerIds !== undefined) {
+      params['viewerIds'] = this.requireStringList(source.viewerIds, 'viewerIds');
+    }
+
+    if (source.labelIds !== undefined) {
+      params['labelIds'] = this.requireStringList(source.labelIds, 'labelIds');
+    }
+
+    return params;
+  }
+
+  private normalizeChannelViewerScope(scope: unknown): 'user' | 'teacher' {
+    if (scope === 'user' || scope === 'teacher') {
+      return scope;
+    }
+
+    throw new PolyVValidationError(
+      'scope must be user or teacher',
+      'scope',
+      scope,
+      'validation_failed'
+    );
+  }
+
+  private requireStringList(value: unknown, field: string): string[] {
+    const list = this.normalizeStringList(value);
+    if (list.length === 0) {
+      throw new PolyVValidationError(
+        `${field} must contain at least one value`,
+        field,
+        value,
+        'validation_failed'
+      );
+    }
+    return list;
+  }
+
+  private normalizeStringList(value: unknown): string[] {
+    if (value === undefined || value === null) {
+      return [];
+    }
+
+    const items = Array.isArray(value) ? value : String(value).split(',');
+    return items.map((item) => String(item).trim()).filter(Boolean);
+  }
+
+  private readChannelViewerImportFile(filePath: unknown): { file: any; path: string; size: number } {
+    if (typeof filePath !== 'string' || filePath.trim().length === 0) {
+      throw new PolyVValidationError(
+        'file path is required',
+        'file',
+        filePath,
+        'validation_failed'
+      );
+    }
+
+    const resolvedPath = resolve(filePath);
+    if (!existsSync(resolvedPath)) {
+      throw new PolyVValidationError(
+        `file does not exist: ${resolvedPath}`,
+        'file',
+        filePath,
+        'validation_failed'
+      );
+    }
+
+    const stats = statSync(resolvedPath);
+    if (!stats.isFile()) {
+      throw new PolyVValidationError(
+        `file path must point to a file: ${resolvedPath}`,
+        'file',
+        filePath,
+        'validation_failed'
+      );
+    }
+
+    if (stats.size <= 0) {
+      throw new PolyVValidationError(
+        `file must not be empty: ${resolvedPath}`,
+        'file',
+        filePath,
+        'validation_failed'
+      );
+    }
+
+    const allowedExtensions = new Set(['.xls', '.xlsx', '.csv']);
+    const extension = extname(resolvedPath).toLowerCase();
+    if (!allowedExtensions.has(extension)) {
+      throw new PolyVValidationError(
+        'file must be an .xls, .xlsx, or .csv file',
+        'file',
+        filePath,
+        'validation_failed'
+      );
+    }
+
+    const buffer = readFileSync(resolvedPath);
+    return {
+      file: new Blob([buffer]) as any,
+      path: resolvedPath,
+      size: stats.size
+    };
+  }
+
+  private displayChannelViewerResult(
+    message: string,
+    result: any,
+    format: OutputFormat = 'table'
+  ): void {
+    if (format === 'json') {
+      this.displayData(result ?? { success: true }, 'json');
+      return;
+    }
+
+    this.displaySuccess(message, result ?? { success: true }, 'table');
   }
 
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T21:27:24.983Z",
+  "generatedAt": "2026-06-19T23:24:53.609Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 357,
-    "cliMissingLatestApis": 221,
-    "cliCoverage": 61.8,
-    "cliUsageReferences": 362,
-    "cliSdkServiceUsages": 362,
+    "cliUsedLatestApis": 383,
+    "cliMissingLatestApis": 195,
+    "cliCoverage": 66.3,
+    "cliUsageReferences": 388,
+    "cliSdkServiceUsages": 388,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 348,
+    "matchedApiIds": 374,
     "sdkEndpointReferences": 710,
-    "cliCommandPaths": 473,
+    "cliCommandPaths": 489,
     "cliTopLevelCommands": 40
   },
   "modules": [
@@ -31,11 +31,11 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 62,
-      "cliMissing": 221,
+      "cliUsed": 88,
+      "cliMissing": 195,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 62,
-      "cliCoverage": 21.9
+      "sdkServiceUsed": 88,
+      "cliCoverage": 31.1
     },
     {
       "module": "account",
@@ -870,7 +870,7 @@
       "depth": 2,
       "signature": "batch-delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 494
+      "line": 521
     },
     {
       "command": "channel ccb-focus-reset",
@@ -881,7 +881,7 @@
       "depth": 2,
       "signature": "ccb-focus-reset",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 574
+      "line": 797
     },
     {
       "command": "channel create",
@@ -892,7 +892,7 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 108
+      "line": 135
     },
     {
       "command": "channel delete",
@@ -903,7 +903,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 428
+      "line": 455
     },
     {
       "command": "channel get",
@@ -914,7 +914,7 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 278
+      "line": 305
     },
     {
       "command": "channel list",
@@ -925,7 +925,7 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 199
+      "line": 226
     },
     {
       "command": "channel status-valid",
@@ -936,7 +936,7 @@
       "depth": 2,
       "signature": "status-valid",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 559
+      "line": 782
     },
     {
       "command": "channel update",
@@ -947,7 +947,204 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 342
+      "line": 369
+    },
+    {
+      "command": "channel viewer",
+      "path": [
+        "channel",
+        "viewer"
+      ],
+      "depth": 2,
+      "signature": "viewer",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 597
+    },
+    {
+      "command": "channel viewer add",
+      "path": [
+        "channel",
+        "viewer",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 705
+    },
+    {
+      "command": "channel viewer delete",
+      "path": [
+        "channel",
+        "viewer",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 718
+    },
+    {
+      "command": "channel viewer export",
+      "path": [
+        "channel",
+        "viewer",
+        "export"
+      ],
+      "depth": 3,
+      "signature": "export",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 697
+    },
+    {
+      "command": "channel viewer group",
+      "path": [
+        "channel",
+        "viewer",
+        "group"
+      ],
+      "depth": 3,
+      "signature": "group",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 612
+    },
+    {
+      "command": "channel viewer group-setting",
+      "path": [
+        "channel",
+        "viewer",
+        "group-setting"
+      ],
+      "depth": 3,
+      "signature": "group-setting",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 661
+    },
+    {
+      "command": "channel viewer import",
+      "path": [
+        "channel",
+        "viewer",
+        "import"
+      ],
+      "depth": 3,
+      "signature": "import",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 743
+    },
+    {
+      "command": "channel viewer list",
+      "path": [
+        "channel",
+        "viewer",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 687
+    },
+    {
+      "command": "channel viewer transfer",
+      "path": [
+        "channel",
+        "viewer",
+        "transfer"
+      ],
+      "depth": 3,
+      "signature": "transfer",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 730
+    },
+    {
+      "command": "channel viewer unrelated-list",
+      "path": [
+        "channel",
+        "viewer",
+        "unrelated-list"
+      ],
+      "depth": 3,
+      "signature": "unrelated-list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 756
+    },
+    {
+      "command": "channel viewer group create",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "create"
+      ],
+      "depth": 4,
+      "signature": "create",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 625
+    },
+    {
+      "command": "channel viewer group delete",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "delete"
+      ],
+      "depth": 4,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 650
+    },
+    {
+      "command": "channel viewer group list",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "list"
+      ],
+      "depth": 4,
+      "signature": "list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 617
+    },
+    {
+      "command": "channel viewer group update",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 637
+    },
+    {
+      "command": "channel viewer group-setting get",
+      "path": [
+        "channel",
+        "viewer",
+        "group-setting",
+        "get"
+      ],
+      "depth": 4,
+      "signature": "get",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 666
+    },
+    {
+      "command": "channel viewer group-setting update",
+      "path": [
+        "channel",
+        "viewer",
+        "group-setting",
+        "update"
+      ],
+      "depth": 4,
+      "signature": "update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 674
     },
     {
       "command": "chat",
@@ -5659,14 +5856,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 221,
+          "missing": 195,
           "total": 283,
-          "coverage": 21.9
+          "coverage": 31.1
         }
       ],
-      "missing": 221,
+      "missing": 195,
       "total": 283,
-      "coverage": 21.9
+      "coverage": 31.1
     }
   ],
   "unmatchedUsages": [],
@@ -9313,8 +9510,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listUnrelatedChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 361,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9341,8 +9547,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listUnrelatedChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 361,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12086,8 +12301,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#exportChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 316,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12114,8 +12338,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#exportChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 316,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12143,8 +12376,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#importChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 352,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12172,8 +12414,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#importChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 352,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12200,8 +12451,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 307,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12228,8 +12488,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 307,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12257,8 +12526,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#transferChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 343,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12286,8 +12564,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#transferChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 343,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12315,8 +12602,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#deleteChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 334,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12344,8 +12640,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#deleteChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 334,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12373,8 +12678,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#addChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 325,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12402,8 +12716,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#addChannelViewers",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 325,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12430,8 +12753,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listChannelViewerGroups",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 253,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12458,8 +12790,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#listChannelViewerGroups",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 253,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12488,8 +12829,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updateChannelViewerGroup",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 271,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12518,8 +12868,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updateChannelViewerGroup",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 271,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12547,8 +12906,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#deleteChannelViewerGroup",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 280,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12576,8 +12944,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#deleteChannelViewerGroup",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 280,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12605,8 +12982,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#createChannelViewerGroup",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 262,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12634,8 +13020,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#createChannelViewerGroup",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 262,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12662,8 +13057,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updateChannelViewerGroupSetting",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 298,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12690,8 +13094,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updateChannelViewerGroupSetting",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 298,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12718,8 +13131,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getChannelViewerGroupSetting",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 289,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12746,8 +13168,17 @@
         "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#getChannelViewerGroupSetting",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 289,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          }
+        ]
       }
     },
     {

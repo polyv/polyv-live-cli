@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-19T21:27:24.983Z
+生成时间：2026-06-19T23:24:53.609Z
 
 ## 来源与规则
 
@@ -15,22 +15,22 @@
 | 指标 | 数值 |
 | --- | ---: |
 | 最新 API 数 | 578 |
-| CLI 已使用最新 API 数 | 357 |
-| CLI 未使用最新 API 数 | 221 |
-| CLI 最新 API 覆盖率 | 61.8% |
-| CLI 调用引用数 | 362 |
-| 其中 SDK service 调用 | 362 |
+| CLI 已使用最新 API 数 | 383 |
+| CLI 未使用最新 API 数 | 195 |
+| CLI 最新 API 覆盖率 | 66.3% |
+| CLI 调用引用数 | 388 |
+| 其中 SDK service 调用 | 388 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 473 |
+| CLI 命令路径数 | 489 |
 | CLI 一级命令数 | 40 |
 
 ## 模块覆盖率
 
 | 模块 | 名称 | 最新 API | CLI 已用 | CLI 未用 | 覆盖率 | SDK 调用覆盖 | 直接 HTTP 覆盖 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `channel` | 频道 | 283 | 62 | 221 | 21.9% | 62 | 0 |
+| `channel` | 频道 | 283 | 88 | 195 | 31.1% | 88 | 0 |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% | 22 | 0 |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% | 13 | 0 |
 | `chat` | 聊天 | 45 | 45 | 0 | 100% | 45 | 0 |
@@ -51,8 +51,8 @@
 
 ## 补齐建议
 
-- 缺口最大的模块：`channel` 221/283。
-- 频道高级能力：`channel` 子命令扩展。缺口：`channel` 221/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
+- 缺口最大的模块：`channel` 195/283。
+- 频道高级能力：`channel` 子命令扩展。缺口：`channel` 195/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
 
 ## CLI 命令面
 
@@ -113,14 +113,30 @@
 | `card-push push` | `packages/cli/src/commands/card-push.commands.ts:251` |
 | `card-push update` | `packages/cli/src/commands/card-push.commands.ts:203` |
 | `channel` | `packages/cli/src/commands/channel.commands.ts:104` |
-| `channel batch-delete` | `packages/cli/src/commands/channel.commands.ts:494` |
-| `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:574` |
-| `channel create` | `packages/cli/src/commands/channel.commands.ts:108` |
-| `channel delete` | `packages/cli/src/commands/channel.commands.ts:428` |
-| `channel get` | `packages/cli/src/commands/channel.commands.ts:278` |
-| `channel list` | `packages/cli/src/commands/channel.commands.ts:199` |
-| `channel status-valid` | `packages/cli/src/commands/channel.commands.ts:559` |
-| `channel update` | `packages/cli/src/commands/channel.commands.ts:342` |
+| `channel batch-delete` | `packages/cli/src/commands/channel.commands.ts:521` |
+| `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:797` |
+| `channel create` | `packages/cli/src/commands/channel.commands.ts:135` |
+| `channel delete` | `packages/cli/src/commands/channel.commands.ts:455` |
+| `channel get` | `packages/cli/src/commands/channel.commands.ts:305` |
+| `channel list` | `packages/cli/src/commands/channel.commands.ts:226` |
+| `channel status-valid` | `packages/cli/src/commands/channel.commands.ts:782` |
+| `channel update` | `packages/cli/src/commands/channel.commands.ts:369` |
+| `channel viewer` | `packages/cli/src/commands/channel.commands.ts:597` |
+| `channel viewer add` | `packages/cli/src/commands/channel.commands.ts:705` |
+| `channel viewer delete` | `packages/cli/src/commands/channel.commands.ts:718` |
+| `channel viewer export` | `packages/cli/src/commands/channel.commands.ts:697` |
+| `channel viewer group` | `packages/cli/src/commands/channel.commands.ts:612` |
+| `channel viewer group-setting` | `packages/cli/src/commands/channel.commands.ts:661` |
+| `channel viewer import` | `packages/cli/src/commands/channel.commands.ts:743` |
+| `channel viewer list` | `packages/cli/src/commands/channel.commands.ts:687` |
+| `channel viewer transfer` | `packages/cli/src/commands/channel.commands.ts:730` |
+| `channel viewer unrelated-list` | `packages/cli/src/commands/channel.commands.ts:756` |
+| `channel viewer group create` | `packages/cli/src/commands/channel.commands.ts:625` |
+| `channel viewer group delete` | `packages/cli/src/commands/channel.commands.ts:650` |
+| `channel viewer group list` | `packages/cli/src/commands/channel.commands.ts:617` |
+| `channel viewer group update` | `packages/cli/src/commands/channel.commands.ts:637` |
+| `channel viewer group-setting get` | `packages/cli/src/commands/channel.commands.ts:666` |
+| `channel viewer group-setting update` | `packages/cli/src/commands/channel.commands.ts:674` |
 | `chat` | `packages/cli/src/commands/chat.commands.ts:87` |
 | `chat badword` | `packages/cli/src/commands/chat.commands.ts:568` |
 | `chat ban` | `packages/cli/src/commands/chat.commands.ts:282` |
@@ -663,8 +679,8 @@
 | 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/detail/list` | query | - | V4ChannelService#channelDetailList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#channelDetailList (packages/cli/src/services/channel.service.sdk.ts:101) |
 | 查询微信预约数据<br><sub>1、查询微信预约数据</sub> | GET | `/live/v4/channel/booking/list` | query | channelId | V4ChannelService#listWeixinBookings (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询伪直播自定义互动脚本<br><sub>1、查询伪直播自定义互动脚本</sub> | GET | `/live/v4/channel/interaction-script/query-disk-video-custom-script` | query | channelId, diskVideoId | V4ChannelService#queryDiskVideoCustomScript (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 查询未加入频道分组的观众列表接口 - 查询未加入频道分组的观众列表<br><sub>查询未加入频道分组的观众列表</sub> | GET | `/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer` | query | channelId | ChannelService#listUnrelatedChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 查询未加入频道分组的观众列表接口 - 查询未加入频道分组的观众列表<br><sub>查询未加入频道分组的观众列表</sub> | GET | `/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer` | query | channelId | ChannelService#listUnrelatedChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
+| 查询未加入频道分组的观众列表接口 - 查询未加入频道分组的观众列表<br><sub>查询未加入频道分组的观众列表</sub> | GET | `/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer` | query | channelId | ChannelService#listUnrelatedChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listUnrelatedChannelViewers (packages/cli/src/services/channel.service.sdk.ts:361) |
+| 查询未加入频道分组的观众列表接口 - 查询未加入频道分组的观众列表<br><sub>查询未加入频道分组的观众列表</sub> | GET | `/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer` | query | channelId | ChannelService#listUnrelatedChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listUnrelatedChannelViewers (packages/cli/src/services/channel.service.sdk.ts:361) |
 | 查询邀请海报明细数据<br><sub>1、分页查询邀请海报明细数据统计</sub> | GET | `/live/v4/channel/invite/list` | query | channelId | V4ChannelService#listInviteStats (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询音视频文件详情<br><sub>1、查询音视频文件详情</sub> | GET | `/live/v4/user/multimedia/resource/list` | query | vids | ChannelService#getUserMultimediaResourceDetail (packages/sdk/src/services/channel.service.ts) | no |
 | 查询云分发数据信息<br><sub>1、查询频道云分发数据信息</sub> | GET | `/live/v4/channel/distribute/get/statistic` | query | channelId | V4ChannelService#getDistributeStatistic (packages/sdk/src/services/v4/channel.service.ts) | no |
@@ -753,30 +769,30 @@
 | 批量修改频道云分发开关<br><sub>1、批量修改频道云分发开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-switch` | query/form | channelId, distributeIds | V4ChannelService#updateSwitch (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 批量转存暂存视频到云点播<br><sub>1、批量转存直播暂存录制视频文件到点播列表，接口转存过程为异步处理过程</sub> | POST | `/live/v3/channel/record/convert` | query/form | channelId | ChannelService#recordConvert (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:134)<br>sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:165) |
 | 频道观看页观众退出登录<br><sub>1、频道观看页观众退出登录</sub> | POST | `/live/v4/channel/watch/viewer/logout` | json-body | channelId | V4ChannelService#logoutWatchViewer (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 频道所属用户列表接口 - 导出频道所属用户列表<br><sub>导出频道所属用户列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/list/export` | query | channelId | ChannelService#exportChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 导出频道所属用户列表<br><sub>导出频道所属用户列表</sub> | GET | `/live-bg/v3/user/channel-viewer/list/export` | query | channelId | ChannelService#exportChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 导入频道所属用户<br><sub>导入频道所属用户</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/import` | query/form | channelId, file | ChannelService#importChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 导入频道所属用户<br><sub>导入频道所属用户</sub> | POST | `/live-bg/v3/user/channel-viewer/list/import` | query/form | channelId, file | ChannelService#importChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 分页查询频道所属用户列表<br><sub>分页查询频道所属用户列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/list/list` | query | channelId | ChannelService#listChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 分页查询频道所属用户列表<br><sub>分页查询频道所属用户列表</sub> | GET | `/live-bg/v3/user/channel-viewer/list/list` | query | channelId | ChannelService#listChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 批量转移频道所属用户到指定分组<br><sub>批量转移频道所属用户到指定分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/transfer` | query/form | channelId, viewerIds | ChannelService#transferChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 批量转移频道所属用户到指定分组<br><sub>批量转移频道所属用户到指定分组</sub> | POST | `/live-bg/v3/user/channel-viewer/list/transfer` | query/form | channelId, viewerIds | ChannelService#transferChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 删除频道所属用户<br><sub>删除频道所属用户</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/delete` | query/form | channelId, viewerIds | ChannelService#deleteChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 删除频道所属用户<br><sub>删除频道所属用户</sub> | POST | `/live-bg/v3/user/channel-viewer/list/delete` | query/form | channelId, viewerIds | ChannelService#deleteChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 新增频道所属用户<br><sub>新增频道所属用户</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/save` | query/form | channelId, viewerIds | ChannelService#addChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道所属用户列表接口 - 新增频道所属用户<br><sub>新增频道所属用户</sub> | POST | `/live-bg/v3/user/channel-viewer/list/save` | query/form | channelId, viewerIds | ChannelService#addChannelViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 查询频道下的分组列表<br><sub>查询频道下的分组列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/group/list` | query | channelId | ChannelService#listChannelViewerGroups (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 查询频道下的分组列表<br><sub>查询频道下的分组列表</sub> | GET | `/live-bg/v3/user/channel-viewer/group/list` | query | channelId | ChannelService#listChannelViewerGroups (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 更新频道分组<br><sub>更新频道分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group/update` | query/form | channelId, id, name | ChannelService#updateChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 更新频道分组<br><sub>更新频道分组</sub> | POST | `/live-bg/v3/user/channel-viewer/group/update` | query/form | channelId, id, name | ChannelService#updateChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 删除频道分组<br><sub>删除频道分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group/delete` | query/form | channelId, id | ChannelService#deleteChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 删除频道分组<br><sub>删除频道分组</sub> | POST | `/live-bg/v3/user/channel-viewer/group/delete` | query/form | channelId, id | ChannelService#deleteChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 新增频道分组<br><sub>新增频道分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group/save` | query/form | channelId, name | ChannelService#createChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组接口 - 新增频道分组<br><sub>新增频道分组</sub> | POST | `/live-bg/v3/user/channel-viewer/group/save` | query/form | channelId, name | ChannelService#createChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组配置接口 - 保存频道用户分组配置<br><sub>保存频道用户分组配置</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group-setting/update` | json-body | channelId | ChannelService#updateChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组配置接口 - 保存频道用户分组配置<br><sub>保存频道用户分组配置</sub> | POST | `/live-bg/v3/user/channel-viewer/group-setting/update` | json-body | channelId | ChannelService#updateChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组配置接口 - 查询频道用户分组配置<br><sub>查询频道用户分组配置</sub> | GET | `/live-bg/v3/teacher/channel-viewer/group-setting/get` | query | channelId | ChannelService#getChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | no |
-| 频道用户分组配置接口 - 查询频道用户分组配置<br><sub>查询频道用户分组配置</sub> | GET | `/live-bg/v3/user/channel-viewer/group-setting/get` | query | channelId | ChannelService#getChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | no |
+| 频道所属用户列表接口 - 导出频道所属用户列表<br><sub>导出频道所属用户列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/list/export` | query | channelId | ChannelService#exportChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#exportChannelViewers (packages/cli/src/services/channel.service.sdk.ts:316) |
+| 频道所属用户列表接口 - 导出频道所属用户列表<br><sub>导出频道所属用户列表</sub> | GET | `/live-bg/v3/user/channel-viewer/list/export` | query | channelId | ChannelService#exportChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#exportChannelViewers (packages/cli/src/services/channel.service.sdk.ts:316) |
+| 频道所属用户列表接口 - 导入频道所属用户<br><sub>导入频道所属用户</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/import` | query/form | channelId, file | ChannelService#importChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#importChannelViewers (packages/cli/src/services/channel.service.sdk.ts:352) |
+| 频道所属用户列表接口 - 导入频道所属用户<br><sub>导入频道所属用户</sub> | POST | `/live-bg/v3/user/channel-viewer/list/import` | query/form | channelId, file | ChannelService#importChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#importChannelViewers (packages/cli/src/services/channel.service.sdk.ts:352) |
+| 频道所属用户列表接口 - 分页查询频道所属用户列表<br><sub>分页查询频道所属用户列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/list/list` | query | channelId | ChannelService#listChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelViewers (packages/cli/src/services/channel.service.sdk.ts:307) |
+| 频道所属用户列表接口 - 分页查询频道所属用户列表<br><sub>分页查询频道所属用户列表</sub> | GET | `/live-bg/v3/user/channel-viewer/list/list` | query | channelId | ChannelService#listChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelViewers (packages/cli/src/services/channel.service.sdk.ts:307) |
+| 频道所属用户列表接口 - 批量转移频道所属用户到指定分组<br><sub>批量转移频道所属用户到指定分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/transfer` | query/form | channelId, viewerIds | ChannelService#transferChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#transferChannelViewers (packages/cli/src/services/channel.service.sdk.ts:343) |
+| 频道所属用户列表接口 - 批量转移频道所属用户到指定分组<br><sub>批量转移频道所属用户到指定分组</sub> | POST | `/live-bg/v3/user/channel-viewer/list/transfer` | query/form | channelId, viewerIds | ChannelService#transferChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#transferChannelViewers (packages/cli/src/services/channel.service.sdk.ts:343) |
+| 频道所属用户列表接口 - 删除频道所属用户<br><sub>删除频道所属用户</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/delete` | query/form | channelId, viewerIds | ChannelService#deleteChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannelViewers (packages/cli/src/services/channel.service.sdk.ts:334) |
+| 频道所属用户列表接口 - 删除频道所属用户<br><sub>删除频道所属用户</sub> | POST | `/live-bg/v3/user/channel-viewer/list/delete` | query/form | channelId, viewerIds | ChannelService#deleteChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannelViewers (packages/cli/src/services/channel.service.sdk.ts:334) |
+| 频道所属用户列表接口 - 新增频道所属用户<br><sub>新增频道所属用户</sub> | POST | `/live-bg/v3/teacher/channel-viewer/list/save` | query/form | channelId, viewerIds | ChannelService#addChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addChannelViewers (packages/cli/src/services/channel.service.sdk.ts:325) |
+| 频道所属用户列表接口 - 新增频道所属用户<br><sub>新增频道所属用户</sub> | POST | `/live-bg/v3/user/channel-viewer/list/save` | query/form | channelId, viewerIds | ChannelService#addChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addChannelViewers (packages/cli/src/services/channel.service.sdk.ts:325) |
+| 频道用户分组接口 - 查询频道下的分组列表<br><sub>查询频道下的分组列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/group/list` | query | channelId | ChannelService#listChannelViewerGroups (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelViewerGroups (packages/cli/src/services/channel.service.sdk.ts:253) |
+| 频道用户分组接口 - 查询频道下的分组列表<br><sub>查询频道下的分组列表</sub> | GET | `/live-bg/v3/user/channel-viewer/group/list` | query | channelId | ChannelService#listChannelViewerGroups (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelViewerGroups (packages/cli/src/services/channel.service.sdk.ts:253) |
+| 频道用户分组接口 - 更新频道分组<br><sub>更新频道分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group/update` | query/form | channelId, id, name | ChannelService#updateChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelViewerGroup (packages/cli/src/services/channel.service.sdk.ts:271) |
+| 频道用户分组接口 - 更新频道分组<br><sub>更新频道分组</sub> | POST | `/live-bg/v3/user/channel-viewer/group/update` | query/form | channelId, id, name | ChannelService#updateChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelViewerGroup (packages/cli/src/services/channel.service.sdk.ts:271) |
+| 频道用户分组接口 - 删除频道分组<br><sub>删除频道分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group/delete` | query/form | channelId, id | ChannelService#deleteChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannelViewerGroup (packages/cli/src/services/channel.service.sdk.ts:280) |
+| 频道用户分组接口 - 删除频道分组<br><sub>删除频道分组</sub> | POST | `/live-bg/v3/user/channel-viewer/group/delete` | query/form | channelId, id | ChannelService#deleteChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannelViewerGroup (packages/cli/src/services/channel.service.sdk.ts:280) |
+| 频道用户分组接口 - 新增频道分组<br><sub>新增频道分组</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group/save` | query/form | channelId, name | ChannelService#createChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#createChannelViewerGroup (packages/cli/src/services/channel.service.sdk.ts:262) |
+| 频道用户分组接口 - 新增频道分组<br><sub>新增频道分组</sub> | POST | `/live-bg/v3/user/channel-viewer/group/save` | query/form | channelId, name | ChannelService#createChannelViewerGroup (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#createChannelViewerGroup (packages/cli/src/services/channel.service.sdk.ts:262) |
+| 频道用户分组配置接口 - 保存频道用户分组配置<br><sub>保存频道用户分组配置</sub> | POST | `/live-bg/v3/teacher/channel-viewer/group-setting/update` | json-body | channelId | ChannelService#updateChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:298) |
+| 频道用户分组配置接口 - 保存频道用户分组配置<br><sub>保存频道用户分组配置</sub> | POST | `/live-bg/v3/user/channel-viewer/group-setting/update` | json-body | channelId | ChannelService#updateChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:298) |
+| 频道用户分组配置接口 - 查询频道用户分组配置<br><sub>查询频道用户分组配置</sub> | GET | `/live-bg/v3/teacher/channel-viewer/group-setting/get` | query | channelId | ChannelService#getChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:289) |
+| 频道用户分组配置接口 - 查询频道用户分组配置<br><sub>查询频道用户分组配置</sub> | GET | `/live-bg/v3/user/channel-viewer/group-setting/get` | query | channelId | ChannelService#getChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:289) |
 | 频道直播录制打点功能<br><sub>1、设置直播录制打点</sub> | POST | `/live/v3/channel/record/add-breakpoint` | query/form | channelId, type | ChannelService#recordAddBreakpoint (packages/sdk/src/services/channel.service.ts) | no |
 | 渠道推广列表<br><sub>1、查询渠道推广列表</sub> | GET | `/live/v4/channel/popularization/list` | query | channelId | V4ChannelService#listPopularizations (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listPopularizations (packages/cli/src/services/promotion-service.ts:54) |
 | 取消频道的关联音视频文件<br><sub>1、取消频道的关联音视频文件</sub> | POST | `/live/v4/channel/multimedia/resource/delete-batch` | query/form | channelId, vids | ChannelService#unlinkChannelMultimediaResource (packages/sdk/src/services/channel.service.ts) | no |

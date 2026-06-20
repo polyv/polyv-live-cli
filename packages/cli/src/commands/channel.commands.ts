@@ -104,6 +104,33 @@ export function registerChannelCommands(program: Command): void {
   const channelCmd = program.command('channel');
   channelCmd.description('Manage live streaming channels');
 
+  const runChannelViewerCommand = async (action: (handler: ChannelHandler) => Promise<void>): Promise<void> => {
+    try {
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+      const channelHandler = new ChannelHandler(authConfig, serviceConfig);
+      await action(channelHandler);
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  };
+
+  const runChannelViewerWriteCommand = async (
+    options: any,
+    confirmationMessage: string,
+    action: (handler: ChannelHandler) => Promise<void>
+  ): Promise<void> => {
+    try {
+      await confirmWrite(options.force, confirmationMessage);
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+      const channelHandler = new ChannelHandler(authConfig, serviceConfig);
+      await action(channelHandler);
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  };
+
   // Channel create command
   const createCmd = channelCmd
     .command('create')
@@ -556,6 +583,202 @@ Note:
   For single channel deletion with interactive confirmation, use 'channel delete' instead.
 `);
 
+  const addViewerCommonOptions = (cmd: Command): Command => cmd
+    .option('--scope <scope>', 'live-bg endpoint scope (user|teacher)', validateChannelViewerScope, 'user')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table');
+
+  const addViewerFilterOptions = (cmd: Command): Command => addViewerCommonOptions(cmd
+    .option('--group-id <id>', 'viewer group ID', parseInteger)
+    .option('--viewer-id <viewerId>', 'viewer ID')
+    .option('--nickname <nickname>', 'viewer nickname')
+    .option('--mobile <mobile>', 'viewer mobile')
+  );
+
+  const viewerCmd = channelCmd
+    .command('viewer')
+    .description('Manage channel-owned viewers and viewer groups');
+
+  viewerCmd.addHelpText('after', `
+Examples:
+  $ polyv-live-cli channel viewer group list --channel-id 3151318
+  $ polyv-live-cli channel viewer list --channel-id 3151318 --page 1 --size 20 -o json
+  $ polyv-live-cli channel viewer import --channel-id 3151318 --file viewers.xlsx --force
+
+Scope:
+  --scope user     Use /live-bg/v3/user endpoints (default)
+  --scope teacher  Use /live-bg/v3/teacher endpoints
+`);
+
+  const viewerGroupCmd = viewerCmd
+    .command('group')
+    .description('Manage channel viewer groups');
+
+  addViewerCommonOptions(
+    viewerGroupCmd.command('list')
+      .description('List channel viewer groups')
+      .requiredOption('--channel-id <id>', 'channel ID')
+  ).action((options) => runChannelViewerCommand(
+    (handler) => handler.listChannelViewerGroups(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerGroupCmd.command('create')
+      .description('Create a channel viewer group')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--name <name>', 'group name')
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Create channel viewer group "${options.name}"?`,
+    (handler) => handler.createChannelViewerGroup(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerGroupCmd.command('update')
+      .description('Update a channel viewer group')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--id <id>', 'group ID', parseInteger)
+      .requiredOption('--name <name>', 'group name')
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Update channel viewer group ${options.id}?`,
+    (handler) => handler.updateChannelViewerGroup(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerGroupCmd.command('delete')
+      .description('Delete a channel viewer group')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--id <id>', 'group ID', parseInteger)
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Delete channel viewer group ${options.id}?`,
+    (handler) => handler.deleteChannelViewerGroup(options)
+  ));
+
+  const viewerGroupSettingCmd = viewerCmd
+    .command('group-setting')
+    .description('Manage channel viewer group settings');
+
+  addViewerCommonOptions(
+    viewerGroupSettingCmd.command('get')
+      .description('Get channel viewer group settings')
+      .requiredOption('--channel-id <id>', 'channel ID')
+  ).action((options) => runChannelViewerCommand(
+    (handler) => handler.getChannelViewerGroupSetting(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerGroupSettingCmd.command('update')
+      .description('Update channel viewer group settings')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .option('--channel-viewer-group-enabled <Y|N>', 'enable channel viewer groups', validateYnFlag)
+      .option('--not-in-group-watch-enabled <Y|N>', 'allow viewers outside groups to watch', validateYnFlag)
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Update channel viewer group settings for ${options.channelId}?`,
+    (handler) => handler.updateChannelViewerGroupSetting(options)
+  ));
+
+  addViewerFilterOptions(
+    viewerCmd.command('list')
+      .description('List viewers belonging to a channel')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .option('--page <page>', 'page number', parseInteger, 1)
+      .option('--size <size>', 'page size', parseInteger, 10)
+  ).action((options) => runChannelViewerCommand(
+    (handler) => handler.listChannelViewers(options)
+  ));
+
+  addViewerFilterOptions(
+    viewerCmd.command('export')
+      .description('Export viewers belonging to a channel')
+      .requiredOption('--channel-id <id>', 'channel ID')
+  ).action((options) => runChannelViewerCommand(
+    (handler) => handler.exportChannelViewers(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerCmd.command('add')
+      .description('Add viewers to a channel')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--viewer-ids <ids>', 'viewer IDs, comma-separated')
+      .option('--group-id <id>', 'target group ID', parseInteger)
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Add viewers to channel ${options.channelId}?`,
+    (handler) => handler.addChannelViewers(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerCmd.command('delete')
+      .description('Delete viewers from a channel')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--viewer-ids <ids>', 'viewer IDs, comma-separated')
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Delete viewers from channel ${options.channelId}?`,
+    (handler) => handler.deleteChannelViewers(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerCmd.command('transfer')
+      .description('Transfer viewers to another group')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--viewer-ids <ids>', 'viewer IDs, comma-separated')
+      .option('--target-group-id <id>', 'target group ID; omit to clear group association', parseInteger)
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Transfer viewers in channel ${options.channelId}?`,
+    (handler) => handler.transferChannelViewers(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerCmd.command('import')
+      .description('Import channel viewers from a file')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .requiredOption('--file <path>', 'viewer import file (.xls, .xlsx, or .csv)')
+      .option('--group-id <id>', 'target group ID', parseInteger)
+      .option('-f, --force', 'skip confirmation prompt')
+  ).action((options) => runChannelViewerWriteCommand(
+    options,
+    `Import viewers into channel ${options.channelId} from ${options.file}?`,
+    (handler) => handler.importChannelViewers(options)
+  ));
+
+  addViewerCommonOptions(
+    viewerCmd.command('unrelated-list')
+      .description('List viewers not joined to any channel group')
+      .requiredOption('--channel-id <id>', 'channel ID')
+      .option('--name <name>', 'viewer name')
+      .option('--mobile <mobile>', 'mobile number')
+      .option('--external-viewer-id <id>', 'external viewer ID')
+      .option('--wx-open-id <id>', 'WeChat OpenID')
+      .option('--wx-union-id <id>', 'WeChat UnionID')
+      .option('--nickname <nickname>', 'viewer nickname')
+      .option('--wx-nick-name <nickname>', 'WeChat nickname')
+      .option('--source <source>', 'viewer source')
+      .option('--email <email>', 'email')
+      .option('--area <area>', 'area')
+      .option('--last-collect-mobile <mobile>', 'last collected mobile')
+      .option('--search-keyword <keyword>', 'keyword for nickname search')
+      .option('--viewer-id <viewerId>', 'viewer ID')
+      .option('--status <status>', 'viewer status')
+      .option('--start-create-time <time>', 'registration start time, yyyy-MM-dd HH:mm:ss')
+      .option('--end-create-time <time>', 'registration end time, yyyy-MM-dd HH:mm:ss')
+      .option('--label-ids <ids>', 'label IDs, comma-separated')
+      .option('--page <page>', 'page number', parseInteger, 1)
+      .option('--size <size>', 'page size', parseInteger, 10)
+  ).action((options) => runChannelViewerCommand(
+    (handler) => handler.listUnrelatedChannelViewers(options)
+  ));
+
   channelCmd.command('status-valid')
     .description('Check whether channel statuses are valid')
     .requiredOption('--channels <ids>', 'channel IDs, comma-separated, max 100')
@@ -658,11 +881,28 @@ function validateOutputFormat(value: string): 'table' | 'json' {
   return value as 'table' | 'json';
 }
 
+function validateChannelViewerScope(value: string): 'user' | 'teacher' {
+  const validScopes = ['user', 'teacher'] as const;
+  if (!validScopes.includes(value as any)) {
+    throw new Error(`Invalid scope: ${value}. Must be one of: ${validScopes.join(', ')}`);
+  }
+  return value as 'user' | 'teacher';
+}
+
+function validateYnFlag(value: string): 'Y' | 'N' {
+  if (value !== 'Y' && value !== 'N') {
+    throw new Error('Invalid value. Must be Y or N');
+  }
+  return value;
+}
+
 // Export validation functions for testing
 export {
   parseInteger,
   validateScene,
   validateTemplate,
   validateLimit,
-  validateOutputFormat
+  validateOutputFormat,
+  validateChannelViewerScope,
+  validateYnFlag
 };

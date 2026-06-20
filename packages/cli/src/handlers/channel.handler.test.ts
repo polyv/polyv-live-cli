@@ -2,6 +2,9 @@
  * @fileoverview Unit tests for ChannelHandler
  */
 
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { tmpdir } from 'os';
 import { ChannelHandler } from './channel.handler';
 import { ChannelServiceSdk } from '../services/channel.service.sdk';
 import {
@@ -73,7 +76,20 @@ describe('ChannelHandler', () => {
       createChannel: jest.fn(),
       listChannels: jest.fn(),
       getChannelDetail: jest.fn(),
-      updateChannel: jest.fn()
+      updateChannel: jest.fn(),
+      listChannelViewerGroups: jest.fn(),
+      createChannelViewerGroup: jest.fn(),
+      updateChannelViewerGroup: jest.fn(),
+      deleteChannelViewerGroup: jest.fn(),
+      getChannelViewerGroupSetting: jest.fn(),
+      updateChannelViewerGroupSetting: jest.fn(),
+      listChannelViewers: jest.fn(),
+      exportChannelViewers: jest.fn(),
+      addChannelViewers: jest.fn(),
+      deleteChannelViewers: jest.fn(),
+      transferChannelViewers: jest.fn(),
+      importChannelViewers: jest.fn(),
+      listUnrelatedChannelViewers: jest.fn()
     } as any;
 
     // Mock the ChannelService constructor
@@ -1244,6 +1260,128 @@ describe('ChannelHandler', () => {
 
       await expect(handler.deleteChannels({ channelIds: ['123'], output: 'xml' as any }))
         .rejects.toThrow(PolyVValidationError);
+    });
+  });
+
+  describe('channel viewer operations', () => {
+    it('should list channel viewers with SDK paging fields', async () => {
+      mockChannelService.listChannelViewers.mockResolvedValue({
+        contents: [],
+        pageNumber: 2,
+        pageSize: 50,
+        totalItems: 0,
+        totalPages: 0
+      });
+
+      await channelHandler.listChannelViewers({
+        channelId: '3151318',
+        scope: 'teacher',
+        viewerIds: undefined,
+        page: 2,
+        size: 50,
+        output: 'json'
+      });
+
+      expect(mockChannelService.listChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        scope: 'teacher',
+        pageNumber: 2,
+        pageSize: 50
+      });
+    });
+
+    it('should normalize viewer ID lists for add and transfer operations', async () => {
+      mockChannelService.addChannelViewers.mockResolvedValue(undefined);
+      mockChannelService.transferChannelViewers.mockResolvedValue(undefined);
+
+      await channelHandler.addChannelViewers({
+        channelId: '3151318',
+        viewerIds: 'viewer-1, viewer-2',
+        groupId: 1,
+        output: 'json'
+      });
+      await channelHandler.transferChannelViewers({
+        channelId: '3151318',
+        viewerIds: 'viewer-1,viewer-2',
+        targetGroupId: 2,
+        output: 'json'
+      });
+
+      expect(mockChannelService.addChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        groupId: 1,
+        viewerIds: ['viewer-1', 'viewer-2']
+      });
+      expect(mockChannelService.transferChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        targetGroupId: 2,
+        viewerIds: ['viewer-1', 'viewer-2']
+      });
+    });
+
+    it('should normalize unrelated viewer label IDs and pagination', async () => {
+      mockChannelService.listUnrelatedChannelViewers.mockResolvedValue({
+        contents: [],
+        pageNumber: 1,
+        pageSize: 20,
+        totalItems: 0,
+        totalPages: 0
+      });
+
+      await channelHandler.listUnrelatedChannelViewers({
+        channelId: '3151318',
+        labelIds: '1, 2',
+        page: 1,
+        size: 20,
+        output: 'json'
+      });
+
+      expect(mockChannelService.listUnrelatedChannelViewers).toHaveBeenCalledWith({
+        channelId: '3151318',
+        labelIds: ['1', '2'],
+        pageNumber: 1,
+        pageSize: 20
+      });
+    });
+
+    it('should reject group setting updates without fields', async () => {
+      await expect(channelHandler.updateChannelViewerGroupSetting({
+        channelId: '3151318',
+        output: 'json'
+      })).rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should reject import when the file does not exist', async () => {
+      await expect(channelHandler.importChannelViewers({
+        channelId: '3151318',
+        file: '/tmp/polyv-live-cli-missing-viewers.xlsx',
+        force: true,
+        output: 'json'
+      })).rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should validate and pass import files to the SDK wrapper', async () => {
+      const tempDir = mkdtempSync(join(tmpdir(), 'polyv-channel-viewer-'));
+      const filePath = join(tempDir, 'viewers.csv');
+      writeFileSync(filePath, 'viewerId\nviewer-1\n');
+      mockChannelService.importChannelViewers.mockResolvedValue({ successCount: 1, failCount: 0 });
+
+      try {
+        await channelHandler.importChannelViewers({
+          channelId: '3151318',
+          groupId: 1,
+          file: filePath,
+          output: 'json'
+        });
+
+        expect(mockChannelService.importChannelViewers).toHaveBeenCalledWith({
+          channelId: '3151318',
+          groupId: 1,
+          file: expect.any(Object)
+        });
+      } finally {
+        rmSync(tempDir, { recursive: true, force: true });
+      }
     });
   });
 });
