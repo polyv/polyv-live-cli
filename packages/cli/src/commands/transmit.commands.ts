@@ -12,6 +12,7 @@ import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
 import { OutputFormat } from '../types/platform';
 import { TransmitServiceConfig } from '../types/transmit';
+import { parseStringList } from '../utils/api-command';
 
 /** Default timeout in milliseconds */
 const DEFAULT_TIMEOUT_MS = 30000;
@@ -79,6 +80,13 @@ export function validateOutputFormat(format: string): OutputFormat {
   return format;
 }
 
+export function validateAssociationType(type: string): 'add' | 'cancel' {
+  if (type !== 'add' && type !== 'cancel') {
+    throw new Error('Association type must be add or cancel');
+  }
+  return type;
+}
+
 /**
  * Register transmit commands
  */
@@ -121,6 +129,31 @@ export function registerTransmitCommands(program: Command): void {
         const handler = new TransmitHandler(authConfig, serviceConfig);
         await handler.getTransmitAssociations({
           channelId: options.channelId,
+          output: options.output as OutputFormat,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  transmitCmd
+    .command('associate')
+    .description('Add or cancel receive channel transmit associations (关联或取消接收转播频道)')
+    .requiredOption('--channelId <id>', 'Source channel ID (发起转播的频道号)')
+    .requiredOption('--receive-channel-ids <ids>', 'Receive channel IDs, comma-separated (接收频道号，逗号分隔)', parseStringList)
+    .option('--type <type>', 'Operation type: add|cancel', validateAssociationType, 'add')
+    .option('-f, --force', 'Skip confirmation prompt')
+    .option('-o, --output <format>', 'Output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(options);
+        const handler = new TransmitHandler(authConfig, serviceConfig);
+        await handler.associationReceiveChannels({
+          channelId: options.channelId,
+          receiveChannelIds: options.receiveChannelIds,
+          type: options.type,
+          force: options.force,
           output: options.output as OutputFormat,
         });
       } catch (error) {

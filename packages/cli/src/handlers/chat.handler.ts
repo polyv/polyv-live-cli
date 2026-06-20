@@ -223,9 +223,21 @@ export class ChatHandler extends BaseHandler {
   async countOnlineUser(options: { channelId: string; output?: OutputFormat }): Promise<void> {
     return this.executeWithErrorHandling(async () => {
       this.validateRequiredOptions(options, ['channelId']);
-      const result = await this.chatService.countOnlineUser({ channelId: options.channelId });
+      const result = await this.chatService.getChatOnlineCount(options.channelId);
       this.displayGenericResult({ channelId: options.channelId, onlineUserCount: result }, options.output);
     }, 'chat.message.online-count');
+  }
+
+  async removeChatContents(options: { channelId: string; ids: string[]; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId', 'ids']);
+      if (!(await this.confirmIfNeeded(options.force, `Remove chat message(s) ${options.ids.join(',')} from channel ${options.channelId}?`))) return;
+      const result = await this.chatService.removeChatContents({
+        channelId: options.channelId,
+        ids: options.ids,
+      });
+      this.displayGenericResult(result, options.output, 'Chat message(s) removed successfully');
+    }, 'chat.message.remove-contents');
   }
 
   async listSpeak(options: {

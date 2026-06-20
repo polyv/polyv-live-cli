@@ -308,6 +308,87 @@ export class ProductServiceSdk {
     }
   }
 
+  async getChannelProductEnabled(channelId: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getChannelProductEnabled(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getChannelProductEnabled');
+    }
+  }
+
+  async batchAddChannelProducts(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.batchAddChannelProducts(options);
+    } catch (error) {
+      throw this.handleError(error, 'batchAddChannelProducts');
+    }
+  }
+
+  async batchDeleteChannelProducts(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.batchDeleteChannelProducts(options);
+    } catch (error) {
+      throw this.handleError(error, 'batchDeleteChannelProducts');
+    }
+  }
+
+  async batchShelfChannelProducts(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.batchShelfChannelProducts(options);
+    } catch (error) {
+      throw this.handleError(error, 'batchShelfChannelProducts');
+    }
+  }
+
+  async shelfChannelProduct(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.shelfChannelProduct(options);
+    } catch (error) {
+      throw this.handleError(error, 'shelfChannelProduct');
+    }
+  }
+
+  async sortChannelProduct(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.sortChannelProduct(options);
+    } catch (error) {
+      throw this.handleError(error, 'sortChannelProduct');
+    }
+  }
+
+  async pushChannelProduct(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.pushChannelProduct(options);
+    } catch (error) {
+      throw this.handleError(error, 'pushChannelProduct');
+    }
+  }
+
+  async cancelPushChannelProduct(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.cancelPushChannelProduct(options);
+    } catch (error) {
+      throw this.handleError(error, 'cancelPushChannelProduct');
+    }
+  }
+
+  async referenceProduct(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.referenceProduct(options);
+    } catch (error) {
+      throw this.handleError(error, 'referenceProduct');
+    }
+  }
+
   async listProductTags(options: ProductTagListOptions): Promise<ListProductTagsResponse> {
     try {
       if (!options.channelId || options.channelId.trim() === '') {

@@ -119,6 +119,23 @@ describe('ChannelService historical write APIs', () => {
     );
   });
 
+  it('falls back to GET for online count when historical POST is not allowed', async () => {
+    mockHttpClient.post.mockRejectedValueOnce(new Error('method not allowed'));
+    mockHttpClient.get.mockResolvedValueOnce(7);
+
+    await expect(service.getChatOnlineCount('123456')).resolves.toBe(7);
+
+    expect(mockHttpClient.post).toHaveBeenCalledWith(
+      '/live/v3/channel/chat/count-online-user',
+      null,
+      { params: { channelId: '123456' } }
+    );
+    expect(mockHttpClient.get).toHaveBeenCalledWith(
+      '/live/v3/channel/chat/count-online-user',
+      { params: { channelId: '123456' } }
+    );
+  });
+
   it('calls transmit, submeeting, association, and chat cleanup endpoints', async () => {
     mockHttpClient.post
       .mockResolvedValueOnce([{ channelId: 1001, name: 'Receiver A' }])

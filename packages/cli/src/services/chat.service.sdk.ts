@@ -273,6 +273,16 @@ export class ChatServiceSdk {
     return await client.chat.countOnlineUser(options);
   }
 
+  async getChatOnlineCount(channelId: string): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.channel.getChatOnlineCount(channelId);
+  }
+
+  async removeChatContents(options: { channelId: string; ids: string[] }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.channel.removeChatContents(options);
+  }
+
   async getSpeakList(options: { startTime?: number; endTime?: number; cursor?: string; size?: number }): Promise<any> {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
     return await client.chat.getSpeakList(compactParams({

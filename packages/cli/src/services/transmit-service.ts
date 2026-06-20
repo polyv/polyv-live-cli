@@ -70,6 +70,35 @@ export class TransmitServiceSdk {
     return this.unwrapData<TransmitAssociation[]>(result) || [];
   }
 
+  async associationReceiveChannels(options: {
+    channelId: string;
+    receiveChannelIds: string[];
+    type?: 'add' | 'cancel';
+  }): Promise<Array<string | number>> {
+    if (!options.channelId || options.channelId.trim() === '') {
+      throw new Error('Channel ID is required (频道ID是必需的)');
+    }
+
+    if (!options.receiveChannelIds || options.receiveChannelIds.length === 0) {
+      throw new Error('Receive channel IDs are required (接收频道ID是必需的)');
+    }
+
+    const associationOptions: {
+      channelId: string;
+      receiveChannelIds: string[];
+      type?: 'add' | 'cancel';
+    } = {
+      channelId: options.channelId,
+      receiveChannelIds: options.receiveChannelIds,
+    };
+    if (options.type) {
+      associationOptions.type = options.type;
+    }
+
+    const result = await this.channel.associationReceiveChannels(associationOptions);
+    return this.unwrapData<Array<string | number>>(result) || [];
+  }
+
   private unwrapData<T>(value: unknown): T | undefined {
     if (value && typeof value === 'object' && 'data' in value) {
       return (value as { data: T }).data;

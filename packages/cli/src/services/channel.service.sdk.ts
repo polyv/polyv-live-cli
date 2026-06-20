@@ -364,6 +364,258 @@ export class ChannelServiceSdk {
     }
   }
 
+  async getAccount(channelId: string, account: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getAccount(channelId, account);
+    } catch (error) {
+      throw this.handleError(error, 'getAccount');
+    }
+  }
+
+  async getAccounts(channelId: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getAccounts(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getAccounts');
+    }
+  }
+
+  async deleteAccount(channelId: string, account: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.deleteAccount(channelId, account);
+    } catch (error) {
+      throw this.handleError(error, 'deleteAccount');
+    }
+  }
+
+  async batchCreateAccounts(channelId: string, accounts: any[]): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.batchCreateAccounts(channelId, accounts);
+    } catch (error) {
+      throw this.handleError(error, 'batchCreateAccounts');
+    }
+  }
+
+  async getChannelAdverts(channelId: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getChannelAdverts(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getChannelAdverts');
+    }
+  }
+
+  async getCallbackSetting(channelId: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getCallbackSetting(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getCallbackSetting');
+    }
+  }
+
+  async updateCallbackSetting(channelId: string, options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateCallbackSetting(channelId, options);
+    } catch (error) {
+      throw this.handleError(error, 'updateCallbackSetting');
+    }
+  }
+
+  async getPptRecordSetting(channelId: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getPptRecordSetting(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getPptRecordSetting');
+    }
+  }
+
+  async listPptRecordTasks(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.listPptRecordTasks(params);
+    } catch (error) {
+      throw this.handleError(error, 'listPptRecordTasks');
+    }
+  }
+
+  async addPptRecordTask(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.addPptRecordTask(params);
+    } catch (error) {
+      throw this.handleError(error, 'addPptRecordTask');
+    }
+  }
+
+  async updatePptRecordSetting(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updatePptRecordSetting(params);
+    } catch (error) {
+      throw this.handleError(error, 'updatePptRecordSetting');
+    }
+  }
+
+  async deletePptRecord(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.deletePptRecord(params);
+    } catch (error) {
+      throw this.handleError(error, 'deletePptRecord');
+    }
+  }
+
+  async copyChannel(channelId: string, options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.copyChannel(channelId, options);
+    } catch (error) {
+      throw this.handleError(error, 'copyChannel');
+    }
+  }
+
+  async getUserChildrenChannels(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getUserChildrenChannels(params);
+    } catch (error) {
+      throw this.handleError(error, 'getUserChildrenChannels');
+    }
+  }
+
+  async getWatchApiToken(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getWatchApiToken(params);
+    } catch (error) {
+      throw this.handleError(error, 'getWatchApiToken');
+    }
+  }
+
+  async getApiToken(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getApiToken(params);
+    } catch (error) {
+      throw this.handleError(error, 'getApiToken');
+    }
+  }
+
+  async getTokenLoginUrl(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getTokenLoginUrl(params);
+    } catch (error) {
+      throw this.handleError(error, 'getTokenLoginUrl');
+    }
+  }
+
+  async getChatToken(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getChatToken(params);
+    } catch (error) {
+      throw this.handleError(error, 'getChatToken');
+    }
+  }
+
+  async listChannelsFollow(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.listChannelsFollow(params);
+    } catch (error) {
+      throw this.handleError(error, 'listChannelsFollow');
+    }
+  }
+
+  async updateChannelsFollow(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateChannelsFollow(params);
+    } catch (error) {
+      throw this.handleError(error, 'updateChannelsFollow');
+    }
+  }
+
+  async batchAddSubmeeting(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.batchAddSubmeeting(params);
+    } catch (error) {
+      throw this.handleError(error, 'batchAddSubmeeting');
+    }
+  }
+
+  async channelsStopQuestionnaire(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.channelsStopQuestionnaire(params);
+    } catch (error) {
+      throw this.handleError(error, 'channelsStopQuestionnaire');
+    }
+  }
+
+  async batchUpdateDanmu(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.batchUpdateDanmu(params);
+    } catch (error) {
+      throw this.handleError(error, 'batchUpdateDanmu');
+    }
+  }
+
+  async setChannelToken(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.setChannelToken(params);
+    } catch (error) {
+      throw this.handleError(error, 'setChannelToken');
+    }
+  }
+
+  async setAccountToken(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.setAccountToken(params);
+    } catch (error) {
+      throw this.handleError(error, 'setAccountToken');
+    }
+  }
+
+  async setMaxViewer(channelId: string, userId: string, maxViewer: number): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.setMaxViewer(channelId, userId, maxViewer);
+    } catch (error) {
+      throw this.handleError(error, 'setMaxViewer');
+    }
+  }
+
+  async updateChannelPassword(userId: string, passwd: string, channelId?: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateChannelPassword(userId, passwd, channelId);
+    } catch (error) {
+      throw this.handleError(error, 'updateChannelPassword');
+    }
+  }
+
+  async setDiyUrlMarquee(params: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.setDiyUrlMarquee(params);
+    } catch (error) {
+      throw this.handleError(error, 'setDiyUrlMarquee');
+    }
+  }
+
   // ===== Validation Methods =====
 
   private validateCreateRequest(request: ChannelCreateRequest): void {

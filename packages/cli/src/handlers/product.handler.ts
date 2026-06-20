@@ -495,6 +495,96 @@ export class ProductHandler extends BaseHandler {
     }, 'product.order.batchStatus');
   }
 
+  async getChannelProductEnabled(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.productService.getChannelProductEnabled(options.channelId);
+      this.displayData(result, options.output || 'table');
+    }, 'product.enabled.get');
+  }
+
+  async batchAddChannelProducts(options: { channelId: string; products: any[]; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'products']);
+      await confirmWrite(options.force, `Add ${options.products.length} product(s) to channel ${options.channelId}?`);
+      const result = await this.productService.batchAddChannelProducts({
+        channelId: options.channelId,
+        products: options.products,
+      });
+      this.displayWriteResult('Channel products added successfully', result, options.output);
+    }, 'product.batch-add');
+  }
+
+  async batchDeleteChannelProducts(options: { channelId: string; productIds: number[]; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productIds']);
+      await confirmWrite(options.force, `Delete product(s) ${options.productIds.join(',')} from channel ${options.channelId}?`);
+      const result = await this.productService.batchDeleteChannelProducts({
+        channelId: options.channelId,
+        productIds: options.productIds,
+      });
+      this.displayWriteResult('Channel products deleted successfully', result, options.output);
+    }, 'product.batch-delete');
+  }
+
+  async batchShelfChannelProducts(options: { channelId: string; productIds: number[]; shelf: 1 | 2; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productIds', 'shelf']);
+      await confirmWrite(options.force, `Update shelf status for product(s) ${options.productIds.join(',')}?`);
+      const result = await this.productService.batchShelfChannelProducts({
+        channelId: options.channelId,
+        productIds: options.productIds,
+        shelf: options.shelf,
+      });
+      this.displayWriteResult('Channel products shelf status updated successfully', result, options.output);
+    }, 'product.batch-shelf');
+  }
+
+  async shelfChannelProduct(options: { channelId: string; productId: number; shelf: 1 | 2; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId', 'shelf']);
+      await confirmWrite(options.force, `Update shelf status for product ${options.productId}?`);
+      const result = await this.productService.shelfChannelProduct(options);
+      this.displayWriteResult('Channel product shelf status updated successfully', result, options.output);
+    }, 'product.shelf');
+  }
+
+  async sortChannelProduct(options: { channelId: string; productId: number; type: 10 | 20 | 50; sort?: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId', 'type']);
+      await confirmWrite(options.force, `Sort product ${options.productId} in channel ${options.channelId}?`);
+      const result = await this.productService.sortChannelProduct(options);
+      this.displayWriteResult('Channel product sorted successfully', result, options.output);
+    }, 'product.sort');
+  }
+
+  async pushChannelProduct(options: { channelId: string; productId: number; pushCardType?: 'smallCard' | 'bigCard'; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId']);
+      await confirmWrite(options.force, `Push product ${options.productId} to viewers?`);
+      const result = await this.productService.pushChannelProduct(options);
+      this.displayWriteResult('Channel product pushed successfully', result, options.output);
+    }, 'product.push');
+  }
+
+  async cancelPushChannelProduct(options: { channelId: string; productId: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId']);
+      await confirmWrite(options.force, `Cancel pushed product ${options.productId}?`);
+      const result = await this.productService.cancelPushChannelProduct(options);
+      this.displayWriteResult('Channel product push cancelled successfully', result, options.output);
+    }, 'product.cancel-push');
+  }
+
+  async referenceProduct(options: { channelId: string; originId: string; status: 1 | 2; withTags?: boolean; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'originId', 'status']);
+      await confirmWrite(options.force, `Reference platform product ${options.originId} into channel ${options.channelId}?`);
+      const result = await this.productService.referenceProduct(options);
+      this.displayWriteResult('Platform product referenced successfully', result, options.output);
+    }, 'product.reference');
+  }
+
   private displayWriteResult(message: string, data: unknown, output?: OutputFormat): void {
     if (output === 'json') {
       this.displayData({ success: true, data }, 'json');

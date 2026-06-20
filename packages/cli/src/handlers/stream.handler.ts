@@ -4,7 +4,7 @@
  * @since 3.1.0
  */
 
-import { BaseHandler } from './base.handler';
+import { BaseHandler, OutputFormat } from './base.handler';
 import { StreamServiceSdk, StreamServiceConfig } from '../services/stream.service.sdk';
 import { AuthConfig } from '../types/auth';
 import {
@@ -41,6 +41,7 @@ import {
 import { formatBandwidth } from '../utils/formatter';
 import { spawn } from 'child_process';
 import * as fs from 'fs';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Stream handler for managing stream-related CLI operations
@@ -839,6 +840,141 @@ export class StreamHandler extends BaseHandler {
     }, 'stream.monitorStream');
   }
 
+  async getLiveStatus(options: { stream: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['stream']);
+      const result = await this.streamService.getLiveStatus(options.stream);
+      this.displayData({ stream: options.stream, status: result }, options.output || 'table');
+    }, 'stream.live-status.get');
+  }
+
+  async getLiveStatusList(options: { channelIds: string[]; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelIds']);
+      const result = await this.streamService.getLiveStatusList({ channelIds: options.channelIds });
+      this.displayData(result, options.output || 'table');
+    }, 'stream.live-status.list');
+  }
+
+  async getStreams(options: { channelIds: string[]; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelIds']);
+      const result = await this.streamService.getStreams({ channelIds: options.channelIds });
+      this.displayData(result, options.output || 'table');
+    }, 'stream.streams.list');
+  }
+
+  async listDiskVideo(options: { channelId: string; page?: number; pageSize?: number; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.streamService.listDiskVideo(this.compactOptions(options, ['output', 'force']));
+      this.displayData(result, options.output || 'table');
+    }, 'stream.disk-video.list');
+  }
+
+  async getCaptureImage(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.streamService.getCaptureImage(options.channelId);
+      this.displayData({ channelId: options.channelId, captureImage: result }, options.output || 'table');
+    }, 'stream.capture.get');
+  }
+
+  async addDiskVideos(options: {
+    channelId: string;
+    vids: string[];
+    origin?: 'vod' | 'material' | 'record';
+    startTimes?: Array<string | number>;
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'vids']);
+      await confirmWrite(options.force, `Configure disk video(s) for channel ${options.channelId}?`);
+      const result = await this.streamService.addDiskVideos(this.compactOptions(options, ['output', 'force']));
+      this.displayWriteResult('Disk videos configured successfully', result, options.output);
+    }, 'stream.disk-video.add');
+  }
+
+  async deleteDiskVideos(options: { channelId: string; vids?: string[]; videoIds?: string[]; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      if (!options.vids && !options.videoIds) {
+        throw new PolyVValidationError('vids or videoIds is required', 'options', options, 'validation_failed');
+      }
+      await confirmWrite(options.force, `Delete disk video(s) from channel ${options.channelId}?`);
+      const result = await this.streamService.deleteDiskVideos(this.compactOptions(options, ['output', 'force']));
+      this.displayWriteResult('Disk video(s) deleted successfully', result, options.output);
+    }, 'stream.disk-video.delete');
+  }
+
+  async endDiskPush(options: { channelId: string; diskVideoId: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'diskVideoId']);
+      await confirmWrite(options.force, `Stop disk push for channel ${options.channelId}?`);
+      const result = await this.streamService.endDiskPush(this.compactOptions(options, ['output', 'force']));
+      this.displayWriteResult('Disk push stopped successfully', result, options.output);
+    }, 'stream.disk-video.end');
+  }
+
+  async banPush(options: { channelId: string; userId: string; forbidTime?: number; playbackForbidden?: 'Y' | 'N'; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'userId']);
+      await confirmWrite(options.force, `Ban push stream for channel ${options.channelId}?`);
+      const result = await this.streamService.banPush(this.compactOptions(options, ['output', 'force']));
+      this.displayWriteResult('Push stream banned successfully', result, options.output);
+    }, 'stream.ban-push');
+  }
+
+  async resumePush(options: { channelId: string; userId: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'userId']);
+      await confirmWrite(options.force, `Resume push stream for channel ${options.channelId}?`);
+      const result = await this.streamService.resume({ channelId: options.channelId, userId: options.userId });
+      this.displayWriteResult('Push stream resumed successfully', result, options.output);
+    }, 'stream.resume');
+  }
+
+  async updateStreamType(options: { channelId: string; streamType: string; pullUrl?: string; pullStreamTime?: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'streamType']);
+      await confirmWrite(options.force, `Update stream type for channel ${options.channelId}?`);
+      const result = await this.streamService.updateStreamType(this.compactOptions(options, ['output', 'force']));
+      this.displayWriteResult('Stream type updated successfully', result, options.output);
+    }, 'stream.type.update');
+  }
+
+  private requireFields(options: Record<string, unknown>, fields: string[]): void {
+    const missing = fields.filter((field) => {
+      const value = options[field];
+      return value === undefined || value === null || value === '';
+    });
+
+    if (missing.length > 0) {
+      throw new PolyVValidationError(
+        `Missing required option(s): ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private compactOptions(options: Record<string, unknown>, skip: string[] = []): Record<string, unknown> {
+    const skipped = new Set(skip);
+    return Object.fromEntries(
+      Object.entries(options).filter(([key, value]) => !skipped.has(key) && value !== undefined && value !== '')
+    );
+  }
+
+  private displayWriteResult(message: string, data: unknown, output?: OutputFormat): void {
+    if (output === 'json') {
+      this.displayData({ success: true, data }, 'json');
+    } else {
+      this.displaySuccess(message, data, 'table');
+    }
+  }
+
   /**
    * Validates stream verification options
    */
@@ -909,4 +1045,4 @@ export class StreamHandler extends BaseHandler {
     const secs = Math.floor(seconds % 60);
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
-} 
+}

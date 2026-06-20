@@ -316,6 +316,105 @@ export class StreamServiceSdk {
     }
   }
 
+  async getLiveStatus(stream: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getLiveStatus(stream);
+    } catch (error) {
+      throw this.handleError(error, 'getLiveStatus');
+    }
+  }
+
+  async getLiveStatusList(options: { channelIds: string[] }): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getLiveStatusList(options);
+    } catch (error) {
+      throw this.handleError(error, 'getLiveStatusList');
+    }
+  }
+
+  async getStreams(options: { channelIds: string[] }): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getStreams(options);
+    } catch (error) {
+      throw this.handleError(error, 'getStreams');
+    }
+  }
+
+  async listDiskVideo(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.listDiskVideo(options);
+    } catch (error) {
+      throw this.handleError(error, 'listDiskVideo');
+    }
+  }
+
+  async getCaptureImage(channelId: string): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.getCaptureImage(channelId);
+    } catch (error) {
+      throw this.handleError(error, 'getCaptureImage');
+    }
+  }
+
+  async addDiskVideos(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.addDiskVideos(options);
+    } catch (error) {
+      throw this.handleError(error, 'addDiskVideos');
+    }
+  }
+
+  async deleteDiskVideos(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.deleteDiskVideos(options);
+    } catch (error) {
+      throw this.handleError(error, 'deleteDiskVideos');
+    }
+  }
+
+  async endDiskPush(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.endDiskPush(options);
+    } catch (error) {
+      throw this.handleError(error, 'endDiskPush');
+    }
+  }
+
+  async banPush(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.banPush(options);
+    } catch (error) {
+      throw this.handleError(error, 'banPush');
+    }
+  }
+
+  async resume(options: { channelId: string; userId: string }): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.resume(options);
+    } catch (error) {
+      throw this.handleError(error, 'resume');
+    }
+  }
+
+  async updateStreamType(options: any): Promise<any> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateStreamType(options);
+    } catch (error) {
+      throw this.handleError(error, 'updateStreamType');
+    }
+  }
+
   // ===== Validation Methods =====
 
   private validateChannelId(channelId: string): void {

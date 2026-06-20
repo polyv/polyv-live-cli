@@ -12,7 +12,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
-import { apiParams, confirmWrite } from '../utils/api-command';
+import { apiParams, confirmWrite, parseJsonArray, parseStringList } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -779,6 +779,252 @@ Scope:
     (handler) => handler.listUnrelatedChannelViewers(options)
   ));
 
+  const roleCmd = channelCmd.command('role').description('Manage historical channel role accounts');
+  roleCmd.command('get')
+    .description('Get one role account')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--account <account>', 'role account ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getRoleAccount(options)));
+  roleCmd.command('list')
+    .description('List role accounts')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.listRoleAccounts(options)));
+  roleCmd.command('batch-create')
+    .description('Batch create role accounts')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--accounts-json <json>', 'accounts JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.batchCreateRoleAccounts({
+      ...options,
+      accounts: options.accountsJson
+    })));
+  roleCmd.command('delete')
+    .description('Delete one role account')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--account <account>', 'role account ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.deleteRoleAccount(options)));
+
+  channelCmd.command('advert-list')
+    .description('List channel adverts')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getChannelAdverts(options)));
+
+  const callbackCmd = channelCmd.command('callback').description('Manage channel callback settings');
+  callbackCmd.command('get')
+    .description('Get channel callback settings')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getCallbackSetting(options)));
+  callbackCmd.command('update')
+    .description('Update channel callback settings')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--record-callback-url <url>', 'record callback URL')
+    .option('--record-callback-video-type <type>', 'record callback video type')
+    .option('--playback-callback-url <url>', 'playback callback URL')
+    .option('--stream-callback-url <url>', 'stream callback URL')
+    .option('--ppt-record-callback-url <url>', 'PPT record callback URL')
+    .option('--live-scan-callback-url <url>', 'live scan callback URL')
+    .option('--playback-cache-callback-url <url>', 'playback cache callback URL')
+    .option('--subtitle-callback-url <url>', 'subtitle callback URL')
+    .option('--live-violation-cutoff-callback-url <url>', 'live violation cutoff callback URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.updateCallbackSetting(options)));
+
+  const pptRecordCmd = channelCmd.command('ppt-record').description('Manage PPT record remake tasks and settings');
+  const pptRecordSettingCmd = pptRecordCmd.command('setting').description('Manage PPT record setting');
+  pptRecordSettingCmd.command('get')
+    .description('Get PPT record setting')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getPptRecordSetting(options)));
+  pptRecordSettingCmd.command('update')
+    .description('Update PPT record setting')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--global-setting-enabled <Y|N>', 'global setting enabled', validateYnFlag)
+    .option('--type <type>', 'record layout type: 0|1|2', parseInteger)
+    .option('--video-ratio <ratio>', 'camera ratio: 0|1', parseInteger)
+    .option('--brand-img-file <pathOrUrl>', 'brand image file or URL')
+    .option('--background-img-file <pathOrUrl>', 'background image file or URL')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.updatePptRecordSetting(options)));
+  pptRecordCmd.command('list')
+    .description('List PPT record tasks')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--session-id <id>', 'session ID')
+    .option('--status <status>', 'task status')
+    .option('--start-time <time>', 'start time yyyyMMddHHmmss')
+    .option('--end-time <time>', 'end time yyyyMMddHHmmss')
+    .option('--page <page>', 'page number', parseInteger)
+    .option('--page-size <size>', 'page size', parseInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.listPptRecordTasks(options)));
+  pptRecordCmd.command('add-task')
+    .description('Create a PPT record remake task')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--video-id <id>', 'playback video ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.addPptRecordTask(options)));
+  pptRecordCmd.command('delete')
+    .description('Delete PPT record tasks')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--task-ids <ids>', 'task IDs, comma-separated', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.deletePptRecord(options)));
+
+  channelCmd.command('copy')
+    .description('Copy a channel')
+    .requiredOption('--channel-id <id>', 'source channel ID')
+    .option('--name <name>', 'new channel name')
+    .option('--category-id <id>', 'category ID', parseInteger)
+    .option('--start-time <timestamp>', 'start time timestamp', parseInteger)
+    .option('--sub-account <account>', 'sub account')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.copyChannel(options)));
+
+  channelCmd.command('children-list')
+    .description('List channels owned by a child account')
+    .requiredOption('--child-user-id <id>', 'child user ID')
+    .option('--start-time <timestamp>', 'created start timestamp', parseInteger)
+    .option('--end-time <timestamp>', 'created end timestamp', parseInteger)
+    .option('--page-number <page>', 'page number', parseInteger, 1)
+    .option('--page-size <size>', 'page size', parseInteger, 20)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getUserChildrenChannels(options)));
+
+  const tokenCmd = channelCmd.command('token').description('Manage channel historical tokens');
+  tokenCmd.command('watch-api')
+    .description('Get watch API token')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--viewer-id <id>', 'viewer ID')
+    .option('--nickname <nickname>', 'viewer nickname')
+    .option('--avatar <url>', 'viewer avatar')
+    .option('--openid <openid>', 'WeChat OpenID')
+    .option('--actor <actor>', 'viewer actor')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getWatchApiToken(options)));
+  tokenCmd.command('api')
+    .description('Get channel API token')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--viewer-id <id>', 'viewer ID')
+    .option('--nickname <nickname>', 'viewer nickname')
+    .option('--avatar <url>', 'viewer avatar')
+    .option('--openid <openid>', 'WeChat OpenID')
+    .option('--actor <actor>', 'viewer actor')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getApiToken(options)));
+  tokenCmd.command('login-url')
+    .description('Get passwordless role login URL')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--account-id <id>', 'role account ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getTokenLoginUrl(options)));
+  tokenCmd.command('chat')
+    .description('Get chat token')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--user-id <id>', 'viewer/user ID')
+    .requiredOption('--role <role>', 'role: teacher|admin|guest|assistant|viewer', validateChatTokenRole)
+    .option('--origin <origin>', 'watch origin')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.getChatToken(options)));
+  tokenCmd.command('set')
+    .description('Set one-time login token for a channel')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--token <token>', 'token')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.setChannelToken(options)));
+  tokenCmd.command('set-account')
+    .description('Set one-time login token for a sub-account channel')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--token <token>', 'token')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.setAccountToken(options)));
+
+  const followCmd = channelCmd.command('follow').description('Manage follow-public-account settings');
+  followCmd.command('list')
+    .description('List channel follow settings')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.listChannelsFollow(options)));
+  followCmd.command('update')
+    .description('Update channel follow settings')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .requiredOption('--qr-code-url <url>', 'QR code image URL')
+    .option('--enabled <Y|N>', 'follow feature switch', validateYnFlag)
+    .option('--auto-show-enabled <Y|N>', 'auto popup switch', validateYnFlag)
+    .option('--entrance-text <text>', 'entry text')
+    .option('--tips <text>', 'popup tips')
+    .option('--pc-follow-tips <text>', 'PC popup tips')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.updateChannelsFollow(options)));
+
+  channelCmd.command('submeeting-batch-add')
+    .description('Batch save submeeting channels')
+    .requiredOption('--channel-id <id>', 'main meeting channel ID')
+    .requiredOption('--sub-channels-json <json>', 'sub channels JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.batchAddSubmeeting({
+      ...options,
+      subChannels: options.subChannelsJson
+    })));
+
+  channelCmd.command('questionnaire-stop')
+    .description('Stop questionnaires for channels')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.stopQuestionnaires(options)));
+
+  channelCmd.command('danmu-batch-update')
+    .description('Batch update channel danmu settings')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .requiredOption('--close-danmu <Y|N>', 'Y closes danmu, N opens danmu', validateYnFlag)
+    .requiredOption('--show-danmu-info-enabled <Y|N>', 'show danmu info enabled', validateYnFlag)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.batchUpdateDanmu(options)));
+
+  channelCmd.command('max-viewer-set')
+    .description('Set max viewer count')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--user-id <id>', 'user ID')
+    .requiredOption('--max-viewer <count>', 'max viewer count', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.setMaxViewer(options)));
+
+  channelCmd.command('password-update')
+    .description('Update channel password')
+    .requiredOption('--user-id <id>', 'user ID')
+    .requiredOption('--passwd <password>', 'new password')
+    .option('--channel-id <id>', 'channel ID; omit to update all channels')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.updateChannelPassword(options)));
+
+  channelCmd.command('marquee-url-set')
+    .description('Set custom URL marquee protection')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--marquee-restrict <Y|N>', 'marquee restriction switch', validateYnFlag)
+    .option('--url <url>', 'marquee URL, required when switch is Y')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelViewerCommand((handler) => handler.setDiyUrlMarquee(options)));
+
   channelCmd.command('status-valid')
     .description('Check whether channel statuses are valid')
     .requiredOption('--channels <ids>', 'channel IDs, comma-separated, max 100')
@@ -896,6 +1142,14 @@ function validateYnFlag(value: string): 'Y' | 'N' {
   return value;
 }
 
+function validateChatTokenRole(value: string): 'teacher' | 'admin' | 'guest' | 'assistant' | 'viewer' {
+  const validRoles = ['teacher', 'admin', 'guest', 'assistant', 'viewer'] as const;
+  if (!validRoles.includes(value as any)) {
+    throw new Error(`Invalid role: ${value}. Must be one of: ${validRoles.join(', ')}`);
+  }
+  return value as 'teacher' | 'admin' | 'guest' | 'assistant' | 'viewer';
+}
+
 // Export validation functions for testing
 export {
   parseInteger,
@@ -904,5 +1158,6 @@ export {
   validateLimit,
   validateOutputFormat,
   validateChannelViewerScope,
-  validateYnFlag
+  validateYnFlag,
+  validateChatTokenRole
 };

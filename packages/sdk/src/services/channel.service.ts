@@ -5605,7 +5605,10 @@ export class ChannelService {
   }
 
   /**
-   * Get channel chat-room online count with the historical POST endpoint.
+   * Get channel chat-room online count.
+   *
+   * The historical channel operate doc lists this endpoint as POST, while
+   * newer docs and some production environments only accept GET.
    *
    * @param channelId - The channel ID
    * @returns Online user count
@@ -5613,9 +5616,25 @@ export class ChannelService {
   async getChatOnlineCount(channelId: string): Promise<number> {
     this.validateRequiredText(channelId, 'channelId');
 
-    const response = await this.client.httpClient.post<number>(
+    try {
+      const response = await this.client.httpClient.post<number>(
+        '/live/v3/channel/chat/count-online-user',
+        null,
+        { params: { channelId } }
+      );
+
+      return response as unknown as number;
+    } catch (error) {
+      const statusCode = (error as { statusCode?: number; response?: { status?: number } }).statusCode
+        ?? (error as { response?: { status?: number } }).response?.status;
+      const message = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase();
+      if (statusCode !== 405 && !message.includes('method not allowed')) {
+        throw error;
+      }
+    }
+
+    const response = await this.client.httpClient.get<number>(
       '/live/v3/channel/chat/count-online-user',
-      null,
       { params: { channelId } }
     );
 

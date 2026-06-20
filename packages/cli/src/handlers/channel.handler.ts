@@ -28,6 +28,7 @@ import {
 } from '../types/channel';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Handler for channel-related CLI commands
@@ -401,6 +402,248 @@ export class ChannelHandler extends BaseHandler {
       );
       this.displayChannelViewerResult('Unrelated channel viewers', result, options.output);
     }, 'channel.viewer.unrelated-list');
+  }
+
+  async getRoleAccount(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'account']);
+      const result = await this.channelService.getAccount(options.channelId, options.account);
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.role.get');
+  }
+
+  async listRoleAccounts(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.channelService.getAccounts(options.channelId);
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.role.list');
+  }
+
+  async deleteRoleAccount(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'account']);
+      await confirmWrite(options.force, `Delete role account ${options.account} from channel ${options.channelId}?`);
+      const result = await this.channelService.deleteAccount(options.channelId, options.account);
+      this.displayHistoricalResult({ success: true, result }, options.output, 'Role account deleted successfully');
+    }, 'channel.role.delete');
+  }
+
+  async batchCreateRoleAccounts(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'accounts']);
+      await confirmWrite(options.force, `Create ${options.accounts.length} role account(s) in channel ${options.channelId}?`);
+      const result = await this.channelService.batchCreateAccounts(options.channelId, options.accounts);
+      this.displayHistoricalResult(result, options.output, 'Role accounts created successfully');
+    }, 'channel.role.batch-create');
+  }
+
+  async getChannelAdverts(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.channelService.getChannelAdverts(options.channelId);
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.advert.list');
+  }
+
+  async getCallbackSetting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.channelService.getCallbackSetting(options.channelId);
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.callback.get');
+  }
+
+  async updateCallbackSetting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      await confirmWrite(options.force, `Update callback settings for channel ${options.channelId}?`);
+      const payload = this.compactHistoricalOptions(options, ['channelId', 'output', 'force']);
+      const result = await this.channelService.updateCallbackSetting(options.channelId, payload);
+      this.displayHistoricalResult(result ?? { success: true }, options.output, 'Callback settings updated successfully');
+    }, 'channel.callback.update');
+  }
+
+  async getPptRecordSetting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.channelService.getPptRecordSetting(options.channelId);
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.ppt-record.setting-get');
+  }
+
+  async listPptRecordTasks(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.channelService.listPptRecordTasks(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.ppt-record.list');
+  }
+
+  async addPptRecordTask(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'videoId']);
+      await confirmWrite(options.force, `Create PPT record task for video ${options.videoId}?`);
+      const result = await this.channelService.addPptRecordTask(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'PPT record task created successfully');
+    }, 'channel.ppt-record.add-task');
+  }
+
+  async updatePptRecordSetting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      await confirmWrite(options.force, `Update PPT record settings for channel ${options.channelId}?`);
+      const result = await this.channelService.updatePptRecordSetting(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'PPT record settings updated successfully');
+    }, 'channel.ppt-record.setting-update');
+  }
+
+  async deletePptRecord(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'taskIds']);
+      await confirmWrite(options.force, `Delete PPT record task(s) ${options.taskIds}?`);
+      const result = await this.channelService.deletePptRecord(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'PPT record task(s) deleted successfully');
+    }, 'channel.ppt-record.delete');
+  }
+
+  async copyChannel(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      await confirmWrite(options.force, `Copy channel ${options.channelId}?`);
+      const payload = this.compactHistoricalOptions(options, ['channelId', 'output', 'force']);
+      const result = await this.channelService.copyChannel(options.channelId, payload);
+      this.displayHistoricalResult({ channelId: result }, options.output, 'Channel copied successfully');
+    }, 'channel.copy');
+  }
+
+  async getUserChildrenChannels(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['childUserId', 'pageNumber', 'pageSize']);
+      const result = await this.channelService.getUserChildrenChannels(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.children.list');
+  }
+
+  async getWatchApiToken(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'viewerId']);
+      const result = await this.channelService.getWatchApiToken(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.token.watch-api');
+  }
+
+  async getApiToken(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'viewerId']);
+      const result = await this.channelService.getApiToken(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.token.api');
+  }
+
+  async getTokenLoginUrl(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.channelService.getTokenLoginUrl(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.token.login-url');
+  }
+
+  async getChatToken(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'userId', 'role']);
+      const result = await this.channelService.getChatToken(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.token.chat');
+  }
+
+  async listChannelsFollow(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelIds']);
+      const result = await this.channelService.listChannelsFollow({ channelIds: options.channelIds });
+      this.displayHistoricalResult(result, options.output);
+    }, 'channel.follow.list');
+  }
+
+  async updateChannelsFollow(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelIds', 'qrCodeUrl']);
+      await confirmWrite(options.force, `Update follow settings for channel(s) ${options.channelIds}?`);
+      const result = await this.channelService.updateChannelsFollow(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result ?? { success: true }, options.output, 'Follow settings updated successfully');
+    }, 'channel.follow.update');
+  }
+
+  async batchAddSubmeeting(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'subChannels']);
+      await confirmWrite(options.force, `Save ${options.subChannels.length} submeeting channel(s) for ${options.channelId}?`);
+      const result = await this.channelService.batchAddSubmeeting(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'Submeeting channels saved successfully');
+    }, 'channel.submeeting.batch-add');
+  }
+
+  async stopQuestionnaires(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelIds']);
+      await confirmWrite(options.force, `Stop questionnaire(s) for channel(s) ${options.channelIds}?`);
+      const result = await this.channelService.channelsStopQuestionnaire({ channelIds: options.channelIds });
+      this.displayHistoricalResult(result, options.output, 'Questionnaire(s) stopped successfully');
+    }, 'channel.questionnaire.stop');
+  }
+
+  async batchUpdateDanmu(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelIds', 'closeDanmu', 'showDanmuInfoEnabled']);
+      await confirmWrite(options.force, `Update danmu settings for channel(s) ${options.channelIds}?`);
+      const result = await this.channelService.batchUpdateDanmu(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'Danmu settings updated successfully');
+    }, 'channel.danmu.batch-update');
+  }
+
+  async setChannelToken(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'token']);
+      await confirmWrite(options.force, `Set one-time login token for channel ${options.channelId}?`);
+      const result = await this.channelService.setChannelToken(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'Channel token set successfully');
+    }, 'channel.token.set');
+  }
+
+  async setAccountToken(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'token']);
+      await confirmWrite(options.force, `Set sub-channel account token for channel ${options.channelId}?`);
+      const result = await this.channelService.setAccountToken(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'Account token set successfully');
+    }, 'channel.token.set-account');
+  }
+
+  async setMaxViewer(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'userId', 'maxViewer']);
+      await confirmWrite(options.force, `Set max viewer count for channel ${options.channelId}?`);
+      const result = await this.channelService.setMaxViewer(options.channelId, options.userId, options.maxViewer);
+      this.displayHistoricalResult(result, options.output, 'Max viewer count updated successfully');
+    }, 'channel.max-viewer.set');
+  }
+
+  async updateChannelPassword(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['userId', 'passwd']);
+      await confirmWrite(options.force, options.channelId ? `Update password for channel ${options.channelId}?` : 'Update password for all channels?');
+      const result = await this.channelService.updateChannelPassword(options.userId, options.passwd, options.channelId);
+      this.displayHistoricalResult(result, options.output, 'Channel password updated successfully');
+    }, 'channel.password.update');
+  }
+
+  async setDiyUrlMarquee(options: any): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'marqueeRestrict']);
+      await confirmWrite(options.force, `Update marquee URL settings for channel ${options.channelId}?`);
+      const result = await this.channelService.setDiyUrlMarquee(this.compactHistoricalOptions(options, ['output', 'force']));
+      this.displayHistoricalResult(result, options.output, 'Marquee URL settings updated successfully');
+    }, 'channel.marquee-url.set');
   }
 
   /**
@@ -1204,6 +1447,41 @@ export class ChannelHandler extends BaseHandler {
       if (urls.length > 0) {
         this.displayInfo('Images:\n' + urls.join('\n'));
       }
+    }
+  }
+
+  private requireFields(options: Record<string, unknown>, fields: string[]): void {
+    const missing = fields.filter((field) => {
+      const value = options[field];
+      return value === undefined || value === null || value === '';
+    });
+
+    if (missing.length > 0) {
+      throw new PolyVValidationError(
+        `Missing required option(s): ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private compactHistoricalOptions(options: Record<string, unknown>, skip: string[] = []): Record<string, unknown> {
+    const skipped = new Set(skip);
+    return Object.fromEntries(
+      Object.entries(options).filter(([key, value]) => !skipped.has(key) && value !== undefined && value !== '')
+    );
+  }
+
+  private displayHistoricalResult(result: unknown, format: OutputFormat = 'table', successMessage?: string): void {
+    if (successMessage && format !== 'json') {
+      this.displaySuccess(successMessage);
+    }
+
+    if (result !== undefined) {
+      this.displayData(result, format);
+    } else if (format === 'json') {
+      this.displayData({ success: true }, 'json');
     }
   }
 

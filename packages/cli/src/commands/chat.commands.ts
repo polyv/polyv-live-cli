@@ -496,6 +496,15 @@ Note:
     .action(async options => withChatHandler(handler => handler.countOnlineUser(options)));
 
   messageCmd
+    .command('remove-contents')
+    .description('Batch remove chat message records')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--ids <ids>', 'chat message IDs, comma-separated', parseCommaList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.removeChatContents(options)));
+
+  messageCmd
     .command('speak-list')
     .description('List account chat speak records')
     .option('--start-time <timestamp>', 'start time timestamp', parsePositiveInteger)

@@ -7,6 +7,7 @@
 import { BaseHandler, OutputFormat } from './base.handler';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 import { TransmitServiceSdk } from '../services/transmit-service';
 import {
   TransmitServiceConfig,
@@ -82,6 +83,54 @@ export class TransmitHandler extends BaseHandler {
       this.displayData(associations, 'json');
     } else {
       this.displayAssociationsTable(associations);
+    }
+  }
+
+  async associationReceiveChannels(options: {
+    channelId: string;
+    receiveChannelIds: string[];
+    type?: 'add' | 'cancel';
+    force?: boolean;
+    output?: OutputFormat;
+  }): Promise<void> {
+    const format: OutputFormat = options.output || 'table';
+    this.validateChannelId(options.channelId);
+
+    if (!options.receiveChannelIds || options.receiveChannelIds.length === 0) {
+      throw new PolyVValidationError(
+        'receiveChannelIds is required (接收频道ID是必需的)',
+        'receiveChannelIds',
+        options.receiveChannelIds,
+        'required'
+      );
+    }
+
+    await confirmWrite(
+      options.force,
+      `${options.type === 'cancel' ? 'Cancel' : 'Add'} transmit association(s) for channel ${options.channelId}?`
+    );
+
+    const associationOptions: {
+      channelId: string;
+      receiveChannelIds: string[];
+      type?: 'add' | 'cancel';
+    } = {
+      channelId: options.channelId,
+      receiveChannelIds: options.receiveChannelIds,
+    };
+    if (options.type) {
+      associationOptions.type = options.type;
+    }
+
+    const result = await this.transmitService.associationReceiveChannels(associationOptions);
+
+    if (format === 'json') {
+      this.displayData({ success: true, receiveChannelIds: result }, 'json');
+    } else {
+      this.displaySuccess('Transmit associations updated successfully', {
+        channelId: options.channelId,
+        receiveChannelIds: result,
+      }, 'table');
     }
   }
 

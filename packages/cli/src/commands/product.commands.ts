@@ -18,6 +18,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parseJsonArray, parseNumberList } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -164,6 +165,21 @@ export function validateProductStatus(value: string): 1 | 2 {
     throw new Error('Product status must be 1 (上架) or 2 (下架)');
   }
   return parsed as 1 | 2;
+}
+
+export function validateProductSortType(value: string): 10 | 20 | 50 {
+  const parsed = parseInt(value, 10);
+  if (parsed !== 10 && parsed !== 20 && parsed !== 50) {
+    throw new Error('Product sort type must be 10 (up), 20 (down), or 50 (rank)');
+  }
+  return parsed as 10 | 20 | 50;
+}
+
+export function validatePushCardType(value: string): 'smallCard' | 'bigCard' {
+  if (value !== 'smallCard' && value !== 'bigCard') {
+    throw new Error('Push card type must be smallCard or bigCard');
+  }
+  return value;
 }
 
 /**
@@ -629,6 +645,86 @@ Note:
   Deletion is permanent and cannot be undone.
   Use --force to skip the confirmation prompt.
 `);
+
+  productCmd.command('enabled')
+    .description('Get channel product library enabled status')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.getChannelProductEnabled(options)));
+
+  productCmd.command('batch-add')
+    .description('Batch add products to a channel')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--products-json <json>', 'products JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.batchAddChannelProducts({
+      ...options,
+      products: options.productsJson
+    })));
+
+  productCmd.command('batch-delete')
+    .description('Batch delete channel products')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--product-ids <ids>', 'product IDs, comma-separated', parseNumberList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.batchDeleteChannelProducts(options)));
+
+  productCmd.command('batch-shelf')
+    .description('Batch update channel product shelf status')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--product-ids <ids>', 'product IDs, comma-separated', parseNumberList)
+    .requiredOption('--shelf <status>', 'shelf status: 1 (on shelf) | 2 (off shelf)', validateProductStatus)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.batchShelfChannelProducts(options)));
+
+  productCmd.command('shelf')
+    .description('Update one channel product shelf status')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .requiredOption('--shelf <status>', 'shelf status: 1 (on shelf) | 2 (off shelf)', validateProductStatus)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.shelfChannelProduct(options)));
+
+  productCmd.command('sort')
+    .description('Sort a channel product')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .requiredOption('--type <type>', '10 up, 20 down, 50 explicit rank', validateProductSortType)
+    .option('--sort <rank>', 'target rank when type=50', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.sortChannelProduct(options)));
+
+  productCmd.command('push')
+    .description('Push a channel product to viewers')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .option('--push-card-type <type>', 'push card type: smallCard | bigCard', validatePushCardType)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.pushChannelProduct(options)));
+
+  productCmd.command('cancel-push')
+    .description('Cancel a pushed channel product')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.cancelPushChannelProduct(options)));
+
+  productCmd.command('reference')
+    .description('Reference a platform product into a channel product library')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--origin-id <id>', 'platform product origin ID')
+    .requiredOption('--status <status>', 'shelf status: 1 (on shelf) | 2 (off shelf)', validateProductStatus)
+    .option('--with-tags', 'sync platform tags')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.referenceProduct(options)));
 
   // ========================================
   // product library - user-level product library

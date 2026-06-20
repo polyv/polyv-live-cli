@@ -12,6 +12,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parseStringList, validateYn } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration for stream commands
@@ -100,6 +101,17 @@ export function registerStreamCommands(program: Command): void {
   // Create stream command group
   const streamCmd = program.command('stream');
   streamCmd.description('Manage live streaming operations');
+
+  async function withStreamHandler(action: (handler: StreamHandler) => Promise<void>): Promise<void> {
+    try {
+      const parentOptions = program.opts();
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+      await action(new StreamHandler(authConfig, serviceConfig));
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  }
 
   // Stream get-key command
   const getKeyCmd = streamCmd
@@ -436,6 +448,91 @@ Watch Mode:
   • Press Ctrl+C to exit
 `);
 
+  const liveStatusCmd = streamCmd.command('live-status').description('Use historical live status APIs');
+  liveStatusCmd.command('get')
+    .description('Get live status by stream name')
+    .requiredOption('--stream <stream>', 'stream name')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.getLiveStatus(options)));
+  liveStatusCmd.command('list')
+    .description('Get live status for channel IDs')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.getLiveStatusList(options)));
+
+  streamCmd.command('streams')
+    .description('Get stream monitor info for channel IDs')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.getStreams(options)));
+
+  streamCmd.command('capture')
+    .description('Get current live capture image')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.getCaptureImage(options)));
+
+  const diskVideoCmd = streamCmd.command('disk-video').description('Manage pseudo-live disk videos');
+  diskVideoCmd.command('list')
+    .description('List pseudo-live disk videos')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page <page>', 'page number', parsePositiveInteger)
+    .option('--page-size <size>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.listDiskVideo(options)));
+  diskVideoCmd.command('add')
+    .description('Configure pseudo-live disk videos')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--vids <ids>', 'VOD/material/record IDs, comma-separated', parseStringList)
+    .option('--origin <origin>', 'video origin: vod|material|record', validateDiskVideoOrigin)
+    .option('--start-times <times>', 'record start times, comma-separated', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.addDiskVideos(options)));
+  diskVideoCmd.command('delete')
+    .description('Delete pseudo-live disk videos')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--vids <ids>', 'VOD/material IDs, comma-separated', parseStringList)
+    .option('--video-ids <ids>', 'disk video IDs, comma-separated', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.deleteDiskVideos(options)));
+  diskVideoCmd.command('end')
+    .description('Stop current pseudo-live disk push')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--disk-video-id <id>', 'disk video ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.endDiskPush(options)));
+
+  streamCmd.command('ban-push')
+    .description('Ban/cut off push stream')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--user-id <id>', 'user ID')
+    .option('--forbid-time <timestamp>', 'forbid end time as 13-digit timestamp', parsePositiveInteger)
+    .option('--playback-forbidden <Y|N>', 'whether playback is forbidden', validateYn)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.banPush(options)));
+
+  streamCmd.command('resume')
+    .description('Resume push stream')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--user-id <id>', 'user ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.resumePush(options)));
+
+  streamCmd.command('type-update')
+    .description('Update channel stream type')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--stream-type <type>', 'stream type: client|pull|thirdpull|disk|audio', validateHistoricalStreamType)
+    .option('--pull-url <url>', 'pull URL when stream type is pull')
+    .option('--pull-stream-time <timestamp>', 'pull stream start timestamp', parsePositiveInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withStreamHandler(handler => handler.updateStreamType(options)));
+
   // Stream push command
   const pushCmd = streamCmd
     .command('push')
@@ -706,4 +803,27 @@ function validateOutputFormat(value: string): 'table' | 'json' {
     throw new Error(`Invalid output format: ${value}. Must be 'table' or 'json'`);
   }
   return value;
-} 
+}
+
+function parsePositiveInteger(value: string): number {
+  const parsed = parseInt(value, 10);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error('value must be a positive integer');
+  }
+  return parsed;
+}
+
+function validateDiskVideoOrigin(value: string): 'vod' | 'material' | 'record' {
+  if (value !== 'vod' && value !== 'material' && value !== 'record') {
+    throw new Error('origin must be vod, material, or record');
+  }
+  return value;
+}
+
+function validateHistoricalStreamType(value: string): 'client' | 'pull' | 'thirdpull' | 'disk' | 'audio' {
+  const validTypes = ['client', 'pull', 'thirdpull', 'disk', 'audio'] as const;
+  if (!validTypes.includes(value as any)) {
+    throw new Error(`stream type must be one of: ${validTypes.join(', ')}`);
+  }
+  return value as 'client' | 'pull' | 'thirdpull' | 'disk' | 'audio';
+}
