@@ -1,4 +1,12 @@
 import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealChannelTests = hasRealCredentials();
 
 describe('user business CLI integration', () => {
   it('shows product library, tag, and order help', () => {
@@ -54,4 +62,28 @@ describe('user business CLI integration', () => {
       expect(result.output).toContain('--output');
     }
   });
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs user business read commands through the real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Business Read Smoke');
+      const id = channelId;
+      const readCommands = [
+        ['product', 'library', 'list', '--page', '1', '--size', '5', '--output', 'json'],
+        ['product', 'tag', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['product', 'order', 'list', '--page', '1', '--size', '5', '--output', 'json'],
+        ['invite-sales', 'follow-viewer', 'list', '--page', '1', '--page-size', '5', '--output', 'json'],
+        ['custom-field', 'list', '--output', 'json'],
+      ];
+
+      for (const args of readCommands) {
+        runCliSuccess(args);
+      }
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

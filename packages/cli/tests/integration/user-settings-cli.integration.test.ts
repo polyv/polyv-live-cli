@@ -1,4 +1,8 @@
 import { runCli } from '../helpers/cli-runner';
+import { runCliSuccess } from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealAccountTests = hasRealCredentials();
 
 describe('user settings CLI integration', () => {
   it('shows user settings command help', () => {
@@ -45,4 +49,15 @@ describe('user settings CLI integration', () => {
       expect(result.output).toContain('--output');
     }
   });
+
+  (shouldRunRealAccountTests ? it : it.skip)('runs user setting read commands through the real CLI', () => {
+    const readCommands = [
+      ['user', 'child', 'list', '--page', '1', '--size', '5', '--output', 'json'],
+      ['user', 'org', 'list', '--output', 'json'],
+    ];
+
+    for (const args of readCommands) {
+      runCliSuccess(args);
+    }
+  }, 120000);
 });

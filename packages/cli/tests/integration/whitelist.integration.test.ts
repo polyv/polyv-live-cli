@@ -6,6 +6,7 @@
 
 import { WhitelistServiceSdk } from '../../src/services/whitelist-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -14,7 +15,7 @@ const shouldRunTests = hasRealCredentials();
 (shouldRunTests ? describe : describe.skip)('Whitelist Integration Tests', () => {
   let whitelistService: WhitelistServiceSdk;
   let testChannelId: string;
-  let createdCodes: { code: string; rank: 1 | 2 }[] = [];
+  let createdCodes: { code: string; rank: 1 | 2; channelId?: string }[] = [];
 
   beforeAll(() => {
     whitelistService = new WhitelistServiceSdk(testConfig.authConfig, {
@@ -22,7 +23,7 @@ const shouldRunTests = hasRealCredentials();
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Whitelist Service');
   });
 
   afterAll(async () => {
@@ -35,12 +36,16 @@ const shouldRunTests = hasRealCredentials();
             rank: item.rank,
             isClear: 'N',
             codes: item.code,
-            channelId: testChannelId
+            ...(item.channelId && { channelId: item.channelId })
           });
         } catch (error) {
           // Ignore cleanup errors
         }
       }
+    }
+
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
     }
   });
 
@@ -188,7 +193,7 @@ const shouldRunTests = hasRealCredentials();
         expect(result).toBe('success');
 
         // Track for cleanup
-        createdCodes.push({ code, rank: 1 });
+        createdCodes.push({ code, rank: 1, channelId: testChannelId });
       } catch (error: any) {
         const message = error.message || '';
         const expectedErrors = ['404', 'not found', '已存在', 'duplicate', '不能为空'];
@@ -246,7 +251,7 @@ const shouldRunTests = hasRealCredentials();
         expect(result).toBe('success');
 
         // Track for cleanup
-        createdCodes.push({ code, rank: 2 });
+        createdCodes.push({ code, rank: 2, channelId: testChannelId });
       } catch (error: any) {
         const message = error.message || '';
         const expectedErrors = ['404', 'not found', '已存在', '不能为空'];
@@ -291,7 +296,7 @@ const shouldRunTests = hasRealCredentials();
           name: 'First User',
           channelId: testChannelId
         });
-        createdCodes.push({ code, rank: 1 });
+        createdCodes.push({ code, rank: 1, channelId: testChannelId });
 
         // Try to add duplicate
         await whitelistService.addWhiteList({
@@ -334,7 +339,7 @@ const shouldRunTests = hasRealCredentials();
           name: 'ToUpdate',
           channelId: testChannelId
         });
-        createdCodes.push({ code: testCode, rank: 1 });
+        createdCodes.push({ code: testCode, rank: 1, channelId: testChannelId });
       } catch (error) {
         // API not available
       }

@@ -1,4 +1,8 @@
 import { runCli } from '../helpers/cli-runner';
+import { runCliSuccess } from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealAccountTests = hasRealCredentials();
 
 describe('viewer user CLI integration', () => {
   it('shows viewer user command help', () => {
@@ -42,4 +46,16 @@ describe('viewer user CLI integration', () => {
       expect(result.output).toContain('--output');
     }
   });
+
+  (shouldRunRealAccountTests ? it : it.skip)('runs viewer read commands through the real CLI', () => {
+    const readCommands = [
+      ['viewer', 'list', '--page', '1', '--size', '5', '--output', 'json'],
+      ['viewer', 'tag', 'list', '--page', '1', '--size', '5', '--output', 'json'],
+      ['viewer', 'label', 'list', '--page', '1', '--size', '5', '--output', 'json'],
+    ];
+
+    for (const args of readCommands) {
+      runCliSuccess(args);
+    }
+  }, 120000);
 });

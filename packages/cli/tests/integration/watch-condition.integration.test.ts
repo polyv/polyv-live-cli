@@ -6,6 +6,7 @@
 
 import { WatchConditionServiceSdk } from '../../src/services/watch-condition-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -21,7 +22,13 @@ const shouldRunTests = hasRealCredentials();
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Watch Condition Service');
+  });
+
+  afterAll(() => {
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
+    }
   });
 
   // ========================================
@@ -235,9 +242,10 @@ const shouldRunTests = hasRealCredentials();
       }
     }, 15000);
 
-    it('should set global watch condition', async () => {
+    it('should disable channel watch condition', async () => {
       try {
         const result = await watchConditionService.setWatchCondition({
+          channelId: testChannelId,
           authSettings: [
             {
               rank: 1,

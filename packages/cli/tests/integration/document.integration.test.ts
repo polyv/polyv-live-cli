@@ -6,6 +6,7 @@
 
 import { DocumentServiceSdk } from '../../src/services/document.service.sdk';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -29,7 +30,7 @@ const shouldRunUploadTests = shouldRunTests && TEST_DOC_URL.length > 0;
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Document Service');
   });
 
   afterAll(async () => {
@@ -43,6 +44,10 @@ const shouldRunUploadTests = shouldRunTests && TEST_DOC_URL.length > 0;
           // Ignore cleanup errors
         }
       }
+    }
+
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
     }
   });
 
