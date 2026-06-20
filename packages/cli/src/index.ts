@@ -33,6 +33,7 @@ import { registerViewerCommands } from './commands/viewer.commands';
 import { registerWatchConditionCommands } from './commands/watch-condition.commands';
 import { registerWhitelistCommands } from './commands/whitelist.commands';
 import { registerPlatformCommands } from './commands/platform.commands';
+import { registerPlatformLabelCommands } from './commands/platform-label.commands';
 import { registerPromotionCommands } from './commands/promotion.commands';
 import { registerCardPushCommands } from './commands/card-push.commands';
 import { registerTransmitCommands } from './commands/transmit.commands';
@@ -205,6 +206,7 @@ async function main(): Promise<void> {
   registerWatchConditionCommands(program);
   registerWhitelistCommands(program);
   registerPlatformCommands(program);
+  registerPlatformLabelCommands(program);
   registerPromotionCommands(program);
   registerCardPushCommands(program);
   registerTransmitCommands(program);
