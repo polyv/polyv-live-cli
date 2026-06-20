@@ -58,6 +58,11 @@ The architecture follows a **layered pattern** with TypeScript/Node.js, emphasiz
 - File naming conventions
 - Development workflow guidelines
 
+### 🔄 [Setup Scene Workflow Specification (setup-scene-workflow-spec.md)](./setup-scene-workflow-spec.md)
+- Safety and output contract for `setup <scene>` workflow commands
+- Scene DSL v2 proposal, parameterization, and rollback semantics
+- Implementation phases and test plan for future built-in scenes
+
 ---
 
 ## 📋 **Future Documentation (To Be Created)**
