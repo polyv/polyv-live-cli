@@ -169,8 +169,13 @@ npx --yes polyv-live-cli@latest statistics export session -c <频道ID> --sessio
 - `setup --help` 当前只列出 `e-commerce`；不要假设存在 `setup education`，除非 help 明确列出。
 - `promotion` 和 `ai digital-human` 是真实命令族：
   ```bash
-  npx --yes polyv-live-cli@latest promotion create --channelId <频道ID> --names "渠道1,渠道2" -o json
+  npx --yes polyv-live-cli@latest promotion create --channelId <频道ID> --names "渠道1,渠道2" --force -o json
   npx --yes polyv-live-cli@latest ai digital-human list -o json
+  ```
+- `lottery records` 查询新版抽奖活动记录；`lottery legacy-records` 查询旧版 V3 单频道抽奖记录，必须传时间范围：
+  ```bash
+  npx --yes polyv-live-cli@latest lottery records -c <频道ID> --start-time <毫秒时间戳> --end-time <毫秒时间戳> -o json
+  npx --yes polyv-live-cli@latest lottery legacy-records -c <频道ID> --start-time <毫秒时间戳> --end-time <毫秒时间戳> -o json
   ```
 - `lottery create` / `lottery update` 使用 `--prize-name`；`lottery winners` 默认查单场中奖名单，需要查某个观众中奖记录时才加 `--viewer-id`：
   ```bash

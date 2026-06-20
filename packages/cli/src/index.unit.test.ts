@@ -15,6 +15,9 @@ jest.mock('./commands/channel.commands', () => ({
 jest.mock('./commands/statistics.commands.export', () => ({
   registerStatisticsExportCommands: jest.fn()
 }));
+jest.mock('./commands/platform-label.commands', () => ({
+  registerPlatformLabelCommands: jest.fn()
+}));
 
 const mockReadFileSync = jest.fn();
 const mockLogError = jest.fn();

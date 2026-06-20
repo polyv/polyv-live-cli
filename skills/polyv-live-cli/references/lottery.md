@@ -101,6 +101,19 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 --page 1 --limit 20
 npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 ```
 
+## 查询旧版 V3 抽奖记录
+
+```bash
+# 查询单频道旧版抽奖记录，必须传时间范围
+npx --yes polyv-live-cli@latest lottery legacy-records -c 3151318 --start-time 1615772426000 --end-time 1615773566000
+
+# 按场次筛选
+npx --yes polyv-live-cli@latest lottery legacy-records -c 3151318 --start-time 1615772426000 --end-time 1615773566000 --session-id fwly13xczv
+
+# 分页和 JSON 输出
+npx --yes polyv-live-cli@latest lottery legacy-records -c 3151318 --start-time 1615772426000 --end-time 1615773566000 --page 1 --limit 20 -o json
+```
+
 ## 命令选项
 
 ### lottery create
@@ -174,6 +187,18 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 | `--session-id` | 场次ID | - |
 | `--start-time` | 开始时间（毫秒时间戳） | 数字 |
 | `--end-time` | 结束时间（毫秒时间戳） | 数字 |
+| `--page` | 页码 | 数字，默认1 |
+| `--limit` | 每页数量 | 数字，默认20 |
+| `-o, --output` | 输出格式 | table（默认）/ json |
+
+### lottery legacy-records
+
+| 选项 | 说明 | 格式 |
+|------|------|------|
+| `-c, --channel-id` | 频道ID（必填） | - |
+| `--start-time` | 开始时间（毫秒时间戳，必填） | 数字 |
+| `--end-time` | 结束时间（毫秒时间戳，必填） | 数字 |
+| `--session-id` | 场次ID | - |
 | `--page` | 页码 | 数字，默认1 |
 | `--limit` | 每页数量 | 数字，默认20 |
 | `-o, --output` | 输出格式 | table（默认）/ json |

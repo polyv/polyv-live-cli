@@ -11,6 +11,9 @@ jest.mock('./commands/channel.commands', () => ({
 jest.mock('./commands/stream.commands', () => ({
   registerStreamCommands: jest.fn()
 }));
+jest.mock('./commands/platform-label.commands', () => ({
+  registerPlatformLabelCommands: jest.fn()
+}));
 jest.mock('./config/manager', () => ({
   configManager: {
     load: jest.fn()

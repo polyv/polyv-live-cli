@@ -21,7 +21,7 @@
     "version": "changeset version",
     "release": "changeset publish",
     "release:cli": "pnpm --filter polyv-live-cli publish",
-    "release:cli:dry": "pnpm --filter polyv-live-cli pack --dry-run",
+    "release:cli:dry": "cd packages/cli && npm pack --dry-run",
     "changelog": "pnpm --filter polyv-live-cli changelog",
     "changelog:update": "pnpm --filter polyv-live-cli changelog:update",
     "release:cli:patch": "./scripts/release.sh cli patch",

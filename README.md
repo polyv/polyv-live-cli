@@ -31,10 +31,10 @@ PolyV Live CLI 专为 AI Agent 和自动化场景设计：
 AI Agent: [自动执行 npx polyv-live-cli@latest channel create ...]
 
 用户: 查看昨天直播的观看数据
-AI Agent: [自动执行 npx polyv-live-cli@latest statistics viewdata ...]
+AI Agent: [自动执行 npx polyv-live-cli@latest statistics view ...]
 
 用户: 给频道添加一个限时优惠券
-AI Agent: [自动执行 npx polyv-live-cli@latest coupon create ...]
+AI Agent: [自动执行 npx polyv-live-cli@latest coupon add ...]
 ```
 
 ### WorkBuddy 演示
@@ -84,7 +84,7 @@ AI Agent: 正在启动直播监控...
 
 ```bash
 # 推荐：使用 npx 直接运行（始终使用最新版）
-npx polyv-live-cli@latest --help
+npx --yes polyv-live-cli@latest --help
 
 # 或全局安装
 npm install -g polyv-live-cli
@@ -95,26 +95,26 @@ polyv-live-cli --help
 
 ```bash
 # 添加账号
-npx polyv-live-cli@latest account add myaccount --app-id <appId> --app-secret <appSecret>
+npx --yes polyv-live-cli@latest account add myaccount --app-id <appId> --app-secret <appSecret> --user-id <userId>
 
 # 设为默认账号
-npx polyv-live-cli@latest account set-default myaccount
+npx --yes polyv-live-cli@latest account set-default myaccount
 ```
 
 ### 基本使用
 
 ```bash
 # 创建频道
-npx polyv-live-cli@latest channel create -n "新品发布会"
+npx --yes polyv-live-cli@latest channel create -n "新品发布会"
 
 # 获取推流密钥（用于 OBS）
-npx polyv-live-cli@latest stream get-key -c <channelId>
+npx --yes polyv-live-cli@latest stream get-key -c <channelId>
 
-# 开始直播
-npx polyv-live-cli@latest stream start -c <channelId>
+# 查看直播状态
+npx --yes polyv-live-cli@latest stream status -c <channelId>
 
 # 查看统计数据
-npx polyv-live-cli@latest statistics overview -c <channelId>
+npx --yes polyv-live-cli@latest statistics view -c <channelId> --start-day 2026-06-01 --end-day 2026-06-20
 ```
 
 ## 功能模块
@@ -128,7 +128,10 @@ npx polyv-live-cli@latest statistics overview -c <channelId>
 | 回放管理 | `playback` | 查看、删除、合并回放录像 |
 | 文档管理 | `document` | 上传、查看、删除直播文档 |
 | 统计分析 | `statistics` | 查看观看数据、导出报告 |
-| 场景初始化 | `setup` | 一键配置电商、教育等场景 |
+| 互动工具 | `lottery` / `checkin` / `qa` / `questionnaire` / `donate` | 抽奖、签到、问答、问卷、打赏 |
+| 观众与观看条件 | `viewer` / `watch-condition` / `whitelist` | 观众查询、观看鉴权、白名单 |
+| 播放器与观看页 | `player` / `web` | 播放器、水印、暖场、观看页配置 |
+| 场景初始化 | `setup` | 一键配置电商场景，可先用 `--dry-run` 预览 |
 
 ## 包结构
 
