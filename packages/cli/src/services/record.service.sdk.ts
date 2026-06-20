@@ -195,9 +195,9 @@ export class RecordServiceSdk {
     return true;
   }
 
-  async getRecordFile(channelId: string, options?: { page?: number; pageSize?: number }): Promise<any> {
+  async getRecordFile(channelId: string, fileId: string): Promise<any> {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
-    return client.channel.getRecordFile(channelId, options);
+    return client.channel.getRecordFile(channelId, fileId);
   }
 
   async listRecordFiles(params: {

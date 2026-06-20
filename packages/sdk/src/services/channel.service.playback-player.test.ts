@@ -98,19 +98,23 @@ const mockChannelSession: ChannelSession = {
 }
 
 const mockRecordFileResponse: RecordFileResponse = {
-  contents: [{
-    fileId: 'file123',
-    channelId: 'ch123456',
-    sessionId: 'session123',
-    startTime: '2024-03-01 10:00:00',
-    endTime: '2024-03-01 11:00:00',
-    fileSize: 1024000,
-    duration: 3600,
-    url: 'https://example.com/record.mp4',
-  }],
-  total: 1,
-  pageSize: 10,
-  pageNumber: 1,
+  fileId: 'file123',
+  userId: 'user123',
+  channelId: 'ch123456',
+  startTime: '20240301100000',
+  endTime: '20240301110000',
+  filename: 'record.mp4',
+  filesize: 1024000,
+  createdTime: 1709262000000,
+  width: 1280,
+  height: 720,
+  duration: 3600,
+  bitrate: 0,
+  mp4: 'https://example.com/record.mp4',
+  m3u8: 'https://example.com/record.m3u8',
+  channelSessionId: 'session123',
+  liveType: 'ppt',
+  daysLeft: 7,
 }
 
 const mockRecordInfo: RecordInfo = {
@@ -560,32 +564,25 @@ describe('ChannelService Playback + Player APIs', () => {
   // ============================================
   // AC4: getRecordFile
   // ============================================
-  describe('AC4: getRecordFile - Get Record Files', () => {
-    it('should retrieve paginated record files', async () => {
+  describe('AC4: getRecordFile - Get Record File', () => {
+    it('should retrieve a record file by file ID', async () => {
       mockAxiosInstance.get.mockResolvedValueOnce(mockRecordFileResponse)
 
-      const result = await channelService.getRecordFile('ch123456')
+      const result = await channelService.getRecordFile('ch123456', 'file123')
 
       expect(mockAxiosInstance.get).toHaveBeenCalledWith(
         '/live/v3/channel/record/get',
-        { params: { channelId: 'ch123456' } }
+        { params: { channelId: 'ch123456', fileId: 'file123' } }
       )
-      expect(result.contents).toHaveLength(1)
-    })
-
-    it('should support pagination parameters', async () => {
-      mockAxiosInstance.get.mockResolvedValueOnce(mockRecordFileResponse)
-
-      await channelService.getRecordFile('ch123456', { page: 2, pageSize: 20 })
-
-      expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-        '/live/v3/channel/record/get',
-        { params: { channelId: 'ch123456', page: 2, pageSize: 20 } }
-      )
+      expect(result.fileId).toBe('file123')
     })
 
     it('should validate channelId is required', async () => {
-      await expect(channelService.getRecordFile('')).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.getRecordFile('', 'file123')).rejects.toThrow(PolyVValidationError)
+    })
+
+    it('should validate fileId is required', async () => {
+      await expect(channelService.getRecordFile('ch123456', '')).rejects.toThrow(PolyVValidationError)
     })
   })
 

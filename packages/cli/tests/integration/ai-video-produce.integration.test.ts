@@ -5,7 +5,9 @@
 import { runCli } from '../helpers/cli-runner';
 import { hasRealCredentials } from '../helpers/integration-config';
 
-describe('AI video production CLI integration', () => {
+const shouldRunRealAccountTests = hasRealCredentials();
+
+describe('AI CLI integration', () => {
   it('shows video-produce help through the real CLI entry', () => {
     const result = runCli(['ai', 'video-produce', '--help'], {
       includeTestEnv: false,
@@ -15,6 +17,17 @@ describe('AI video production CLI integration', () => {
     expect(result.stdout).toContain('tts-voice');
     expect(result.stdout).toContain('ppt');
     expect(result.stdout).toContain('create');
+  });
+
+  it('shows digital-human help through the real CLI entry', () => {
+    const result = runCli(['ai', 'digital-human', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+
+    expect(result.stdout).toContain('list');
+    expect(result.stdout).toContain('list-org');
+    expect(result.stdout).toContain('set-org');
   });
 
   it('requires --force for create in non-interactive mode', () => {
@@ -31,12 +44,21 @@ describe('AI video production CLI integration', () => {
     expect(result.output).toContain('Interactive confirmation not available');
   });
 
-  (hasRealCredentials() ? it : it.skip)('lists TTS voices with JSON output through the real CLI', () => {
-    const result = runCli(['ai', 'video-produce', 'tts-voice', 'list', '--page', '1', '--size', '5', '-o', 'json'], {
-      rejectOnError: true,
-      timeout: 30000,
-    });
+  (shouldRunRealAccountTests ? it : it.skip)('lists AI resources with JSON output through the real CLI', () => {
+    const commands = [
+      ['ai', 'digital-human', 'list', '--page', '1', '--size', '5', '-o', 'json'],
+      ['ai', 'video-produce', 'tts-voice', 'list', '--page', '1', '--size', '5', '-o', 'json'],
+      ['ai', 'video-produce', 'list', '--page', '1', '--size', '5', '-o', 'json'],
+      ['ai', 'video-produce', 'ppt', 'list', '--page', '1', '--size', '5', '-o', 'json'],
+    ];
 
-    expect(() => JSON.parse(result.stdout)).not.toThrow();
-  }, 30000);
+    for (const args of commands) {
+      const result = runCli(args, {
+        rejectOnError: true,
+        timeout: 30000,
+      });
+
+      expect(() => JSON.parse(result.stdout)).not.toThrow();
+    }
+  }, 120000);
 });

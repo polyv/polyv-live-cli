@@ -845,35 +845,34 @@ export interface ChannelSession {
 }
 
 /**
- * Record File Item
- */
-export interface RecordFileItem {
-  fileId: string;
-  channelId: string;
-  sessionId: string;
-  startTime: string;
-  endTime: string;
-  fileSize: number;
-  duration: number;
-  url: string;
-}
-
-/**
  * Record File Response
  */
 export interface RecordFileResponse {
-  contents: RecordFileItem[];
-  total: number;
-  pageSize: number;
-  pageNumber: number;
+  fileId: string;
+  userId: string;
+  channelId: string;
+  startTime: string;
+  endTime: string;
+  filename: string;
+  filesize: number;
+  createdTime: number;
+  width: number;
+  height: number;
+  duration: number;
+  bitrate: number;
+  mp4: string;
+  m3u8: string;
+  channelSessionId: string;
+  liveType: ChannelScene;
+  daysLeft: number;
+  originSessionId?: string;
 }
 
 /**
  * Record File Request
  */
 export interface RecordFileRequest {
-  page?: number;
-  pageSize?: number;
+  fileId: string;
 }
 
 /**

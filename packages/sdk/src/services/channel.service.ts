@@ -2266,38 +2266,33 @@ export class ChannelService {
   /**
    * Get record file
    *
-   * Retrieves paginated list of recording files for a channel.
+   * Retrieves information about a specific temporary record file.
    *
    * @param channelId - The channel ID
-   * @param options - Pagination options
-   * @returns Paginated record file list
-   * @throws PolyVValidationError if channelId is empty
+   * @param fileId - The temporary record file ID
+   * @returns Record file detail
+   * @throws PolyVValidationError if channelId or fileId is empty
    *
    * @example
    * ```typescript
-   * const result = await channelService.getRecordFile('ch123456', { page: 1, pageSize: 10 });
-   * console.log(result.contents);
+   * const result = await channelService.getRecordFile('ch123456', 'file123');
+   * console.log(result.fileId);
    * ```
    */
   async getRecordFile(
     channelId: string,
-    options?: import('../types/channel.js').RecordFileRequest
+    fileId: string
   ): Promise<import('../types/channel.js').RecordFileResponse> {
     if (!channelId || channelId.trim() === '') {
       throw PolyVValidationError.required('channelId');
     }
-
-    const params: Record<string, unknown> = { channelId };
-    if (options?.page !== undefined) {
-      params.page = options.page;
-    }
-    if (options?.pageSize !== undefined) {
-      params.pageSize = options.pageSize;
+    if (!fileId || fileId.trim() === '') {
+      throw PolyVValidationError.required('fileId');
     }
 
     const response = await this.client.httpClient.get<import('../types/channel.js').RecordFileResponse>(
       '/live/v3/channel/record/get',
-      { params }
+      { params: { channelId, fileId } }
     );
 
     return response as unknown as import('../types/channel.js').RecordFileResponse;

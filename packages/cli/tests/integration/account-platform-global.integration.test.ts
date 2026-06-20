@@ -38,6 +38,20 @@ describe('Account, platform, and global CLI integration', () => {
     expect(couponUpdate.output).toContain('--force');
   });
 
+  it('should show platform read command help', () => {
+    const checks = [
+      { args: ['platform', 'callback', 'get', '--help'], text: '--output' },
+      { args: ['platform', 'anchor', 'list', '--help'], text: '--page-size' },
+      { args: ['platform', 'content-group', 'list', '--help'], text: '--type' },
+    ];
+
+    for (const check of checks) {
+      const result = runCli(check.args, { includeTestEnv: false });
+      expect(result.exitCode).toBe(0);
+      expect(result.output).toContain(check.text);
+    }
+  });
+
   it('should show global update help with force options', () => {
     const authUpdate = runCli(['global', 'auth', 'update', '--help'], { includeTestEnv: false });
     const pageSettingUpdate = runCli(['global', 'page-setting', 'update', '--help'], { includeTestEnv: false });
@@ -68,6 +82,10 @@ describe('Account, platform, and global CLI integration', () => {
         ['platform', 'switch', 'get', '--output', 'json'],
         ['platform', 'setting', 'get', '--output', 'json'],
         ['platform', 'label', 'list', '--output', 'json'],
+        ['platform', 'callback', 'get', '--output', 'json'],
+        ['platform', 'anchor', 'list', '--page', '1', '--page-size', '5', '--output', 'json'],
+        ['platform', 'content-group', 'list', '--type', 'script', '--output', 'json'],
+        ['platform', 'content-group', 'list', '--type', 'robot', '--output', 'json'],
         ['global', 'auth', 'get', '--output', 'json'],
         ['global', 'page-setting', 'get', '--output', 'json'],
       ];

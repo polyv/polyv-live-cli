@@ -464,8 +464,7 @@ Options:
     .command('temp-list')
     .description('查询频道单个直播暂存信息')
     .requiredOption('-c, --channel-id <channelId>', '频道ID')
-    .option('--page <number>', '页码', parsePositiveInteger)
-    .option('--page-size <number>', '每页数量', parsePositiveInteger)
+    .requiredOption('--file-id <fileId>', '暂存文件ID')
     .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
     .action((options) => runRecordAction(program, (handler) => handler.getRecordFile(options)));
 

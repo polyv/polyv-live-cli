@@ -27,7 +27,7 @@ export interface IRecordService {
   recordConvert(channelId: string, options: RecordConvertOptions): Promise<RecordConvertResult>;
   recordConvertAsync(channelId: string, options: RecordConvertOptions): Promise<RecordConvertResult>;
   setRecordDefault(channelId: string, videoId: string, listType?: 'playback' | 'vod'): Promise<boolean>;
-  getRecordFile(channelId: string, options?: any): Promise<any>;
+  getRecordFile(channelId: string, fileId: string): Promise<any>;
   listRecordFiles(params: any): Promise<any>;
   listMaterialRecordFiles(params: any): Promise<any>;
   clipRecordFile(channelId: string, options: any): Promise<any>;
@@ -243,10 +243,7 @@ export class RecordHandler extends BaseHandler {
 
   async getRecordFile(options: any): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      const result = await this.recordService.getRecordFile(options.channelId, {
-        page: options.page,
-        pageSize: options.pageSize,
-      });
+      const result = await this.recordService.getRecordFile(options.channelId, options.fileId);
       this.displayResult(result, options.output);
     }, 'record.temp-list');
   }
