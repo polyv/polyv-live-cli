@@ -1,4 +1,12 @@
 import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealChannelTests = hasRealCredentials();
 
 describe('chat CLI integration', () => {
   it('shows extended chat command groups', () => {
@@ -51,4 +59,36 @@ describe('chat CLI integration', () => {
       expect(result.output).toContain('--output');
     }
   });
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs chat read commands against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Chat Read Smoke');
+      const id = channelId;
+
+      const readCommands = [
+        ['chat', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['chat', 'banned', 'list', '--channel-id', id, '--type', 'badword', '--output', 'json'],
+        ['chat', 'kicked', 'list', '--channel-id', id, '--output', 'json'],
+        ['chat', 'message', 'online-count', '--channel-id', id, '--output', 'json'],
+        ['chat', 'message', 'speak-list', '--size', '5', '--output', 'json'],
+        ['chat', 'badword', 'list', '--output', 'json'],
+        ['chat', 'banned', 'forbid-list', '--page-number', '1', '--page-size', '5', '--output', 'json'],
+        ['chat', 'notice', 'list', '--channel-id', id, '--page-number', '1', '--page-size', '5', '--output', 'json'],
+        ['chat', 'qa', 'list', '--channel-id', id, '--page-number', '1', '--page-size', '5', '--output', 'json'],
+        ['chat', 'role', 'teacher-get', '--channel-id', id, '--output', 'json'],
+        ['chat', 'robot', 'setting-get', '--channel-id', id, '--output', 'json'],
+        ['chat', 'robot', 'stats', '--channel-id', id, '--output', 'json'],
+      ];
+
+      for (const args of readCommands) {
+        runCliSuccess(args);
+      }
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

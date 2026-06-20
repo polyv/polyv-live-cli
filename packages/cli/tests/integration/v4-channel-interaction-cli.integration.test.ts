@@ -73,13 +73,20 @@ function extractId(value: unknown): string {
   const obj = value as Record<string, any>;
   const candidates = [
     obj.id,
+    obj.activityId,
     obj.groupId,
     obj.data?.id,
+    obj.data?.activityId,
     obj.data?.groupId,
     obj.result?.id,
+    obj.result?.activityId,
     obj.result?.data?.id,
+    obj.result?.data?.activityId,
   ];
-  const id = candidates.find((item) => item !== undefined && item !== null && String(item).trim() !== '');
+  const id = candidates.find((item) => {
+    const value = String(item ?? '').trim();
+    return value !== '' && value !== 'N/A';
+  });
   if (id === undefined) {
     throw new Error(`Cannot extract id from value: ${JSON.stringify(value)}`);
   }
@@ -140,6 +147,92 @@ describe('v4 channel interaction CLI integration', () => {
         runCliSuccess(args);
       }
     } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('creates, updates, and deletes a lottery activity through the real CLI', () => {
+    let channelId: string | undefined;
+    let lotteryId: string | undefined;
+    let lotteryDeleted = false;
+
+    try {
+      channelId = createTemporaryChannel('Lottery Lifecycle');
+      const id = channelId;
+      const name = `Lot${Date.now() % 100000}`;
+      const createdOutput = runCliSuccess([
+        'lottery',
+        'create',
+        '--channel-id',
+        id,
+        '--name',
+        name,
+        '--type',
+        'none',
+        '--amount',
+        '1',
+        '--prize-name',
+        'CLI Prize',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      lotteryId = extractId(parseJsonValue(createdOutput));
+      expect(lotteryId).toMatch(/^\d+$/);
+      const activityId = lotteryId;
+
+      const updatedPrize = `Prize${Date.now() % 100000}`;
+      const updated = parseJsonObject(runCliSuccess([
+        'lottery',
+        'update',
+        '--channel-id',
+        id,
+        '--id',
+        activityId,
+        '--amount',
+        '1',
+        '--prize-name',
+        updatedPrize,
+        '--force',
+        '--output',
+        'json',
+      ]));
+      expect(String(updated.id || '')).toBe(activityId);
+
+      const deleteOutput = runCliSuccess([
+        'lottery',
+        'delete',
+        '--channel-id',
+        id,
+        '--id',
+        activityId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(deleteOutput).toContain('Lottery deleted successfully');
+      lotteryDeleted = true;
+    } finally {
+      if (channelId && lotteryId && !lotteryDeleted) {
+        try {
+          runCliSuccess([
+            'lottery',
+            'delete',
+            '--channel-id',
+            channelId,
+            '--id',
+            lotteryId,
+            '--force',
+            '--output',
+            'json',
+          ]);
+        } catch {
+          // Channel cleanup below removes the disposable test channel even if lottery cleanup already failed.
+        }
+      }
+
       if (channelId) {
         deleteTemporaryChannel(channelId);
       }
