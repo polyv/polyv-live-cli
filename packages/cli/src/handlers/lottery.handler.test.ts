@@ -23,10 +23,16 @@ import {
 } from '../types/lottery';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError, PolyVError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 
 // Mock LotteryServiceSdk
 jest.mock('../services/lottery-service');
+jest.mock('../utils/api-command', () => ({
+  ...jest.requireActual('../utils/api-command'),
+  confirmWrite: jest.fn().mockResolvedValue(undefined),
+}));
 const MockedLotteryService = LotteryServiceSdk as jest.MockedClass<typeof LotteryServiceSdk>;
+const mockConfirmWrite = confirmWrite as jest.MockedFunction<typeof confirmWrite>;
 
 // Mock console methods
 const mockConsoleLog = jest.spyOn(console, 'log').mockImplementation();
@@ -40,6 +46,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockConfirmWrite.mockResolvedValue(undefined);
 
     mockAuthConfig = {
       appId: 'test-app-id',
@@ -115,6 +122,34 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
       expect(mockConsoleLog).toHaveBeenCalledWith(
         expect.stringContaining('Lottery created successfully')
       );
+    });
+
+    it('11.5-UNIT-002b: should confirm before creating lottery when force is not provided', async () => {
+      const options: LotteryCreateOptions = {
+        channelId: '3151318',
+        name: 'Test Lottery',
+        type: 'none',
+        amount: 3,
+        prizeName: 'Test Prize',
+        output: 'table',
+      };
+
+      mockConfirmWrite.mockImplementation(async () => {
+        expect(mockLotteryService.createLotteryActivity).not.toHaveBeenCalled();
+      });
+      mockLotteryService.createLotteryActivity.mockResolvedValue({
+        code: 200,
+        status: 'success',
+        data: { id: '20521' },
+      });
+
+      await lotteryHandler.createLottery(options);
+
+      expect(mockConfirmWrite).toHaveBeenCalledWith(
+        undefined,
+        'Create lottery activity "Test Lottery" on channel 3151318?'
+      );
+      expect(mockLotteryService.createLotteryActivity).toHaveBeenCalledTimes(1);
     });
 
     it('11.5-UNIT-003: should create invite-type lottery activity', async () => {
@@ -707,6 +742,24 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
       expect(mockConsoleLog).toHaveBeenCalledWith(
         expect.stringContaining('Lottery deleted successfully')
       );
+    });
+
+    it('11.5-UNIT-028b: should not delete lottery activity when confirmation fails', async () => {
+      const options: LotteryDeleteOptions = {
+        channelId: '3151318',
+        id: '20521',
+        output: 'table',
+      };
+
+      mockConfirmWrite.mockRejectedValue(new Error('Operation cancelled.'));
+
+      await expect(lotteryHandler.deleteLottery(options)).rejects.toThrow('Operation cancelled.');
+
+      expect(mockConfirmWrite).toHaveBeenCalledWith(
+        undefined,
+        'Delete lottery activity 20521 on channel 3151318?'
+      );
+      expect(mockLotteryService.deleteLotteryActivity).not.toHaveBeenCalled();
     });
 
     it('11.5-UNIT-029: should validate id is required', async () => {

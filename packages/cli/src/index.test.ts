@@ -547,6 +547,24 @@ describe('CLI Main Function', () => {
       expect((mockCommand as any).commands).toBeDefined();
     });
 
+    it('should not crash when a matched command has malformed subcommands', async () => {
+      const malformedCommand = {
+        name: jest.fn().mockReturnValue('shadow'),
+        aliases: jest.fn().mockReturnValue([]),
+        commands: 'not an array',
+        options: []
+      };
+      (mockCommand as any).commands = [malformedCommand];
+      process.env['POLYV_APP_ID'] = 'test-app-id';
+      process.env['POLYV_APP_SECRET'] = 'test-app-secret';
+      process.argv = ['node', 'cli.js', 'shadow', 'unknown-child'];
+
+      await main();
+
+      expect(consoleSpy).toHaveBeenCalledWith('Unknown command: unknown-child');
+      expect(exitSpy).toHaveBeenCalledWith(1);
+    });
+
     it('should handle unknown command with empty args', async () => {
       let commandCallback: (args: string[]) => void = () => {};
       mockCommand.on.mockImplementation((event: string, callback: (args: string[]) => void) => {
