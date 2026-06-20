@@ -29,6 +29,7 @@ export interface IPlayerService {
   updateStopAdvert(channelId: string | number, params: any): Promise<any>;
   getWatchFeedbackList(params: any): Promise<any>;
   updatePlayerLogo(channelId: string | number, params: any): Promise<any>;
+  updateSkinBatch(params: any): Promise<any>;
 }
 
 /**
@@ -234,6 +235,15 @@ export class PlayerHandler extends BaseHandler {
     await confirmWrite(options.force, `Update player logo for channel ${options.channelId}?`);
     this.displayData(
       { success: await this.playerService.updatePlayerLogo(options.channelId, params), channelId: options.channelId },
+      options.output || 'table'
+    );
+  }
+
+  async updateSkinBatch(options: any): Promise<void> {
+    this.requireFields(options, ['channelIds', 'skin']);
+    await confirmWrite(options.force, `Update player skin for ${options.channelIds.length} channel(s)?`);
+    this.displayData(
+      { success: await this.playerService.updateSkinBatch(apiParams(options)) },
       options.output || 'table'
     );
   }

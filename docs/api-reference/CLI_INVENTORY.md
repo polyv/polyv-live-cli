@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-20T01:49:45.321Z
+生成时间：2026-06-20T02:10:21.645Z
 
 ## 来源与规则
 
@@ -15,22 +15,22 @@
 | 指标 | 数值 |
 | --- | ---: |
 | 最新 API 数 | 578 |
-| CLI 已使用最新 API 数 | 476 |
-| CLI 未使用最新 API 数 | 102 |
-| CLI 最新 API 覆盖率 | 82.4% |
-| CLI 调用引用数 | 478 |
-| 其中 SDK service 调用 | 478 |
+| CLI 已使用最新 API 数 | 508 |
+| CLI 未使用最新 API 数 | 70 |
+| CLI 最新 API 覆盖率 | 87.9% |
+| CLI 调用引用数 | 510 |
+| 其中 SDK service 调用 | 510 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 596 |
+| CLI 命令路径数 | 631 |
 | CLI 一级命令数 | 40 |
 
 ## 模块覆盖率
 
 | 模块 | 名称 | 最新 API | CLI 已用 | CLI 未用 | 覆盖率 | SDK 调用覆盖 | 直接 HTTP 覆盖 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `channel` | 频道 | 283 | 181 | 102 | 64% | 181 | 0 |
+| `channel` | 频道 | 283 | 213 | 70 | 75.3% | 213 | 0 |
 | `account` | 账号与财务 | 22 | 22 | 0 | 100% | 22 | 0 |
 | `ai` | AI 与数字人 | 13 | 13 | 0 | 100% | 13 | 0 |
 | `chat` | 聊天 | 45 | 45 | 0 | 100% | 45 | 0 |
@@ -51,8 +51,8 @@
 
 ## 补齐建议
 
-- 缺口最大的模块：`channel` 102/283。
-- 频道高级能力：`channel` 子命令扩展。缺口：`channel` 102/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
+- 缺口最大的模块：`channel` 70/283。
+- 频道高级能力：`channel` 子命令扩展。缺口：`channel` 70/283。API 数量最大，当前 CLI 只覆盖频道 CRUD、开停播、少量回放/录制/文档/营销入口。 建议入口：`channel copy`、`channel batch-create`、`channel auth-token`；`channel role *`、`channel subtitle *`、`channel template update`；`channel distribute *`、`channel task-reward *`、`channel invite *`。
 
 ## CLI 命令面
 
@@ -112,65 +112,92 @@
 | `card-push list` | `packages/cli/src/commands/card-push.commands.ts:137` |
 | `card-push push` | `packages/cli/src/commands/card-push.commands.ts:251` |
 | `card-push update` | `packages/cli/src/commands/card-push.commands.ts:203` |
-| `channel` | `packages/cli/src/commands/channel.commands.ts:104` |
-| `channel advert-list` | `packages/cli/src/commands/channel.commands.ts:812` |
-| `channel batch-delete` | `packages/cli/src/commands/channel.commands.ts:521` |
-| `channel callback` | `packages/cli/src/commands/channel.commands.ts:818` |
-| `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1043` |
-| `channel children-list` | `packages/cli/src/commands/channel.commands.ts:895` |
-| `channel copy` | `packages/cli/src/commands/channel.commands.ts:884` |
-| `channel create` | `packages/cli/src/commands/channel.commands.ts:135` |
-| `channel danmu-batch-update` | `packages/cli/src/commands/channel.commands.ts:992` |
-| `channel delete` | `packages/cli/src/commands/channel.commands.ts:455` |
-| `channel follow` | `packages/cli/src/commands/channel.commands.ts:955` |
-| `channel get` | `packages/cli/src/commands/channel.commands.ts:305` |
-| `channel list` | `packages/cli/src/commands/channel.commands.ts:226` |
-| `channel marquee-url-set` | `packages/cli/src/commands/channel.commands.ts:1019` |
-| `channel max-viewer-set` | `packages/cli/src/commands/channel.commands.ts:1001` |
-| `channel password-update` | `packages/cli/src/commands/channel.commands.ts:1010` |
-| `channel ppt-record` | `packages/cli/src/commands/channel.commands.ts:840` |
-| `channel questionnaire-stop` | `packages/cli/src/commands/channel.commands.ts:985` |
-| `channel role` | `packages/cli/src/commands/channel.commands.ts:782` |
-| `channel status-valid` | `packages/cli/src/commands/channel.commands.ts:1028` |
-| `channel submeeting-batch-add` | `packages/cli/src/commands/channel.commands.ts:974` |
-| `channel token` | `packages/cli/src/commands/channel.commands.ts:905` |
-| `channel update` | `packages/cli/src/commands/channel.commands.ts:369` |
-| `channel viewer` | `packages/cli/src/commands/channel.commands.ts:597` |
-| `channel callback get` | `packages/cli/src/commands/channel.commands.ts:819` |
-| `channel callback update` | `packages/cli/src/commands/channel.commands.ts:824` |
-| `channel follow list` | `packages/cli/src/commands/channel.commands.ts:956` |
-| `channel follow update` | `packages/cli/src/commands/channel.commands.ts:961` |
-| `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:869` |
-| `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:876` |
-| `channel ppt-record list` | `packages/cli/src/commands/channel.commands.ts:858` |
-| `channel ppt-record setting` | `packages/cli/src/commands/channel.commands.ts:841` |
-| `channel role batch-create` | `packages/cli/src/commands/channel.commands.ts:794` |
-| `channel role delete` | `packages/cli/src/commands/channel.commands.ts:804` |
-| `channel role get` | `packages/cli/src/commands/channel.commands.ts:783` |
-| `channel role list` | `packages/cli/src/commands/channel.commands.ts:789` |
-| `channel token api` | `packages/cli/src/commands/channel.commands.ts:916` |
-| `channel token chat` | `packages/cli/src/commands/channel.commands.ts:932` |
-| `channel token login-url` | `packages/cli/src/commands/channel.commands.ts:926` |
-| `channel token set` | `packages/cli/src/commands/channel.commands.ts:940` |
-| `channel token set-account` | `packages/cli/src/commands/channel.commands.ts:947` |
-| `channel token watch-api` | `packages/cli/src/commands/channel.commands.ts:906` |
-| `channel viewer add` | `packages/cli/src/commands/channel.commands.ts:705` |
-| `channel viewer delete` | `packages/cli/src/commands/channel.commands.ts:718` |
-| `channel viewer export` | `packages/cli/src/commands/channel.commands.ts:697` |
-| `channel viewer group` | `packages/cli/src/commands/channel.commands.ts:612` |
-| `channel viewer group-setting` | `packages/cli/src/commands/channel.commands.ts:661` |
-| `channel viewer import` | `packages/cli/src/commands/channel.commands.ts:743` |
-| `channel viewer list` | `packages/cli/src/commands/channel.commands.ts:687` |
-| `channel viewer transfer` | `packages/cli/src/commands/channel.commands.ts:730` |
-| `channel viewer unrelated-list` | `packages/cli/src/commands/channel.commands.ts:756` |
-| `channel ppt-record setting get` | `packages/cli/src/commands/channel.commands.ts:842` |
-| `channel ppt-record setting update` | `packages/cli/src/commands/channel.commands.ts:847` |
-| `channel viewer group create` | `packages/cli/src/commands/channel.commands.ts:625` |
-| `channel viewer group delete` | `packages/cli/src/commands/channel.commands.ts:650` |
-| `channel viewer group list` | `packages/cli/src/commands/channel.commands.ts:617` |
-| `channel viewer group update` | `packages/cli/src/commands/channel.commands.ts:637` |
-| `channel viewer group-setting get` | `packages/cli/src/commands/channel.commands.ts:666` |
-| `channel viewer group-setting update` | `packages/cli/src/commands/channel.commands.ts:674` |
+| `channel` | `packages/cli/src/commands/channel.commands.ts:112` |
+| `channel advert-list` | `packages/cli/src/commands/channel.commands.ts:1154` |
+| `channel basic-list` | `packages/cli/src/commands/channel.commands.ts:821` |
+| `channel batch-delete` | `packages/cli/src/commands/channel.commands.ts:560` |
+| `channel callback` | `packages/cli/src/commands/channel.commands.ts:1160` |
+| `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1385` |
+| `channel children-list` | `packages/cli/src/commands/channel.commands.ts:1237` |
+| `channel copy` | `packages/cli/src/commands/channel.commands.ts:1226` |
+| `channel create` | `packages/cli/src/commands/channel.commands.ts:174` |
+| `channel create-init` | `packages/cli/src/commands/channel.commands.ts:851` |
+| `channel danmu-batch-update` | `packages/cli/src/commands/channel.commands.ts:1334` |
+| `channel delete` | `packages/cli/src/commands/channel.commands.ts:494` |
+| `channel distribute` | `packages/cli/src/commands/channel.commands.ts:1074` |
+| `channel follow` | `packages/cli/src/commands/channel.commands.ts:1297` |
+| `channel get` | `packages/cli/src/commands/channel.commands.ts:344` |
+| `channel list` | `packages/cli/src/commands/channel.commands.ts:265` |
+| `channel live-status-list` | `packages/cli/src/commands/channel.commands.ts:845` |
+| `channel marquee-url-set` | `packages/cli/src/commands/channel.commands.ts:1361` |
+| `channel max-viewer-set` | `packages/cli/src/commands/channel.commands.ts:1343` |
+| `channel mr-create` | `packages/cli/src/commands/channel.commands.ts:875` |
+| `channel password-update` | `packages/cli/src/commands/channel.commands.ts:1352` |
+| `channel ppt-record` | `packages/cli/src/commands/channel.commands.ts:1182` |
+| `channel pull-bitrate-set` | `packages/cli/src/commands/channel.commands.ts:892` |
+| `channel questionnaire-stop` | `packages/cli/src/commands/channel.commands.ts:1327` |
+| `channel role` | `packages/cli/src/commands/channel.commands.ts:916` |
+| `channel simple-list` | `packages/cli/src/commands/channel.commands.ts:834` |
+| `channel status-valid` | `packages/cli/src/commands/channel.commands.ts:1370` |
+| `channel submeeting-batch-add` | `packages/cli/src/commands/channel.commands.ts:1316` |
+| `channel subtitle` | `packages/cli/src/commands/channel.commands.ts:1043` |
+| `channel template-update` | `packages/cli/src/commands/channel.commands.ts:904` |
+| `channel token` | `packages/cli/src/commands/channel.commands.ts:1247` |
+| `channel update` | `packages/cli/src/commands/channel.commands.ts:408` |
+| `channel viewer` | `packages/cli/src/commands/channel.commands.ts:636` |
+| `channel callback get` | `packages/cli/src/commands/channel.commands.ts:1161` |
+| `channel callback update` | `packages/cli/src/commands/channel.commands.ts:1166` |
+| `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1081` |
+| `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1111` |
+| `channel distribute list` | `packages/cli/src/commands/channel.commands.ts:1075` |
+| `channel distribute master-switch` | `packages/cli/src/commands/channel.commands.ts:1130` |
+| `channel distribute statistic` | `packages/cli/src/commands/channel.commands.ts:1122` |
+| `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1141` |
+| `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1096` |
+| `channel follow list` | `packages/cli/src/commands/channel.commands.ts:1298` |
+| `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1303` |
+| `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1211` |
+| `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1218` |
+| `channel ppt-record list` | `packages/cli/src/commands/channel.commands.ts:1200` |
+| `channel ppt-record setting` | `packages/cli/src/commands/channel.commands.ts:1183` |
+| `channel role account-create` | `packages/cli/src/commands/channel.commands.ts:945` |
+| `channel role account-update` | `packages/cli/src/commands/channel.commands.ts:965` |
+| `channel role accounts-delete` | `packages/cli/src/commands/channel.commands.ts:985` |
+| `channel role batch-create` | `packages/cli/src/commands/channel.commands.ts:928` |
+| `channel role config-get` | `packages/cli/src/commands/channel.commands.ts:1020` |
+| `channel role config-update` | `packages/cli/src/commands/channel.commands.ts:1026` |
+| `channel role delete` | `packages/cli/src/commands/channel.commands.ts:938` |
+| `channel role get` | `packages/cli/src/commands/channel.commands.ts:917` |
+| `channel role list` | `packages/cli/src/commands/channel.commands.ts:923` |
+| `channel role teacher-list` | `packages/cli/src/commands/channel.commands.ts:996` |
+| `channel role viewer-get` | `packages/cli/src/commands/channel.commands.ts:1001` |
+| `channel role viewer-update` | `packages/cli/src/commands/channel.commands.ts:1006` |
+| `channel subtitle config-get` | `packages/cli/src/commands/channel.commands.ts:1044` |
+| `channel subtitle config-update` | `packages/cli/src/commands/channel.commands.ts:1053` |
+| `channel subtitle languages` | `packages/cli/src/commands/channel.commands.ts:1049` |
+| `channel token api` | `packages/cli/src/commands/channel.commands.ts:1258` |
+| `channel token chat` | `packages/cli/src/commands/channel.commands.ts:1274` |
+| `channel token login-url` | `packages/cli/src/commands/channel.commands.ts:1268` |
+| `channel token set` | `packages/cli/src/commands/channel.commands.ts:1282` |
+| `channel token set-account` | `packages/cli/src/commands/channel.commands.ts:1289` |
+| `channel token watch-api` | `packages/cli/src/commands/channel.commands.ts:1248` |
+| `channel viewer add` | `packages/cli/src/commands/channel.commands.ts:744` |
+| `channel viewer delete` | `packages/cli/src/commands/channel.commands.ts:757` |
+| `channel viewer export` | `packages/cli/src/commands/channel.commands.ts:736` |
+| `channel viewer group` | `packages/cli/src/commands/channel.commands.ts:651` |
+| `channel viewer group-setting` | `packages/cli/src/commands/channel.commands.ts:700` |
+| `channel viewer import` | `packages/cli/src/commands/channel.commands.ts:782` |
+| `channel viewer list` | `packages/cli/src/commands/channel.commands.ts:726` |
+| `channel viewer transfer` | `packages/cli/src/commands/channel.commands.ts:769` |
+| `channel viewer unrelated-list` | `packages/cli/src/commands/channel.commands.ts:795` |
+| `channel ppt-record setting get` | `packages/cli/src/commands/channel.commands.ts:1184` |
+| `channel ppt-record setting update` | `packages/cli/src/commands/channel.commands.ts:1189` |
+| `channel viewer group create` | `packages/cli/src/commands/channel.commands.ts:664` |
+| `channel viewer group delete` | `packages/cli/src/commands/channel.commands.ts:689` |
+| `channel viewer group list` | `packages/cli/src/commands/channel.commands.ts:656` |
+| `channel viewer group update` | `packages/cli/src/commands/channel.commands.ts:676` |
+| `channel viewer group-setting get` | `packages/cli/src/commands/channel.commands.ts:705` |
+| `channel viewer group-setting update` | `packages/cli/src/commands/channel.commands.ts:713` |
 | `chat` | `packages/cli/src/commands/chat.commands.ts:87` |
 | `chat badword` | `packages/cli/src/commands/chat.commands.ts:577` |
 | `chat ban` | `packages/cli/src/commands/chat.commands.ts:282` |
@@ -330,14 +357,15 @@
 | `material label list` | `packages/cli/src/commands/material.commands.ts:58` |
 | `material label update` | `packages/cli/src/commands/material.commands.ts:73` |
 | `monitor` | `packages/cli/src/commands/monitor.commands.ts:43` |
-| `monitor config` | `packages/cli/src/commands/monitor.commands.ts:84` |
-| `monitor export` | `packages/cli/src/commands/monitor.commands.ts:120` |
-| `monitor import` | `packages/cli/src/commands/monitor.commands.ts:128` |
-| `monitor layouts` | `packages/cli/src/commands/monitor.commands.ts:93` |
-| `monitor status` | `packages/cli/src/commands/monitor.commands.ts:75` |
+| `monitor config` | `packages/cli/src/commands/monitor.commands.ts:102` |
+| `monitor export` | `packages/cli/src/commands/monitor.commands.ts:138` |
+| `monitor import` | `packages/cli/src/commands/monitor.commands.ts:146` |
+| `monitor layouts` | `packages/cli/src/commands/monitor.commands.ts:111` |
+| `monitor status` | `packages/cli/src/commands/monitor.commands.ts:93` |
+| `monitor stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:75` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:59` |
-| `monitor test` | `packages/cli/src/commands/monitor.commands.ts:111` |
-| `monitor themes` | `packages/cli/src/commands/monitor.commands.ts:102` |
+| `monitor test` | `packages/cli/src/commands/monitor.commands.ts:129` |
+| `monitor themes` | `packages/cli/src/commands/monitor.commands.ts:120` |
 | `partner` | `packages/cli/src/commands/partner.commands.ts:24` |
 | `partner tencent-order` | `packages/cli/src/commands/partner.commands.ts:38` |
 | `partner user-register` | `packages/cli/src/commands/partner.commands.ts:26` |
@@ -385,19 +413,21 @@
 | `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
 | `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
-| `player` | `packages/cli/src/commands/player.commands.ts:198` |
-| `player advert` | `packages/cli/src/commands/player.commands.ts:433` |
-| `player anti-record` | `packages/cli/src/commands/player.commands.ts:376` |
-| `player config` | `packages/cli/src/commands/player.commands.ts:202` |
-| `player logo-update` | `packages/cli/src/commands/player.commands.ts:475` |
-| `player marquee-url` | `packages/cli/src/commands/player.commands.ts:416` |
-| `player watch-feedback-list` | `packages/cli/src/commands/player.commands.ts:494` |
-| `player advert head-update` | `packages/cli/src/commands/player.commands.ts:434` |
-| `player advert stop-update` | `packages/cli/src/commands/player.commands.ts:457` |
-| `player anti-record get` | `packages/cli/src/commands/player.commands.ts:378` |
-| `player anti-record update` | `packages/cli/src/commands/player.commands.ts:392` |
-| `player config get` | `packages/cli/src/commands/player.commands.ts:206` |
-| `player config update` | `packages/cli/src/commands/player.commands.ts:270` |
+| `player` | `packages/cli/src/commands/player.commands.ts:199` |
+| `player advert` | `packages/cli/src/commands/player.commands.ts:451` |
+| `player anti-record` | `packages/cli/src/commands/player.commands.ts:394` |
+| `player config` | `packages/cli/src/commands/player.commands.ts:203` |
+| `player logo-update` | `packages/cli/src/commands/player.commands.ts:493` |
+| `player marquee-url` | `packages/cli/src/commands/player.commands.ts:434` |
+| `player skin` | `packages/cli/src/commands/player.commands.ts:377` |
+| `player watch-feedback-list` | `packages/cli/src/commands/player.commands.ts:512` |
+| `player advert head-update` | `packages/cli/src/commands/player.commands.ts:452` |
+| `player advert stop-update` | `packages/cli/src/commands/player.commands.ts:475` |
+| `player anti-record get` | `packages/cli/src/commands/player.commands.ts:396` |
+| `player anti-record update` | `packages/cli/src/commands/player.commands.ts:410` |
+| `player config get` | `packages/cli/src/commands/player.commands.ts:207` |
+| `player config update` | `packages/cli/src/commands/player.commands.ts:271` |
+| `player skin update-batch` | `packages/cli/src/commands/player.commands.ts:378` |
 | `product` | `packages/cli/src/commands/product.commands.ts:321` |
 | `product add` | `packages/cli/src/commands/product.commands.ts:418` |
 | `product batch-add` | `packages/cli/src/commands/product.commands.ts:655` |
@@ -487,16 +517,21 @@
 | `session external relevance` | `packages/cli/src/commands/session.commands.ts:375` |
 | `session external session-list` | `packages/cli/src/commands/session.commands.ts:359` |
 | `setup` | `packages/cli/src/commands/setup.commands.ts:90` |
-| `statistics` | `packages/cli/src/commands/statistics.commands.ts:166` |
-| `statistics audience` | `packages/cli/src/commands/statistics.commands.ts:433` |
-| `statistics concurrency` | `packages/cli/src/commands/statistics.commands.ts:288` |
+| `statistics` | `packages/cli/src/commands/statistics.commands.ts:168` |
+| `statistics audience` | `packages/cli/src/commands/statistics.commands.ts:514` |
+| `statistics concurrency` | `packages/cli/src/commands/statistics.commands.ts:369` |
 | `statistics export` | `packages/cli/src/commands/statistics.commands.export.ts:171` |
-| `statistics inviter-poster-list` | `packages/cli/src/commands/statistics.commands.ts:189` |
-| `statistics max-concurrent` | `packages/cli/src/commands/statistics.commands.ts:357` |
-| `statistics session-summary-list` | `packages/cli/src/commands/statistics.commands.ts:169` |
-| `statistics view` | `packages/cli/src/commands/statistics.commands.ts:207` |
-| `statistics audience device` | `packages/cli/src/commands/statistics.commands.ts:520` |
-| `statistics audience region` | `packages/cli/src/commands/statistics.commands.ts:437` |
+| `statistics invite-list` | `packages/cli/src/commands/statistics.commands.ts:273` |
+| `statistics inviter-poster-list` | `packages/cli/src/commands/statistics.commands.ts:205` |
+| `statistics live-data` | `packages/cli/src/commands/statistics.commands.ts:237` |
+| `statistics live-session-list` | `packages/cli/src/commands/statistics.commands.ts:248` |
+| `statistics lottery-list` | `packages/cli/src/commands/statistics.commands.ts:222` |
+| `statistics max-concurrent` | `packages/cli/src/commands/statistics.commands.ts:438` |
+| `statistics session-summary-list` | `packages/cli/src/commands/statistics.commands.ts:185` |
+| `statistics view` | `packages/cli/src/commands/statistics.commands.ts:288` |
+| `statistics weixin-booking-list` | `packages/cli/src/commands/statistics.commands.ts:260` |
+| `statistics audience device` | `packages/cli/src/commands/statistics.commands.ts:601` |
+| `statistics audience region` | `packages/cli/src/commands/statistics.commands.ts:518` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
 | `statistics export viewlog` | `packages/cli/src/commands/statistics.commands.export.ts:178` |
 | `stream` | `packages/cli/src/commands/stream.commands.ts:102` |
@@ -717,7 +752,7 @@
 | 查询多个频道概览统计数据<br><sub>1、根据提交的频道号，查询频道有关信息的统计数据，数据会根据频道号进行汇总，返回pc端播放时长、pc端播放流量、移动端播放时长、移动端播放流量等。</sub> | POST | `/live/v2/statistics/{param}/channel_summary` | query/form | endDate, startDate | ChannelService#getChannelPlaySummary (packages/sdk/src/services/channel.service.ts) | no |
 | 查询多个频道回放设置<br><sub>1、查询多个频道回放设置</sub> | GET | `/live/v4/channel/playback/list` | query | channelIds | V4ChannelService#listPlaybackSettings (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listPlaybackSettings (packages/cli/src/services/playback.service.sdk.ts:107) |
 | 查询多个频道实时并发数据<br><sub>1、获取多个频道实时在线人数</sub> | GET | `/live/v2/statistics/get-realtime-viewers` | query | channelIds | ChannelService#getRealtimeViewers (packages/sdk/src/services/channel.service.ts) | no |
-| 查询分发地址信息<br><sub>1、查询分发地址信息</sub> | GET | `/live/v4/channel/distribute/list` | query | channelId | V4ChannelService#distributeList (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询分发地址信息<br><sub>1、查询分发地址信息</sub> | GET | `/live/v4/channel/distribute/list` | query | channelId | V4ChannelService#distributeList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#distributeList (packages/cli/src/services/channel.service.sdk.ts:691) |
 | 查询分组观众列表<br><sub>1、查询分组观众列表</sub> | GET | `/live/v4/channel/lottery-viewer-list/list` | query | channelId, groupId | V4ChannelService#listLotteryGroupViewers (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询分组列表<br><sub>1、查询分组列表</sub> | GET | `/live/v4/channel/lottery-viewer-group/whitelist/list` | query | channelId | V4ChannelService#listLotteryViewerGroups (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询福袋中奖者分页列表<br><sub>1、查询指定福袋活动的中奖者分页列表</sub> | GET | `/live/v4/channel/lucky-bag/winner-page` | query | activityId | V4ChannelService#listLuckyBagWinners (packages/sdk/src/services/v4/channel.service.ts) | no |
@@ -730,10 +765,10 @@
 | 查询频道场次对应自定义场次ID<br><sub>1、查询频道场次对应自定义场次ID</sub> | GET | `/live/v4/channel/session/external-by-session` | query | channelId, sessionId | V4ChannelService#getSessionExternalBySession (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getSessionExternalBySession (packages/cli/src/services/session.service.sdk.ts:136) |
 | 查询频道场次信息<br><sub>1、查询频道直播场次信息</sub> | GET | `/live/v3/channel/session/data/list` | query | channelId | ChannelService#getSessionDataList (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getSessionDataList (packages/cli/src/services/session.service.sdk.ts:131) |
 | 查询频道场次信息<br><sub>1、查询频道直播场次信息</sub> | GET | `/live/v3/channel/session/list` | query | channelId | ChannelService#listChannelSessions (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelSessions (packages/cli/src/services/session.service.sdk.ts:120) |
-| 查询频道抽奖记录<br><sub>1、查询频道发起抽奖记录</sub> | GET | `/live/v4/channel/lottery/list` | query | channelId | V4ChannelService#listChannelLotteryRecords (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询频道抽奖记录<br><sub>1、查询频道发起抽奖记录</sub> | GET | `/live/v4/channel/lottery/list` | query | channelId | V4ChannelService#listChannelLotteryRecords (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listChannelLotteryRecords (packages/cli/src/services/statistics.service.sdk.ts:66) |
 | 查询频道打赏设置(新版后台)<br><sub>1、查询频道打赏设置，包括现金打赏、礼物打赏，礼物打赏又分为现金支付和积分支付</sub> | GET | `/live/v4/channel/donate/get` | query | channelId | V4ChannelService#getDonate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getDonate (packages/cli/src/services/donate-service.ts:46) |
 | 查询频道单个直播暂存信息<br><sub>1、通过文件ID查询频道内录制视频文件信息</sub> | GET | `/live/v3/channel/record/get` | query | channelId | ChannelService#getRecordFile (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getRecordFile (packages/cli/src/services/record.service.sdk.ts:200) |
-| 查询频道地域分布数据统计<br><sub>1、查询频道观看地域分布统计信息</sub> | GET | `/live/v4/channel/statistics/geo-summary-mc` | query | channelId, endTime, startTime | StatisticsService#getRegionDistribution (packages/sdk/src/services/statistics.service.ts) | sdk: StatisticsService#getRegionDistribution (packages/cli/src/services/statistics.service.sdk.ts:306) |
+| 查询频道地域分布数据统计<br><sub>1、查询频道观看地域分布统计信息</sub> | GET | `/live/v4/channel/statistics/geo-summary-mc` | query | channelId, endTime, startTime | StatisticsService#getRegionDistribution (packages/sdk/src/services/statistics.service.ts) | sdk: StatisticsService#getRegionDistribution (packages/cli/src/services/statistics.service.sdk.ts:331) |
 | 查询频道的关联音视频文件<br><sub>1、查询频道的关联音视频文件</sub> | GET | `/live/v4/channel/multimedia/resource/list-vids` | query | channelId | ChannelService#getChannelMultimediaResourceList (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelMultimediaResourceList (packages/cli/src/services/document.service.sdk.ts:239) |
 | 查询频道的关联音视频文件详情<br><sub>1、查询频道的关联音视频文件详情</sub> | GET | `/live/v4/channel/multimedia/resource/list` | query | channelId | ChannelService#getChannelMultimediaResourceDetail (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelMultimediaResourceDetail (packages/cli/src/services/document.service.sdk.ts:247) |
 | 查询频道多场次概览统计数据<br><sub>1、接口用于统计直播间内多场次的直播的观看数据，数据会根据场次号进行汇总，返回观看UV、观看PV等。</sub> | GET | `/live/v3/channel/statistics/get-session-stats` | query | channelId | ChannelService#getSessionStats (packages/sdk/src/services/channel.service.ts) | no |
@@ -742,11 +777,11 @@
 | 查询频道回调设置<br><sub>1、查询频道回调设置接口</sub> | GET | `/live/v3/channel/callback/get-setting` | query | channelId | ChannelService#getCallbackSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getCallbackSetting (packages/cli/src/services/channel.service.sdk.ts:415) |
 | 查询频道回放开关<br><sub>1、查询频道的回放开关状态</sub> | GET | `/live/v3/channel/playback/get-enabled` | query | channelId | ChannelService#getPlaybackEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPlaybackEnabled (packages/cli/src/services/playback.service.sdk.ts:122) |
 | 查询频道回放设置<br><sub>1、查询频道回放设置</sub> | GET | `/live/v3/channel/playback/get-setting` | query | channelId | ChannelService#getPlaybackSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPlaybackSetting (packages/cli/src/services/record.service.sdk.ts:44) |
-| 查询频道角色观众设置信息<br><sub>1、查询频道角色观众设置信息</sub> | GET | `/live/v4/channel/account/viewer/get` | query | channelId | V4ChannelService#getAccountViewerConfig (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 查询频道角色权限设置<br><sub>1、查询频道角色权限设置</sub> | GET | `/live/v4/channel/role-config/get-by-role` | query | channelId, role | V4ChannelService#getByRole (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询频道角色观众设置信息<br><sub>1、查询频道角色观众设置信息</sub> | GET | `/live/v4/channel/account/viewer/get` | query | channelId | V4ChannelService#getAccountViewerConfig (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getAccountViewerConfig (packages/cli/src/services/channel.service.sdk.ts:636) |
+| 查询频道角色权限设置<br><sub>1、查询频道角色权限设置</sub> | GET | `/live/v4/channel/role-config/get-by-role` | query | channelId, role | V4ChannelService#getByRole (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getByRole (packages/cli/src/services/channel.service.sdk.ts:646) |
 | 查询频道卡片推送<br><sub>1、查询频道卡片推送，对应新版后台的 营销-卡片</sub> | GET | `/live/v4/channel/card-push/list` | query | channelId | V4ChannelService#listCardPushes (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listCardPushes (packages/cli/src/services/card-push-service.ts:51) |
-| 查询频道历史并发数据<br><sub>1、获取频道在某个日期区间并发人数</sub> | GET | `/live/v3/channel/statistics/concurrence` | query | channelId, endDate, startDate | ChannelService#getConcurrency (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getConcurrencyData (packages/cli/src/services/statistics.service.sdk.ts:151) |
-| 查询频道历史最高并发数据<br><sub>1、获取频道一定时间范围之内的历史最高并发人数</sub> | GET | `/live/v3/channel/statistics/get-max-history-concurrent` | query | channelId, endTime, startTime | ChannelService#getMaxHistoryConcurrent (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getMaxConcurrent (packages/cli/src/services/statistics.service.sdk.ts:222) |
+| 查询频道历史并发数据<br><sub>1、获取频道在某个日期区间并发人数</sub> | GET | `/live/v3/channel/statistics/concurrence` | query | channelId, endDate, startDate | ChannelService#getConcurrency (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getConcurrencyData (packages/cli/src/services/statistics.service.sdk.ts:176) |
+| 查询频道历史最高并发数据<br><sub>1、获取频道一定时间范围之内的历史最高并发人数</sub> | GET | `/live/v3/channel/statistics/get-max-history-concurrent` | query | channelId, endTime, startTime | ChannelService#getMaxHistoryConcurrent (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getMaxConcurrent (packages/cli/src/services/statistics.service.sdk.ts:247) |
 | 查询频道连麦使用量<br><sub>1、分页获取频道连麦使用详情，默认查询账号下的所有频道</sub> | GET | `/live/v3/channel/statistics/mic/list` | query | - | ChannelService#getMicDetailList (packages/sdk/src/services/channel.service.ts) | no |
 | 查询频道连麦详情数据<br><sub>1、接口用于查询某个频道的一段时间区间内的连麦详情数据，支持分页</sub> | GET | `/live/v3/channel/mic/log/list-detail` | query | channelId, endDate, startDate | ChannelService#getLinkMicDetailList (packages/sdk/src/services/channel.service.ts) | no |
 | 查询频道某段时间的直播观看详情数据<br><sub>1、通过频道号获取该频道某段时间的直播观看的统计数据</sub> | GET | `/live/v2/statistics/{param}/summary` | query | endDay, startDay | ChannelService#getSummary (packages/sdk/src/services/channel.service.ts) | no |
@@ -765,39 +800,39 @@
 | 查询频道优惠券列表<br><sub>1、查询频道优惠券列表</sub> | GET | `/live/v4/channel/coupon/list` | query | channelId | V4ChannelService#listChannelCoupons (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询频道直播观看详情数据<br><sub>1、获取频道观看日志</sub> | GET | `/live/v1/statistics/{param}/viewlog` | query | currentDay, userId | ChannelService#getViewlogV1 (packages/sdk/src/services/channel.service.ts) | no |
 | 查询频道直播截图<br><sub>1、截图功能，查询当前频道正在直播的截图（截图五分钟更新一次）</sub> | POST | `/live/v2/stream/{param}/capture` | query/form | - | ChannelService#getCaptureImage (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getCaptureImage (packages/cli/src/services/stream.service.sdk.ts:358) |
-| 查询频道直播数据<br><sub>1、查询频道直播数据</sub> | GET | `/live/v4/channel/statistics/live-data` | query | channelId | V4ChannelService#getLiveData (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询频道直播数据<br><sub>1、查询频道直播数据</sub> | GET | `/live/v4/channel/statistics/live-data` | query | channelId | V4ChannelService#getLiveData (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getLiveData (packages/cli/src/services/statistics.service.sdk.ts:71) |
 | 查询频道直播推流信息<br><sub>1、获取频道直播的实时推流信息</sub> | GET | `/live/v3/channel/monitor/get-stream-info` | query | channelId | ChannelService#getStreamInfo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getStreamInfo (packages/cli/src/services/stream.service.sdk.ts:188) |
 | 查询频道直播暂存列表<br><sub>1、管理系统频道录制视频信息入口：云直播-我的直播-频道设置-回放管理-视频库-直播暂存</sub> | GET | `/live/v2/channels/{param}/recordFiles` | query | - | ChannelService#listRecordFiles (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listRecordFiles (packages/cli/src/services/record.service.sdk.ts:211) |
-| 查询频道终端分布数据统计<br><sub>1、查询频道观看终端分布统计信息</sub> | GET | `/live/v4/channel/statistics/browser-summary` | query | channelId, endTime, startTime | StatisticsService#getDeviceDistribution (packages/sdk/src/services/statistics.service.ts) | sdk: StatisticsService#getDeviceDistribution (packages/cli/src/services/statistics.service.sdk.ts:388) |
+| 查询频道终端分布数据统计<br><sub>1、查询频道观看终端分布统计信息</sub> | GET | `/live/v4/channel/statistics/browser-summary` | query | channelId, endTime, startTime | StatisticsService#getDeviceDistribution (packages/sdk/src/services/statistics.service.ts) | sdk: StatisticsService#getDeviceDistribution (packages/cli/src/services/statistics.service.sdk.ts:413) |
 | 查询频道重制课件配置信息<br><sub>1、查询频道重制课件参数设置信息</sub> | GET | `/live/v3/channel/pptRecord/get-setting` | query | - | ChannelService#getPptRecordSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPptRecordSetting (packages/cli/src/services/channel.service.sdk.ts:433) |
 | 查询频道重制课件设置<br><sub>1、查询频道重制课件设置</sub> | GET | `/live/v3/channel/pptRecord/get-setting` | query | channelId | ChannelService#getPptRecordSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPptRecordSetting (packages/cli/src/services/channel.service.sdk.ts:433) |
 | 查询频道状态<br><sub>1、查询频道直播状态</sub> | GET | `/live_status/query` | query | stream | ChannelService#getLiveStatus (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getLiveStatus (packages/cli/src/services/stream.service.sdk.ts:322) |
-| 查询频道字幕配置信息<br><sub>1、查询频道字幕配置信息</sub> | GET | `/live/v4/channel/subtitle/config/get` | query | channelId | V4ChannelService#getSubtitleConfig (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询频道字幕配置信息<br><sub>1、查询频道字幕配置信息</sub> | GET | `/live/v4/channel/subtitle/config/get` | query | channelId | V4ChannelService#getSubtitleConfig (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getSubtitleConfig (packages/cli/src/services/channel.service.sdk.ts:676) |
 | 查询任务奖励活动分页列表<br><sub>1、查询任务奖励活动分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/page` | query | channelId | V4ChannelService#listTaskRewardActivities (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询任务奖励活动观众奖励明细分页列表<br><sub>1、查询任务奖励活动观众奖励明细分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/viewer-detail` | query | activityId, channelId | V4ChannelService#listTaskRewardViewerDetails (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询任务奖励活动统计数据分页列表<br><sub>1、查询任务奖励活动统计数据分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/stats` | query | channelId | V4ChannelService#listTaskRewardStats (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询商品标签列表<br><sub>1、查询商品标签列表</sub> | GET | `/live/v4/channel/product/tag/list` | query | channelId | V4ChannelService#listProductTagsExact (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 查询时间范围内频道直播观看详情数据<br><sub>1、通过频道号获取该频道某段时间的直播观看的统计数据</sub> | GET | `/live/v3/channel/statistics/daily/summary` | query | channelId, endDay, startDay | ChannelService#getDailySummary (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getDailyViewStatistics (packages/cli/src/services/statistics.service.sdk.ts:80) |
-| 查询时间内直播场次数据<br><sub>1、查询时间内直播场次数据</sub> | POST | `/live/v4/statistics/session-stats/list` | query/form | - | V4ChannelService#listSessionStats (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 查询实时字幕语言类型枚举<br><sub>1、查询实时字幕语言类型枚举</sub> | GET | `/live/v4/channel/subtitle/language/list-all` | query | - | V4ChannelService#listSubtitleLanguages (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询时间范围内频道直播观看详情数据<br><sub>1、通过频道号获取该频道某段时间的直播观看的统计数据</sub> | GET | `/live/v3/channel/statistics/daily/summary` | query | channelId, endDay, startDay | ChannelService#getDailySummary (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getDailyViewStatistics (packages/cli/src/services/statistics.service.sdk.ts:105) |
+| 查询时间内直播场次数据<br><sub>1、查询时间内直播场次数据</sub> | POST | `/live/v4/statistics/session-stats/list` | query/form | - | V4ChannelService#listSessionStats (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listSessionStats (packages/cli/src/services/statistics.service.sdk.ts:76) |
+| 查询实时字幕语言类型枚举<br><sub>1、查询实时字幕语言类型枚举</sub> | GET | `/live/v4/channel/subtitle/language/list-all` | query | - | V4ChannelService#listSubtitleLanguages (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listSubtitleLanguages (packages/cli/src/services/channel.service.sdk.ts:686) |
 | 查询视频库列表<br><sub>1、管理系统视频列表信息入口：云直播-我的直播-频道设置-回放管理-视频库-回放列表/点播列表</sub> | GET | `/live/v2/channel/recordFile/{param}/playback/list` | query | - | ChannelService#getPlaybackList (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPlaybackList (packages/cli/src/services/playback.service.sdk.ts:72) |
-| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/basic/list` | query | - | V4ChannelService#listChannelBasicExact (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/simple/list` | query | - | V4ChannelService#listChannelSimple (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/basic/list` | query | - | V4ChannelService#listChannelBasicExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listChannelBasicExact (packages/cli/src/services/channel.service.sdk.ts:621) |
+| 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/simple/list` | query | - | V4ChannelService#listChannelSimple (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listChannelSimple (packages/cli/src/services/channel.service.sdk.ts:626) |
 | 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/detail/list` | query | - | V4ChannelService#channelDetailList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#channelDetailList (packages/cli/src/services/channel.service.sdk.ts:101) |
-| 查询微信预约数据<br><sub>1、查询微信预约数据</sub> | GET | `/live/v4/channel/booking/list` | query | channelId | V4ChannelService#listWeixinBookings (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询微信预约数据<br><sub>1、查询微信预约数据</sub> | GET | `/live/v4/channel/booking/list` | query | channelId | V4ChannelService#listWeixinBookings (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listWeixinBookings (packages/cli/src/services/statistics.service.sdk.ts:81) |
 | 查询伪直播自定义互动脚本<br><sub>1、查询伪直播自定义互动脚本</sub> | GET | `/live/v4/channel/interaction-script/query-disk-video-custom-script` | query | channelId, diskVideoId | V4ChannelService#queryDiskVideoCustomScript (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 查询未加入频道分组的观众列表接口 - 查询未加入频道分组的观众列表<br><sub>查询未加入频道分组的观众列表</sub> | GET | `/live-bg/v3/teacher/viewer-record/list-unrelation-channel-viewer` | query | channelId | ChannelService#listUnrelatedChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listUnrelatedChannelViewers (packages/cli/src/services/channel.service.sdk.ts:361) |
 | 查询未加入频道分组的观众列表接口 - 查询未加入频道分组的观众列表<br><sub>查询未加入频道分组的观众列表</sub> | GET | `/live-bg/v3/user/viewer-record/list-unrelation-channel-viewer` | query | channelId | ChannelService#listUnrelatedChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listUnrelatedChannelViewers (packages/cli/src/services/channel.service.sdk.ts:361) |
-| 查询邀请海报明细数据<br><sub>1、分页查询邀请海报明细数据统计</sub> | GET | `/live/v4/channel/invite/list` | query | channelId | V4ChannelService#listInviteStats (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询邀请海报明细数据<br><sub>1、分页查询邀请海报明细数据统计</sub> | GET | `/live/v4/channel/invite/list` | query | channelId | V4ChannelService#listInviteStats (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listInviteStats (packages/cli/src/services/statistics.service.sdk.ts:86) |
 | 查询音视频文件详情<br><sub>1、查询音视频文件详情</sub> | GET | `/live/v4/user/multimedia/resource/list` | query | vids | ChannelService#getUserMultimediaResourceDetail (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getUserMultimediaResourceDetail (packages/cli/src/services/document.service.sdk.ts:262) |
-| 查询云分发数据信息<br><sub>1、查询频道云分发数据信息</sub> | GET | `/live/v4/channel/distribute/get/statistic` | query | channelId | V4ChannelService#getDistributeStatistic (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 查询云分发数据信息<br><sub>1、查询频道云分发数据信息</sub> | GET | `/live/v4/channel/distribute/get/statistic` | query | channelId | V4ChannelService#getDistributeStatistic (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getDistributeStatistic (packages/cli/src/services/channel.service.sdk.ts:711) |
 | 查询重制课件任务列表<br><sub>1、查询课件重制任务列表</sub> | GET | `/live/v3/channel/pptRecord/list` | query | channelId | ChannelService#listPptRecordTasks (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listPptRecordTasks (packages/cli/src/services/channel.service.sdk.ts:442) |
 | 查询转播频道信息<br><sub>1、查询账号或频道下的转播列表信息</sub> | GET | `/live/v3/channel/transmit/get-associations` | query | - | ChannelService#getTransmitAssociations (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getTransmitAssociations (packages/cli/src/services/transmit-service.ts:69) |
 | 查询子账号频道列表<br><sub>1、查询子账号频道列表</sub> | GET | `/live/v4/channel/channel-user-children/get-channels` | query | childUserId, pageNumber, pageSize | ChannelService#getUserChildrenChannels (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getUserChildrenChannels (packages/cli/src/services/channel.service.sdk.ts:487) |
-| 创建并初始化频道<br><sub>1、根据请求参数与默认模板创建频道</sub> | POST | `/live/v4/channel/create-init` | json-body | basicSetting | V4ChannelService#createInit (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 创建并初始化频道<br><sub>1、根据请求参数与默认模板创建频道</sub> | POST | `/live/v4/channel/create-init` | json-body | basicSetting | V4ChannelService#createInit (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createInit (packages/cli/src/services/channel.service.sdk.ts:726) |
 | 创建抽奖活动<br><sub>1、创建抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/create` | json-body | activityName, amount, channelId, lotteryCondition, prizeName | V4ChannelService#createLotteryActivityExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryActivityExact (packages/cli/src/services/lottery-service.ts:51) |
 | 创建互动监听事件<br><sub>1、创建互动监听事件</sub> | POST | `/live/v4/channel/interaction-event/save` | json-body | allDone, channelId, tasks | V4ChannelService#interactionEventSave (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 创建角色<br><sub>1、创建频道的助教或嘉宾角色</sub> | POST | `/live/v4/channel/account/create` | json-body | channelId, role | V4ChannelService#createAccount (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 创建角色<br><sub>1、创建频道的助教或嘉宾角色</sub> | POST | `/live/v4/channel/account/create` | json-body | channelId, role | V4ChannelService#createAccount (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createAccount (packages/cli/src/services/channel.service.sdk.ts:656) |
 | 创建频道<br><sub>1、根据直播默认模板创建频道</sub> | POST | `/live/v4/channel/create` | json-body | name, newScene, template | ChannelService#createChannelV4 (packages/sdk/src/services/channel.service.ts) | sdk: V4ChannelService#create (packages/cli/src/services/channel.service.sdk.ts:69)<br>sdk: ChannelService#createChannelV4 (packages/cli/src/setup/resource-handlers.ts:67) |
 | 创建频道卡片推送<br><sub>1、创建频道卡片推送，对应新版后台的 营销-卡片</sub> | GET | `/live/v4/channel/card-push/create` | query | channelId, duration, imageType, link, showCondition, title | V4ChannelService#createCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createCardPushExact (packages/cli/src/services/card-push-service.ts:101) |
 | 创建频道新版场次<br><sub>1、创建频道新版场次</sub> | POST | `/live/v4/channel/session/new/create` | json-body | channelId, name, planEndTime, planStartTime | V4ChannelService#sessionCreate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sessionCreate (packages/cli/src/services/session.service.sdk.ts:147) |
@@ -806,15 +841,15 @@
 | 创建邀请者<br><sub>1、邀请海报-创建邀请者</sub> | POST | `/live/v4/channel/invite/poster/create` | query/form | channelId, nickname, openId | V4ChannelService#createInvitePoster (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 创建暂存视频大纲<br><sub>- 用于创建暂存视频的 AI 大纲任务</sub> | POST | `/live/v4/channel/record-file/subtitle/outline/create` | query/form | fileId | V4ChannelService#createRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:298) |
 | 创建重制课件任务<br><sub>1、创建重制课件任务，需等候任务队列执行完成，不是实时重制</sub> | POST | `/live/v3/channel/pptRecord/addRecordTask` | query/form | channelId, videoId | ChannelService#addPptRecordTask (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addPptRecordTask (packages/cli/src/services/channel.service.sdk.ts:451) |
-| 创建MR频道<br><sub>1、创建MR频道</sub> | POST | `/live/v4/channel/mr/create` | json-body | name | V4ChannelService#createMrChannel (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 导出频道场次报表（图表）<br><sub>1、导出频道场次报表（图表）</sub> | GET | `/live/v3/channel/session/stats/export` | query | channelId, sessionId | ChannelService#exportSessionStats (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#exportSessionStats (packages/cli/src/services/statistics.service.sdk.ts:584) |
+| 创建MR频道<br><sub>1、创建MR频道</sub> | POST | `/live/v4/channel/mr/create` | json-body | name | V4ChannelService#createMrChannel (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createMrChannel (packages/cli/src/services/channel.service.sdk.ts:731) |
+| 导出频道场次报表（图表）<br><sub>1、导出频道场次报表（图表）</sub> | GET | `/live/v3/channel/session/stats/export` | query | channelId, sessionId | ChannelService#exportSessionStats (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#exportSessionStats (packages/cli/src/services/statistics.service.sdk.ts:609) |
 | 分页查询频道抽奖统计记录<br><sub>1、分页查询频道抽奖统计记录</sub> | GET | `/live/v4/channel/lottery/activity-record/list` | query | channelId | V4ChannelService#listLotteryActivityRecords (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 分页查询频道打赏记录<br><sub>1、分页查询频道打赏记录</sub> | GET | `/live/v4/channel/reward/gift-list` | query | channelId, end, start | V4ChannelService#listRewardGifts (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listRewardGifts (packages/cli/src/services/donate-service.ts:87) |
 | 分页查询频道点赞记录<br><sub>1、分页查询频道点赞记录</sub> | GET | `/live/v4/channel/reward/like-list` | query | channelId | V4ChannelService#listRewardLikes (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 分页查询频道商品统计列表<br><sub>1、分页查询频道商品统计列表</sub> | GET | `/live/v4/channel/product/stats/page` | query | channelId | V4ChannelService#listProductStats (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 分页查询频道直播观看详情数据<br><sub>1、分页获取频道的直播观看日志</sub> | GET | `/live/v2/statistics/{param}/viewlog` | query | - | ChannelService#getViewlog2 (packages/sdk/src/services/channel.service.ts) | no |
 | 分页查询素材库频道直播回放列表<br><sub>1、分页查询素材库频道直播回放列表</sub> | GET | `/live/v4/channel/record-file/m-list` | query | channelId | V4ChannelService#listMaterialRecordFiles (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listMaterialRecordFiles (packages/cli/src/services/record.service.sdk.ts:220) |
-| 分页查询账号直播观看详情数据<br><sub>1、分页获取账号下所有频道观看详情数据</sub> | GET | `/live/v3/user/statistics/viewlog` | query | endDate, startDate | ChannelService#getUserViewlog (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getViewlog (packages/cli/src/services/statistics.service.sdk.ts:492) |
+| 分页查询账号直播观看详情数据<br><sub>1、分页获取账号下所有频道观看详情数据</sub> | GET | `/live/v3/user/statistics/viewlog` | query | endDate, startDate | ChannelService#getUserViewlog (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getViewlog (packages/cli/src/services/statistics.service.sdk.ts:517) |
 | 分组删除观众<br><sub>1、分组删除观众</sub> | POST | `/live/v4/channel/lottery-viewer-list/delete-batch` | json-body | channelId, groupId, ids | V4ChannelService#deleteLotteryGroupViewers (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 分组添加观众<br><sub>1、分组添加观众</sub> | POST | `/live/v4/channel/lottery-viewer-list/create` | json-body | channelId, groupId, viewerIds | V4ChannelService#createLotteryGroupViewers (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 复制频道<br><sub>1、通过一个频道复制出一个新的频道</sub> | POST | `/live/v3/channel/basic/copy` | query/form | channelId | ChannelService#copyChannel (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#copyChannel (packages/cli/src/services/channel.service.sdk.ts:478) |
@@ -847,33 +882,33 @@
 | 获取频道hls协议拉流地址<br><sub>1、获取频道hls协议拉流地址</sub> | GET | `/live/v3/channel/monitor/hls-pull-url` | query | channelId | ChannelService#getHlsPullUrl (packages/sdk/src/services/channel.service.ts) | no |
 | 获取硬盘推流(伪直播)视频列表<br><sub>1、获取硬盘推流(伪直播)视频列表</sub> | GET | `/live/v3/channel/disk-video/list` | query | channelId | ChannelService#listDiskVideo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listDiskVideo (packages/cli/src/services/stream.service.sdk.ts:349) |
 | 获取主讲等角色免密登录URL<br><sub>1、获取频道免密登录URL</sub> | POST | `/live/v3/channel/common/token-login-url` | query/form | channelId | ChannelService#getTokenLoginUrl (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getTokenLoginUrl (packages/cli/src/services/channel.service.sdk.ts:514) |
-| 获取cdn频道的直播实时推流信息(阿里、腾讯cdn)<br><sub>1、获取cdn频道的直播实时推流信息(阿里、腾讯cdn)</sub> | GET | `/live/v4/channel/monitor/list-stream-info` | query | channelId | V4ChannelService#listMonitorStreamInfo (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 获取cdn频道的直播实时推流信息(阿里、腾讯cdn)<br><sub>1、获取cdn频道的直播实时推流信息(阿里、腾讯cdn)</sub> | GET | `/live/v4/channel/monitor/list-stream-info` | query | channelId | V4ChannelService#listMonitorStreamInfo (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listMonitorStreamInfo (packages/cli/src/services/monitor-service.ts:18) |
 | 将点播视频添加到视频库<br><sub>1、添加账号对应的点播视频到直播频道下的视频库</sub> | POST | `/live/v3/channel/playback/add` | query/form | channelId, vid | ChannelService#addVodPlaybackToLibrary (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addVodPlaybackToLibrary (packages/cli/src/services/playback.service.sdk.ts:141) |
 | 讲师文档关系管理<br><sub>1、开启了“讲义库”功能后（如需开通请联系售后），通过此接口将讲师和公共讲义库中的文档关联起来，从而实现在不需要重复上传的情况下，多个讲师共用同一份文档</sub> | POST | `/live/v4/channel/doc/teacher/update-relation` | query/form | fileIds, operation, teacherId | ChannelService#updateTeacherDocRelation (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateTeacherDocRelation (packages/cli/src/services/document.service.sdk.ts:231) |
 | 结束伪直播<br><sub>1、结束当前正在直播中的伪直播</sub> | POST | `/live/v3/channel/stream/end-disk-push` | query/form | channelId | ChannelService#endDiskPush (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#endDiskPush (packages/cli/src/services/stream.service.sdk.ts:385) |
 | 批量查询频道单个回放信息<br><sub>1、根据多个频道号查询每个频道设置的回放视频信息（仅支持非直播暂存的单个视频的回放查询）</sub> | GET | `/live/v4/channel/play-back/get` | query | channelIds | V4ChannelService#getPlaybackVideoInfo (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getPlaybackVideoInfo (packages/cli/src/services/playback.service.sdk.ts:112) |
 | 批量查询频道直播推流信息<br><sub>1、批量获取频道直播的实时推流信息</sub> | GET | `/live/v3/channel/monitor/get-streams` | query | channelIds | ChannelService#getStreams (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getStreams (packages/cli/src/services/stream.service.sdk.ts:340) |
-| 批量查询频道直播状态<br><sub>1、批量查询频道直播状态（不支持研讨会）</sub> | GET | `/live/v4/channel/live-status/list` | query | channelIds | V4ChannelService#listLiveStatus (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 批量查询主讲信息接口<br><sub>1、批量查询主讲信息接口</sub> | POST | `/live/v4/channel/account/teacher-list` | json-body | channelIds | V4ChannelService#teacherList (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 批量查询频道直播状态<br><sub>1、批量查询频道直播状态（不支持研讨会）</sub> | GET | `/live/v4/channel/live-status/list` | query | channelIds | V4ChannelService#listLiveStatus (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listLiveStatus (packages/cli/src/services/channel.service.sdk.ts:631) |
+| 批量查询主讲信息接口<br><sub>1、批量查询主讲信息接口</sub> | POST | `/live/v4/channel/account/teacher-list` | json-body | channelIds | V4ChannelService#teacherList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#teacherList (packages/cli/src/services/channel.service.sdk.ts:671) |
 | 批量创建角色<br><sub>1、批量创建角色，角色包括Guest(嘉宾)、Assistant(助教)</sub> | POST | `/live/v3/channel/account/batch-create` | json-body | channelId | ChannelService#batchCreateAccounts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchCreateAccounts (packages/cli/src/services/channel.service.sdk.ts:397) |
 | 批量创建接收转播的频道<br><sub>1、根据发起转播的频道，批量创建接收转播的频道</sub> | POST | `/live/v3/channel/transmit/batch-create` | json-body | channelId | ChannelService#batchAddTransmit (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchAddTransmit (packages/cli/src/services/transmit-service.ts:55) |
 | 批量创建频道<br><sub>1、批量创建频道</sub> | POST | `/live/v4/channel/create-batch` | json-body | name, newScene, template | V4ChannelService#createBatch (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 批量创建渠道推广<br><sub>1、支持批量创建渠道推广</sub> | POST | `/live/v4/channel/popularization/create-batch` | json-body | channelId, names | V4ChannelService#createPopularizations (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createPopularizations (packages/cli/src/services/promotion-service.ts:109) |
 | 批量关联分会场<br><sub>1、批量关联分会场</sub> | POST | `/live/v3/channel/multi-meeting/batch-save-submeeting` | json-body | channelId, subChannels | ChannelService#batchAddSubmeeting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchAddSubmeeting (packages/cli/src/services/channel.service.sdk.ts:550) |
 | 批量关联或者取消关联接收转播频道设置<br><sub>1、批量关联或者取消关联接收转播频道设置</sub> | POST | `/live/v3/channel/transmit/associations` | query/form | channelId, receiveChannelIds | ChannelService#associationReceiveChannels (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#associationReceiveChannels (packages/cli/src/services/transmit-service.ts:98) |
-| 批量删除分发地址<br><sub>1、批量删除分发地址</sub> | POST | `/live/v4/channel/distribute/delete-batch` | query/form | channelId, distributeIds | V4ChannelService#distributeDeleteBatch (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 批量删除角色<br><sub>1、批量删除角色</sub> | POST | `/live/v4/channel/account/delete-batch` | query/form | accounts, channelId | V4ChannelService#deleteAccountsBatch (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 批量删除分发地址<br><sub>1、批量删除分发地址</sub> | POST | `/live/v4/channel/distribute/delete-batch` | query/form | channelId, distributeIds | V4ChannelService#distributeDeleteBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#distributeDeleteBatch (packages/cli/src/services/channel.service.sdk.ts:706) |
+| 批量删除角色<br><sub>1、批量删除角色</sub> | POST | `/live/v4/channel/account/delete-batch` | query/form | accounts, channelId | V4ChannelService#deleteAccountsBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteAccountsBatch (packages/cli/src/services/channel.service.sdk.ts:666) |
 | 批量删除频道<br><sub>1、批量删除直播频道</sub> | POST | `/live/v3/channel/basic/batch-delete` | json-body | channelIds | ChannelService#batchDeleteChannels (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchDeleteChannels (packages/cli/src/services/channel.service.sdk.ts:197)<br>sdk: ChannelService#batchDeleteChannels (packages/cli/src/services/channel.service.sdk.ts:220) |
 | 批量删除频道多条聊天记录<br><sub>1、根据聊天的id删除对应聊天记录</sub> | POST | `/live/v3/channel/chat/remove-contents` | query/form | channelId, ids | ChannelService#removeChatContents (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#removeChatContents (packages/cli/src/services/chat.service.sdk.ts:283) |
 | 批量删除频道商品<br><sub>1、批量删除频道商品</sub> | POST | `/live/v3/channel/product/batch-delete` | json-body | channelId, productIds | ChannelService#batchDeleteChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchDeleteChannelProducts (packages/cli/src/services/product.service.sdk.ts:332) |
-| 批量添加分发地址<br><sub>1、批量添加分发地址</sub> | POST | `/live/v4/channel/distribute/create-batch` | json-body | channelId | V4ChannelService#distributeCreateBatch (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 批量添加分发地址<br><sub>1、批量添加分发地址</sub> | POST | `/live/v4/channel/distribute/create-batch` | json-body | channelId | V4ChannelService#distributeCreateBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#distributeCreateBatch (packages/cli/src/services/channel.service.sdk.ts:696) |
 | 批量添加频道商品<br><sub>1、批量添加频道商品库商品</sub> | POST | `/live/v3/channel/product/batch-add` | json-body | channelId | ChannelService#batchAddChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchAddChannelProducts (packages/cli/src/services/product.service.sdk.ts:323) |
-| 批量修改分分发地址<br><sub>1、修改分发地址</sub> | POST | `/live/v4/channel/distribute/update-batch` | json-body | channelId | V4ChannelService#distributeUpdateBatch (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 批量修改分分发地址<br><sub>1、修改分发地址</sub> | POST | `/live/v4/channel/distribute/update-batch` | json-body | channelId | V4ChannelService#distributeUpdateBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#distributeUpdateBatch (packages/cli/src/services/channel.service.sdk.ts:701) |
 | 批量修改频道弹幕开关<br><sub>1、批量修改频道弹幕开关</sub> | POST | `/live/v3/channel/basic/batchUpdateDanmu` | query/form | channelIds, closeDanmu, showDanmuInfoEnabled | ChannelService#batchUpdateDanmu (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchUpdateDanmu (packages/cli/src/services/channel.service.sdk.ts:568) |
 | 批量修改频道回放字幕<br><sub>1、批量修改频道回放字幕</sub> | POST | `/live/v4/channel/subtitle/update-batch` | json-body | body, channelId | V4ChannelService#updateChannelSubtitleBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateChannelSubtitleBatch (packages/cli/src/services/playback.service.sdk.ts:117) |
-| 批量修改频道皮肤<br><sub>1、批量修改频道装修皮肤</sub> | POST | `/live/v4/channel/decorate/skin/update-batch` | query/form | channelIds, skin | V4ChannelService#updateSkinBatch (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 批量修改频道皮肤<br><sub>1、批量修改频道装修皮肤</sub> | POST | `/live/v4/channel/decorate/skin/update-batch` | query/form | channelIds, skin | V4ChannelService#updateSkinBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateSkinBatch (packages/cli/src/services/player.service.sdk.ts:174) |
 | 批量修改频道商品库上下架状态<br><sub>1、批量修改频道商品库商品上下架状态</sub> | POST | `/live/v3/channel/product/batch-shelf` | json-body | channelId, productIds | ChannelService#batchShelfChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchShelfChannelProducts (packages/cli/src/services/product.service.sdk.ts:341) |
-| 批量修改频道云分发开关<br><sub>1、批量修改频道云分发开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-switch` | query/form | channelId, distributeIds | V4ChannelService#updateSwitch (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 批量修改频道云分发开关<br><sub>1、批量修改频道云分发开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-switch` | query/form | channelId, distributeIds | V4ChannelService#updateSwitch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateSwitch (packages/cli/src/services/channel.service.sdk.ts:721) |
 | 批量转存暂存视频到云点播<br><sub>1、批量转存直播暂存录制视频文件到点播列表，接口转存过程为异步处理过程</sub> | POST | `/live/v3/channel/record/convert` | query/form | channelId | ChannelService#recordConvert (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:134)<br>sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:165) |
 | 频道观看页观众退出登录<br><sub>1、频道观看页观众退出登录</sub> | POST | `/live/v4/channel/watch/viewer/logout` | json-body | channelId | V4ChannelService#logoutWatchViewer (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 频道所属用户列表接口 - 导出频道所属用户列表<br><sub>导出频道所属用户列表</sub> | GET | `/live-bg/v3/teacher/channel-viewer/list/export` | query | channelId | ChannelService#exportChannelViewers (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#exportChannelViewers (packages/cli/src/services/channel.service.sdk.ts:316) |
@@ -950,8 +985,8 @@
 | 新增频道优惠券<br><sub>1、将平台优惠券添加到频道中</sub> | POST | `/live/v4/channel/coupon/create` | json-body | channelId, couponIds | V4ChannelService#addChannelCoupon (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改分组<br><sub>1、修改分组</sub> | POST | `/live/v4/channel/lottery-viewer-group/whitelist/update` | json-body | channelId, title | V4ChannelService#updateLotteryViewerGroup (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改回放视频名称<br><sub>1、修改频道视频库回放列表中某个视频的名称</sub> | POST | `/live/v3/channel/playback/update-title` | query/form | channelId, title, videoId | ChannelService#updatePlaybackTitle (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlaybackTitle (packages/cli/src/services/playback.service.sdk.ts:146) |
-| 修改角色观众设置信息<br><sub>1、修改角色观众设置信息</sub> | POST | `/live/v4/channel/account/viewer/update` | json-body | channelId | V4ChannelService#updateAccountViewerConfig (packages/sdk/src/services/v4/channel.service.ts) | no |
-| 修改角色信息<br><sub>1、修改助教或嘉宾的信息</sub> | POST | `/live/v4/channel/account/update` | json-body | account, channelId | V4ChannelService#updateAccountInfo (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 修改角色观众设置信息<br><sub>1、修改角色观众设置信息</sub> | POST | `/live/v4/channel/account/viewer/update` | json-body | channelId | V4ChannelService#updateAccountViewerConfig (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateAccountViewerConfig (packages/cli/src/services/channel.service.sdk.ts:641) |
+| 修改角色信息<br><sub>1、修改助教或嘉宾的信息</sub> | POST | `/live/v4/channel/account/update` | json-body | account, channelId | V4ChannelService#updateAccountInfo (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateAccountInfo (packages/cli/src/services/channel.service.sdk.ts:661) |
 | 修改暖场设置开关<br><sub>1、通过频道号，修改暖场开关</sub> | POST | `/live/v3/channel/set-warmup-enabled` | query/form | channelId, warmUpEnabled | ChannelService#updateWarmupSwitch (packages/sdk/src/services/channel.service.ts) | no |
 | 修改暖场视频<br><sub>1、通过频道号，修改播放器的暖场视频</sub> | POST | `/live/v2/channels/{param}/update` | query/form | warmUpFlv | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
 | 修改暖场图片<br><sub>1、通过频道号，修改播放器的暖场图片</sub> | POST | `/live/v2/channels/{param}/update` | query/form | coverImage | ChannelService#updatePlayerLogo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePlayerLogo (packages/cli/src/services/player.service.sdk.ts:169)<br>sdk: WebService#updateChannelName (packages/cli/src/services/web-service.ts:30) |
@@ -960,9 +995,9 @@
 | 修改频道回调设置<br><sub>1、修改频道回调设置接口</sub> | POST | `/live/v3/channel/callback/update-setting` | query/form | channelId | ChannelService#updateCallbackSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateCallbackSetting (packages/cli/src/services/channel.service.sdk.ts:424) |
 | 修改频道回放开关<br><sub>1、修改单个或全部频道的回放开关</sub> | POST | `/live/v2/channelSetting/{param}/setPlayBackEnabled` | query/form | playBackEnabled | ChannelService#setUserPlaybackEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setUserPlaybackEnabled (packages/cli/src/services/playback.service.sdk.ts:131) |
 | 修改频道回放设置<br><sub>1、修改频道回放设置</sub> | POST | `/live/v3/channel/playback/set-setting` | query/form | channelId | ChannelService#setPlaybackSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setPlaybackSetting (packages/cli/src/services/record.service.sdk.ts:106) |
-| 修改频道角色权限设置<br><sub>1、修改频道角色权限设置</sub> | POST | `/live/v4/channel/role-config/update-by-role` | json-body | body, channelId, role | V4ChannelService#updateByRole (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 修改频道角色权限设置<br><sub>1、修改频道角色权限设置</sub> | POST | `/live/v4/channel/role-config/update-by-role` | json-body | body, channelId, role | V4ChannelService#updateByRole (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateByRole (packages/cli/src/services/channel.service.sdk.ts:651) |
 | 修改频道卡片推送<br><sub>1、修改频道卡片推送，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/update` | json-body | cardPushId, channelId | V4ChannelService#updateCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateCardPushExact (packages/cli/src/services/card-push-service.ts:140) |
-| 修改频道拉流码率<br><sub>1、修改频道拉流码率</sub> | POST | `/live/v4/channel/set-pull-bitrate` | query/form | channelId, pullBitRate | V4ChannelService#setPullBitrate (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 修改频道拉流码率<br><sub>1、修改频道拉流码率</sub> | POST | `/live/v4/channel/set-pull-bitrate` | query/form | channelId, pullBitRate | V4ChannelService#setPullBitrate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#setPullBitrate (packages/cli/src/services/channel.service.sdk.ts:736) |
 | 修改频道礼物打赏设置<br><sub>1、修改频道礼物打赏设置，礼物打赏又分为现金支付和积分支付</sub> | POST | `/live/v4/channel/donate/gift/update` | json-body | channelId, donateGiftEnabled | V4ChannelService#updateDonateGift (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateDonateGift (packages/cli/src/services/donate-service.ts:65) |
 | 修改频道聊天室发言开关<br><sub>1、修改频道聊天室发言开关</sub> | POST | `/live/v4/channel/chat/update-chatEnabled` | json-body | channelIds, chatEnabled | V4ChannelService#batchUpdateChatEnabled (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改频道密码<br><sub>1、修改单个频道号的密码，或者修改账号下所有频道号的密码</sub> | POST | `/live/v2/channels/{param}/passwdSetting` | query/form | passwd | ChannelService#updateChannelPassword (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelPassword (packages/cli/src/services/channel.service.sdk.ts:604) |
@@ -975,18 +1010,18 @@
 | 修改频道微信分享信息(新版)<br><sub>1、修改频道微信分享信息，对应新版后台的 营销-分享设置</sub> | GET | `/live/v4/channel/share/update` | query | channelId, shareBtnEnable, titleType | V4ChannelService#updateShareExact (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改频道信息<br><sub>1、修改频道的相关设置</sub> | POST | `/live/v3/channel/basic/update` | json-body | channelId, enabled, rank | ChannelService#updateChannel (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannel (packages/cli/src/services/channel.service.sdk.ts:168) |
 | 修改频道优惠券开关状态<br><sub>1、修改频道优惠券开关状态</sub> | POST | `/live/v4/channel/coupon/update-enabled` | json-body | channelId, enabled | V4ChannelService#updateCouponEnabled (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateCouponEnabled (packages/cli/src/setup/resource-handlers.ts:235) |
-| 修改频道直播模版<br><sub>1、修改频道直播模板信息</sub> | POST | `/live/v4/channel/update-template` | query/form | channelId, template | V4ChannelService#updateTemplate (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 修改频道直播模版<br><sub>1、修改频道直播模板信息</sub> | POST | `/live/v4/channel/update-template` | query/form | channelId, template | V4ChannelService#updateTemplate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateTemplate (packages/cli/src/services/channel.service.sdk.ts:741) |
 | 修改频道装修设置<br><sub>1、修改频道的页面装修设置，建议将 查询频道的页面装修设置 接口的返回值进行修改作为入参调用该接口</sub> | POST | `/live/v4/channel/decorate/update` | json-body | channelId | PlayerService#updateChannelDecorate (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#updateChannelDecorate (packages/cli/src/services/player.service.sdk.ts:129) |
 | 修改频道状态为禁止直播<br><sub>1、禁止频道的直播推流，禁止有效期为24小时，24小时后会恢复频道推流</sub> | POST | `/live/v2/stream/{param}/cutoff` | query/form | userId | ChannelService#banPush (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#banPush (packages/cli/src/services/stream.service.sdk.ts:394) |
 | 修改频道状态为可直播<br><sub>1、恢复频道的直播推流</sub> | POST | `/live/v2/stream/{param}/resume` | query/form | - | ChannelService#resume (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#resume (packages/cli/src/services/stream.service.sdk.ts:403) |
 | 修改频道状态为无直播<br><sub>1、修改频道直播状态为无直播</sub> | POST | `/live/v2/channels/{param}/end` | query/form | - | ChannelService#setStatusEnd (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setStatusEnd (packages/cli/src/services/stream.service.sdk.ts:156) |
 | 修改频道状态为直播中<br><sub>1、修改频道直播状态为直播中</sub> | POST | `/live/v2/channels/{param}/live` | query/form | - | ChannelService#setStatusStart (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setStatusStart (packages/cli/src/services/stream.service.sdk.ts:118) |
-| 修改频道字幕配置信息<br><sub>1、修改频道字幕配置信息</sub> | POST | `/live/v4/channel/subtitle/config/update` | json-body | channelId | V4ChannelService#updateSubtitleConfig (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 修改频道字幕配置信息<br><sub>1、修改频道字幕配置信息</sub> | POST | `/live/v4/channel/subtitle/config/update` | json-body | channelId | V4ChannelService#updateSubtitleConfig (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateSubtitleConfig (packages/cli/src/services/channel.service.sdk.ts:681) |
 | 修改任务奖励活动<br><sub>1、修改任务奖励活动</sub> | POST | `/live/v4/channel/task-reward-activity/update` | json-body | activityId, channelId, tasks | V4ChannelService#updateTaskRewardActivity (packages/sdk/src/services/v4/channel.service.ts) | no |
 | 修改视频库单个视频的上移、下移（包括点播列表和回放列表）<br><sub>1、修改视频库单个视频的上移、下移（包括点播列表和回放列表）</sub> | POST | `/live/v3/channel/playback/single-sort` | query/form | - | ChannelService#movePlaybackVideo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#movePlaybackVideo (packages/cli/src/services/playback.service.sdk.ts:156) |
 | 修改视频库的默认视频<br><sub>1、将回放列表中的某个视频设置为默认回放视频</sub> | POST | `/live/v2/channel/recordFile/{param}/playback/set-Default` | query/form | - | ChannelService#setDefaultPlaybackVideo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setDefaultPlaybackVideo (packages/cli/src/services/record.service.sdk.ts:189) |
 | 修改视频库的视频排序<br><sub>1、修改视频库回放列表的视频排序</sub> | POST | `/live/v3/channel/playback/sort` | json-body | - | ChannelService#sortPlaybackVideos (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#sortPlaybackVideos (packages/cli/src/services/playback.service.sdk.ts:165) |
-| 修改云分发频道总开关<br><sub>1、修改单个频道云分发总开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-master-switch` | query/form | channelId | V4ChannelService#updateMasterSwitch (packages/sdk/src/services/v4/channel.service.ts) | no |
+| 修改云分发频道总开关<br><sub>1、修改单个频道云分发总开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-master-switch` | query/form | channelId | V4ChannelService#updateMasterSwitch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateMasterSwitch (packages/cli/src/services/channel.service.sdk.ts:716) |
 | 引用平台商品到频道商品<br><sub>1、将平台商品引用到指定频道（支持是否同步平台商品标签）</sub> | POST | `/live/v3/channel/product/reference` | json-body | channelId, originId, status | ChannelService#referenceProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#referenceProduct (packages/cli/src/services/product.service.sdk.ts:386) |
 | 暂存视频的字幕文件批量发布<br><sub>1、用于批量设置暂存视频字幕文件的发布状态，控制字幕在观看页是否显示</sub> | POST | `/live/v4/channel/record-file/subtitle/batch-publish` | query/form | subtitles, subtitles[].id, subtitles[].status | V4ChannelService#batchPublishRecordFileSubtitles (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#batchPublishRecordFileSubtitles (packages/cli/src/services/record.service.sdk.ts:308) |
 | 直播场次关联自定义ID<br><sub>1、将直播场次关联自定义的直播场次UUID，关联频道之后开播的场次、以及这些开播场次衍生出来的裁剪和合并视频</sub> | POST | `/live/v3/channel/session/relevance` | query/form | channelId, externalSessionId | ChannelService#relevanceSession (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#relevanceSession (packages/cli/src/services/session.service.sdk.ts:179) |

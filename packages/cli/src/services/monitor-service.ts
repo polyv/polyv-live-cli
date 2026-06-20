@@ -12,4 +12,9 @@ export class MonitorServiceSdk {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
     return client.other.listTencentStreamInfo(params);
   }
+
+  async listMonitorStreamInfo(params: any) {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listMonitorStreamInfo(params);
+  }
 }

@@ -18,6 +18,7 @@ import { AuthConfig } from '../types/auth';
 import {
   parseNonNegativeNumber,
   parsePositiveInteger,
+  parseStringList,
 } from '../utils/api-command';
 
 /**
@@ -372,6 +373,23 @@ Output Formats:
   table          Formatted output (default)
   json           JSON format for programmatic use
 `);
+
+  const skinCmd = playerCmd.command('skin').description('Manage V4 player skin settings');
+  skinCmd.command('update-batch')
+    .description('Batch update channel player skin')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated, max 500', parseStringList)
+    .requiredOption('--skin <skin>', 'skin: black|red|blue|white|green|golden')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+        await new PlayerHandler(authConfig, serviceConfig).updateSkinBatch(options);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
 
   const antiRecordCmd = playerCmd.command('anti-record').description('Manage anti-record settings');
 

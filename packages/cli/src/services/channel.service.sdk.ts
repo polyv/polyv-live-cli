@@ -616,6 +616,131 @@ export class ChannelServiceSdk {
     }
   }
 
+  async listChannelBasicExact(params: any = {}): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listChannelBasicExact(params);
+  }
+
+  async listChannelSimple(params: any = {}): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listChannelSimple(params);
+  }
+
+  async listLiveStatus(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listLiveStatus(params);
+  }
+
+  async getAccountViewerConfig(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getAccountViewerConfig(params);
+  }
+
+  async updateAccountViewerConfig(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateAccountViewerConfig(params);
+  }
+
+  async getByRole(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getByRole(params);
+  }
+
+  async updateByRole(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateByRole(params);
+  }
+
+  async createAccount(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.createAccount(params);
+  }
+
+  async updateAccountInfo(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateAccountInfo(params);
+  }
+
+  async deleteAccountsBatch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.deleteAccountsBatch(params);
+  }
+
+  async teacherList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.teacherList(params);
+  }
+
+  async getSubtitleConfig(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getSubtitleConfig(params);
+  }
+
+  async updateSubtitleConfig(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateSubtitleConfig(params);
+  }
+
+  async listSubtitleLanguages(): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listSubtitleLanguages();
+  }
+
+  async distributeList(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.distributeList(params);
+  }
+
+  async distributeCreateBatch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.distributeCreateBatch(params);
+  }
+
+  async distributeUpdateBatch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.distributeUpdateBatch(params);
+  }
+
+  async distributeDeleteBatch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.distributeDeleteBatch(params);
+  }
+
+  async getDistributeStatistic(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getDistributeStatistic(params);
+  }
+
+  async updateMasterSwitch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateMasterSwitch(params);
+  }
+
+  async updateSwitch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateSwitch(params);
+  }
+
+  async createInit(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.createInit(params);
+  }
+
+  async createMrChannel(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.createMrChannel(params);
+  }
+
+  async setPullBitrate(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.setPullBitrate(params);
+  }
+
+  async updateTemplate(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateTemplate(params);
+  }
+
   // ===== Validation Methods =====
 
   private validateCreateRequest(request: ChannelCreateRequest): void {

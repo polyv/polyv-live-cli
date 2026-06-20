@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20T01:49:45.321Z",
+  "generatedAt": "2026-06-20T02:10:21.645Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 476,
-    "cliMissingLatestApis": 102,
-    "cliCoverage": 82.4,
-    "cliUsageReferences": 478,
-    "cliSdkServiceUsages": 478,
+    "cliUsedLatestApis": 508,
+    "cliMissingLatestApis": 70,
+    "cliCoverage": 87.9,
+    "cliUsageReferences": 510,
+    "cliSdkServiceUsages": 510,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 463,
+    "matchedApiIds": 495,
     "sdkEndpointReferences": 711,
-    "cliCommandPaths": 596,
+    "cliCommandPaths": 631,
     "cliTopLevelCommands": 40
   },
   "modules": [
@@ -31,11 +31,11 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 181,
-      "cliMissing": 102,
+      "cliUsed": 213,
+      "cliMissing": 70,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 181,
-      "cliCoverage": 64
+      "sdkServiceUsed": 213,
+      "cliCoverage": 75.3
     },
     {
       "module": "account",
@@ -859,7 +859,7 @@
       "depth": 1,
       "signature": "channel",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 104
+      "line": 112
     },
     {
       "command": "channel advert-list",
@@ -870,7 +870,18 @@
       "depth": 2,
       "signature": "advert-list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 812
+      "line": 1154
+    },
+    {
+      "command": "channel basic-list",
+      "path": [
+        "channel",
+        "basic-list"
+      ],
+      "depth": 2,
+      "signature": "basic-list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 821
     },
     {
       "command": "channel batch-delete",
@@ -881,7 +892,7 @@
       "depth": 2,
       "signature": "batch-delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 521
+      "line": 560
     },
     {
       "command": "channel callback",
@@ -892,7 +903,7 @@
       "depth": 2,
       "signature": "callback",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 818
+      "line": 1160
     },
     {
       "command": "channel ccb-focus-reset",
@@ -903,7 +914,7 @@
       "depth": 2,
       "signature": "ccb-focus-reset",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1043
+      "line": 1385
     },
     {
       "command": "channel children-list",
@@ -914,7 +925,7 @@
       "depth": 2,
       "signature": "children-list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 895
+      "line": 1237
     },
     {
       "command": "channel copy",
@@ -925,7 +936,7 @@
       "depth": 2,
       "signature": "copy",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 884
+      "line": 1226
     },
     {
       "command": "channel create",
@@ -936,7 +947,18 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 135
+      "line": 174
+    },
+    {
+      "command": "channel create-init",
+      "path": [
+        "channel",
+        "create-init"
+      ],
+      "depth": 2,
+      "signature": "create-init",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 851
     },
     {
       "command": "channel danmu-batch-update",
@@ -947,7 +969,7 @@
       "depth": 2,
       "signature": "danmu-batch-update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 992
+      "line": 1334
     },
     {
       "command": "channel delete",
@@ -958,7 +980,18 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 455
+      "line": 494
+    },
+    {
+      "command": "channel distribute",
+      "path": [
+        "channel",
+        "distribute"
+      ],
+      "depth": 2,
+      "signature": "distribute",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1074
     },
     {
       "command": "channel follow",
@@ -969,7 +1002,7 @@
       "depth": 2,
       "signature": "follow",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 955
+      "line": 1297
     },
     {
       "command": "channel get",
@@ -980,7 +1013,7 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 305
+      "line": 344
     },
     {
       "command": "channel list",
@@ -991,7 +1024,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 226
+      "line": 265
+    },
+    {
+      "command": "channel live-status-list",
+      "path": [
+        "channel",
+        "live-status-list"
+      ],
+      "depth": 2,
+      "signature": "live-status-list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 845
     },
     {
       "command": "channel marquee-url-set",
@@ -1002,7 +1046,7 @@
       "depth": 2,
       "signature": "marquee-url-set",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1019
+      "line": 1361
     },
     {
       "command": "channel max-viewer-set",
@@ -1013,7 +1057,18 @@
       "depth": 2,
       "signature": "max-viewer-set",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1001
+      "line": 1343
+    },
+    {
+      "command": "channel mr-create",
+      "path": [
+        "channel",
+        "mr-create"
+      ],
+      "depth": 2,
+      "signature": "mr-create",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 875
     },
     {
       "command": "channel password-update",
@@ -1024,7 +1079,7 @@
       "depth": 2,
       "signature": "password-update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1010
+      "line": 1352
     },
     {
       "command": "channel ppt-record",
@@ -1035,7 +1090,18 @@
       "depth": 2,
       "signature": "ppt-record",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 840
+      "line": 1182
+    },
+    {
+      "command": "channel pull-bitrate-set",
+      "path": [
+        "channel",
+        "pull-bitrate-set"
+      ],
+      "depth": 2,
+      "signature": "pull-bitrate-set",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 892
     },
     {
       "command": "channel questionnaire-stop",
@@ -1046,7 +1112,7 @@
       "depth": 2,
       "signature": "questionnaire-stop",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 985
+      "line": 1327
     },
     {
       "command": "channel role",
@@ -1057,7 +1123,18 @@
       "depth": 2,
       "signature": "role",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 782
+      "line": 916
+    },
+    {
+      "command": "channel simple-list",
+      "path": [
+        "channel",
+        "simple-list"
+      ],
+      "depth": 2,
+      "signature": "simple-list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 834
     },
     {
       "command": "channel status-valid",
@@ -1068,7 +1145,7 @@
       "depth": 2,
       "signature": "status-valid",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1028
+      "line": 1370
     },
     {
       "command": "channel submeeting-batch-add",
@@ -1079,7 +1156,29 @@
       "depth": 2,
       "signature": "submeeting-batch-add",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 974
+      "line": 1316
+    },
+    {
+      "command": "channel subtitle",
+      "path": [
+        "channel",
+        "subtitle"
+      ],
+      "depth": 2,
+      "signature": "subtitle",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1043
+    },
+    {
+      "command": "channel template-update",
+      "path": [
+        "channel",
+        "template-update"
+      ],
+      "depth": 2,
+      "signature": "template-update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 904
     },
     {
       "command": "channel token",
@@ -1090,7 +1189,7 @@
       "depth": 2,
       "signature": "token",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 905
+      "line": 1247
     },
     {
       "command": "channel update",
@@ -1101,7 +1200,7 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 369
+      "line": 408
     },
     {
       "command": "channel viewer",
@@ -1112,7 +1211,7 @@
       "depth": 2,
       "signature": "viewer",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 597
+      "line": 636
     },
     {
       "command": "channel callback get",
@@ -1124,7 +1223,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 819
+      "line": 1161
     },
     {
       "command": "channel callback update",
@@ -1136,7 +1235,91 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 824
+      "line": 1166
+    },
+    {
+      "command": "channel distribute create-batch",
+      "path": [
+        "channel",
+        "distribute",
+        "create-batch"
+      ],
+      "depth": 3,
+      "signature": "create-batch",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1081
+    },
+    {
+      "command": "channel distribute delete-batch",
+      "path": [
+        "channel",
+        "distribute",
+        "delete-batch"
+      ],
+      "depth": 3,
+      "signature": "delete-batch",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1111
+    },
+    {
+      "command": "channel distribute list",
+      "path": [
+        "channel",
+        "distribute",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1075
+    },
+    {
+      "command": "channel distribute master-switch",
+      "path": [
+        "channel",
+        "distribute",
+        "master-switch"
+      ],
+      "depth": 3,
+      "signature": "master-switch",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1130
+    },
+    {
+      "command": "channel distribute statistic",
+      "path": [
+        "channel",
+        "distribute",
+        "statistic"
+      ],
+      "depth": 3,
+      "signature": "statistic",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1122
+    },
+    {
+      "command": "channel distribute switch",
+      "path": [
+        "channel",
+        "distribute",
+        "switch"
+      ],
+      "depth": 3,
+      "signature": "switch",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1141
+    },
+    {
+      "command": "channel distribute update-batch",
+      "path": [
+        "channel",
+        "distribute",
+        "update-batch"
+      ],
+      "depth": 3,
+      "signature": "update-batch",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1096
     },
     {
       "command": "channel follow list",
@@ -1148,7 +1331,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 956
+      "line": 1298
     },
     {
       "command": "channel follow update",
@@ -1160,7 +1343,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 961
+      "line": 1303
     },
     {
       "command": "channel ppt-record add-task",
@@ -1172,7 +1355,7 @@
       "depth": 3,
       "signature": "add-task",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 869
+      "line": 1211
     },
     {
       "command": "channel ppt-record delete",
@@ -1184,7 +1367,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 876
+      "line": 1218
     },
     {
       "command": "channel ppt-record list",
@@ -1196,7 +1379,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 858
+      "line": 1200
     },
     {
       "command": "channel ppt-record setting",
@@ -1208,7 +1391,43 @@
       "depth": 3,
       "signature": "setting",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 841
+      "line": 1183
+    },
+    {
+      "command": "channel role account-create",
+      "path": [
+        "channel",
+        "role",
+        "account-create"
+      ],
+      "depth": 3,
+      "signature": "account-create",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 945
+    },
+    {
+      "command": "channel role account-update",
+      "path": [
+        "channel",
+        "role",
+        "account-update"
+      ],
+      "depth": 3,
+      "signature": "account-update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 965
+    },
+    {
+      "command": "channel role accounts-delete",
+      "path": [
+        "channel",
+        "role",
+        "accounts-delete"
+      ],
+      "depth": 3,
+      "signature": "accounts-delete",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 985
     },
     {
       "command": "channel role batch-create",
@@ -1220,7 +1439,31 @@
       "depth": 3,
       "signature": "batch-create",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 794
+      "line": 928
+    },
+    {
+      "command": "channel role config-get",
+      "path": [
+        "channel",
+        "role",
+        "config-get"
+      ],
+      "depth": 3,
+      "signature": "config-get",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1020
+    },
+    {
+      "command": "channel role config-update",
+      "path": [
+        "channel",
+        "role",
+        "config-update"
+      ],
+      "depth": 3,
+      "signature": "config-update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1026
     },
     {
       "command": "channel role delete",
@@ -1232,7 +1475,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 804
+      "line": 938
     },
     {
       "command": "channel role get",
@@ -1244,7 +1487,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 783
+      "line": 917
     },
     {
       "command": "channel role list",
@@ -1256,7 +1499,79 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 789
+      "line": 923
+    },
+    {
+      "command": "channel role teacher-list",
+      "path": [
+        "channel",
+        "role",
+        "teacher-list"
+      ],
+      "depth": 3,
+      "signature": "teacher-list",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 996
+    },
+    {
+      "command": "channel role viewer-get",
+      "path": [
+        "channel",
+        "role",
+        "viewer-get"
+      ],
+      "depth": 3,
+      "signature": "viewer-get",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1001
+    },
+    {
+      "command": "channel role viewer-update",
+      "path": [
+        "channel",
+        "role",
+        "viewer-update"
+      ],
+      "depth": 3,
+      "signature": "viewer-update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1006
+    },
+    {
+      "command": "channel subtitle config-get",
+      "path": [
+        "channel",
+        "subtitle",
+        "config-get"
+      ],
+      "depth": 3,
+      "signature": "config-get",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1044
+    },
+    {
+      "command": "channel subtitle config-update",
+      "path": [
+        "channel",
+        "subtitle",
+        "config-update"
+      ],
+      "depth": 3,
+      "signature": "config-update",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1053
+    },
+    {
+      "command": "channel subtitle languages",
+      "path": [
+        "channel",
+        "subtitle",
+        "languages"
+      ],
+      "depth": 3,
+      "signature": "languages",
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1049
     },
     {
       "command": "channel token api",
@@ -1268,7 +1583,7 @@
       "depth": 3,
       "signature": "api",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 916
+      "line": 1258
     },
     {
       "command": "channel token chat",
@@ -1280,7 +1595,7 @@
       "depth": 3,
       "signature": "chat",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 932
+      "line": 1274
     },
     {
       "command": "channel token login-url",
@@ -1292,7 +1607,7 @@
       "depth": 3,
       "signature": "login-url",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 926
+      "line": 1268
     },
     {
       "command": "channel token set",
@@ -1304,7 +1619,7 @@
       "depth": 3,
       "signature": "set",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 940
+      "line": 1282
     },
     {
       "command": "channel token set-account",
@@ -1316,7 +1631,7 @@
       "depth": 3,
       "signature": "set-account",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 947
+      "line": 1289
     },
     {
       "command": "channel token watch-api",
@@ -1328,7 +1643,7 @@
       "depth": 3,
       "signature": "watch-api",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 906
+      "line": 1248
     },
     {
       "command": "channel viewer add",
@@ -1340,7 +1655,7 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 705
+      "line": 744
     },
     {
       "command": "channel viewer delete",
@@ -1352,7 +1667,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 718
+      "line": 757
     },
     {
       "command": "channel viewer export",
@@ -1364,7 +1679,7 @@
       "depth": 3,
       "signature": "export",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 697
+      "line": 736
     },
     {
       "command": "channel viewer group",
@@ -1376,7 +1691,7 @@
       "depth": 3,
       "signature": "group",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 612
+      "line": 651
     },
     {
       "command": "channel viewer group-setting",
@@ -1388,7 +1703,7 @@
       "depth": 3,
       "signature": "group-setting",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 661
+      "line": 700
     },
     {
       "command": "channel viewer import",
@@ -1400,7 +1715,7 @@
       "depth": 3,
       "signature": "import",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 743
+      "line": 782
     },
     {
       "command": "channel viewer list",
@@ -1412,7 +1727,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 687
+      "line": 726
     },
     {
       "command": "channel viewer transfer",
@@ -1424,7 +1739,7 @@
       "depth": 3,
       "signature": "transfer",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 730
+      "line": 769
     },
     {
       "command": "channel viewer unrelated-list",
@@ -1436,7 +1751,7 @@
       "depth": 3,
       "signature": "unrelated-list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 756
+      "line": 795
     },
     {
       "command": "channel ppt-record setting get",
@@ -1449,7 +1764,7 @@
       "depth": 4,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 842
+      "line": 1184
     },
     {
       "command": "channel ppt-record setting update",
@@ -1462,7 +1777,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 847
+      "line": 1189
     },
     {
       "command": "channel viewer group create",
@@ -1475,7 +1790,7 @@
       "depth": 4,
       "signature": "create",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 625
+      "line": 664
     },
     {
       "command": "channel viewer group delete",
@@ -1488,7 +1803,7 @@
       "depth": 4,
       "signature": "delete",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 650
+      "line": 689
     },
     {
       "command": "channel viewer group list",
@@ -1501,7 +1816,7 @@
       "depth": 4,
       "signature": "list",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 617
+      "line": 656
     },
     {
       "command": "channel viewer group update",
@@ -1514,7 +1829,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 637
+      "line": 676
     },
     {
       "command": "channel viewer group-setting get",
@@ -1527,7 +1842,7 @@
       "depth": 4,
       "signature": "get",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 666
+      "line": 705
     },
     {
       "command": "channel viewer group-setting update",
@@ -1540,7 +1855,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 674
+      "line": 713
     },
     {
       "command": "chat",
@@ -3362,7 +3677,7 @@
       "depth": 2,
       "signature": "config",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 84
+      "line": 102
     },
     {
       "command": "monitor export",
@@ -3373,7 +3688,7 @@
       "depth": 2,
       "signature": "export <filepath>",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 120
+      "line": 138
     },
     {
       "command": "monitor import",
@@ -3384,7 +3699,7 @@
       "depth": 2,
       "signature": "import <filepath>",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 128
+      "line": 146
     },
     {
       "command": "monitor layouts",
@@ -3395,7 +3710,7 @@
       "depth": 2,
       "signature": "layouts",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 93
+      "line": 111
     },
     {
       "command": "monitor status",
@@ -3405,6 +3720,17 @@
       ],
       "depth": 2,
       "signature": "status",
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 93
+    },
+    {
+      "command": "monitor stream-info-list",
+      "path": [
+        "monitor",
+        "stream-info-list"
+      ],
+      "depth": 2,
+      "signature": "stream-info-list",
       "file": "packages/cli/src/commands/monitor.commands.ts",
       "line": 75
     },
@@ -3428,7 +3754,7 @@
       "depth": 2,
       "signature": "test",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 111
+      "line": 129
     },
     {
       "command": "monitor themes",
@@ -3439,7 +3765,7 @@
       "depth": 2,
       "signature": "themes",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 102
+      "line": 120
     },
     {
       "command": "partner",
@@ -3987,7 +4313,7 @@
       "depth": 1,
       "signature": "player",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 198
+      "line": 199
     },
     {
       "command": "player advert",
@@ -3998,7 +4324,7 @@
       "depth": 2,
       "signature": "advert",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 433
+      "line": 451
     },
     {
       "command": "player anti-record",
@@ -4009,7 +4335,7 @@
       "depth": 2,
       "signature": "anti-record",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 376
+      "line": 394
     },
     {
       "command": "player config",
@@ -4020,7 +4346,7 @@
       "depth": 2,
       "signature": "config",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 202
+      "line": 203
     },
     {
       "command": "player logo-update",
@@ -4031,7 +4357,7 @@
       "depth": 2,
       "signature": "logo-update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 475
+      "line": 493
     },
     {
       "command": "player marquee-url",
@@ -4042,7 +4368,18 @@
       "depth": 2,
       "signature": "marquee-url",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 416
+      "line": 434
+    },
+    {
+      "command": "player skin",
+      "path": [
+        "player",
+        "skin"
+      ],
+      "depth": 2,
+      "signature": "skin",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 377
     },
     {
       "command": "player watch-feedback-list",
@@ -4053,7 +4390,7 @@
       "depth": 2,
       "signature": "watch-feedback-list",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 494
+      "line": 512
     },
     {
       "command": "player advert head-update",
@@ -4065,7 +4402,7 @@
       "depth": 3,
       "signature": "head-update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 434
+      "line": 452
     },
     {
       "command": "player advert stop-update",
@@ -4077,7 +4414,7 @@
       "depth": 3,
       "signature": "stop-update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 457
+      "line": 475
     },
     {
       "command": "player anti-record get",
@@ -4089,7 +4426,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 378
+      "line": 396
     },
     {
       "command": "player anti-record update",
@@ -4101,7 +4438,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 392
+      "line": 410
     },
     {
       "command": "player config get",
@@ -4113,7 +4450,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 206
+      "line": 207
     },
     {
       "command": "player config update",
@@ -4125,7 +4462,19 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 270
+      "line": 271
+    },
+    {
+      "command": "player skin update-batch",
+      "path": [
+        "player",
+        "skin",
+        "update-batch"
+      ],
+      "depth": 3,
+      "signature": "update-batch",
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 378
     },
     {
       "command": "product",
@@ -5131,7 +5480,7 @@
       "depth": 1,
       "signature": "statistics",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 166
+      "line": 168
     },
     {
       "command": "statistics audience",
@@ -5142,7 +5491,7 @@
       "depth": 2,
       "signature": "audience",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 433
+      "line": 514
     },
     {
       "command": "statistics concurrency",
@@ -5153,7 +5502,7 @@
       "depth": 2,
       "signature": "concurrency",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 288
+      "line": 369
     },
     {
       "command": "statistics export",
@@ -5167,6 +5516,17 @@
       "line": 171
     },
     {
+      "command": "statistics invite-list",
+      "path": [
+        "statistics",
+        "invite-list"
+      ],
+      "depth": 2,
+      "signature": "invite-list",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 273
+    },
+    {
       "command": "statistics inviter-poster-list",
       "path": [
         "statistics",
@@ -5175,7 +5535,40 @@
       "depth": 2,
       "signature": "inviter-poster-list",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 189
+      "line": 205
+    },
+    {
+      "command": "statistics live-data",
+      "path": [
+        "statistics",
+        "live-data"
+      ],
+      "depth": 2,
+      "signature": "live-data",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 237
+    },
+    {
+      "command": "statistics live-session-list",
+      "path": [
+        "statistics",
+        "live-session-list"
+      ],
+      "depth": 2,
+      "signature": "live-session-list",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 248
+    },
+    {
+      "command": "statistics lottery-list",
+      "path": [
+        "statistics",
+        "lottery-list"
+      ],
+      "depth": 2,
+      "signature": "lottery-list",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 222
     },
     {
       "command": "statistics max-concurrent",
@@ -5186,7 +5579,7 @@
       "depth": 2,
       "signature": "max-concurrent",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 357
+      "line": 438
     },
     {
       "command": "statistics session-summary-list",
@@ -5197,7 +5590,7 @@
       "depth": 2,
       "signature": "session-summary-list",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 169
+      "line": 185
     },
     {
       "command": "statistics view",
@@ -5208,7 +5601,18 @@
       "depth": 2,
       "signature": "view",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 207
+      "line": 288
+    },
+    {
+      "command": "statistics weixin-booking-list",
+      "path": [
+        "statistics",
+        "weixin-booking-list"
+      ],
+      "depth": 2,
+      "signature": "weixin-booking-list",
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 260
     },
     {
       "command": "statistics audience device",
@@ -5220,7 +5624,7 @@
       "depth": 3,
       "signature": "device",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 520
+      "line": 601
     },
     {
       "command": "statistics audience region",
@@ -5232,7 +5636,7 @@
       "depth": 3,
       "signature": "region",
       "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 437
+      "line": 518
     },
     {
       "command": "statistics export session",
@@ -7087,14 +7491,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 102,
+          "missing": 70,
           "total": 283,
-          "coverage": 64
+          "coverage": 75.3
         }
       ],
-      "missing": 102,
+      "missing": 70,
       "total": 283,
-      "coverage": 64
+      "coverage": 75.3
     }
   ],
   "unmatchedUsages": [],
@@ -8684,8 +9088,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#distributeList",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 691,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9090,8 +9503,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listChannelLotteryRecords",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 66,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9201,7 +9623,7 @@
             "reference": "StatisticsService#getRegionDistribution",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 306,
+            "line": 331,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -9516,8 +9938,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getAccountViewerConfig",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 636,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9545,8 +9976,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getByRole",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 646,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9619,7 +10059,7 @@
             "reference": "StatisticsService#getConcurrencyData",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 151,
+            "line": 176,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -9658,7 +10098,7 @@
             "reference": "StatisticsService#getMaxConcurrent",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 222,
+            "line": 247,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -10262,8 +10702,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getLiveData",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 71,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10371,7 +10820,7 @@
             "reference": "StatisticsService#getDeviceDistribution",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 388,
+            "line": 413,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -10510,8 +10959,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getSubtitleConfig",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 676,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10660,7 +11118,7 @@
             "reference": "StatisticsService#getDailyViewStatistics",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 80,
+            "line": 105,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -10688,8 +11146,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listSessionStats",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 76,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10714,8 +11181,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listSubtitleLanguages",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 686,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10775,8 +11251,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listChannelBasicExact",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 621,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10801,8 +11286,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listChannelSimple",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 626,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10864,8 +11358,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listWeixinBookings",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 81,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10995,8 +11498,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listInviteStats",
+            "cliModule": "statistics",
+            "file": "packages/cli/src/services/statistics.service.sdk.ts",
+            "line": 86,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11060,8 +11572,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getDistributeStatistic",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 711,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11199,8 +11720,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createInit",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 726,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11299,8 +11829,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createAccount",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 656,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11623,8 +12162,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createMrChannel",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 731,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11659,7 +12207,7 @@
             "reference": "StatisticsService#exportSessionStats",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 584,
+            "line": 609,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -11883,7 +12431,7 @@
             "reference": "StatisticsService#getViewlog",
             "cliModule": "statistics",
             "file": "packages/cli/src/services/statistics.service.sdk.ts",
-            "line": 492,
+            "line": 517,
             "sdkFile": "packages/sdk/src/services/statistics.service.ts"
           }
         ]
@@ -13036,8 +13584,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listMonitorStreamInfo",
+            "cliModule": "monitor",
+            "file": "packages/cli/src/services/monitor-service.ts",
+            "line": 18,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13252,8 +13809,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLiveStatus",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 631,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13280,8 +13846,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#teacherList",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 671,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13527,8 +14102,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#distributeDeleteBatch",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 706,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13556,8 +14140,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteAccountsBatch",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 666,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13705,8 +14298,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#distributeCreateBatch",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 696,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13770,8 +14372,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#distributeUpdateBatch",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 701,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13876,8 +14487,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateSkinBatch",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 174,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13943,8 +14563,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateSwitch",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 721,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16727,8 +17356,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateAccountViewerConfig",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 641,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16756,8 +17394,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateAccountInfo",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 661,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17092,8 +17739,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateByRole",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 651,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17159,8 +17815,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#setPullBitrate",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 736,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17610,8 +18275,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateTemplate",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 741,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17817,8 +18491,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateSubtitleConfig",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 681,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17980,8 +18663,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateMasterSwitch",
+            "cliModule": "channel",
+            "file": "packages/cli/src/services/channel.service.sdk.ts",
+            "line": 716,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {

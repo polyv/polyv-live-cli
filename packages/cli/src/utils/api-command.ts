@@ -3,6 +3,7 @@ import { authAdapter } from '../config/auth-adapter';
 import { configManager } from '../config/manager';
 import type { AuthConfig } from '../types/auth';
 import { confirmDeletion } from './confirmation';
+import { formatJSON, formatTable } from './formatter';
 
 export interface ApiServiceConfig {
   baseUrl: string;
@@ -135,6 +136,39 @@ export async function confirmWrite(force: boolean | undefined, message: string):
   if (!confirmed) {
     throw new Error('Operation cancelled.');
   }
+}
+
+export function displayApiResult(data: unknown, output = 'table'): void {
+  if (output === 'json') {
+    console.log(formatJSON(data));
+    return;
+  }
+
+  if (Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && data[0] !== null) {
+    const headers = Object.keys(data[0] as Record<string, unknown>);
+    const rows = data.map((item) => headers.map((header) => formatCell((item as Record<string, unknown>)[header])));
+    console.log(formatTable({ headers, data: rows }));
+    return;
+  }
+
+  if (data && typeof data === 'object' && !Array.isArray(data)) {
+    const entries = Object.entries(data as Record<string, unknown>);
+    if (entries.every(([, value]) => typeof value !== 'object' || value === null)) {
+      console.log(formatTable({
+        headers: ['Field', 'Value'],
+        data: entries.map(([key, value]) => [key, formatCell(value)]),
+      }));
+      return;
+    }
+  }
+
+  console.log(formatJSON(data));
+}
+
+function formatCell(value: unknown): string {
+  if (value === undefined || value === null) return '';
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
 }
 
 export function commandParentOptions(program: Command): Record<string, unknown> {

@@ -73,6 +73,24 @@ export function registerMonitorCommands(program: Command): void {
     });
 
   monitorCommand
+    .command('stream-info-list')
+    .description('List V4 channel realtime stream monitoring info')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--start-time <timestamp>', 'start timestamp')
+    .option('--end-time <timestamp>', 'end timestamp')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadApiCommandConfig(commandParentOptions(program));
+        const service = new MonitorServiceSdk(authConfig, serviceConfig);
+        displayApiResult(await service.listMonitorStreamInfo(apiParams(options)), options.output);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  monitorCommand
     .command('status')
     .description('Show monitoring dashboard status')
     .option('-o, --output <format>', 'Output format (table, json)', 'table')

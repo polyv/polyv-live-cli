@@ -169,6 +169,11 @@ export class PlayerServiceSdk {
     return client.channel.updatePlayerLogo(String(channelId), params);
   }
 
+  async updateSkinBatch(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.updateSkinBatch(params);
+  }
+
   /**
    * Validates player config get options
    * @param options Options to validate

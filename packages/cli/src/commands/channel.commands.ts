@@ -12,7 +12,15 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
-import { apiParams, confirmWrite, parseJsonArray, parseStringList } from '../utils/api-command';
+import {
+  apiParams,
+  confirmWrite,
+  displayApiResult,
+  parseJsonArray,
+  parseJsonObject,
+  parseNumberList,
+  parseStringList,
+} from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -125,6 +133,37 @@ export function registerChannelCommands(program: Command): void {
       const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
       const channelHandler = new ChannelHandler(authConfig, serviceConfig);
       await action(channelHandler);
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  };
+
+  const runChannelApiCommand = async (
+    options: any,
+    action: (service: ChannelServiceSdk) => Promise<any>
+  ): Promise<void> => {
+    try {
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+      const service = new ChannelServiceSdk(authConfig, serviceConfig);
+      displayApiResult(await action(service), options.output);
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  };
+
+  const runChannelApiWriteCommand = async (
+    options: any,
+    confirmationMessage: string,
+    action: (service: ChannelServiceSdk) => Promise<any>
+  ): Promise<void> => {
+    try {
+      await confirmWrite(options.force, confirmationMessage);
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+      const service = new ChannelServiceSdk(authConfig, serviceConfig);
+      const result = await action(service);
+      displayApiResult({ success: true, result: result ?? true }, options.output);
     } catch (error) {
       logError(error instanceof Error ? error : new Error(String(error)));
       process.exit(1);
@@ -779,6 +818,101 @@ Scope:
     (handler) => handler.listUnrelatedChannelViewers(options)
   ));
 
+  channelCmd.command('basic-list')
+    .description('List V4 channel basic information')
+    .option('--page-number <page>', 'page number', parseInteger)
+    .option('--page-size <size>', 'page size', parseInteger)
+    .option('--category-ids <ids>', 'category IDs, comma-separated', parseStringList)
+    .option('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .option('--watch-status <status>', 'watch status filter')
+    .option('--start-time <timestamp>', 'start timestamp', parseInteger)
+    .option('--end-time <timestamp>', 'end timestamp', parseInteger)
+    .option('--order-by <orderBy>', 'order by value')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.listChannelBasicExact(apiParams(options))));
+
+  channelCmd.command('simple-list')
+    .description('List V4 channel compact information')
+    .option('--page-number <page>', 'page number', parseInteger)
+    .option('--page-size <size>', 'page size', parseInteger)
+    .option('--category-id <id>', 'category ID')
+    .option('--watch-status <status>', 'watch status filter')
+    .option('--keyword <keyword>', 'channel keyword')
+    .option('--order-by <orderBy>', 'order by value')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.listChannelSimple(apiParams(options))));
+
+  channelCmd.command('live-status-list')
+    .description('Batch query V4 channel live status')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated, max 200', parseStringList)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.listLiveStatus(apiParams(options))));
+
+  channelCmd.command('create-init')
+    .description('Create and initialize a V4 channel')
+    .requiredOption('--basic-setting-json <json>', 'basicSetting JSON object', parseJsonObject)
+    .option('--master-auth-setting-json <json>', 'masterAuthSetting JSON object', parseJsonObject)
+    .option('--playback-setting-json <json>', 'playbackSetting JSON object', parseJsonObject)
+    .option('--roles-json <json>', 'roles JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Create initialized channel "${options.basicSettingJson?.name || ''}"?`,
+      (service) => service.createInit(apiParams({
+        ...options,
+        basicSetting: options.basicSettingJson,
+        masterAuthSetting: options.masterAuthSettingJson,
+        playbackSetting: options.playbackSettingJson,
+        roles: options.rolesJson,
+        basicSettingJson: undefined,
+        masterAuthSettingJson: undefined,
+        playbackSettingJson: undefined,
+        rolesJson: undefined,
+      }))
+    ));
+
+  channelCmd.command('mr-create')
+    .description('Create a V4 MR channel')
+    .requiredOption('--name <name>', 'channel name')
+    .option('--category-id <id>', 'category ID', parseInteger)
+    .option('--start-time <timestamp>', 'start timestamp', parseInteger)
+    .option('--channel-passwd <password>', 'channel password')
+    .option('--assistant-passwd <password>', 'assistant password')
+    .option('--splash-img <url>', 'splash image URL')
+    .option('--sub-account <email>', 'sub account email')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Create MR channel "${options.name}"?`,
+      (service) => service.createMrChannel(apiParams(options))
+    ));
+
+  channelCmd.command('pull-bitrate-set')
+    .description('Set V4 channel pull bitrate')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--pull-bit-rate <bitrate>', 'pull bitrate: -1,400,600,800,1000,1500,2000,2500', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Set pull bitrate for channel ${options.channelId}?`,
+      (service) => service.setPullBitrate(apiParams(options))
+    ));
+
+  channelCmd.command('template-update')
+    .description('Update V4 channel live template')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--template <template>', 'template value', validateTemplate)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update template for channel ${options.channelId}?`,
+      (service) => service.updateTemplate(apiParams(options))
+    ));
+
   const roleCmd = channelCmd.command('role').description('Manage historical channel role accounts');
   roleCmd.command('get')
     .description('Get one role account')
@@ -808,6 +942,214 @@ Scope:
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => runChannelViewerCommand((handler) => handler.deleteRoleAccount(options)));
+  roleCmd.command('account-create')
+    .description('Create a V4 assistant or guest role account')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--role <role>', 'role, for example Assistant or Guest')
+    .option('--actor <actor>', 'actor label')
+    .option('--nick-name <name>', 'nickname')
+    .option('--avatar <url>', 'avatar URL')
+    .option('--passwd <password>', 'role account password')
+    .option('--purview-list-json <json>', 'purviewList JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Create ${options.role} account in channel ${options.channelId}?`,
+      (service) => service.createAccount(apiParams({
+        ...options,
+        purviewList: options.purviewListJson,
+        purviewListJson: undefined,
+      }))
+    ));
+  roleCmd.command('account-update')
+    .description('Update a V4 role account')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--account <account>', 'role account')
+    .option('--actor <actor>', 'actor label')
+    .option('--nick-name <name>', 'nickname')
+    .option('--avatar <url>', 'avatar URL')
+    .option('--passwd <password>', 'role account password')
+    .option('--purview-list-json <json>', 'purviewList JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update role account ${options.account} in channel ${options.channelId}?`,
+      (service) => service.updateAccountInfo(apiParams({
+        ...options,
+        purviewList: options.purviewListJson,
+        purviewListJson: undefined,
+      }))
+    ));
+  roleCmd.command('accounts-delete')
+    .description('Batch delete V4 role accounts')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--accounts <accounts>', 'role accounts, comma-separated', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Delete ${options.accounts.length} role account(s) from channel ${options.channelId}?`,
+      (service) => service.deleteAccountsBatch(apiParams(options))
+    ));
+  roleCmd.command('teacher-list')
+    .description('Batch query V4 teacher information')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseStringList)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.teacherList(apiParams(options))));
+  roleCmd.command('viewer-get')
+    .description('Get V4 role-viewer display config')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.getAccountViewerConfig(apiParams(options))));
+  roleCmd.command('viewer-update')
+    .description('Update V4 role-viewer display config')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--actor <actor>', 'actor title')
+    .option('--actor-enabled <Y|N>', 'actor title switch', validateYnFlag)
+    .option('--question-student-title <title>', 'question student title')
+    .option('--question-student-title-enabled <Y|N>', 'question student title switch', validateYnFlag)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update role-viewer config for channel ${options.channelId}?`,
+      (service) => service.updateAccountViewerConfig(apiParams(options))
+    ));
+  roleCmd.command('config-get')
+    .description('Get V4 role config by role')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--role <role>', 'role')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.getByRole(apiParams(options))));
+  roleCmd.command('config-update')
+    .description('Update V4 role config by role')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--role <role>', 'role')
+    .requiredOption('--config-json <json>', 'config JSON object', parseJsonObject)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update role config ${options.role} for channel ${options.channelId}?`,
+      (service) => service.updateByRole(apiParams({
+        ...options,
+        config: options.configJson,
+        configJson: undefined,
+      }))
+    ));
+
+  const subtitleCmd = channelCmd.command('subtitle').description('Manage V4 realtime subtitle settings');
+  subtitleCmd.command('config-get')
+    .description('Get realtime subtitle config')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.getSubtitleConfig(apiParams(options))));
+  subtitleCmd.command('languages')
+    .description('List all realtime subtitle languages')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.listSubtitleLanguages()));
+  subtitleCmd.command('config-update')
+    .description('Update realtime subtitle config')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--real-time-subtitle-enabled <Y|N>', 'realtime subtitle switch', validateYnFlag)
+    .option('--real-time-subtitle-display-enabled <Y|N>', 'display realtime subtitle switch', validateYnFlag)
+    .option('--source-language <code>', 'source language code')
+    .option('--subtitle-translation-enabled <Y|N>', 'translation switch', validateYnFlag)
+    .option('--translation-language <code>', 'single translation language')
+    .option('--translation-languages <codes>', 'translation language codes, comma-separated', parseStringList)
+    .option('--subtitle-callback-enabled <Y|N>', 'subtitle callback switch', validateYnFlag)
+    .option('--subtitle-callback-url <url>', 'subtitle callback URL')
+    .option('--real-time-subtitle-display-number-limit-enabled <Y|N>', 'display line limit switch', validateYnFlag)
+    .option('--real-time-subtitle-display-number <number>', 'display line count', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update subtitle config for channel ${options.channelId}?`,
+      (service) => service.updateSubtitleConfig(apiParams(options))
+    ));
+
+  const distributeCmd = channelCmd.command('distribute').description('Manage V4 cloud distribution');
+  distributeCmd.command('list')
+    .description('List cloud distribution endpoints')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--distribute-ids <ids>', 'distribution IDs, comma-separated')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.distributeList(apiParams(options))));
+  distributeCmd.command('create-batch')
+    .description('Batch create cloud distribution endpoints')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--distributes-json <json>', 'distributes JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Create ${options.distributesJson.length} distribution endpoint(s) for channel ${options.channelId}?`,
+      (service) => service.distributeCreateBatch(apiParams({
+        ...options,
+        distributes: options.distributesJson,
+        distributesJson: undefined,
+      }))
+    ));
+  distributeCmd.command('update-batch')
+    .description('Batch update cloud distribution endpoints')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--distributes-json <json>', 'distributes JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update ${options.distributesJson.length} distribution endpoint(s) for channel ${options.channelId}?`,
+      (service) => service.distributeUpdateBatch(apiParams({
+        ...options,
+        distributes: options.distributesJson,
+        distributesJson: undefined,
+      }))
+    ));
+  distributeCmd.command('delete-batch')
+    .description('Batch delete cloud distribution endpoints')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--ids <ids>', 'distribution IDs, comma-separated', parseNumberList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Delete ${options.ids.length} distribution endpoint(s) from channel ${options.channelId}?`,
+      (service) => service.distributeDeleteBatch(apiParams(options))
+    ));
+  distributeCmd.command('statistic')
+    .description('Get cloud distribution statistics')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .option('--session-ids <ids>', 'session IDs, comma-separated', parseStringList)
+    .option('--start-time <timestamp>', 'start timestamp', parseInteger)
+    .option('--end-time <timestamp>', 'end timestamp', parseInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiCommand(options, (service) => service.getDistributeStatistic(apiParams(options))));
+  distributeCmd.command('master-switch')
+    .description('Update cloud distribution master switch')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--enabled <Y|N>', 'master switch', validateYnFlag)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update distribution master switch for channel ${options.channelId}?`,
+      (service) => service.updateMasterSwitch(apiParams(options))
+    ));
+  distributeCmd.command('switch')
+    .description('Update one cloud distribution endpoint switch')
+    .requiredOption('--channel-id <id>', 'channel ID')
+    .requiredOption('--distribute-id <id>', 'distribution ID', parseInteger)
+    .requiredOption('--enabled <Y|N>', 'endpoint switch', validateYnFlag)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runChannelApiWriteCommand(
+      options,
+      `Update distribution ${options.distributeId} switch for channel ${options.channelId}?`,
+      (service) => service.updateSwitch(apiParams(options))
+    ));
 
   channelCmd.command('advert-list')
     .description('List channel adverts')

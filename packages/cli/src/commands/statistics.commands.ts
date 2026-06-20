@@ -18,6 +18,8 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { StatisticsServiceSdk } from '../services/statistics.service.sdk';
+import { apiParams, displayApiResult } from '../utils/api-command';
 import {
   validateDateRange as validateDateRangeUtil,
   validateTimestampRange as validateTimestampRangeUtil,
@@ -166,6 +168,20 @@ export function registerStatisticsCommands(program: Command): void {
   const statisticsCmd = program.command('statistics');
   statisticsCmd.description('View live streaming statistics data');
 
+  const runV4StatisticsCommand = async (
+    options: any,
+    action: (service: StatisticsServiceSdk) => Promise<any>
+  ): Promise<void> => {
+    try {
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
+      const service = new StatisticsServiceSdk(authConfig, serviceConfig);
+      displayApiResult(await action(service), options.output);
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  };
+
   statisticsCmd.command('session-summary-list')
     .description('List V4 session statistics summaries')
     .option('-c, --channel-id <channelId>', 'channel ID')
@@ -202,6 +218,71 @@ export function registerStatisticsCommands(program: Command): void {
         process.exit(1);
       }
     });
+
+  statisticsCmd.command('lottery-list')
+    .description('List V4 channel lottery statistics records')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--lottery-id <id>', 'lottery ID')
+    .option('--session-id <id>', 'session ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.listChannelLotteryRecords(apiParams(options))
+    ));
+
+  statisticsCmd.command('live-data')
+    .description('Get V4 channel live data summary')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.getLiveData(apiParams(options))
+    ));
+
+  statisticsCmd.command('live-session-list')
+    .description('List V4 live session statistics')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.listSessionStats(apiParams(options))
+    ));
+
+  statisticsCmd.command('weixin-booking-list')
+    .description('List V4 WeChat booking records')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.listWeixinBookings(apiParams(options))
+    ));
+
+  statisticsCmd.command('invite-list')
+    .description('List V4 invite statistics records')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--sender-viewer-id <id>', 'sender viewer ID')
+    .option('--start-time <timestamp>', 'start timestamp', parseInt)
+    .option('--end-time <timestamp>', 'end timestamp', parseInt)
+    .option('--page-number <page>', 'page number', parseInt)
+    .option('--page-size <size>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => runV4StatisticsCommand(
+      options,
+      (service) => service.listInviteStats(apiParams(options))
+    ));
 
   // Statistics view command
   const viewCmd = statisticsCmd

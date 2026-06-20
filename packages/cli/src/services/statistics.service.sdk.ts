@@ -61,6 +61,31 @@ export class StatisticsServiceSdk {
     return client.other.getInviterPosterList(params);
   }
 
+  async listChannelLotteryRecords(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listChannelLotteryRecords(params);
+  }
+
+  async getLiveData(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.getLiveData(params);
+  }
+
+  async listSessionStats(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listSessionStats(params);
+  }
+
+  async listWeixinBookings(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listWeixinBookings(params);
+  }
+
+  async listInviteStats(params: any): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return client.v4Channel.listInviteStats(params);
+  }
+
   /**
    * Get daily view statistics for a channel
    * @param options Statistics view options from CLI
