@@ -252,6 +252,7 @@ export class LotteryHandler extends BaseHandler {
         channelId: options.channelId,
         lotteryId: options.lotteryId,
       };
+      if (options.viewerId !== undefined) params.viewerId = options.viewerId;
       if (options.page !== undefined) params.page = options.page;
       if (options.limit !== undefined) params.limit = options.limit;
 
@@ -644,6 +645,10 @@ export class LotteryHandler extends BaseHandler {
 
     if (!options.lotteryId || options.lotteryId.trim() === '') {
       errors.push('lotteryId is required');
+    }
+
+    if (options.viewerId !== undefined && options.viewerId.trim() === '') {
+      errors.push('viewerId must not be empty');
     }
 
     if (options.output && !['table', 'json'].includes(options.output)) {

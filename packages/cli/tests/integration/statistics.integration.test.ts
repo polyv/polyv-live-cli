@@ -5,6 +5,7 @@
  */
 
 import { StatisticsServiceSdk } from '../../src/services/statistics.service.sdk';
+import { ChannelServiceSdk } from '../../src/services/channel.service.sdk';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
 
 // Use test config from CLI accounts or environment
@@ -33,15 +34,36 @@ function getDateTimeString(daysOffset: number = 0): string {
 
 (shouldRunTests ? describe : describe.skip)('Statistics Integration Tests', () => {
   let statisticsService: StatisticsServiceSdk;
+  let channelService: ChannelServiceSdk;
   let testChannelId: string;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     statisticsService = new StatisticsServiceSdk(testConfig.authConfig, {
       baseUrl: testConfig.baseUrl,
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    channelService = new ChannelServiceSdk(testConfig.authConfig, {
+      baseUrl: testConfig.baseUrl,
+      timeout: 30000,
+      debug: false,
+    });
+    const created = await channelService.createChannel({
+      name: `Test Statistics ${Date.now()}`,
+      newScene: 'topclass',
+      template: 'ppt',
+    });
+    testChannelId = String(created.channelId);
+  }, 30000);
+
+  afterAll(async () => {
+    if (testChannelId) {
+      try {
+        await channelService.deleteChannel(testChannelId);
+      } catch {
+        // Ignore cleanup errors for already-removed temporary channels.
+      }
+    }
   });
 
   // ========================================

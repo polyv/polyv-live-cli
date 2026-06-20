@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-19T14:10:07.385Z",
+  "generatedAt": "2026-06-20T04:24:37.045Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,7 +18,7 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 710,
+    "sdkEndpoints": 711,
     "sdkImplemented": 578,
     "sdkMissing": 0
   },
@@ -5015,8 +5015,8 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v3/channel/chat/count-online-user",
-        "reference": "ChatService#countOnlineUser",
-        "file": "packages/sdk/src/services/chat.service.ts"
+        "reference": "ChannelService#getChatOnlineCount",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -9728,8 +9728,8 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v3/channel/chat/count-online-user",
-        "reference": "ChatService#countOnlineUser",
-        "file": "packages/sdk/src/services/chat.service.ts"
+        "reference": "ChannelService#getChatOnlineCount",
+        "file": "packages/sdk/src/services/channel.service.ts"
       }
     },
     {
@@ -18882,6 +18882,15 @@
     },
     {
       "method": "POST",
+      "path": "/live/v3/channel/chat/count-online-user",
+      "normalizedPath": "/live/v3/channel/chat/count-online-user",
+      "file": "packages/sdk/src/services/channel.service.ts",
+      "className": "ChannelService",
+      "methodName": "getChatOnlineCount",
+      "reference": "ChannelService#getChatOnlineCount"
+    },
+    {
+      "method": "GET",
       "path": "/live/v3/channel/chat/count-online-user",
       "normalizedPath": "/live/v3/channel/chat/count-online-user",
       "file": "packages/sdk/src/services/channel.service.ts",

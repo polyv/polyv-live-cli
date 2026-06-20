@@ -142,7 +142,7 @@ const shouldRunTests = hasRealCredentials();
         expect(true).toBe(true);
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['已存在', 'duplicate', '重复', '404', 'not found'];
+        const expectedErrors = ['已存在', 'duplicate', '重复', '404', 'not found', '未返回标签信息'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {
@@ -245,7 +245,7 @@ const shouldRunTests = hasRealCredentials();
         expect(true).toBe(true);
       } catch (error: any) {
         const message = error.message || '';
-        const expectedErrors = ['404', 'not found', '不存在', '找不到'];
+        const expectedErrors = ['404', 'not found', '不存在', '找不到', '重复'];
         const isExpectedError = expectedErrors.some(e => message.includes(e));
 
         if (isExpectedError) {

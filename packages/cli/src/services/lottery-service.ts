@@ -121,17 +121,28 @@ export class LotteryServiceSdk {
   }
 
   /**
-   * Get winner detail list using V4 Channel API
+   * Get winner detail list, or viewer-specific winner detail when viewerId is provided.
    * @param params Winner detail parameters
    * @returns API response with winner list
    */
   async getWinnerDetail(params: GetWinnerDetailParams): Promise<any> {
     try {
-      const result = await this.v4Channel.queryWinnerViewer({
+      if (params.viewerId) {
+        const result = await this.v4Channel.queryWinnerViewer({
+          channelId: params.channelId,
+          lotteryId: params.lotteryId,
+          viewerId: params.viewerId,
+          pageNumber: params.page,
+          pageSize: params.limit,
+        });
+        return result;
+      }
+
+      const result = await this.liveInteraction.getWinnerDetail({
         channelId: params.channelId,
         lotteryId: params.lotteryId,
-        pageNumber: params.page,
-        pageSize: params.limit,
+        page: params.page,
+        limit: params.limit,
       });
       return result;
     } catch (error) {

@@ -256,6 +256,7 @@ describe('Lottery Commands', () => {
       const options = winnersSubcommand?.options || [];
       expect(options.some(opt => opt.long === '--channel-id')).toBe(true);
       expect(options.some(opt => opt.long === '--lottery-id')).toBe(true);
+      expect(options.some(opt => opt.long === '--viewer-id')).toBe(true);
       expect(options.some(opt => opt.long === '--page')).toBe(true);
       expect(options.some(opt => opt.long === '--limit')).toBe(true);
       expect(options.some(opt => opt.long === '--output')).toBe(true);
@@ -501,10 +502,10 @@ describe('Lottery Commands', () => {
       (LotteryHandler as jest.Mock).mockImplementation(() => mockHandler);
 
       const prog = createProgramWithLottery();
-      await prog.parseAsync(['node', 'test', 'lottery', 'winners', '-c', '123456', '--lottery-id', 'lottery123']);
+      await prog.parseAsync(['node', 'test', 'lottery', 'winners', '-c', '123456', '--lottery-id', 'lottery123', '--viewer-id', 'viewer123']);
 
       expect(mockHandler.getWinners).toHaveBeenCalledWith(
-        expect.objectContaining({ channelId: '123456', lotteryId: 'lottery123' })
+        expect.objectContaining({ channelId: '123456', lotteryId: 'lottery123', viewerId: 'viewer123' })
       );
     });
 

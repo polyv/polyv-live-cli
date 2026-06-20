@@ -300,7 +300,8 @@ async function main(): Promise<void> {
   }
 
   function findChildCommand(parent: Command, name: string): Command | undefined {
-    return parent.commands.find((cmd) => {
+    const children = Array.isArray(parent.commands) ? parent.commands : [];
+    return children.find((cmd) => {
       const aliases = typeof cmd.aliases === 'function' ? cmd.aliases() : [];
       return cmd.name() === name || aliases.includes(name);
     });

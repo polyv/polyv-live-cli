@@ -1,6 +1,6 @@
 # PolyV Live API Inventory
 
-生成时间：2026-06-19T14:10:07.397Z
+生成时间：2026-06-20T04:24:37.052Z
 
 ## 来源与规则
 
@@ -20,7 +20,7 @@
 | 可解析 API 数 | 590 |
 | 去重后最新 API 数 | 578 |
 | 被旧版去重的 API 数 | 12 |
-| SDK 源码 API 路径数 | 710 |
+| SDK 源码 API 路径数 | 711 |
 | SDK 已实现最新 API 数 | 578 |
 | SDK 未实现最新 API 数 | 0 |
 | SDK 覆盖率 | 100% |
@@ -230,7 +230,7 @@
 | 获取观看页测试模式的访问令牌<br><sub>1、接口用于获取观看页测试模式的访问令牌</sub> | POST | `/live/v3/channel/watch/get-test-mode-token` | `../document-center/docs/live/api/channel/auth/get_channel_watch_test_mode_token.md` | query/form | channelId | yes: ChannelService#getTestModeToken (packages/sdk/src/services/channel.service.ts) | - |
 | 获取观众观看调用接口token<br><sub>1、获取观众观看调用接口token</sub> | POST | `/live/v3/channel/watch/get-api-token` | `../document-center/docs/live/api/channel/operate/get_api_token.md` | query/form | channelId, viewerId | yes: ChannelService#getApiToken (packages/sdk/src/services/channel.service.ts) | - |
 | 获取频道关注公众号设置信息<br><sub>1、查询关注公众号设置接口</sub> | GET | `/live/v3/channel/promotion/list-channels-follow` | `../document-center/docs/live/api/channel/operate/list_channels_follow.md` | query | channelIds | yes: ChannelService#listChannelsFollow (packages/sdk/src/services/channel.service.ts) | - |
-| 获取频道聊天室的在线人数<br><sub>1、获取频道聊天室的在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/channel/operate/get_chat_online_count.md` | query | channelId | yes: ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | - |
+| 获取频道聊天室的在线人数<br><sub>1、获取频道聊天室的在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/channel/operate/get_chat_online_count.md` | query | channelId | yes: ChannelService#getChatOnlineCount (packages/sdk/src/services/channel.service.ts) | - |
 | 获取频道聊天室在线人数接口<br><sub>1、获取频道聊天室在线人数接口</sub> | POST | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/channel/operate/chat_online_count.md` | query/form | channelId | yes: ChannelService#getChatOnlineCount (packages/sdk/src/services/channel.service.ts) | - |
 | 获取频道商品统计概览<br><sub>1、查询频道商品整体统计数据概览（点击、下单、成交等指标汇总）</sub> | GET | `/live/v4/channel/product/stats/summary` | `../document-center/docs/live/api/v4/channel/product_stats/summary.md` | query | channelId | yes: V4ChannelService#getProductStatsSummary (packages/sdk/src/services/v4/channel.service.ts) | - |
 | 获取频道推流URL<br><sub>1、获取频道推流URL，由于推流地址可能发生变化，所以请在使用时获取</sub> | GET | `/live/v3/channel/stream/get-push-url` | `../document-center/docs/live/api/channel/operate/get_push_url.md` | query | channelId | yes: ChannelService#getPushUrl (packages/sdk/src/services/channel.service.ts) | - |
@@ -394,7 +394,7 @@
 | （可隐藏）发送图文信息<br><sub>1、通过聊天室API，发送图文信息</sub> | POST | `/live/v1/channelSetting/{param}/send-chat` | `../document-center/docs/live/api/chat/message/send_hidden_message.md` | query/form | content/imgUrl, userId | yes: ChatService#sendChat (packages/sdk/src/services/chat.service.ts) | - |
 | （可隐藏）以管理员身份发送信息<br><sub>1、通过管理员，发送聊天消息</sub> | POST | `/live/v3/channel/chat/send` | `../document-center/docs/live/api/chat/message/send_hidden_message_by_admin.md` | query/form | channelId, content, role | yes: ChatService#sendHiddenByAdmin (packages/sdk/src/services/chat.service.ts) | - |
 | 查询管理员身份信息<br><sub>1、通过频道号，查询管理员身份信息</sub> | GET | `/live/v2/channelSetting/{param}/get-chat-admin` | `../document-center/docs/live/api/chat/role/get_admin_info.md` | query | - | yes: ChatService#getAdminInfo (packages/sdk/src/services/chat.service.ts) | - |
-| 查询聊天室在线人数<br><sub>1、通过频道号，查询频道聊天室当前在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/chat/message/count-online-user.md` | query | channelId | yes: ChatService#countOnlineUser (packages/sdk/src/services/chat.service.ts) | - |
+| 查询聊天室在线人数<br><sub>1、通过频道号，查询频道聊天室当前在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | `../document-center/docs/live/api/chat/message/count-online-user.md` | query | channelId | yes: ChannelService#getChatOnlineCount (packages/sdk/src/services/channel.service.ts) | - |
 | 查询频道公告列表<br><sub>1、查询频道公告列表</sub> | GET | `/live/v4/chat/list-bullentin` | `../document-center/docs/live/api/v4/chat/notice_list.md` | query | channelId, pageNumber, pageSize | yes: V4ChatService#listBulletins (packages/sdk/src/services/v4/chat.service.ts) | - |
 | 查询频道禁言用户Userid/IP<br><sub>1、通过频道号，查询禁言的用户列表或者ip列表</sub> | GET | `/live/v3/channel/chat/get-banned-list` | `../document-center/docs/live/api/chat/banned/get_channel_banned_user_list.md` | query | channelId, type | yes: ChatService#getChannelBannedUserList (packages/sdk/src/services/chat.service.ts) | - |
 | 查询频道聊天记录<br><sub>1、通过频道号，查询一段时间内的聊天记录</sub> | GET | `/live/v3/channel/chat/get-history-page` | `../document-center/docs/live/api/chat/message/get_message_list.md` | query | channelId, endDay, startDay | yes: ChatService#getHistoryPage (packages/sdk/src/services/chat.service.ts) | - |

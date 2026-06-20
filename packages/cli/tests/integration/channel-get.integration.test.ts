@@ -3,7 +3,7 @@
  */
 
 import { ChannelServiceSdk } from '../../src/services/channel.service.sdk';
-import { ChannelServiceConfig } from '../../src/types/channel';
+import { ChannelCreateRequest, ChannelServiceConfig } from '../../src/types/channel';
 import { AuthConfig } from '../../src/types/auth';
 import { PolyVValidationError } from '../../src/utils/errors';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
@@ -18,7 +18,7 @@ const shouldRunTests = hasRealCredentials();
   let serviceConfig: ChannelServiceConfig;
   let testChannelId: string;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     if (!shouldRunTests) {
       console.warn('⚠️  Skipping integration tests - no real API credentials found');
       return;
@@ -31,9 +31,25 @@ const shouldRunTests = hasRealCredentials();
       maxRetries: 3,
       debug: false
     };
-    testChannelId = testConfig.testChannelId;
-
     channelService = new ChannelServiceSdk(authConfig, serviceConfig);
+
+    const createOptions: ChannelCreateRequest = {
+      name: `Test Channel Get ${Date.now()}`,
+      newScene: 'topclass',
+      template: 'ppt',
+    };
+    const created = await channelService.createChannel(createOptions);
+    testChannelId = String(created.channelId);
+  });
+
+  afterAll(async () => {
+    if (shouldRunTests && testChannelId) {
+      try {
+        await channelService.deleteChannel(testChannelId);
+      } catch {
+        // Ignore cleanup errors for already-removed temporary channels.
+      }
+    }
   });
 
   describe('Real API Tests', () => {
@@ -42,7 +58,7 @@ const shouldRunTests = hasRealCredentials();
         const result = await channelService.getChannelDetail({ channelId: testChannelId });
 
         expect(result).toBeDefined();
-        expect(result.channelId).toBe(testChannelId);
+        expect(String(result.channelId)).toBe(testChannelId);
         expect(result.name).toBeDefined();
         expect(typeof result.name).toBe('string');
       } catch (error: any) {
@@ -62,7 +78,7 @@ const shouldRunTests = hasRealCredentials();
         const result = await channelService.getChannelDetail({ channelId: testChannelId });
 
         expect(result).toBeDefined();
-        expect(result.channelId).toBe(testChannelId);
+        expect(String(result.channelId)).toBe(testChannelId);
         // Channel should have basic properties
         expect(result).toHaveProperty('channelId');
       } catch (error: any) {

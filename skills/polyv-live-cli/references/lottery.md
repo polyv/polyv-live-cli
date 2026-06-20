@@ -8,22 +8,22 @@
 
 ```bash
 # 创建无条件抽奖（默认）
-npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "幸运抽奖" --type none --amount 3 --prize "神秘礼品"
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "幸运抽奖" --type none --amount 3 --prize-name "神秘礼品" --force
 
 # 创建邀请抽奖（观众邀请3人参与）
-npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "邀请抽奖" --type invite --amount 5 --prize "优惠券" --duration 30 --invite-num 3
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "邀请抽奖" --type invite --amount 5 --prize-name "优惠券" --duration 30 --invite-num 3 --force
 
-# 创建观看时长抽奖（观看10分钟后可参与）
-npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "时长抽奖" --type duration --amount 2 --prize "红包" --duration 10
+# 创建观看时长抽奖（观看10秒后可参与）
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "时长抽奖" --type duration --amount 2 --prize-name "红包" --duration 10 --force
 
-# 创建评论抽奖（发表评论后可参与）
-npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "评论抽奖" --type comment --amount 3 --prize "积分" --duration 5
+# 创建评论抽奖（发表评论后5秒内可参与）
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "评论抽奖" --type comment --amount 3 --prize-name "积分" --duration 5 --force
 
 # 创建答题抽奖（回答问题后可参与）
-npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "答题抽奖" --type question --amount 1 --prize "大奖" --duration 30
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "答题抽奖" --type question --amount 1 --prize-name "大奖" --duration 30 --force
 
 # JSON输出
-npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "测试抽奖" --type none --amount 3 --prize "奖品" -o json
+npx --yes polyv-live-cli@latest lottery create -c 3151318 --name "测试抽奖" --type none --amount 3 --prize-name "奖品" --force -o json
 ```
 
 ## 查询抽奖列表
@@ -53,17 +53,17 @@ npx --yes polyv-live-cli@latest lottery get -c 3151318 --id 20521 -o json
 
 ```bash
 # 更新抽奖活动配置
-npx --yes polyv-live-cli@latest lottery update -c 3151318 --id 20521 --name "更新后的抽奖" --amount 5 --prize "新奖品"
+npx --yes polyv-live-cli@latest lottery update -c 3151318 --id 20521 --name "更新后的抽奖" --amount 5 --prize-name "新奖品" --force
 
 # JSON输出
-npx --yes polyv-live-cli@latest lottery update -c 3151318 --id 20521 --amount 10 -o json
+npx --yes polyv-live-cli@latest lottery update -c 3151318 --id 20521 --amount 10 --force -o json
 ```
 
 ## 删除抽奖
 
 ```bash
 # 删除指定抽奖活动
-npx --yes polyv-live-cli@latest lottery delete -c 3151318 --id 20521
+npx --yes polyv-live-cli@latest lottery delete -c 3151318 --id 20521 --force
 ```
 
 ## 查询中奖用户
@@ -74,6 +74,9 @@ npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43
 
 # 分页查询
 npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 --page 1 --limit 20
+
+# 查询指定观众中奖记录
+npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 --viewer-id viewer-1
 
 # JSON输出
 npx --yes polyv-live-cli@latest lottery winners -c 3151318 --lottery-id fv3mao43u6 -o json
@@ -108,10 +111,11 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 | `--name` | 抽奖活动名称（必填） | - |
 | `--type` | 抽奖条件类型（必填） | none/invite/duration/comment/question |
 | `--amount` | 中奖人数（必填） | 数字 |
-| `--prize` | 奖品名称（必填） | - |
-| `--duration` | 抽奖时长（分钟） | 数字 |
+| `--prize-name` | 奖品名称（必填） | - |
+| `--duration` | 抽奖时长（秒） | 数字 |
 | `--invite-num` | 邀请人数（仅invite类型） | 数字 |
 | `--receive-info` | 中奖者信息收集配置 | JSON字符串 |
+| `-f, --force` | 跳过确认提示 | - |
 | `-o, --output` | 输出格式 | table（默认）/ json |
 
 ### lottery list
@@ -139,7 +143,8 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 | `--id` | 抽奖活动ID（必填） | - |
 | `--name` | 新的抽奖活动名称 | - |
 | `--amount` | 新的中奖人数 | 数字 |
-| `--prize` | 新的奖品名称 | - |
+| `--prize-name` | 新的奖品名称 | - |
+| `-f, --force` | 跳过确认提示 | - |
 | `-o, --output` | 输出格式 | table（默认）/ json |
 
 ### lottery delete
@@ -148,6 +153,7 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 |------|------|------|
 | `-c, --channel-id` | 频道ID（必填） | - |
 | `--id` | 抽奖活动ID（必填） | - |
+| `-f, --force` | 跳过确认提示 | - |
 
 ### lottery winners
 
@@ -155,6 +161,7 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 |------|------|------|
 | `-c, --channel-id` | 频道ID（必填） | - |
 | `--lottery-id` | 抽奖ID（必填） | - |
+| `--viewer-id` | 指定观众ID；传入后查询该观众中奖记录 | - |
 | `--page` | 页码 | 数字，默认1 |
 | `--limit` | 每页数量 | 数字，默认20 |
 | `-o, --output` | 输出格式 | table（默认）/ json |
@@ -177,9 +184,9 @@ npx --yes polyv-live-cli@latest lottery records -c 3151318 -o json
 |------|------|----------|
 | `none` | 无条件抽奖（默认） | - |
 | `invite` | 邀请好友参与 | `--invite-num`（邀请人数） |
-| `duration` | 观看时长抽奖 | `--duration`（观看分钟数） |
-| `comment` | 发表评论抽奖 | `--duration`（评论后分钟内） |
-| `question` | 回答问题抽奖 | `--duration`（答题时长） |
+| `duration` | 观看时长抽奖 | `--duration`（观看秒数） |
+| `comment` | 发表评论抽奖 | `--duration`（评论后秒数） |
+| `question` | 回答问题抽奖 | `--duration`（答题秒数） |
 
 ## 输出格式
 

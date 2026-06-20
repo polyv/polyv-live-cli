@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20T04:00:35.405Z",
+  "generatedAt": "2026-06-20T04:24:46.567Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,15 +13,15 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 576,
-    "cliMissingLatestApis": 2,
-    "cliCoverage": 99.7,
-    "cliUsageReferences": 579,
-    "cliSdkServiceUsages": 579,
+    "cliUsedLatestApis": 577,
+    "cliMissingLatestApis": 1,
+    "cliCoverage": 99.8,
+    "cliUsageReferences": 580,
+    "cliSdkServiceUsages": 580,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 563,
+    "matchedApiIds": 564,
     "sdkEndpointReferences": 711,
     "cliCommandPaths": 717,
     "cliTopLevelCommands": 40
@@ -31,11 +31,11 @@
       "module": "live_interaction",
       "label": "直播互动",
       "total": 30,
-      "cliUsed": 28,
-      "cliMissing": 2,
+      "cliUsed": 29,
+      "cliMissing": 1,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 28,
-      "cliCoverage": 93.3
+      "sdkServiceUsed": 29,
+      "cliCoverage": 96.7
     },
     {
       "module": "account",
@@ -3887,7 +3887,7 @@
       "depth": 2,
       "signature": "blacklist",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 661
+      "line": 666
     },
     {
       "command": "lottery channel-records",
@@ -3898,7 +3898,7 @@
       "depth": 2,
       "signature": "channel-records",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 399
+      "line": 404
     },
     {
       "command": "lottery create",
@@ -3931,7 +3931,7 @@
       "depth": 2,
       "signature": "download-winners",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 440
+      "line": 445
     },
     {
       "command": "lottery get",
@@ -3953,7 +3953,7 @@
       "depth": 2,
       "signature": "group",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 531
+      "line": 536
     },
     {
       "command": "lottery group-viewer",
@@ -3964,7 +3964,7 @@
       "depth": 2,
       "signature": "group-viewer",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 593
+      "line": 598
     },
     {
       "command": "lottery list",
@@ -3986,7 +3986,7 @@
       "depth": 2,
       "signature": "lucky-bag",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 707
+      "line": 712
     },
     {
       "command": "lottery receive-info",
@@ -3997,7 +3997,7 @@
       "depth": 2,
       "signature": "receive-info",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 473
+      "line": 478
     },
     {
       "command": "lottery records",
@@ -4008,7 +4008,7 @@
       "depth": 2,
       "signature": "records",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 348
+      "line": 353
     },
     {
       "command": "lottery update",
@@ -4030,7 +4030,7 @@
       "depth": 2,
       "signature": "wait",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 511
+      "line": 516
     },
     {
       "command": "lottery winners",
@@ -4053,7 +4053,7 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 679
+      "line": 684
     },
     {
       "command": "lottery blacklist delete",
@@ -4065,7 +4065,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 693
+      "line": 698
     },
     {
       "command": "lottery blacklist list",
@@ -4077,7 +4077,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 665
+      "line": 670
     },
     {
       "command": "lottery group create",
@@ -4089,7 +4089,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 549
+      "line": 554
     },
     {
       "command": "lottery group delete",
@@ -4101,7 +4101,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 579
+      "line": 584
     },
     {
       "command": "lottery group list",
@@ -4113,7 +4113,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 535
+      "line": 540
     },
     {
       "command": "lottery group update",
@@ -4125,7 +4125,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 563
+      "line": 568
     },
     {
       "command": "lottery group-viewer add",
@@ -4137,7 +4137,7 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 613
+      "line": 618
     },
     {
       "command": "lottery group-viewer add-names",
@@ -4149,7 +4149,7 @@
       "depth": 3,
       "signature": "add-names",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 629
+      "line": 634
     },
     {
       "command": "lottery group-viewer delete",
@@ -4161,7 +4161,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 645
+      "line": 650
     },
     {
       "command": "lottery group-viewer list",
@@ -4173,7 +4173,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 597
+      "line": 602
     },
     {
       "command": "lottery lucky-bag winners",
@@ -4185,7 +4185,7 @@
       "depth": 3,
       "signature": "winners",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 711
+      "line": 716
     },
     {
       "command": "lottery wait create",
@@ -4197,7 +4197,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 515
+      "line": 520
     },
     {
       "command": "material",
@@ -8485,14 +8485,14 @@
         {
           "module": "live_interaction",
           "label": "直播互动",
-          "missing": 2,
+          "missing": 1,
           "total": 30,
-          "coverage": 93.3
+          "coverage": 96.7
         }
       ],
-      "missing": 2,
+      "missing": 1,
       "total": 30,
-      "coverage": 93.3
+      "coverage": 96.7
     }
   ],
   "unmatchedUsages": [],
@@ -10145,7 +10145,7 @@
             "reference": "V4ChannelService#listLotteryGroupViewers",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 266,
+            "line": 277,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -10182,7 +10182,7 @@
             "reference": "V4ChannelService#listLotteryViewerGroups",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 233,
+            "line": 244,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -10219,7 +10219,7 @@
             "reference": "V4ChannelService#listLuckyBagWinners",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 324,
+            "line": 335,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -10258,7 +10258,7 @@
             "reference": "V4ChannelService#queryWinnerViewer",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 130,
+            "line": 131,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -10295,7 +10295,7 @@
             "reference": "V4ChannelService#listLotteryBlacklistViewers",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 299,
+            "line": 310,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -13517,7 +13517,7 @@
             "reference": "V4ChannelService#listLotteryActivityRecords",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 150,
+            "line": 161,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -13779,7 +13779,7 @@
             "reference": "V4ChannelService#deleteLotteryGroupViewers",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 290,
+            "line": 301,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -13818,7 +13818,7 @@
             "reference": "V4ChannelService#createLotteryGroupViewers",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 274,
+            "line": 285,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14400,7 +14400,7 @@
             "reference": "V4ChannelService#deleteLotteryBlacklistViewers",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 315,
+            "line": 326,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14438,7 +14438,7 @@
             "reference": "V4ChannelService#createLotteryBlacklistViewers",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 307,
+            "line": 318,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14614,8 +14614,8 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v3/channel/chat/count-online-user",
-        "reference": "ChatService#countOnlineUser",
-        "file": "packages/sdk/src/services/chat.service.ts"
+        "reference": "ChannelService#getChatOnlineCount",
+        "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
         "used": true,
@@ -17313,7 +17313,7 @@
             "reference": "V4ChannelService#deleteLotteryViewerGroup",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 257,
+            "line": 268,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18536,7 +18536,7 @@
             "reference": "V4ChannelService#createConditionWaitLottery",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 224,
+            "line": 235,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18763,7 +18763,7 @@
             "reference": "V4ChannelService#createLotteryViewerGroup",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 241,
+            "line": 252,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18839,7 +18839,7 @@
             "reference": "V4ChannelService#updateLotteryViewerGroup",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 249,
+            "line": 260,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -20477,7 +20477,7 @@
             "reference": "V4ChannelService#createLotteryGroupViewerNames",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 282,
+            "line": 293,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -20653,8 +20653,8 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v3/channel/chat/count-online-user",
-        "reference": "ChatService#countOnlineUser",
-        "file": "packages/sdk/src/services/chat.service.ts"
+        "reference": "ChannelService#getChatOnlineCount",
+        "file": "packages/sdk/src/services/channel.service.ts"
       },
       "cli": {
         "used": true,
@@ -23069,7 +23069,7 @@
             "reference": "LiveInteractionService#listChannelsLottery",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 171,
+            "line": 182,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -23502,8 +23502,17 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "LiveInteractionService#getWinnerDetail",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 141,
+            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
+          }
+        ]
       }
     },
     {
@@ -23994,7 +24003,7 @@
             "reference": "LiveInteractionService#addReceiveInfoV4",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 209,
+            "line": 220,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -24070,7 +24079,7 @@
             "reference": "LiveInteractionService#downloadWinnerDetail",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 192,
+            "line": 203,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]

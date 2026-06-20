@@ -154,17 +154,18 @@ API 文档列中的路径均相对于本仓库根目录解析的 `../document-ce
 
 ---
 
-### 12. Lottery (抽奖管理) - 8 命令
+### 12. Lottery (抽奖管理) - 8 API 映射
 
 | 命令 | SDK 方法 | API Endpoint | API 文档 |
 |------|----------|--------------|---------|
-| `lottery create` | V4 抽奖接口 | `POST /live/v4/channel/lottery/create` | `v4/channel/lottery_activity/lottery_activity_create.md` |
-| `lottery list` | V4 抽奖接口 | `GET /live/v4/channel/lottery/list` | `v4/channel/lottery_activity/lottery_activity_list.md` |
-| `lottery get` | V4 抽奖接口 | `GET /live/v4/channel/lottery/get` | `v4/channel/lottery_activity/lottery_activity_get.md` |
-| `lottery update` | V4 抽奖接口 | `POST /live/v4/channel/lottery/update` | `v4/channel/lottery_activity/lottery_activity_update.md` |
-| `lottery delete` | V4 抽奖接口 | `POST /live/v4/channel/lottery/delete` | `v4/channel/lottery_activity/lottery_activity_delete.md` |
-| `lottery winners` | V4 抽奖接口 | `GET /live/v4/channel/lottery/winners` | `v4/channel/lottery/query_winner_viewer.md` |
-| `lottery records` | `liveInteraction.getLotteryRecord()` | `GET /live/v2/chat/{channelId}/get_lottery_record` | `live_interaction/list_lottery.md` |
+| `lottery create` | `v4Channel.createLotteryActivityExact()` | `POST /live/v4/channel/lottery-activity/create` | `v4/channel/lottery_activity/lottery_activity_create.md` |
+| `lottery list` | `v4Channel.listLotteryActivitiesExact()` | `GET /live/v4/channel/lottery-activity/list` | `v4/channel/lottery_activity/lottery_activity_list.md` |
+| `lottery get` | `v4Channel.getLotteryActivityExact()` | `GET /live/v4/channel/lottery-activity/get` | `v4/channel/lottery_activity/lottery_activity_get.md` |
+| `lottery update` | `v4Channel.updateLotteryActivityExact()` | `POST /live/v4/channel/lottery-activity/update` | `v4/channel/lottery_activity/lottery_activity_update.md` |
+| `lottery delete` | `v4Channel.deleteLotteryActivityExact()` | `POST /live/v4/channel/lottery-activity/delete` | `v4/channel/lottery_activity/lottery_activity_delete.md` |
+| `lottery winners` | `liveInteraction.getWinnerDetail()` | `GET /live/v3/channel/lottery/get-winner-detail` | `live_interaction/get_winner_detail.md` |
+| `lottery winners --viewer-id` | `v4Channel.queryWinnerViewer()` | `GET /live/v4/channel/lottery/query-winner-viewer` | `v4/channel/lottery/query_winner_viewer.md` |
+| `lottery records` | `v4Channel.listLotteryActivityRecords()` | `GET /live/v4/channel/lottery/activity-record/list` | `v4/channel/lottery/activity_record_list.md` |
 
 ---
 

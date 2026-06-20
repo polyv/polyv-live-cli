@@ -172,6 +172,12 @@ npx --yes polyv-live-cli@latest statistics export session -c <频道ID> --sessio
   npx --yes polyv-live-cli@latest promotion create --channelId <频道ID> --names "渠道1,渠道2" -o json
   npx --yes polyv-live-cli@latest ai digital-human list -o json
   ```
+- `lottery create` / `lottery update` 使用 `--prize-name`；`lottery winners` 默认查单场中奖名单，需要查某个观众中奖记录时才加 `--viewer-id`：
+  ```bash
+  npx --yes polyv-live-cli@latest lottery create -c <频道ID> --name <名称> --type none --amount 3 --prize-name <奖品名> --force -o json
+  npx --yes polyv-live-cli@latest lottery winners -c <频道ID> --lottery-id <抽奖ID> -o json
+  npx --yes polyv-live-cli@latest lottery winners -c <频道ID> --lottery-id <抽奖ID> --viewer-id <观众ID> -o json
+  ```
 - `player config update` 管理水印、暖场图和基础 PV：
   ```bash
   npx --yes polyv-live-cli@latest player config update -c <频道ID> --watermark-enabled Y --watermark-url <图片URL> --watermark-position br --watermark-opacity 0.8 -o json

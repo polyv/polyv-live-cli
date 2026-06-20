@@ -195,6 +195,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         cashEnabled: 'Y',
+        force: true,
         output: 'table',
       };
 
@@ -221,6 +222,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         giftEnabled: 'Y',
+        force: true,
         output: 'table',
       };
 
@@ -244,6 +246,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
         channelId: '3151318',
         tips: 'Thank you for your support!',
         amounts: [0.88, 6.66, 8.88, 18.88],
+        force: true,
         output: 'table',
       };
 
@@ -271,6 +274,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
         giftEnabled: 'Y',
         tips: 'Thanks!',
         amounts: [1, 5, 10],
+        force: true,
         output: 'json',
       };
 
@@ -332,6 +336,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         amounts: '0.88,6.66,8.88,18.88,66.6,88.8',
+        force: true,
         output: 'table',
       };
 
@@ -354,6 +359,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         cashEnabled: 'Y',
+        force: true,
         output: 'table',
       };
 
@@ -679,6 +685,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         cashEnabled: 'Y',
+        force: true,
         output: 'table',
       };
 

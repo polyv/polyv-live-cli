@@ -306,6 +306,7 @@ Output Formats:
     .description('Get winner list for a lottery')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
     .requiredOption('--lottery-id <id>', 'lottery ID')
+    .option('--viewer-id <id>', 'viewer ID for viewer-specific winner lookup')
     .option('--page <number>', 'page number', parseInt)
     .option('--limit <number>', 'items per page', parseInt)
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
@@ -319,6 +320,7 @@ Output Formats:
         await lotteryHandler.getWinners({
           channelId: options.channelId,
           lotteryId: options.lotteryId,
+          viewerId: options.viewerId,
           page: options.page,
           limit: options.limit,
           output: options.output,
@@ -336,6 +338,9 @@ Examples:
 
   # Get with pagination
   $ polyv-live-cli lottery winners -c "3151318" --lottery-id "fv3mao43u6" --page 1 --limit 20
+
+  # Query a specific viewer winner record
+  $ polyv-live-cli lottery winners -c "3151318" --lottery-id "fv3mao43u6" --viewer-id "viewer-1"
 
 Output Formats:
   table       - Formatted table output (default)

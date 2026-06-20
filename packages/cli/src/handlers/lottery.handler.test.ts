@@ -93,6 +93,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 3,
         prizeName: 'Test Prize',
+        force: true,
         output: 'table',
       };
 
@@ -125,6 +126,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         prizeName: 'Invite Prize',
         duration: 30,
         inviteNum: 3,
+        force: true,
         output: 'table',
       };
 
@@ -153,6 +155,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         amount: 2,
         prizeName: 'Duration Prize',
         duration: 10,
+        force: true,
         output: 'table',
       };
 
@@ -179,6 +182,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'comment',
         amount: 3,
         prizeName: 'Comment Prize',
+        force: true,
         output: 'table',
       };
 
@@ -204,6 +208,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'question',
         amount: 2,
         prizeName: 'Question Prize',
+        force: true,
         output: 'table',
       };
 
@@ -233,6 +238,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         amount: 3,
         prizeName: 'Test Prize',
         receiveInfo,
+        force: true,
         output: 'table',
       };
 
@@ -331,6 +337,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 3,
         prizeName: 'Test Prize',
+        force: true,
         output: 'json',
       };
 
@@ -354,6 +361,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 3,
         prizeName: 'Test Prize',
+        force: true,
         output: 'table',
       };
 
@@ -638,6 +646,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         name: 'Updated Name',
         amount: 5,
         prizeName: 'Updated Prize',
+        force: true,
         output: 'table',
       };
 
@@ -679,6 +688,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
       const options: LotteryDeleteOptions = {
         channelId: '3151318',
         id: '20521',
+        force: true,
         output: 'table',
       };
 
@@ -768,6 +778,29 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
       );
     });
 
+    it('11.5-UNIT-031b: should pass viewerId for viewer-specific winner lookup', async () => {
+      const options: LotteryWinnersOptions = {
+        channelId: '3151318',
+        lotteryId: 'fv3mao43u6',
+        viewerId: 'viewer123',
+        output: 'table',
+      };
+
+      mockLotteryService.getWinnerDetail.mockResolvedValue({
+        code: 200,
+        status: 'success',
+        data: [],
+      });
+
+      await lotteryHandler.getWinners(options);
+
+      expect(mockLotteryService.getWinnerDetail).toHaveBeenCalledWith({
+        channelId: '3151318',
+        lotteryId: 'fv3mao43u6',
+        viewerId: 'viewer123',
+      });
+    });
+
     it('11.5-UNIT-032: should validate lotteryId is required', async () => {
       const options = {
         channelId: '3151318',
@@ -777,6 +810,18 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
 
       await expect(lotteryHandler.getWinners(options)).rejects.toThrow(PolyVValidationError);
       await expect(lotteryHandler.getWinners(options)).rejects.toThrow('lotteryId is required');
+    });
+
+    it('11.5-UNIT-032b: should validate viewerId is not empty when provided', async () => {
+      const options = {
+        channelId: '3151318',
+        lotteryId: 'fv3mao43u6',
+        viewerId: '',
+        output: 'table' as const,
+      };
+
+      await expect(lotteryHandler.getWinners(options)).rejects.toThrow(PolyVValidationError);
+      await expect(lotteryHandler.getWinners(options)).rejects.toThrow('viewerId must not be empty');
     });
 
     it('11.5-UNIT-033: should output winners in table format', async () => {
@@ -1007,6 +1052,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 1,
         prizeName: 'Prize',
+        force: true,
         output: 'table',
       };
 
@@ -1023,6 +1069,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 1,
         prizeName: 'Prize',
+        force: true,
         output: 'table',
       };
 
@@ -1052,6 +1099,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 1,
         prizeName: 'Prize',
+        force: true,
         output: 'table',
       };
 
@@ -1068,6 +1116,7 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'none',
         amount: 1,
         prizeName: 'Prize',
+        force: true,
         output: 'table',
       };
 

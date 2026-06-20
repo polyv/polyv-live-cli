@@ -119,6 +119,8 @@ export interface LotteryWinnersOptions {
   channelId: string;
   /** Lottery ID (required) */
   lotteryId: string;
+  /** Viewer ID for V4 viewer-specific winner lookup */
+  viewerId?: string;
   /** Page number */
   page?: number;
   /** Items per page */
@@ -268,6 +270,7 @@ export interface DeleteLotteryActivityParams {
 export interface GetWinnerDetailParams {
   channelId: string;
   lotteryId: string;
+  viewerId?: string;
   page?: number;
   limit?: number;
 }

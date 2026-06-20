@@ -378,11 +378,11 @@ describe('LotteryServiceSdk', () => {
   });
 
   // ============================================================
-  // AC #6: getWinnerDetail (V4 Channel API)
+  // AC #6: getWinnerDetail
   // ============================================================
   describe('getWinnerDetail (AC #6)', () => {
     it('11.5-SVC-012: should get winner detail list', async () => {
-      mockV4ChannelService.queryWinnerViewer.mockResolvedValue({
+      mockLiveInteractionService.getWinnerDetail.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [
@@ -400,17 +400,17 @@ describe('LotteryServiceSdk', () => {
         lotteryId: 'fv3mao43u6',
       });
 
-      expect(mockV4ChannelService.queryWinnerViewer).toHaveBeenCalledWith({
+      expect(mockLiveInteractionService.getWinnerDetail).toHaveBeenCalledWith({
         channelId: '3151318',
         lotteryId: 'fv3mao43u6',
-        pageNumber: undefined,
-        pageSize: undefined,
+        page: undefined,
+        limit: undefined,
       });
       expect(result.data).toHaveLength(1);
     });
 
     it('11.5-SVC-013: should get winner detail with pagination', async () => {
-      mockV4ChannelService.queryWinnerViewer.mockResolvedValue({
+      mockLiveInteractionService.getWinnerDetail.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [],
@@ -423,12 +423,36 @@ describe('LotteryServiceSdk', () => {
         limit: 20,
       });
 
-      expect(mockV4ChannelService.queryWinnerViewer).toHaveBeenCalledWith(
+      expect(mockLiveInteractionService.getWinnerDetail).toHaveBeenCalledWith(
         expect.objectContaining({
-          pageNumber: 1,
-          pageSize: 20,
+          page: 1,
+          limit: 20,
         })
       );
+    });
+
+    it('11.5-SVC-013b: should query viewer-specific winner record when viewerId is provided', async () => {
+      mockV4ChannelService.queryWinnerViewer.mockResolvedValue({
+        code: 200,
+        status: 'success',
+        data: [],
+      });
+
+      await lotteryService.getWinnerDetail({
+        channelId: '3151318',
+        lotteryId: 'fv3mao43u6',
+        viewerId: 'viewer123',
+        page: 1,
+        limit: 20,
+      });
+
+      expect(mockV4ChannelService.queryWinnerViewer).toHaveBeenCalledWith({
+        channelId: '3151318',
+        lotteryId: 'fv3mao43u6',
+        viewerId: 'viewer123',
+        pageNumber: 1,
+        pageSize: 20,
+      });
     });
   });
 
