@@ -97,6 +97,16 @@ describe('Promotion Commands', () => {
       expect(outputOption).toBeDefined();
     });
 
+    it('should register force option for create command', () => {
+      const promotionCmd = program.commands.find(cmd => cmd.name() === 'promotion');
+      const createCmd = promotionCmd?.commands.find(cmd => cmd.name() === 'create');
+      const options = createCmd?.options || [];
+
+      const forceOption = options.find(opt => opt.long === '--force');
+      expect(forceOption).toBeDefined();
+      expect(forceOption?.short).toBe('-f');
+    });
+
     it('[AC3] should register -o short form for --output option', () => {
       const promotionCmd = program.commands.find(cmd => cmd.name() === 'promotion');
 
@@ -149,7 +159,7 @@ describe('Promotion Commands', () => {
       const createCmd = promotionCmd?.commands.find(cmd => cmd.name() === 'create');
 
       const helpText = createCmd?.helpInformation() || '';
-      expect(helpText).toMatch(/channelId|--channelId|names|--names/i);
+      expect(helpText).toMatch(/channelId|--channelId|names|--names|force|--force/i);
     });
 
     it('should include output format options in help', () => {
@@ -274,6 +284,7 @@ describe('action execution', () => {
       expect(mockHandler.createPromotions).toHaveBeenCalledWith({
         channelId: '123456',
         names: ['Channel1', 'Channel2'],
+        force: undefined,
         output: 'table',
       });
     });
@@ -294,7 +305,29 @@ describe('action execution', () => {
       expect(mockHandler.createPromotions).toHaveBeenCalledWith({
         channelId: '123456',
         names: ['Channel1'],
+        force: undefined,
         output: 'json',
+      });
+    });
+
+    it('[P1] should pass force flag to createPromotions', async () => {
+      const mockHandler = { createPromotions: jest.fn().mockResolvedValue(undefined) };
+      MockPromotionHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerPromotionCommands(program);
+      await program.parseAsync([
+        'node', 'test', 'promotion', 'create',
+        '--channelId', '123456',
+        '--names', 'Channel1',
+        '--force',
+      ]);
+
+      expect(mockHandler.createPromotions).toHaveBeenCalledWith({
+        channelId: '123456',
+        names: ['Channel1'],
+        force: true,
+        output: 'table',
       });
     });
 

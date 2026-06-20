@@ -7,6 +7,7 @@
 import { BaseHandler, OutputFormat } from './base.handler';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 import { PromotionServiceSdk } from '../services/promotion-service';
 import {
   PromotionListOptions,
@@ -66,6 +67,11 @@ export class PromotionHandler extends BaseHandler {
 
     // Validate options
     this.validateCreateOptions(options);
+
+    await confirmWrite(
+      options.force,
+      `Create ${options.names.length} promotion channel(s) for channel ${options.channelId}?`
+    );
 
     // Call service to create promotions
     const createdPromotions = await this.promotionService.batchCreatePopularizations({

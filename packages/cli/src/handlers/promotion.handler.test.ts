@@ -8,6 +8,7 @@ import { PromotionHandler, PromotionListOptions, PromotionCreateOptions } from '
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
 import { PromotionServiceSdk } from '../services/promotion-service';
+import { confirmWrite } from '../utils/api-command';
 
 // Mock the PromotionServiceSdk module
 const mockPromotionService = {
@@ -18,6 +19,13 @@ const mockPromotionService = {
 jest.mock('../services/promotion-service', () => ({
   PromotionServiceSdk: jest.fn(() => mockPromotionService),
 }));
+
+jest.mock('../utils/api-command', () => ({
+  ...jest.requireActual('../utils/api-command'),
+  confirmWrite: jest.fn().mockResolvedValue(undefined),
+}));
+
+const mockConfirmWrite = confirmWrite as jest.MockedFunction<typeof confirmWrite>;
 
 // Mock console methods to suppress output during tests
 const mockConsoleLog = jest.spyOn(console, 'log').mockImplementation(() => {});
@@ -219,11 +227,38 @@ describe('PromotionHandler', () => {
 
       await promotionHandler.createPromotions(validOptions);
 
+      expect(mockConfirmWrite).toHaveBeenCalledWith(
+        undefined,
+        'Create 2 promotion channel(s) for channel 3151318?'
+      );
       expect(mockPromotionService.batchCreatePopularizations).toHaveBeenCalledWith({
         channelId: '3151318',
         names: ['First', 'Second'],
       });
       expect(mockConsoleLog).toHaveBeenCalled();
+    });
+
+    it('[P0] should pass force flag to confirmation guard', async () => {
+      mockPromotionService.batchCreatePopularizations.mockResolvedValueOnce(mockCreatedPromotions);
+
+      await promotionHandler.createPromotions({
+        ...validOptions,
+        force: true,
+      });
+
+      expect(mockConfirmWrite).toHaveBeenCalledWith(
+        true,
+        'Create 2 promotion channel(s) for channel 3151318?'
+      );
+      expect(mockPromotionService.batchCreatePopularizations).toHaveBeenCalled();
+    });
+
+    it('[P0] should not call API when confirmation is rejected', async () => {
+      mockConfirmWrite.mockRejectedValueOnce(new Error('Operation cancelled.'));
+
+      await expect(promotionHandler.createPromotions(validOptions)).rejects.toThrow('Operation cancelled.');
+
+      expect(mockPromotionService.batchCreatePopularizations).not.toHaveBeenCalled();
     });
 
     it('[P0][HDL-008] should validate channelId is required', async () => {
@@ -237,6 +272,7 @@ describe('PromotionHandler', () => {
         .rejects
         .toThrow(PolyVValidationError);
 
+      expect(mockConfirmWrite).not.toHaveBeenCalled();
       expect(mockPromotionService.batchCreatePopularizations).not.toHaveBeenCalled();
     });
 
@@ -251,6 +287,7 @@ describe('PromotionHandler', () => {
         .rejects
         .toThrow(PolyVValidationError);
 
+      expect(mockConfirmWrite).not.toHaveBeenCalled();
       expect(mockPromotionService.batchCreatePopularizations).not.toHaveBeenCalled();
     });
 

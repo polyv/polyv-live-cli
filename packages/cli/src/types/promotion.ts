@@ -36,6 +36,8 @@ export interface PromotionCreateOptions {
   channelId: string;
   /** Promotion channel names (required) */
   names: string[];
+  /** Skip confirmation prompt for non-interactive use */
+  force?: boolean;
   /** Output format (table or json) */
   output?: OutputFormat;
 }

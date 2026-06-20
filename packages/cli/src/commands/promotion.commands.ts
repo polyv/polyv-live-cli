@@ -116,6 +116,7 @@ export function registerPromotionCommands(program: Command): void {
     .description('Batch create promotion channels (批量创建推广渠道)')
     .requiredOption('--channelId <id>', 'Channel ID (频道ID)')
     .requiredOption('--names <names>', 'Comma-separated promotion channel names (推广渠道名称, 用逗分隔)')
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'Output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -124,6 +125,7 @@ export function registerPromotionCommands(program: Command): void {
         await handler.createPromotions({
           channelId: options.channelId,
           names: options.names.split(',').map((n: string) => n.trim()).filter((n: string) => n.trim().length > 0),
+          force: options.force,
           output: options.output as OutputFormat,
         });
       } catch (error) {
