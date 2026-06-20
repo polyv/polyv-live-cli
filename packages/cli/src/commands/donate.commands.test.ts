@@ -128,6 +128,7 @@ describe('Donate Commands Registration (ATDD RED PHASE)', () => {
       expect(options.some(opt => opt.long === '--gift-enabled')).toBe(true);
       expect(options.some(opt => opt.long === '--tips')).toBe(true);
       expect(options.some(opt => opt.long === '--amounts')).toBe(true);
+      expect(options.some(opt => opt.long === '--force')).toBe(true);
       expect(options.some(opt => opt.long === '--output')).toBe(true);
     });
 
@@ -229,6 +230,24 @@ describe('Donate Commands Registration (ATDD RED PHASE)', () => {
       const command = program.commands.find(cmd => cmd.name() === 'donate');
       const listSubcommand = command?.commands.find(cmd => cmd.name() === 'list');
       expect(listSubcommand?.description().toLowerCase()).toContain('list');
+    });
+  });
+
+  describe('should register donate likes command', () => {
+    it('should register likes subcommand with correct options', () => {
+      registerDonateCommands(program);
+
+      const command = program.commands.find(cmd => cmd.name() === 'donate');
+      const likesSubcommand = command?.commands.find(cmd => cmd.name() === 'likes');
+      expect(likesSubcommand).toBeDefined();
+
+      const options = likesSubcommand?.options || [];
+      expect(options.some(opt => opt.long === '--channel-id')).toBe(true);
+      expect(options.some(opt => opt.long === '--start')).toBe(true);
+      expect(options.some(opt => opt.long === '--end')).toBe(true);
+      expect(options.some(opt => opt.long === '--page')).toBe(true);
+      expect(options.some(opt => opt.long === '--size')).toBe(true);
+      expect(options.some(opt => opt.long === '--output')).toBe(true);
     });
   });
 

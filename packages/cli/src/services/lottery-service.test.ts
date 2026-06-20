@@ -44,6 +44,21 @@ describe('LotteryServiceSdk', () => {
       getLotteryActivityExact: jest.fn(),
       updateLotteryActivityExact: jest.fn(),
       deleteLotteryActivityExact: jest.fn(),
+      queryWinnerViewer: jest.fn(),
+      listLotteryActivityRecords: jest.fn(),
+      createConditionWaitLottery: jest.fn(),
+      listLotteryViewerGroups: jest.fn(),
+      createLotteryViewerGroup: jest.fn(),
+      updateLotteryViewerGroup: jest.fn(),
+      deleteLotteryViewerGroup: jest.fn(),
+      listLotteryGroupViewers: jest.fn(),
+      createLotteryGroupViewers: jest.fn(),
+      createLotteryGroupViewerNames: jest.fn(),
+      deleteLotteryGroupViewers: jest.fn(),
+      listLotteryBlacklistViewers: jest.fn(),
+      createLotteryBlacklistViewers: jest.fn(),
+      deleteLotteryBlacklistViewers: jest.fn(),
+      listLuckyBagWinners: jest.fn(),
     };
 
     mockLiveInteractionService = {
@@ -363,11 +378,11 @@ describe('LotteryServiceSdk', () => {
   });
 
   // ============================================================
-  // AC #6: getWinnerDetail (LiveInteraction V2 API)
+  // AC #6: getWinnerDetail (V4 Channel API)
   // ============================================================
   describe('getWinnerDetail (AC #6)', () => {
     it('11.5-SVC-012: should get winner detail list', async () => {
-      mockLiveInteractionService.getWinnerDetail.mockResolvedValue({
+      mockV4ChannelService.queryWinnerViewer.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [
@@ -385,15 +400,17 @@ describe('LotteryServiceSdk', () => {
         lotteryId: 'fv3mao43u6',
       });
 
-      expect(mockLiveInteractionService.getWinnerDetail).toHaveBeenCalledWith({
+      expect(mockV4ChannelService.queryWinnerViewer).toHaveBeenCalledWith({
         channelId: '3151318',
         lotteryId: 'fv3mao43u6',
+        pageNumber: undefined,
+        pageSize: undefined,
       });
       expect(result.data).toHaveLength(1);
     });
 
     it('11.5-SVC-013: should get winner detail with pagination', async () => {
-      mockLiveInteractionService.getWinnerDetail.mockResolvedValue({
+      mockV4ChannelService.queryWinnerViewer.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [],
@@ -406,21 +423,21 @@ describe('LotteryServiceSdk', () => {
         limit: 20,
       });
 
-      expect(mockLiveInteractionService.getWinnerDetail).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.queryWinnerViewer).toHaveBeenCalledWith(
         expect.objectContaining({
-          page: 1,
-          limit: 20,
+          pageNumber: 1,
+          pageSize: 20,
         })
       );
     });
   });
 
   // ============================================================
-  // AC #7: listLottery (LiveInteraction V3 API - Legacy)
+  // AC #7: listLottery (V4 Channel API)
   // ============================================================
   describe('listLottery (AC #7)', () => {
     it('11.5-SVC-014: should list lottery records', async () => {
-      mockLiveInteractionService.listLottery.mockResolvedValue({
+      mockV4ChannelService.listLotteryActivityRecords.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [
@@ -440,18 +457,18 @@ describe('LotteryServiceSdk', () => {
         channelId: '3151318',
       });
 
-      expect(mockLiveInteractionService.listLottery).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.listLotteryActivityRecords).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
-          startTime: expect.any(Number),
-          endTime: expect.any(Number),
+          startTimeBegin: expect.any(Number),
+          startTimeEnd: expect.any(Number),
         })
       );
       expect(result.data).toHaveLength(1);
     });
 
     it('11.5-SVC-015: should list lottery records with time range', async () => {
-      mockLiveInteractionService.listLottery.mockResolvedValue({
+      mockV4ChannelService.listLotteryActivityRecords.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [],
@@ -463,16 +480,16 @@ describe('LotteryServiceSdk', () => {
         endTime: 1615773566000,
       });
 
-      expect(mockLiveInteractionService.listLottery).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.listLotteryActivityRecords).toHaveBeenCalledWith(
         expect.objectContaining({
-          startTime: 1615772426000,
-          endTime: 1615773566000,
+          startTimeBegin: 1615772426000,
+          startTimeEnd: 1615773566000,
         })
       );
     });
 
     it('11.5-SVC-016: should list lottery records with sessionId filter', async () => {
-      mockLiveInteractionService.listLottery.mockResolvedValue({
+      mockV4ChannelService.listLotteryActivityRecords.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [],
@@ -483,7 +500,7 @@ describe('LotteryServiceSdk', () => {
         sessionId: 'fwly13xczv',
       });
 
-      expect(mockLiveInteractionService.listLottery).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.listLotteryActivityRecords).toHaveBeenCalledWith(
         expect.objectContaining({
           sessionId: 'fwly13xczv',
         })
@@ -491,7 +508,7 @@ describe('LotteryServiceSdk', () => {
     });
 
     it('11.5-SVC-017: should list lottery records with pagination', async () => {
-      mockLiveInteractionService.listLottery.mockResolvedValue({
+      mockV4ChannelService.listLotteryActivityRecords.mockResolvedValue({
         code: 200,
         status: 'success',
         data: [],
@@ -503,12 +520,67 @@ describe('LotteryServiceSdk', () => {
         limit: 20,
       });
 
-      expect(mockLiveInteractionService.listLottery).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.listLotteryActivityRecords).toHaveBeenCalledWith(
         expect.objectContaining({
-          page: 1,
-          limit: 20,
+          pageNumber: 1,
+          pageSize: 20,
         })
       );
+    });
+  });
+
+  describe('v4 channel interaction lottery helpers', () => {
+    it('maps viewer group and member methods to V4ChannelService', async () => {
+      mockV4ChannelService.listLotteryViewerGroups.mockResolvedValue({ data: { contents: [] } });
+      mockV4ChannelService.createLotteryViewerGroup.mockResolvedValue({ id: 1 });
+      mockV4ChannelService.updateLotteryViewerGroup.mockResolvedValue({ id: 1 });
+      mockV4ChannelService.deleteLotteryViewerGroup.mockResolvedValue(undefined);
+      mockV4ChannelService.listLotteryGroupViewers.mockResolvedValue({ data: { contents: [] } });
+      mockV4ChannelService.createLotteryGroupViewers.mockResolvedValue([]);
+      mockV4ChannelService.createLotteryGroupViewerNames.mockResolvedValue([]);
+      mockV4ChannelService.deleteLotteryGroupViewers.mockResolvedValue(undefined);
+
+      await lotteryService.listLotteryViewerGroups({ channelId: '3151318' });
+      await lotteryService.createLotteryViewerGroup({ channelId: '3151318', title: 'VIP' });
+      await lotteryService.updateLotteryViewerGroup({ channelId: '3151318', id: 1, title: 'VIP 2' });
+      await lotteryService.deleteLotteryViewerGroup({ channelId: '3151318', id: 1 });
+      await lotteryService.listLotteryGroupViewers({ channelId: '3151318', groupId: 1 });
+      await lotteryService.createLotteryGroupViewers({ channelId: '3151318', groupId: 1, viewerIds: ['viewer-1'] });
+      await lotteryService.createLotteryGroupViewerNames({
+        channelId: '3151318',
+        groupId: 1,
+        viewerNames: [{ viewerId: 'viewer-1', viewerName: 'Nick' }],
+      });
+      await lotteryService.deleteLotteryGroupViewers({ channelId: '3151318', groupId: 1, ids: [1] });
+
+      expect(mockV4ChannelService.listLotteryViewerGroups).toHaveBeenCalledWith({ channelId: '3151318' });
+      expect(mockV4ChannelService.createLotteryViewerGroup).toHaveBeenCalledWith({ channelId: '3151318', title: 'VIP' });
+      expect(mockV4ChannelService.updateLotteryViewerGroup).toHaveBeenCalledWith({ channelId: '3151318', id: 1, title: 'VIP 2' });
+      expect(mockV4ChannelService.deleteLotteryViewerGroup).toHaveBeenCalledWith({ channelId: '3151318', id: 1 });
+      expect(mockV4ChannelService.listLotteryGroupViewers).toHaveBeenCalledWith({ channelId: '3151318', groupId: 1 });
+      expect(mockV4ChannelService.createLotteryGroupViewers).toHaveBeenCalledWith({ channelId: '3151318', groupId: 1, viewerIds: ['viewer-1'] });
+      expect(mockV4ChannelService.createLotteryGroupViewerNames).toHaveBeenCalledWith(expect.objectContaining({ viewerNames: expect.any(Array) }));
+      expect(mockV4ChannelService.deleteLotteryGroupViewers).toHaveBeenCalledWith({ channelId: '3151318', groupId: 1, ids: [1] });
+    });
+
+    it('maps blacklist, lucky bag, and wait lottery methods to V4ChannelService', async () => {
+      mockV4ChannelService.listLotteryBlacklistViewers.mockResolvedValue({ data: { contents: [] } });
+      mockV4ChannelService.createLotteryBlacklistViewers.mockResolvedValue([]);
+      mockV4ChannelService.deleteLotteryBlacklistViewers.mockResolvedValue(undefined);
+      mockV4ChannelService.listLuckyBagWinners.mockResolvedValue({ data: { contents: [] } });
+      mockV4ChannelService.createConditionWaitLottery.mockResolvedValue({ success: true });
+
+      await lotteryService.listLotteryBlacklistViewers({ channelId: '3151318' });
+      await lotteryService.createLotteryBlacklistViewers({ channelId: '3151318', viewerIds: ['viewer-1'] });
+      await lotteryService.deleteLotteryBlacklistViewers({ channelId: '3151318', ids: [1] });
+      await lotteryService.listLuckyBagWinners({ activityId: 123, currentPage: 1, pageSize: 10 });
+      await lotteryService.createConditionWaitLottery({ channelId: '3151318', id: 1, lotteryTime: 1704067200000 });
+
+      expect(mockV4ChannelService.listLotteryBlacklistViewers).toHaveBeenCalledWith({ channelId: '3151318' });
+      expect(mockV4ChannelService.createLotteryBlacklistViewers).toHaveBeenCalledWith({ channelId: '3151318', viewerIds: ['viewer-1'] });
+      expect(mockV4ChannelService.deleteLotteryBlacklistViewers).toHaveBeenCalledWith({ channelId: '3151318', ids: [1] });
+      expect(mockV4ChannelService.listLuckyBagWinners).toHaveBeenCalledWith({ activityId: 123, currentPage: 1, pageSize: 10 });
+      expect(mockV4ChannelService.createConditionWaitLottery).toHaveBeenCalledWith({ channelId: '3151318', id: 1, lotteryTime: 1704067200000 });
     });
   });
 

@@ -9,6 +9,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
+import { parseJsonArray, parseJsonObject, parseTimestamp } from '../utils/api-command';
 
 export function validateOutputFormat(value: string): 'table' | 'json' {
   if (!['table', 'json'].includes(value)) {
@@ -151,6 +152,274 @@ export function registerInteractionCommands(program: Command): void {
       teacherNick: options.teacherNick,
       teacherPic: options.teacherPic,
       msgType: options.msgType,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const eventCmd = interactionCmd
+    .command('event')
+    .description('Manage interaction listener events');
+
+  eventCmd
+    .command('list')
+    .description('List interaction listener events')
+    .requiredOption('--room-id <id>', 'room ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.listInteractionEvents({
+      roomId: options.roomId,
+      output: options.output,
+    })));
+
+  eventCmd
+    .command('save')
+    .description('Save an interaction listener event')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--event-type <type>', 'event type')
+    .requiredOption('--event-data <json>', 'event data JSON object', parseJsonObject)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.saveInteractionEvent({
+      channelId: options.channelId,
+      eventType: options.eventType,
+      eventData: options.eventData,
+      force: options.force,
+      output: options.output,
+    })));
+
+  eventCmd
+    .command('delete')
+    .description('Delete an interaction listener event')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--event-id <id>', 'event ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.deleteInteractionEvent({
+      channelId: options.channelId,
+      eventId: options.eventId,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const invitePosterCmd = interactionCmd
+    .command('invite-poster')
+    .description('Manage invite poster interaction helpers');
+
+  invitePosterCmd
+    .command('create')
+    .description('Create an invite poster inviter')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--open-id <id>', 'viewer open ID')
+    .requiredOption('--nickname <name>', 'viewer nickname')
+    .option('--avatar <url>', 'viewer avatar URL')
+    .option('--viewer-id <id>', 'viewer ID')
+    .option('--invitee <id>', 'invitee ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.createInvitePoster({
+      channelId: options.channelId,
+      openId: options.openId,
+      nickname: options.nickname,
+      avatar: options.avatar,
+      viewerId: options.viewerId,
+      invitee: options.invitee,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const scriptCmd = interactionCmd
+    .command('script')
+    .description('Manage pseudo-live disk video interaction scripts');
+
+  scriptCmd
+    .command('query')
+    .description('Query custom interaction scripts for a disk video')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--disk-video-id <id>', 'disk video ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.queryDiskVideoCustomScript({
+      channelId: options.channelId,
+      diskVideoId: options.diskVideoId,
+      output: options.output,
+    })));
+
+  scriptCmd
+    .command('upload')
+    .description('Upload a custom interaction script for a disk video')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--disk-video-id <id>', 'disk video ID')
+    .requiredOption('--file <path>', 'script file path')
+    .option('--label-id <id>', 'disk video label ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.uploadDiskVideoCustomScript({
+      channelId: options.channelId,
+      diskVideoId: options.diskVideoId,
+      filePath: options.file,
+      labelId: options.labelId,
+      force: options.force,
+      output: options.output,
+    })));
+
+  scriptCmd
+    .command('delete')
+    .description('Delete an interaction script')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--id <id>', 'script ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.deleteInteractionScript({
+      channelId: options.channelId,
+      id: options.id,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const taskRewardCmd = interactionCmd
+    .command('task-reward')
+    .description('Manage task reward activities');
+
+  taskRewardCmd
+    .command('list')
+    .description('List task reward activities')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.listTaskRewardActivities({
+      channelId: options.channelId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('create')
+    .description('Create a task reward activity')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--activity-name <name>', 'activity name')
+    .requiredOption('--task-rule <number>', 'task rule', parsePositiveInteger)
+    .requiredOption('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parseTimestamp)
+    .requiredOption('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parseTimestamp)
+    .requiredOption('--tasks-json <json>', 'task settings JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.createTaskRewardActivity({
+      channelId: options.channelId,
+      activityName: options.activityName,
+      taskRule: options.taskRule,
+      startTime: options.startTime,
+      endTime: options.endTime,
+      tasks: options.tasksJson,
+      force: options.force,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('update')
+    .description('Update a task reward activity')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--activity-id <id>', 'activity ID')
+    .requiredOption('--tasks-json <json>', 'task settings JSON array', parseJsonArray)
+    .option('--activity-name <name>', 'activity name')
+    .option('--task-rule <number>', 'task rule', parsePositiveInteger)
+    .option('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parseTimestamp)
+    .option('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parseTimestamp)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.updateTaskRewardActivity({
+      channelId: options.channelId,
+      activityId: options.activityId,
+      activityName: options.activityName,
+      taskRule: options.taskRule,
+      startTime: options.startTime,
+      endTime: options.endTime,
+      tasks: options.tasksJson,
+      force: options.force,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('delete')
+    .description('Delete a task reward activity')
+    .requiredOption('--activity-id <id>', 'activity ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.deleteTaskRewardActivity({
+      activityId: options.activityId,
+      force: options.force,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('stop')
+    .description('Stop a task reward activity')
+    .requiredOption('--activity-id <id>', 'activity ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.stopTaskRewardActivity({
+      activityId: options.activityId,
+      force: options.force,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('stats')
+    .description('List task reward activity statistics')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.listTaskRewardStats({
+      channelId: options.channelId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('viewer-detail')
+    .description('List viewer details for a task reward activity')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--activity-id <id>', 'activity ID')
+    .option('--viewer-id <id>', 'viewer ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.listTaskRewardViewerDetails({
+      channelId: options.channelId,
+      activityId: options.activityId,
+      viewerId: options.viewerId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('viewer-list')
+    .description('List viewer-side task reward details')
+    .requiredOption('--viewer-id <id>', 'viewer ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.listViewerTaskRewardDetails({
+      viewerId: options.viewerId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  taskRewardCmd
+    .command('submit-accept-info')
+    .description('Submit viewer accept information for a task reward')
+    .requiredOption('--id <id>', 'viewer task reward record ID')
+    .requiredOption('--viewer-id <id>', 'viewer ID')
+    .requiredOption('--form-info-json <json>', 'accept form information JSON array', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withInteractionHandler((handler) => handler.submitViewerTaskRewardAcceptInfo({
+      id: options.id,
+      viewerId: options.viewerId,
+      formInfo: options.formInfoJson,
       force: options.force,
       output: options.output,
     })));

@@ -12,6 +12,7 @@ import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
 import { OutputFormat } from '../handlers/base.handler';
+import { parseJsonArray, parseNumberList } from '../utils/api-command';
 
 /**
  * Validate output format
@@ -57,6 +58,17 @@ export function registerLotteryCommands(program: Command): void {
   const lotteryCmd = program.command('lottery');
   lotteryCmd.description('Manage live streaming lottery interactions');
 
+  async function withLotteryHandler(action: (handler: LotteryHandler) => Promise<void>): Promise<void> {
+    try {
+      const parentOptions = program.opts();
+      const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+      await action(new LotteryHandler(authConfig, serviceConfig));
+    } catch (error) {
+      logError(error instanceof Error ? error : new Error(String(error)));
+      process.exit(1);
+    }
+  }
+
   // ========================================
   // lottery create (AC #1)
   // ========================================
@@ -71,6 +83,7 @@ export function registerLotteryCommands(program: Command): void {
     .option('--receive-info <json>', 'receive info JSON string')
     .option('--duration <seconds>', 'duration in seconds (for invite/duration types)', parseInt)
     .option('--invite-num <number>', 'number of invites required (for invite type)', parseInt)
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -88,6 +101,7 @@ export function registerLotteryCommands(program: Command): void {
           receiveInfo: options.receiveInfo,
           duration: options.duration,
           inviteNum: options.inviteNum,
+          force: options.force,
           output: options.output,
         });
       } catch (error) {
@@ -208,6 +222,7 @@ Output Formats:
     .option('--name <name>', 'new lottery activity name')
     .option('--amount <number>', 'new number of winners', parseInt)
     .option('--prize-name <name>', 'new prize name')
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -222,6 +237,7 @@ Output Formats:
           name: options.name,
           amount: options.amount,
           prizeName: options.prizeName,
+          force: options.force,
           output: options.output,
         });
       } catch (error) {
@@ -251,6 +267,7 @@ Output Formats:
     .description('Delete lottery activity')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
     .requiredOption('--id <id>', 'lottery activity ID')
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -262,6 +279,7 @@ Output Formats:
         await lotteryHandler.deleteLottery({
           channelId: options.channelId,
           id: options.id,
+          force: options.force,
           output: options.output,
         });
       } catch (error) {
@@ -329,7 +347,7 @@ Output Formats:
   // ========================================
   const recordsCmd = lotteryCmd
     .command('records')
-    .description('Get lottery records (legacy V3 API)')
+    .description('Get lottery activity records')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
     .option('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parseInt)
     .option('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parseInt)
@@ -489,6 +507,222 @@ Examples:
   # Add winner receive information
   $ polyv-live-cli lottery receive-info -c "3151318" --lottery-id "fv3mao43u6" --viewer-id "viewer-1" --winner-code "ABC123" --receive-info '{"name":"Nick","phone":"13800000000"}' --force
 `);
+
+  const waitCmd = lotteryCmd
+    .command('wait')
+    .description('Manage condition lottery wait schedules');
+
+  waitCmd
+    .command('create')
+    .description('Create a waiting draw schedule for a condition lottery')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--id <id>', 'lottery activity ID')
+    .requiredOption('--lottery-time <timestamp>', 'lottery time (timestamp in milliseconds)', parsePositiveNumber)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.createWaitLottery({
+      channelId: options.channelId,
+      id: options.id,
+      lotteryTime: options.lotteryTime,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const groupCmd = lotteryCmd
+    .command('group')
+    .description('Manage lottery viewer whitelist groups');
+
+  groupCmd
+    .command('list')
+    .description('List lottery viewer whitelist groups')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.listViewerGroups({
+      channelId: options.channelId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  groupCmd
+    .command('create')
+    .description('Create a lottery viewer whitelist group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--title <title>', 'group title')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.createViewerGroup({
+      channelId: options.channelId,
+      title: options.title,
+      force: options.force,
+      output: options.output,
+    })));
+
+  groupCmd
+    .command('update')
+    .description('Update a lottery viewer whitelist group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--id <id>', 'group ID')
+    .requiredOption('--title <title>', 'group title')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.updateViewerGroup({
+      channelId: options.channelId,
+      id: options.id,
+      title: options.title,
+      force: options.force,
+      output: options.output,
+    })));
+
+  groupCmd
+    .command('delete')
+    .description('Delete a lottery viewer whitelist group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--id <id>', 'group ID')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.deleteViewerGroup({
+      channelId: options.channelId,
+      id: options.id,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const groupViewerCmd = lotteryCmd
+    .command('group-viewer')
+    .description('Manage lottery viewer whitelist group members');
+
+  groupViewerCmd
+    .command('list')
+    .description('List viewers in a lottery viewer group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--group-id <id>', 'group ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.listGroupViewers({
+      channelId: options.channelId,
+      groupId: options.groupId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  groupViewerCmd
+    .command('add')
+    .description('Add viewers to a lottery viewer group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--group-id <id>', 'group ID')
+    .requiredOption('--viewer-ids <ids>', 'comma-separated viewer IDs', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.createGroupViewers({
+      channelId: options.channelId,
+      groupId: options.groupId,
+      viewerIds: options.viewerIds,
+      force: options.force,
+      output: options.output,
+    })));
+
+  groupViewerCmd
+    .command('add-names')
+    .description('Add viewers with names to a lottery viewer group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--group-id <id>', 'group ID')
+    .requiredOption('--viewer-names <json>', 'JSON array of {viewerId,viewerName}', parseJsonArray)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.createGroupViewerNames({
+      channelId: options.channelId,
+      groupId: options.groupId,
+      viewerNames: options.viewerNames,
+      force: options.force,
+      output: options.output,
+    })));
+
+  groupViewerCmd
+    .command('delete')
+    .description('Delete viewers from a lottery viewer group')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--group-id <id>', 'group ID')
+    .requiredOption('--ids <ids>', 'comma-separated group viewer record IDs', parseNumberList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.deleteGroupViewers({
+      channelId: options.channelId,
+      groupId: options.groupId,
+      ids: options.ids,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const blacklistCmd = lotteryCmd
+    .command('blacklist')
+    .description('Manage lottery viewer blacklist');
+
+  blacklistCmd
+    .command('list')
+    .description('List lottery viewer blacklist')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.listBlacklistViewers({
+      channelId: options.channelId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  blacklistCmd
+    .command('add')
+    .description('Add viewers to lottery blacklist')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--viewer-ids <ids>', 'comma-separated viewer IDs', parseStringList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.createBlacklistViewers({
+      channelId: options.channelId,
+      viewerIds: options.viewerIds,
+      force: options.force,
+      output: options.output,
+    })));
+
+  blacklistCmd
+    .command('delete')
+    .description('Delete viewers from lottery blacklist')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--ids <ids>', 'comma-separated blacklist record IDs', parseNumberList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.deleteBlacklistViewers({
+      channelId: options.channelId,
+      ids: options.ids,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const luckyBagCmd = lotteryCmd
+    .command('lucky-bag')
+    .description('Manage lucky bag lottery data');
+
+  luckyBagCmd
+    .command('winners')
+    .description('List lucky bag winners')
+    .requiredOption('--activity-id <id>', 'lucky bag activity ID')
+    .option('--session-id <id>', 'live session ID')
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withLotteryHandler((handler) => handler.listLuckyBagWinners({
+      activityId: options.activityId,
+      sessionId: options.sessionId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
 }
 
 // ========================================

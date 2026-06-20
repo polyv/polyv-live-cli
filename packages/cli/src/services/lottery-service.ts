@@ -121,13 +121,18 @@ export class LotteryServiceSdk {
   }
 
   /**
-   * Get winner detail list using LiveInteraction V2 API
+   * Get winner detail list using V4 Channel API
    * @param params Winner detail parameters
    * @returns API response with winner list
    */
   async getWinnerDetail(params: GetWinnerDetailParams): Promise<any> {
     try {
-      const result = await this.liveInteraction.getWinnerDetail(params);
+      const result = await this.v4Channel.queryWinnerViewer({
+        channelId: params.channelId,
+        lotteryId: params.lotteryId,
+        pageNumber: params.page,
+        pageSize: params.limit,
+      });
       return result;
     } catch (error) {
       throw this.wrapError(error, 'getWinnerDetail');
@@ -135,15 +140,21 @@ export class LotteryServiceSdk {
   }
 
   /**
-   * List lottery records using LiveInteraction V3 API
+   * List lottery records using V4 Channel API
    * @param params List lottery records parameters
    * @returns API response with lottery records
    */
   async listLottery(params: ListLotteryRecordsParams): Promise<any> {
     try {
-      const result = await this.liveInteraction.listLottery(
-        this.withDefaultLotteryTimeRange(params)
-      );
+      const query = this.withDefaultLotteryTimeRange(params);
+      const result = await this.v4Channel.listLotteryActivityRecords({
+        channelId: query.channelId,
+        sessionId: query.sessionId,
+        startTimeBegin: query.startTime,
+        startTimeEnd: query.endTime,
+        pageNumber: query.page,
+        pageSize: query.limit,
+      });
       return result;
     } catch (error) {
       throw this.wrapError(error, 'listLottery');
@@ -205,6 +216,114 @@ export class LotteryServiceSdk {
       return result;
     } catch (error) {
       throw this.wrapError(error, 'addReceiveInfoV4');
+    }
+  }
+
+  async createConditionWaitLottery(params: Record<string, unknown>): Promise<any> {
+    try {
+      const result = await this.v4Channel.createConditionWaitLottery(params);
+      return result ?? this.successResponse();
+    } catch (error) {
+      throw this.wrapError(error, 'createConditionWaitLottery');
+    }
+  }
+
+  async listLotteryViewerGroups(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.listLotteryViewerGroups(params);
+    } catch (error) {
+      throw this.wrapError(error, 'listLotteryViewerGroups');
+    }
+  }
+
+  async createLotteryViewerGroup(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.createLotteryViewerGroup(params);
+    } catch (error) {
+      throw this.wrapError(error, 'createLotteryViewerGroup');
+    }
+  }
+
+  async updateLotteryViewerGroup(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.updateLotteryViewerGroup(params);
+    } catch (error) {
+      throw this.wrapError(error, 'updateLotteryViewerGroup');
+    }
+  }
+
+  async deleteLotteryViewerGroup(params: Record<string, unknown>): Promise<any> {
+    try {
+      const result = await this.v4Channel.deleteLotteryViewerGroup(params);
+      return result ?? this.successResponse();
+    } catch (error) {
+      throw this.wrapError(error, 'deleteLotteryViewerGroup');
+    }
+  }
+
+  async listLotteryGroupViewers(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.listLotteryGroupViewers(params);
+    } catch (error) {
+      throw this.wrapError(error, 'listLotteryGroupViewers');
+    }
+  }
+
+  async createLotteryGroupViewers(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.createLotteryGroupViewers(params);
+    } catch (error) {
+      throw this.wrapError(error, 'createLotteryGroupViewers');
+    }
+  }
+
+  async createLotteryGroupViewerNames(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.createLotteryGroupViewerNames(params);
+    } catch (error) {
+      throw this.wrapError(error, 'createLotteryGroupViewerNames');
+    }
+  }
+
+  async deleteLotteryGroupViewers(params: Record<string, unknown>): Promise<any> {
+    try {
+      const result = await this.v4Channel.deleteLotteryGroupViewers(params);
+      return result ?? this.successResponse();
+    } catch (error) {
+      throw this.wrapError(error, 'deleteLotteryGroupViewers');
+    }
+  }
+
+  async listLotteryBlacklistViewers(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.listLotteryBlacklistViewers(params);
+    } catch (error) {
+      throw this.wrapError(error, 'listLotteryBlacklistViewers');
+    }
+  }
+
+  async createLotteryBlacklistViewers(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.createLotteryBlacklistViewers(params);
+    } catch (error) {
+      throw this.wrapError(error, 'createLotteryBlacklistViewers');
+    }
+  }
+
+  async deleteLotteryBlacklistViewers(params: Record<string, unknown>): Promise<any> {
+    try {
+      const result = await this.v4Channel.deleteLotteryBlacklistViewers(params);
+      return result ?? this.successResponse();
+    } catch (error) {
+      throw this.wrapError(error, 'deleteLotteryBlacklistViewers');
+    }
+  }
+
+  async listLuckyBagWinners(params: Record<string, unknown>): Promise<any> {
+    try {
+      return await this.v4Channel.listLuckyBagWinners(params);
+    } catch (error) {
+      throw this.wrapError(error, 'listLuckyBagWinners');
     }
   }
 

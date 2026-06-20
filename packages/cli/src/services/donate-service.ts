@@ -12,6 +12,7 @@ import {
   GetDonateConfigParams,
   UpdateDonateConfigParams,
   ListRewardGiftParams,
+  ListRewardLikeParams,
   DonateRecordApiResponse,
   DonateUpdateApiResponse,
 } from '../types/donate';
@@ -94,6 +95,26 @@ export class DonateServiceSdk {
       return response as unknown as DonateRecordApiResponse;
     } catch (error) {
       throw this.wrapError(error, 'listRewardGift');
+    }
+  }
+
+  /**
+   * List like reward records using V4 API
+   * @param params List reward like parameters
+   * @returns API response with reward like records
+   */
+  async listRewardLikes(params: ListRewardLikeParams): Promise<any> {
+    try {
+      const response = await this.v4Channel.listRewardLikes({
+        channelId: params.channelId,
+        pageNumber: params.pageNumber ?? 1,
+        pageSize: params.pageSize ?? 10,
+        ...(params.start !== undefined ? { start: params.start } : {}),
+        ...(params.end !== undefined ? { end: params.end } : {}),
+      });
+      return response;
+    } catch (error) {
+      throw this.wrapError(error, 'listRewardLikes');
     }
   }
 

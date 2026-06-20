@@ -37,6 +37,8 @@ export interface DonateConfigUpdateOptions {
   amounts?: number[] | string;
   /** Output format (table or json) */
   output?: OutputFormat;
+  /** Skip confirmation prompt */
+  force?: boolean;
 }
 
 /**
@@ -49,6 +51,24 @@ export interface DonateListOptions {
   start: number;
   /** End time (timestamp in milliseconds, required) */
   end: number;
+  /** Page number */
+  page?: number;
+  /** Page size */
+  size?: number;
+  /** Output format (table or json) */
+  output?: OutputFormat;
+}
+
+/**
+ * Options for listing like reward records
+ */
+export interface DonateLikeListOptions {
+  /** Channel ID (required) */
+  channelId: string;
+  /** Optional start time (timestamp in milliseconds) */
+  start?: number;
+  /** Optional end time (timestamp in milliseconds) */
+  end?: number;
   /** Page number */
   page?: number;
   /** Page size */
@@ -217,6 +237,17 @@ export interface ListRewardGiftParams {
   channelId: string;
   start: number;
   end: number;
+  pageNumber?: number;
+  pageSize?: number;
+}
+
+/**
+ * Parameters for listing like reward records via SDK
+ */
+export interface ListRewardLikeParams {
+  channelId: string;
+  start?: number;
+  end?: number;
   pageNumber?: number;
   pageSize?: number;
 }

@@ -11,9 +11,11 @@ import {
   DonateConfigGetOptions,
   DonateConfigUpdateOptions,
   DonateListOptions,
+  DonateLikeListOptions,
 } from '../types/donate';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 
 /**
  * Handler for donate-related CLI commands
@@ -75,6 +77,8 @@ export class DonateHandler extends BaseHandler {
     return this.executeWithErrorHandling(async () => {
       // Validate input options
       this.validateConfigUpdateOptions(options);
+
+      await confirmWrite(options.force, `Update donate configuration for channel ${options.channelId}?`);
 
       // Build params
       const params: any = {
@@ -140,6 +144,29 @@ export class DonateHandler extends BaseHandler {
       this.displayListResult(result, options);
 
     }, 'donate.list');
+  }
+
+  /**
+   * List like reward records
+   * @param options Donate like list options from CLI
+   * @returns Promise that resolves when records are displayed
+   */
+  async listLikes(options: DonateLikeListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateLikeListOptions(options);
+
+      const params = {
+        channelId: options.channelId,
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 10,
+        ...(options.start !== undefined ? { start: options.start } : {}),
+        ...(options.end !== undefined ? { end: options.end } : {}),
+      };
+
+      const result = await this.donateService.listRewardLikes(params);
+
+      this.displayGenericResult(result, options.output);
+    }, 'donate.likes');
   }
 
   // ===== Private Validation Methods =====
@@ -232,6 +259,43 @@ export class DonateHandler extends BaseHandler {
     if (errors.length > 0) {
       throw new PolyVValidationError(
         `Donate list options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateLikeListOptions(options: DonateLikeListOptions): void {
+    const errors: string[] = [];
+
+    if (!options.channelId || options.channelId.trim() === '') {
+      errors.push('channelId is required');
+    }
+
+    if (options.start !== undefined && options.end !== undefined && options.start > options.end) {
+      errors.push('start must be before end');
+    }
+
+    if (options.page !== undefined) {
+      if (typeof options.page !== 'number' || !Number.isInteger(options.page) || options.page < 1) {
+        errors.push('page must be a positive integer');
+      }
+    }
+
+    if (options.size !== undefined) {
+      if (typeof options.size !== 'number' || !Number.isInteger(options.size) || options.size < 1) {
+        errors.push('size must be a positive integer');
+      }
+    }
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Donate likes options validation failed: ${errors.join(', ')}`,
         'options',
         options,
         'validation_failed'
@@ -338,6 +402,10 @@ export class DonateHandler extends BaseHandler {
         this.displayAsTable(tableData);
       }
     }
+  }
+
+  private displayGenericResult(result: any, output?: string): void {
+    this.displayData(result ?? { success: true }, output === 'json' ? 'json' : 'table');
   }
 
   // ===== Private Helper Methods =====

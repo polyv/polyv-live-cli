@@ -47,6 +47,8 @@ export interface LotteryCreateOptions {
   inviteNum?: number;
   /** Output format (table or json) */
   output?: OutputFormat;
+  /** Skip confirmation prompt */
+  force?: boolean;
 }
 
 /**
@@ -91,6 +93,8 @@ export interface LotteryUpdateOptions {
   prizeName?: string;
   /** Output format (table or json) */
   output?: OutputFormat;
+  /** Skip confirmation prompt */
+  force?: boolean;
 }
 
 /**
@@ -103,6 +107,8 @@ export interface LotteryDeleteOptions {
   id: string;
   /** Output format (table or json) */
   output?: OutputFormat;
+  /** Skip confirmation prompt */
+  force?: boolean;
 }
 
 /**

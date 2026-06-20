@@ -41,6 +41,7 @@ describe('DonateServiceSdk', () => {
       getDonate: jest.fn(),
       updateDonateGift: jest.fn(),
       listRewardGifts: jest.fn(),
+      listRewardLikes: jest.fn(),
     };
 
     // Create mock PolyVClient
@@ -56,6 +57,39 @@ describe('DonateServiceSdk', () => {
   describe('constructor', () => {
     it('11.6-SVC-001: should create DonateServiceSdk with correct configuration', () => {
       expect(donateService).toBeDefined();
+    });
+  });
+
+  describe('listRewardLikes', () => {
+    it('should list like reward records with optional time range and pagination', async () => {
+      const mockResponse = {
+        code: 200,
+        status: 'success',
+        data: {
+          pageNumber: 2,
+          pageSize: 20,
+          totalItems: 1,
+          contents: [{ viewerId: 'viewer-1', likeCount: 10 }],
+        },
+      };
+      mockV4ChannelService.listRewardLikes.mockResolvedValue(mockResponse);
+
+      const result = await donateService.listRewardLikes({
+        channelId: '3151318',
+        start: 1615772426000,
+        end: 1615858826000,
+        pageNumber: 2,
+        pageSize: 20,
+      });
+
+      expect(result).toBe(mockResponse);
+      expect(mockV4ChannelService.listRewardLikes).toHaveBeenCalledWith({
+        channelId: '3151318',
+        start: 1615772426000,
+        end: 1615858826000,
+        pageNumber: 2,
+        pageSize: 20,
+      });
     });
   });
 

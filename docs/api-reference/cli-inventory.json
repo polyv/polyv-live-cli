@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20T02:10:21.645Z",
+  "generatedAt": "2026-06-20T03:04:29.899Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 508,
-    "cliMissingLatestApis": 70,
-    "cliCoverage": 87.9,
-    "cliUsageReferences": 510,
-    "cliSdkServiceUsages": 510,
+    "cliUsedLatestApis": 538,
+    "cliMissingLatestApis": 40,
+    "cliCoverage": 93.1,
+    "cliUsageReferences": 540,
+    "cliSdkServiceUsages": 540,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 495,
+    "matchedApiIds": 525,
     "sdkEndpointReferences": 711,
-    "cliCommandPaths": 631,
+    "cliCommandPaths": 670,
     "cliTopLevelCommands": 40
   },
   "modules": [
@@ -31,11 +31,21 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 213,
-      "cliMissing": 70,
+      "cliUsed": 245,
+      "cliMissing": 38,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 213,
-      "cliCoverage": 75.3
+      "sdkServiceUsed": 245,
+      "cliCoverage": 86.6
+    },
+    {
+      "module": "live_interaction",
+      "label": "直播互动",
+      "total": 30,
+      "cliUsed": 28,
+      "cliMissing": 2,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 28,
+      "cliCoverage": 93.3
     },
     {
       "module": "account",
@@ -95,16 +105,6 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 11,
-      "cliCoverage": 100
-    },
-    {
-      "module": "live_interaction",
-      "label": "直播互动",
-      "total": 30,
-      "cliUsed": 30,
-      "cliMissing": 0,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 30,
       "cliCoverage": 100
     },
     {
@@ -2807,6 +2807,17 @@
       "line": 39
     },
     {
+      "command": "donate likes",
+      "path": [
+        "donate",
+        "likes"
+      ],
+      "depth": 2,
+      "signature": "likes",
+      "file": "packages/cli/src/commands/donate.commands.ts",
+      "line": 186
+    },
+    {
       "command": "donate list",
       "path": [
         "donate",
@@ -2815,7 +2826,7 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/donate.commands.ts",
-      "line": 132
+      "line": 134
     },
     {
       "command": "donate config get",
@@ -3265,7 +3276,18 @@
       "depth": 1,
       "signature": "interaction",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 36
+      "line": 37
+    },
+    {
+      "command": "interaction event",
+      "path": [
+        "interaction",
+        "event"
+      ],
+      "depth": 2,
+      "signature": "event",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 159
     },
     {
       "command": "interaction favor",
@@ -3276,7 +3298,18 @@
       "depth": 2,
       "signature": "favor",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 50
+      "line": 51
+    },
+    {
+      "command": "interaction invite-poster",
+      "path": [
+        "interaction",
+        "invite-poster"
+      ],
+      "depth": 2,
+      "signature": "invite-poster",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 203
     },
     {
       "command": "interaction reward",
@@ -3287,7 +3320,29 @@
       "depth": 2,
       "signature": "reward",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 66
+      "line": 67
+    },
+    {
+      "command": "interaction script",
+      "path": [
+        "interaction",
+        "script"
+      ],
+      "depth": 2,
+      "signature": "script",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 229
+    },
+    {
+      "command": "interaction task-reward",
+      "path": [
+        "interaction",
+        "task-reward"
+      ],
+      "depth": 2,
+      "signature": "task-reward",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 277
     },
     {
       "command": "interaction teacher-answer",
@@ -3298,7 +3353,7 @@
       "depth": 2,
       "signature": "teacher-answer",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 136
+      "line": 137
     },
     {
       "command": "interaction webhook",
@@ -3309,7 +3364,199 @@
       "depth": 2,
       "signature": "webhook",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 96
+      "line": 97
+    },
+    {
+      "command": "interaction event delete",
+      "path": [
+        "interaction",
+        "event",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 189
+    },
+    {
+      "command": "interaction event list",
+      "path": [
+        "interaction",
+        "event",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 163
+    },
+    {
+      "command": "interaction event save",
+      "path": [
+        "interaction",
+        "event",
+        "save"
+      ],
+      "depth": 3,
+      "signature": "save",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 173
+    },
+    {
+      "command": "interaction invite-poster create",
+      "path": [
+        "interaction",
+        "invite-poster",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 207
+    },
+    {
+      "command": "interaction script delete",
+      "path": [
+        "interaction",
+        "script",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 263
+    },
+    {
+      "command": "interaction script query",
+      "path": [
+        "interaction",
+        "script",
+        "query"
+      ],
+      "depth": 3,
+      "signature": "query",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 233
+    },
+    {
+      "command": "interaction script upload",
+      "path": [
+        "interaction",
+        "script",
+        "upload"
+      ],
+      "depth": 3,
+      "signature": "upload",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 245
+    },
+    {
+      "command": "interaction task-reward create",
+      "path": [
+        "interaction",
+        "task-reward",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 295
+    },
+    {
+      "command": "interaction task-reward delete",
+      "path": [
+        "interaction",
+        "task-reward",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 341
+    },
+    {
+      "command": "interaction task-reward list",
+      "path": [
+        "interaction",
+        "task-reward",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 281
+    },
+    {
+      "command": "interaction task-reward stats",
+      "path": [
+        "interaction",
+        "task-reward",
+        "stats"
+      ],
+      "depth": 3,
+      "signature": "stats",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 365
+    },
+    {
+      "command": "interaction task-reward stop",
+      "path": [
+        "interaction",
+        "task-reward",
+        "stop"
+      ],
+      "depth": 3,
+      "signature": "stop",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 353
+    },
+    {
+      "command": "interaction task-reward submit-accept-info",
+      "path": [
+        "interaction",
+        "task-reward",
+        "submit-accept-info"
+      ],
+      "depth": 3,
+      "signature": "submit-accept-info",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 411
+    },
+    {
+      "command": "interaction task-reward update",
+      "path": [
+        "interaction",
+        "task-reward",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 317
+    },
+    {
+      "command": "interaction task-reward viewer-detail",
+      "path": [
+        "interaction",
+        "task-reward",
+        "viewer-detail"
+      ],
+      "depth": 3,
+      "signature": "viewer-detail",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 379
+    },
+    {
+      "command": "interaction task-reward viewer-list",
+      "path": [
+        "interaction",
+        "task-reward",
+        "viewer-list"
+      ],
+      "depth": 3,
+      "signature": "viewer-list",
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 397
     },
     {
       "command": "interaction webhook delete",
@@ -3321,7 +3568,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 124
+      "line": 125
     },
     {
       "command": "interaction webhook get",
@@ -3333,7 +3580,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 100
+      "line": 101
     },
     {
       "command": "interaction webhook set",
@@ -3345,7 +3592,7 @@
       "depth": 3,
       "signature": "set",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 110
+      "line": 111
     },
     {
       "command": "invite-sales",
@@ -3432,7 +3679,18 @@
       "depth": 1,
       "signature": "lottery",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 57
+      "line": 58
+    },
+    {
+      "command": "lottery blacklist",
+      "path": [
+        "lottery",
+        "blacklist"
+      ],
+      "depth": 2,
+      "signature": "blacklist",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 661
     },
     {
       "command": "lottery channel-records",
@@ -3443,7 +3701,7 @@
       "depth": 2,
       "signature": "channel-records",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 381
+      "line": 399
     },
     {
       "command": "lottery create",
@@ -3454,7 +3712,7 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 63
+      "line": 75
     },
     {
       "command": "lottery delete",
@@ -3465,7 +3723,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 249
+      "line": 265
     },
     {
       "command": "lottery download-winners",
@@ -3476,7 +3734,7 @@
       "depth": 2,
       "signature": "download-winners",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 422
+      "line": 440
     },
     {
       "command": "lottery get",
@@ -3487,7 +3745,29 @@
       "depth": 2,
       "signature": "get",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 163
+      "line": 177
+    },
+    {
+      "command": "lottery group",
+      "path": [
+        "lottery",
+        "group"
+      ],
+      "depth": 2,
+      "signature": "group",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 531
+    },
+    {
+      "command": "lottery group-viewer",
+      "path": [
+        "lottery",
+        "group-viewer"
+      ],
+      "depth": 2,
+      "signature": "group-viewer",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 593
     },
     {
       "command": "lottery list",
@@ -3498,7 +3778,18 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 118
+      "line": 132
+    },
+    {
+      "command": "lottery lucky-bag",
+      "path": [
+        "lottery",
+        "lucky-bag"
+      ],
+      "depth": 2,
+      "signature": "lucky-bag",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 707
     },
     {
       "command": "lottery receive-info",
@@ -3509,7 +3800,7 @@
       "depth": 2,
       "signature": "receive-info",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 455
+      "line": 473
     },
     {
       "command": "lottery records",
@@ -3520,7 +3811,7 @@
       "depth": 2,
       "signature": "records",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 330
+      "line": 348
     },
     {
       "command": "lottery update",
@@ -3531,7 +3822,18 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 203
+      "line": 217
+    },
+    {
+      "command": "lottery wait",
+      "path": [
+        "lottery",
+        "wait"
+      ],
+      "depth": 2,
+      "signature": "wait",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 511
     },
     {
       "command": "lottery winners",
@@ -3542,7 +3844,163 @@
       "depth": 2,
       "signature": "winners",
       "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 286
+      "line": 304
+    },
+    {
+      "command": "lottery blacklist add",
+      "path": [
+        "lottery",
+        "blacklist",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 679
+    },
+    {
+      "command": "lottery blacklist delete",
+      "path": [
+        "lottery",
+        "blacklist",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 693
+    },
+    {
+      "command": "lottery blacklist list",
+      "path": [
+        "lottery",
+        "blacklist",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 665
+    },
+    {
+      "command": "lottery group create",
+      "path": [
+        "lottery",
+        "group",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 549
+    },
+    {
+      "command": "lottery group delete",
+      "path": [
+        "lottery",
+        "group",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 579
+    },
+    {
+      "command": "lottery group list",
+      "path": [
+        "lottery",
+        "group",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 535
+    },
+    {
+      "command": "lottery group update",
+      "path": [
+        "lottery",
+        "group",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 563
+    },
+    {
+      "command": "lottery group-viewer add",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 613
+    },
+    {
+      "command": "lottery group-viewer add-names",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "add-names"
+      ],
+      "depth": 3,
+      "signature": "add-names",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 629
+    },
+    {
+      "command": "lottery group-viewer delete",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 645
+    },
+    {
+      "command": "lottery group-viewer list",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 597
+    },
+    {
+      "command": "lottery lucky-bag winners",
+      "path": [
+        "lottery",
+        "lucky-bag",
+        "winners"
+      ],
+      "depth": 3,
+      "signature": "winners",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 711
+    },
+    {
+      "command": "lottery wait create",
+      "path": [
+        "lottery",
+        "wait",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 515
     },
     {
       "command": "material",
@@ -7491,14 +7949,39 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 70,
+          "missing": 38,
           "total": 283,
-          "coverage": 75.3
+          "coverage": 86.6
         }
       ],
-      "missing": 70,
+      "missing": 38,
       "total": 283,
-      "coverage": 75.3
+      "coverage": 86.6
+    },
+    {
+      "modules": [
+        "live_interaction"
+      ],
+      "title": "互动活动补齐",
+      "command": "扩展 `checkin`、`qa`、`questionnaire`、`lottery`，新增活动子命令",
+      "rationale": "CLI 已有基础签到/问答/问卷/抽奖，但红包、福袋、邀请、任务奖励、观众分组等活动运营能力仍缺。",
+      "examples": [
+        "`lottery group *`、`lottery blacklist *`",
+        "`interaction lucky-bag winners`、`interaction red-pack stats`",
+        "`interaction task-reward *`"
+      ],
+      "relatedModules": [
+        {
+          "module": "live_interaction",
+          "label": "直播互动",
+          "missing": 2,
+          "total": 30,
+          "coverage": 93.3
+        }
+      ],
+      "missing": 2,
+      "total": 30,
+      "coverage": 93.3
     }
   ],
   "unmatchedUsages": [],
@@ -9126,8 +9609,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLotteryGroupViewers",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 266,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9154,8 +9646,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLotteryViewerGroups",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 233,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9182,8 +9683,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLuckyBagWinners",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 324,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9212,8 +9722,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#queryWinnerViewer",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 130,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9240,8 +9759,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLotteryBlacklistViewers",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 299,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9326,8 +9854,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listInteractionEvents",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 115,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -9547,7 +10084,7 @@
             "reference": "V4ChannelService#getDonate",
             "cliModule": "donate",
             "file": "packages/cli/src/services/donate-service.ts",
-            "line": 46,
+            "line": 47,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -10996,8 +11533,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listTaskRewardActivities",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 190,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11025,8 +11571,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listTaskRewardViewerDetails",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 206,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11053,8 +11608,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listTaskRewardStats",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 198,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11396,8 +11960,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#queryDiskVideoCustomScript",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 149,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11800,8 +12373,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#interactionEventSave",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 123,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12000,8 +12582,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createTaskRewardActivity",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 182,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12059,8 +12650,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createInvitePoster",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 141,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12237,8 +12837,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listLotteryActivityRecords",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 150,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12274,7 +12883,7 @@
             "reference": "V4ChannelService#listRewardGifts",
             "cliModule": "donate",
             "file": "packages/cli/src/services/donate-service.ts",
-            "line": 87,
+            "line": 88,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -12304,8 +12913,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listRewardLikes",
+            "cliModule": "donate",
+            "file": "packages/cli/src/services/donate-service.ts",
+            "line": 108,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12463,8 +13081,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteLotteryGroupViewers",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 290,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12493,8 +13120,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createLotteryGroupViewers",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 274,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12821,8 +13457,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listViewerTaskRewardDetails",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 241,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12851,8 +13496,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#submitViewerTaskRewardAcceptInfo",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 249,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13039,8 +13693,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteLotteryBlacklistViewers",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 315,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13068,8 +13731,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createLotteryBlacklistViewers",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 307,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15871,8 +16543,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteLotteryViewerGroup",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 257,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15900,8 +16581,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#interactionEventDelete",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 132,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15929,8 +16619,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteInteractionScript",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 173,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16145,8 +16844,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteTaskRewardActivity",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 223,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16425,8 +17133,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#uploadDiskVideoCustomScript",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 160,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16954,8 +17671,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#stopTaskRewardActivity",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 232,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17022,8 +17748,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createConditionWaitLottery",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 224,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17231,8 +17966,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createLotteryViewerGroup",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 241,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17289,8 +18033,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateLotteryViewerGroup",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 249,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17860,7 +18613,7 @@
             "reference": "V4ChannelService#updateDonateGift",
             "cliModule": "donate",
             "file": "packages/cli/src/services/donate-service.ts",
-            "line": 65,
+            "line": 66,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18530,8 +19283,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateTaskRewardActivity",
+            "cliModule": "interaction",
+            "file": "packages/cli/src/services/interaction-service.ts",
+            "line": 214,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -18847,8 +19609,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createLotteryGroupViewerNames",
+            "cliModule": "lottery",
+            "file": "packages/cli/src/services/lottery-service.ts",
+            "line": 282,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -21437,7 +22208,7 @@
             "reference": "LiveInteractionService#listChannelsLottery",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 160,
+            "line": 171,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -21469,17 +22240,8 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": true,
-        "usages": [
-          {
-            "usageType": "sdk-service",
-            "reference": "LiveInteractionService#listLottery",
-            "cliModule": "lottery",
-            "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 144,
-            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
-          }
-        ]
+        "used": false,
+        "usages": []
       }
     },
     {
@@ -21879,17 +22641,8 @@
         "file": "packages/sdk/src/services/live-interaction.service.ts"
       },
       "cli": {
-        "used": true,
-        "usages": [
-          {
-            "usageType": "sdk-service",
-            "reference": "LiveInteractionService#getWinnerDetail",
-            "cliModule": "lottery",
-            "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 130,
-            "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
-          }
-        ]
+        "used": false,
+        "usages": []
       }
     },
     {
@@ -21921,7 +22674,7 @@
             "reference": "LiveInteractionService#getStudentQuestionWebhook",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 62,
+            "line": 65,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22039,7 +22792,7 @@
             "reference": "LiveInteractionService#sendRewardMsg",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 42,
+            "line": 45,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22076,7 +22829,7 @@
             "reference": "LiveInteractionService#sendFavor",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 29,
+            "line": 32,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22190,7 +22943,7 @@
             "reference": "LiveInteractionService#sendTeacherAnswer",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 96,
+            "line": 99,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22228,7 +22981,7 @@
             "reference": "LiveInteractionService#setStudentQuestionWebhook",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 73,
+            "line": 76,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22340,7 +23093,7 @@
             "reference": "LiveInteractionService#deleteStudentQuestionWebhook",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 85,
+            "line": 88,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22380,7 +23133,7 @@
             "reference": "LiveInteractionService#addReceiveInfoV4",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 198,
+            "line": 209,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -22456,7 +23209,7 @@
             "reference": "LiveInteractionService#downloadWinnerDetail",
             "cliModule": "lottery",
             "file": "packages/cli/src/services/lottery-service.ts",
-            "line": 181,
+            "line": 192,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]

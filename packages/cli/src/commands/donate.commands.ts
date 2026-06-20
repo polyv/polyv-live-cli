@@ -88,6 +88,7 @@ Output Formats:
     .option('--gift-enabled <Y|N>', 'enable gift donate (Y/N)')
     .option('--tips <text>', 'donate tips text')
     .option('--amounts <values>', 'donate amounts (comma-separated, e.g., "0.88,6.66,8.88")')
+    .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -102,6 +103,7 @@ Output Formats:
           giftEnabled: options.giftEnabled,
           tips: options.tips,
           amounts: options.amounts,
+          force: options.force,
           output: options.output,
         });
       } catch (error) {
@@ -172,6 +174,52 @@ Examples:
 
 Note:
   --start and --end require 13-digit millisecond timestamps (e.g., 1615772426000)
+
+Output Formats:
+  table       - Formatted table output (default)
+  json        - JSON format for programmatic use
+`);
+
+  // ========================================
+  // donate likes
+  // ========================================
+  const likesCmd = donateCmd
+    .command('likes')
+    .description('List like reward records')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--start <timestamp>', 'start time (timestamp in milliseconds)', parseInt)
+    .option('--end <timestamp>', 'end time (timestamp in milliseconds)', parseInt)
+    .option('--page <number>', 'page number', parseInt)
+    .option('--size <number>', 'page size', parseInt)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const donateHandler = new DonateHandler(authConfig, serviceConfig);
+
+        await donateHandler.listLikes({
+          channelId: options.channelId,
+          start: options.start,
+          end: options.end,
+          page: options.page,
+          size: options.size,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  likesCmd.addHelpText('after', `
+Examples:
+  # List like reward records
+  $ polyv-live-cli donate likes -c "3151318"
+
+  # List with a time range
+  $ polyv-live-cli donate likes -c "3151318" --start 1615772426000 --end 1615858826000
 
 Output Formats:
   table       - Formatted table output (default)

@@ -240,6 +240,79 @@ async function main(): Promise<void> {
     return { topLevel, subCommands };
   }
 
+  function getCommandPathIndices(commandArgs: string[]): Set<number> {
+    const indices = new Set<number>();
+    let current: Command = program;
+    let optionValueExpected = false;
+
+    for (let index = 0; index < commandArgs.length; index++) {
+      const arg = commandArgs[index];
+      if (!arg) continue;
+
+      if (optionValueExpected) {
+        optionValueExpected = false;
+        continue;
+      }
+
+      if (arg.startsWith('-')) {
+        if (optionExpectsValue(current, arg) && commandArgs[index + 1]) {
+          optionValueExpected = true;
+        }
+        continue;
+      }
+
+      const next = findChildCommand(current, arg);
+      if (!next) {
+        break;
+      }
+
+      indices.add(index);
+      current = next;
+    }
+
+    return indices;
+  }
+
+  function isOptionValue(commandArgs: string[], index: number): boolean {
+    let current: Command = program;
+
+    for (let cursor = 0; cursor < index; cursor++) {
+      const arg = commandArgs[cursor];
+      if (!arg) continue;
+
+      if (arg.startsWith('-')) {
+        if (optionExpectsValue(current, arg)) {
+          if (cursor + 1 === index) {
+            return true;
+          }
+          cursor++;
+        }
+        continue;
+      }
+
+      const next = findChildCommand(current, arg);
+      if (next) {
+        current = next;
+      }
+    }
+
+    return false;
+  }
+
+  function findChildCommand(parent: Command, name: string): Command | undefined {
+    return parent.commands.find((cmd) => {
+      const aliases = typeof cmd.aliases === 'function' ? cmd.aliases() : [];
+      return cmd.name() === name || aliases.includes(name);
+    });
+  }
+
+  function optionExpectsValue(command: Command, rawOption: string): boolean {
+    const optionName = rawOption.includes('=') ? rawOption.slice(0, rawOption.indexOf('=')) : rawOption;
+    const options = Array.isArray((command as any).options) ? command.options : [];
+    const option = options.find((candidate) => candidate.long === optionName || candidate.short === optionName);
+    return !!option && (option.required || option.optional) && !rawOption.includes('=');
+  }
+
   // Add concise help text
   program.addHelpText('after', `
 Quick Start:
@@ -525,31 +598,15 @@ Authentication:
   // Check for unknown commands (commands that are not global options)
   // Use dynamic command detection instead of hardcoded lists
   if (!unknownCommand) {
-    const registeredCommands = getAllRegisteredCommands();
+    const commandPathIndices = getCommandPathIndices(args);
     
     unknownCommand = args.find((arg, index) => {
       if (arg.startsWith('-')) return false;
-      
-      // Top-level commands (including built-in help)
-      if (registeredCommands.topLevel.includes(arg) || arg === 'help') return false;
-      
-      // Check if it's a valid subcommand in the correct context
-      for (const [parentCmd, subCmds] of registeredCommands.subCommands) {
-        if (subCmds.includes(arg)) {
-          // Check if this subcommand is in the correct context (preceded by its parent)
-          if (index > 0 && args[index - 1] === parentCmd) {
-            return false; // Valid subcommand
-          }
-          // If not preceded by correct parent, it's an unknown top-level command
-          return true;
-        }
-      }
+      if (arg === 'help') return false;
+      if (commandPathIndices.has(index)) return false;
       
       // Check if it's a value for any option (including channel command options)
-      if (index > 0) {
-        const prevArg = args[index - 1];
-        if (prevArg && prevArg.startsWith('--')) return false;
-      }
+      if (isOptionValue(args, index)) return false;
       
       return true;
     }) || null;
@@ -607,10 +664,7 @@ Authentication:
   // Load and validate configuration for non-help commands
   if (!isHelpOrVersion) {
     // Check if we have any actual commands
-    const hasActualCommands = args.some(arg =>
-      arg === 'channel' || arg === 'stream' || arg === 'product' || arg === 'coupon' || arg === 'setup' || arg === 'monitor' || arg === 'account' || arg === 'use' || arg === 'statistics' || arg === 'player' || arg === 'playback' || arg === 'document' || arg === 'session' || arg === 'checkin' || arg === 'whitelist' || arg === 'global' || arg === 'group' || arg === 'finance' || arg === 'material' || arg === 'webapp' || arg === 'robot' || arg === 'partner' || arg === 'web' ||
-      arg.startsWith('channel ') || arg.startsWith('stream ') || arg.startsWith('product ') || arg.startsWith('coupon ') || arg.startsWith('setup ') || arg.startsWith('monitor ') || arg.startsWith('account ') || arg.startsWith('use ') || arg.startsWith('statistics ') || arg.startsWith('player ') || arg.startsWith('playback ') || arg.startsWith('document ') || arg.startsWith('session ') || arg.startsWith('checkin ') || arg.startsWith('whitelist ') || arg.startsWith('global ') || arg.startsWith('group ') || arg.startsWith('finance ') || arg.startsWith('material ') || arg.startsWith('webapp ') || arg.startsWith('robot ') || arg.startsWith('partner ') || arg.startsWith('web ')
-    );
+    const hasActualCommands = getCommandPathIndices(args).size > 0;
     
 
     // Check for unknown commands first if no other valid commands

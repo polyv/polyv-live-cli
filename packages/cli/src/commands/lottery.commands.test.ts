@@ -386,8 +386,13 @@ describe('Lottery Commands', () => {
       expect(subcommandNames).toContain('channel-records');
       expect(subcommandNames).toContain('download-winners');
       expect(subcommandNames).toContain('receive-info');
+      expect(subcommandNames).toContain('wait');
+      expect(subcommandNames).toContain('group');
+      expect(subcommandNames).toContain('group-viewer');
+      expect(subcommandNames).toContain('blacklist');
+      expect(subcommandNames).toContain('lucky-bag');
 
-      expect(subcommandNames).toHaveLength(10);
+      expect(subcommandNames).toHaveLength(15);
     });
   });
 

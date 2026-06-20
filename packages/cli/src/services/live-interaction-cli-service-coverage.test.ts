@@ -18,6 +18,7 @@ describe('live_interaction CLI service wrappers', () => {
   };
 
   let liveInteraction: Record<string, jest.Mock>;
+  let v4Channel: Record<string, jest.Mock>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -42,11 +43,29 @@ describe('live_interaction CLI service wrappers', () => {
       deleteStudentQuestionWebhook: jest.fn().mockResolvedValue({ code: 200 }),
       sendTeacherAnswer: jest.fn().mockResolvedValue({ code: 200 }),
     };
+    v4Channel = {
+      listInteractionEvents: jest.fn().mockResolvedValue({ code: 200 }),
+      interactionEventSave: jest.fn().mockResolvedValue(undefined),
+      interactionEventDelete: jest.fn().mockResolvedValue(undefined),
+      createInvitePoster: jest.fn().mockResolvedValue({ code: 200 }),
+      queryDiskVideoCustomScript: jest.fn().mockResolvedValue({ code: 200 }),
+      uploadDiskVideoCustomScript: jest.fn().mockResolvedValue({ id: 1 }),
+      deleteInteractionScript: jest.fn().mockResolvedValue(undefined),
+      createTaskRewardActivity: jest.fn().mockResolvedValue(123),
+      listTaskRewardActivities: jest.fn().mockResolvedValue({ code: 200 }),
+      listTaskRewardStats: jest.fn().mockResolvedValue({ code: 200 }),
+      listTaskRewardViewerDetails: jest.fn().mockResolvedValue({ code: 200 }),
+      updateTaskRewardActivity: jest.fn().mockResolvedValue(undefined),
+      deleteTaskRewardActivity: jest.fn().mockResolvedValue(undefined),
+      stopTaskRewardActivity: jest.fn().mockResolvedValue(undefined),
+      listViewerTaskRewardDetails: jest.fn().mockResolvedValue({ code: 200 }),
+      submitViewerTaskRewardAcceptInfo: jest.fn().mockResolvedValue(undefined),
+    };
 
     MockPolyVClient.mockImplementation(() => ({
       liveInteraction,
       v4Chat: { batchCheckin: jest.fn() },
-      v4Channel: {},
+      v4Channel,
     }) as any);
   });
 
@@ -140,5 +159,68 @@ describe('live_interaction CLI service wrappers', () => {
     expect(liveInteraction.setStudentQuestionWebhook).toHaveBeenCalledWith({ roomId: 'room-1', callbackUrl: 'https://example.com/callback' });
     expect(liveInteraction.deleteStudentQuestionWebhook).toHaveBeenCalledWith({ roomId: 'room-1' });
     expect(liveInteraction.sendTeacherAnswer).toHaveBeenCalledWith(expect.objectContaining({ viewerUserId: 'viewer-1' }));
+  });
+
+  it('maps v4 channel interaction event and script methods to V4ChannelService', async () => {
+    const service = new InteractionServiceSdk(authConfig);
+
+    await service.listInteractionEvents({ roomId: 'room-1' });
+    await service.saveInteractionEvent({ channelId: '3151318', eventType: 'custom', eventData: { key: 'value' } });
+    await service.deleteInteractionEvent({ channelId: '3151318', eventId: 'event-1' });
+    await service.createInvitePoster({ channelId: '3151318', openId: 'open-1', nickname: 'Nick' });
+    await service.queryDiskVideoCustomScript({ channelId: '3151318', diskVideoId: 'video-1' });
+    await service.uploadDiskVideoCustomScript({ channelId: '3151318', diskVideoId: 'video-1', filePath: __filename });
+    await service.deleteInteractionScript({ channelId: '3151318', id: 1 });
+
+    expect(v4Channel.listInteractionEvents).toHaveBeenCalledWith({ roomId: 'room-1' });
+    expect(v4Channel.interactionEventSave).toHaveBeenCalledWith({ channelId: '3151318', eventType: 'custom', eventData: { key: 'value' } });
+    expect(v4Channel.interactionEventDelete).toHaveBeenCalledWith({ channelId: '3151318', eventId: 'event-1' });
+    expect(v4Channel.createInvitePoster).toHaveBeenCalledWith({ channelId: '3151318', openId: 'open-1', nickname: 'Nick' });
+    expect(v4Channel.queryDiskVideoCustomScript).toHaveBeenCalledWith({ channelId: '3151318', diskVideoId: 'video-1' });
+    expect(v4Channel.uploadDiskVideoCustomScript).toHaveBeenCalledWith(expect.objectContaining({
+      channelId: '3151318',
+      diskVideoId: 'video-1',
+      file: expect.any(Blob),
+    }));
+    expect(v4Channel.deleteInteractionScript).toHaveBeenCalledWith({ channelId: '3151318', id: 1 });
+  });
+
+  it('maps task reward methods to V4ChannelService', async () => {
+    const service = new InteractionServiceSdk(authConfig);
+    const tasks = [{
+      reachCondition: { type: 'sign', amount: 1 },
+      rewardSetting: { type: 'nothing' },
+    }];
+
+    await service.createTaskRewardActivity({
+      channelId: '3151318',
+      activityName: 'Task reward',
+      taskRule: 1,
+      startTime: 1704067200000,
+      endTime: 1704153600000,
+      tasks,
+    });
+    await service.listTaskRewardActivities({ channelId: '3151318' });
+    await service.listTaskRewardStats({ channelId: '3151318' });
+    await service.listTaskRewardViewerDetails({ channelId: '3151318', activityId: 123 });
+    await service.updateTaskRewardActivity({ channelId: '3151318', activityId: 123, tasks });
+    await service.deleteTaskRewardActivity({ activityId: 123 });
+    await service.stopTaskRewardActivity({ activityId: 123 });
+    await service.listViewerTaskRewardDetails({ viewerId: 'viewer-1' });
+    await service.submitViewerTaskRewardAcceptInfo({
+      id: 1,
+      viewerId: 'viewer-1',
+      formInfo: [{ field: 'name', value: 'Nick' }],
+    });
+
+    expect(v4Channel.createTaskRewardActivity).toHaveBeenCalledWith(expect.objectContaining({ activityName: 'Task reward' }));
+    expect(v4Channel.listTaskRewardActivities).toHaveBeenCalledWith({ channelId: '3151318' });
+    expect(v4Channel.listTaskRewardStats).toHaveBeenCalledWith({ channelId: '3151318' });
+    expect(v4Channel.listTaskRewardViewerDetails).toHaveBeenCalledWith({ channelId: '3151318', activityId: 123 });
+    expect(v4Channel.updateTaskRewardActivity).toHaveBeenCalledWith(expect.objectContaining({ activityId: 123 }));
+    expect(v4Channel.deleteTaskRewardActivity).toHaveBeenCalledWith({ activityId: 123 });
+    expect(v4Channel.stopTaskRewardActivity).toHaveBeenCalledWith({ activityId: 123 });
+    expect(v4Channel.listViewerTaskRewardDetails).toHaveBeenCalledWith({ viewerId: 'viewer-1' });
+    expect(v4Channel.submitViewerTaskRewardAcceptInfo).toHaveBeenCalledWith(expect.objectContaining({ viewerId: 'viewer-1' }));
   });
 });

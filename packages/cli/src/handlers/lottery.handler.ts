@@ -22,7 +22,7 @@ import {
 } from '../types/lottery';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
-import { confirmWrite } from '../utils/api-command';
+import { apiParams, confirmWrite } from '../utils/api-command';
 
 /**
  * Valid lottery condition types
@@ -86,6 +86,8 @@ export class LotteryHandler extends BaseHandler {
           params.inviteNum = options.inviteNum;
         }
       }
+
+      await confirmWrite(options.force, `Create lottery activity "${options.name}" on channel ${options.channelId}?`);
 
       // Call SDK service
       const result = await this.lotteryService.createLotteryActivity(params);
@@ -184,6 +186,8 @@ export class LotteryHandler extends BaseHandler {
       if (options.amount !== undefined) params.amount = options.amount;
       if (options.prizeName !== undefined) params.prizeName = options.prizeName;
 
+      await confirmWrite(options.force, `Update lottery activity ${options.id} on channel ${options.channelId}?`);
+
       // Call SDK service
       const result = await this.lotteryService.updateLotteryActivity(params);
 
@@ -209,6 +213,8 @@ export class LotteryHandler extends BaseHandler {
     return this.executeWithErrorHandling(async () => {
       // Validate input options
       this.validateDeleteOptions(options);
+
+      await confirmWrite(options.force, `Delete lottery activity ${options.id} on channel ${options.channelId}?`);
 
       // Call SDK service
       await this.lotteryService.deleteLotteryActivity({
@@ -344,6 +350,142 @@ export class LotteryHandler extends BaseHandler {
 
       this.displayGenericResult(result ?? { success: true }, options.output, 'Receive info saved successfully');
     }, 'lottery.receive-info');
+  }
+
+  async createWaitLottery(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery wait create', options, ['channelId', 'id', 'lotteryTime'], [], ['lotteryTime']);
+
+      await confirmWrite(options.force, `Create wait lottery schedule for lottery ${options.id}?`);
+      const result = await this.lotteryService.createConditionWaitLottery(this.toV4Params(options));
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Wait lottery scheduled successfully');
+    }, 'lottery.wait.create');
+  }
+
+  async listViewerGroups(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group list', options, ['channelId'], ['page', 'size']);
+      const result = await this.lotteryService.listLotteryViewerGroups(this.toV4Params(options));
+      this.displayGenericResult(result, options.output);
+    }, 'lottery.group.list');
+  }
+
+  async createViewerGroup(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group create', options, ['channelId', 'title']);
+
+      await confirmWrite(options.force, `Create lottery viewer group "${options.title}"?`);
+      const result = await this.lotteryService.createLotteryViewerGroup(this.toV4Params(options));
+
+      this.displayGenericResult(result, options.output, 'Lottery viewer group created successfully');
+    }, 'lottery.group.create');
+  }
+
+  async updateViewerGroup(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group update', options, ['channelId', 'id', 'title']);
+
+      await confirmWrite(options.force, `Update lottery viewer group ${options.id}?`);
+      const result = await this.lotteryService.updateLotteryViewerGroup(this.toV4Params(options));
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Lottery viewer group updated successfully');
+    }, 'lottery.group.update');
+  }
+
+  async deleteViewerGroup(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group delete', options, ['channelId', 'id']);
+
+      await confirmWrite(options.force, `Delete lottery viewer group ${options.id}?`);
+      const result = await this.lotteryService.deleteLotteryViewerGroup(this.toV4Params(options));
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Lottery viewer group deleted successfully');
+    }, 'lottery.group.delete');
+  }
+
+  async listGroupViewers(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group-viewer list', options, ['channelId', 'groupId'], ['page', 'size']);
+      const result = await this.lotteryService.listLotteryGroupViewers(this.toV4Params(options));
+      this.displayGenericResult(result, options.output);
+    }, 'lottery.group-viewer.list');
+  }
+
+  async createGroupViewers(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group-viewer add', options, ['channelId', 'groupId']);
+      this.validateArrayOption('viewerIds', options.viewerIds, options);
+
+      await confirmWrite(options.force, `Add ${options.viewerIds.length} lottery group viewer(s)?`);
+      const result = await this.lotteryService.createLotteryGroupViewers(this.toV4Params(options));
+
+      this.displayGenericResult(result, options.output, 'Lottery group viewers added successfully');
+    }, 'lottery.group-viewer.add');
+  }
+
+  async createGroupViewerNames(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group-viewer add-names', options, ['channelId', 'groupId']);
+      this.validateArrayOption('viewerNames', options.viewerNames, options);
+
+      await confirmWrite(options.force, `Add ${options.viewerNames.length} lottery group viewer name(s)?`);
+      const result = await this.lotteryService.createLotteryGroupViewerNames(this.toV4Params(options));
+
+      this.displayGenericResult(result, options.output, 'Lottery group viewer names added successfully');
+    }, 'lottery.group-viewer.add-names');
+  }
+
+  async deleteGroupViewers(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery group-viewer delete', options, ['channelId', 'groupId']);
+      this.validateArrayOption('ids', options.ids, options);
+
+      await confirmWrite(options.force, `Delete ${options.ids.length} lottery group viewer record(s)?`);
+      const result = await this.lotteryService.deleteLotteryGroupViewers(this.toV4Params(options));
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Lottery group viewers deleted successfully');
+    }, 'lottery.group-viewer.delete');
+  }
+
+  async listBlacklistViewers(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery blacklist list', options, ['channelId'], ['page', 'size']);
+      const result = await this.lotteryService.listLotteryBlacklistViewers(this.toV4Params(options));
+      this.displayGenericResult(result, options.output);
+    }, 'lottery.blacklist.list');
+  }
+
+  async createBlacklistViewers(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery blacklist add', options, ['channelId']);
+      this.validateArrayOption('viewerIds', options.viewerIds, options);
+
+      await confirmWrite(options.force, `Add ${options.viewerIds.length} lottery blacklist viewer(s)?`);
+      const result = await this.lotteryService.createLotteryBlacklistViewers(this.toV4Params(options));
+
+      this.displayGenericResult(result, options.output, 'Lottery blacklist viewers added successfully');
+    }, 'lottery.blacklist.add');
+  }
+
+  async deleteBlacklistViewers(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery blacklist delete', options, ['channelId']);
+      this.validateArrayOption('ids', options.ids, options);
+
+      await confirmWrite(options.force, `Delete ${options.ids.length} lottery blacklist viewer record(s)?`);
+      const result = await this.lotteryService.deleteLotteryBlacklistViewers(this.toV4Params(options));
+
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Lottery blacklist viewers deleted successfully');
+    }, 'lottery.blacklist.delete');
+  }
+
+  async listLuckyBagWinners(options: Record<string, any>): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateGenericOptions('Lottery lucky-bag winners', options, ['activityId'], ['page', 'size']);
+      const result = await this.lotteryService.listLuckyBagWinners(this.toV4Params(options));
+      this.displayGenericResult(result, options.output);
+    }, 'lottery.lucky-bag.winners');
   }
 
   // ===== Private Validation Methods =====
@@ -629,6 +771,74 @@ export class LotteryHandler extends BaseHandler {
     }
   }
 
+  private validateGenericOptions(
+    label: string,
+    options: Record<string, any>,
+    requiredFields: string[],
+    positiveIntegerFields: string[] = [],
+    positiveNumberFields: string[] = []
+  ): void {
+    const errors: string[] = [];
+
+    requiredFields.forEach((field) => {
+      const value = options[field];
+      if (value === undefined || value === null || (typeof value === 'string' && value.trim() === '')) {
+        errors.push(`${field} is required`);
+      }
+    });
+
+    positiveIntegerFields.forEach((field) => {
+      const value = options[field];
+      if (value !== undefined && (!Number.isInteger(value) || value < 1)) {
+        errors.push(`${field} must be a positive integer`);
+      }
+    });
+
+    positiveNumberFields.forEach((field) => {
+      const value = options[field];
+      if (value !== undefined && (!Number.isFinite(value) || value <= 0)) {
+        errors.push(`${field} must be a positive number`);
+      }
+    });
+
+    if (options.output && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `${label} options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateArrayOption(field: string, value: unknown, options: Record<string, any>): void {
+    if (!Array.isArray(value) || value.length === 0) {
+      throw new PolyVValidationError(
+        `${field} must be a non-empty array`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private toV4Params(options: Record<string, any>): Record<string, unknown> {
+    const params = apiParams(options) as Record<string, unknown>;
+    if (params.page !== undefined) {
+      params.pageNumber = params.page;
+      delete params.page;
+    }
+    if (params.size !== undefined) {
+      params.pageSize = params.size;
+      delete params.size;
+    }
+    return params;
+  }
+
   // ===== Private Display Methods =====
 
   private displayCreateResult(result: any, options: LotteryCreateOptions): void {
@@ -725,7 +935,7 @@ export class LotteryHandler extends BaseHandler {
   }
 
   private displayWinnersResult(result: any, options: LotteryWinnersOptions): void {
-    const data = result?.data || [];
+    const data = result?.data?.contents || result?.data || [];
 
     if (!data || (Array.isArray(data) && data.length === 0)) {
       this.displayInfo(`No winners found for lottery ${options.lotteryId}`);
@@ -752,7 +962,7 @@ export class LotteryHandler extends BaseHandler {
   }
 
   private displayRecordsResult(result: any, options: LotteryRecordsOptions): void {
-    const data = result?.data || [];
+    const data = result?.data?.contents || result?.data || [];
 
     if (!data || (Array.isArray(data) && data.length === 0)) {
       this.displayInfo(`No lottery records found for channel ${options.channelId}`);
