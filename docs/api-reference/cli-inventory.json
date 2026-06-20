@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20T03:04:29.899Z",
+  "generatedAt": "2026-06-20T03:32:57.378Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,17 +13,17 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 538,
-    "cliMissingLatestApis": 40,
-    "cliCoverage": 93.1,
-    "cliUsageReferences": 540,
-    "cliSdkServiceUsages": 540,
+    "cliUsedLatestApis": 557,
+    "cliMissingLatestApis": 21,
+    "cliCoverage": 96.4,
+    "cliUsageReferences": 560,
+    "cliSdkServiceUsages": 560,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
-    "matchedApiIds": 525,
+    "matchedApiIds": 544,
     "sdkEndpointReferences": 711,
-    "cliCommandPaths": 670,
+    "cliCommandPaths": 696,
     "cliTopLevelCommands": 40
   },
   "modules": [
@@ -31,11 +31,11 @@
       "module": "channel",
       "label": "频道",
       "total": 283,
-      "cliUsed": 245,
-      "cliMissing": 38,
+      "cliUsed": 264,
+      "cliMissing": 19,
       "directHttpUsed": 0,
-      "sdkServiceUsed": 245,
-      "cliCoverage": 86.6
+      "sdkServiceUsed": 264,
+      "cliCoverage": 93.3
     },
     {
       "module": "live_interaction",
@@ -783,7 +783,7 @@
       "depth": 1,
       "signature": "card-push",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 132
+      "line": 139
     },
     {
       "command": "card-push cancel",
@@ -794,7 +794,7 @@
       "depth": 2,
       "signature": "cancel",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 273
+      "line": 280
     },
     {
       "command": "card-push create",
@@ -805,7 +805,7 @@
       "depth": 2,
       "signature": "create",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 157
+      "line": 164
     },
     {
       "command": "card-push delete",
@@ -816,7 +816,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 295
+      "line": 302
     },
     {
       "command": "card-push list",
@@ -827,7 +827,7 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 137
+      "line": 144
     },
     {
       "command": "card-push push",
@@ -838,7 +838,18 @@
       "depth": 2,
       "signature": "push",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 251
+      "line": 258
+    },
+    {
+      "command": "card-push share",
+      "path": [
+        "card-push",
+        "share"
+      ],
+      "depth": 2,
+      "signature": "share",
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 323
     },
     {
       "command": "card-push update",
@@ -849,7 +860,31 @@
       "depth": 2,
       "signature": "update",
       "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 203
+      "line": 210
+    },
+    {
+      "command": "card-push share get",
+      "path": [
+        "card-push",
+        "share",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 327
+    },
+    {
+      "command": "card-push share update",
+      "path": [
+        "card-push",
+        "share",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 346
     },
     {
       "command": "channel",
@@ -1865,7 +1900,7 @@
       "depth": 1,
       "signature": "chat",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 87
+      "line": 94
     },
     {
       "command": "chat badword",
@@ -1876,7 +1911,7 @@
       "depth": 2,
       "signature": "badword",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 577
+      "line": 584
     },
     {
       "command": "chat ban",
@@ -1887,7 +1922,7 @@
       "depth": 2,
       "signature": "ban",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 282
+      "line": 289
     },
     {
       "command": "chat banned",
@@ -1898,7 +1933,7 @@
       "depth": 2,
       "signature": "banned",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 408
+      "line": 415
     },
     {
       "command": "chat censor",
@@ -1909,7 +1944,7 @@
       "depth": 2,
       "signature": "censor",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 685
+      "line": 692
     },
     {
       "command": "chat delete",
@@ -1920,7 +1955,18 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 219
+      "line": 226
+    },
+    {
+      "command": "chat enabled",
+      "path": [
+        "chat",
+        "enabled"
+      ],
+      "depth": 2,
+      "signature": "enabled",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 805
     },
     {
       "command": "chat group-login-times",
@@ -1931,7 +1977,7 @@
       "depth": 2,
       "signature": "group-login-times",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 263
+      "line": 270
     },
     {
       "command": "chat kick",
@@ -1942,7 +1988,7 @@
       "depth": 2,
       "signature": "kick",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 342
+      "line": 349
     },
     {
       "command": "chat kicked",
@@ -1953,7 +1999,7 @@
       "depth": 2,
       "signature": "kicked",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 438
+      "line": 445
     },
     {
       "command": "chat list",
@@ -1964,7 +2010,7 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 158
+      "line": 165
     },
     {
       "command": "chat message",
@@ -1975,7 +2021,7 @@
       "depth": 2,
       "signature": "message",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 463
+      "line": 470
     },
     {
       "command": "chat notice",
@@ -1986,7 +2032,7 @@
       "depth": 2,
       "signature": "notice",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 641
+      "line": 648
     },
     {
       "command": "chat qa",
@@ -1997,7 +2043,7 @@
       "depth": 2,
       "signature": "qa",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 673
+      "line": 680
     },
     {
       "command": "chat robot",
@@ -2008,7 +2054,7 @@
       "depth": 2,
       "signature": "robot",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 747
+      "line": 754
     },
     {
       "command": "chat role",
@@ -2019,7 +2065,7 @@
       "depth": 2,
       "signature": "role",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 697
+      "line": 704
     },
     {
       "command": "chat send",
@@ -2030,7 +2076,7 @@
       "depth": 2,
       "signature": "send",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 104
+      "line": 111
     },
     {
       "command": "chat unban",
@@ -2041,7 +2087,7 @@
       "depth": 2,
       "signature": "unban",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 312
+      "line": 319
     },
     {
       "command": "chat unkick",
@@ -2052,7 +2098,18 @@
       "depth": 2,
       "signature": "unkick",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 375
+      "line": 382
+    },
+    {
+      "command": "chat viewer-logout",
+      "path": [
+        "chat",
+        "viewer-logout"
+      ],
+      "depth": 2,
+      "signature": "viewer-logout",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 822
     },
     {
       "command": "chat badword add",
@@ -2064,7 +2121,7 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 586
+      "line": 593
     },
     {
       "command": "chat badword delete",
@@ -2076,7 +2133,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 596
+      "line": 603
     },
     {
       "command": "chat badword list",
@@ -2088,7 +2145,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 580
+      "line": 587
     },
     {
       "command": "chat banned delete",
@@ -2100,7 +2157,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 631
+      "line": 638
     },
     {
       "command": "chat banned forbid-list",
@@ -2112,7 +2169,7 @@
       "depth": 3,
       "signature": "forbid-list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 621
+      "line": 628
     },
     {
       "command": "chat banned ip-add",
@@ -2124,7 +2181,7 @@
       "depth": 3,
       "signature": "ip-add",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 604
+      "line": 611
     },
     {
       "command": "chat banned list",
@@ -2136,7 +2193,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 411
+      "line": 418
     },
     {
       "command": "chat banned user-list",
@@ -2148,7 +2205,7 @@
       "depth": 3,
       "signature": "user-list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 613
+      "line": 620
     },
     {
       "command": "chat censor update",
@@ -2160,7 +2217,19 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 688
+      "line": 695
+    },
+    {
+      "command": "chat enabled update",
+      "path": [
+        "chat",
+        "enabled",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 808
     },
     {
       "command": "chat kicked list",
@@ -2172,7 +2241,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 441
+      "line": 448
     },
     {
       "command": "chat message admin-send",
@@ -2184,7 +2253,7 @@
       "depth": 3,
       "signature": "admin-send",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 482
+      "line": 489
     },
     {
       "command": "chat message alert-special",
@@ -2196,7 +2265,7 @@
       "depth": 3,
       "signature": "alert-special",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 517
+      "line": 524
     },
     {
       "command": "chat message audit",
@@ -2208,7 +2277,7 @@
       "depth": 3,
       "signature": "audit",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 527
+      "line": 534
     },
     {
       "command": "chat message custom-send",
@@ -2220,7 +2289,7 @@
       "depth": 3,
       "signature": "custom-send",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 542
+      "line": 549
     },
     {
       "command": "chat message custom-send-encode",
@@ -2232,7 +2301,7 @@
       "depth": 3,
       "signature": "custom-send-encode",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 555
+      "line": 562
     },
     {
       "command": "chat message emit-by-user-id",
@@ -2244,7 +2313,7 @@
       "depth": 3,
       "signature": "emit-by-user-id",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 567
+      "line": 574
     },
     {
       "command": "chat message hidden-send",
@@ -2256,7 +2325,7 @@
       "depth": 3,
       "signature": "hidden-send",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 466
+      "line": 473
     },
     {
       "command": "chat message online-count",
@@ -2268,7 +2337,7 @@
       "depth": 3,
       "signature": "online-count",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 491
+      "line": 498
     },
     {
       "command": "chat message remove-contents",
@@ -2280,7 +2349,7 @@
       "depth": 3,
       "signature": "remove-contents",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 498
+      "line": 505
     },
     {
       "command": "chat message speak-list",
@@ -2292,7 +2361,7 @@
       "depth": 3,
       "signature": "speak-list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 507
+      "line": 514
     },
     {
       "command": "chat notice add",
@@ -2304,7 +2373,7 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 654
+      "line": 661
     },
     {
       "command": "chat notice clean",
@@ -2316,7 +2385,7 @@
       "depth": 3,
       "signature": "clean",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 665
+      "line": 672
     },
     {
       "command": "chat notice list",
@@ -2328,7 +2397,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 644
+      "line": 651
     },
     {
       "command": "chat qa list",
@@ -2340,7 +2409,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 676
+      "line": 683
     },
     {
       "command": "chat robot list-update",
@@ -2352,7 +2421,7 @@
       "depth": 3,
       "signature": "list-update",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 776
+      "line": 783
     },
     {
       "command": "chat robot pause",
@@ -2364,7 +2433,7 @@
       "depth": 3,
       "signature": "pause",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 790
+      "line": 797
     },
     {
       "command": "chat robot setting-get",
@@ -2376,7 +2445,7 @@
       "depth": 3,
       "signature": "setting-get",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 750
+      "line": 757
     },
     {
       "command": "chat robot setting-update",
@@ -2388,7 +2457,7 @@
       "depth": 3,
       "signature": "setting-update",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 764
+      "line": 771
     },
     {
       "command": "chat robot stats",
@@ -2400,7 +2469,7 @@
       "depth": 3,
       "signature": "stats",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 757
+      "line": 764
     },
     {
       "command": "chat role admin-get",
@@ -2412,7 +2481,7 @@
       "depth": 3,
       "signature": "admin-get",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 700
+      "line": 707
     },
     {
       "command": "chat role admin-update",
@@ -2424,7 +2493,7 @@
       "depth": 3,
       "signature": "admin-update",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 707
+      "line": 714
     },
     {
       "command": "chat role teacher-get",
@@ -2436,7 +2505,7 @@
       "depth": 3,
       "signature": "teacher-get",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 718
+      "line": 725
     },
     {
       "command": "chat role teacher-update",
@@ -2448,7 +2517,7 @@
       "depth": 3,
       "signature": "teacher-update",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 725
+      "line": 732
     },
     {
       "command": "chat role user-list",
@@ -2460,7 +2529,7 @@
       "depth": 3,
       "signature": "user-list",
       "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 737
+      "line": 744
     },
     {
       "command": "checkin",
@@ -2535,7 +2604,7 @@
       "depth": 1,
       "signature": "coupon",
       "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 167
+      "line": 190
     },
     {
       "command": "coupon add",
@@ -2546,7 +2615,18 @@
       "depth": 2,
       "signature": "add",
       "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 173
+      "line": 196
+    },
+    {
+      "command": "coupon channel",
+      "path": [
+        "coupon",
+        "channel"
+      ],
+      "depth": 2,
+      "signature": "channel",
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 388
     },
     {
       "command": "coupon delete",
@@ -2557,7 +2637,7 @@
       "depth": 2,
       "signature": "delete",
       "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 316
+      "line": 339
     },
     {
       "command": "coupon list",
@@ -2568,7 +2648,67 @@
       "depth": 2,
       "signature": "list",
       "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 258
+      "line": 281
+    },
+    {
+      "command": "coupon channel add",
+      "path": [
+        "coupon",
+        "channel",
+        "add"
+      ],
+      "depth": 3,
+      "signature": "add",
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 464
+    },
+    {
+      "command": "coupon channel delete",
+      "path": [
+        "coupon",
+        "channel",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 489
+    },
+    {
+      "command": "coupon channel enabled",
+      "path": [
+        "coupon",
+        "channel",
+        "enabled"
+      ],
+      "depth": 3,
+      "signature": "enabled",
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 392
+    },
+    {
+      "command": "coupon channel list",
+      "path": [
+        "coupon",
+        "channel",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 437
+    },
+    {
+      "command": "coupon channel update-enabled",
+      "path": [
+        "coupon",
+        "channel",
+        "update-enabled"
+      ],
+      "depth": 3,
+      "signature": "update-enabled",
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 412
     },
     {
       "command": "custom-field",
@@ -5000,6 +5140,17 @@
       "line": 711
     },
     {
+      "command": "product channel-tag",
+      "path": [
+        "product",
+        "channel-tag"
+      ],
+      "depth": 2,
+      "signature": "channel-tag",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 755
+    },
+    {
       "command": "product delete",
       "path": [
         "product",
@@ -5030,7 +5181,7 @@
       "depth": 2,
       "signature": "library",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 732
+      "line": 859
     },
     {
       "command": "product list",
@@ -5052,7 +5203,7 @@
       "depth": 2,
       "signature": "order",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 820
+      "line": 947
     },
     {
       "command": "product push",
@@ -5064,6 +5215,28 @@
       "signature": "push",
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 702
+    },
+    {
+      "command": "product push-rule",
+      "path": [
+        "product",
+        "push-rule"
+      ],
+      "depth": 2,
+      "signature": "push-rule",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 729
+    },
+    {
+      "command": "product rank",
+      "path": [
+        "product",
+        "rank"
+      ],
+      "depth": 2,
+      "signature": "rank",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 831
     },
     {
       "command": "product reference",
@@ -5099,6 +5272,17 @@
       "line": 692
     },
     {
+      "command": "product stats",
+      "path": [
+        "product",
+        "stats"
+      ],
+      "depth": 2,
+      "signature": "stats",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 807
+    },
+    {
       "command": "product tag",
       "path": [
         "product",
@@ -5107,7 +5291,29 @@
       "depth": 2,
       "signature": "tag",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 769
+      "line": 896
+    },
+    {
+      "command": "product topping",
+      "path": [
+        "product",
+        "topping"
+      ],
+      "depth": 2,
+      "signature": "topping",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 840
+    },
+    {
+      "command": "product untopping",
+      "path": [
+        "product",
+        "untopping"
+      ],
+      "depth": 2,
+      "signature": "untopping",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 848
     },
     {
       "command": "product update",
@@ -5121,6 +5327,54 @@
       "line": 523
     },
     {
+      "command": "product channel-tag create",
+      "path": [
+        "product",
+        "channel-tag",
+        "create"
+      ],
+      "depth": 3,
+      "signature": "create",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 766
+    },
+    {
+      "command": "product channel-tag delete",
+      "path": [
+        "product",
+        "channel-tag",
+        "delete"
+      ],
+      "depth": 3,
+      "signature": "delete",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 794
+    },
+    {
+      "command": "product channel-tag list",
+      "path": [
+        "product",
+        "channel-tag",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 757
+    },
+    {
+      "command": "product channel-tag update",
+      "path": [
+        "product",
+        "channel-tag",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 779
+    },
+    {
       "command": "product library create",
       "path": [
         "product",
@@ -5130,7 +5384,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 745
+      "line": 872
     },
     {
       "command": "product library delete",
@@ -5142,7 +5396,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 755
+      "line": 882
     },
     {
       "command": "product library list",
@@ -5154,7 +5408,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 734
+      "line": 861
     },
     {
       "command": "product library update",
@@ -5166,7 +5420,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 750
+      "line": 877
     },
     {
       "command": "product order batch-status",
@@ -5178,7 +5432,7 @@
       "depth": 3,
       "signature": "batch-status",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 838
+      "line": 965
     },
     {
       "command": "product order get",
@@ -5190,7 +5444,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 829
+      "line": 956
     },
     {
       "command": "product order list",
@@ -5202,7 +5456,55 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 822
+      "line": 949
+    },
+    {
+      "command": "product push-rule get",
+      "path": [
+        "product",
+        "push-rule",
+        "get"
+      ],
+      "depth": 3,
+      "signature": "get",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 731
+    },
+    {
+      "command": "product push-rule update",
+      "path": [
+        "product",
+        "push-rule",
+        "update"
+      ],
+      "depth": 3,
+      "signature": "update",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 737
+    },
+    {
+      "command": "product stats list",
+      "path": [
+        "product",
+        "stats",
+        "list"
+      ],
+      "depth": 3,
+      "signature": "list",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 809
+    },
+    {
+      "command": "product stats summary",
+      "path": [
+        "product",
+        "stats",
+        "summary"
+      ],
+      "depth": 3,
+      "signature": "summary",
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 824
     },
     {
       "command": "product tag create",
@@ -5214,7 +5516,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 782
+      "line": 909
     },
     {
       "command": "product tag delete",
@@ -5226,7 +5528,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 806
+      "line": 933
     },
     {
       "command": "product tag list",
@@ -5238,7 +5540,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 771
+      "line": 898
     },
     {
       "command": "product tag update",
@@ -5250,7 +5552,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 793
+      "line": 920
     },
     {
       "command": "promotion",
@@ -7949,14 +8251,14 @@
         {
           "module": "channel",
           "label": "频道",
-          "missing": 38,
+          "missing": 19,
           "total": 283,
-          "coverage": 86.6
+          "coverage": 93.3
         }
       ],
-      "missing": 38,
+      "missing": 19,
       "total": 283,
-      "coverage": 86.6
+      "coverage": 93.3
     },
     {
       "modules": [
@@ -10557,7 +10859,7 @@
             "reference": "V4ChannelService#listCardPushes",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 51,
+            "line": 52,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -10880,8 +11182,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getProductPushRule",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 495,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -10936,8 +11247,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getShareExact",
+            "cliModule": "card-push",
+            "file": "packages/cli/src/services/card-push-service.ts",
+            "line": 209,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11119,8 +11439,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getCouponEnabled",
+            "cliModule": "coupon",
+            "file": "packages/cli/src/handlers/coupon.handler.ts",
+            "line": 260,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11147,8 +11476,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listChannelCoupons",
+            "cliModule": "coupon",
+            "file": "packages/cli/src/handlers/coupon.handler.ts",
+            "line": 291,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -11645,8 +11983,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listProductTagsExact",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 528,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12507,7 +12854,7 @@
             "reference": "V4ChannelService#createCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 101,
+            "line": 102,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -12620,8 +12967,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#createProductTagExact",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 545,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -12950,8 +13306,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#listProductStats",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 597,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13391,8 +13756,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateProductTagExact",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 562,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -13991,8 +14365,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#getProductStatsSummary",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 614,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -15317,8 +15700,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#logoutWatchViewer",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 566,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16370,7 +16762,7 @@
             "reference": "V4ChannelService#cancelCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 178,
+            "line": 179,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -16439,8 +16831,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#untoppingChannelProduct",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 658,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16701,7 +17102,7 @@
             "reference": "V4ChannelService#deleteCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 197,
+            "line": 198,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -16816,8 +17217,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteChannelCoupons",
+            "cliModule": "coupon",
+            "file": "packages/cli/src/handlers/coupon.handler.ts",
+            "line": 329,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -16882,8 +17292,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#deleteProductTagExact",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 577,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17826,8 +18245,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#sortChannelProductRank",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 629,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -17897,7 +18325,7 @@
             "reference": "V4ChannelService#pushCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 159,
+            "line": 160,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18004,8 +18432,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#addChannelCoupon",
+            "cliModule": "coupon",
+            "file": "packages/cli/src/handlers/coupon.handler.ts",
+            "line": 309,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -18537,7 +18974,7 @@
             "reference": "V4ChannelService#updateCardPushExact",
             "cliModule": "card-push",
             "file": "packages/cli/src/services/card-push-service.ts",
-            "line": 140,
+            "line": 141,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18644,8 +19081,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#batchUpdateChatEnabled",
+            "cliModule": "chat",
+            "file": "packages/cli/src/services/chat.service.sdk.ts",
+            "line": 558,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -18785,8 +19231,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateProductPushRule",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 505,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -18922,8 +19377,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateShareExact",
+            "cliModule": "card-push",
+            "file": "packages/cli/src/services/card-push-service.ts",
+            "line": 236,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -18992,6 +19456,14 @@
       "cli": {
         "used": true,
         "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#updateCouponEnabled",
+            "cliModule": "coupon",
+            "file": "packages/cli/src/handlers/coupon.handler.ts",
+            "line": 273,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          },
           {
             "usageType": "sdk-service",
             "reference": "V4ChannelService#updateCouponEnabled",
@@ -19579,8 +20051,17 @@
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       },
       "cli": {
-        "used": false,
-        "usages": []
+        "used": true,
+        "usages": [
+          {
+            "usageType": "sdk-service",
+            "reference": "V4ChannelService#toppingChannelProduct",
+            "cliModule": "product",
+            "file": "packages/cli/src/services/product.service.sdk.ts",
+            "line": 644,
+            "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
+          }
+        ]
       }
     },
     {
@@ -23623,7 +24104,7 @@
             "reference": "V4PlatformService#searchCoupons",
             "cliModule": "coupon",
             "file": "packages/cli/src/handlers/coupon.handler.ts",
-            "line": 194,
+            "line": 216,
             "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
           }
         ]
@@ -23740,7 +24221,7 @@
             "reference": "V4PlatformService#createCoupon",
             "cliModule": "coupon",
             "file": "packages/cli/src/handlers/coupon.handler.ts",
-            "line": 158,
+            "line": 180,
             "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
           },
           {
@@ -23861,7 +24342,7 @@
             "reference": "V4PlatformService#deleteCouponsBatch",
             "cliModule": "coupon",
             "file": "packages/cli/src/handlers/coupon.handler.ts",
-            "line": 225,
+            "line": 247,
             "sdkFile": "packages/sdk/src/services/v4/platform.service.ts"
           },
           {

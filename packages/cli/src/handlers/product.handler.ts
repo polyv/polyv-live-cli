@@ -585,6 +585,114 @@ export class ProductHandler extends BaseHandler {
     }, 'product.reference');
   }
 
+  async getProductPushRule(options: { channelId: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.productService.getProductPushRule({ channelId: options.channelId });
+      this.displayData(result, options.output || 'table');
+    }, 'product.push-rule.get');
+  }
+
+  async updateProductPushRule(options: Record<string, any> & { channelId: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      this.requireAtLeastOne(options, [
+        'productExplainEnabled',
+        'productExplainingAutoPushAndSticky',
+        'productListSortType',
+        'productTagSortType',
+        'productPushRule',
+        'productHotEffectEnabled',
+        'normalProductHotEffectTips',
+        'jobProductHotEffectTips',
+        'financeProductHotEffectTips',
+        'outLinkProductRedirectEnabled',
+        'productTagSortOrderIds',
+      ]);
+      await confirmWrite(options.force, `Update product push rule for channel ${options.channelId}?`);
+      await this.productService.updateProductPushRule(options);
+      this.displayWriteResult('Product push rule updated successfully', { channelId: options.channelId }, options.output);
+    }, 'product.push-rule.update');
+  }
+
+  async listChannelProductTags(options: { channelId: string; page?: number; size?: number; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.productService.listChannelProductTags(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.channel-tag.list');
+  }
+
+  async createChannelProductTag(options: { channelId: string; name: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'name']);
+      await confirmWrite(options.force, `Create channel product tag "${options.name}" in channel ${options.channelId}?`);
+      const result = await this.productService.createChannelProductTag(options);
+      this.displayWriteResult('Channel product tag created successfully', result, options.output);
+    }, 'product.channel-tag.create');
+  }
+
+  async updateChannelProductTag(options: { channelId: string; id: number; name: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'id', 'name']);
+      await confirmWrite(options.force, `Update channel product tag ${options.id} in channel ${options.channelId}?`);
+      await this.productService.updateChannelProductTag(options);
+      this.displayWriteResult('Channel product tag updated successfully', { channelId: options.channelId, id: options.id, name: options.name }, options.output);
+    }, 'product.channel-tag.update');
+  }
+
+  async deleteChannelProductTag(options: { channelId: string; id: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'id']);
+      await confirmWrite(options.force, `Delete channel product tag ${options.id} from channel ${options.channelId}?`);
+      await this.productService.deleteChannelProductTag(options);
+      this.displayWriteResult('Channel product tag deleted successfully', { channelId: options.channelId, id: options.id }, options.output);
+    }, 'product.channel-tag.delete');
+  }
+
+  async listProductStats(options: { channelId: string; productId?: string; productName?: string; sessionId?: string; page?: number; size?: number; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.productService.listProductStats(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.stats.list');
+  }
+
+  async getProductStatsSummary(options: { channelId: string; sessionId?: string; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId']);
+      const result = await this.productService.getProductStatsSummary(options);
+      this.displayData(result, options.output || 'table');
+    }, 'product.stats.summary');
+  }
+
+  async sortChannelProductRank(options: { channelId: string; productId: number; rank: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId', 'rank']);
+      await confirmWrite(options.force, `Set product ${options.productId} rank to ${options.rank} in channel ${options.channelId}?`);
+      await this.productService.sortChannelProductRank(options);
+      this.displayWriteResult('Channel product rank updated successfully', { channelId: options.channelId, productId: options.productId, rank: options.rank }, options.output);
+    }, 'product.rank');
+  }
+
+  async toppingChannelProduct(options: { channelId: string; productId: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId']);
+      await confirmWrite(options.force, `Top product ${options.productId} in channel ${options.channelId}?`);
+      await this.productService.toppingChannelProduct(options);
+      this.displayWriteResult('Channel product topped successfully', { channelId: options.channelId, productId: options.productId }, options.output);
+    }, 'product.topping');
+  }
+
+  async untoppingChannelProduct(options: { channelId: string; productId: number; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'productId']);
+      await confirmWrite(options.force, `Untop product ${options.productId} in channel ${options.channelId}?`);
+      await this.productService.untoppingChannelProduct(options);
+      this.displayWriteResult('Channel product untopped successfully', { channelId: options.channelId, productId: options.productId }, options.output);
+    }, 'product.untopping');
+  }
+
   private displayWriteResult(message: string, data: unknown, output?: OutputFormat): void {
     if (output === 'json') {
       this.displayData({ success: true, data }, 'json');
@@ -602,6 +710,21 @@ export class ProductHandler extends BaseHandler {
     if (missing.length > 0) {
       throw new PolyVValidationError(
         `Missing required option(s): ${missing.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private requireAtLeastOne(options: Record<string, unknown>, fields: string[]): void {
+    const present = fields.some((field) => {
+      const value = options[field];
+      return value !== undefined && value !== null && value !== '';
+    });
+    if (!present) {
+      throw new PolyVValidationError(
+        `At least one option is required: ${fields.join(', ')}`,
         'options',
         options,
         'validation_failed'

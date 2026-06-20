@@ -21,7 +21,15 @@ const PAGE_SIZE_MAX = 1000;
 
 /** Default timeout in milliseconds */
 const DEFAULT_TIMEOUT_MS = 30000;
-import { CouponHandler, CouponAddOptions, CouponListOptions, CouponDeleteOptions } from '../handlers/coupon.handler';
+import {
+  CouponHandler,
+  CouponAddOptions,
+  CouponListOptions,
+  CouponDeleteOptions,
+  ChannelCouponListOptions,
+  ChannelCouponWriteOptions,
+  ChannelCouponUpdateEnabledOptions,
+} from '../handlers/coupon.handler';
 import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
@@ -142,6 +150,21 @@ export function validateOutputFormat(value: string): 'table' | 'json' {
     throw new Error('Invalid output format. Must be "table" or "json"');
   }
   return value as 'table' | 'json';
+}
+
+export function validateYn(value: string): 'Y' | 'N' {
+  if (value !== 'Y' && value !== 'N') {
+    throw new Error('Value must be Y or N');
+  }
+  return value;
+}
+
+export function parseCouponIds(value: string): string[] {
+  const ids = value.split(',').map((item) => item.trim()).filter(Boolean);
+  if (ids.length === 0) {
+    throw new Error('coupon IDs must not be empty');
+  }
+  return ids;
 }
 
 /**
@@ -361,4 +384,130 @@ Notes:
   - Maximum ${BATCH_DELETE_MAX_IDS} coupon IDs can be deleted in one batch
   - Deletion is permanent and cannot be undone
 `);
+
+  const channelCmd = couponCmd
+    .command('channel')
+    .description('Manage channel coupon associations');
+
+  channelCmd
+    .command('enabled')
+    .description('Get channel coupon switch')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const couponHandler = new CouponHandler(authConfig, serviceConfig);
+        await couponHandler.getChannelCouponEnabled({
+          channelId: options.channelId,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  channelCmd
+    .command('update-enabled')
+    .description('Update channel coupon switch')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--enabled <yn>', 'enabled flag (Y|N)', validateYn)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const couponHandler = new CouponHandler(authConfig, serviceConfig);
+        const updateOptions: ChannelCouponUpdateEnabledOptions = {
+          channelId: options.channelId,
+          enabled: options.enabled,
+          force: options.force,
+          output: options.output,
+        };
+        await couponHandler.updateChannelCouponEnabled(updateOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  channelCmd
+    .command('list')
+    .description('List coupons associated with a channel')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('-p, --page <number>', 'page number (minimum 1)', parseInteger, 1)
+    .option('-s, --size <number>', 'items per page (1-1000)', validateSize, 10)
+    .option('-n, --name <name>', 'coupon name filter')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const couponHandler = new CouponHandler(authConfig, serviceConfig);
+        const listOptions: ChannelCouponListOptions = {
+          channelId: options.channelId,
+          page: options.page,
+          size: options.size,
+          name: options.name,
+          output: options.output,
+        };
+        await couponHandler.listChannelCoupons(listOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  channelCmd
+    .command('add')
+    .description('Add platform coupons to a channel')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--coupon-ids <ids>', 'coupon IDs, comma-separated (max 30)', parseCouponIds)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const couponHandler = new CouponHandler(authConfig, serviceConfig);
+        const addOptions: ChannelCouponWriteOptions = {
+          channelId: options.channelId,
+          couponIds: options.couponIds,
+          force: options.force,
+          output: options.output,
+        };
+        await couponHandler.addChannelCoupons(addOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  channelCmd
+    .command('delete')
+    .description('Delete coupons from a channel')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--coupon-ids <ids>', 'coupon IDs, comma-separated (max 30)', parseCouponIds)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+        const couponHandler = new CouponHandler(authConfig, serviceConfig);
+        const deleteOptions: ChannelCouponWriteOptions = {
+          channelId: options.channelId,
+          couponIds: options.couponIds,
+          force: options.force,
+          output: options.output,
+        };
+        await couponHandler.deleteChannelCoupons(deleteOptions);
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
 }

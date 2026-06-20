@@ -82,6 +82,13 @@ export function validateOutputFormat(format: string): OutputFormat {
   return format;
 }
 
+export function validateYn(value: string): 'Y' | 'N' {
+  if (value !== 'Y' && value !== 'N') {
+    throw new Error('Value must be Y or N');
+  }
+  return value;
+}
+
 /**
  * Validates image type
  * @param imageType Image type to validate
@@ -305,6 +312,66 @@ export function registerCardPushCommands(program: Command): void {
         await handler.deleteCardPush({
           channelId: options.channelId,
           cardPushId: options.cardPushId,
+          output: options.output as OutputFormat,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  const shareCmd = cardPushCmd
+    .command('share')
+    .description('Manage channel share settings (管理频道分享设置)');
+
+  shareCmd
+    .command('get')
+    .description('Get channel share settings (查询频道分享设置)')
+    .requiredOption('--channelId <id>', 'Channel ID (频道ID)')
+    .option('-o, --output <format>', 'Output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(options);
+        const handler = new CardPushHandler(authConfig, serviceConfig);
+        await handler.getShare({
+          channelId: options.channelId,
+          output: options.output as OutputFormat,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  shareCmd
+    .command('update')
+    .description('Update channel share settings (更新频道分享设置)')
+    .requiredOption('--channelId <id>', 'Channel ID (频道ID)')
+    .requiredOption('--share-btn-enable <yn>', 'Share button enabled (Y|N)', validateYn)
+    .requiredOption('--title-type <type>', 'Share title type (follow|custom)')
+    .option('--weixin-share-title <title>', 'WeChat share title')
+    .option('--weixin-share-desc <desc>', 'WeChat share description')
+    .option('--weixin-share-custom-url <url>', 'Custom WeChat share URL')
+    .option('--web-share-custom-url <url>', 'Custom web share URL')
+    .option('--weixin-share-custom-url-with-param-enabled <yn>', 'Append params to custom WeChat share URL (Y|N)', validateYn)
+    .option('--web-share-custom-url-with-param-enabled <yn>', 'Append params to custom web share URL (Y|N)', validateYn)
+    .option('-f, --force', 'Skip confirmation prompt')
+    .option('-o, --output <format>', 'Output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(options);
+        const handler = new CardPushHandler(authConfig, serviceConfig);
+        await handler.updateShare({
+          channelId: options.channelId,
+          shareBtnEnable: options.shareBtnEnable,
+          titleType: options.titleType,
+          weixinShareTitle: options.weixinShareTitle,
+          weixinShareDesc: options.weixinShareDesc,
+          weixinShareCustomUrl: options.weixinShareCustomUrl,
+          webShareCustomUrl: options.webShareCustomUrl,
+          weixinShareCustomUrlWithParamEnabled: options.weixinShareCustomUrlWithParamEnabled,
+          webShareCustomUrlWithParamEnabled: options.webShareCustomUrlWithParamEnabled,
+          force: options.force,
           output: options.output as OutputFormat,
         });
       } catch (error) {

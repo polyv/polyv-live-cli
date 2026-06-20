@@ -136,6 +136,34 @@ export interface CardPushDeleteOptions {
   output?: 'table' | 'json';
 }
 
+export interface CardPushShareGetOptions {
+  /** Channel ID (频道ID) */
+  channelId: string;
+  /** Output format (table|json) */
+  output?: 'table' | 'json';
+}
+
+export interface CardPushShareUpdateOptions extends CardPushShareGetOptions {
+  /** Whether to show the share button (Y|N) */
+  shareBtnEnable: 'Y' | 'N';
+  /** Share title mode */
+  titleType: 'follow' | 'custom' | string;
+  /** WeChat share title */
+  weixinShareTitle?: string;
+  /** WeChat share description */
+  weixinShareDesc?: string;
+  /** Custom WeChat share URL */
+  weixinShareCustomUrl?: string;
+  /** Custom web share URL */
+  webShareCustomUrl?: string;
+  /** Whether to append params to custom WeChat share URL */
+  weixinShareCustomUrlWithParamEnabled?: 'Y' | 'N';
+  /** Whether to append params to custom web share URL */
+  webShareCustomUrlWithParamEnabled?: 'Y' | 'N';
+  /** Skip confirmation prompt */
+  force?: boolean;
+}
+
 /**
  * Card-push information
  */

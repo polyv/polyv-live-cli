@@ -14,6 +14,7 @@ import type {
 } from 'polyv-live-api-sdk';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
+import { confirmWrite } from '../utils/api-command';
 
 // ========================================
 // Constants
@@ -86,6 +87,27 @@ export interface CouponDeleteOptions {
   couponIds: string[];
   /** Output format (table or json) */
   output?: OutputFormat;
+}
+
+export interface ChannelCouponEnabledOptions {
+  channelId: string;
+  output?: OutputFormat;
+}
+
+export interface ChannelCouponUpdateEnabledOptions extends ChannelCouponEnabledOptions {
+  enabled: 'Y' | 'N';
+  force?: boolean;
+}
+
+export interface ChannelCouponListOptions extends ChannelCouponEnabledOptions {
+  page?: number;
+  size?: number;
+  name?: string;
+}
+
+export interface ChannelCouponWriteOptions extends ChannelCouponEnabledOptions {
+  couponIds: string[];
+  force?: boolean;
 }
 
 /**
@@ -228,6 +250,92 @@ export class CouponHandler extends BaseHandler {
       this.displayDeleteResult(options.couponIds.length, options.output);
 
     }, 'coupon.delete');
+  }
+
+  async getChannelCouponEnabled(options: ChannelCouponEnabledOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateChannelId(options.channelId);
+
+      const client = createSdkClient(this.authConfig, this.serviceConfig.baseUrl);
+      const result = await client.v4Channel.getCouponEnabled({ channelId: options.channelId });
+
+      this.displayData(result, options.output || 'table');
+    }, 'coupon.channel.enabled');
+  }
+
+  async updateChannelCouponEnabled(options: ChannelCouponUpdateEnabledOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateChannelId(options.channelId);
+      this.validateYn(options.enabled, 'enabled');
+      await confirmWrite(options.force, `Update channel coupon switch for channel ${options.channelId}?`);
+
+      const client = createSdkClient(this.authConfig, this.serviceConfig.baseUrl);
+      await client.v4Channel.updateCouponEnabled({
+        channelId: options.channelId,
+        enabled: options.enabled,
+      });
+
+      this.displayGenericWriteResult('Channel coupon switch updated successfully', {
+        channelId: options.channelId,
+        enabled: options.enabled,
+      }, options.output);
+    }, 'coupon.channel.update-enabled');
+  }
+
+  async listChannelCoupons(options: ChannelCouponListOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateChannelId(options.channelId);
+      this.validateChannelCouponListOptions(options);
+
+      const client = createSdkClient(this.authConfig, this.serviceConfig.baseUrl);
+      const result = await client.v4Channel.listChannelCoupons({
+        channelId: options.channelId,
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 10,
+        ...(options.name && { name: options.name }),
+      });
+
+      this.displayData(result, options.output || 'table');
+    }, 'coupon.channel.list');
+  }
+
+  async addChannelCoupons(options: ChannelCouponWriteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateChannelId(options.channelId);
+      this.validateChannelCouponIds(options.couponIds);
+      await confirmWrite(options.force, `Add ${options.couponIds.length} coupon(s) to channel ${options.channelId}?`);
+
+      const client = createSdkClient(this.authConfig, this.serviceConfig.baseUrl);
+      const result = await client.v4Channel.addChannelCoupon({
+        channelId: options.channelId,
+        couponIds: options.couponIds,
+      });
+
+      this.displayGenericWriteResult('Channel coupon(s) added successfully', {
+        channelId: options.channelId,
+        couponIds: options.couponIds,
+        result,
+      }, options.output);
+    }, 'coupon.channel.add');
+  }
+
+  async deleteChannelCoupons(options: ChannelCouponWriteOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateChannelId(options.channelId);
+      this.validateChannelCouponIds(options.couponIds);
+      await confirmWrite(options.force, `Delete ${options.couponIds.length} coupon(s) from channel ${options.channelId}?`);
+
+      const client = createSdkClient(this.authConfig, this.serviceConfig.baseUrl);
+      await client.v4Channel.deleteChannelCoupons({
+        channelId: options.channelId,
+        couponIds: options.couponIds,
+      });
+
+      this.displayGenericWriteResult('Channel coupon(s) deleted successfully', {
+        channelId: options.channelId,
+        couponIds: options.couponIds,
+      }, options.output);
+    }, 'coupon.channel.delete');
   }
 
   // ========================================
@@ -407,6 +515,56 @@ export class CouponHandler extends BaseHandler {
     }
   }
 
+  private validateChannelId(channelId: string): void {
+    if (!channelId || channelId.trim() === '') {
+      throw new PolyVValidationError('channelId is required', 'channelId', channelId, 'required');
+    }
+  }
+
+  private validateYn(value: string, fieldName: string): void {
+    if (value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(`${fieldName} must be Y or N`, fieldName, value, 'invalid_value');
+    }
+  }
+
+  private validateChannelCouponListOptions(options: ChannelCouponListOptions): void {
+    const errors: string[] = [];
+
+    if (options.page !== undefined && (!Number.isInteger(options.page) || options.page < 1)) {
+      errors.push('page must be a positive integer');
+    }
+
+    if (options.size !== undefined && (!Number.isInteger(options.size) || options.size < 1 || options.size > PAGE_SIZE_MAX)) {
+      errors.push(`size must be an integer between 1 and ${PAGE_SIZE_MAX}`);
+    }
+
+    if (options.output !== undefined && !['table', 'json'].includes(options.output)) {
+      errors.push('output must be either "table" or "json"');
+    }
+
+    if (errors.length > 0) {
+      throw new PolyVValidationError(
+        `Channel coupon list options validation failed: ${errors.join(', ')}`,
+        'options',
+        options,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateChannelCouponIds(couponIds: string[]): void {
+    if (!Array.isArray(couponIds) || couponIds.length === 0) {
+      throw new PolyVValidationError('couponIds is required and must not be empty', 'couponIds', couponIds, 'required');
+    }
+    if (couponIds.length > 30) {
+      throw new PolyVValidationError('couponIds must not exceed 30 items', 'couponIds', couponIds, 'max_items');
+    }
+    const uniqueIds = new Set(couponIds);
+    if (uniqueIds.size !== couponIds.length) {
+      throw new PolyVValidationError('couponIds contains duplicate values', 'couponIds', couponIds, 'duplicate');
+    }
+  }
+
   // ========================================
   // Private Transformation Methods
   // ========================================
@@ -560,6 +718,14 @@ export class CouponHandler extends BaseHandler {
       this.displayData(data, 'json');
     } else {
       this.displaySuccess(`Successfully deleted ${count} coupon(s)`, data, 'table');
+    }
+  }
+
+  private displayGenericWriteResult(message: string, data: unknown, format: OutputFormat = 'table'): void {
+    if (format === 'json') {
+      this.displayData({ success: true, data }, 'json');
+    } else {
+      this.displaySuccess(message, data, 'table');
     }
   }
 

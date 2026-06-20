@@ -18,7 +18,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
-import { parseJsonArray, parseNumberList } from '../utils/api-command';
+import { parseJsonArray, parseNumberList, validateYn } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -725,6 +725,133 @@ Note:
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withProductHandler(program, handler => handler.referenceProduct(options)));
+
+  const pushRuleCmd = productCmd.command('push-rule').description('Manage channel product push rule');
+
+  pushRuleCmd.command('get')
+    .description('Get channel product push rule')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.getProductPushRule(options)));
+
+  pushRuleCmd.command('update')
+    .description('Update channel product push rule')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--product-explain-enabled <yn>', 'product explain enabled (Y|N)', validateYn)
+    .option('--product-explaining-auto-push-and-sticky <yn>', 'auto push and sticky explaining product (Y|N)', validateYn)
+    .option('--product-list-sort-type <type>', 'product list sort type')
+    .option('--product-tag-sort-type <type>', 'product tag sort type')
+    .option('--product-push-rule <rule>', 'product push rule: smallCard | bigCard | chooseCard')
+    .option('--product-hot-effect-enabled <yn>', 'product hot effect enabled (Y|N)', validateYn)
+    .option('--normal-product-hot-effect-tips <text>', 'normal product hot effect tips')
+    .option('--job-product-hot-effect-tips <text>', 'job product hot effect tips')
+    .option('--finance-product-hot-effect-tips <text>', 'finance product hot effect tips')
+    .option('--out-link-product-redirect-enabled <yn>', 'out-link redirect enabled (Y|N)', validateYn)
+    .option('--product-tag-sort-order-ids <ids>', 'product tag sort order IDs, comma-separated', parseNumberList)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.updateProductPushRule(options)));
+
+  const channelTagCmd = productCmd.command('channel-tag').description('Manage channel product tags');
+
+  addPaging(channelTagCmd.command('list').description('List channel product tags'))
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .action((options) => withProductHandler(program, handler => handler.listChannelProductTags({
+      channelId: options.channelId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  channelTagCmd.command('create')
+    .description('Create a channel product tag')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-n, --name <name>', 'tag name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.createChannelProductTag({
+      channelId: options.channelId,
+      name: options.name,
+      force: options.force,
+      output: options.output,
+    })));
+
+  channelTagCmd.command('update')
+    .description('Update a channel product tag')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--id <id>', 'tag ID', parseInteger)
+    .requiredOption('-n, --name <name>', 'tag name')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.updateChannelProductTag({
+      channelId: options.channelId,
+      id: options.id,
+      name: options.name,
+      force: options.force,
+      output: options.output,
+    })));
+
+  channelTagCmd.command('delete')
+    .description('Delete a channel product tag')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--id <id>', 'tag ID', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.deleteChannelProductTag({
+      channelId: options.channelId,
+      id: options.id,
+      force: options.force,
+      output: options.output,
+    })));
+
+  const statsCmd = productCmd.command('stats').description('Query channel product statistics');
+
+  addPaging(statsCmd.command('list').description('List channel product statistics'))
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--product-id <productId>', 'product ID')
+    .option('--product-name <productName>', 'product name filter')
+    .option('--session-id <sessionId>', 'session ID')
+    .action((options) => withProductHandler(program, handler => handler.listProductStats({
+      channelId: options.channelId,
+      productId: options.productId,
+      productName: options.productName,
+      sessionId: options.sessionId,
+      page: options.page,
+      size: options.size,
+      output: options.output,
+    })));
+
+  statsCmd.command('summary')
+    .description('Get channel product statistics summary')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .option('--session-id <sessionId>', 'session ID')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.getProductStatsSummary(options)));
+
+  productCmd.command('rank')
+    .description('Set channel product rank')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .requiredOption('--rank <rank>', 'target rank', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.sortChannelProductRank(options)));
+
+  productCmd.command('topping')
+    .description('Top a channel product')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.toppingChannelProduct(options)));
+
+  productCmd.command('untopping')
+    .description('Cancel topping for a channel product')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('-p, --product-id <productId>', 'product ID', parseInteger)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.untoppingChannelProduct(options)));
 
   // ========================================
   // product library - user-level product library

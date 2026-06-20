@@ -488,6 +488,182 @@ export class ProductServiceSdk {
     }
   }
 
+  async getProductPushRule(options: { channelId: string }): Promise<any> {
+    try {
+      this.validateChannelId(options.channelId);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4Channel.getProductPushRule({ channelId: options.channelId });
+    } catch (error) {
+      throw this.handleError(error, 'getProductPushRule');
+    }
+  }
+
+  async updateProductPushRule(options: Record<string, any> & { channelId: string }): Promise<void> {
+    try {
+      this.validateChannelId(options.channelId);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4Channel.updateProductPushRule(this.compact({
+        channelId: options.channelId,
+        productExplainEnabled: options.productExplainEnabled,
+        productExplainingAutoPushAndSticky: options.productExplainingAutoPushAndSticky,
+        productListSortType: options.productListSortType,
+        productTagSortType: options.productTagSortType,
+        productPushRule: options.productPushRule,
+        productHotEffectEnabled: options.productHotEffectEnabled,
+        normalProductHotEffectTips: options.normalProductHotEffectTips,
+        jobProductHotEffectTips: options.jobProductHotEffectTips,
+        financeProductHotEffectTips: options.financeProductHotEffectTips,
+        outLinkProductRedirectEnabled: options.outLinkProductRedirectEnabled,
+        productTagSortOrderIds: options.productTagSortOrderIds,
+      }) as any);
+    } catch (error) {
+      throw this.handleError(error, 'updateProductPushRule');
+    }
+  }
+
+  async listChannelProductTags(options: { channelId: string; page?: number; size?: number }): Promise<any> {
+    try {
+      this.validateChannelId(options.channelId);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4Channel.listProductTagsExact({
+        channelId: options.channelId,
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 20,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'listChannelProductTags');
+    }
+  }
+
+  async createChannelProductTag(options: { channelId: string; name: string }): Promise<any> {
+    try {
+      this.validateChannelId(options.channelId);
+      if (!options.name || options.name.trim() === '') {
+        throw new PolyVValidationError('name is required', 'name', options.name, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4Channel.createProductTagExact({
+        channelId: options.channelId,
+        name: options.name,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'createChannelProductTag');
+    }
+  }
+
+  async updateChannelProductTag(options: { channelId: string; id: number; name: string }): Promise<void> {
+    try {
+      this.validateChannelId(options.channelId);
+      this.validatePositiveNumber(options.id, 'id');
+      if (!options.name || options.name.trim() === '') {
+        throw new PolyVValidationError('name is required', 'name', options.name, 'required');
+      }
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4Channel.updateProductTagExact({
+        channelId: options.channelId,
+        id: options.id,
+        name: options.name,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'updateChannelProductTag');
+    }
+  }
+
+  async deleteChannelProductTag(options: { channelId: string; id: number }): Promise<void> {
+    try {
+      this.validateChannelId(options.channelId);
+      this.validatePositiveNumber(options.id, 'id');
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4Channel.deleteProductTagExact({
+        channelId: options.channelId,
+        id: options.id,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'deleteChannelProductTag');
+    }
+  }
+
+  async listProductStats(options: {
+    channelId: string;
+    productId?: string;
+    productName?: string;
+    sessionId?: string;
+    page?: number;
+    size?: number;
+  }): Promise<any> {
+    try {
+      this.validateChannelId(options.channelId);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4Channel.listProductStats(this.compact({
+        channelId: options.channelId,
+        productId: options.productId,
+        productName: options.productName,
+        sessionId: options.sessionId,
+        pageNumber: options.page ?? 1,
+        pageSize: options.size ?? 20,
+      }) as any);
+    } catch (error) {
+      throw this.handleError(error, 'listProductStats');
+    }
+  }
+
+  async getProductStatsSummary(options: { channelId: string; sessionId?: string }): Promise<any> {
+    try {
+      this.validateChannelId(options.channelId);
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return client.v4Channel.getProductStatsSummary(this.compact({
+        channelId: options.channelId,
+        sessionId: options.sessionId,
+      }) as any);
+    } catch (error) {
+      throw this.handleError(error, 'getProductStatsSummary');
+    }
+  }
+
+  async sortChannelProductRank(options: { channelId: string; productId: number; rank: number }): Promise<void> {
+    try {
+      this.validateChannelId(options.channelId);
+      this.validatePositiveNumber(options.productId, 'productId');
+      this.validatePositiveNumber(options.rank, 'rank');
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4Channel.sortChannelProductRank({
+        channelId: options.channelId,
+        productId: options.productId,
+        rank: options.rank,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'sortChannelProductRank');
+    }
+  }
+
+  async toppingChannelProduct(options: { channelId: string; productId: number }): Promise<void> {
+    try {
+      this.validateChannelId(options.channelId);
+      this.validatePositiveNumber(options.productId, 'productId');
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4Channel.toppingChannelProduct({
+        channelId: options.channelId,
+        productId: options.productId,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'toppingChannelProduct');
+    }
+  }
+
+  async untoppingChannelProduct(options: { channelId: string; productId: number }): Promise<void> {
+    try {
+      this.validateChannelId(options.channelId);
+      this.validatePositiveNumber(options.productId, 'productId');
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      await client.v4Channel.untoppingChannelProduct({
+        channelId: options.channelId,
+        productId: options.productId,
+      });
+    } catch (error) {
+      throw this.handleError(error, 'untoppingChannelProduct');
+    }
+  }
+
   // ===== Validation Methods =====
 
   private validateListRequest(request: ProductListRequest): void {
@@ -675,6 +851,18 @@ export class ProductServiceSdk {
       }
       return parsed;
     });
+  }
+
+  private validateChannelId(channelId: string): void {
+    if (!channelId || channelId.trim() === '') {
+      throw new PolyVValidationError('channelId is required', 'channelId', channelId, 'required');
+    }
+  }
+
+  private validatePositiveNumber(value: number, fieldName: string): void {
+    if (!Number.isInteger(value) || value <= 0) {
+      throw new PolyVValidationError(`${fieldName} must be a positive integer`, fieldName, value, 'positive_integer');
+    }
   }
 
   private compact<T extends Record<string, unknown>>(params: T): Partial<T> {

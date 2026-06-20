@@ -15,10 +15,13 @@ import {
   CardPushPushOptions,
   CardPushCancelOptions,
   CardPushDeleteOptions,
+  CardPushShareGetOptions,
+  CardPushShareUpdateOptions,
   CardPushServiceConfig,
   CardPush,
   CreatedCardPush,
 } from '../types/card-push';
+import { confirmWrite } from '../utils/api-command';
 
 export type {
   CardPushListOptions,
@@ -27,6 +30,8 @@ export type {
   CardPushPushOptions,
   CardPushCancelOptions,
   CardPushDeleteOptions,
+  CardPushShareGetOptions,
+  CardPushShareUpdateOptions,
 };
 
 /**
@@ -218,6 +223,28 @@ export class CardPushHandler extends BaseHandler {
       this.displayData({ success: true, message: successMsg }, 'json');
     } else {
       console.log(successMsg);
+    }
+  }
+
+  async getShare(options: CardPushShareGetOptions): Promise<void> {
+    const format: OutputFormat = options.output || 'table';
+    this.validateListOptions(options);
+
+    const result = await this.cardPushService.getShare(options.channelId);
+    this.displayData(result, format);
+  }
+
+  async updateShare(options: CardPushShareUpdateOptions): Promise<void> {
+    const format: OutputFormat = options.output || 'table';
+    this.validateShareUpdateOptions(options);
+
+    await confirmWrite(options.force, `Update share settings for channel ${options.channelId}?`);
+    const result = await this.cardPushService.updateShare(options);
+
+    if (format === 'json') {
+      this.displayData({ success: true, data: result }, 'json');
+    } else {
+      this.displaySuccess('Share settings updated successfully', result, 'table');
     }
   }
 
@@ -519,6 +546,40 @@ export class CardPushHandler extends BaseHandler {
         options.cardPushId,
         'required'
       );
+    }
+  }
+
+  private validateShareUpdateOptions(options: CardPushShareUpdateOptions): void {
+    this.validateListOptions(options);
+
+    if (options.shareBtnEnable !== 'Y' && options.shareBtnEnable !== 'N') {
+      throw new PolyVValidationError(
+        'shareBtnEnable must be Y or N',
+        'shareBtnEnable',
+        options.shareBtnEnable,
+        'invalid_value'
+      );
+    }
+
+    if (!options.titleType || options.titleType.trim() === '') {
+      throw new PolyVValidationError(
+        'titleType is required',
+        'titleType',
+        options.titleType,
+        'required'
+      );
+    }
+
+    for (const field of ['weixinShareCustomUrlWithParamEnabled', 'webShareCustomUrlWithParamEnabled'] as const) {
+      const value = options[field];
+      if (value !== undefined && value !== 'Y' && value !== 'N') {
+        throw new PolyVValidationError(
+          `${field} must be Y or N`,
+          field,
+          value,
+          'invalid_value'
+        );
+      }
     }
   }
 

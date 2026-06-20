@@ -15,6 +15,7 @@ import {
   CardPushPushParams,
   CardPushCancelParams,
   CardPushDeleteParams,
+  CardPushShareUpdateOptions,
 } from '../types/card-push';
 
 /**
@@ -200,10 +201,54 @@ export class CardPushServiceSdk {
     });
   }
 
+  async getShare(channelId: string): Promise<Record<string, unknown>> {
+    if (!channelId || channelId.trim() === '') {
+      throw new Error('Channel ID is required (频道ID是必需的)');
+    }
+
+    const result = await this.v4Channel.getShareExact({ channelId });
+    return this.unwrapData<Record<string, unknown>>(result) || {};
+  }
+
+  async updateShare(params: CardPushShareUpdateOptions): Promise<Record<string, unknown>> {
+    if (!params.channelId || params.channelId.trim() === '') {
+      throw new Error('Channel ID is required (频道ID是必需的)');
+    }
+    if (params.shareBtnEnable !== 'Y' && params.shareBtnEnable !== 'N') {
+      throw new Error('shareBtnEnable must be Y or N');
+    }
+    if (!params.titleType || params.titleType.trim() === '') {
+      throw new Error('titleType is required');
+    }
+
+    const requestParams = this.compactParams({
+      channelId: params.channelId,
+      shareBtnEnable: params.shareBtnEnable,
+      titleType: params.titleType,
+      weixinShareTitle: params.weixinShareTitle,
+      weixinShareDesc: params.weixinShareDesc,
+      weixinShareCustomUrl: params.weixinShareCustomUrl,
+      webShareCustomUrl: params.webShareCustomUrl,
+      weixinShareCustomUrlWithParamEnabled: params.weixinShareCustomUrlWithParamEnabled,
+      webShareCustomUrlWithParamEnabled: params.webShareCustomUrlWithParamEnabled,
+    });
+
+    const result = await this.v4Channel.updateShareExact(
+      requestParams as Parameters<PolyVClient['v4Channel']['updateShareExact']>[0]
+    );
+    return this.unwrapData<Record<string, unknown>>(result) || { success: true };
+  }
+
   private unwrapData<T>(value: unknown): T | undefined {
     if (value && typeof value === 'object' && 'data' in value) {
       return (value as { data: T }).data;
     }
     return value as T;
+  }
+
+  private compactParams<T extends Record<string, unknown>>(params: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== '')
+    ) as Partial<T>;
   }
 }

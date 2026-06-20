@@ -553,6 +553,22 @@ export class ChatServiceSdk {
     return await client.v4Robot.pauseRobot(options);
   }
 
+  async batchUpdateChatEnabled(options: { channelIds: string[]; chatEnabled: 'Y' | 'N' }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Channel.batchUpdateChatEnabled({
+      channelIds: options.channelIds,
+      chatEnabled: options.chatEnabled,
+    });
+  }
+
+  async logoutWatchViewer(options: { channelId: string; token?: string }): Promise<any> {
+    const client = createSdkClient(this.authConfig, this.config.baseUrl);
+    return await client.v4Channel.logoutWatchViewer(compactParams({
+      channelId: options.channelId,
+      token: options.token,
+    }));
+  }
+
   // ===== Validation Methods =====
 
   private validateSendOptions(options: ChatSendOptions): void {

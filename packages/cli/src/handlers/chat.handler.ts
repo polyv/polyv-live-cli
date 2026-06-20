@@ -613,6 +613,33 @@ export class ChatHandler extends BaseHandler {
     }, 'chat.robot.pause');
   }
 
+  async batchUpdateChatEnabled(options: { channelIds: string[]; chatEnabled: 'Y' | 'N'; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      if (!options.channelIds || options.channelIds.length === 0) {
+        throw new PolyVValidationError('channelIds is required', 'channelIds', options.channelIds, 'validation_failed');
+      }
+      this.validateYN('chatEnabled', options.chatEnabled);
+      if (!(await this.confirmIfNeeded(options.force, `Update chat switch for channel(s) ${options.channelIds.join(',')}?`))) return;
+      const result = await this.chatService.batchUpdateChatEnabled({
+        channelIds: options.channelIds,
+        chatEnabled: options.chatEnabled,
+      });
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Chat switch updated successfully');
+    }, 'chat.enabled.update');
+  }
+
+  async logoutWatchViewer(options: { channelId: string; token?: string; force?: boolean; output?: OutputFormat }): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.validateRequiredOptions(options, ['channelId']);
+      if (!(await this.confirmIfNeeded(options.force, `Log out viewer from watch page for channel ${options.channelId}?`))) return;
+      const result = await this.chatService.logoutWatchViewer({
+        channelId: options.channelId,
+        ...(options.token ? { token: options.token } : {}),
+      });
+      this.displayGenericResult(result ?? { success: true }, options.output, 'Watch viewer logged out successfully');
+    }, 'chat.viewer.logout');
+  }
+
   // ===== Private Display Methods =====
 
   private validateRequiredOptions(options: Record<string, any>, fields: string[]): void {

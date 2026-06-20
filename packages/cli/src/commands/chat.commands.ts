@@ -37,6 +37,13 @@ export function validateOutputFormat(value: string): 'table' | 'json' {
   return value as 'table' | 'json';
 }
 
+export function validateYn(value: string): 'Y' | 'N' {
+  if (value !== 'Y' && value !== 'N') {
+    throw new Error('Value must be Y or N');
+  }
+  return value;
+}
+
 export function parsePositiveInteger(value: string): number {
   const parsed = parseInt(value, 10);
   if (!Number.isInteger(parsed) || parsed < 1) {
@@ -794,6 +801,32 @@ Note:
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async options => withChatHandler(handler => handler.pauseRobot(options)));
+
+  const enabledCmd = chatCmd.command('enabled');
+  enabledCmd.description('Manage channel chat switch');
+
+  enabledCmd
+    .command('update')
+    .description('Batch update channel chat switch')
+    .requiredOption('--channel-ids <ids>', 'channel IDs, comma-separated', parseCommaList)
+    .requiredOption('--chat-enabled <yn>', 'chat enabled flag (Y|N)', validateYn)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.batchUpdateChatEnabled({
+      channelIds: options.channelIds,
+      chatEnabled: options.chatEnabled,
+      force: options.force,
+      output: options.output,
+    })));
+
+  chatCmd
+    .command('viewer-logout')
+    .description('Log out a viewer from the channel watch page')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--token <token>', 'viewer token')
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async options => withChatHandler(handler => handler.logoutWatchViewer(options)));
 
   // ========================================
   // Common helper
