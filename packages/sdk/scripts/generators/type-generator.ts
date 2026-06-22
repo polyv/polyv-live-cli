@@ -125,8 +125,6 @@ export class TypeGenerator {
  *
  * AUTO-GENERATED FILE - DO NOT EDIT
  * Generated from API docs module ${moduleName} by scripts/generate-types.ts
- *
- * Last updated: ${new Date().toISOString()}
  */
 
 `;
@@ -153,8 +151,6 @@ export class TypeGenerator {
  *
  * AUTO-GENERATED FILE - DO NOT EDIT
  * Generated from API docs by scripts/generate-types.ts
- *
- * Last updated: ${new Date().toISOString()}
  */
 
 `;

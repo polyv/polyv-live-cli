@@ -3,8 +3,6 @@
  *
  * AUTO-GENERATED FILE - DO NOT EDIT
  * Generated from API docs module uncategorized by scripts/generate-types.ts
- *
- * Last updated: 2026-06-20T00:51:38.564Z
  */
 
 /**
