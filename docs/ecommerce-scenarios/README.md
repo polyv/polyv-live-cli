@@ -30,14 +30,15 @@
 | 12 | 直播间互动治理与促活（聊天消息审计/公告+互动点赞/奖励） | 互动 / 治理 / 转化 | `account`、`channel`、`chat`、`interaction` | [12-chat-interaction-engagement.md](./12-chat-interaction-engagement.md) |
 | 13 | 开播前频道初始化与推流就绪（一键电商场景初始化+推流凭证/直播状态就绪检查） | 开播 / 预热 | `account`、`channel`、`setup`、`stream` | [13-stream-setup-golive.md](./13-stream-setup-golive.md) |
 | 14 | 直播物料与课件资源治理（素材库分类/标签体系+频道课件文档上传/转码/清理） | 预热 / 开播 / 数据复盘 | `account`、`channel`、`material`、`document` | [14-material-document.md](./14-material-document.md) |
+| 15 | 直播运营驾驶舱（实时监控大盘+账号全局配置治理） | 开播 / 数据复盘 / 治理 | `account`、`channel`、`monitor`、`global` | [15-monitor-global-dashboard.md](./15-monitor-global-dashboard.md) |
 
 ---
 
 ## 二、覆盖统计
 
-- **已覆盖一级命令**：28 / 40
+- **已覆盖一级命令**：30 / 40
   - `account`（每个场景写入前的账号预检，真实执行）
-  - `channel`（场景 01、02、03、04、05、06、07、08、09、10、11、12、13、14：建测试频道 + 验证）
+  - `channel`（场景 01、02、03、04、05、06、07、08、09、10、11、12、13、14、15：建测试频道 + 验证）
   - `coupon`（场景 01：建券 + 绑定频道 + 开领券开关 + 验证）
   - `product`（场景 02：上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
   - `card-push`（场景 02：建手动秒杀卡 + 观看触发红包卡 + push/cancel 状态流转验证）
@@ -64,9 +65,11 @@
   - `stream`（场景 13：stream status（频道 7983944/7983945 均 waiting/isLive=false）/ get-key（未开播即可返回 RTMP URL + 脱敏推流密钥，已记录与 help "must be live" 不符）/ live-status list / streams 四条只读命令真实执行成功；hls-pull-url 报 forbidden、capture 报 channel is not live 已执行失败并记录）
   - `material`（场景 14：素材库为账号级。`category list --material-type image/video/document` 三类只读盘点成功（video 含「商品讲解」等 8 类、image 3 类、document 2 类），`material list --type <type>` 多类型只读基线成功；`label create`×2（建 296/297）+ `label list` 复查 0→2 + `label update` 改名（296 GNHF物料标签→GNHF片头片尾）+ `label delete` 清理（297，list 复查 2→1）完整写入生命周期并前后对比验证持久化；`category list --material-type audio` 报「系统异常」已执行失败并记录空集合异常缺陷）
   - `document`（场景 14：课件文档为频道级。`list` 基线/复查 + `upload` 真实上传公网 PDF 课件落库 doc-2.polyv.net + `status` 转码状态（转换中→normal，imageCount=1）+ `delete --force` 清理（list 复查回归空）+ `media vids` 只读基线（0）全生命周期真实执行成功；发现同源 URL 复用同一 fileId 并覆盖 fileName 已记录）
-- **未覆盖一级命令**：12 / 40（见下表「未覆盖」）
+  - `monitor`（场景 15：监控驾驶舱。`status`（驾驶舱状态 Stopped）/`config`（监控配置表）/`layouts`（3 布局 default/compact/single）/`themes`（2 主题 default/dark）/`test`（兼容性自检 PASS）/`export`+`import`（监控配置导出/导入可移植）七条命令真实执行成功；`stream-info-list`/`tencent-stream-info-list` 在测试频道 7983952 真实执行但因未开播返回「未检测到直播推流 / channel status not live」已执行失败并记录，属「面向活跃直播态」实时推流监测家族）
+  - `global`（场景 15：账号全局设置为账号级。`auth get` 返回账号级观看鉴权基线（custom+phone 两套 authType、whiteListEntryText=白名单验证入口、privacyParam 隐私声明）/`page-setting get` 返回账号级观看页默认设置基线（20 字段：watchLayout=video、mobileWatchEnabled=Y、barrageEnabled=Y、pvShowEnabled=Y 等）两条只读命令真实执行成功；`auth update`/`page-setting update` 经参数探测确认存在（`--settings <json>`/`--config <json>`）但因账号级全量写入爆炸半径覆盖本账号所有频道按风险规则未执行写入，已记录）
+- **未覆盖一级命令**：10 / 40（见下表「未覆盖」）
 
-> 进度：28 / 40 = 70%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
+> 进度：30 / 40 = 75%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
 
 ---
 
@@ -94,7 +97,7 @@
 | 1 | `account` | 01（写入前预检，共享） | ✅ 已执行成功 | — | [01](./01-coupon-redemption.md) |
 | 2 | `ai` | — | ⬜ 未覆盖 | — | — |
 | 3 | `card-push` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
-| 4 | `channel` | 01、02、03、04、05、06、07、08、09、10、11、12、13、14 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 / 7983937 / 7983938 / 7983941 / 7983944 / 7983945 / 7983948 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md)、[10](./10-postlive-playback-record-replay.md)、[11](./11-promotion-invite-sales-distribution.md)、[12](./12-chat-interaction-engagement.md)、[13](./13-stream-setup-golive.md)、[14](./14-material-document.md) |
+| 4 | `channel` | 01、02、03、04、05、06、07、08、09、10、11、12、13、14、15 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 / 7983937 / 7983938 / 7983941 / 7983944 / 7983945 / 7983948 / 7983949 / 7983952 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md)、[10](./10-postlive-playback-record-replay.md)、[11](./11-promotion-invite-sales-distribution.md)、[12](./12-chat-interaction-engagement.md)、[13](./13-stream-setup-golive.md)、[14](./14-material-document.md)、[15](./15-monitor-global-dashboard.md) |
 | 5 | `chat` | 12 | ✅ 已执行成功 ⁸ | 7983941 | [12](./12-chat-interaction-engagement.md) |
 | 6 | `checkin` | 06 | ✅ 已执行成功 ² | 7983902 | [06](./06-donate-checkin-warmup.md) |
 | 7 | `coupon` | 01 | ✅ 已执行成功 | 7983877 | [01](./01-coupon-redemption.md) |
@@ -102,13 +105,13 @@
 | 9 | `document` | 14 | ✅ 已执行成功 ¹⁰ | 7983948 | [14](./14-material-document.md) |
 | 10 | `donate` | 06 | ✅ 已执行成功 ² | 7983902 | [06](./06-donate-checkin-warmup.md) |
 | 11 | `finance` | — | ⬜ 未覆盖 | — | — |
-| 12 | `global` | — | ⬜ 未覆盖 | — | — |
+| 12 | `global` | 15 | ✅ 已执行成功 ¹¹ | 7983952（频道落点；全局设置为账号级） | [15](./15-monitor-global-dashboard.md) |
 | 13 | `group` | — | ⬜ 未覆盖 | — | — |
 | 14 | `interaction` | 12 | ✅ 已执行成功 ⁸ | 7983941 | [12](./12-chat-interaction-engagement.md) |
 | 15 | `invite-sales` | 11 | ✅ 已执行成功 ⁷ | 7983938（频道落点；名册为账号级） | [11](./11-promotion-invite-sales-distribution.md) |
 | 16 | `lottery` | 03 | ✅ 已执行成功 | 7983885 | [03](./03-live-lottery.md) |
 | 17 | `material` | 14 | ✅ 已执行成功 ¹⁰ | 7983948（频道落点；素材库为账号级） | [14](./14-material-document.md) |
-| 18 | `monitor` | — | ⬜ 未覆盖 | — | — |
+| 18 | `monitor` | 15 | ✅ 已执行成功 ¹¹ | 7983952 | [15](./15-monitor-global-dashboard.md) |
 | 19 | `partner` | — | ⬜ 未覆盖 | — | — |
 | 20 | `platform` | — | ⬜ 未覆盖 | — | — |
 | 21 | `playback` | 10 | ✅ 已执行成功 ⁶ | 7983937 | [10](./10-postlive-playback-record-replay.md) |
@@ -151,6 +154,8 @@
 > ⁹ `setup` 与 `stream` 两族在专用测试频道 `7983944`（`channel create` 新建）与 `setup e-commerce` 产物频道 `7983945` 上真实执行。`setup` 族的 `--list`/`--list --detailed`/`e-commerce --dry-run`（预览，不变更资源）真实执行成功；`setup e-commerce` **真实写入**一次性创建全部 7 个资源（频道 `7983945` + 观看条件 rank1 public/rank2 disabled + 商品 `998742` + 商品库开关 `enabled=Y` + 优惠券 `4ttd0zp3uoue103f1qanjh0s2adko9bb` + 券频道绑定 + 领券开关 `enabled=Y`，耗时 2218ms），并经 `channel get -c 7983945`（命中，pushUrl/pushSecret 脱敏）+ `product list -c 7983945`（命中商品 998742「Allowish英国进口香氛沐浴露」399→179 status=1）交叉验证产物落库。`stream` 族的 `status`（频道 `7983944`/`7983945` 均 `waiting`/`isLive=false`）/`get-key`（table 脱敏，**未开播 waiting 态即返回 RTMP URL `rtmp://push-t2.videocc.net/recordf` + 推流密钥**）/`live-status list`（历史状态 `end`）/`streams`（`live=false`/`streamInfo=null`）四条只读命令真实执行成功。其中 `stream get-key` 真实执行但**发现与 reference/help 描述不符**——help 声明 *"Channel must be in live streaming state"*，实测未开播即可取回推流凭证（仅 deploy/input address 待推流后填充），开播前预配 OBS 不必先 `stream start`；`stream hls-pull-url` 真实执行但**已执行失败**——报 `Failed to getHlsPullUrl: forbidden`（疑似账号级监控/拉流权益未开通）；`stream capture` 真实执行但**已执行失败**——报 `Failed to getCaptureImage: channel is not live.`（需直播态，属预期）。另发现 `stream status`（实时态 `waiting`）与 `stream live-status list`（历史态 `end`）语义不同，不要据后者误判频道不可用。详见 [场景 13 第 12.1–12.4 节](./13-stream-setup-golive.md)。`setup` 族因 `e-commerce` 一键初始化**真实写入成功**并经只读复查交叉验证而计入已覆盖；`stream` 族因 `status`/`get-key`/`live-status list`/`streams` 四条只读命令真实执行成功而计入已覆盖（与场景 06/07/10/11/12 只读命令计入覆盖的先例一致）。`setup e-commerce` 自带创建频道 `7983945`，与本场景 `channel create` 的 `7983944` 一并保留未删除。
 >
 > ¹⁰ `material` 与 `document` 两族在专用测试频道 `7983948`（`material` 标签为账号级，频道仅作 `document` 课件落点）上真实执行。`material` 族的 `category list --material-type image`（3 类：默认/自定义/网页开播）/`category list --material-type video`（8 类：含「商品讲解」PRODUCT_EXPLAIN、AI 视频、伪直播视频、视频回放、小班课录制等）/`category list --material-type document`（2 类）/`label list`（基线 totalItems=0）/`material list --type image|video|document`（均 totalItems=0 只读基线）真实执行成功；`label create`×2（**真实写入**建标签 296「GNHF物料标签」/297「GNHF电商封面」）/`label list`（复查 **0→2** 确认持久化）/`label update --id 296 --name "GNHF片头片尾"`（**真实写入**改名并经 list 复查确认）/`label delete --id 297`（**真实写入 + 清理**并经 list 复查 **2→1**）真实执行成功。其中 `material category list --material-type audio` 真实执行但**已执行失败**——报 `Unexpected error: 系统异常`（image/video/document 三类同账号同命令均正常），根因是后端对 audio 空分类集合未返回 `[]` 而抛异常（与场景 11 `promotion list` 零渠道「系统异常」同源缺陷）。`document` 族的 `list`（基线空）/`upload`（**真实写入**公网 PDF 课件，fileId `2942bfabb3...7983948common`，落库 `doc-2.polyv.net`，totalPage 1）/`list`（复查 1 文档 status=normal）/`status`（convertStatus=normal、imageCount=1，转码完成）/`delete --force`（**真实写入 + 清理**，list 复查回归空）/`media vids`（totalItems=0 只读基线）真实执行成功。其中发现 `document upload` **同源 URL 复用同一 fileId 并覆盖 fileName**——删除后用同一公网 PDF URL 再次上传到同频道，返回 fileId 完全相同、`document list` 的 fileName 被后者覆盖（fileId 由「源 URL+channelId+convertType」决定），同频道需多份课件须用不同源 URL；另 `document delete` 用 `--force`（长格式）而非 `-f`（`-f` 报 unknown option，与 `material label` 的 `-f`/`--force` 风格不一致）。详见 [场景 14 第 12.1–12.4 节](./14-material-document.md)。`material` 族因 `label create/update/delete` 三类写入真实成功并经 `label list` 前后对比交叉验证持久化 + 多条只读命令真实执行成功而计入已覆盖；`document` 族因 `upload` 真实写入成功（落库 doc-2.polyv.net）+ `status` 转码验证 + `delete` 清理 + 多条只读命令真实执行成功而计入已覆盖。保留资产：频道 `7983948` + 账号级素材标签 `296`「GNHF片头片尾」+ 频道课件 `2942bfabb3...7983948common`「GNHF-保留-开播须知」，均未删除。
+>
+> ¹¹ `monitor` 与 `global` 两族在专用测试频道 `7983952`（`global` 为账号级，频道仅作 `monitor` 实时推流监测落点）上真实执行。`monitor` 族的 `test`（兼容性自检 PASS：Terminal 120x30、24-bit colors、blessed 兼容、内存 97MB/100MB）/`layouts`（default/compact/single 3 布局）/`themes`（default/dark 2 主题）/`status`（驾驶舱状态 Stopped、Refresh 5000ms）/`config`（监控配置 Refresh/Layout/Theme/MinTerminal）/`export`（导出 JSON 配置文件含 version/refreshInterval/performance/components）/`import`（导回同一文件）七条命令真实执行成功。其中 `monitor stream-info-list --channel-id 7983952` 与 `monitor tencent-stream-info-list --channel-id 7983952` 真实执行但**已执行失败**——分别报 `Unexpected error: 未检测到直播推流` 与 `Unexpected error: channel status not live`，根因是实时推流监测（V4 实时流接口 / 腾讯云流接口）需频道处于直播推流态，未开播频道无推流即无数据（与场景 06 `checkin start`、场景 12 `interaction reward`、场景 13 `stream capture` 同属「面向活跃直播态」实时家族）。`global` 族的 `auth get`（返回账号级 2 套 authType：`custom` authEnabled=Y + `phone` authEnabled=Y/whiteListEntryText=白名单验证入口/privacyParam 隐私声明）/`page-setting get`（返回账号级 20 字段：watchLayout=video、watchLangType=zh_CN、mobileWatchEnabled=Y、bookingEnabled=Y、barrageEnabled=Y/barrageSpeed=200、autoPlayEnabled=Y、showCountdownEnabled=Y、pvShowEnabled=Y 等）两条只读命令真实执行成功。其中 `global auth update`（必填 `--settings <json>`）与 `global page-setting update`（必填 `--config <json>`）经无参探测确认存在但**本轮未执行写入**——`global` 为账号级命令、`update` 是账号级全量配置写入，爆炸半径覆盖本账号（`nicksu`）所有频道，与「所有真实写入必须使用本轮新建的专用测试频道/测试对象」风险规则冲突（账号级写入不存在频道级测试对象隔离面），参照场景 11 `transmit`、场景 07 `session create` 的账号级/权益门控写入先例不计入本轮覆盖，仅以只读 `get` 覆盖该族。详见 [场景 15 第 12.1、12.2 节](./15-monitor-global-dashboard.md)。`monitor` 族因 `status`/`config`/`layouts`/`themes`/`test`/`export`/`import` 七条命令真实执行成功而计入已覆盖；`global` 族因 `auth get`/`page-setting get` 两条只读命令真实执行成功（返回结构化账号级基线）而计入已覆盖（与场景 06/07/10/11/12/13/14 只读命令计入覆盖的先例一致）。另发现 `monitor` 顶层 `-c` 是 `--config`（配置文件路径）而非频道，实时推流监测频道须用长参 `--channel-id`；参数探测阶段另建探测频道 `7983949`（`GNHF-probe-do-not-use`）按不删除规则一并保留。保留资产：频道 `7983952` + 探测频道 `7983949` + 本地监控配置 `/tmp/gnhf15-mon.json`，均未删除（`global` 未产生任何账号级写入）。
 
 ---
 
@@ -170,3 +175,4 @@
 - 2026-06-23：新增场景 12「直播间互动治理与促活 — 聊天消息审计/公告 + 互动点赞/奖励」，真实执行覆盖 `chat`、`interaction`（测试频道 `7983941`；`chat send` 发 2 条管理员消息并经 `chat list --start-day/--end-day` 交叉验证落库 + `notice add` 置顶弹窗公告并经 `notice list` 验证 + `badword add` 账号级违禁词并经 `badword list` 验证后 `delete` 清理回归 + list/online-count/banned list×3/banned user-list 只读基线真实执行成功；发现 `chat list` 默认日期范围返空而显式同日返回消息的 CLI 缺陷、`chat role user-list` 未开播报 API Error；`interaction favor` 多次点赞并经 `channel get` likes 0→10→15 交叉验证累计写入 + task-reward list/event list/webhook get 只读基线成功；`interaction reward` 因多个未标 required 必填项 + 未开播 send message failure 已执行失败并记录）。累计覆盖 24 / 40。
 - 2026-06-23：新增场景 13「开播前频道初始化与推流就绪 — 一键电商场景初始化 + 推流凭证/直播状态就绪检查」，真实执行覆盖 `setup`、`stream`（测试频道 `7983944`（`channel create` 新建）+ `setup e-commerce` 产物频道 `7983945`；`setup --list`/`--list --detailed`/`e-commerce --dry-run` 预览成功，`setup e-commerce` 一键初始化**真实写入**全部 7 个资源（频道 7983945 + 观看条件 + 商品 998742 + 商品库开关 enabled=Y + 优惠券 4ttd0zp3... + 券绑定 + 领券开关 enabled=Y）并经 `channel get`/`product list` 交叉验证落库；`stream status`/`get-key`/`live-status list`/`streams` 四条只读命令真实执行成功，发现 `stream get-key` 未开播即可取回推流凭证（与 help "must be live" 不符）、`stream status` waiting 与 `live-status` end 语义不同；`stream hls-pull-url` 报 forbidden、`stream capture` 报 channel is not live 已执行失败并记录）。累计覆盖 26 / 40。
 - 2026-06-23：新增场景 14「直播物料与课件资源治理 — 素材库分类/标签体系 + 频道课件文档上传/转码/清理」，真实执行覆盖 `material`、`document`（测试频道 `7983948`（`material` 标签为账号级、`document` 课件为频道级）；`material category list` image(3)/video(8 含「商品讲解」)/document(2) 三类只读盘点 + `material list` 多类型基线 + `material label create`×2/`list`(0→2)/`update` 改名/`delete`(2→1) 完整写入生命周期并前后对比验证持久化真实执行成功，`category list --material-type audio` 报「系统异常」已执行失败并记录空集合异常缺陷；`document list` 基线 + `upload` 真实上传公网 PDF 课件落库 doc-2.polyv.net + `status` 转码 normal + `delete --force` 清理 + `media vids` 只读基线全生命周期真实执行成功，发现 `document upload` 同源 URL 复用同一 fileId 并覆盖 fileName、`document delete` 须用 `--force` 非 `-f` 已记录）。累计覆盖 28 / 40。
+- 2026-06-23：新增场景 15「直播运营驾驶舱 — 实时监控大盘 + 账号全局配置治理」，真实执行覆盖 `monitor`、`global`（测试频道 `7983952`（`global` 为账号级、频道仅作 `monitor` 实时推流监测落点）+ 探测频道 `7983949`；`monitor test`（兼容性自检 PASS）/`layouts`（3 布局）/`themes`（2 主题）/`status`（驾驶舱 Stopped）/`config`（监控配置）/`export`+`import`（监控配置可移植）七条命令真实执行成功，`stream-info-list`/`tencent-stream-info-list` 在未开播频道返回「未检测到直播推流 / channel status not live」已执行失败并记录属「面向活跃直播态」实时推流监测家族；`global auth get` 返回账号级观看鉴权基线（custom+phone 两套 authType）+ `global page-setting get` 返回账号级观看页默认设置基线（20 字段）两条只读命令真实执行成功；`global auth update`/`page-setting update` 经参数探测确认存在但因账号级全量写入爆炸半径覆盖本账号所有频道按风险规则未执行写入，已记录；发现当前 rc 的 `user`/`platform` 二级子命令虽在 `--help` 列出但执行报 `Unknown command` 的注册缺陷、`channel create` 的 `--category` 为 unknown option 仅 `--name` 必填且默认 scene=topclass）。累计覆盖 30 / 40。
