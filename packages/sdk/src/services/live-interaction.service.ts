@@ -7,6 +7,7 @@
  */
 
 import type { PolyVClient } from '../client.js';
+import { PolyVValidationError } from '../errors/polyv-validation-error.js';
 import type {
   // Checkin
   GetCheckinListParams,
@@ -58,6 +59,8 @@ import type {
   QuestionListResponse2,
 } from '../types/live-interaction.js';
 
+type Params = Record<string, unknown>;
+
 /**
  * LiveInteractionService
  *
@@ -70,6 +73,71 @@ import type {
  */
 export class LiveInteractionService {
   constructor(private readonly client: PolyVClient) {}
+
+  private compactParams(params?: Params): Params {
+    if (!params) return {};
+
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== null)
+    );
+  }
+
+  private validateRequiredString(value: unknown, fieldName: string): void {
+    if (typeof value !== 'string' || value.trim() === '') {
+      throw new PolyVValidationError(`${fieldName} is required`);
+    }
+  }
+
+  private validateRequiredChannelId(value: unknown, fieldName = 'channelId'): void {
+    if (
+      value === undefined ||
+      value === null ||
+      (typeof value === 'string' && value.trim() === '')
+    ) {
+      throw new PolyVValidationError(`${fieldName} is required`);
+    }
+  }
+
+  private validateRequiredNumber(value: unknown, fieldName: string): void {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+      throw new PolyVValidationError(`${fieldName} is required`);
+    }
+  }
+
+  private validatePositiveInteger(value: unknown, fieldName: string): void {
+    if (value === undefined || value === null) return;
+
+    if (typeof value !== 'number' || !Number.isInteger(value) || value < 1) {
+      throw new PolyVValidationError(`${fieldName} must be a positive integer`);
+    }
+  }
+
+  private validatePageParams(params: { page?: number; pageSize?: number; limit?: number }): void {
+    this.validatePositiveInteger(params.page, 'page');
+    this.validatePositiveInteger(params.pageSize, 'pageSize');
+    this.validatePositiveInteger(params.limit, 'limit');
+  }
+
+  private validateTimeRange(params: { startTime?: number; endTime?: number }): void {
+    this.validateRequiredNumber(params.startTime, 'startTime');
+    this.validateRequiredNumber(params.endTime, 'endTime');
+  }
+
+  private validateQuestionnairePayload(params: CreateQuestionnaireParams): void {
+    this.validateRequiredChannelId(params.channelId);
+    this.validateRequiredString(params.questionnaireTitle, 'questionnaireTitle');
+    if (!Array.isArray(params.questions) || params.questions.length === 0) {
+      throw new PolyVValidationError('questions is required');
+    }
+  }
+
+  private splitQuestionnairePayload(params: CreateQuestionnaireParams): {
+    query: { channelId: CreateQuestionnaireParams['channelId'] };
+    body: Omit<CreateQuestionnaireParams, 'channelId'>;
+  } {
+    const { channelId, ...body } = params;
+    return { query: { channelId }, body };
+  }
 
   // ============================================
   // 签到 (Checkin) APIs
@@ -92,12 +160,10 @@ export class LiveInteractionService {
    * ```
    */
   async getCheckinList(params: GetCheckinListParams): Promise<CheckinListResponse> {
-    if (!params.channelId) {
-      throw new Error('channelId is required');
-    }
+    this.validateRequiredChannelId(params.channelId);
     const response = await this.client.httpClient.get<CheckinListResponse>(
-      '/live/v2/chat/getCheckinList',
-      { params }
+      '/live/v3/channel/checkin/list',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as CheckinListResponse;
   }
@@ -118,8 +184,8 @@ export class LiveInteractionService {
    */
   async getCheckinByCheckinId(params: GetCheckinByCheckinIdParams): Promise<CheckinRecordResponse> {
     const response = await this.client.httpClient.get<CheckinRecordResponse>(
-      '/live/v2/chat/getCheckinByCheckId',
-      { params }
+      '/live/v3/channel/chat/get-checkins',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as CheckinRecordResponse;
   }
@@ -140,8 +206,8 @@ export class LiveInteractionService {
    */
   async getCheckinBySessionId(params: GetCheckinBySessionIdParams): Promise<CheckinRecordResponse> {
     const response = await this.client.httpClient.get<CheckinRecordResponse>(
-      '/live/v2/chat/getCheckinBySessionId',
-      { params }
+      '/live/v3/channel/chat/checkin-by-sessionId',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as CheckinRecordResponse;
   }
@@ -163,8 +229,8 @@ export class LiveInteractionService {
    */
   async getCheckinByTime(params: GetCheckinByTimeParams): Promise<CheckinRecordResponse> {
     const response = await this.client.httpClient.get<CheckinRecordResponse>(
-      '/live/v2/chat/getCheckinByTime',
-      { params }
+      '/live/v3/channel/chat/get-checkin-list',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as CheckinRecordResponse;
   }
@@ -188,10 +254,13 @@ export class LiveInteractionService {
    * ```
    */
   async createQuestionnaire(params: CreateQuestionnaireParams): Promise<QuestionnaireDetailResponse> {
+    this.validateQuestionnairePayload(params);
+    const { query, body } = this.splitQuestionnairePayload(params);
+
     const response = await this.client.httpClient.post<QuestionnaireDetailResponse>(
-      '/live/v2/questionnaire/create',
-      null,
-      { params }
+      '/live/v4/channel/questionnaire/save',
+      body,
+      { params: query }
     );
     return response as unknown as QuestionnaireDetailResponse;
   }
@@ -214,12 +283,11 @@ export class LiveInteractionService {
    */
   async batchCreateQuestionnaire(
     params: BatchCreateQuestionnaireParams,
-    body: BatchCreateQuestionnaireBody
+    body?: BatchCreateQuestionnaireBody
   ): Promise<QuestionnaireDetailResponse> {
     const response = await this.client.httpClient.post<QuestionnaireDetailResponse>(
-      '/live/v2/questionnaire/batch_create',
-      body,
-      { params }
+      '/live/v4/channel/questionnaire/create-batch',
+      body ?? params
     );
     return response as unknown as QuestionnaireDetailResponse;
   }
@@ -246,12 +314,30 @@ export class LiveInteractionService {
     params: AddEditQuestionnaireParams,
     body: AddEditQuestionnaireBody
   ): Promise<QuestionnaireDetailResponse> {
-    const response = await this.client.httpClient.post<QuestionnaireDetailResponse>(
-      '/live/v2/questionnaire/add_edit',
-      body,
-      { params }
-    );
-    return response as unknown as QuestionnaireDetailResponse;
+    if (body) {
+      const mappedQuestions: CreateQuestionnaireParams['questions'] = Array.isArray(body.questions)
+        ? body.questions
+        : body.items?.map((item) => ({
+            name: item.question,
+            type: item.type,
+            options: item.options,
+            required: item.required ? 'Y' : 'N',
+          })) ?? [];
+      const questionnaireTitle = typeof body.questionnaireTitle === 'string'
+        ? body.questionnaireTitle
+        : typeof body.title === 'string'
+          ? body.title
+          : '';
+
+      return this.createQuestionnaire({
+        ...body,
+        channelId: params.channelId,
+        questionnaireTitle,
+        questions: mappedQuestions,
+      });
+    }
+
+    return this.createQuestionnaire(params as CreateQuestionnaireParams);
   }
 
   /**
@@ -271,8 +357,8 @@ export class LiveInteractionService {
    */
   async listQuestionnaire(params: ListQuestionnaireParams): Promise<QuestionnaireListResponse> {
     const response = await this.client.httpClient.get<QuestionnaireListResponse>(
-      '/live/v3/user/questionnaire/list',
-      { params }
+      '/live/v3/channel/questionnaire/list',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionnaireListResponse;
   }
@@ -294,8 +380,8 @@ export class LiveInteractionService {
    */
   async listQuestionnaireByPage(params: ListQuestionnaireByPageParams): Promise<QuestionnaireListResponse> {
     const response = await this.client.httpClient.get<QuestionnaireListResponse>(
-      '/live/v3/user/questionnaire/list_by_page',
-      { params }
+      '/live/v3/channel/questionnaire/list-answer-records',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionnaireListResponse;
   }
@@ -316,8 +402,8 @@ export class LiveInteractionService {
    */
   async getQuestionnaireDetail(params: GetQuestionnaireDetailParams): Promise<QuestionnaireDetailResponse> {
     const response = await this.client.httpClient.get<QuestionnaireDetailResponse>(
-      '/live/v3/user/questionnaire/detail',
-      { params }
+      '/live/v3/channel/questionnaire/detail',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionnaireDetailResponse;
   }
@@ -338,8 +424,8 @@ export class LiveInteractionService {
    */
   async getQuestionnaireResult(params: GetQuestionnaireResultParams): Promise<QuestionnaireResultResponse> {
     const response = await this.client.httpClient.get<QuestionnaireResultResponse>(
-      '/live/v3/user/questionnaire/result',
-      { params }
+      '/live/v3/channel/questionnaire/answer-records',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionnaireResultResponse;
   }
@@ -363,8 +449,8 @@ export class LiveInteractionService {
    */
   async listQuestion(params: ListQuestionParams): Promise<QuestionListResponse> {
     const response = await this.client.httpClient.get<QuestionListResponse>(
-      '/live/v2/question/list',
-      { params }
+      '/live/v3/channel/interact/question/list-question',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -384,8 +470,8 @@ export class LiveInteractionService {
    */
   async listQuestionSendTime(params: ListQuestionSendTimeParams): Promise<QuestionListResponse> {
     const response = await this.client.httpClient.get<QuestionListResponse>(
-      '/live/v2/question/list_send_time',
-      { params }
+      '/live/v3/channel/interact/question/list-send-time',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -409,10 +495,23 @@ export class LiveInteractionService {
    * ```
    */
   async addEditQuestion(params: AddEditQuestionParams): Promise<QuestionListResponse> {
+    const { _type, option1_option15, tips1_tips5, ...rest } = params;
+    const query: Record<string, unknown> = {
+      ...rest,
+      type: params.type ?? _type,
+    };
+
+    option1_option15?.split(',').forEach((option, index) => {
+      query[`option${index + 1}`] = option;
+    });
+    tips1_tips5?.split(',').forEach((tip, index) => {
+      query[`tips${index + 1}`] = tip;
+    });
+
     const response = await this.client.httpClient.post<QuestionListResponse>(
-      '/live/v2/question/add_edit',
+      '/live/v3/channel/interact/question/add-edit-question',
       null,
-      { params }
+      { params: this.compactParams(query) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -433,9 +532,9 @@ export class LiveInteractionService {
    */
   async deleteQuestion(params: DeleteQuestionParams): Promise<QuestionListResponse> {
     const response = await this.client.httpClient.post<QuestionListResponse>(
-      '/live/v2/question/delete',
+      '/live/v3/channel/interact/question/delete-question',
       null,
-      { params }
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -457,9 +556,9 @@ export class LiveInteractionService {
    */
   async sendQuestion(params: SendQuestionParams): Promise<QuestionListResponse> {
     const response = await this.client.httpClient.post<QuestionListResponse>(
-      '/live/v2/question/send',
+      '/live/v4/channel/question/send',
       null,
-      { params }
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -480,9 +579,9 @@ export class LiveInteractionService {
    */
   async stopQuestion(params: StopQuestionParams): Promise<QuestionListResponse> {
     const response = await this.client.httpClient.post<QuestionListResponse>(
-      '/live/v2/question/stop',
+      '/live/v4/channel/question/stop',
       null,
-      { params }
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -503,9 +602,9 @@ export class LiveInteractionService {
    */
   async sendQuestionResult(params: SendQuestionResultParams): Promise<QuestionListResponse> {
     const response = await this.client.httpClient.post<QuestionListResponse>(
-      '/live/v2/question/send_result',
+      '/live/v4/channel/question/send-result',
       null,
-      { params }
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as QuestionListResponse;
   }
@@ -526,8 +625,8 @@ export class LiveInteractionService {
    */
   async getAnswerList(params: GetAnswerListParams): Promise<AnswerListResponse> {
     const response = await this.client.httpClient.get<AnswerListResponse>(
-      '/live/v2/chat/getAnswerList',
-      { params }
+      '/live/v3/channel/question/answer-records',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as AnswerListResponse;
   }
@@ -552,9 +651,13 @@ export class LiveInteractionService {
    * ```
    */
   async listLottery(params: ListLotteryParams): Promise<LotteryListResponse> {
+    this.validateRequiredChannelId(params.channelId);
+    this.validateTimeRange(params);
+    this.validatePageParams(params);
+
     const response = await this.client.httpClient.get<LotteryListResponse>(
-      '/live/v2/chat/list_lottery',
-      { params }
+      '/live/v3/channel/lottery/list-lottery',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as LotteryListResponse;
   }
@@ -575,9 +678,13 @@ export class LiveInteractionService {
    * ```
    */
   async listChannelsLottery(params: ListChannelsLotteryParams): Promise<LotteryListResponse> {
+    this.validateRequiredString(params.channelIds, 'channelIds');
+    this.validateTimeRange(params);
+    this.validatePageParams(params);
+
     const response = await this.client.httpClient.get<LotteryListResponse>(
-      '/live/v2/chat/list_channels_lottery',
-      { params }
+      '/live/v3/channel/lottery/list-channels-lottery',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as LotteryListResponse;
   }
@@ -600,8 +707,8 @@ export class LiveInteractionService {
    */
   async getWinnerDetail(params: GetWinnerDetailParams): Promise<WinnerDetailResponse> {
     const response = await this.client.httpClient.get<WinnerDetailResponse>(
-      '/live/v2/chat/get_winner_detail',
-      { params }
+      '/live/v3/channel/lottery/get-winner-detail',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as WinnerDetailResponse;
   }
@@ -622,8 +729,8 @@ export class LiveInteractionService {
    */
   async downloadWinnerDetail(params: DownloadWinnerDetailParams): Promise<unknown> {
     const response = await this.client.httpClient.get<unknown>(
-      '/live/v2/chat/download_winner_detail',
-      { params }
+      '/live/v3/channel/lottery/download-winner-detail',
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response;
   }
@@ -647,12 +754,7 @@ export class LiveInteractionService {
    * ```
    */
   async addReceiveInfo(params: AddReceiveInfoParams): Promise<AddReceiveInfoResponse> {
-    const response = await this.client.httpClient.post<AddReceiveInfoResponse>(
-      '/live/v2/chat/add_receive_info',
-      null,
-      { params }
-    );
-    return response as unknown as AddReceiveInfoResponse;
+    return this.addReceiveInfoV4(params);
   }
 
   /**
@@ -674,9 +776,9 @@ export class LiveInteractionService {
    */
   async addReceiveInfoV4(params: AddReceiveInfoV4Params): Promise<AddReceiveInfoResponse> {
     const response = await this.client.httpClient.post<AddReceiveInfoResponse>(
-      '/live/v4/chat/add_receive_info',
+      '/live/v4/channel/lottery/add-receive-info',
       null,
-      { params }
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as AddReceiveInfoResponse;
   }
@@ -728,9 +830,9 @@ export class LiveInteractionService {
    */
   async sendRewardMsg(params: SendRewardMsgParams): Promise<SendRewardMsgResponse> {
     const response = await this.client.httpClient.post<SendRewardMsgResponse>(
-      '/live/v2/chat/send_reward_msg',
+      '/live/v3/channel/chat/send-reward-msg',
       null,
-      { params }
+      { params: this.compactParams(params as unknown as Params) }
     );
     return response as unknown as SendRewardMsgResponse;
   }
@@ -752,8 +854,8 @@ export class LiveInteractionService {
    */
   async getQuestionList(channelId: string, params?: GetQuestionListParams): Promise<QuestionListResponse2> {
     const response = await this.client.httpClient.get<QuestionListResponse2>(
-      `/live/v2/chat/${channelId}/get_question_list`,
-      { params }
+      `/live/v2/chat/${encodeURIComponent(channelId)}/getQuestion`,
+      { params: this.compactParams(params as unknown as Params | undefined) }
     );
     return response as unknown as QuestionListResponse2;
   }

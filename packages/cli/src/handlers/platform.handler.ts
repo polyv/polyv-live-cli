@@ -5,6 +5,7 @@
  */
 
 import { BaseHandler, OutputFormat } from './base.handler';
+import type { SwitchGetResponse } from 'polyv-live-api-sdk';
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
 import {
@@ -91,7 +92,7 @@ export class PlatformHandler extends BaseHandler {
       if (format === 'json') {
         this.displayData(switchConfig, 'json');
       } else {
-        this.displaySwitchConfigTable(switchConfig.config);
+        this.displaySwitchConfigTable(switchConfig);
       }
     }, 'platform.getSwitchConfig');
   }
@@ -460,20 +461,15 @@ export class PlatformHandler extends BaseHandler {
    * Displays switch config as a formatted table
    * @param config Switch config data
    */
-  private displaySwitchConfigTable(config: {
-    globalSettingEnabled: boolean;
-    authEnabled: boolean;
-    recordEnabled: boolean;
-    playbackEnabled: boolean;
-    danmuEnabled: boolean;
-  }): void {
-    const tableData = [
-      { '开关名称': '全局设置', '状态': config.globalSettingEnabled ? 'enabled' : 'disabled' },
-      { '开关名称': '认证', '状态': config.authEnabled ? 'enabled' : 'disabled' },
-      { '开关名称': '录制', '状态': config.recordEnabled ? 'enabled' : 'disabled' },
-      { '开关名称': '回放', '状态': config.playbackEnabled ? 'enabled' : 'disabled' },
-      { '开关名称': '弹幕', '状态': config.danmuEnabled ? 'enabled' : 'disabled' },
-    ];
+  private displaySwitchConfigTable(config: SwitchGetResponse): void {
+    const switchItems = Array.isArray(config)
+      ? config
+      : Object.entries(config.config).map(([type, enabled]) => ({ type, enabled }));
+
+    const tableData = switchItems.map((item) => ({
+      '开关名称': item.type,
+      '状态': item.enabled === 'Y' || item.enabled === true ? 'enabled' : 'disabled',
+    }));
 
     this.displayAsTable(tableData);
   }
@@ -485,10 +481,20 @@ export class PlatformHandler extends BaseHandler {
   private displayCallbackSettingsTable(settings: {
     url?: string;
     enabled?: boolean;
+    streamCallbackUrl?: string;
+    playbackCallbackUrl?: string;
+    recordCallbackUrl?: string;
+    rebirthVodCallbackUrl?: string;
+    rebirthVodCallbackEnabled?: 'Y' | 'N';
   }): void {
     const tableData = {
-      'Callback URL': settings.url || '-',
-      'Enabled': settings.enabled ? 'Yes' : 'No',
+      'Stream Callback URL': settings.streamCallbackUrl || settings.url || '-',
+      'Playback Callback URL': settings.playbackCallbackUrl || '-',
+      'Record Callback URL': settings.recordCallbackUrl || '-',
+      'Rebirth VOD Callback URL': settings.rebirthVodCallbackUrl || '-',
+      'Rebirth VOD Callback Enabled': settings.rebirthVodCallbackEnabled
+        ? settings.rebirthVodCallbackEnabled === 'Y' ? 'Yes' : 'No'
+        : settings.enabled ? 'Yes' : 'No',
     };
 
     this.displayAsTable(tableData);

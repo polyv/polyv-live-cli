@@ -286,12 +286,25 @@ export interface SwitchConfig {
   [key: string]: boolean | string | number;
 }
 
-export interface SwitchGetResponse {
-  config: SwitchConfig;
+export interface SwitchGetParams {
+  /** Channel ID. Omit to query global switch settings. */
+  channelId?: string;
 }
 
+export interface SwitchConfigItem {
+  type: string;
+  enabled: 'Y' | 'N';
+}
+
+export type SwitchGetResponse = SwitchConfigItem[] | { config: SwitchConfig };
+
 export interface SwitchUpdateParams {
-  param: string;
+  /** Channel ID. Omit to update global switch settings. */
+  channelId?: string;
+  /** Switch type from the source API. */
+  type?: string;
+  /** Deprecated compatibility alias for type. */
+  param?: string;
   enabled: 'Y' | 'N' | boolean;
 }
 

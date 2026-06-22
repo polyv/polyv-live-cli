@@ -293,6 +293,11 @@ describe('Lottery Commands', () => {
       expect(options.some(opt => opt.long === '--page')).toBe(true);
       expect(options.some(opt => opt.long === '--limit')).toBe(true);
       expect(options.some(opt => opt.long === '--output')).toBe(true);
+
+      const startTimeOption = recordsSubcommand?.options.find(opt => opt.long === '--start-time');
+      const endTimeOption = recordsSubcommand?.options.find(opt => opt.long === '--end-time');
+      expect(startTimeOption?.required).toBe(true);
+      expect(endTimeOption?.required).toBe(true);
     });
   });
 
@@ -508,10 +513,25 @@ describe('Lottery Commands', () => {
       (LotteryHandler as jest.Mock).mockImplementation(() => mockHandler);
 
       const prog = createProgramWithLottery();
-      await prog.parseAsync(['node', 'test', 'lottery', 'records', '-c', '123456']);
+      await prog.parseAsync([
+        'node',
+        'test',
+        'lottery',
+        'records',
+        '-c',
+        '123456',
+        '--start-time',
+        '1601481600000',
+        '--end-time',
+        '1615357743000',
+      ]);
 
       expect(mockHandler.getRecords).toHaveBeenCalledWith(
-        expect.objectContaining({ channelId: '123456' })
+        expect.objectContaining({
+          channelId: '123456',
+          startTime: 1601481600000,
+          endTime: 1615357743000,
+        })
       );
     });
 

@@ -36,39 +36,70 @@ export interface GetCheckinByTimeParams {
 // 问卷 (Questionnaire) Types
 // ============================================
 
+export type LiveInteractionChannelId = string | number;
+export type LiveInteractionYnFlag = 'Y' | 'N';
+export type QuestionType = 'R' | 'C' | 'S' | 'V';
+export type QuestionnaireQuestionType = 'R' | 'C' | 'Q' | 'J' | 'X' | string;
+
+export interface QuestionnaireOption {
+  id?: string;
+  name?: string;
+  [key: string]: unknown;
+}
+
+export interface QuestionnaireQuestion {
+  name: string;
+  type: QuestionnaireQuestionType;
+  desc?: string;
+  answer?: string;
+  required?: LiveInteractionYnFlag | string;
+  scoreEnabled?: LiveInteractionYnFlag | string;
+  score?: number | string;
+  scoreExt?: unknown;
+  options?: string[];
+  optionList?: QuestionnaireOption[];
+  option1?: string;
+  option2?: string;
+  option3?: string;
+  option4?: string;
+  option5?: string;
+  option6?: string;
+  option7?: string;
+  option8?: string;
+  option9?: string;
+  option10?: string;
+  [key: string]: unknown;
+}
+
 export interface CreateQuestionnaireParams {
-  channelId: number;
+  channelId: LiveInteractionChannelId;
+  questionnaireTitle: string;
+  questions: QuestionnaireQuestion[];
+  customQuestionnaireId?: string;
+  autoPublishTime?: string | number;
+  autoEndTime?: string | number;
+  privacyEnabled?: LiveInteractionYnFlag | string;
+  privacyContent?: string;
+  userTags?: string[];
+  desc?: string;
+  [key: string]: unknown;
 }
 
 export interface BatchCreateQuestionnaireParams {
-  // Empty - just appId, timestamp, sign
+  questionnaires: CreateQuestionnaireParams[];
 }
 
-export interface BatchCreateQuestionnaireBody {
-  channelIds: number[];
-  title: string;
-  items: Array<{
-    type: string;
+export type BatchCreateQuestionnaireBody = BatchCreateQuestionnaireParams;
+export type AddEditQuestionnaireParams = { channelId: LiveInteractionChannelId } & Partial<Omit<CreateQuestionnaireParams, 'channelId'>>;
+export type AddEditQuestionnaireBody = Omit<CreateQuestionnaireParams, 'channelId'> & {
+  title?: string;
+  items?: Array<{
+    type: 'R' | 'C' | 'S' | 'V' | string;
     question: string;
     options?: string[];
     required?: boolean;
   }>;
-}
-
-export interface AddEditQuestionnaireParams {
-  channelId: string;
-}
-
-export interface AddEditQuestionnaireBody {
-  questionnaireId?: string;
-  title: string;
-  items: Array<{
-    type: 'R' | 'C' | 'S' | 'V';
-    question: string;
-    options?: string[];
-    required?: boolean;
-  }>;
-}
+};
 
 export interface ListQuestionnaireParams {
   channelId: string;
@@ -113,14 +144,35 @@ export interface ListQuestionSendTimeParams {
 }
 
 export interface AddEditQuestionParams {
-  channelId: string;
+  channelId: LiveInteractionChannelId;
   questionId?: string;
-  _type: 'R' | 'C' | 'S' | 'V';
+  type?: QuestionType;
+  _type?: QuestionType;
   answer: string;
   name: string;
   itemType: number;
   option1_option15?: string;
   tips1_tips5?: string;
+  option1?: string;
+  option2?: string;
+  option3?: string;
+  option4?: string;
+  option5?: string;
+  option6?: string;
+  option7?: string;
+  option8?: string;
+  option9?: string;
+  option10?: string;
+  option11?: string;
+  option12?: string;
+  option13?: string;
+  option14?: string;
+  option15?: string;
+  tips1?: string;
+  tips2?: string;
+  tips3?: string;
+  tips4?: string;
+  tips5?: string;
 }
 
 export interface DeleteQuestionParams {
@@ -129,18 +181,18 @@ export interface DeleteQuestionParams {
 }
 
 export interface SendQuestionParams {
-  channelId: number;
+  channelId: LiveInteractionChannelId;
   questionId: string;
   duration?: number;
 }
 
 export interface StopQuestionParams {
-  channelId: number;
+  channelId: LiveInteractionChannelId;
   questionId: string;
 }
 
 export interface SendQuestionResultParams {
-  channelId: number;
+  channelId: LiveInteractionChannelId;
   questionId: string;
 }
 

@@ -426,10 +426,14 @@ describe('LotteryServiceSdk', () => {
 
       const result = await lotteryService.listLottery({
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
       });
 
       expect(mockLiveInteractionService.listLottery).toHaveBeenCalledWith({
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
       });
       expect(result.data).toHaveLength(1);
     });
@@ -464,6 +468,8 @@ describe('LotteryServiceSdk', () => {
 
       await lotteryService.listLottery({
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         sessionId: 'fwly13xczv',
       });
 
@@ -483,6 +489,8 @@ describe('LotteryServiceSdk', () => {
 
       await lotteryService.listLottery({
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         page: 1,
         limit: 20,
       });

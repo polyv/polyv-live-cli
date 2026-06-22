@@ -166,4 +166,47 @@ describe('V4ChannelService path fixes', () => {
       { params: { channelId: '123' } }
     );
   });
+
+  it('uses the documented donate gift update and reward record paths', async () => {
+    mockHttpClient.get.mockResolvedValue({});
+    mockHttpClient.post.mockResolvedValue({});
+
+    await service.updateDonateGift({
+      channelId: '123',
+      donateGiftEnabled: 'Y',
+      giftDonate: {
+        payWay: 'CASH',
+        cashPays: [{ name: '6.66', enabled: 'Y', imgType: 'STATIC', img: '//example.png', price: 6.66 }],
+      },
+    });
+    await service.updateDonate({
+      channelId: '123',
+      donateEnabled: 'N',
+    });
+    await service.listRewardGifts({ channelId: '123', start: 1, end: 2, pageNumber: 1, pageSize: 10 });
+    await service.listRewardLikes({ channelId: '123', pageNumber: 1, pageSize: 10 });
+
+    expect(mockHttpClient.post).toHaveBeenCalledWith(
+      '/live/v4/channel/donate/gift/update',
+      {
+        donateGiftEnabled: 'Y',
+        giftDonate: {
+          payWay: 'CASH',
+          cashPays: [{ name: '6.66', enabled: 'Y', imgType: 'STATIC', img: '//example.png', price: 6.66 }],
+        },
+      },
+      { params: { channelId: '123' } }
+    );
+    expect(mockHttpClient.post).toHaveBeenCalledWith(
+      '/live/v4/channel/donate/gift/update',
+      { donateGiftEnabled: 'N' },
+      { params: { channelId: '123' } }
+    );
+    expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v4/channel/reward/gift-list', {
+      params: { channelId: '123', start: 1, end: 2, pageNumber: 1, pageSize: 10 },
+    });
+    expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v4/channel/reward/like-list', {
+      params: { channelId: '123', pageNumber: 1, pageSize: 10 },
+    });
+  });
 });

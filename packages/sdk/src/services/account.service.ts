@@ -38,6 +38,7 @@ import type {
   GetUserDurationsResponse,
   MicDurationParams,
   MicDurationResponse,
+  SwitchGetParams,
   SwitchGetResponse,
   SwitchUpdateParams,
   SwitchUpdateResponse,
@@ -79,6 +80,26 @@ export class AccountService {
    */
   constructor(client: PolyVClient) {
     this.client = client;
+  }
+
+  private compactParams(params?: Record<string, unknown>): Record<string, unknown> {
+    if (!params) return {};
+
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined && value !== null)
+    );
+  }
+
+  private normalizeEnabled(enabled: SwitchUpdateParams['enabled']): 'Y' | 'N' {
+    if (typeof enabled === 'boolean') {
+      return enabled ? 'Y' : 'N';
+    }
+
+    if (enabled !== 'Y' && enabled !== 'N') {
+      throw new PolyVValidationError('enabled must be Y or N');
+    }
+
+    return enabled;
   }
 
   // ============================================
@@ -479,9 +500,10 @@ export class AccountService {
    * console.log(result.config);
    * ```
    */
-  async switchGet(): Promise<SwitchGetResponse> {
+  async switchGet(params?: SwitchGetParams): Promise<SwitchGetResponse> {
     const response = await this.client.httpClient.get<SwitchGetResponse>(
-      '/live/v3/user/switch/get'
+      '/live/v3/channel/switch/get',
+      { params: this.compactParams(params as Record<string, unknown> | undefined) }
     );
     return response as unknown as SwitchGetResponse;
   }
@@ -502,21 +524,24 @@ export class AccountService {
    * ```
    */
   async switchUpdate(params: SwitchUpdateParams): Promise<SwitchUpdateResponse> {
-    if (!params.param) {
-      throw new PolyVValidationError('param is required');
+    const type = params.type ?? params.param;
+    if (!type) {
+      throw new PolyVValidationError('type is required');
     }
     if (params.enabled === undefined || params.enabled === null) {
       throw new PolyVValidationError('enabled is required');
     }
 
-    const enabledValue = typeof params.enabled === 'boolean'
-      ? (params.enabled ? 'Y' : 'N')
-      : params.enabled;
-
     const response = await this.client.httpClient.post<SwitchUpdateResponse>(
-      '/live/v3/user/switch/update',
+      '/live/v3/channel/switch/update',
       null,
-      { params: { param: params.param, enabled: enabledValue } }
+      {
+        params: this.compactParams({
+          channelId: params.channelId,
+          type,
+          enabled: this.normalizeEnabled(params.enabled),
+        }),
+      }
     );
     return { success: response as unknown as boolean };
   }

@@ -40,6 +40,9 @@ describe('DonateServiceSdk', () => {
     mockV4ChannelService = {
       getDonate: jest.fn(),
       updateDonate: jest.fn(),
+      updateDonateGift: jest.fn(),
+      listRewardGifts: jest.fn(),
+      listRewardLikes: jest.fn(),
     };
 
     // Create mock PolyVClient
@@ -112,53 +115,58 @@ describe('DonateServiceSdk', () => {
   // ============================================================
   describe('updateDonateConfig (AC #2)', () => {
     it('11.6-SVC-004: should update donate config with donateEnabled', async () => {
-      mockV4ChannelService.updateDonate.mockResolvedValue(undefined);
+      mockV4ChannelService.updateDonateGift.mockResolvedValue(undefined);
 
       await donateService.updateDonateConfig({
         channelId: '3151318',
         donateEnabled: 'Y',
       });
 
-      expect(mockV4ChannelService.updateDonate).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.updateDonateGift).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
-          donateEnabled: 'Y',
+          donateGiftEnabled: 'Y',
         })
       );
     });
 
     it('11.6-SVC-005: should update donate config with donateTips', async () => {
-      mockV4ChannelService.updateDonate.mockResolvedValue(undefined);
+      mockV4ChannelService.updateDonateGift.mockResolvedValue(undefined);
 
       await donateService.updateDonateConfig({
         channelId: '3151318',
         donateTips: 'Thank you for your support!',
       });
 
-      expect(mockV4ChannelService.updateDonate).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.updateDonateGift).toHaveBeenCalledWith(
         expect.objectContaining({
-          donateTips: 'Thank you for your support!',
+          donateGiftEnabled: 'Y',
         })
       );
     });
 
     it('11.6-SVC-006: should update donate config with donateAmounts', async () => {
-      mockV4ChannelService.updateDonate.mockResolvedValue(undefined);
+      mockV4ChannelService.updateDonateGift.mockResolvedValue(undefined);
 
       await donateService.updateDonateConfig({
         channelId: '3151318',
         donateAmounts: [0.88, 6.66, 8.88, 18.88, 66.6, 88.8],
       });
 
-      expect(mockV4ChannelService.updateDonate).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.updateDonateGift).toHaveBeenCalledWith(
         expect.objectContaining({
-          donateAmounts: [0.88, 6.66, 8.88, 18.88, 66.6, 88.8],
+          giftDonate: expect.objectContaining({
+            payWay: 'CASH',
+            cashPays: expect.arrayContaining([
+              expect.objectContaining({ price: 0.88, imgType: 'STATIC' }),
+            ]),
+          }),
         })
       );
     });
 
     it('11.6-SVC-007: should update donate config with all parameters', async () => {
-      mockV4ChannelService.updateDonate.mockResolvedValue(undefined);
+      mockV4ChannelService.updateDonateGift.mockResolvedValue(undefined);
 
       await donateService.updateDonateConfig({
         channelId: '3151318',
@@ -167,18 +175,21 @@ describe('DonateServiceSdk', () => {
         donateAmounts: [1, 5, 10],
       });
 
-      expect(mockV4ChannelService.updateDonate).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.updateDonateGift).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
-          donateEnabled: 'Y',
-          donateTips: 'Thanks!',
-          donateAmounts: [1, 5, 10],
+          donateGiftEnabled: 'Y',
+          giftDonate: expect.objectContaining({
+            cashPays: expect.arrayContaining([
+              expect.objectContaining({ price: 1 }),
+            ]),
+          }),
         })
       );
     });
 
     it('11.6-SVC-008: should handle API errors', async () => {
-      mockV4ChannelService.updateDonate.mockRejectedValue(
+      mockV4ChannelService.updateDonateGift.mockRejectedValue(
         new Error('API Error: Permission denied')
       );
 
@@ -229,9 +240,7 @@ describe('DonateServiceSdk', () => {
       };
 
       // Mock the httpClient directly for this new endpoint
-      mockPolyVClient.httpClient = {
-        get: jest.fn().mockResolvedValue(mockResponse),
-      };
+      mockV4ChannelService.listRewardGifts.mockResolvedValue(mockResponse);
 
       const result = await donateService.listRewardGift({
         channelId: '3151318',
@@ -241,6 +250,13 @@ describe('DonateServiceSdk', () => {
 
       expect(result.data.contents).toHaveLength(2);
       expect(result.data.totalItems).toBe(2);
+      expect(mockV4ChannelService.listRewardGifts).toHaveBeenCalledWith({
+        channelId: '3151318',
+        start: 1615772426000,
+        end: 1615858826000,
+        pageNumber: 1,
+        pageSize: 10,
+      });
     });
 
     it('11.6-SVC-010: should list reward gift records with pagination', async () => {
@@ -256,9 +272,7 @@ describe('DonateServiceSdk', () => {
         },
       };
 
-      mockPolyVClient.httpClient = {
-        get: jest.fn().mockResolvedValue(mockResponse),
-      };
+      mockV4ChannelService.listRewardGifts.mockResolvedValue(mockResponse);
 
       const result = await donateService.listRewardGift({
         channelId: '3151318',
@@ -270,12 +284,17 @@ describe('DonateServiceSdk', () => {
 
       expect(result.data.pageNumber).toBe(2);
       expect(result.data.pageSize).toBe(20);
+      expect(mockV4ChannelService.listRewardGifts).toHaveBeenCalledWith({
+        channelId: '3151318',
+        start: 1615772426000,
+        end: 1615858826000,
+        pageNumber: 2,
+        pageSize: 20,
+      });
     });
 
     it('11.6-SVC-011: should handle API errors', async () => {
-      mockPolyVClient.httpClient = {
-        get: jest.fn().mockRejectedValue(new Error('API Error: Invalid time range')),
-      };
+      mockV4ChannelService.listRewardGifts.mockRejectedValue(new Error('API Error: Invalid time range'));
 
       await expect(
         donateService.listRewardGift({

@@ -952,19 +952,28 @@ export interface UpdateVideoModerationSettingParams {
  * Callback settings
  */
 export interface CallbackSettings {
-  /** Callback URL */
+  streamCallbackUrl?: string;
+  playbackCallbackUrl?: string;
+  recordCallbackUrl?: string;
+  rebirthVodCallbackUrl?: string;
+  rebirthVodCallbackEnabled?: 'Y' | 'N';
+  /** Compatibility aliases used by older SDK consumers. */
   url?: string;
-  /** Whether enabled */
   enabled?: boolean;
+  [key: string]: unknown;
 }
 
 /**
  * Parameters for updating callback settings
  */
 export interface UpdateCallbackParams {
-  /** Callback URL */
+  streamCallbackUrl?: string;
+  playbackCallbackUrl?: string;
+  recordCallbackUrl?: string;
+  rebirthVodCallbackUrl?: string;
+  rebirthVodCallbackEnabled?: 'Y' | 'N';
+  /** Compatibility aliases used by older SDK consumers. */
   url?: string;
-  /** Whether enabled */
   enabled?: boolean;
 }
 

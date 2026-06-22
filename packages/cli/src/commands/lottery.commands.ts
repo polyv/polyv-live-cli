@@ -307,8 +307,8 @@ Output Formats:
     .command('records')
     .description('Get lottery records (legacy V3 API)')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
-    .option('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parseInt)
-    .option('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parseInt)
+    .requiredOption('--start-time <timestamp>', 'start time (timestamp in milliseconds)', parseInt)
+    .requiredOption('--end-time <timestamp>', 'end time (timestamp in milliseconds)', parseInt)
     .option('--session-id <id>', 'session ID filter')
     .option('--page <number>', 'page number', parseInt)
     .option('--limit <number>', 'items per page', parseInt)
@@ -338,13 +338,13 @@ Output Formats:
   recordsCmd.addHelpText('after', `
 Examples:
   # Get lottery records
-  $ polyv-live-cli lottery records -c "3151318"
+  $ polyv-live-cli lottery records -c "3151318" --start-time 1615772426000 --end-time 1615773566000
 
   # Get records with time range
   $ polyv-live-cli lottery records -c "3151318" --start-time 1615772426000 --end-time 1615773566000
 
   # Get records by session ID
-  $ polyv-live-cli lottery records -c "3151318" --session-id "fwly13xczv"
+  $ polyv-live-cli lottery records -c "3151318" --start-time 1615772426000 --end-time 1615773566000 --session-id "fwly13xczv"
 
 Output Formats:
   table       - Formatted table output (default)

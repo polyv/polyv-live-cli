@@ -12,9 +12,12 @@ import {
   GetDonateConfigParams,
   UpdateDonateConfigParams,
   ListRewardGiftParams,
+  ListRewardLikeParams,
   DonateRecordApiResponse,
   DonateUpdateApiResponse,
 } from '../types/donate';
+
+const DEFAULT_DONATE_GIFT_IMAGE = '//s1.videocc.net/default-img/donate/666.png';
 
 /**
  * SDK wrapper for donate operations
@@ -22,7 +25,7 @@ import {
  */
 export class DonateServiceSdk {
   private readonly client: PolyVClient;
-  private readonly v4Channel: any;
+  private readonly v4Channel: PolyVClient['v4Channel'];
 
   /**
    * Creates a new DonateServiceSdk instance
@@ -55,7 +58,16 @@ export class DonateServiceSdk {
    */
   async updateDonateConfig(params: UpdateDonateConfigParams): Promise<DonateUpdateApiResponse> {
     try {
-      await this.v4Channel.updateDonate(params);
+      const donateGiftEnabled = params.donateGiftEnabled ?? params.donateEnabled ?? 'Y';
+      const giftDonate = this.normalizeGiftDonateConfig(
+        params.giftDonate ?? this.buildGiftDonateConfig(params.donateAmounts)
+      );
+
+      await this.v4Channel.updateDonateGift({
+        channelId: params.channelId,
+        donateGiftEnabled,
+        ...(giftDonate ? { giftDonate } : {}),
+      });
       return {
         code: 200,
         status: 'success',
@@ -73,20 +85,88 @@ export class DonateServiceSdk {
    */
   async listRewardGift(params: ListRewardGiftParams): Promise<DonateRecordApiResponse> {
     try {
-      // Use httpClient directly for this endpoint
-      const response = await this.client.httpClient.get('/live/v4/channel/reward/gift-list', {
-        params: {
-          channelId: params.channelId,
-          start: params.start,
-          end: params.end,
-          pageNumber: params.pageNumber ?? 1,
-          pageSize: params.pageSize ?? 10,
-        },
+      const response = await this.v4Channel.listRewardGifts({
+        channelId: params.channelId,
+        start: params.start,
+        end: params.end,
+        pageNumber: params.pageNumber ?? 1,
+        pageSize: params.pageSize ?? 10,
       });
       return response as unknown as DonateRecordApiResponse;
     } catch (error) {
       throw this.wrapError(error, 'listRewardGift');
     }
+  }
+
+  /**
+   * List like reward records using V4 API
+   * @param params List reward like parameters
+   * @returns API response with reward like records
+   */
+  async listRewardLikes(params: ListRewardLikeParams): Promise<any> {
+    try {
+      const response = await this.v4Channel.listRewardLikes({
+        channelId: params.channelId,
+        pageNumber: params.pageNumber ?? 1,
+        pageSize: params.pageSize ?? 10,
+        ...(params.start !== undefined ? { start: params.start } : {}),
+        ...(params.end !== undefined ? { end: params.end } : {}),
+      });
+      return response;
+    } catch (error) {
+      throw this.wrapError(error, 'listRewardLikes');
+    }
+  }
+
+  private buildGiftDonateConfig(amounts?: number[]): UpdateDonateConfigParams['giftDonate'] | undefined {
+    if (!amounts || amounts.length === 0) {
+      return undefined;
+    }
+
+    return {
+      payWay: 'CASH',
+      cashPays: amounts.map((amount) => ({
+        name: String(amount),
+        enabled: 'Y',
+        imgType: 'STATIC',
+        img: DEFAULT_DONATE_GIFT_IMAGE,
+        price: amount,
+      })),
+    };
+  }
+
+  private normalizeGiftDonateConfig(
+    giftDonate?: UpdateDonateConfigParams['giftDonate']
+  ): UpdateDonateConfigParams['giftDonate'] | undefined {
+    if (!giftDonate) {
+      return undefined;
+    }
+
+    type DonatePayItem = NonNullable<NonNullable<UpdateDonateConfigParams['giftDonate']>['cashPays']>[number];
+    const normalizePayItem = (item: DonatePayItem): DonatePayItem => {
+      if (item.img || item.imgType === 'DYNAMIC') {
+        return item;
+      }
+
+      return {
+        ...item,
+        imgType: item.imgType ?? 'STATIC',
+        img: DEFAULT_DONATE_GIFT_IMAGE,
+      };
+    };
+
+    const normalized: UpdateDonateConfigParams['giftDonate'] = {
+      ...giftDonate,
+    };
+
+    if (giftDonate.cashPays) {
+      normalized.cashPays = giftDonate.cashPays.map(normalizePayItem);
+    }
+    if (giftDonate.pointPays) {
+      normalized.pointPays = giftDonate.pointPays.map(normalizePayItem);
+    }
+
+    return normalized;
   }
 
   /**

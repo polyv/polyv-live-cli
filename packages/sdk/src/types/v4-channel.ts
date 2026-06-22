@@ -907,11 +907,14 @@ export interface DonateSettings {
   /** Channel ID */
   channelId: string;
   /** Donate enabled */
-  donateEnabled: YNFlag;
+  donateEnabled?: YNFlag;
+  donateGiftEnabled?: YNFlag;
   /** Donate tips */
-  donateTips: string;
+  donateTips?: string;
   /** Donate amounts */
-  donateAmounts: number[];
+  donateAmounts?: number[];
+  giftDonate?: GiftDonateConfig;
+  [key: string]: unknown;
 }
 
 /**
@@ -930,10 +933,35 @@ export interface UpdateDonateParams {
   channelId: string;
   /** Donate enabled */
   donateEnabled?: YNFlag;
+  donateGiftEnabled?: YNFlag;
   /** Donate tips */
   donateTips?: string;
   /** Donate amounts */
   donateAmounts?: number[];
+  giftDonate?: GiftDonateConfig;
+}
+
+export interface GiftDonatePayItem {
+  name?: string;
+  enabled?: YNFlag;
+  imgType?: 'STATIC' | 'DYNAMIC' | string;
+  img?: string;
+  dynamicImg?: string;
+  dynamicFile?: string;
+  price?: number | string;
+}
+
+export interface GiftDonateConfig {
+  payWay?: 'CASH' | 'POINT' | string;
+  pointUnit?: string;
+  cashPays?: GiftDonatePayItem[];
+  pointPays?: GiftDonatePayItem[];
+}
+
+export interface UpdateDonateGiftParams {
+  channelId: string | number;
+  donateGiftEnabled: YNFlag;
+  giftDonate?: GiftDonateConfig;
 }
 
 // ============================================
@@ -2218,6 +2246,54 @@ export interface LikeInfo {
   likeCount: number;
   /** Like time */
   likeTime: number;
+}
+
+export interface RewardGiftRecord {
+  viewerId?: string;
+  viewerName?: string;
+  giftName?: string;
+  price?: number;
+  count?: number;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListRewardGiftsParams extends V4PaginationParams {
+  channelId: string | number;
+  start: number;
+  end: number;
+}
+
+export interface ListRewardGiftsResponse {
+  pageNumber?: number;
+  pageSize?: number;
+  totalItems?: number;
+  totalPages?: number;
+  contents?: RewardGiftRecord[];
+  [key: string]: unknown;
+}
+
+export interface RewardLikeRecord {
+  viewerId?: string;
+  viewerName?: string;
+  likeCount?: number;
+  createTime?: number;
+  [key: string]: unknown;
+}
+
+export interface ListRewardLikesParams extends V4PaginationParams {
+  channelId: string | number;
+  start?: number;
+  end?: number;
+}
+
+export interface ListRewardLikesResponse {
+  pageNumber?: number;
+  pageSize?: number;
+  totalItems?: number;
+  totalPages?: number;
+  contents?: RewardLikeRecord[];
+  [key: string]: unknown;
 }
 
 /**

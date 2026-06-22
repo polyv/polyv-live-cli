@@ -1476,7 +1476,7 @@ export class V4UserService {
    */
   async getCallback(): Promise<CallbackSettings> {
     const response = await this.client.httpClient.get<CallbackSettings>(
-      '/live/v4/user/callback/get',
+      '/live/v4/user/global-setting/callback/get',
       {}
     );
     return response as unknown as CallbackSettings;
@@ -1496,9 +1496,16 @@ export class V4UserService {
    * ```
    */
   async updateCallback(params: UpdateCallbackParams): Promise<void> {
+    const { url, enabled, ...rest } = params;
+    const body = {
+      ...rest,
+      ...(url !== undefined ? { streamCallbackUrl: url } : {}),
+      ...(enabled !== undefined ? { rebirthVodCallbackEnabled: enabled ? 'Y' : 'N' } : {}),
+    };
+
     await this.client.httpClient.post(
-      '/live/v4/user/callback/update',
-      params
+      '/live/v4/user/global-setting/callback/update',
+      body
     );
   }
 

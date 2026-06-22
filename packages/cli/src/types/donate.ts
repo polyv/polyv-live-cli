@@ -183,8 +183,31 @@ export interface GetDonateConfigParams {
 export interface UpdateDonateConfigParams {
   channelId: string;
   donateEnabled?: YNFlag;
+  donateGiftEnabled?: YNFlag;
   donateTips?: string;
   donateAmounts?: number[];
+  giftDonate?: {
+    payWay?: 'CASH' | 'POINT' | string;
+    pointUnit?: string;
+    cashPays?: Array<{
+      name?: string;
+      enabled?: YNFlag;
+      imgType?: 'STATIC' | 'DYNAMIC' | string;
+      img?: string;
+      dynamicImg?: string;
+      dynamicFile?: string;
+      price?: number | string;
+    }>;
+    pointPays?: Array<{
+      name?: string;
+      enabled?: YNFlag;
+      imgType?: 'STATIC' | 'DYNAMIC' | string;
+      img?: string;
+      dynamicImg?: string;
+      dynamicFile?: string;
+      price?: number | string;
+    }>;
+  };
 }
 
 /**
@@ -194,6 +217,17 @@ export interface ListRewardGiftParams {
   channelId: string;
   start: number;
   end: number;
+  pageNumber?: number;
+  pageSize?: number;
+}
+
+/**
+ * Parameters for listing like reward records via SDK
+ */
+export interface ListRewardLikeParams {
+  channelId: string;
+  start?: number;
+  end?: number;
   pageNumber?: number;
   pageSize?: number;
 }

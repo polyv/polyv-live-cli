@@ -469,6 +469,30 @@ export class LotteryHandler extends BaseHandler {
       errors.push('channelId is required');
     }
 
+    if (typeof options.startTime !== 'number' || !Number.isInteger(options.startTime)) {
+      errors.push('startTime is required');
+    }
+
+    if (typeof options.endTime !== 'number' || !Number.isInteger(options.endTime)) {
+      errors.push('endTime is required');
+    }
+
+    if (
+      typeof options.startTime === 'number' &&
+      typeof options.endTime === 'number' &&
+      options.startTime > options.endTime
+    ) {
+      errors.push('startTime must be less than or equal to endTime');
+    }
+
+    if (options.page !== undefined && (!Number.isInteger(options.page) || options.page < 1)) {
+      errors.push('page must be a positive integer');
+    }
+
+    if (options.limit !== undefined && (!Number.isInteger(options.limit) || options.limit < 1)) {
+      errors.push('limit must be a positive integer');
+    }
+
     if (options.output && !['table', 'json'].includes(options.output)) {
       errors.push('output must be either "table" or "json"');
     }

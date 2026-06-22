@@ -127,10 +127,10 @@ export interface LotteryWinnersOptions {
 export interface LotteryRecordsOptions {
   /** Channel ID (required) */
   channelId: string;
-  /** Start time (timestamp in milliseconds) */
-  startTime?: number;
-  /** End time (timestamp in milliseconds) */
-  endTime?: number;
+  /** Start time (timestamp in milliseconds, required) */
+  startTime: number;
+  /** End time (timestamp in milliseconds, required) */
+  endTime: number;
   /** Session ID filter */
   sessionId?: string;
   /** Page number */
@@ -219,8 +219,8 @@ export interface GetWinnerDetailParams {
  */
 export interface ListLotteryRecordsParams {
   channelId: string;
-  startTime?: number;
-  endTime?: number;
+  startTime: number;
+  endTime: number;
   sessionId?: string;
   page?: number;
   limit?: number;

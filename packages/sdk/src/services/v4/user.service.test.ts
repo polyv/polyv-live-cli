@@ -853,6 +853,10 @@ describe('V4UserService', () => {
       const result = await service.getCallback();
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/callback/get',
+        {}
+      );
     });
   });
 
@@ -862,7 +866,13 @@ describe('V4UserService', () => {
 
       await service.updateCallback({ url: 'https://example.com/new-callback', enabled: true });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/user/global-setting/callback/update',
+        {
+          streamCallbackUrl: 'https://example.com/new-callback',
+          rebirthVodCallbackEnabled: 'Y',
+        }
+      );
     });
   });
 

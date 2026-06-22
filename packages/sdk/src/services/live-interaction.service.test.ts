@@ -72,11 +72,19 @@ describe('LiveInteractionService', () => {
 
       const result = await service.createQuestionnaire({
         channelId: '12345678',
-        name: 'Test Questionnaire',
-        questions: [{ question: 'Q1', type: 'S', option: ['A', 'B'] }],
+        questionnaireTitle: 'Test Questionnaire',
+        questions: [{ name: 'Q1', type: 'R', options: ['A', 'B'] }],
       });
 
       expect(result).toEqual(mockResponse);
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/questionnaire/save',
+        {
+          questionnaireTitle: 'Test Questionnaire',
+          questions: [{ name: 'Q1', type: 'R', options: ['A', 'B'] }],
+        },
+        { params: { channelId: '12345678' } }
+      );
     });
   });
 
@@ -227,9 +235,19 @@ describe('LiveInteractionService', () => {
       const mockResponse = { contents: [{ lotteryId: 'lottery1' }], total: 1 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.listLottery({ channelId: '12345678' });
+      const result = await service.listLottery({
+        channelId: '12345678',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
+      });
 
       expect(result).toEqual(mockResponse);
+    });
+
+    it('[P1] should require startTime and endTime', async () => {
+      await expect(
+        service.listLottery({ channelId: '12345678' } as never)
+      ).rejects.toThrow('startTime is required');
     });
   });
 
@@ -242,7 +260,11 @@ describe('LiveInteractionService', () => {
       const mockResponse = { contents: [{ lotteryId: 'lottery1' }], total: 1 };
       mockHttpClient.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await service.listChannelsLottery({ channelIds: '12345678' });
+      const result = await service.listChannelsLottery({
+        channelIds: '12345678',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
+      });
 
       expect(result).toEqual(mockResponse);
     });
@@ -334,6 +356,59 @@ describe('LiveInteractionService', () => {
       const result = await service.getQuestionList('12345678');
 
       expect(result).toEqual(mockResponse);
+    });
+  });
+
+  describe('documented exact paths', () => {
+    it('uses v3/v4 paths for checkin, QA, questionnaire, and lottery APIs', async () => {
+      mockHttpClient.get.mockResolvedValue({});
+      mockHttpClient.post.mockResolvedValue({});
+
+      await service.getCheckinList({ channelId: '12345678', page: 1, pageSize: 10 });
+      await service.getCheckinByCheckinId({ channelId: '12345678', checkinId: 'checkin1' });
+      await service.getCheckinBySessionId({ channelId: '12345678', sessionId: 'session1' });
+      await service.getCheckinByTime({ channelId: '12345678', startDate: '2026-06-01', endDate: '2026-06-22' });
+      await service.listQuestion({ channelId: '12345678' });
+      await service.sendQuestion({ channelId: '12345678', questionId: 'question1', duration: 30 });
+      await service.stopQuestion({ channelId: '12345678', questionId: 'question1' });
+      await service.listQuestionnaireByPage({ channelId: '12345678', page: 1, pageSize: 10 });
+      await service.getQuestionnaireDetail({ channelId: '12345678', questionnaireId: 'questionnaire1' });
+      await service.listLottery({ channelId: '12345678', startTime: 1, endTime: 2 });
+      await service.getWinnerDetail({ channelId: '12345678', lotteryId: 'lottery1' });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/checkin/list', {
+        params: { channelId: '12345678', page: 1, pageSize: 10 },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/chat/get-checkins', {
+        params: { channelId: '12345678', checkinId: 'checkin1' },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/chat/checkin-by-sessionId', {
+        params: { channelId: '12345678', sessionId: 'session1' },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/chat/get-checkin-list', {
+        params: { channelId: '12345678', startDate: '2026-06-01', endDate: '2026-06-22' },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/interact/question/list-question', {
+        params: { channelId: '12345678' },
+      });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/live/v4/channel/question/send', null, {
+        params: { channelId: '12345678', questionId: 'question1', duration: 30 },
+      });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/live/v4/channel/question/stop', null, {
+        params: { channelId: '12345678', questionId: 'question1' },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/questionnaire/list-answer-records', {
+        params: { channelId: '12345678', page: 1, pageSize: 10 },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/questionnaire/detail', {
+        params: { channelId: '12345678', questionnaireId: 'questionnaire1' },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/lottery/list-lottery', {
+        params: { channelId: '12345678', startTime: 1, endTime: 2 },
+      });
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v3/channel/lottery/get-winner-detail', {
+        params: { channelId: '12345678', lotteryId: 'lottery1' },
+      });
     });
   });
 });

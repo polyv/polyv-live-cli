@@ -486,20 +486,19 @@ describe('AccountService', () => {
   describe('AC5: Switch Config', () => {
     describe('switchGet', () => {
       it('should return current switch configuration', async () => {
-        const mockResponse = {
-          config: {
-            globalSettingEnabled: true,
-            authEnabled: false,
-          },
-        }
+        const mockResponse = [
+          { type: 'globalSettingEnabled', enabled: 'Y' },
+          { type: 'authEnabled', enabled: 'N' },
+        ]
         mockAxiosInstance.get.mockResolvedValueOnce(mockResponse)
 
         const result = await accountService.switchGet()
 
         expect(mockAxiosInstance.get).toHaveBeenCalledWith(
-          '/live/v3/user/switch/get'
+          '/live/v3/channel/switch/get',
+          { params: {} }
         )
-        expect(result.config.globalSettingEnabled).toBe(true)
+        expect(result).toEqual(mockResponse)
       })
     })
 
@@ -513,9 +512,9 @@ describe('AccountService', () => {
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/switch/update',
+          '/live/v3/channel/switch/update',
           null,
-          { params: { param: 'authEnabled', enabled: 'Y' } }
+          { params: { type: 'authEnabled', enabled: 'Y' } }
         )
         expect(result.success).toBe(true)
       })
@@ -529,9 +528,9 @@ describe('AccountService', () => {
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/switch/update',
+          '/live/v3/channel/switch/update',
           null,
-          { params: { param: 'authEnabled', enabled: 'Y' } }
+          { params: { type: 'authEnabled', enabled: 'Y' } }
         )
       })
 
@@ -544,9 +543,9 @@ describe('AccountService', () => {
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-          '/live/v3/user/switch/update',
+          '/live/v3/channel/switch/update',
           null,
-          { params: { param: 'authEnabled', enabled: 'N' } }
+          { params: { type: 'authEnabled', enabled: 'N' } }
         )
       })
 

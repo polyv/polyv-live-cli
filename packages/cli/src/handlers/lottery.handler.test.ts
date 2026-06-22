@@ -834,6 +834,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
     it('11.5-UNIT-035: should get lottery records with minimal parameters', async () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         output: 'table',
       };
 
@@ -857,6 +859,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
 
       expect(mockLotteryService.listLottery).toHaveBeenCalledWith({
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
       });
     });
 
@@ -887,6 +891,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
     it('11.5-UNIT-037: should get lottery records with sessionId filter', async () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         sessionId: 'fwly13xczv',
         output: 'table',
       };
@@ -909,6 +915,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
     it('11.5-UNIT-038: should get lottery records with pagination', async () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         page: 1,
         limit: 20,
         output: 'table',
@@ -933,6 +941,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
     it('11.5-UNIT-039: should output records in table format', async () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         output: 'table',
       };
 
@@ -962,6 +972,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
     it('11.5-UNIT-040: should display empty message when no records found', async () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1601481600000,
+        endTime: 1615357743000,
         output: 'table',
       };
 
@@ -976,6 +988,16 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
       expect(mockConsoleLog).toHaveBeenCalledWith(
         expect.stringContaining('No lottery records found')
       );
+    });
+
+    it('11.5-UNIT-040b: should require time range', async () => {
+      const options = {
+        channelId: '3151318',
+        output: 'table',
+      } as LotteryRecordsOptions;
+
+      await expect(lotteryHandler.getRecords(options)).rejects.toThrow(PolyVValidationError);
+      await expect(lotteryHandler.getRecords(options)).rejects.toThrow('startTime is required');
     });
   });
 

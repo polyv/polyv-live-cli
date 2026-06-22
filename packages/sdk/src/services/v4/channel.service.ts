@@ -62,6 +62,7 @@ import type {
   DonateSettings,
   GetDonateParams,
   UpdateDonateParams,
+  UpdateDonateGiftParams,
   // AC6: Distribute
   DistributeItem,
   DistributeListResponse,
@@ -155,6 +156,10 @@ import type {
   GiftPageParams,
   LikeItem,
   LikePageParams,
+  ListRewardGiftsParams,
+  ListRewardGiftsResponse,
+  ListRewardLikesParams,
+  ListRewardLikesResponse,
   // AC11: Task Reward
   TaskReward,
   CreateTaskRewardParams,
@@ -828,12 +833,31 @@ export class V4ChannelService {
    * @param params - Update parameters
    */
   async updateDonate(params: UpdateDonateParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    await this.updateDonateGift({
+      channelId: params.channelId,
+      donateGiftEnabled: params.donateGiftEnabled ?? params.donateEnabled ?? 'Y',
+      ...(params.giftDonate ? { giftDonate: params.giftDonate } : {}),
+    });
+  }
 
-    await this.client.httpClient.post(
-      '/live/v4/channel/donate/update',
-      params
+  /**
+   * Update channel gift donate settings.
+   *
+   * @param params - Update parameters
+   * @returns Donate settings
+   */
+  async updateDonateGift(params: UpdateDonateGiftParams): Promise<DonateSettings> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.donateGiftEnabled, 'donateGiftEnabled');
+    this.validateOptionalYn(params.donateGiftEnabled, 'donateGiftEnabled');
+
+    const { channelId, ...body } = params;
+    const response = await this.client.httpClient.post<DonateSettings>(
+      '/live/v4/channel/donate/gift/update',
+      body,
+      { params: { channelId } }
     );
+    return response as unknown as DonateSettings;
   }
 
   // ============================================
@@ -1745,6 +1769,42 @@ export class V4ChannelService {
       { params }
     );
     return response as unknown as { contents: LikeItem[] };
+  }
+
+  /**
+   * List gift reward records.
+   *
+   * @param params - Query parameters
+   * @returns Gift reward records
+   */
+  async listRewardGifts(params: ListRewardGiftsParams): Promise<ListRewardGiftsResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredNumber(params.start, 'start');
+    this.validateRequiredNumber(params.end, 'end');
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListRewardGiftsResponse>(
+      '/live/v4/channel/reward/gift-list',
+      { params }
+    );
+    return response as unknown as ListRewardGiftsResponse;
+  }
+
+  /**
+   * List like reward records.
+   *
+   * @param params - Query parameters
+   * @returns Like reward records
+   */
+  async listRewardLikes(params: ListRewardLikesParams): Promise<ListRewardLikesResponse> {
+    this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
+
+    const response = await this.client.httpClient.get<ListRewardLikesResponse>(
+      '/live/v4/channel/reward/like-list',
+      { params }
+    );
+    return response as unknown as ListRewardLikesResponse;
   }
 
   // ============================================
