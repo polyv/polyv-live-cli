@@ -112,7 +112,8 @@ describe('V4ChannelService path fixes', () => {
     });
     expect(mockHttpClient.post).toHaveBeenCalledWith(
       '/live/v4/channel/card-push/update',
-      { channelId: '123', cardPushId: '1', title: 'New Card', duration: 10 }
+      { title: 'New Card', duration: 10 },
+      { params: { channelId: '123', cardPushId: '1' } }
     );
     expect(mockHttpClient.post).toHaveBeenCalledWith(
       '/live/v4/channel/card-push/delete',

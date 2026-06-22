@@ -1390,9 +1390,12 @@ export class V4ChannelService {
     this.validateCardPushIdParams(params);
     this.validateCardPushOptionalParams(params);
 
+    const { channelId, cardPushId, ...body } = params;
+
     await this.client.httpClient.post(
       '/live/v4/channel/card-push/update',
-      params
+      body,
+      { params: { channelId, cardPushId } }
     );
   }
 

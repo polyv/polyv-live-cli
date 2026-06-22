@@ -84,8 +84,11 @@ export class PromotionServiceSdk {
       }
     );
 
+    const data = this.unwrapData<ApiPopularizationListResponse | ApiPopularizationInfo[]>(response);
+    const items = Array.isArray(data) ? data : (data?.contents ?? []);
+
     // Transform API response to CLI format
-    return response.data.contents.map((item) => ({
+    return items.map((item) => ({
       promoteId: item.promoteId,
       popularizationName: item.popularizationName,
       visitsNum: item.visitsNum ?? 0,
@@ -137,10 +140,19 @@ export class PromotionServiceSdk {
       }
     );
 
+    const data = this.unwrapData<ApiBatchCreateResponse[]>(response) ?? [];
+
     // Return created promotions
-    return response.data.map((item) => ({
+    return data.map((item) => ({
       promoteId: item.promoteId,
       popularizationName: item.popularizationName,
     }));
+  }
+
+  private unwrapData<T>(value: unknown): T | undefined {
+    if (value && typeof value === 'object' && 'data' in value) {
+      return (value as { data: T }).data;
+    }
+    return value as T;
   }
 }
