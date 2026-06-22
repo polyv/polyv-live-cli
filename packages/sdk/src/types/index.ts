@@ -514,7 +514,6 @@ export type {
   CardPushItem,
   CreateCardPushParams,
   CreateCardPushResponse,
-  GetCardPushParams,
   UpdateCardPushParams,
   DeleteCardPushParams,
   PushCardParams,

@@ -116,7 +116,6 @@ import type {
   CardPushItem,
   CreateCardPushParams,
   CreateCardPushResponse,
-  GetCardPushParams,
   UpdateCardPushParams,
   DeleteCardPushParams,
   PushCardParams,
@@ -1514,22 +1513,6 @@ export class V4ChannelService {
       { params }
     );
     return response as unknown as CreateCardPushResponse;
-  }
-
-  /**
-   * Get card push
-   *
-   * @param params - Query parameters
-   * @returns Card push info
-   */
-  async cardPushGet(params: GetCardPushParams): Promise<CardPushItem> {
-    this.validateChannelId(params.channelId);
-
-    const response = await this.client.httpClient.get<CardPushItem>(
-      '/live/v4/channel/market/cardPush/get',
-      { params }
-    );
-    return response as unknown as CardPushItem;
   }
 
   /**

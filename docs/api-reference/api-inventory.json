@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20T16:22:16.973Z",
+  "generatedAt": "2026-06-22T05:16:21.304Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,7 +18,7 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 711,
+    "sdkEndpoints": 694,
     "sdkImplemented": 578,
     "sdkMissing": 0
   },
@@ -1238,7 +1238,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/lottery-activity/get",
-        "reference": "V4ChannelService#getLotteryActivityExact",
+        "reference": "V4ChannelService#lotteryActivityGet",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -1267,7 +1267,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/lottery-activity/list",
-        "reference": "V4ChannelService#listLotteryActivitiesExact",
+        "reference": "V4ChannelService#lotteryActivityList",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -2556,7 +2556,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/share/get",
-        "reference": "V4ChannelService#getShareExact",
+        "reference": "V4ChannelService#shareGet",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -3158,7 +3158,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/product/tag/list",
-        "reference": "V4ChannelService#listProductTagsExact",
+        "reference": "V4ChannelService#productTagList",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -3314,7 +3314,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/basic/list",
-        "reference": "V4ChannelService#listChannelBasicExact",
+        "reference": "V4ChannelService#listAllChannelBasic",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -3721,7 +3721,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/lottery-activity/create",
-        "reference": "V4ChannelService#createLotteryActivityExact",
+        "reference": "V4ChannelService#lotteryActivityCreate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -3873,7 +3873,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/card-push/create",
-        "reference": "V4ChannelService#createCardPushExact",
+        "reference": "V4ChannelService#cardPushCreate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -3969,7 +3969,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/product/tag/create",
-        "reference": "V4ChannelService#createProductTagExact",
+        "reference": "V4ChannelService#productTagCreate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -4507,7 +4507,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/lottery-activity/update",
-        "reference": "V4ChannelService#updateLotteryActivityExact",
+        "reference": "V4ChannelService#lotteryActivityUpdate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -4599,7 +4599,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/product/tag/update",
-        "reference": "V4ChannelService#updateProductTagExact",
+        "reference": "V4ChannelService#productTagUpdate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -6971,7 +6971,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/card-push/cancel-push",
-        "reference": "V4ChannelService#cancelCardPushExact",
+        "reference": "V4ChannelService#cardPushCancelPush",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -7061,7 +7061,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/lottery-activity/delete",
-        "reference": "V4ChannelService#deleteLotteryActivityExact",
+        "reference": "V4ChannelService#lotteryActivityDelete",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -7239,7 +7239,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/card-push/delete",
-        "reference": "V4ChannelService#deleteCardPushExact",
+        "reference": "V4ChannelService#cardPushDelete",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -7388,7 +7388,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/product/tag/delete",
-        "reference": "V4ChannelService#deleteProductTagExact",
+        "reference": "V4ChannelService#productTagDelete",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -8182,7 +8182,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/card-push/push",
-        "reference": "V4ChannelService#pushCardPushExact",
+        "reference": "V4ChannelService#cardPushPush",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -8697,7 +8697,7 @@
         "methodMismatch": false,
         "sdkMethod": "POST",
         "sdkPath": "/live/v4/channel/card-push/update",
-        "reference": "V4ChannelService#updateCardPushExact",
+        "reference": "V4ChannelService#cardPushUpdate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -9028,7 +9028,7 @@
         "methodMismatch": false,
         "sdkMethod": "GET",
         "sdkPath": "/live/v4/channel/share/update",
-        "reference": "V4ChannelService#updateShareExact",
+        "reference": "V4ChannelService#shareUpdate",
         "file": "packages/sdk/src/services/v4/channel.service.ts"
       }
     },
@@ -20700,8 +20700,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-create",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-create",
+      "path": "/live/v4/channel/lottery-activity/create",
+      "normalizedPath": "/live/v4/channel/lottery-activity/create",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "lotteryActivityCreate",
@@ -20709,8 +20709,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-get",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-get",
+      "path": "/live/v4/channel/lottery-activity/get",
+      "normalizedPath": "/live/v4/channel/lottery-activity/get",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "lotteryActivityGet",
@@ -20718,8 +20718,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-list",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-list",
+      "path": "/live/v4/channel/lottery-activity/list",
+      "normalizedPath": "/live/v4/channel/lottery-activity/list",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "lotteryActivityList",
@@ -20727,8 +20727,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-update",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-update",
+      "path": "/live/v4/channel/lottery-activity/update",
+      "normalizedPath": "/live/v4/channel/lottery-activity/update",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "lotteryActivityUpdate",
@@ -20736,8 +20736,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/lottery-activity-delete",
-      "normalizedPath": "/live/v4/channel/lottery-activity/lottery-activity-delete",
+      "path": "/live/v4/channel/lottery-activity/delete",
+      "normalizedPath": "/live/v4/channel/lottery-activity/delete",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "lotteryActivityDelete",
@@ -20898,44 +20898,35 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/channel/market/share/get",
-      "normalizedPath": "/live/v4/channel/market/share/get",
+      "path": "/live/v4/channel/share/get",
+      "normalizedPath": "/live/v4/channel/share/get",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "shareGet",
       "reference": "V4ChannelService#shareGet"
     },
     {
-      "method": "POST",
-      "path": "/live/v4/channel/market/share/update",
-      "normalizedPath": "/live/v4/channel/market/share/update",
+      "method": "GET",
+      "path": "/live/v4/channel/share/update",
+      "normalizedPath": "/live/v4/channel/share/update",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "shareUpdate",
       "reference": "V4ChannelService#shareUpdate"
     },
     {
-      "method": "POST",
-      "path": "/live/v4/channel/market/cardPush/create",
-      "normalizedPath": "/live/v4/channel/market/cardPush/create",
+      "method": "GET",
+      "path": "/live/v4/channel/card-push/create",
+      "normalizedPath": "/live/v4/channel/card-push/create",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "cardPushCreate",
       "reference": "V4ChannelService#cardPushCreate"
     },
     {
-      "method": "GET",
-      "path": "/live/v4/channel/market/cardPush/get",
-      "normalizedPath": "/live/v4/channel/market/cardPush/get",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "cardPushGet",
-      "reference": "V4ChannelService#cardPushGet"
-    },
-    {
       "method": "POST",
-      "path": "/live/v4/channel/market/cardPush/update",
-      "normalizedPath": "/live/v4/channel/market/cardPush/update",
+      "path": "/live/v4/channel/card-push/update",
+      "normalizedPath": "/live/v4/channel/card-push/update",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "cardPushUpdate",
@@ -20943,8 +20934,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/market/cardPush/delete",
-      "normalizedPath": "/live/v4/channel/market/cardPush/delete",
+      "path": "/live/v4/channel/card-push/delete",
+      "normalizedPath": "/live/v4/channel/card-push/delete",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "cardPushDelete",
@@ -20952,8 +20943,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/market/cardPush/push",
-      "normalizedPath": "/live/v4/channel/market/cardPush/push",
+      "path": "/live/v4/channel/card-push/push",
+      "normalizedPath": "/live/v4/channel/card-push/push",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "cardPushPush",
@@ -20961,8 +20952,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/market/cardPush/cancelPush",
-      "normalizedPath": "/live/v4/channel/market/cardPush/cancelPush",
+      "path": "/live/v4/channel/card-push/cancel-push",
+      "normalizedPath": "/live/v4/channel/card-push/cancel-push",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "cardPushCancelPush",
@@ -21069,8 +21060,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/product-tag/product-tag-create",
-      "normalizedPath": "/live/v4/channel/product-tag/product-tag-create",
+      "path": "/live/v4/channel/product/tag/create",
+      "normalizedPath": "/live/v4/channel/product/tag/create",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "productTagCreate",
@@ -21087,8 +21078,8 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/channel/product-tag/product-tag-list",
-      "normalizedPath": "/live/v4/channel/product-tag/product-tag-list",
+      "path": "/live/v4/channel/product/tag/list",
+      "normalizedPath": "/live/v4/channel/product/tag/list",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "productTagList",
@@ -21096,8 +21087,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/product-tag/product-tag-update",
-      "normalizedPath": "/live/v4/channel/product-tag/product-tag-update",
+      "path": "/live/v4/channel/product/tag/update",
+      "normalizedPath": "/live/v4/channel/product/tag/update",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "productTagUpdate",
@@ -21105,8 +21096,8 @@
     },
     {
       "method": "POST",
-      "path": "/live/v4/channel/product-tag/product-tag-delete",
-      "normalizedPath": "/live/v4/channel/product-tag/product-tag-delete",
+      "path": "/live/v4/channel/product/tag/delete",
+      "normalizedPath": "/live/v4/channel/product/tag/delete",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
       "methodName": "productTagDelete",
@@ -21397,8 +21388,8 @@
       "normalizedPath": "/live/v4/channel/basic/list",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
       "className": "V4ChannelService",
-      "methodName": "listChannelBasicExact",
-      "reference": "V4ChannelService#listChannelBasicExact"
+      "methodName": "listAllChannelBasic",
+      "reference": "V4ChannelService#listAllChannelBasic"
     },
     {
       "method": "GET",
@@ -21570,51 +21561,6 @@
       "className": "V4ChannelService",
       "methodName": "updateSubtitleConfig",
       "reference": "V4ChannelService#updateSubtitleConfig"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/create",
-      "normalizedPath": "/live/v4/channel/lottery-activity/create",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "createLotteryActivityExact",
-      "reference": "V4ChannelService#createLotteryActivityExact"
-    },
-    {
-      "method": "GET",
-      "path": "/live/v4/channel/lottery-activity/get",
-      "normalizedPath": "/live/v4/channel/lottery-activity/get",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "getLotteryActivityExact",
-      "reference": "V4ChannelService#getLotteryActivityExact"
-    },
-    {
-      "method": "GET",
-      "path": "/live/v4/channel/lottery-activity/list",
-      "normalizedPath": "/live/v4/channel/lottery-activity/list",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "listLotteryActivitiesExact",
-      "reference": "V4ChannelService#listLotteryActivitiesExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/update",
-      "normalizedPath": "/live/v4/channel/lottery-activity/update",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "updateLotteryActivityExact",
-      "reference": "V4ChannelService#updateLotteryActivityExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/lottery-activity/delete",
-      "normalizedPath": "/live/v4/channel/lottery-activity/delete",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "deleteLotteryActivityExact",
-      "reference": "V4ChannelService#deleteLotteryActivityExact"
     },
     {
       "method": "POST",
@@ -21906,69 +21852,6 @@
     },
     {
       "method": "GET",
-      "path": "/live/v4/channel/card-push/create",
-      "normalizedPath": "/live/v4/channel/card-push/create",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "createCardPushExact",
-      "reference": "V4ChannelService#createCardPushExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/card-push/update",
-      "normalizedPath": "/live/v4/channel/card-push/update",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "updateCardPushExact",
-      "reference": "V4ChannelService#updateCardPushExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/card-push/delete",
-      "normalizedPath": "/live/v4/channel/card-push/delete",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "deleteCardPushExact",
-      "reference": "V4ChannelService#deleteCardPushExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/card-push/push",
-      "normalizedPath": "/live/v4/channel/card-push/push",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "pushCardPushExact",
-      "reference": "V4ChannelService#pushCardPushExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/card-push/cancel-push",
-      "normalizedPath": "/live/v4/channel/card-push/cancel-push",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "cancelCardPushExact",
-      "reference": "V4ChannelService#cancelCardPushExact"
-    },
-    {
-      "method": "GET",
-      "path": "/live/v4/channel/share/get",
-      "normalizedPath": "/live/v4/channel/share/get",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "getShareExact",
-      "reference": "V4ChannelService#getShareExact"
-    },
-    {
-      "method": "GET",
-      "path": "/live/v4/channel/share/update",
-      "normalizedPath": "/live/v4/channel/share/update",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "updateShareExact",
-      "reference": "V4ChannelService#updateShareExact"
-    },
-    {
-      "method": "GET",
       "path": "/live/v4/channel/coupon/get-enabled",
       "normalizedPath": "/live/v4/channel/coupon/get-enabled",
       "file": "packages/sdk/src/services/v4/channel.service.ts",
@@ -22020,42 +21903,6 @@
       "className": "V4ChannelService",
       "methodName": "updateProductPushRule",
       "reference": "V4ChannelService#updateProductPushRule"
-    },
-    {
-      "method": "GET",
-      "path": "/live/v4/channel/product/tag/list",
-      "normalizedPath": "/live/v4/channel/product/tag/list",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "listProductTagsExact",
-      "reference": "V4ChannelService#listProductTagsExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/product/tag/create",
-      "normalizedPath": "/live/v4/channel/product/tag/create",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "createProductTagExact",
-      "reference": "V4ChannelService#createProductTagExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/product/tag/update",
-      "normalizedPath": "/live/v4/channel/product/tag/update",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "updateProductTagExact",
-      "reference": "V4ChannelService#updateProductTagExact"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/product/tag/delete",
-      "normalizedPath": "/live/v4/channel/product/tag/delete",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "deleteProductTagExact",
-      "reference": "V4ChannelService#deleteProductTagExact"
     },
     {
       "method": "GET",

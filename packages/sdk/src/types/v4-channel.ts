@@ -1754,16 +1754,6 @@ export interface CardPushCreateResponse {
 }
 
 /**
- * Parameters for getting card push
- */
-export interface CardPushGetParams {
-  /** Channel ID */
-  channelId: string | number;
-  /** Card push ID */
-  cardPushId: string | number;
-}
-
-/**
  * Parameters for updating card push
  */
 export interface CardPushUpdateParams {
@@ -3821,7 +3811,6 @@ export type GetShareParams = ShareGetParams;
 export type UpdateShareParams = ShareUpdateParams;
 export type CreateCardPushParams = CardPushCreateParams;
 export type CreateCardPushResponse = CardPushCreateResponse;
-export type GetCardPushParams = CardPushGetParams;
 export type UpdateCardPushParams = CardPushUpdateParams;
 export type DeleteCardPushParams = CardPushDeleteParams;
 export type PushCardParams = CardPushPushParams;
