@@ -97,6 +97,24 @@ describe('CardPushServiceSdk', () => {
       expect(result).toEqual(expectedResponse);
     });
 
+    it('[P0] should handle SDK top-level array responses', async () => {
+      const mockSdkResponse = [
+        {
+          id: 77859,
+          channelId: 7982219,
+          title: 'Codex大促',
+          pushStatus: 'N',
+          showCondition: 'PUSH',
+        },
+      ];
+
+      mockV4Channel.listCardPushes.mockResolvedValueOnce(mockSdkResponse);
+
+      const result = await service.listCardPushes('7982219');
+
+      expect(result).toEqual(mockSdkResponse);
+    });
+
     it('[P1] should throw error when channelId is empty', async () => {
       await expect(service.listCardPushes('')).rejects.toThrow(/channelId|Channel.*ID/i);
     });
