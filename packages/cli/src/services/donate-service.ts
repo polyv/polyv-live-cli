@@ -58,9 +58,9 @@ export class DonateServiceSdk {
    */
   async updateDonateConfig(params: UpdateDonateConfigParams): Promise<DonateUpdateApiResponse> {
     try {
-      const donateGiftEnabled = params.donateGiftEnabled ?? params.donateEnabled ?? 'Y';
+      const donateGiftEnabled = params.donateGiftEnabled ?? 'Y';
       const giftDonate = this.normalizeGiftDonateConfig(
-        params.giftDonate ?? this.buildGiftDonateConfig(params.donateAmounts)
+        params.giftDonate ?? this.buildGiftDonateConfig(params.donateAmounts, params.donateEnabled)
       );
 
       await this.v4Channel.updateDonateGift({
@@ -118,7 +118,10 @@ export class DonateServiceSdk {
     }
   }
 
-  private buildGiftDonateConfig(amounts?: number[]): UpdateDonateConfigParams['giftDonate'] | undefined {
+  private buildGiftDonateConfig(
+    amounts?: number[],
+    cashEnabled: UpdateDonateConfigParams['donateEnabled'] = 'Y'
+  ): UpdateDonateConfigParams['giftDonate'] | undefined {
     if (!amounts || amounts.length === 0) {
       return undefined;
     }
@@ -127,7 +130,7 @@ export class DonateServiceSdk {
       payWay: 'CASH',
       cashPays: amounts.map((amount) => ({
         name: String(amount),
-        enabled: 'Y',
+        enabled: cashEnabled,
         imgType: 'STATIC',
         img: DEFAULT_DONATE_GIFT_IMAGE,
         price: amount,

@@ -126,7 +126,7 @@ describe('Donate Commands Registration (ATDD RED PHASE)', () => {
       expect(options.some(opt => opt.long === '--channel-id')).toBe(true);
       expect(options.some(opt => opt.long === '--cash-enabled')).toBe(true);
       expect(options.some(opt => opt.long === '--gift-enabled')).toBe(true);
-      expect(options.some(opt => opt.long === '--tips')).toBe(true);
+      expect(options.some(opt => opt.long === '--tips')).toBe(false);
       expect(options.some(opt => opt.long === '--amounts')).toBe(true);
       expect(options.some(opt => opt.long === '--output')).toBe(true);
     });
@@ -408,6 +408,7 @@ describe('action execution', () => {
         'node', 'test', 'donate', 'config', 'update',
         '-c', '123456',
         '--cash-enabled', 'Y',
+        '--amounts', '1,5,10',
       ]);
 
       expect(MockDonateHandler).toHaveBeenCalled();
@@ -415,8 +416,7 @@ describe('action execution', () => {
         channelId: '123456',
         cashEnabled: 'Y',
         giftEnabled: undefined,
-        tips: undefined,
-        amounts: undefined,
+        amounts: '1,5,10',
         output: 'table',
       });
     });
@@ -432,7 +432,6 @@ describe('action execution', () => {
         '-c', '123456',
         '--cash-enabled', 'Y',
         '--gift-enabled', 'N',
-        '--tips', 'Thank you!',
         '--amounts', '1,5,10',
         '-o', 'json',
       ]);
@@ -441,7 +440,6 @@ describe('action execution', () => {
         channelId: '123456',
         cashEnabled: 'Y',
         giftEnabled: 'N',
-        tips: 'Thank you!',
         amounts: '1,5,10',
         output: 'json',
       });

@@ -82,11 +82,10 @@ Output Formats:
   // ========================================
   const updateCmd = configCmd
     .command('update')
-    .description('Update donate configuration')
+    .description('Update gift donate configuration')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
-    .option('--cash-enabled <Y|N>', 'enable cash donate (Y/N)')
+    .option('--cash-enabled <Y|N>', 'enable generated cash gift entries (Y/N, requires --amounts)')
     .option('--gift-enabled <Y|N>', 'enable gift donate (Y/N)')
-    .option('--tips <text>', 'donate tips text')
     .option('--amounts <values>', 'donate amounts (comma-separated, e.g., "0.88,6.66,8.88")')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -100,7 +99,6 @@ Output Formats:
           channelId: options.channelId,
           cashEnabled: options.cashEnabled,
           giftEnabled: options.giftEnabled,
-          tips: options.tips,
           amounts: options.amounts,
           output: options.output,
         });
@@ -112,14 +110,14 @@ Output Formats:
 
   updateCmd.addHelpText('after', `
 Examples:
-  # Enable cash donate
-  $ polyv-live-cli donate config update -c "3151318" --cash-enabled Y
+  # Enable gift donate
+  $ polyv-live-cli donate config update -c "3151318" --gift-enabled Y
 
-  # Update with tips and amounts
-  $ polyv-live-cli donate config update -c "3151318" --tips "Thank you for your support!" --amounts "0.88,6.66,8.88,18.88"
+  # Update cash gift amounts
+  $ polyv-live-cli donate config update -c "3151318" --amounts "0.88,6.66,8.88,18.88"
 
-  # Update all settings
-  $ polyv-live-cli donate config update -c "3151318" --cash-enabled Y --gift-enabled Y --tips "Thanks!" --amounts "1,5,10"
+  # Update all gift donate settings
+  $ polyv-live-cli donate config update -c "3151318" --gift-enabled Y --cash-enabled Y --amounts "1,5,10"
 
 Output Formats:
   table       - Formatted table output (default)

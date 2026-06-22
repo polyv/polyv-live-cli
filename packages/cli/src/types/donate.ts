@@ -31,8 +31,6 @@ export interface DonateConfigUpdateOptions {
   cashEnabled?: YNFlag;
   /** Enable gift donate (Y/N) */
   giftEnabled?: YNFlag;
-  /** Donate tips text */
-  tips?: string;
   /** Donate amounts (array or comma-separated string) */
   amounts?: number[] | string;
   /** Output format (table or json) */
@@ -184,7 +182,6 @@ export interface UpdateDonateConfigParams {
   channelId: string;
   donateEnabled?: YNFlag;
   donateGiftEnabled?: YNFlag;
-  donateTips?: string;
   donateAmounts?: number[];
   giftDonate?: {
     payWay?: 'CASH' | 'POINT' | string;

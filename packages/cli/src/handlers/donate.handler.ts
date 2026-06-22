@@ -84,8 +84,8 @@ export class DonateHandler extends BaseHandler {
       if (options.cashEnabled !== undefined) {
         params.donateEnabled = options.cashEnabled;
       }
-      if (options.tips !== undefined) {
-        params.donateTips = options.tips;
+      if (options.giftEnabled !== undefined) {
+        params.donateGiftEnabled = options.giftEnabled;
       }
       if (options.amounts !== undefined) {
         if (typeof options.amounts === 'string') {
@@ -175,6 +175,10 @@ export class DonateHandler extends BaseHandler {
 
     if (options.giftEnabled !== undefined && !['Y', 'N'].includes(options.giftEnabled)) {
       errors.push('giftEnabled must be either "Y" or "N"');
+    }
+
+    if (options.cashEnabled !== undefined && options.amounts === undefined) {
+      errors.push('cashEnabled requires amounts');
     }
 
     if (options.output && !['table', 'json'].includes(options.output)) {
@@ -276,7 +280,6 @@ export class DonateHandler extends BaseHandler {
         channelId: options.channelId,
         cashEnabled: options.cashEnabled,
         giftEnabled: options.giftEnabled,
-        tips: options.tips,
         amounts: options.amounts,
       }, 'json');
     } else {
@@ -287,9 +290,6 @@ export class DonateHandler extends BaseHandler {
       }
       if (options.giftEnabled !== undefined) {
         console.log(`Gift Enabled: ${options.giftEnabled}`);
-      }
-      if (options.tips !== undefined) {
-        console.log(`Tips: ${options.tips}`);
       }
       if (options.amounts !== undefined) {
         const amountsStr = typeof options.amounts === 'string' ? options.amounts : options.amounts.join(', ');

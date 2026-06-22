@@ -195,6 +195,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         cashEnabled: 'Y',
+        amounts: [1, 5, 10],
         output: 'table',
       };
 
@@ -210,6 +211,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
         expect.objectContaining({
           channelId: '3151318',
           donateEnabled: 'Y',
+          donateAmounts: [1, 5, 10],
         })
       );
       expect(mockConsoleLog).toHaveBeenCalledWith(
@@ -235,14 +237,14 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       expect(mockDonateService.updateDonateConfig).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
+          donateGiftEnabled: 'Y',
         })
       );
     });
 
-    it('11.6-UNIT-009: should update donate config with tips and amounts', async () => {
+    it('11.6-UNIT-009: should update donate config with amounts', async () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
-        tips: 'Thank you for your support!',
         amounts: [0.88, 6.66, 8.88, 18.88],
         output: 'table',
       };
@@ -258,7 +260,6 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       expect(mockDonateService.updateDonateConfig).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
-          donateTips: 'Thank you for your support!',
           donateAmounts: [0.88, 6.66, 8.88, 18.88],
         })
       );
@@ -269,7 +270,6 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
         channelId: '3151318',
         cashEnabled: 'Y',
         giftEnabled: 'Y',
-        tips: 'Thanks!',
         amounts: [1, 5, 10],
         output: 'json',
       };
@@ -286,7 +286,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
         expect.objectContaining({
           channelId: '3151318',
           donateEnabled: 'Y',
-          donateTips: 'Thanks!',
+          donateGiftEnabled: 'Y',
           donateAmounts: [1, 5, 10],
         })
       );
@@ -350,10 +350,22 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       );
     });
 
+    it('11.6-UNIT-014b: should require amounts when cashEnabled is set', async () => {
+      const options: DonateConfigUpdateOptions = {
+        channelId: '3151318',
+        cashEnabled: 'Y',
+        output: 'table',
+      };
+
+      await expect(donateHandler.updateConfig(options)).rejects.toThrow(PolyVValidationError);
+      await expect(donateHandler.updateConfig(options)).rejects.toThrow('cashEnabled requires amounts');
+    });
+
     it('11.6-UNIT-015: should handle API errors gracefully', async () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         cashEnabled: 'Y',
+        amounts: [1, 5, 10],
         output: 'table',
       };
 
@@ -679,6 +691,7 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       const options: DonateConfigUpdateOptions = {
         channelId: '3151318',
         cashEnabled: 'Y',
+        amounts: [1, 5, 10],
         output: 'table',
       };
 
