@@ -23,6 +23,10 @@ bash "$(git rev-parse --show-toplevel)/scripts/run-ecommerce-scenarios-gnhf.sh"
 - 使用隔离 worktree：`--worktree`
 - 默认只跑 1 轮：`--max-iterations 1`
 - 要求工作区干净，否则直接退出
+- 每个场景必须先创建一个专用测试频道
+- 场景文档中列入覆盖的命令必须真实执行过；只做 help 校验不能计入覆盖
+- 测试结束后保留新建频道，不自动删除，方便后续查看频道配置
+- 命令执行失败时写入场景文档的执行台账和问题记录
 
 ## 跑多轮
 
