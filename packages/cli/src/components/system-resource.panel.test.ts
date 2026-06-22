@@ -17,6 +17,7 @@ jest.mock('blessed', () => ({
     hide: jest.fn(),
     focus: jest.fn(),
     destroy: jest.fn(),
+    append: jest.fn(),
     screen: { render: jest.fn() },
     style: { border: { fg: 'green' } },
   })),

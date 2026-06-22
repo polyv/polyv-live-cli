@@ -4,6 +4,13 @@
 
 import { Command } from 'commander';
 import { registerGlobalCommands } from './global.commands';
+import { GlobalHandler } from '../handlers/global.handler';
+import { authAdapter } from '../config/auth-adapter';
+import { configManager } from '../config/manager';
+
+jest.mock('../handlers/global.handler');
+jest.mock('../config/auth-adapter');
+jest.mock('../config/manager');
 
 describe('Global Commands', () => {
   let program: Command;
@@ -43,5 +50,71 @@ describe('Global Commands', () => {
     expect(updateCmd).toBeDefined();
     expect(updateCmd?.options.some(opt => opt.long === '--config' && opt.required)).toBe(true);
     expect(updateCmd?.options.some(opt => opt.long === '--force')).toBe(true);
+  });
+});
+
+describe('Global Commands actions', () => {
+  let program: Command;
+  const mockHandler = {
+    getAuth: jest.fn().mockResolvedValue(undefined),
+    updateAuth: jest.fn().mockResolvedValue(undefined),
+    getPageSetting: jest.fn().mockResolvedValue(undefined),
+    updatePageSetting: jest.fn().mockResolvedValue(undefined),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (GlobalHandler as jest.Mock).mockImplementation(() => mockHandler);
+    (authAdapter.tryGetAuthConfig as jest.Mock).mockReturnValue({
+      config: { appId: 'a', appSecret: 's', userId: 'u' },
+      source: 'test',
+      accountName: 'acct',
+    });
+    (authAdapter.getStatusMessage as jest.Mock).mockReturnValue('No auth');
+    (configManager.load as jest.Mock).mockResolvedValue({
+      config: { baseUrl: 'https://api.polyv.net', timeout: 30, debug: false },
+    });
+    jest.spyOn(console, 'log').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+    program = new Command();
+    program.exitOverride();
+    registerGlobalCommands(program);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('coerces --settings via parseJsonArray and runs updateAuth', async () => {
+    await program.parseAsync(['node', 't', 'global', 'auth', 'update', '--settings', '[{"a":1},{"b":2}]', '--force']);
+    expect(mockHandler.updateAuth).toHaveBeenCalled();
+  });
+
+  it('coerces --config via parseJsonObject and runs updatePageSetting', async () => {
+    await program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config', '{"x":1}', '--force']);
+    expect(mockHandler.updatePageSetting).toHaveBeenCalled();
+  });
+
+  it('rejects non-array --settings', async () => {
+    await expect(
+      program.parseAsync(['node', 't', 'global', 'auth', 'update', '--settings', '{"a":1}', '--force'])
+    ).rejects.toThrow();
+  });
+
+  it('rejects non-object --config', async () => {
+    await expect(
+      program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config', '[1,2]', '--force'])
+    ).rejects.toThrow();
+  });
+
+  it('falls back to default config when config load reports incomplete auth', async () => {
+    (configManager.load as jest.Mock).mockRejectedValue(new Error('Auth configuration is incomplete'));
+    await program.parseAsync(['node', 't', 'global', 'auth', 'get']);
+    expect(mockHandler.getAuth).toHaveBeenCalled();
+  });
+
+  it('runs getPageSetting', async () => {
+    await program.parseAsync(['node', 't', 'global', 'page-setting', 'get']);
+    expect(mockHandler.getPageSetting).toHaveBeenCalled();
   });
 });

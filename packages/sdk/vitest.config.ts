@@ -13,7 +13,13 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json-summary', 'lcov', 'html'],
       reportsDirectory: './coverage',
-      exclude: ['src/types/**', 'scripts/**', 'src/**/index.ts'],
+      exclude: [
+        'src/types/**',
+        'src/errors/types.ts',
+        'scripts/**',
+        'src/**/index.ts',
+        'tests/integration/**'
+      ],
       thresholds: {
         branches: 70,
         functions: 70,

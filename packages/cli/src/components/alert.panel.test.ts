@@ -996,10 +996,75 @@ describe('AlertPanel', () => {
     it('should handle destroyed widget render', () => {
       const alertPanel = new AlertPanel(createMockConfig(), new EventEmitter());
       (alertPanel as any).isDestroyed = true;
-      
+
       expect(() => {
         alertPanel.render();
       }).not.toThrow();
+    });
+  });
+
+  describe('Rendering and formatting coverage', () => {
+    it('populates alerts, renders, and exercises formatting paths', () => {
+      const panel = new AlertPanel(createMockConfig(), mockEventBus);
+      const levels = ['info', 'warning', 'error', 'critical'] as const;
+      const types = ['system', 'stream', 'network'] as const;
+
+      for (let i = 0; i < levels.length; i++) {
+        panel.addAlert(createMockAlert({
+          id: `a-${i}`,
+          title: `Alert ${i}`,
+          message: `Message ${i}`,
+          level: levels[i],
+          type: types[i],
+          status: i % 2 === 0 ? 'active' : 'resolved',
+          acknowledged: i % 2 === 1,
+          timestamp: Date.now() - i * 1000,
+        }));
+      }
+
+      // Selection + pane toggles drive details/statistics/filter formatting.
+      panel.selectAlert(0);
+      (panel as any).toggleDetailsPane();
+      (panel as any).toggleFilterPane();
+      (panel as any).toggleStatisticsPane();
+
+      expect(() => panel.render()).not.toThrow();
+      expect(() => (panel as any).updateLayout()).not.toThrow();
+      expect(() => (panel as any).updateAlertList()).not.toThrow();
+      expect(() => (panel as any).updateDetailsPane()).not.toThrow();
+      expect(() => (panel as any).updateStatistics()).not.toThrow();
+
+      const stats = (panel as any).calculateStatistics();
+      expect(stats).toBeDefined();
+      expect(typeof (panel as any).formatStatistics(stats)).toBe('string');
+      expect(typeof (panel as any).formatAlertDetails(panel.getSelectedAlert()!)).toBe('string');
+      expect(typeof (panel as any).generateActionBarContent()).toBe('string');
+      expect(typeof (panel as any).generateFilterContent()).toBe('string');
+    });
+
+    it('exercises update() and event handlers', () => {
+      const panel = new AlertPanel(createMockConfig(), mockEventBus);
+      const alert = createMockAlert({ id: 'evt-1', title: 'Event Alert' });
+      panel.addAlert(alert);
+
+      expect(() => (panel as any).update({ alerts: [alert] })).not.toThrow();
+      expect(() => (panel as any).update({ alert: alert })).not.toThrow();
+
+      // EventBus-driven handlers wired in setupAlertEventListeners.
+      expect(() => mockEventBus.emit('alert:new', { alert: createMockAlert({ id: 'evt-2' }) })).not.toThrow();
+      expect(() => mockEventBus.emit('alert:updated', { alert: createMockAlert({ id: 'evt-1', title: 'Updated' }) })).not.toThrow();
+      expect(() => mockEventBus.emit('alert:acknowledged', { alertId: 'evt-1', user: 'nick' })).not.toThrow();
+      expect(() => mockEventBus.emit('alert:resolved', { alertId: 'evt-1' })).not.toThrow();
+      expect(() => mockEventBus.emit('filter:changed', { filter: { levels: ['error'] } as AlertFilter })).not.toThrow();
+      expect(() => mockEventBus.emit('alerts:clear')).not.toThrow();
+
+      expect(() => panel.render()).not.toThrow();
+    });
+
+    it('exercises keyboard and mouse binding paths', () => {
+      const panel = new AlertPanel(createMockConfig(), mockEventBus);
+      expect(() => (panel as any).bindKeyboardEvents()).not.toThrow();
+      expect(() => (panel as any).bindMouseEvents()).not.toThrow();
     });
   });
 });
