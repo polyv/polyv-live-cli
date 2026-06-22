@@ -29,14 +29,15 @@
 | 11 | 多渠道分销推广（推广渠道归因+分销员邀请名册） | 转化 / 数据复盘 / 治理 | `account`、`channel`、`promotion`、`invite-sales` | [11-promotion-invite-sales-distribution.md](./11-promotion-invite-sales-distribution.md) |
 | 12 | 直播间互动治理与促活（聊天消息审计/公告+互动点赞/奖励） | 互动 / 治理 / 转化 | `account`、`channel`、`chat`、`interaction` | [12-chat-interaction-engagement.md](./12-chat-interaction-engagement.md) |
 | 13 | 开播前频道初始化与推流就绪（一键电商场景初始化+推流凭证/直播状态就绪检查） | 开播 / 预热 | `account`、`channel`、`setup`、`stream` | [13-stream-setup-golive.md](./13-stream-setup-golive.md) |
+| 14 | 直播物料与课件资源治理（素材库分类/标签体系+频道课件文档上传/转码/清理） | 预热 / 开播 / 数据复盘 | `account`、`channel`、`material`、`document` | [14-material-document.md](./14-material-document.md) |
 
 ---
 
 ## 二、覆盖统计
 
-- **已覆盖一级命令**：26 / 40
+- **已覆盖一级命令**：28 / 40
   - `account`（每个场景写入前的账号预检，真实执行）
-  - `channel`（场景 01、02、03、04、05、06、07、08、09、10、11、12、13：建测试频道 + 验证）
+  - `channel`（场景 01、02、03、04、05、06、07、08、09、10、11、12、13、14：建测试频道 + 验证）
   - `coupon`（场景 01：建券 + 绑定频道 + 开领券开关 + 验证）
   - `product`（场景 02：上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
   - `card-push`（场景 02：建手动秒杀卡 + 观看触发红包卡 + push/cancel 状态流转验证）
@@ -61,9 +62,11 @@
   - `interaction`（场景 12：interaction favor 多次点赞并经 `channel get` 的 `likes` 字段交叉验证累计 0→10→15 + task-reward list/event list/webhook get 三条只读命令真实执行成功建立基线；reward 因多个未标 required 必填项 + 未开播聊天室 send message failure 已执行失败并记录）
   - `setup`（场景 13：setup --list / --list --detailed / e-commerce --dry-run 预览真实执行成功；setup e-commerce 一键初始化**真实写入**全部 7 个资源——频道 7983945 + 观看条件 + 商品 998742 + 商品库开关 enabled=Y + 优惠券 4ttd0zp3... + 券频道绑定 + 领券开关 enabled=Y，并经 channel get / product list 交叉验证产物落库）
   - `stream`（场景 13：stream status（频道 7983944/7983945 均 waiting/isLive=false）/ get-key（未开播即可返回 RTMP URL + 脱敏推流密钥，已记录与 help "must be live" 不符）/ live-status list / streams 四条只读命令真实执行成功；hls-pull-url 报 forbidden、capture 报 channel is not live 已执行失败并记录）
-- **未覆盖一级命令**：14 / 40（见下表「未覆盖」）
+  - `material`（场景 14：素材库为账号级。`category list --material-type image/video/document` 三类只读盘点成功（video 含「商品讲解」等 8 类、image 3 类、document 2 类），`material list --type <type>` 多类型只读基线成功；`label create`×2（建 296/297）+ `label list` 复查 0→2 + `label update` 改名（296 GNHF物料标签→GNHF片头片尾）+ `label delete` 清理（297，list 复查 2→1）完整写入生命周期并前后对比验证持久化；`category list --material-type audio` 报「系统异常」已执行失败并记录空集合异常缺陷）
+  - `document`（场景 14：课件文档为频道级。`list` 基线/复查 + `upload` 真实上传公网 PDF 课件落库 doc-2.polyv.net + `status` 转码状态（转换中→normal，imageCount=1）+ `delete --force` 清理（list 复查回归空）+ `media vids` 只读基线（0）全生命周期真实执行成功；发现同源 URL 复用同一 fileId 并覆盖 fileName 已记录）
+- **未覆盖一级命令**：12 / 40（见下表「未覆盖」）
 
-> 进度：26 / 40 = 65%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
+> 进度：28 / 40 = 70%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
 
 ---
 
@@ -91,12 +94,12 @@
 | 1 | `account` | 01（写入前预检，共享） | ✅ 已执行成功 | — | [01](./01-coupon-redemption.md) |
 | 2 | `ai` | — | ⬜ 未覆盖 | — | — |
 | 3 | `card-push` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
-| 4 | `channel` | 01、02、03、04、05、06、07、08、09、10、11、12、13 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 / 7983937 / 7983938 / 7983941 / 7983944 / 7983945 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md)、[10](./10-postlive-playback-record-replay.md)、[11](./11-promotion-invite-sales-distribution.md)、[12](./12-chat-interaction-engagement.md)、[13](./13-stream-setup-golive.md) |
+| 4 | `channel` | 01、02、03、04、05、06、07、08、09、10、11、12、13、14 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 / 7983937 / 7983938 / 7983941 / 7983944 / 7983945 / 7983948 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md)、[10](./10-postlive-playback-record-replay.md)、[11](./11-promotion-invite-sales-distribution.md)、[12](./12-chat-interaction-engagement.md)、[13](./13-stream-setup-golive.md)、[14](./14-material-document.md) |
 | 5 | `chat` | 12 | ✅ 已执行成功 ⁸ | 7983941 | [12](./12-chat-interaction-engagement.md) |
 | 6 | `checkin` | 06 | ✅ 已执行成功 ² | 7983902 | [06](./06-donate-checkin-warmup.md) |
 | 7 | `coupon` | 01 | ✅ 已执行成功 | 7983877 | [01](./01-coupon-redemption.md) |
 | 8 | `custom-field` | 08 | ✅ 已执行成功 ⁴ | 7983932（频道落点；字段为账号级） | [08](./08-viewer-segmentation-custom-field.md) |
-| 9 | `document` | — | ⬜ 未覆盖 | — | — |
+| 9 | `document` | 14 | ✅ 已执行成功 ¹⁰ | 7983948 | [14](./14-material-document.md) |
 | 10 | `donate` | 06 | ✅ 已执行成功 ² | 7983902 | [06](./06-donate-checkin-warmup.md) |
 | 11 | `finance` | — | ⬜ 未覆盖 | — | — |
 | 12 | `global` | — | ⬜ 未覆盖 | — | — |
@@ -104,7 +107,7 @@
 | 14 | `interaction` | 12 | ✅ 已执行成功 ⁸ | 7983941 | [12](./12-chat-interaction-engagement.md) |
 | 15 | `invite-sales` | 11 | ✅ 已执行成功 ⁷ | 7983938（频道落点；名册为账号级） | [11](./11-promotion-invite-sales-distribution.md) |
 | 16 | `lottery` | 03 | ✅ 已执行成功 | 7983885 | [03](./03-live-lottery.md) |
-| 17 | `material` | — | ⬜ 未覆盖 | — | — |
+| 17 | `material` | 14 | ✅ 已执行成功 ¹⁰ | 7983948（频道落点；素材库为账号级） | [14](./14-material-document.md) |
 | 18 | `monitor` | — | ⬜ 未覆盖 | — | — |
 | 19 | `partner` | — | ⬜ 未覆盖 | — | — |
 | 20 | `platform` | — | ⬜ 未覆盖 | — | — |
@@ -146,6 +149,8 @@
 > ⁸ `chat` 与 `interaction` 两族在专用测试频道 `7983941` 上真实执行。`chat` 族的 `send`（发 2 条管理员消息，返回 `{}`，**真实写入**）/`list`（**必须带 `--start-day`/`--end-day`** 才返回 2 条消息，与 send 一一对应）/`message online-count`（onlineUserCount=0）/`notice add`（置顶+弹窗公告，返回 `true`，**真实写入**）/`notice list`（totalItems=1，id 301652，isTop=1/isPop=1，**交叉验证持久化**）/`badword add`（账号级违禁词 2 个，count=2，**真实写入**）/`badword list`（返回 2 词，**交叉验证持久化**）/`badword delete`（清理回归，`badword list` 复查 `[]`）/`banned list -t userId/ip/badword`（均 `data=[]`）/`banned user-list`（totalItems=0）真实执行成功。其中 `chat list` 真实执行但**发现 CLI 缺陷**——默认日期范围（文档称 today）连续返回 `No chat messages found`，而显式同日 `--start-day 2026-06-23 --end-day 2026-06-23` 立即返回 2 条消息，证明 send 已持久化、问题在默认查询窗口，**审计必须显式传日期**；`chat role user-list` 真实执行但**已执行失败**——未开播频道无活跃聊天室，返回 `Unexpected error: API Error`。`interaction` 族的 `task-reward list`（totalItems=0）/`event list`（`{list:[]}`）/`webhook get`（`{callbackUrl:""}`）真实执行成功；`interaction favor`（多次点赞，返回累计总数 10→15，**真实写入**并经 `channel get` 的 `likes` 字段交叉验证 0→10→15 确认持久化）真实执行成功。其中 `interaction reward` 真实执行但**已执行失败**——`--avatar`/`--donate-type`/（`good` 类型下）`--good-image` 为真实必填但 help 未标注，逐层补齐后最终报 `sendRewardMsg failed: send message failure`（疑似需活跃聊天室/直播态），`donate-type` 合法枚举（实测 `good` 合法、`1` 非法）help 未列出。详见 [场景 12 第 12.1–12.5 节](./12-chat-interaction-engagement.md)。`chat` 族因 `send`/`notice add`/`badword add` 三类写入真实成功并经只读复查交叉验证持久化 + 多条只读命令真实执行成功而计入已覆盖；`interaction` 族因 `favor` 真实写入成功（经 `channel get` likes 交叉验证）+ 三条只读命令真实执行成功而计入已覆盖。
 >
 > ⁹ `setup` 与 `stream` 两族在专用测试频道 `7983944`（`channel create` 新建）与 `setup e-commerce` 产物频道 `7983945` 上真实执行。`setup` 族的 `--list`/`--list --detailed`/`e-commerce --dry-run`（预览，不变更资源）真实执行成功；`setup e-commerce` **真实写入**一次性创建全部 7 个资源（频道 `7983945` + 观看条件 rank1 public/rank2 disabled + 商品 `998742` + 商品库开关 `enabled=Y` + 优惠券 `4ttd0zp3uoue103f1qanjh0s2adko9bb` + 券频道绑定 + 领券开关 `enabled=Y`，耗时 2218ms），并经 `channel get -c 7983945`（命中，pushUrl/pushSecret 脱敏）+ `product list -c 7983945`（命中商品 998742「Allowish英国进口香氛沐浴露」399→179 status=1）交叉验证产物落库。`stream` 族的 `status`（频道 `7983944`/`7983945` 均 `waiting`/`isLive=false`）/`get-key`（table 脱敏，**未开播 waiting 态即返回 RTMP URL `rtmp://push-t2.videocc.net/recordf` + 推流密钥**）/`live-status list`（历史状态 `end`）/`streams`（`live=false`/`streamInfo=null`）四条只读命令真实执行成功。其中 `stream get-key` 真实执行但**发现与 reference/help 描述不符**——help 声明 *"Channel must be in live streaming state"*，实测未开播即可取回推流凭证（仅 deploy/input address 待推流后填充），开播前预配 OBS 不必先 `stream start`；`stream hls-pull-url` 真实执行但**已执行失败**——报 `Failed to getHlsPullUrl: forbidden`（疑似账号级监控/拉流权益未开通）；`stream capture` 真实执行但**已执行失败**——报 `Failed to getCaptureImage: channel is not live.`（需直播态，属预期）。另发现 `stream status`（实时态 `waiting`）与 `stream live-status list`（历史态 `end`）语义不同，不要据后者误判频道不可用。详见 [场景 13 第 12.1–12.4 节](./13-stream-setup-golive.md)。`setup` 族因 `e-commerce` 一键初始化**真实写入成功**并经只读复查交叉验证而计入已覆盖；`stream` 族因 `status`/`get-key`/`live-status list`/`streams` 四条只读命令真实执行成功而计入已覆盖（与场景 06/07/10/11/12 只读命令计入覆盖的先例一致）。`setup e-commerce` 自带创建频道 `7983945`，与本场景 `channel create` 的 `7983944` 一并保留未删除。
+>
+> ¹⁰ `material` 与 `document` 两族在专用测试频道 `7983948`（`material` 标签为账号级，频道仅作 `document` 课件落点）上真实执行。`material` 族的 `category list --material-type image`（3 类：默认/自定义/网页开播）/`category list --material-type video`（8 类：含「商品讲解」PRODUCT_EXPLAIN、AI 视频、伪直播视频、视频回放、小班课录制等）/`category list --material-type document`（2 类）/`label list`（基线 totalItems=0）/`material list --type image|video|document`（均 totalItems=0 只读基线）真实执行成功；`label create`×2（**真实写入**建标签 296「GNHF物料标签」/297「GNHF电商封面」）/`label list`（复查 **0→2** 确认持久化）/`label update --id 296 --name "GNHF片头片尾"`（**真实写入**改名并经 list 复查确认）/`label delete --id 297`（**真实写入 + 清理**并经 list 复查 **2→1**）真实执行成功。其中 `material category list --material-type audio` 真实执行但**已执行失败**——报 `Unexpected error: 系统异常`（image/video/document 三类同账号同命令均正常），根因是后端对 audio 空分类集合未返回 `[]` 而抛异常（与场景 11 `promotion list` 零渠道「系统异常」同源缺陷）。`document` 族的 `list`（基线空）/`upload`（**真实写入**公网 PDF 课件，fileId `2942bfabb3...7983948common`，落库 `doc-2.polyv.net`，totalPage 1）/`list`（复查 1 文档 status=normal）/`status`（convertStatus=normal、imageCount=1，转码完成）/`delete --force`（**真实写入 + 清理**，list 复查回归空）/`media vids`（totalItems=0 只读基线）真实执行成功。其中发现 `document upload` **同源 URL 复用同一 fileId 并覆盖 fileName**——删除后用同一公网 PDF URL 再次上传到同频道，返回 fileId 完全相同、`document list` 的 fileName 被后者覆盖（fileId 由「源 URL+channelId+convertType」决定），同频道需多份课件须用不同源 URL；另 `document delete` 用 `--force`（长格式）而非 `-f`（`-f` 报 unknown option，与 `material label` 的 `-f`/`--force` 风格不一致）。详见 [场景 14 第 12.1–12.4 节](./14-material-document.md)。`material` 族因 `label create/update/delete` 三类写入真实成功并经 `label list` 前后对比交叉验证持久化 + 多条只读命令真实执行成功而计入已覆盖；`document` 族因 `upload` 真实写入成功（落库 doc-2.polyv.net）+ `status` 转码验证 + `delete` 清理 + 多条只读命令真实执行成功而计入已覆盖。保留资产：频道 `7983948` + 账号级素材标签 `296`「GNHF片头片尾」+ 频道课件 `2942bfabb3...7983948common`「GNHF-保留-开播须知」，均未删除。
 
 ---
 
@@ -164,3 +169,4 @@
 - 2026-06-23：新增场景 11「多渠道分销推广 — 推广渠道归因 + 分销员邀请名册」，真实执行覆盖 `promotion`、`invite-sales`（测试频道 `7983938`；`promotion create` 批量建 3 个推广渠道 aDnZib/8TPDLD/slrMEQ + `promotion list` 复盘归因指标真实执行成功，`invite-sales list`/`follow-viewer list` 查名册 + `add` 新增测试分销员并经 list 复查 1→2 确认持久化 + `update` 调组织 + `remove` 清理并经 list 复查 2→1 回到基线完整写入生命周期；`promotion list` 对零渠道频道返回「系统异常」、`invite-sales add` 对个别 viewer 返回「参数错误」均已执行失败并记录；探索 `transmit` 发现 create/associate 受账号级转播权益门控 access forbidden，仅 list 只读可用，不计入本轮覆盖留待未来转播场景）。累计覆盖 22 / 40。
 - 2026-06-23：新增场景 12「直播间互动治理与促活 — 聊天消息审计/公告 + 互动点赞/奖励」，真实执行覆盖 `chat`、`interaction`（测试频道 `7983941`；`chat send` 发 2 条管理员消息并经 `chat list --start-day/--end-day` 交叉验证落库 + `notice add` 置顶弹窗公告并经 `notice list` 验证 + `badword add` 账号级违禁词并经 `badword list` 验证后 `delete` 清理回归 + list/online-count/banned list×3/banned user-list 只读基线真实执行成功；发现 `chat list` 默认日期范围返空而显式同日返回消息的 CLI 缺陷、`chat role user-list` 未开播报 API Error；`interaction favor` 多次点赞并经 `channel get` likes 0→10→15 交叉验证累计写入 + task-reward list/event list/webhook get 只读基线成功；`interaction reward` 因多个未标 required 必填项 + 未开播 send message failure 已执行失败并记录）。累计覆盖 24 / 40。
 - 2026-06-23：新增场景 13「开播前频道初始化与推流就绪 — 一键电商场景初始化 + 推流凭证/直播状态就绪检查」，真实执行覆盖 `setup`、`stream`（测试频道 `7983944`（`channel create` 新建）+ `setup e-commerce` 产物频道 `7983945`；`setup --list`/`--list --detailed`/`e-commerce --dry-run` 预览成功，`setup e-commerce` 一键初始化**真实写入**全部 7 个资源（频道 7983945 + 观看条件 + 商品 998742 + 商品库开关 enabled=Y + 优惠券 4ttd0zp3... + 券绑定 + 领券开关 enabled=Y）并经 `channel get`/`product list` 交叉验证落库；`stream status`/`get-key`/`live-status list`/`streams` 四条只读命令真实执行成功，发现 `stream get-key` 未开播即可取回推流凭证（与 help "must be live" 不符）、`stream status` waiting 与 `live-status` end 语义不同；`stream hls-pull-url` 报 forbidden、`stream capture` 报 channel is not live 已执行失败并记录）。累计覆盖 26 / 40。
+- 2026-06-23：新增场景 14「直播物料与课件资源治理 — 素材库分类/标签体系 + 频道课件文档上传/转码/清理」，真实执行覆盖 `material`、`document`（测试频道 `7983948`（`material` 标签为账号级、`document` 课件为频道级）；`material category list` image(3)/video(8 含「商品讲解」)/document(2) 三类只读盘点 + `material list` 多类型基线 + `material label create`×2/`list`(0→2)/`update` 改名/`delete`(2→1) 完整写入生命周期并前后对比验证持久化真实执行成功，`category list --material-type audio` 报「系统异常」已执行失败并记录空集合异常缺陷；`document list` 基线 + `upload` 真实上传公网 PDF 课件落库 doc-2.polyv.net + `status` 转码 normal + `delete --force` 清理 + `media vids` 只读基线全生命周期真实执行成功，发现 `document upload` 同源 URL 复用同一 fileId 并覆盖 fileName、`document delete` 须用 `--force` 非 `-f` 已记录）。累计覆盖 28 / 40。
