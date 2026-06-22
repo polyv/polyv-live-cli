@@ -190,13 +190,17 @@ describe('Lottery Types (ATDD RED PHASE)', () => {
   });
 
   describe('11.5-TYPE-007: LotteryRecordsOptions interface', () => {
-    it('should define LotteryRecordsOptions with required channelId', () => {
+    it('should define LotteryRecordsOptions with required channelId and time range', () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1615772426000,
+        endTime: 1615773566000,
         output: 'table',
       };
 
       expect(options.channelId).toBe('3151318');
+      expect(options.startTime).toBe(1615772426000);
+      expect(options.endTime).toBe(1615773566000);
     });
 
     it('should support time range parameters', () => {
@@ -214,6 +218,8 @@ describe('Lottery Types (ATDD RED PHASE)', () => {
     it('should support sessionId filter', () => {
       const options: LotteryRecordsOptions = {
         channelId: '3151318',
+        startTime: 1615772426000,
+        endTime: 1615773566000,
         sessionId: 'fwly13xczv',
         output: 'table',
       };

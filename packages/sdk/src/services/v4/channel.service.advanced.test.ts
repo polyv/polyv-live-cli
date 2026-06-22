@@ -286,8 +286,7 @@ describe('V4ChannelService - Advanced Configuration', () => {
 
       await service.updateDonate({
         channelId: '12345678',
-        enabled: 'Y',
-        donateType: 'gift'
+        donateGiftEnabled: 'Y'
       });
 
       expect(mockHttpClient.post).toHaveBeenCalled();

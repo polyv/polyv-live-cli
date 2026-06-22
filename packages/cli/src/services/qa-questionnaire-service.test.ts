@@ -31,6 +31,7 @@ describe('QaQuestionnaireServiceSdk', () => {
     sendQuestion: jest.Mock;
     listQuestion: jest.Mock;
     stopQuestion: jest.Mock;
+    createQuestionnaire: jest.Mock;
     addEditQuestionnaire: jest.Mock;
     createQuestionnaire: jest.Mock;
     listQuestionnaireByPage: jest.Mock;
@@ -53,6 +54,7 @@ describe('QaQuestionnaireServiceSdk', () => {
       sendQuestion: jest.fn(),
       listQuestion: jest.fn(),
       stopQuestion: jest.fn(),
+      createQuestionnaire: jest.fn(),
       addEditQuestionnaire: jest.fn(),
       createQuestionnaire: jest.fn((payload) => mockLiveInteraction.addEditQuestionnaire(
         { channelId: payload.channelId },
@@ -314,7 +316,7 @@ describe('QaQuestionnaireServiceSdk', () => {
         data: { questionnaireId: 'q-123' },
       };
 
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValueOnce(mockResponse);
+      mockLiveInteraction.createQuestionnaire.mockResolvedValueOnce(mockResponse);
 
       const result = await service.createQuestionnaire(validParams);
 
@@ -322,67 +324,72 @@ describe('QaQuestionnaireServiceSdk', () => {
     });
 
     it('should transform questions to SDK format', async () => {
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValueOnce({ code: 200 });
+      mockLiveInteraction.createQuestionnaire.mockResolvedValueOnce({ code: 200 });
 
       await service.createQuestionnaire(validParams);
 
-      expect(mockLiveInteraction.addEditQuestionnaire).toHaveBeenCalledWith(
-        { channelId: '3151318' },
+      expect(mockLiveInteraction.createQuestionnaire).toHaveBeenCalledWith(
         expect.objectContaining({
-          items: [
-            {
+          channelId: '3151318',
+          questionnaireTitle: 'Survey Title',
+          questions: [
+            expect.objectContaining({
+              name: 'What is your favorite color?',
               type: 'R',
-              question: 'What is your favorite color?',
               options: ['Red', 'Blue', 'Green'],
-              required: true,
-            },
-            {
+              required: 'Y',
+              optionList: [
+                { id: '1', name: 'Red' },
+                { id: '2', name: 'Blue' },
+                { id: '3', name: 'Green' },
+              ],
+              option1: 'Red',
+            }),
+            expect.objectContaining({
+              name: 'Comments',
               type: 'Q',
-              question: 'Comments',
-              options: undefined,
-              required: false,
-            },
+              required: 'N',
+            }),
           ],
         })
       );
     });
 
     it('should include optional customQuestionnaireId', async () => {
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValueOnce({ code: 200 });
+      mockLiveInteraction.createQuestionnaire.mockResolvedValueOnce({ code: 200 });
 
       await service.createQuestionnaire({
         ...validParams,
         customQuestionnaireId: 'custom-123',
       });
 
-      expect(mockLiveInteraction.addEditQuestionnaire).toHaveBeenCalledWith(
-        { channelId: '3151318' },
+      expect(mockLiveInteraction.createQuestionnaire).toHaveBeenCalledWith(
         expect.objectContaining({
-          questionnaireId: 'custom-123',
+          channelId: '3151318',
+          customQuestionnaireId: 'custom-123',
         })
       );
     });
 
     it('should include title in request', async () => {
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValueOnce({ code: 200 });
+      mockLiveInteraction.createQuestionnaire.mockResolvedValueOnce({ code: 200 });
 
       await service.createQuestionnaire(validParams);
 
-      expect(mockLiveInteraction.addEditQuestionnaire).toHaveBeenCalledWith(
-        { channelId: '3151318' },
+      expect(mockLiveInteraction.createQuestionnaire).toHaveBeenCalledWith(
         expect.objectContaining({
-          title: 'Survey Title',
+          questionnaireTitle: 'Survey Title',
         })
       );
     });
 
-    it('should convert required Y/N to boolean', async () => {
+    it('should keep required Y/N values for the V4 API', async () => {
       const questionsWithMixedRequired: QuestionnaireQuestionItem[] = [
         { name: 'Q1', type: 'R', required: 'Y' },
         { name: 'Q2', type: 'Q', required: 'N' },
       ];
 
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValueOnce({ code: 200 });
+      mockLiveInteraction.createQuestionnaire.mockResolvedValueOnce({ code: 200 });
 
       await service.createQuestionnaire({
         channelId: '3151318',
@@ -390,13 +397,13 @@ describe('QaQuestionnaireServiceSdk', () => {
         questions: questionsWithMixedRequired,
       });
 
-      const callArgs = mockLiveInteraction.addEditQuestionnaire.mock.calls[0][1];
-      expect(callArgs.items[0].required).toBe(true);
-      expect(callArgs.items[1].required).toBe(false);
+      const callArgs = mockLiveInteraction.createQuestionnaire.mock.calls[0][0];
+      expect(callArgs.questions[0].required).toBe('Y');
+      expect(callArgs.questions[1].required).toBe('N');
     });
 
     it('should wrap SDK errors in PolyVError', async () => {
-      mockLiveInteraction.addEditQuestionnaire.mockRejectedValueOnce(new Error('SDK Error'));
+      mockLiveInteraction.createQuestionnaire.mockRejectedValueOnce(new Error('SDK Error'));
 
       try {
         await service.createQuestionnaire(validParams);
@@ -622,7 +629,7 @@ describe('QaQuestionnaireServiceSdk', () => {
 
   describe('question types in createQuestionnaire', () => {
     it('should handle all question types', async () => {
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValue({ code: 200 });
+      mockLiveInteraction.createQuestionnaire.mockResolvedValue({ code: 200 });
 
       const questionTypes: Array<'R' | 'C' | 'Q' | 'J' | 'X'> = ['R', 'C', 'Q', 'J', 'X'];
 
@@ -634,11 +641,11 @@ describe('QaQuestionnaireServiceSdk', () => {
         });
       }
 
-      expect(mockLiveInteraction.addEditQuestionnaire).toHaveBeenCalledTimes(5);
+      expect(mockLiveInteraction.createQuestionnaire).toHaveBeenCalledTimes(5);
     });
 
     it('should handle questions with all optional fields', async () => {
-      mockLiveInteraction.addEditQuestionnaire.mockResolvedValueOnce({ code: 200 });
+      mockLiveInteraction.createQuestionnaire.mockResolvedValueOnce({ code: 200 });
 
       const fullQuestion: QuestionnaireQuestionItem = {
         name: 'Full Question',
@@ -656,14 +663,17 @@ describe('QaQuestionnaireServiceSdk', () => {
         questions: [fullQuestion],
       });
 
-      expect(mockLiveInteraction.addEditQuestionnaire).toHaveBeenCalledWith(
-        { channelId: '3151318' },
+      expect(mockLiveInteraction.createQuestionnaire).toHaveBeenCalledWith(
         expect.objectContaining({
-          items: [expect.objectContaining({
+          channelId: '3151318',
+          questions: [expect.objectContaining({
+            name: 'Full Question',
             type: 'C',
-            question: 'Full Question',
             options: ['A', 'B', 'C'],
-            required: true,
+            answer: 'A',
+            scoreEnabled: 'Y',
+            score: 10,
+            required: 'Y',
           })],
         })
       );

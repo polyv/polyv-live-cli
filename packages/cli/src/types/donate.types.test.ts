@@ -45,7 +45,6 @@ describe('Donate Types (ATDD RED PHASE)', () => {
         channelId: '3151318',
         cashEnabled: 'Y',
         giftEnabled: 'Y',
-        tips: 'Thanks!',
         amounts: [0.88, 6.66, 8.88],
         output: 'table',
       };
@@ -129,7 +128,6 @@ describe('Donate Types (ATDD RED PHASE)', () => {
       };
       expect(options.cashEnabled).toBeUndefined();
       expect(options.giftEnabled).toBeUndefined();
-      expect(options.tips).toBeUndefined();
       expect(options.amounts).toBeUndefined();
     });
 

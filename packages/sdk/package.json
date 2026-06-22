@@ -1,6 +1,6 @@
 {
   "name": "polyv-live-api-sdk",
-  "version": "1.0.11",
+  "version": "1.0.14-rc.0",
   "description": "PolyV Live API SDK for TypeScript/Node.js",
   "type": "module",
   "exports": {

@@ -113,6 +113,33 @@ describe('PromotionServiceSdk', () => {
 
       expect(result).toEqual([]);
     });
+
+    it('[P0] should support unwrapped list responses from SDK client', async () => {
+      mockHttpClient.get.mockResolvedValueOnce({
+        contents: [
+          {
+            promoteId: 'Fq5gpU',
+            popularizationName: '甘肃分公司',
+          },
+        ],
+      });
+
+      const result = await service.listPopularizations('3151318');
+
+      expect(result).toEqual([
+        {
+          promoteId: 'Fq5gpU',
+          popularizationName: '甘肃分公司',
+          visitsNum: 0,
+          reservationNum: 0,
+          watchNum: 0,
+          viewerNum: 0,
+          averageWatchTime: '',
+          enrollNum: 0,
+          createdTime: 0,
+        },
+      ]);
+    });
   });
 
   describe('batchCreatePopularizations', () => {
@@ -136,6 +163,21 @@ describe('PromotionServiceSdk', () => {
           names: ['Promotion 1', 'Promotion 2'],
         }
       );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('[P0] should support unwrapped create responses from SDK client', async () => {
+      const mockResponse = [
+        { promoteId: 'abc123', popularizationName: 'Promotion 1' },
+      ];
+
+      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.batchCreatePopularizations({
+        channelId: '3151318',
+        names: ['Promotion 1'],
+      });
+
       expect(result).toEqual(mockResponse);
     });
 

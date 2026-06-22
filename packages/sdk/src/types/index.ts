@@ -483,6 +483,7 @@ export type {
   CreateLotteryActivityResponse,
   GetLotteryActivityParams,
   ListLotteryActivitiesParams,
+  ListLotteryActivitiesResponse,
   UpdateLotteryActivityParams,
   DeleteLotteryActivityParams,
   BlacklistAddParams,
@@ -511,6 +512,8 @@ export type {
   ShareSettings,
   GetShareParams,
   UpdateShareParams,
+  ListCardPushesParams,
+  ListCardPushesResponse,
   CardPushItem,
   CreateCardPushParams,
   CreateCardPushResponse,
@@ -543,6 +546,7 @@ export type {
   CreateProductTagResponse,
   GetProductTagParams,
   ListProductTagsParams,
+  ListChannelProductTagsResponse,
   UpdateProductTagParams,
   DeleteProductTagParams,
   GiftItem,
@@ -642,7 +646,6 @@ export type {
   PopularizationItem,
   PopularizationInfo,
   PopularizationListParams,
-  ListChannelProductTagsResponse,
   AddChannelCouponParams,
 } from './v4-channel.js';
 

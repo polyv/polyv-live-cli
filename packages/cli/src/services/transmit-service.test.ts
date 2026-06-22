@@ -10,7 +10,11 @@ import { TransmitChannelInfo, TransmitAssociation } from '../types/transmit';
 
 describe('TransmitServiceSdk', () => {
   let service: TransmitServiceSdk;
-  let mockHttpClient: { get: jest.Mock; post: jest.Mock };
+  let mockChannel: {
+    batchAddTransmit: jest.Mock;
+    getTransmitAssociations: jest.Mock;
+    associationReceiveChannels: jest.Mock;
+  };
   const authConfig: AuthConfig = {
     appId: 'test-app-id',
     appSecret: 'test-app-secret',
@@ -19,11 +23,12 @@ describe('TransmitServiceSdk', () => {
 
   beforeEach(() => {
     service = new TransmitServiceSdk(authConfig);
-    mockHttpClient = {
-        get: jest.fn(),
-        post: jest.fn(),
-      };
-    (service as unknown as { client: { httpClient: typeof mockHttpClient } }).client.httpClient = mockHttpClient;
+    mockChannel = {
+      batchAddTransmit: jest.fn(),
+      getTransmitAssociations: jest.fn(),
+      associationReceiveChannels: jest.fn(),
+    };
+    (service as unknown as { channel: typeof mockChannel }).channel = mockChannel;
   });
 
   describe('batchCreateTransmitChannels', () => {
@@ -59,21 +64,12 @@ describe('TransmitServiceSdk', () => {
         },
       ];
 
-      mockHttpClient.post.mockResolvedValue({ data: mockResponse });
+      mockChannel.batchAddTransmit.mockResolvedValue({ data: mockResponse });
 
       const result = await service.batchCreateTransmitChannels(channelId, names);
 
       expect(result).toEqual(mockResponse);
-      // API expects: channelId as URL param, names as JSON array in request body
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/live/v3/channel/transmit/batch-create',
-        names,
-        {
-          params: {
-            channelId,
-          },
-        }
-      );
+      expect(mockChannel.batchAddTransmit).toHaveBeenCalledWith({ channelId, names });
     });
 
     test('[AC1] should throw error when channelId is empty', async () => {
@@ -90,7 +86,7 @@ describe('TransmitServiceSdk', () => {
     });
 
     test('[AC1] should handle API error response', async () => {
-      mockHttpClient.post.mockRejectedValue(new Error('API Error'));
+      mockChannel.batchAddTransmit.mockRejectedValue(new Error('API Error'));
 
       await expect(service.batchCreateTransmitChannels('123456', ['频道1'])).rejects.toThrow('API Error');
     });
@@ -110,19 +106,12 @@ describe('TransmitServiceSdk', () => {
         },
       ];
 
-      mockHttpClient.get.mockResolvedValue({ data: mockResponse });
+      mockChannel.getTransmitAssociations.mockResolvedValue({ data: mockResponse });
 
       const result = await service.getTransmitAssociations(channelId);
 
       expect(result).toEqual(mockResponse);
-      expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v3/channel/transmit/get-associations',
-        {
-          params: {
-            channelId,
-          },
-        }
-      );
+      expect(mockChannel.getTransmitAssociations).toHaveBeenCalledWith({ channelId });
     });
 
     test('[AC2] should throw error when channelId is empty', async () => {
@@ -130,7 +119,7 @@ describe('TransmitServiceSdk', () => {
     });
 
     test('[AC2] should return empty array when no associations found', async () => {
-      mockHttpClient.get.mockResolvedValue({ data: [] });
+      mockChannel.getTransmitAssociations.mockResolvedValue({ data: [] });
 
       const result = await service.getTransmitAssociations('123456');
 
@@ -138,7 +127,7 @@ describe('TransmitServiceSdk', () => {
     });
 
     test('[AC2] should handle API error response', async () => {
-      mockHttpClient.get.mockRejectedValue(new Error('API Error'));
+      mockChannel.getTransmitAssociations.mockRejectedValue(new Error('API Error'));
 
       await expect(service.getTransmitAssociations('123456')).rejects.toThrow('API Error');
     });

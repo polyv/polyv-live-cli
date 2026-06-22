@@ -61,7 +61,6 @@ import type {
   UpdateSkinParams,
   DonateSettings,
   GetDonateParams,
-  UpdateDonateParams,
   // AC6: Distribute
   DistributeItem,
   DistributeListResponse,
@@ -961,13 +960,8 @@ export class V4ChannelService {
    *
    * @param params - Update parameters
    */
-  async updateDonate(params: UpdateDonateParams): Promise<void> {
-    this.validateChannelId(params.channelId);
-
-    await this.client.httpClient.post(
-      '/live/v4/channel/donate/update',
-      params
-    );
+  async updateDonate(params: UpdateDonateGiftParams): Promise<void> {
+    await this.updateDonateGift(params);
   }
 
   // ============================================
@@ -1524,9 +1518,12 @@ export class V4ChannelService {
     this.validateCardPushIdParams(params);
     this.validateCardPushOptionalParams(params);
 
+    const { channelId, cardPushId, ...body } = params;
+
     await this.client.httpClient.post(
       '/live/v4/channel/card-push/update',
-      params
+      body,
+      { params: { channelId, cardPushId } }
     );
   }
 

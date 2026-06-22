@@ -162,18 +162,18 @@ describe('DonateServiceSdk', () => {
       );
     });
 
-    it('11.6-SVC-005: should update donate config with donateTips', async () => {
+    it('11.6-SVC-005: should update donate config with gift enabled', async () => {
       mockV4ChannelService.updateDonateGift.mockResolvedValue(undefined);
 
       await donateService.updateDonateConfig({
         channelId: '3151318',
-        donateTips: 'Thank you for your support!',
+        donateGiftEnabled: 'N',
       });
 
       expect(mockV4ChannelService.updateDonateGift).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
-          donateGiftEnabled: 'Y',
+          donateGiftEnabled: 'N',
         })
       );
     });
@@ -205,7 +205,6 @@ describe('DonateServiceSdk', () => {
       await donateService.updateDonateConfig({
         channelId: '3151318',
         donateEnabled: 'Y',
-        donateTips: 'Thanks!',
         donateAmounts: [1, 5, 10],
       });
 
