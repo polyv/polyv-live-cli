@@ -486,7 +486,8 @@ export class LotteryHandler extends BaseHandler {
   // ===== Private Display Methods =====
 
   private displayCreateResult(result: any, options: LotteryCreateOptions): void {
-    const activityId = result?.data?.id || 'N/A';
+    const data = result?.data ?? result;
+    const activityId = data?.id || data?.activityId || data?.lotteryActivityId || 'N/A';
 
     if (options.output === 'json') {
       this.displayData({
@@ -510,8 +511,9 @@ export class LotteryHandler extends BaseHandler {
   }
 
   private displayListResult(result: any, options: LotteryListOptions): void {
-    const contents = result?.data?.contents || [];
-    const totalItems = result?.data?.totalItems || 0;
+    const data = result?.data ?? result;
+    const contents = data?.contents || [];
+    const totalItems = data?.totalItems || contents.length;
 
     if (contents.length === 0) {
       this.displayInfo(`No lottery activities found for channel ${options.channelId}`);
@@ -540,7 +542,7 @@ export class LotteryHandler extends BaseHandler {
   }
 
   private displayGetResult(result: any, options: LotteryGetOptions): void {
-    const data = result?.data;
+    const data = result?.data ?? result;
 
     if (!data) {
       this.displayInfo(`No lottery activity found with ID ${options.id}`);

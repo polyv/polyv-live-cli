@@ -45,7 +45,9 @@ export class LotteryServiceSdk {
    */
   async createLotteryActivity(params: CreateLotteryActivityParams): Promise<any> {
     try {
-      const result = await this.v4Channel.lotteryActivityCreate(params);
+      const result = await this.v4Channel.lotteryActivityCreate(
+        this.buildLotteryActivityCreate(params)
+      );
       return result;
     } catch (error) {
       throw this.wrapError(error, 'createLotteryActivity');
@@ -87,8 +89,15 @@ export class LotteryServiceSdk {
    */
   async updateLotteryActivity(params: UpdateLotteryActivityParams): Promise<any> {
     try {
-      const result = await this.v4Channel.lotteryActivityUpdate(params);
-      return result;
+      const currentResponse = await this.v4Channel.lotteryActivityGet({
+        channelId: params.channelId,
+        id: params.id,
+      });
+      const current = this.unwrapData<Record<string, unknown>>(currentResponse) ?? {};
+      const result = await this.v4Channel.lotteryActivityUpdate(
+        this.buildLotteryActivityUpdate(params, current)
+      );
+      return result ?? this.successResponse();
     } catch (error) {
       throw this.wrapError(error, 'updateLotteryActivity');
     }
@@ -102,7 +111,7 @@ export class LotteryServiceSdk {
   async deleteLotteryActivity(params: DeleteLotteryActivityParams): Promise<any> {
     try {
       const result = await this.v4Channel.lotteryActivityDelete(params);
-      return result;
+      return result ?? this.successResponse();
     } catch (error) {
       throw this.wrapError(error, 'deleteLotteryActivity');
     }
@@ -134,6 +143,137 @@ export class LotteryServiceSdk {
     } catch (error) {
       throw this.wrapError(error, 'listLottery');
     }
+  }
+
+  private buildLotteryActivityUpdate(
+    params: UpdateLotteryActivityParams,
+    current: Record<string, unknown>
+  ): Record<string, unknown> {
+    const updateParams: Record<string, unknown> = {
+      channelId: params.channelId,
+      id: params.id,
+      activityName: params.activityName ?? current['activityName'],
+      lotteryCondition: current['lotteryCondition'],
+      amount: params.amount ?? current['amount'],
+      prizeName: params.prizeName ?? current['prizeName'],
+    };
+
+    [
+      'hiddenWinnerAmount',
+      'lotteryRange',
+      'customGroupIds',
+      'customGroupLotteryType',
+      'customGroupLotteryAmount',
+      'hiddenAttendeeNumber',
+      'repeatWinEnabled',
+      'receiveEnabled',
+      'receiveInfo',
+      'thumbnail',
+      'externalListLink',
+      'externalInviteNumLink',
+      'comment',
+      'realPrice',
+      'price',
+      'prizeInfo',
+      'questionGroupId',
+      'perAnswerDuration',
+      'lotteryOnlineEnabled',
+      'answerType',
+      'showWinnerCode',
+      'showWinners',
+    ].forEach((key) => {
+      if (current[key] !== undefined && current[key] !== null) {
+        updateParams[key] = current[key];
+      }
+    });
+
+    const lotteryCondition = updateParams['lotteryCondition'];
+    if (lotteryCondition !== 'none') {
+      this.copyDefined(current, updateParams, ['activityDuration', 'activityDurationType']);
+      if (current['acceptType']) {
+        this.copyDefined(current, updateParams, ['acceptType', 'formInfo', 'prizeUrl', 'qrCode', 'qrCodeTips']);
+      }
+    }
+    if (lotteryCondition === 'invite') {
+      this.copyDefined(current, updateParams, ['inviteType']);
+      const inviteNum = this.numberOrUndefined(current['inviteNum']);
+      if (inviteNum !== undefined && inviteNum >= 1) {
+        updateParams['inviteNum'] = inviteNum;
+      }
+    }
+    if (lotteryCondition === 'duration') {
+      const duration = this.numberOrUndefined(current['duration']);
+      if (duration !== undefined && duration >= 2) {
+        updateParams['duration'] = duration;
+      }
+    }
+
+    return updateParams;
+  }
+
+  private buildLotteryActivityCreate(params: CreateLotteryActivityParams): Record<string, unknown> {
+    const createParams: Record<string, unknown> = { ...params };
+
+    if (params.lotteryCondition !== 'none' && params.duration !== undefined) {
+      createParams['activityDuration'] = String(Math.max(1, Math.ceil(params.duration / 60)));
+      createParams['activityDurationType'] = 'minute';
+    }
+
+    if (params.lotteryCondition === 'invite' && createParams['inviteType'] === undefined) {
+      createParams['inviteType'] = 'poster';
+    }
+
+    if (params.lotteryCondition !== 'none' && createParams['acceptType'] === undefined) {
+      createParams['acceptType'] = 'form';
+      createParams['formInfo'] = [
+        {
+          type: 'userName',
+          field: 'Name',
+          tips: 'Please enter name',
+          required: true,
+        },
+      ];
+    }
+
+    return createParams;
+  }
+
+  private copyDefined(
+    source: Record<string, unknown>,
+    target: Record<string, unknown>,
+    keys: string[]
+  ): void {
+    keys.forEach((key) => {
+      if (source[key] !== undefined && source[key] !== null) {
+        target[key] = source[key];
+      }
+    });
+  }
+
+  private numberOrUndefined(value: unknown): number | undefined {
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      return value;
+    }
+    if (typeof value === 'string' && value.trim() !== '') {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : undefined;
+    }
+    return undefined;
+  }
+
+  private unwrapData<T>(value: unknown): T | undefined {
+    if (value && typeof value === 'object' && 'data' in value) {
+      return (value as { data: T }).data;
+    }
+    return value as T;
+  }
+
+  private successResponse(): { code: number; status: string; data: Record<string, unknown> } {
+    return {
+      code: 200,
+      status: 'success',
+      data: {},
+    };
   }
 
   /**

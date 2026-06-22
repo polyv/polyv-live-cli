@@ -14,8 +14,18 @@ const mockHttpClient = {
   post: jest.fn(),
 };
 
+const mockV4Channel = {
+  listCardPushes: jest.fn(),
+  cardPushCreate: jest.fn(),
+  cardPushUpdate: jest.fn(),
+  cardPushPush: jest.fn(),
+  cardPushCancelPush: jest.fn(),
+  cardPushDelete: jest.fn(),
+};
+
 const mockClient = {
   httpClient: mockHttpClient,
+  v4Channel: mockV4Channel,
 } as unknown as PolyVClient;
 
 jest.mock('polyv-live-api-sdk', () => ({
@@ -42,7 +52,7 @@ describe('CardPushServiceSdk', () => {
   // AC1: listCardPushes - List card push configs
   // ========================================
   describe('listCardPushes', () => {
-    it('[P0][SVC-001] should call httpClient.get for list operations', async () => {
+    it('[P0][SVC-001] should call SDK list method for list operations', async () => {
       const mockSdkResponse = {
         contents: [
           {
@@ -79,18 +89,11 @@ describe('CardPushServiceSdk', () => {
         },
       ];
 
-      mockHttpClient.get.mockResolvedValueOnce({ data: mockSdkResponse });
+      mockV4Channel.listCardPushes.mockResolvedValueOnce({ data: mockSdkResponse });
 
       const result = await service.listCardPushes('3151318');
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/list',
-        {
-          params: {
-            channelId: '3151318',
-          },
-        }
-      );
+      expect(mockV4Channel.listCardPushes).toHaveBeenCalledWith({ channelId: '3151318' });
       expect(result).toEqual(expectedResponse);
     });
 
@@ -99,13 +102,13 @@ describe('CardPushServiceSdk', () => {
     });
 
     it('[P1] should handle API errors gracefully', async () => {
-      mockHttpClient.get.mockRejectedValueOnce(new Error('API Error'));
+      mockV4Channel.listCardPushes.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(service.listCardPushes('3151318')).rejects.toThrow('API Error');
     });
 
     it('[P1] should return empty array when no card pushes exist', async () => {
-      mockHttpClient.get.mockResolvedValueOnce({ data: { contents: [] } });
+      mockV4Channel.listCardPushes.mockResolvedValueOnce({ data: { contents: [] } });
 
       const result = await service.listCardPushes('3151318');
 
@@ -117,13 +120,13 @@ describe('CardPushServiceSdk', () => {
   // AC2: createCardPush - Create card push config
   // ========================================
   describe('createCardPush', () => {
-    it('[P0][SVC-002] should call httpClient.get for create operations', async () => {
+    it('[P0][SVC-002] should call SDK create method for create operations', async () => {
       const mockResponse = {
         id: 123,
         title: 'New Card',
       };
 
-      mockHttpClient.get.mockResolvedValueOnce({ data: mockResponse });
+      mockV4Channel.cardPushCreate.mockResolvedValueOnce({ data: mockResponse });
 
       const result = await service.createCardPush({
         channelId: '3151318',
@@ -134,19 +137,14 @@ describe('CardPushServiceSdk', () => {
         showCondition: 'PUSH',
       });
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/create',
-        {
-          params: {
-            channelId: 3151318,
-            imageType: 'giftbox',
-            title: 'New Card',
-            link: 'https://example.com',
-            duration: 10,
-            showCondition: 'PUSH',
-          },
-        }
-      );
+      expect(mockV4Channel.cardPushCreate).toHaveBeenCalledWith({
+        channelId: 3151318,
+        imageType: 'giftbox',
+        title: 'New Card',
+        link: 'https://example.com',
+        duration: 10,
+        showCondition: 'PUSH',
+      });
       expect(result).toEqual({ id: 123, title: 'New Card' });
     });
 
@@ -178,7 +176,7 @@ describe('CardPushServiceSdk', () => {
 
     it('[P1] should include optional params when provided', async () => {
       const mockResponse = { id: 123, title: 'Card' };
-      mockHttpClient.get.mockResolvedValueOnce({ data: mockResponse });
+      mockV4Channel.cardPushCreate.mockResolvedValueOnce({ data: mockResponse });
 
       await service.createCardPush({
         channelId: '3151318',
@@ -196,18 +194,15 @@ describe('CardPushServiceSdk', () => {
         redirectType: 'tab',
       });
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/create',
+      expect(mockV4Channel.cardPushCreate).toHaveBeenCalledWith(
         expect.objectContaining({
-          params: expect.objectContaining({
-            cardType: 'qrCode',
-            conditionValue: 30,
-            conditionUnit: 'SECONDS',
-            countdownMsg: 'Coming',
-            enterEnabled: 'N',
-            linkEnabled: 'Y',
-            redirectType: 'tab',
-          }),
+          cardType: 'qrCode',
+          conditionValue: 30,
+          conditionUnit: 'SECONDS',
+          countdownMsg: 'Coming',
+          enterEnabled: 'N',
+          linkEnabled: 'Y',
+          redirectType: 'tab',
         })
       );
     });
@@ -217,13 +212,13 @@ describe('CardPushServiceSdk', () => {
   // AC3: updateCardPush - Update card push config
   // ========================================
   describe('updateCardPush', () => {
-    it('[P0][SVC-003] should call httpClient.post for update operations', async () => {
+    it('[P0][SVC-003] should call SDK update method for update operations', async () => {
       const mockResponse = {
         id: 123,
         title: 'Updated Card',
       };
 
-      mockHttpClient.post.mockResolvedValueOnce({ data: mockResponse });
+      mockV4Channel.cardPushUpdate.mockResolvedValueOnce({ data: mockResponse });
 
       const result = await service.updateCardPush({
         channelId: '3151318',
@@ -231,14 +226,11 @@ describe('CardPushServiceSdk', () => {
         title: 'Updated Card',
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/update',
-        {
-          channelId: 3151318,
-          cardPushId: 123,
-          title: 'Updated Card',
-        }
-      );
+      expect(mockV4Channel.cardPushUpdate).toHaveBeenCalledWith({
+        channelId: 3151318,
+        cardPushId: 123,
+        title: 'Updated Card',
+      });
       expect(result).toEqual({ id: 123, title: 'Updated Card' });
     });
 
@@ -253,7 +245,7 @@ describe('CardPushServiceSdk', () => {
     });
 
     it('[P1] should handle API errors gracefully', async () => {
-      mockHttpClient.post.mockRejectedValueOnce(new Error('API Error'));
+      mockV4Channel.cardPushUpdate.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(
         service.updateCardPush({
@@ -269,21 +261,18 @@ describe('CardPushServiceSdk', () => {
   // AC4: pushCard - Push card to viewers
   // ========================================
   describe('pushCard', () => {
-    it('[P0][SVC-004] should call httpClient.post for push operations', async () => {
-      mockHttpClient.post.mockResolvedValueOnce({ data: {} });
+    it('[P0][SVC-004] should call SDK push method for push operations', async () => {
+      mockV4Channel.cardPushPush.mockResolvedValueOnce({ data: {} });
 
       await service.pushCard({
         channelId: '3151318',
         cardPushId: '123',
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/push',
-        {
-          channelId: 3151318,
-          cardPushId: 123,
-        }
-      );
+      expect(mockV4Channel.cardPushPush).toHaveBeenCalledWith({
+        channelId: 3151318,
+        cardPushId: 123,
+      });
     });
 
     it('[P1] should throw error when cardPushId is missing', async () => {
@@ -296,7 +285,7 @@ describe('CardPushServiceSdk', () => {
     });
 
     it('[P1] should handle API errors gracefully', async () => {
-      mockHttpClient.post.mockRejectedValueOnce(new Error('API Error'));
+      mockV4Channel.cardPushPush.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(
         service.pushCard({
@@ -311,21 +300,18 @@ describe('CardPushServiceSdk', () => {
   // AC5: cancelPush - Cancel card push
   // ========================================
   describe('cancelPush', () => {
-    it('[P0][SVC-005] should call httpClient.post for cancel operations', async () => {
-      mockHttpClient.post.mockResolvedValueOnce({ data: {} });
+    it('[P0][SVC-005] should call SDK cancel method for cancel operations', async () => {
+      mockV4Channel.cardPushCancelPush.mockResolvedValueOnce({ data: {} });
 
       await service.cancelPush({
         channelId: '3151318',
         cardPushId: '123',
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/cancel-push',
-        {
-          channelId: 3151318,
-          cardPushId: 123,
-        }
-      );
+      expect(mockV4Channel.cardPushCancelPush).toHaveBeenCalledWith({
+        channelId: 3151318,
+        cardPushId: 123,
+      });
     });
 
     it('[P1] should throw error when cardPushId is missing', async () => {
@@ -338,7 +324,7 @@ describe('CardPushServiceSdk', () => {
     });
 
     it('[P1] should handle API errors gracefully', async () => {
-      mockHttpClient.post.mockRejectedValueOnce(new Error('API Error'));
+      mockV4Channel.cardPushCancelPush.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(
         service.cancelPush({
@@ -353,21 +339,18 @@ describe('CardPushServiceSdk', () => {
   // AC6: deleteCardPush - Delete card push config
   // ========================================
   describe('deleteCardPush', () => {
-    it('[P0][SVC-006] should call httpClient.post for delete operations', async () => {
-      mockHttpClient.post.mockResolvedValueOnce({ data: {} });
+    it('[P0][SVC-006] should call SDK delete method for delete operations', async () => {
+      mockV4Channel.cardPushDelete.mockResolvedValueOnce({ data: {} });
 
       await service.deleteCardPush({
         channelId: '3151318',
         cardPushId: '123',
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/live/v4/channel/card-push/delete',
-        {
-          channelId: 3151318,
-          cardPushId: 123,
-        }
-      );
+      expect(mockV4Channel.cardPushDelete).toHaveBeenCalledWith({
+        channelId: 3151318,
+        cardPushId: 123,
+      });
     });
 
     it('[P1] should throw error when cardPushId is missing', async () => {
@@ -380,7 +363,7 @@ describe('CardPushServiceSdk', () => {
     });
 
     it('[P1] should handle API errors gracefully', async () => {
-      mockHttpClient.post.mockRejectedValueOnce(new Error('API Error'));
+      mockV4Channel.cardPushDelete.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(
         service.deleteCardPush({

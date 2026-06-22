@@ -1144,26 +1144,71 @@ export interface QueryWinnerViewerResponse {
   contents: WinnerViewerInfo[];
 }
 
+export interface LotteryReceiveInfo {
+  type?: 'userName' | 'userPhone' | 'custom' | string;
+  field: string;
+  tips?: string;
+  required?: boolean;
+}
+
+export interface LotteryPrizeInfo {
+  prizeItem: string;
+  correctAnswerCount: number;
+  [key: string]: unknown;
+}
+
 /**
  * Lottery activity info
  */
 export interface LotteryActivity {
   /** Activity ID */
-  activityId: string;
+  id: number;
   /** Channel ID */
-  channelId: string;
+  channelId?: string;
   /** Activity name */
-  name: string;
-  /** Activity type */
-  type: string;
+  activityName: string;
+  /** Lottery condition type */
+  lotteryCondition: 'none' | 'invite' | 'duration' | 'comment' | 'question' | string;
   /** Status */
-  status: YNFlag;
-  /** Start time */
-  startTime: number;
-  /** End time */
-  endTime: number;
-  /** Created time */
-  createdTime: number;
+  status?: string | null;
+  /** Winner count */
+  amount: number;
+  /** Prize name */
+  prizeName: string;
+  hiddenWinnerAmount?: YNFlag;
+  lotteryRange?: 'all' | 'customGroup' | string;
+  customGroup?: Array<Record<string, unknown>>;
+  customGroupIds?: Array<string | number>;
+  customGroupLotteryType?: 'average' | 'random' | string;
+  customGroupLotteryAmount?: number | null;
+  hiddenAttendeeNumber?: YNFlag;
+  repeatWinEnabled?: YNFlag;
+  receiveEnabled?: YNFlag;
+  receiveInfo?: LotteryReceiveInfo[] | null;
+  thumbnail?: string | null;
+  activityDuration?: string | number | null;
+  activityDurationType?: 'second' | 'minute' | 'hour' | string | null;
+  inviteType?: 'poster' | 'external' | string | null;
+  externalListLink?: string | null;
+  externalInviteNumLink?: string | null;
+  inviteNum?: number | null;
+  duration?: number | null;
+  comment?: string | null;
+  acceptType?: 'form' | 'link' | 'qrCode' | string | null;
+  formInfo?: LotteryReceiveInfo[] | null;
+  prizeUrl?: string | null;
+  qrCode?: string | null;
+  qrCodeTips?: string | null;
+  realPrice?: number | null;
+  price?: number | null;
+  prizeInfo?: LotteryPrizeInfo[] | null;
+  questionGroupId?: number | null;
+  perAnswerDuration?: number | null;
+  lotteryOnlineEnabled?: YNFlag;
+  answerType?: 'pushQuestion' | 'autonomyAnswer' | string;
+  showWinnerCode?: YNFlag;
+  showWinners?: YNFlag;
+  [key: string]: unknown;
 }
 
 /**
@@ -1171,15 +1216,47 @@ export interface LotteryActivity {
  */
 export interface LotteryActivityCreateParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Activity name */
-  name: string;
-  /** Activity type */
-  type: string;
-  /** Start time */
-  startTime?: number;
-  /** End time */
-  endTime?: number;
+  activityName: string;
+  /** Lottery condition type */
+  lotteryCondition: 'none' | 'invite' | 'duration' | 'comment' | 'question' | string;
+  /** Winner count */
+  amount: number;
+  /** Prize name */
+  prizeName: string;
+  hiddenWinnerAmount?: YNFlag;
+  lotteryRange?: 'all' | 'customGroup' | string;
+  customGroupIds?: Array<string | number>;
+  customGroupLotteryType?: 'average' | 'random' | string;
+  customGroupLotteryAmount?: number;
+  hiddenAttendeeNumber?: YNFlag;
+  repeatWinEnabled?: YNFlag;
+  receiveEnabled?: YNFlag;
+  receiveInfo?: LotteryReceiveInfo[];
+  thumbnail?: string;
+  activityDuration?: string | number;
+  activityDurationType?: 'second' | 'minute' | 'hour' | string;
+  inviteType?: 'poster' | 'external' | string;
+  externalListLink?: string;
+  externalInviteNumLink?: string;
+  inviteNum?: number;
+  duration?: number;
+  comment?: string;
+  acceptType?: 'form' | 'link' | 'qrCode' | string;
+  formInfo?: LotteryReceiveInfo[];
+  prizeUrl?: string;
+  qrCode?: string;
+  qrCodeTips?: string;
+  realPrice?: number;
+  price?: number;
+  prizeInfo?: LotteryPrizeInfo[];
+  questionGroupId?: number;
+  perAnswerDuration?: number;
+  lotteryOnlineEnabled?: YNFlag;
+  answerType?: 'pushQuestion' | 'autonomyAnswer' | string;
+  showWinnerCode?: YNFlag;
+  showWinners?: YNFlag;
 }
 
 /**
@@ -1187,7 +1264,7 @@ export interface LotteryActivityCreateParams {
  */
 export interface LotteryActivityCreateResponse {
   /** Activity ID */
-  activityId: string;
+  id: number;
 }
 
 /**
@@ -1195,21 +1272,17 @@ export interface LotteryActivityCreateResponse {
  */
 export interface LotteryActivityGetParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Activity ID */
-  activityId: string;
+  id: string | number;
 }
 
 /**
  * Parameters for listing lottery activities
  */
-export interface LotteryActivityListParams {
+export interface LotteryActivityListParams extends V4PaginationParams {
   /** Channel ID */
-  channelId: string;
-  /** Page number */
-  pageNumber?: number;
-  /** Page size */
-  pageSize?: number;
+  channelId: string | number;
 }
 
 /**
@@ -1231,17 +1304,49 @@ export interface LotteryActivityListResponse {
  */
 export interface LotteryActivityUpdateParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Activity ID */
-  activityId: string;
+  id: string | number;
   /** Activity name */
-  name?: string;
-  /** Start time */
-  startTime?: number;
-  /** End time */
-  endTime?: number;
-  /** Status */
-  status?: YNFlag;
+  activityName: string;
+  /** Lottery condition type */
+  lotteryCondition: 'none' | 'invite' | 'duration' | 'comment' | 'question' | string;
+  /** Winner count */
+  amount: number;
+  /** Prize name */
+  prizeName: string;
+  hiddenWinnerAmount?: YNFlag;
+  lotteryRange?: 'all' | 'customGroup' | string;
+  customGroupIds?: Array<string | number>;
+  customGroupLotteryType?: 'average' | 'random' | string;
+  customGroupLotteryAmount?: number;
+  hiddenAttendeeNumber?: YNFlag;
+  repeatWinEnabled?: YNFlag;
+  receiveEnabled?: YNFlag;
+  receiveInfo?: LotteryReceiveInfo[];
+  thumbnail?: string;
+  activityDuration?: string | number;
+  activityDurationType?: 'second' | 'minute' | 'hour' | string;
+  inviteType?: 'poster' | 'external' | string;
+  externalListLink?: string;
+  externalInviteNumLink?: string;
+  inviteNum?: number;
+  duration?: number;
+  comment?: string;
+  acceptType?: 'form' | 'link' | 'qrCode' | string;
+  formInfo?: LotteryReceiveInfo[];
+  prizeUrl?: string;
+  qrCode?: string;
+  qrCodeTips?: string;
+  realPrice?: number;
+  price?: number;
+  prizeInfo?: LotteryPrizeInfo[];
+  questionGroupId?: number;
+  perAnswerDuration?: number;
+  lotteryOnlineEnabled?: YNFlag;
+  answerType?: 'pushQuestion' | 'autonomyAnswer' | string;
+  showWinnerCode?: YNFlag;
+  showWinners?: YNFlag;
 }
 
 /**
@@ -1249,9 +1354,9 @@ export interface LotteryActivityUpdateParams {
  */
 export interface LotteryActivityDeleteParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Activity ID */
-  activityId: string;
+  id: string | number;
 }
 
 /**
@@ -1570,14 +1675,15 @@ export interface DiskVideoScriptDeleteParams {
  * Share settings
  */
 export interface ShareSettings {
-  /** Channel ID */
-  channelId: string;
-  /** Share title */
-  title: string;
-  /** Share description */
-  description: string;
-  /** Share image URL */
-  imageUrl: string;
+  shareBtnEnable?: YNFlag;
+  titleType?: 'follow' | 'custom' | string;
+  weixinShareTitle?: string;
+  weixinShareDesc?: string;
+  weixinShareCustomUrl?: string;
+  webShareCustomUrl?: string;
+  weixinShareCustomUrlWithParamEnabled?: YNFlag;
+  webShareCustomUrlWithParamEnabled?: YNFlag;
+  [key: string]: unknown;
 }
 
 /**
@@ -1585,7 +1691,7 @@ export interface ShareSettings {
  */
 export interface ShareGetParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
 }
 
 /**
@@ -1593,33 +1699,30 @@ export interface ShareGetParams {
  */
 export interface ShareUpdateParams {
   /** Channel ID */
-  channelId: string;
-  /** Share title */
-  title?: string;
-  /** Share description */
-  description?: string;
-  /** Share image URL */
-  imageUrl?: string;
+  channelId: string | number;
+  shareBtnEnable: YNFlag;
+  titleType: 'follow' | 'custom' | string;
+  weixinShareTitle?: string;
+  weixinShareDesc?: string;
+  weixinShareCustomUrl?: string;
+  webShareCustomUrl?: string;
+  weixinShareCustomUrlWithParamEnabled?: YNFlag;
+  webShareCustomUrlWithParamEnabled?: YNFlag;
 }
 
 /**
  * Card push info
  */
 export interface CardPushInfo {
-  /** Card push ID */
-  id: number;
-  /** Channel ID */
-  channelId: string;
-  /** Card title */
-  title: string;
-  /** Card content */
-  content: string;
-  /** Card type */
-  type: string;
-  /** Card URL */
-  url: string;
-  /** Created time */
-  createdTime: number;
+  cardPushId?: number | string;
+  channelId?: string | number;
+  cardType?: 'common' | 'qrCode' | string;
+  imageType?: 'giftbox' | 'redpack' | 'custom' | 'weixinWork' | string;
+  title?: string;
+  link?: string;
+  duration?: 0 | 5 | 10 | 20 | 30 | number;
+  showCondition?: 'PUSH' | 'WATCH' | string;
+  [key: string]: unknown;
 }
 
 /**
@@ -1627,15 +1730,31 @@ export interface CardPushInfo {
  */
 export interface CardPushCreateParams {
   /** Channel ID */
-  channelId: string;
-  /** Card title */
+  channelId: string | number;
+  cardType?: 'common' | 'qrCode' | string;
+  imageType: 'giftbox' | 'redpack' | 'custom' | 'weixinWork' | string;
   title: string;
-  /** Card content */
-  content: string;
-  /** Card type */
-  type: string;
-  /** Card URL */
-  url?: string;
+  link: string;
+  duration: 0 | 5 | 10 | 20 | 30 | number;
+  durationPosition?: 'bottom' | 'top' | string;
+  showCondition: 'PUSH' | 'WATCH' | string;
+  conditionValue?: number;
+  conditionUnit?: 'SECONDS' | 'MINUTES' | string;
+  countdownMsg?: string;
+  enterEnabled?: YNFlag;
+  linkEnabled?: YNFlag;
+  redirectType?: 'iframe' | 'tab' | string;
+  enterImage?: string;
+  cardImage?: string;
+  weixinWordQrCodeId?: string;
+  qrCodeImage?: string;
+  hrefType?: 'common' | 'multiplatform' | string;
+  pcLink?: string;
+  mobileLink?: string;
+  wxMiniprogramOriginalId?: string;
+  wxMiniprogramAppId?: string;
+  wxMiniprogramLink?: string;
+  mobileAppLink?: string;
 }
 
 /**
@@ -1643,17 +1762,8 @@ export interface CardPushCreateParams {
  */
 export interface CardPushCreateResponse {
   /** Card push ID */
-  id: number;
-}
-
-/**
- * Parameters for getting card push
- */
-export interface CardPushGetParams {
-  /** Channel ID */
-  channelId: string;
-  /** Card push ID */
-  id: number;
+  cardPushId?: number | string;
+  [key: string]: unknown;
 }
 
 /**
@@ -1661,15 +1771,20 @@ export interface CardPushGetParams {
  */
 export interface CardPushUpdateParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Card push ID */
-  id: number;
-  /** Card title */
+  cardPushId: string | number;
   title?: string;
-  /** Card content */
-  content?: string;
-  /** Card URL */
-  url?: string;
+  duration?: 0 | 5 | 10 | 20 | 30 | number;
+  imageType?: 'giftbox' | 'redpack' | 'custom' | 'weixinWork' | string;
+  link?: string;
+  showCondition?: 'PUSH' | 'WATCH' | string;
+  conditionValue?: number;
+  conditionUnit?: 'SECONDS' | 'MINUTES' | string;
+  countdownMsg?: string;
+  enterEnabled?: YNFlag;
+  linkEnabled?: YNFlag;
+  [key: string]: unknown;
 }
 
 /**
@@ -1677,9 +1792,9 @@ export interface CardPushUpdateParams {
  */
 export interface CardPushDeleteParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Card push ID */
-  id: number;
+  cardPushId: string | number;
 }
 
 /**
@@ -1687,9 +1802,9 @@ export interface CardPushDeleteParams {
  */
 export interface CardPushPushParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Card push ID */
-  id: number;
+  cardPushId: string | number;
 }
 
 /**
@@ -1697,9 +1812,9 @@ export interface CardPushPushParams {
  */
 export interface CardPushCancelPushParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Card push ID */
-  id: number;
+  cardPushId: string | number;
 }
 
 // ============================================
@@ -1963,11 +2078,10 @@ export interface ProductStatsPageResponse {
  */
 export interface ProductTag {
   /** Tag ID */
-  tagId: string;
+  id?: number | string;
   /** Tag name */
-  name: string;
-  /** Tag color */
-  color: string;
+  name?: string;
+  [key: string]: unknown;
 }
 
 /**
@@ -1975,11 +2089,9 @@ export interface ProductTag {
  */
 export interface ProductTagCreateParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Tag name */
   name: string;
-  /** Tag color */
-  color?: string;
 }
 
 /**
@@ -1987,7 +2099,9 @@ export interface ProductTagCreateParams {
  */
 export interface ProductTagCreateResponse {
   /** Tag ID */
-  tagId: string;
+  id?: number | string;
+  name?: string;
+  [key: string]: unknown;
 }
 
 /**
@@ -1995,17 +2109,17 @@ export interface ProductTagCreateResponse {
  */
 export interface ProductTagGetParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Tag ID */
-  tagId: string;
+  id: string | number;
 }
 
 /**
  * Parameters for listing product tags
  */
-export interface ProductTagListParams {
+export interface ProductTagListParams extends V4PaginationParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
 }
 
 /**
@@ -2013,13 +2127,11 @@ export interface ProductTagListParams {
  */
 export interface ProductTagUpdateParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Tag ID */
-  tagId: string;
+  id: string | number;
   /** Tag name */
-  name?: string;
-  /** Tag color */
-  color?: string;
+  name: string;
 }
 
 /**
@@ -2027,9 +2139,9 @@ export interface ProductTagUpdateParams {
  */
 export interface ProductTagDeleteParams {
   /** Channel ID */
-  channelId: string;
+  channelId: string | number;
   /** Tag ID */
-  tagId: string;
+  id: string | number;
 }
 
 /**
@@ -2558,6 +2670,16 @@ export interface LiveSessionInfo {
 }
 
 // ============================================
+// V4 Channel Marketing & Content API Types
+// ============================================
+
+export interface ListCardPushesParams {
+  channelId: string | number;
+}
+
+export type ListCardPushesResponse = CardPushInfo[];
+
+// ============================================
 // Type Aliases for Backward Compatibility
 // ============================================
 
@@ -2582,6 +2704,8 @@ export interface V4PaginatedResponse<T> {
   /** Page size */
   pageSize?: number;
 }
+
+export type V4ChannelPageResponse<T> = V4PaginatedResponse<T>;
 
 /** Channel ID parameter */
 export interface ChannelIdParam {
@@ -2620,6 +2744,7 @@ export type CreateLotteryActivityParams = LotteryActivityCreateParams;
 export type CreateLotteryActivityResponse = LotteryActivityCreateResponse;
 export type GetLotteryActivityParams = LotteryActivityGetParams;
 export type ListLotteryActivitiesParams = LotteryActivityListParams;
+export type ListLotteryActivitiesResponse = LotteryActivityListResponse;
 export type UpdateLotteryActivityParams = LotteryActivityUpdateParams;
 export type DeleteLotteryActivityParams = LotteryActivityDeleteParams;
 export type GroupResponse = GroupAddResponse;
@@ -2629,7 +2754,6 @@ export type GetShareParams = ShareGetParams;
 export type UpdateShareParams = ShareUpdateParams;
 export type CreateCardPushParams = CardPushCreateParams;
 export type CreateCardPushResponse = CardPushCreateResponse;
-export type GetCardPushParams = CardPushGetParams;
 export type UpdateCardPushParams = CardPushUpdateParams;
 export type DeleteCardPushParams = CardPushDeleteParams;
 export type PushCardParams = CardPushPushParams;
@@ -2644,6 +2768,7 @@ export type CreateProductTagParams = ProductTagCreateParams;
 export type CreateProductTagResponse = ProductTagCreateResponse;
 export type GetProductTagParams = ProductTagGetParams;
 export type ListProductTagsParams = ProductTagListParams;
+export type ListChannelProductTagsResponse = V4ChannelPageResponse<ProductTag>;
 export type UpdateProductTagParams = ProductTagUpdateParams;
 export type DeleteProductTagParams = ProductTagDeleteParams;
 export type GiftItem = GiftInfo;

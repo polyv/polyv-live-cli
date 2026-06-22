@@ -83,6 +83,7 @@ import type {
   CreateLotteryActivityResponse,
   GetLotteryActivityParams,
   ListLotteryActivitiesParams,
+  ListLotteryActivitiesResponse,
   UpdateLotteryActivityParams,
   DeleteLotteryActivityParams,
   BlacklistAddParams,
@@ -112,10 +113,10 @@ import type {
   ShareSettings,
   GetShareParams,
   UpdateShareParams,
-  CardPushItem,
+  ListCardPushesParams,
+  ListCardPushesResponse,
   CreateCardPushParams,
   CreateCardPushResponse,
-  GetCardPushParams,
   UpdateCardPushParams,
   DeleteCardPushParams,
   PushCardParams,
@@ -147,6 +148,7 @@ import type {
   CreateProductTagResponse,
   GetProductTagParams,
   ListProductTagsParams,
+  ListChannelProductTagsResponse,
   UpdateProductTagParams,
   DeleteProductTagParams,
   GiftItem,
@@ -986,11 +988,13 @@ export class V4ChannelService {
    * @returns Activity ID
    */
   async lotteryActivityCreate(params: CreateLotteryActivityParams): Promise<CreateLotteryActivityResponse> {
-    this.validateChannelId(params.channelId);
+    this.validateLotteryActivityBody(params);
+    const { channelId, ...body } = params;
 
     const response = await this.client.httpClient.post<CreateLotteryActivityResponse>(
-      '/live/v4/channel/lottery-activity/lottery-activity-create',
-      params
+      '/live/v4/channel/lottery-activity/create',
+      body,
+      { params: { channelId } }
     );
     return response as unknown as CreateLotteryActivityResponse;
   }
@@ -1005,7 +1009,7 @@ export class V4ChannelService {
     this.validateChannelId(params.channelId);
 
     const response = await this.client.httpClient.get<LotteryActivity>(
-      '/live/v4/channel/lottery-activity/lottery-activity-get',
+      '/live/v4/channel/lottery-activity/get',
       { params }
     );
     return response as unknown as LotteryActivity;
@@ -1017,15 +1021,15 @@ export class V4ChannelService {
    * @param params - Query parameters
    * @returns Lottery activities list
    */
-  async lotteryActivityList(params: ListLotteryActivitiesParams): Promise<{ contents: LotteryActivity[] }> {
+  async lotteryActivityList(params: ListLotteryActivitiesParams): Promise<ListLotteryActivitiesResponse> {
     this.validateChannelId(params.channelId);
     this.validatePaginationParams(params);
 
-    const response = await this.client.httpClient.get<{ contents: LotteryActivity[] }>(
-      '/live/v4/channel/lottery-activity/lottery-activity-list',
+    const response = await this.client.httpClient.get<ListLotteryActivitiesResponse>(
+      '/live/v4/channel/lottery-activity/list',
       { params }
     );
-    return response as unknown as { contents: LotteryActivity[] };
+    return response as unknown as ListLotteryActivitiesResponse;
   }
 
   /**
@@ -1034,11 +1038,14 @@ export class V4ChannelService {
    * @param params - Update parameters
    */
   async lotteryActivityUpdate(params: UpdateLotteryActivityParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateLotteryActivityBody(params);
+    this.validateRequiredId(params.id, 'id');
+    const { channelId, ...body } = params;
 
     await this.client.httpClient.post(
-      '/live/v4/channel/lottery-activity/lottery-activity-update',
-      params
+      '/live/v4/channel/lottery-activity/update',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -1049,11 +1056,13 @@ export class V4ChannelService {
    */
   async lotteryActivityDelete(params: DeleteLotteryActivityParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    const { channelId, ...body } = params;
 
     await this.client.httpClient.post(
-      '/live/v4/channel/lottery-activity/lottery-activity-delete',
-      null,
-      { params }
+      '/live/v4/channel/lottery-activity/delete',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -1330,7 +1339,7 @@ export class V4ChannelService {
     this.validateChannelId(params.channelId);
 
     const response = await this.client.httpClient.get<ShareSettings>(
-      '/live/v4/channel/market/share/get',
+      '/live/v4/channel/share/get',
       { params }
     );
     return response as unknown as ShareSettings;
@@ -1341,13 +1350,19 @@ export class V4ChannelService {
    *
    * @param params - Update parameters
    */
-  async shareUpdate(params: UpdateShareParams): Promise<void> {
+  async shareUpdate(params: UpdateShareParams): Promise<ShareSettings> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.shareBtnEnable, 'shareBtnEnable');
+    this.validateOptionalYn(params.shareBtnEnable, 'shareBtnEnable');
+    this.validateRequiredString(params.titleType, 'titleType');
+    this.validateOptionalYn(params.weixinShareCustomUrlWithParamEnabled, 'weixinShareCustomUrlWithParamEnabled');
+    this.validateOptionalYn(params.webShareCustomUrlWithParamEnabled, 'webShareCustomUrlWithParamEnabled');
 
-    await this.client.httpClient.post(
-      '/live/v4/channel/market/share/update',
-      params
+    const response = await this.client.httpClient.get<ShareSettings>(
+      '/live/v4/channel/share/update',
+      { params }
     );
+    return response as unknown as ShareSettings;
   }
 
   /**
@@ -1357,29 +1372,13 @@ export class V4ChannelService {
    * @returns Card ID
    */
   async cardPushCreate(params: CreateCardPushParams): Promise<CreateCardPushResponse> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushCreateParams(params);
 
-    const response = await this.client.httpClient.post<CreateCardPushResponse>(
-      '/live/v4/channel/market/cardPush/create',
-      params
-    );
-    return response as unknown as CreateCardPushResponse;
-  }
-
-  /**
-   * Get card push
-   *
-   * @param params - Query parameters
-   * @returns Card push info
-   */
-  async cardPushGet(params: GetCardPushParams): Promise<CardPushItem> {
-    this.validateChannelId(params.channelId);
-
-    const response = await this.client.httpClient.get<CardPushItem>(
-      '/live/v4/channel/market/cardPush/get',
+    const response = await this.client.httpClient.get<CreateCardPushResponse>(
+      '/live/v4/channel/card-push/create',
       { params }
     );
-    return response as unknown as CardPushItem;
+    return response as unknown as CreateCardPushResponse;
   }
 
   /**
@@ -1388,10 +1387,11 @@ export class V4ChannelService {
    * @param params - Update parameters
    */
   async cardPushUpdate(params: UpdateCardPushParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
+    this.validateCardPushOptionalParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/update',
+      '/live/v4/channel/card-push/update',
       params
     );
   }
@@ -1402,10 +1402,10 @@ export class V4ChannelService {
    * @param params - Delete parameters
    */
   async cardPushDelete(params: DeleteCardPushParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/delete',
+      '/live/v4/channel/card-push/delete',
       null,
       { params }
     );
@@ -1417,10 +1417,10 @@ export class V4ChannelService {
    * @param params - Push parameters
    */
   async cardPushPush(params: PushCardParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/push',
+      '/live/v4/channel/card-push/push',
       null,
       { params }
     );
@@ -1432,10 +1432,10 @@ export class V4ChannelService {
    * @param params - Cancel parameters
    */
   async cardPushCancelPush(params: CancelCardPushParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/cancelPush',
+      '/live/v4/channel/card-push/cancel-push',
       null,
       { params }
     );
@@ -1631,10 +1631,13 @@ export class V4ChannelService {
    */
   async productTagCreate(params: CreateProductTagParams): Promise<CreateProductTagResponse> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.name, 'name');
 
+    const { channelId, ...body } = params;
     const response = await this.client.httpClient.post<CreateProductTagResponse>(
-      '/live/v4/channel/product-tag/product-tag-create',
-      params
+      '/live/v4/channel/product/tag/create',
+      body,
+      { params: { channelId } }
     );
     return response as unknown as CreateProductTagResponse;
   }
@@ -1661,14 +1664,15 @@ export class V4ChannelService {
    * @param params - Query parameters
    * @returns Product tags list
    */
-  async productTagList(params: ListProductTagsParams): Promise<ProductTag[]> {
+  async productTagList(params: ListProductTagsParams): Promise<ListChannelProductTagsResponse> {
     this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
 
-    const response = await this.client.httpClient.get<ProductTag[]>(
-      '/live/v4/channel/product-tag/product-tag-list',
+    const response = await this.client.httpClient.get<ListChannelProductTagsResponse>(
+      '/live/v4/channel/product/tag/list',
       { params }
     );
-    return response as unknown as ProductTag[];
+    return response as unknown as ListChannelProductTagsResponse;
   }
 
   /**
@@ -1678,10 +1682,14 @@ export class V4ChannelService {
    */
   async productTagUpdate(params: UpdateProductTagParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    this.validateRequiredString(params.name, 'name');
 
+    const { channelId, ...body } = params;
     await this.client.httpClient.post(
-      '/live/v4/channel/product-tag/product-tag-update',
-      params
+      '/live/v4/channel/product/tag/update',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -1692,11 +1700,13 @@ export class V4ChannelService {
    */
   async productTagDelete(params: DeleteProductTagParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
 
+    const { channelId, ...body } = params;
     await this.client.httpClient.post(
-      '/live/v4/channel/product-tag/product-tag-delete',
-      null,
-      { params }
+      '/live/v4/channel/product/tag/delete',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -2058,8 +2068,107 @@ export class V4ChannelService {
   }
 
   // ============================================
+  // V4 Channel Marketing & Content API Paths
+  // ============================================
+
+  /**
+   * List channel card pushes.
+   */
+  async listCardPushes(params: ListCardPushesParams): Promise<ListCardPushesResponse> {
+    this.validateChannelId(params.channelId);
+
+    const response = await this.client.httpClient.get<ListCardPushesResponse>(
+      '/live/v4/channel/card-push/list',
+      { params }
+    );
+    return response as unknown as ListCardPushesResponse;
+  }
+
+  // ============================================
   // Private Validation Helpers
   // ============================================
+
+  private validateRequiredString(value: string | undefined, field: string): void {
+    if (!value || value.trim() === '') {
+      throw new PolyVValidationError(`${field} is required and cannot be empty`, field);
+    }
+  }
+
+  private validateOptionalYn(value: string | undefined, field: string): void {
+    if (value !== undefined && value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(`${field} must be Y or N`, field, value);
+    }
+  }
+
+  private validateRequiredId(value: string | number | undefined, field: string): void {
+    if (typeof value === 'string') {
+      this.validateRequiredString(value, field);
+      return;
+    }
+    if (typeof value === 'number') {
+      if (!Number.isFinite(value) || value <= 0) {
+        throw new PolyVValidationError(`${field} must be a positive number`, field, value);
+      }
+      return;
+    }
+    throw new PolyVValidationError(`${field} is required`, field);
+  }
+
+  private validateRequiredNumber(value: number | undefined, field: string): void {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+      throw new PolyVValidationError(`${field} is required and must be a number`, field, value);
+    }
+  }
+
+  private validateLotteryActivityBody(params: CreateLotteryActivityParams | UpdateLotteryActivityParams): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.activityName, 'activityName');
+    this.validateRequiredString(params.lotteryCondition, 'lotteryCondition');
+    this.validateRequiredNumber(params.amount, 'amount');
+    if (params.amount < 1) {
+      throw new PolyVValidationError('amount must be >= 1', 'amount', params.amount);
+    }
+    this.validateRequiredString(params.prizeName, 'prizeName');
+
+    this.validateOptionalYn(params.hiddenWinnerAmount, 'hiddenWinnerAmount');
+    this.validateOptionalYn(params.hiddenAttendeeNumber, 'hiddenAttendeeNumber');
+    this.validateOptionalYn(params.repeatWinEnabled, 'repeatWinEnabled');
+    this.validateOptionalYn(params.receiveEnabled, 'receiveEnabled');
+    this.validateOptionalYn(params.lotteryOnlineEnabled, 'lotteryOnlineEnabled');
+    this.validateOptionalYn(params.showWinnerCode, 'showWinnerCode');
+    this.validateOptionalYn(params.showWinners, 'showWinners');
+  }
+
+  private validateCardPushCreateParams(params: CreateCardPushParams): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.imageType, 'imageType');
+    this.validateRequiredString(params.title, 'title');
+    if (params.title.length > 16) {
+      throw new PolyVValidationError('title cannot exceed 16 characters', 'title', params.title);
+    }
+    this.validateRequiredString(params.link, 'link');
+    this.validateRequiredNumber(params.duration, 'duration');
+    this.validateRequiredString(params.showCondition, 'showCondition');
+    this.validateCardPushOptionalParams(params);
+  }
+
+  private validateCardPushIdParams(
+    params: UpdateCardPushParams | DeleteCardPushParams | PushCardParams | CancelCardPushParams
+  ): void {
+    this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.cardPushId, 'cardPushId');
+  }
+
+  private validateCardPushOptionalParams(params: Partial<CreateCardPushParams>): void {
+    this.validateOptionalYn(params.enterEnabled, 'enterEnabled');
+    this.validateOptionalYn(params.linkEnabled, 'linkEnabled');
+    if (params.countdownMsg !== undefined && params.countdownMsg.length > 8) {
+      throw new PolyVValidationError('countdownMsg cannot exceed 8 characters', 'countdownMsg', params.countdownMsg);
+    }
+    if (params.duration !== undefined && ![0, 5, 10, 20, 30].includes(params.duration)) {
+      throw new PolyVValidationError('duration must be one of 0, 5, 10, 20, or 30', 'duration', params.duration);
+    }
+  }
 
   /**
    * Validate channel ID
@@ -2140,6 +2249,16 @@ export class V4ChannelService {
       throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', params.pageNumber);
     }
     if (params.pageSize === undefined || params.pageSize === null || params.pageSize < 1 || params.pageSize > 1000) {
+      throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
+    }
+  }
+
+  private validateOptionalPaginationParams(params: V4PaginationParams): void {
+    const pageNumber = params.pageNumber ?? params.page;
+    if (pageNumber !== undefined && pageNumber < 1) {
+      throw new PolyVValidationError('pageNumber must be >= 1', 'pageNumber', pageNumber);
+    }
+    if (params.pageSize !== undefined && (params.pageSize < 1 || params.pageSize > 1000)) {
       throw new PolyVValidationError('pageSize must be between 1 and 1000', 'pageSize', params.pageSize);
     }
   }
