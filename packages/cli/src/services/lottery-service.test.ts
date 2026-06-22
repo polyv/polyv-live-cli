@@ -39,11 +39,11 @@ describe('LotteryServiceSdk', () => {
 
     // Create mock services
     mockV4ChannelService = {
-      createLotteryActivityExact: jest.fn(),
-      listLotteryActivitiesExact: jest.fn(),
-      getLotteryActivityExact: jest.fn(),
-      updateLotteryActivityExact: jest.fn(),
-      deleteLotteryActivityExact: jest.fn(),
+      lotteryActivityCreate: jest.fn(),
+      lotteryActivityList: jest.fn(),
+      lotteryActivityGet: jest.fn(),
+      lotteryActivityUpdate: jest.fn(),
+      lotteryActivityDelete: jest.fn(),
       queryWinnerViewer: jest.fn(),
       listLotteryActivityRecords: jest.fn(),
       createConditionWaitLottery: jest.fn(),
@@ -96,7 +96,7 @@ describe('LotteryServiceSdk', () => {
         prizeName: 'Test Prize',
       };
 
-      mockV4ChannelService.createLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityCreate.mockResolvedValue({
         code: 200,
         status: 'success',
         data: {
@@ -106,7 +106,7 @@ describe('LotteryServiceSdk', () => {
 
       const result = await lotteryService.createLotteryActivity(params);
 
-      expect(mockV4ChannelService.createLotteryActivityExact).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.lotteryActivityCreate).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
           activityName: 'Test Lottery',
@@ -131,7 +131,7 @@ describe('LotteryServiceSdk', () => {
         ]),
       };
 
-      mockV4ChannelService.createLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityCreate.mockResolvedValue({
         code: 200,
         status: 'success',
         data: { id: '20521' },
@@ -139,7 +139,7 @@ describe('LotteryServiceSdk', () => {
 
       await lotteryService.createLotteryActivity(params);
 
-      expect(mockV4ChannelService.createLotteryActivityExact).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.lotteryActivityCreate).toHaveBeenCalledWith(
         expect.objectContaining({
           receiveEnabled: 'Y',
         })
@@ -157,7 +157,7 @@ describe('LotteryServiceSdk', () => {
         inviteNum: 3,
       };
 
-      mockV4ChannelService.createLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityCreate.mockResolvedValue({
         code: 200,
         status: 'success',
         data: { id: '20522' },
@@ -165,7 +165,7 @@ describe('LotteryServiceSdk', () => {
 
       await lotteryService.createLotteryActivity(params);
 
-      expect(mockV4ChannelService.createLotteryActivityExact).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.lotteryActivityCreate).toHaveBeenCalledWith(
         expect.objectContaining({
           lotteryCondition: 'invite',
           duration: 30,
@@ -184,7 +184,7 @@ describe('LotteryServiceSdk', () => {
         duration: 10,
       };
 
-      mockV4ChannelService.createLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityCreate.mockResolvedValue({
         code: 200,
         status: 'success',
         data: { id: '20523' },
@@ -192,7 +192,7 @@ describe('LotteryServiceSdk', () => {
 
       await lotteryService.createLotteryActivity(params);
 
-      expect(mockV4ChannelService.createLotteryActivityExact).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.lotteryActivityCreate).toHaveBeenCalledWith(
         expect.objectContaining({
           lotteryCondition: 'duration',
           duration: 10,
@@ -209,7 +209,7 @@ describe('LotteryServiceSdk', () => {
         prizeName: 'Test Prize',
       };
 
-      mockV4ChannelService.createLotteryActivityExact.mockRejectedValue(
+      mockV4ChannelService.lotteryActivityCreate.mockRejectedValue(
         new Error('API Error: Authentication failed')
       );
 
@@ -222,7 +222,7 @@ describe('LotteryServiceSdk', () => {
   // ============================================================
   describe('listLotteryActivities (AC #2)', () => {
     it('11.5-SVC-007: should list lottery activities with minimal parameters', async () => {
-      mockV4ChannelService.listLotteryActivitiesExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityList.mockResolvedValue({
         code: 200,
         status: 'success',
         data: {
@@ -247,14 +247,14 @@ describe('LotteryServiceSdk', () => {
         channelId: '3151318',
       });
 
-      expect(mockV4ChannelService.listLotteryActivitiesExact).toHaveBeenCalledWith({
+      expect(mockV4ChannelService.lotteryActivityList).toHaveBeenCalledWith({
         channelId: '3151318',
       });
       expect(result.data.contents).toHaveLength(1);
     });
 
     it('11.5-SVC-008: should list lottery activities with pagination', async () => {
-      mockV4ChannelService.listLotteryActivitiesExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityList.mockResolvedValue({
         code: 200,
         status: 'success',
         data: {
@@ -272,7 +272,7 @@ describe('LotteryServiceSdk', () => {
         pageSize: 20,
       });
 
-      expect(mockV4ChannelService.listLotteryActivitiesExact).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.lotteryActivityList).toHaveBeenCalledWith(
         expect.objectContaining({
           pageNumber: 1,
           pageSize: 20,
@@ -286,7 +286,7 @@ describe('LotteryServiceSdk', () => {
   // ============================================================
   describe('getLotteryActivity (AC #3)', () => {
     it('11.5-SVC-009: should get lottery activity details', async () => {
-      mockV4ChannelService.getLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityGet.mockResolvedValue({
         code: 200,
         status: 'success',
         data: {
@@ -304,7 +304,7 @@ describe('LotteryServiceSdk', () => {
         id: '20521',
       });
 
-      expect(mockV4ChannelService.getLotteryActivityExact).toHaveBeenCalledWith({
+      expect(mockV4ChannelService.lotteryActivityGet).toHaveBeenCalledWith({
         channelId: '3151318',
         id: '20521',
       });
@@ -317,13 +317,13 @@ describe('LotteryServiceSdk', () => {
   // ============================================================
   describe('updateLotteryActivity (AC #4)', () => {
     it('11.5-SVC-010: should update lottery activity', async () => {
-      mockV4ChannelService.getLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityGet.mockResolvedValue({
         activityName: 'Original Name',
         lotteryCondition: 'none',
         amount: 3,
         prizeName: 'Original Prize',
       });
-      mockV4ChannelService.updateLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityUpdate.mockResolvedValue({
         code: 200,
         status: 'success',
         data: {},
@@ -337,11 +337,11 @@ describe('LotteryServiceSdk', () => {
         prizeName: 'Updated Prize',
       });
 
-      expect(mockV4ChannelService.getLotteryActivityExact).toHaveBeenCalledWith({
+      expect(mockV4ChannelService.lotteryActivityGet).toHaveBeenCalledWith({
         channelId: '3151318',
         id: '20521',
       });
-      expect(mockV4ChannelService.updateLotteryActivityExact).toHaveBeenCalledWith(
+      expect(mockV4ChannelService.lotteryActivityUpdate).toHaveBeenCalledWith(
         expect.objectContaining({
           channelId: '3151318',
           id: '20521',
@@ -359,7 +359,7 @@ describe('LotteryServiceSdk', () => {
   // ============================================================
   describe('deleteLotteryActivity (AC #5)', () => {
     it('11.5-SVC-011: should delete lottery activity', async () => {
-      mockV4ChannelService.deleteLotteryActivityExact.mockResolvedValue({
+      mockV4ChannelService.lotteryActivityDelete.mockResolvedValue({
         code: 200,
         status: 'success',
         data: {},
@@ -370,7 +370,7 @@ describe('LotteryServiceSdk', () => {
         id: '20521',
       });
 
-      expect(mockV4ChannelService.deleteLotteryActivityExact).toHaveBeenCalledWith({
+      expect(mockV4ChannelService.lotteryActivityDelete).toHaveBeenCalledWith({
         channelId: '3151318',
         id: '20521',
       });
@@ -613,7 +613,7 @@ describe('LotteryServiceSdk', () => {
   // ============================================================
   describe('Error Handling', () => {
     it('11.5-SVC-018: should wrap SDK errors with PolyVError', async () => {
-      mockV4ChannelService.createLotteryActivityExact.mockRejectedValue(
+      mockV4ChannelService.lotteryActivityCreate.mockRejectedValue(
         new Error('Network error')
       );
 

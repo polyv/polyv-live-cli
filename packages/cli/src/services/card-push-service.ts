@@ -99,8 +99,8 @@ export class CardPushServiceSdk {
     if (params.linkEnabled) requestParams.linkEnabled = params.linkEnabled;
     if (params.redirectType) requestParams.redirectType = params.redirectType;
 
-    const result = await this.v4Channel.createCardPushExact(
-      requestParams as unknown as Parameters<PolyVClient['v4Channel']['createCardPushExact']>[0]
+    const result = await this.v4Channel.cardPushCreate(
+      requestParams as unknown as Parameters<PolyVClient['v4Channel']['cardPushCreate']>[0]
     );
     return this.unwrapData<CreatedCardPush>(result) as CreatedCardPush;
   }
@@ -138,8 +138,8 @@ export class CardPushServiceSdk {
     if (params.linkEnabled) requestBody.linkEnabled = params.linkEnabled;
     if (params.redirectType) requestBody.redirectType = params.redirectType;
 
-    const result = await this.v4Channel.updateCardPushExact(
-      requestBody as unknown as Parameters<PolyVClient['v4Channel']['updateCardPushExact']>[0]
+    const result = await this.v4Channel.cardPushUpdate(
+      requestBody as unknown as Parameters<PolyVClient['v4Channel']['cardPushUpdate']>[0]
     );
     return this.unwrapData<{ id: number; [key: string]: unknown }>(result) || { id: parseInt(params.cardPushId, 10) };
   }
@@ -157,7 +157,7 @@ export class CardPushServiceSdk {
       throw new Error('Card-push ID is required (卡片推送ID是必需的)');
     }
 
-    await this.v4Channel.pushCardPushExact({
+    await this.v4Channel.cardPushPush({
       channelId: parseInt(params.channelId, 10),
       cardPushId: parseInt(params.cardPushId, 10),
     });
@@ -176,7 +176,7 @@ export class CardPushServiceSdk {
       throw new Error('Card-push ID is required (卡片推送ID是必需的)');
     }
 
-    await this.v4Channel.cancelCardPushExact({
+    await this.v4Channel.cardPushCancelPush({
       channelId: parseInt(params.channelId, 10),
       cardPushId: parseInt(params.cardPushId, 10),
     });
@@ -195,7 +195,7 @@ export class CardPushServiceSdk {
       throw new Error('Card-push ID is required (卡片推送ID是必需的)');
     }
 
-    await this.v4Channel.deleteCardPushExact({
+    await this.v4Channel.cardPushDelete({
       channelId: parseInt(params.channelId, 10),
       cardPushId: parseInt(params.cardPushId, 10),
     });
@@ -206,7 +206,7 @@ export class CardPushServiceSdk {
       throw new Error('Channel ID is required (频道ID是必需的)');
     }
 
-    const result = await this.v4Channel.getShareExact({ channelId });
+    const result = await this.v4Channel.shareGet({ channelId });
     return this.unwrapData<Record<string, unknown>>(result) || {};
   }
 
@@ -233,8 +233,8 @@ export class CardPushServiceSdk {
       webShareCustomUrlWithParamEnabled: params.webShareCustomUrlWithParamEnabled,
     });
 
-    const result = await this.v4Channel.updateShareExact(
-      requestParams as Parameters<PolyVClient['v4Channel']['updateShareExact']>[0]
+    const result = await this.v4Channel.shareUpdate(
+      requestParams as Parameters<PolyVClient['v4Channel']['shareUpdate']>[0]
     );
     return this.unwrapData<Record<string, unknown>>(result) || { success: true };
   }

@@ -77,7 +77,7 @@ describe('V4ChannelService core exact API paths', () => {
   it('calls operate and statistics list endpoints', async () => {
     mockHttpClient.get.mockResolvedValue({ contents: [] });
 
-    await service.listChannelBasicExact({
+    await service.listAllChannelBasic({
       categoryIds: ['1', '2'],
       channelIds: ['123', '456'],
       watchStatus: 'live',

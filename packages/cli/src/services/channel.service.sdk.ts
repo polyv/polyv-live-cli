@@ -616,9 +616,9 @@ export class ChannelServiceSdk {
     }
   }
 
-  async listChannelBasicExact(params: any = {}): Promise<any> {
+  async listAllChannelBasic(params: any = {}): Promise<any> {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
-    return client.v4Channel.listChannelBasicExact(params);
+    return client.v4Channel.listAllChannelBasic(params);
   }
 
   async listChannelSimple(params: any = {}): Promise<any> {

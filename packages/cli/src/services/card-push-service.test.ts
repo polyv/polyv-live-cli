@@ -16,11 +16,11 @@ const mockHttpClient = {
 
 const mockV4Channel = {
   listCardPushes: jest.fn((params) => mockHttpClient.get('/live/v4/channel/card-push/list', { params })),
-  createCardPushExact: jest.fn((params) => mockHttpClient.get('/live/v4/channel/card-push/create', { params })),
-  updateCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/update', params)),
-  pushCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/push', params)),
-  cancelCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/cancel-push', params)),
-  deleteCardPushExact: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/delete', params)),
+  cardPushCreate: jest.fn((params) => mockHttpClient.get('/live/v4/channel/card-push/create', { params })),
+  cardPushUpdate: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/update', params)),
+  cardPushPush: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/push', params)),
+  cardPushCancelPush: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/cancel-push', params)),
+  cardPushDelete: jest.fn((params) => mockHttpClient.post('/live/v4/channel/card-push/delete', params)),
 };
 
 const mockClient = {

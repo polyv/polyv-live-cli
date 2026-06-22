@@ -29,16 +29,16 @@ describe('V4ChannelService interaction exact API paths', () => {
     mockHttpClient.get.mockResolvedValue({ contents: [] });
     mockHttpClient.post.mockResolvedValue({ id: 11 });
 
-    await service.createLotteryActivityExact({
+    await service.lotteryActivityCreate({
       channelId: '123',
       activityName: 'Lucky draw',
       lotteryCondition: 'none',
       amount: 1,
       prizeName: 'Prize',
     });
-    await service.getLotteryActivityExact({ channelId: '123', id: '11' });
-    await service.listLotteryActivitiesExact({ channelId: '123', pageNumber: 1, pageSize: 10 });
-    await service.updateLotteryActivityExact({
+    await service.lotteryActivityGet({ channelId: '123', id: '11' });
+    await service.lotteryActivityList({ channelId: '123', pageNumber: 1, pageSize: 10 });
+    await service.lotteryActivityUpdate({
       channelId: '123',
       id: '11',
       activityName: 'Lucky draw',
@@ -46,7 +46,7 @@ describe('V4ChannelService interaction exact API paths', () => {
       amount: 2,
       prizeName: 'Prize',
     });
-    await service.deleteLotteryActivityExact({ channelId: '123', id: '11' });
+    await service.lotteryActivityDelete({ channelId: '123', id: '11' });
     await service.createConditionWaitLottery({ channelId: '123', id: '11', lotteryTime: 1730000000000 });
     await service.listLotteryActivityRecords({ channelId: '123', pageNumber: 1, pageSize: 10 });
 
@@ -340,7 +340,7 @@ describe('V4ChannelService interaction exact API paths', () => {
   });
 
   it('validates required interaction parameters', async () => {
-    await expect(service.createLotteryActivityExact({
+    await expect(service.lotteryActivityCreate({
       channelId: '123',
       activityName: 'Lucky draw',
       lotteryCondition: 'none',

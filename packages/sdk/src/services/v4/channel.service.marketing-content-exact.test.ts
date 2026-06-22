@@ -25,7 +25,7 @@ describe('V4ChannelService marketing and content exact API paths', () => {
     mockHttpClient.post.mockResolvedValue({});
 
     await service.listCardPushes({ channelId: '123' });
-    await service.createCardPushExact({
+    await service.cardPushCreate({
       channelId: '123',
       imageType: 'custom',
       title: 'Card',
@@ -33,12 +33,12 @@ describe('V4ChannelService marketing and content exact API paths', () => {
       duration: 5,
       showCondition: 'PUSH',
     });
-    await service.updateCardPushExact({ channelId: '123', cardPushId: '1', title: 'New Card', duration: 10 });
-    await service.deleteCardPushExact({ channelId: '123', cardPushId: '1' });
-    await service.pushCardPushExact({ channelId: '123', cardPushId: '1' });
-    await service.cancelCardPushExact({ channelId: '123', cardPushId: '1' });
-    await service.getShareExact({ channelId: '123' });
-    await service.updateShareExact({ channelId: '123', shareBtnEnable: 'Y', titleType: 'follow' });
+    await service.cardPushUpdate({ channelId: '123', cardPushId: '1', title: 'New Card', duration: 10 });
+    await service.cardPushDelete({ channelId: '123', cardPushId: '1' });
+    await service.cardPushPush({ channelId: '123', cardPushId: '1' });
+    await service.cardPushCancelPush({ channelId: '123', cardPushId: '1' });
+    await service.shareGet({ channelId: '123' });
+    await service.shareUpdate({ channelId: '123', shareBtnEnable: 'Y', titleType: 'follow' });
 
     expect(mockHttpClient.get).toHaveBeenCalledWith('/live/v4/channel/card-push/list', {
       params: { channelId: '123' },
@@ -95,10 +95,10 @@ describe('V4ChannelService marketing and content exact API paths', () => {
       productListSortType: 'DESC',
       productTagSortOrderIds: [1, 2],
     });
-    await service.listProductTagsExact({ channelId: '123', pageNumber: 1, pageSize: 10 });
-    await service.createProductTagExact({ channelId: '123', name: 'Hot' });
-    await service.updateProductTagExact({ channelId: '123', id: '7', name: 'New Hot' });
-    await service.deleteProductTagExact({ channelId: '123', id: '7' });
+    await service.productTagList({ channelId: '123', pageNumber: 1, pageSize: 10 });
+    await service.productTagCreate({ channelId: '123', name: 'Hot' });
+    await service.productTagUpdate({ channelId: '123', id: '7', name: 'New Hot' });
+    await service.productTagDelete({ channelId: '123', id: '7' });
     await service.listProductStats({ channelId: '123', pageNumber: 1, pageSize: 10, productName: 'Book' });
     await service.getProductStatsSummary({ channelId: '123', sessionId: 'session1' });
     await service.sortChannelProductRank({ channelId: '123', productId: '9', rank: 2 });
@@ -236,7 +236,7 @@ describe('V4ChannelService marketing and content exact API paths', () => {
   });
 
   it('validates marketing and content exact parameters', async () => {
-    await expect(service.createCardPushExact({
+    await expect(service.cardPushCreate({
       channelId: '123',
       imageType: 'custom',
       title: 'Card',

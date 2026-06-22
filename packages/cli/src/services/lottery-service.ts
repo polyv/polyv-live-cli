@@ -48,7 +48,7 @@ export class LotteryServiceSdk {
    */
   async createLotteryActivity(params: CreateLotteryActivityParams): Promise<any> {
     try {
-      const result = await this.v4Channel.createLotteryActivityExact(
+      const result = await this.v4Channel.lotteryActivityCreate(
         this.buildLotteryActivityCreate(params)
       );
       return result;
@@ -64,7 +64,7 @@ export class LotteryServiceSdk {
    */
   async listLotteryActivities(params: ListLotteryActivitiesParams): Promise<any> {
     try {
-      const result = await this.v4Channel.listLotteryActivitiesExact(params);
+      const result = await this.v4Channel.lotteryActivityList(params);
       return result;
     } catch (error) {
       throw this.wrapError(error, 'listLotteryActivities');
@@ -78,7 +78,7 @@ export class LotteryServiceSdk {
    */
   async getLotteryActivity(params: GetLotteryActivityParams): Promise<any> {
     try {
-      const result = await this.v4Channel.getLotteryActivityExact(params);
+      const result = await this.v4Channel.lotteryActivityGet(params);
       return result;
     } catch (error) {
       throw this.wrapError(error, 'getLotteryActivity');
@@ -92,12 +92,12 @@ export class LotteryServiceSdk {
    */
   async updateLotteryActivity(params: UpdateLotteryActivityParams): Promise<any> {
     try {
-      const currentResponse = await this.v4Channel.getLotteryActivityExact({
+      const currentResponse = await this.v4Channel.lotteryActivityGet({
         channelId: params.channelId,
         id: params.id,
       });
       const current = this.unwrapData<Record<string, unknown>>(currentResponse) ?? {};
-      const result = await this.v4Channel.updateLotteryActivityExact(
+      const result = await this.v4Channel.lotteryActivityUpdate(
         this.buildLotteryActivityUpdate(params, current)
       );
       return result ?? this.successResponse();
@@ -113,7 +113,7 @@ export class LotteryServiceSdk {
    */
   async deleteLotteryActivity(params: DeleteLotteryActivityParams): Promise<any> {
     try {
-      const result = await this.v4Channel.deleteLotteryActivityExact(params);
+      const result = await this.v4Channel.lotteryActivityDelete(params);
       return result ?? this.successResponse();
     } catch (error) {
       throw this.wrapError(error, 'deleteLotteryActivity');

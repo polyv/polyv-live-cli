@@ -445,7 +445,7 @@ describeWithCredentials('SDK real API integration smoke', () => {
       accountViewerConfig,
       sessionStats,
     ] = await Promise.all([
-      client.v4Channel.listChannelBasicExact({ pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.listAllChannelBasic({ pageNumber: 1, pageSize: 1 }),
       client.v4Channel.listChannelSimple({ pageNumber: 1, pageSize: 1 }),
       client.v4Channel.listLiveStatus({ channelIds: [channelId] }),
       client.v4Channel.listPlaybackSettings({ channelIds: [channelId] }),
@@ -494,7 +494,7 @@ describeWithCredentials('SDK real API integration smoke', () => {
       taskRewardActivities,
       taskRewardStats,
     ] = await Promise.all([
-      client.v4Channel.listLotteryActivitiesExact({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.lotteryActivityList({ channelId, pageNumber: 1, pageSize: 1 }),
       client.v4Channel.listLotteryActivityRecords({ channelId, pageNumber: 1, pageSize: 1 }),
       client.v4Channel.listLotteryViewerGroups({ channelId, pageNumber: 1, pageSize: 1 }),
       client.v4Channel.listLotteryBlacklistViewers({ channelId, pageNumber: 1, pageSize: 1 }),
@@ -534,11 +534,11 @@ describeWithCredentials('SDK real API integration smoke', () => {
       recordFiles,
     ] = await Promise.all([
       client.v4Channel.listCardPushes({ channelId }),
-      client.v4Channel.getShareExact({ channelId }),
+      client.v4Channel.shareGet({ channelId }),
       client.v4Channel.getCouponEnabled({ channelId }),
       client.v4Channel.listChannelCoupons({ channelId, pageNumber: 1, pageSize: 1 }),
       client.v4Channel.getProductPushRule({ channelId }),
-      client.v4Channel.listProductTagsExact({ channelId, pageNumber: 1, pageSize: 1 }),
+      client.v4Channel.productTagList({ channelId, pageNumber: 1, pageSize: 1 }),
       client.v4Channel.listProductStats({ channelId, pageNumber: 1, pageSize: 1 }),
       client.v4Channel.getProductStatsSummary({ channelId }),
       client.v4Channel.listMaterialRecordFiles({ channelId, pageNumber: 1, pageSize: 1 }),

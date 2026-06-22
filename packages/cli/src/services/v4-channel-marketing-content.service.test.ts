@@ -26,8 +26,8 @@ describe('v4 channel marketing/content CLI wrappers', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     v4Channel = {
-      getShareExact: jest.fn().mockResolvedValue({ shareBtnEnable: 'Y' }),
-      updateShareExact: jest.fn().mockResolvedValue({ shareBtnEnable: 'N' }),
+      shareGet: jest.fn().mockResolvedValue({ shareBtnEnable: 'Y' }),
+      shareUpdate: jest.fn().mockResolvedValue({ shareBtnEnable: 'N' }),
       getCouponEnabled: jest.fn().mockResolvedValue({ enabled: 'Y' }),
       updateCouponEnabled: jest.fn().mockResolvedValue(undefined),
       listChannelCoupons: jest.fn().mockResolvedValue({ contents: [], total: 0 }),
@@ -35,10 +35,10 @@ describe('v4 channel marketing/content CLI wrappers', () => {
       deleteChannelCoupons: jest.fn().mockResolvedValue(undefined),
       getProductPushRule: jest.fn().mockResolvedValue({ productPushRule: 'smallCard' }),
       updateProductPushRule: jest.fn().mockResolvedValue(undefined),
-      listProductTagsExact: jest.fn().mockResolvedValue({ contents: [], total: 0 }),
-      createProductTagExact: jest.fn().mockResolvedValue({ id: 1, name: 'tag' }),
-      updateProductTagExact: jest.fn().mockResolvedValue(undefined),
-      deleteProductTagExact: jest.fn().mockResolvedValue(undefined),
+      productTagList: jest.fn().mockResolvedValue({ contents: [], total: 0 }),
+      productTagCreate: jest.fn().mockResolvedValue({ id: 1, name: 'tag' }),
+      productTagUpdate: jest.fn().mockResolvedValue(undefined),
+      productTagDelete: jest.fn().mockResolvedValue(undefined),
       listProductStats: jest.fn().mockResolvedValue({ contents: [], total: 0 }),
       getProductStatsSummary: jest.fn().mockResolvedValue({ clicks: 0 }),
       sortChannelProductRank: jest.fn().mockResolvedValue(undefined),
@@ -67,8 +67,8 @@ describe('v4 channel marketing/content CLI wrappers', () => {
       weixinShareTitle: 'Share title',
     });
 
-    expect(v4Channel.getShareExact).toHaveBeenCalledWith({ channelId: '3151318' });
-    expect(v4Channel.updateShareExact).toHaveBeenCalledWith({
+    expect(v4Channel.shareGet).toHaveBeenCalledWith({ channelId: '3151318' });
+    expect(v4Channel.shareUpdate).toHaveBeenCalledWith({
       channelId: '3151318',
       shareBtnEnable: 'N',
       titleType: 'follow',
@@ -103,10 +103,10 @@ describe('v4 channel marketing/content CLI wrappers', () => {
       productPushRule: 'bigCard',
       productTagSortOrderIds: [1, 2],
     }));
-    expect(v4Channel.listProductTagsExact).toHaveBeenCalledWith({ channelId: '3151318', pageNumber: 2, pageSize: 10 });
-    expect(v4Channel.createProductTagExact).toHaveBeenCalledWith({ channelId: '3151318', name: 'tag' });
-    expect(v4Channel.updateProductTagExact).toHaveBeenCalledWith({ channelId: '3151318', id: 1, name: 'tag2' });
-    expect(v4Channel.deleteProductTagExact).toHaveBeenCalledWith({ channelId: '3151318', id: 1 });
+    expect(v4Channel.productTagList).toHaveBeenCalledWith({ channelId: '3151318', pageNumber: 2, pageSize: 10 });
+    expect(v4Channel.productTagCreate).toHaveBeenCalledWith({ channelId: '3151318', name: 'tag' });
+    expect(v4Channel.productTagUpdate).toHaveBeenCalledWith({ channelId: '3151318', id: 1, name: 'tag2' });
+    expect(v4Channel.productTagDelete).toHaveBeenCalledWith({ channelId: '3151318', id: 1 });
     expect(v4Channel.listProductStats).toHaveBeenCalledWith(expect.objectContaining({ channelId: '3151318', productId: '100', sessionId: 'session-1' }));
     expect(v4Channel.getProductStatsSummary).toHaveBeenCalledWith({ channelId: '3151318', sessionId: 'session-1' });
     expect(v4Channel.sortChannelProductRank).toHaveBeenCalledWith({ channelId: '3151318', productId: 100, rank: 1 });

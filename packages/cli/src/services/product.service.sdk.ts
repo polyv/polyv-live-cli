@@ -525,7 +525,7 @@ export class ProductServiceSdk {
     try {
       this.validateChannelId(options.channelId);
       const client = createSdkClient(this.authConfig, this.config.baseUrl);
-      return client.v4Channel.listProductTagsExact({
+      return client.v4Channel.productTagList({
         channelId: options.channelId,
         pageNumber: options.page ?? 1,
         pageSize: options.size ?? 20,
@@ -542,7 +542,7 @@ export class ProductServiceSdk {
         throw new PolyVValidationError('name is required', 'name', options.name, 'required');
       }
       const client = createSdkClient(this.authConfig, this.config.baseUrl);
-      return client.v4Channel.createProductTagExact({
+      return client.v4Channel.productTagCreate({
         channelId: options.channelId,
         name: options.name,
       });
@@ -559,7 +559,7 @@ export class ProductServiceSdk {
         throw new PolyVValidationError('name is required', 'name', options.name, 'required');
       }
       const client = createSdkClient(this.authConfig, this.config.baseUrl);
-      await client.v4Channel.updateProductTagExact({
+      await client.v4Channel.productTagUpdate({
         channelId: options.channelId,
         id: options.id,
         name: options.name,
@@ -574,7 +574,7 @@ export class ProductServiceSdk {
       this.validateChannelId(options.channelId);
       this.validatePositiveNumber(options.id, 'id');
       const client = createSdkClient(this.authConfig, this.config.baseUrl);
-      await client.v4Channel.deleteProductTagExact({
+      await client.v4Channel.productTagDelete({
         channelId: options.channelId,
         id: options.id,
       });

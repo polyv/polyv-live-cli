@@ -829,7 +829,7 @@ Scope:
     .option('--end-time <timestamp>', 'end timestamp', parseInteger)
     .option('--order-by <orderBy>', 'order by value')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action((options) => runChannelApiCommand(options, (service) => service.listChannelBasicExact(apiParams(options))));
+    .action((options) => runChannelApiCommand(options, (service) => service.listAllChannelBasic(apiParams(options))));
 
   channelCmd.command('simple-list')
     .description('List V4 channel compact information')

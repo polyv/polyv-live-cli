@@ -24,7 +24,7 @@ describe('V4 channel core CLI service wrappers', () => {
       getSubtitleConfig: jest.fn().mockResolvedValue({ realTimeSubtitleEnabled: 'N' }),
       listSessionStats: jest.fn().mockResolvedValue({ contents: [] }),
       listSubtitleLanguages: jest.fn().mockResolvedValue([]),
-      listChannelBasicExact: jest.fn().mockResolvedValue({ contents: [] }),
+      listAllChannelBasic: jest.fn().mockResolvedValue({ contents: [] }),
       listChannelSimple: jest.fn().mockResolvedValue({ contents: [] }),
       listWeixinBookings: jest.fn().mockResolvedValue({ contents: [] }),
       listInviteStats: jest.fn().mockResolvedValue({ contents: [] }),
@@ -61,7 +61,7 @@ describe('V4 channel core CLI service wrappers', () => {
     await service.getByRole({ channelId: '1', role: 'Teacher' });
     await service.getSubtitleConfig({ channelId: '1' });
     await service.listSubtitleLanguages();
-    await service.listChannelBasicExact({ pageNumber: 1 });
+    await service.listAllChannelBasic({ pageNumber: 1 });
     await service.listChannelSimple({ keyword: 'demo' });
     await service.listLiveStatus({ channelIds: ['1'] });
     await service.getDistributeStatistic({ channelId: '1', sessionIds: ['s1'] });
@@ -87,7 +87,7 @@ describe('V4 channel core CLI service wrappers', () => {
     expect(v4Channel.getByRole).toHaveBeenCalledWith({ channelId: '1', role: 'Teacher' });
     expect(v4Channel.getSubtitleConfig).toHaveBeenCalledWith({ channelId: '1' });
     expect(v4Channel.listSubtitleLanguages).toHaveBeenCalledWith();
-    expect(v4Channel.listChannelBasicExact).toHaveBeenCalledWith({ pageNumber: 1 });
+    expect(v4Channel.listAllChannelBasic).toHaveBeenCalledWith({ pageNumber: 1 });
     expect(v4Channel.listChannelSimple).toHaveBeenCalledWith({ keyword: 'demo' });
     expect(v4Channel.listLiveStatus).toHaveBeenCalledWith({ channelIds: ['1'] });
     expect(v4Channel.getDistributeStatistic).toHaveBeenCalledWith({ channelId: '1', sessionIds: ['s1'] });

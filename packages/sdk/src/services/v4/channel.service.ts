@@ -83,6 +83,7 @@ import type {
   CreateLotteryActivityResponse,
   GetLotteryActivityParams,
   ListLotteryActivitiesParams,
+  ListLotteryActivitiesResponse,
   UpdateLotteryActivityParams,
   DeleteLotteryActivityParams,
   BlacklistAddParams,
@@ -147,6 +148,7 @@ import type {
   CreateProductTagResponse,
   GetProductTagParams,
   ListProductTagsParams,
+  ListChannelProductTagsResponse,
   UpdateProductTagParams,
   DeleteProductTagParams,
   GiftItem,
@@ -201,10 +203,10 @@ import type {
   SubtitleLanguageInfo,
   SessionStatsListParams,
   SessionStatsListResponse,
-  ListChannelBasicExactParams,
-  ChannelBasicListExactResponse,
-  ChannelSimpleListExactParams,
-  ChannelSimpleListExactResponse,
+  ListAllChannelBasicParams,
+  ListAllChannelBasicResponse,
+  ListAllChannelSimpleParams,
+  ListAllChannelSimpleResponse,
   WeixinBookingListParams,
   WeixinBookingListResponse,
   InviteListParams,
@@ -233,13 +235,6 @@ import type {
   SetPullBitrateExactParams,
   UpdateTemplateExactParams,
   UpdateSubtitleConfigParams,
-  CreateLotteryActivityExactParams,
-  CreateLotteryActivityExactResponse,
-  GetLotteryActivityExactParams,
-  ListLotteryActivitiesExactParams,
-  ListLotteryActivitiesExactResponse,
-  UpdateLotteryActivityExactParams,
-  DeleteLotteryActivityExactParams,
   ListLotteryGroupViewersParams,
   ListLotteryGroupViewersResponse,
   ListLotteryViewerGroupsParams,
@@ -295,13 +290,7 @@ import type {
   CreateLotteryGroupViewerNamesResponse,
   ListCardPushesParams,
   ListCardPushesResponse,
-  CreateCardPushExactParams,
-  CreateCardPushExactResponse,
   CardPushIdParams,
-  UpdateCardPushExactParams,
-  GetShareExactParams,
-  ShareExact,
-  UpdateShareExactParams,
   CouponEnabledParams,
   CouponEnabled,
   UpdateCouponEnabledParams,
@@ -311,12 +300,6 @@ import type {
   ProductPushRuleParams,
   ProductPushRule,
   UpdateProductPushRuleParams,
-  ListProductTagsExactParams,
-  ListProductTagsExactResponse,
-  CreateProductTagExactParams,
-  CreateProductTagExactResponse,
-  UpdateProductTagExactParams,
-  DeleteProductTagExactParams,
   ListProductStatsParams,
   ListProductStatsResponse,
   ProductStatsSummaryParams,
@@ -1140,11 +1123,13 @@ export class V4ChannelService {
    * @returns Activity ID
    */
   async lotteryActivityCreate(params: CreateLotteryActivityParams): Promise<CreateLotteryActivityResponse> {
-    this.validateChannelId(params.channelId);
+    this.validateLotteryActivityBody(params);
+    const { channelId, ...body } = params;
 
     const response = await this.client.httpClient.post<CreateLotteryActivityResponse>(
-      '/live/v4/channel/lottery-activity/lottery-activity-create',
-      params
+      '/live/v4/channel/lottery-activity/create',
+      body,
+      { params: { channelId } }
     );
     return response as unknown as CreateLotteryActivityResponse;
   }
@@ -1159,7 +1144,7 @@ export class V4ChannelService {
     this.validateChannelId(params.channelId);
 
     const response = await this.client.httpClient.get<LotteryActivity>(
-      '/live/v4/channel/lottery-activity/lottery-activity-get',
+      '/live/v4/channel/lottery-activity/get',
       { params }
     );
     return response as unknown as LotteryActivity;
@@ -1171,15 +1156,15 @@ export class V4ChannelService {
    * @param params - Query parameters
    * @returns Lottery activities list
    */
-  async lotteryActivityList(params: ListLotteryActivitiesParams): Promise<{ contents: LotteryActivity[] }> {
+  async lotteryActivityList(params: ListLotteryActivitiesParams): Promise<ListLotteryActivitiesResponse> {
     this.validateChannelId(params.channelId);
     this.validatePaginationParams(params);
 
-    const response = await this.client.httpClient.get<{ contents: LotteryActivity[] }>(
-      '/live/v4/channel/lottery-activity/lottery-activity-list',
+    const response = await this.client.httpClient.get<ListLotteryActivitiesResponse>(
+      '/live/v4/channel/lottery-activity/list',
       { params }
     );
-    return response as unknown as { contents: LotteryActivity[] };
+    return response as unknown as ListLotteryActivitiesResponse;
   }
 
   /**
@@ -1188,11 +1173,14 @@ export class V4ChannelService {
    * @param params - Update parameters
    */
   async lotteryActivityUpdate(params: UpdateLotteryActivityParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateLotteryActivityBody(params);
+    this.validateRequiredId(params.id, 'id');
+    const { channelId, ...body } = params;
 
     await this.client.httpClient.post(
-      '/live/v4/channel/lottery-activity/lottery-activity-update',
-      params
+      '/live/v4/channel/lottery-activity/update',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -1203,11 +1191,13 @@ export class V4ChannelService {
    */
   async lotteryActivityDelete(params: DeleteLotteryActivityParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    const { channelId, ...body } = params;
 
     await this.client.httpClient.post(
-      '/live/v4/channel/lottery-activity/lottery-activity-delete',
-      null,
-      { params }
+      '/live/v4/channel/lottery-activity/delete',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -1484,7 +1474,7 @@ export class V4ChannelService {
     this.validateChannelId(params.channelId);
 
     const response = await this.client.httpClient.get<ShareSettings>(
-      '/live/v4/channel/market/share/get',
+      '/live/v4/channel/share/get',
       { params }
     );
     return response as unknown as ShareSettings;
@@ -1495,13 +1485,19 @@ export class V4ChannelService {
    *
    * @param params - Update parameters
    */
-  async shareUpdate(params: UpdateShareParams): Promise<void> {
+  async shareUpdate(params: UpdateShareParams): Promise<ShareSettings> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.shareBtnEnable, 'shareBtnEnable');
+    this.validateOptionalYn(params.shareBtnEnable, 'shareBtnEnable');
+    this.validateRequiredString(params.titleType, 'titleType');
+    this.validateOptionalYn(params.weixinShareCustomUrlWithParamEnabled, 'weixinShareCustomUrlWithParamEnabled');
+    this.validateOptionalYn(params.webShareCustomUrlWithParamEnabled, 'webShareCustomUrlWithParamEnabled');
 
-    await this.client.httpClient.post(
-      '/live/v4/channel/market/share/update',
-      params
+    const response = await this.client.httpClient.get<ShareSettings>(
+      '/live/v4/channel/share/update',
+      { params }
     );
+    return response as unknown as ShareSettings;
   }
 
   /**
@@ -1511,11 +1507,11 @@ export class V4ChannelService {
    * @returns Card ID
    */
   async cardPushCreate(params: CreateCardPushParams): Promise<CreateCardPushResponse> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushCreateParams(params);
 
-    const response = await this.client.httpClient.post<CreateCardPushResponse>(
-      '/live/v4/channel/market/cardPush/create',
-      params
+    const response = await this.client.httpClient.get<CreateCardPushResponse>(
+      '/live/v4/channel/card-push/create',
+      { params }
     );
     return response as unknown as CreateCardPushResponse;
   }
@@ -1542,10 +1538,11 @@ export class V4ChannelService {
    * @param params - Update parameters
    */
   async cardPushUpdate(params: UpdateCardPushParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
+    this.validateCardPushOptionalParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/update',
+      '/live/v4/channel/card-push/update',
       params
     );
   }
@@ -1556,10 +1553,10 @@ export class V4ChannelService {
    * @param params - Delete parameters
    */
   async cardPushDelete(params: DeleteCardPushParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/delete',
+      '/live/v4/channel/card-push/delete',
       null,
       { params }
     );
@@ -1571,10 +1568,10 @@ export class V4ChannelService {
    * @param params - Push parameters
    */
   async cardPushPush(params: PushCardParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/push',
+      '/live/v4/channel/card-push/push',
       null,
       { params }
     );
@@ -1586,10 +1583,10 @@ export class V4ChannelService {
    * @param params - Cancel parameters
    */
   async cardPushCancelPush(params: CancelCardPushParams): Promise<void> {
-    this.validateChannelId(params.channelId);
+    this.validateCardPushIdParams(params);
 
     await this.client.httpClient.post(
-      '/live/v4/channel/market/cardPush/cancelPush',
+      '/live/v4/channel/card-push/cancel-push',
       null,
       { params }
     );
@@ -1785,10 +1782,13 @@ export class V4ChannelService {
    */
   async productTagCreate(params: CreateProductTagParams): Promise<CreateProductTagResponse> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredString(params.name, 'name');
 
+    const { channelId, ...body } = params;
     const response = await this.client.httpClient.post<CreateProductTagResponse>(
-      '/live/v4/channel/product-tag/product-tag-create',
-      params
+      '/live/v4/channel/product/tag/create',
+      body,
+      { params: { channelId } }
     );
     return response as unknown as CreateProductTagResponse;
   }
@@ -1815,14 +1815,15 @@ export class V4ChannelService {
    * @param params - Query parameters
    * @returns Product tags list
    */
-  async productTagList(params: ListProductTagsParams): Promise<ProductTag[]> {
+  async productTagList(params: ListProductTagsParams): Promise<ListChannelProductTagsResponse> {
     this.validateChannelId(params.channelId);
+    this.validateOptionalPaginationParams(params);
 
-    const response = await this.client.httpClient.get<ProductTag[]>(
-      '/live/v4/channel/product-tag/product-tag-list',
+    const response = await this.client.httpClient.get<ListChannelProductTagsResponse>(
+      '/live/v4/channel/product/tag/list',
       { params }
     );
-    return response as unknown as ProductTag[];
+    return response as unknown as ListChannelProductTagsResponse;
   }
 
   /**
@@ -1832,10 +1833,14 @@ export class V4ChannelService {
    */
   async productTagUpdate(params: UpdateProductTagParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
+    this.validateRequiredString(params.name, 'name');
 
+    const { channelId, ...body } = params;
     await this.client.httpClient.post(
-      '/live/v4/channel/product-tag/product-tag-update',
-      params
+      '/live/v4/channel/product/tag/update',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -1846,11 +1851,13 @@ export class V4ChannelService {
    */
   async productTagDelete(params: DeleteProductTagParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    this.validateRequiredId(params.id, 'id');
 
+    const { channelId, ...body } = params;
     await this.client.httpClient.post(
-      '/live/v4/channel/product-tag/product-tag-delete',
-      null,
-      { params }
+      '/live/v4/channel/product/tag/delete',
+      body,
+      { params: { channelId } }
     );
   }
 
@@ -2326,30 +2333,30 @@ export class V4ChannelService {
   /**
    * Query all channels' basic information.
    */
-  async listChannelBasicExact(
-    params: ListChannelBasicExactParams = {}
-  ): Promise<ChannelBasicListExactResponse> {
+  async listAllChannelBasic(
+    params: ListAllChannelBasicParams = {}
+  ): Promise<ListAllChannelBasicResponse> {
     this.validateOptionalPaginationParams(params);
     const queryParams = this.buildListChannelBasicParams(params);
 
-    const response = await this.client.httpClient.get<ChannelBasicListExactResponse>(
+    const response = await this.client.httpClient.get<ListAllChannelBasicResponse>(
       '/live/v4/channel/basic/list',
       { params: queryParams }
     );
-    return response as unknown as ChannelBasicListExactResponse;
+    return response as unknown as ListAllChannelBasicResponse;
   }
 
   /**
    * Query all channels' compact information.
    */
-  async listChannelSimple(params: ChannelSimpleListExactParams = {}): Promise<ChannelSimpleListExactResponse> {
+  async listChannelSimple(params: ListAllChannelSimpleParams = {}): Promise<ListAllChannelSimpleResponse> {
     this.validateOptionalPaginationParams(params);
 
-    const response = await this.client.httpClient.get<ChannelSimpleListExactResponse>(
+    const response = await this.client.httpClient.get<ListAllChannelSimpleResponse>(
       '/live/v4/channel/simple/list',
       { params }
     );
-    return response as unknown as ChannelSimpleListExactResponse;
+    return response as unknown as ListAllChannelSimpleResponse;
   }
 
   /**
@@ -2639,87 +2646,6 @@ export class V4ChannelService {
       params
     );
     return response as unknown as SubtitleConfig;
-  }
-
-  // ============================================
-  // V4 Channel Interaction Exact API Paths
-  // ============================================
-
-  /**
-   * Create a lottery activity from the exact V4 activity API.
-   */
-  async createLotteryActivityExact(
-    params: CreateLotteryActivityExactParams
-  ): Promise<CreateLotteryActivityExactResponse> {
-    this.validateLotteryActivityBody(params);
-
-    const { channelId, ...body } = params;
-    const response = await this.client.httpClient.post<CreateLotteryActivityExactResponse>(
-      '/live/v4/channel/lottery-activity/create',
-      body,
-      { params: { channelId } }
-    );
-    return response as unknown as CreateLotteryActivityExactResponse;
-  }
-
-  /**
-   * Query one lottery activity.
-   */
-  async getLotteryActivityExact(params: GetLotteryActivityExactParams): Promise<CreateLotteryActivityExactResponse> {
-    this.validateChannelId(params.channelId);
-    this.validateRequiredId(params.id, 'id');
-
-    const response = await this.client.httpClient.get<CreateLotteryActivityExactResponse>(
-      '/live/v4/channel/lottery-activity/get',
-      { params }
-    );
-    return response as unknown as CreateLotteryActivityExactResponse;
-  }
-
-  /**
-   * List lottery activities.
-   */
-  async listLotteryActivitiesExact(
-    params: ListLotteryActivitiesExactParams
-  ): Promise<ListLotteryActivitiesExactResponse> {
-    this.validateChannelId(params.channelId);
-    this.validateOptionalPaginationParams(params);
-
-    const response = await this.client.httpClient.get<ListLotteryActivitiesExactResponse>(
-      '/live/v4/channel/lottery-activity/list',
-      { params }
-    );
-    return response as unknown as ListLotteryActivitiesExactResponse;
-  }
-
-  /**
-   * Update a lottery activity.
-   */
-  async updateLotteryActivityExact(params: UpdateLotteryActivityExactParams): Promise<void> {
-    this.validateLotteryActivityBody(params);
-    this.validateRequiredId(params.id, 'id');
-
-    const { channelId, ...body } = params;
-    await this.client.httpClient.post(
-      '/live/v4/channel/lottery-activity/update',
-      body,
-      { params: { channelId } }
-    );
-  }
-
-  /**
-   * Delete a lottery activity.
-   */
-  async deleteLotteryActivityExact(params: DeleteLotteryActivityExactParams): Promise<void> {
-    this.validateChannelId(params.channelId);
-    this.validateRequiredId(params.id, 'id');
-
-    const { channelId, ...body } = params;
-    await this.client.httpClient.post(
-      '/live/v4/channel/lottery-activity/delete',
-      body,
-      { params: { channelId } }
-    );
   }
 
   /**
@@ -3254,102 +3180,6 @@ export class V4ChannelService {
   }
 
   /**
-   * Create a channel card push. This API is GET in the source document.
-   */
-  async createCardPushExact(params: CreateCardPushExactParams): Promise<CreateCardPushExactResponse> {
-    this.validateCardPushCreateParams(params);
-
-    const response = await this.client.httpClient.get<CreateCardPushExactResponse>(
-      '/live/v4/channel/card-push/create',
-      { params }
-    );
-    return response as unknown as CreateCardPushExactResponse;
-  }
-
-  /**
-   * Update a channel card push.
-   */
-  async updateCardPushExact(params: UpdateCardPushExactParams): Promise<void> {
-    this.validateCardPushIdParams(params);
-    this.validateCardPushOptionalParams(params);
-
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/update',
-      params
-    );
-  }
-
-  /**
-   * Delete a channel card push.
-   */
-  async deleteCardPushExact(params: CardPushIdParams): Promise<void> {
-    this.validateCardPushIdParams(params);
-
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/delete',
-      null,
-      { params }
-    );
-  }
-
-  /**
-   * Push a channel card.
-   */
-  async pushCardPushExact(params: CardPushIdParams): Promise<void> {
-    this.validateCardPushIdParams(params);
-
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/push',
-      null,
-      { params }
-    );
-  }
-
-  /**
-   * Cancel a pushed channel card.
-   */
-  async cancelCardPushExact(params: CardPushIdParams): Promise<void> {
-    this.validateCardPushIdParams(params);
-
-    await this.client.httpClient.post(
-      '/live/v4/channel/card-push/cancel-push',
-      null,
-      { params }
-    );
-  }
-
-  /**
-   * Query new channel WeChat share settings.
-   */
-  async getShareExact(params: GetShareExactParams): Promise<ShareExact> {
-    this.validateChannelId(params.channelId);
-
-    const response = await this.client.httpClient.get<ShareExact>(
-      '/live/v4/channel/share/get',
-      { params }
-    );
-    return response as unknown as ShareExact;
-  }
-
-  /**
-   * Update new channel WeChat share settings. This API is GET in the source document.
-   */
-  async updateShareExact(params: UpdateShareExactParams): Promise<ShareExact> {
-    this.validateChannelId(params.channelId);
-    this.validateRequiredString(params.shareBtnEnable, 'shareBtnEnable');
-    this.validateOptionalYn(params.shareBtnEnable, 'shareBtnEnable');
-    this.validateRequiredString(params.titleType, 'titleType');
-    this.validateOptionalYn(params.weixinShareCustomUrlWithParamEnabled, 'weixinShareCustomUrlWithParamEnabled');
-    this.validateOptionalYn(params.webShareCustomUrlWithParamEnabled, 'webShareCustomUrlWithParamEnabled');
-
-    const response = await this.client.httpClient.get<ShareExact>(
-      '/live/v4/channel/share/update',
-      { params }
-    );
-    return response as unknown as ShareExact;
-  }
-
-  /**
    * Query channel coupon switch.
    */
   async getCouponEnabled(params: CouponEnabledParams): Promise<CouponEnabled> {
@@ -3433,66 +3263,6 @@ export class V4ChannelService {
     );
   }
 
-  /**
-   * List channel product tags.
-   */
-  async listProductTagsExact(params: ListProductTagsExactParams): Promise<ListProductTagsExactResponse> {
-    this.validateChannelId(params.channelId);
-    this.validateOptionalPaginationParams(params);
-
-    const response = await this.client.httpClient.get<ListProductTagsExactResponse>(
-      '/live/v4/channel/product/tag/list',
-      { params }
-    );
-    return response as unknown as ListProductTagsExactResponse;
-  }
-
-  /**
-   * Create a channel product tag.
-   */
-  async createProductTagExact(params: CreateProductTagExactParams): Promise<CreateProductTagExactResponse> {
-    this.validateChannelId(params.channelId);
-    this.validateRequiredString(params.name, 'name');
-
-    const { channelId, ...body } = params;
-    const response = await this.client.httpClient.post<CreateProductTagExactResponse>(
-      '/live/v4/channel/product/tag/create',
-      body,
-      { params: { channelId } }
-    );
-    return response as unknown as CreateProductTagExactResponse;
-  }
-
-  /**
-   * Update a channel product tag.
-   */
-  async updateProductTagExact(params: UpdateProductTagExactParams): Promise<void> {
-    this.validateChannelId(params.channelId);
-    this.validateRequiredId(params.id, 'id');
-    this.validateRequiredString(params.name, 'name');
-
-    const { channelId, ...body } = params;
-    await this.client.httpClient.post(
-      '/live/v4/channel/product/tag/update',
-      body,
-      { params: { channelId } }
-    );
-  }
-
-  /**
-   * Delete a channel product tag.
-   */
-  async deleteProductTagExact(params: DeleteProductTagExactParams): Promise<void> {
-    this.validateChannelId(params.channelId);
-    this.validateRequiredId(params.id, 'id');
-
-    const { channelId, ...body } = params;
-    await this.client.httpClient.post(
-      '/live/v4/channel/product/tag/delete',
-      body,
-      { params: { channelId } }
-    );
-  }
 
   /**
    * List channel product statistics.
@@ -3748,7 +3518,7 @@ export class V4ChannelService {
     }
   }
 
-  private validateLotteryActivityBody(params: CreateLotteryActivityExactParams): void {
+  private validateLotteryActivityBody(params: CreateLotteryActivityParams): void {
     this.validateChannelId(params.channelId);
     this.validateRequiredString(params.activityName, 'activityName');
     this.validateRequiredString(params.lotteryCondition, 'lotteryCondition');
@@ -3799,7 +3569,7 @@ export class V4ChannelService {
     }
   }
 
-  private validateCardPushCreateParams(params: CreateCardPushExactParams): void {
+  private validateCardPushCreateParams(params: CreateCardPushParams): void {
     this.validateChannelId(params.channelId);
     this.validateRequiredString(params.imageType, 'imageType');
     this.validateRequiredString(params.title, 'title');
@@ -3817,7 +3587,7 @@ export class V4ChannelService {
     this.validateRequiredId(params.cardPushId, 'cardPushId');
   }
 
-  private validateCardPushOptionalParams(params: Partial<CreateCardPushExactParams>): void {
+  private validateCardPushOptionalParams(params: Partial<CreateCardPushParams>): void {
     this.validateOptionalYn(params.enterEnabled, 'enterEnabled');
     this.validateOptionalYn(params.linkEnabled, 'linkEnabled');
     if (params.countdownMsg !== undefined && params.countdownMsg.length > 8) {
@@ -3902,7 +3672,7 @@ export class V4ChannelService {
     });
   }
 
-  private buildListChannelBasicParams(params: ListChannelBasicExactParams): Record<string, unknown> {
+  private buildListChannelBasicParams(params: ListAllChannelBasicParams): Record<string, unknown> {
     const queryParams: Record<string, unknown> = { ...params };
 
     if (params.categoryIds !== undefined) {
