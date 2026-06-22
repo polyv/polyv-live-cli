@@ -24,12 +24,13 @@
 | 06 | 直播间互动暖场促活（打赏激励+暖场签到） | 互动 / 转化 | `account`、`channel`、`donate`、`checkin` | [06-donate-checkin-warmup.md](./06-donate-checkin-warmup.md) |
 | 07 | 场次级直播运营（新版场次编排+场次/频道数据复盘） | 预热 / 数据复盘 | `account`、`channel`、`session`、`statistics` | [07-session-statistics-replay.md](./07-session-statistics-replay.md) |
 | 08 | 观众分层运营（观众画像查询+用户自定义字段标签体系） | 数据复盘 / 治理 / 预热 | `account`、`channel`、`viewer`、`custom-field` | [08-viewer-segmentation-custom-field.md](./08-viewer-segmentation-custom-field.md) |
+| 09 | 直播间品牌化装修（观看页品牌物料+播放器水印/防录屏） | 预热 / 治理 | `account`、`channel`、`web`、`player` | [09-brand-watchpage-player.md](./09-brand-watchpage-player.md) |
 
 ---
 
 ## 二、覆盖统计
 
-- **已覆盖一级命令**：16 / 40
+- **已覆盖一级命令**：18 / 40
   - `account`（每个场景写入前的账号预检，真实执行）
   - `channel`（场景 01、02、03、04、05、06、07：建测试频道 + 验证）
   - `coupon`（场景 01：建券 + 绑定频道 + 开领券开关 + 验证）
@@ -46,9 +47,11 @@
   - `statistics`（场景 07：max-concurrent/channel-statistic/session-summary-list/channel-session-stats/view/product-click/product-list-click/audience device/audience region 九条只读命令真实执行成功；channel-summary 输出 undefined 已记录为 CLI handler 空值处理缺陷）
   - `viewer`（场景 08：viewer list 建画像基线 73 名观众 + viewer get 查详情 + viewer tag create 建 3 档分层标签 + tag list 复核 + tag add 打标并 viewer get 交叉验证持久化 + label create/list + label channel-ref add + lottery-wins）
   - `custom-field`（场景 08：custom-field add 新增 text 业务字段并 list 复核落库 + value save 写入观众字段值；add 经 list 交叉验证持久化，value save 返回 success 但 CLI 无读回路径已记录）
-- **未覆盖一级命令**：24 / 40（见下表「未覆盖」）
+  - `web`（场景 09：观看页开屏 splash-set Y→N→Y + 倒计时 countdown-set（countEnabled N→Y、startTime 写入）+ 主播名 publisher-set（经 channel get 复查）+ 直播介绍 menu intro-set（经 menu list 复查）+ 微信分享 share update（标题/描述前后对比）均真实持久化；likes-get/splash-get/countdown-get/menu list/share get 只读基线成功；basePv 经 likes-get viewers=1000 观众侧交叉验证）
+  - `player`（场景 09：player config update 水印标量参数 url/position/opacity + base-pv 真实持久化（get 复查命中）；warmup switch-update 暖场开关真实持久化（get 复查 N→Y）；logo-update 成功；anti-record get/watch-feedback-list 只读成功；config update 的 Y/N 开关与 anti-record update 已执行失败并记录）
+- **未覆盖一级命令**：22 / 40（见下表「未覆盖」）
 
-> 进度：16 / 40 = 40%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
+> 进度：18 / 40 = 45%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
 
 ---
 
@@ -76,7 +79,7 @@
 | 1 | `account` | 01（写入前预检，共享） | ✅ 已执行成功 | — | [01](./01-coupon-redemption.md) |
 | 2 | `ai` | — | ⬜ 未覆盖 | — | — |
 | 3 | `card-push` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
-| 4 | `channel` | 01、02、03、04、05、06、07、08 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md) |
+| 4 | `channel` | 01、02、03、04、05、06、07、08、09 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md) |
 | 5 | `chat` | — | ⬜ 未覆盖 | — | — |
 | 6 | `checkin` | 06 | ✅ 已执行成功 ² | 7983902 | [06](./06-donate-checkin-warmup.md) |
 | 7 | `coupon` | 01 | ✅ 已执行成功 | 7983877 | [01](./01-coupon-redemption.md) |
@@ -94,7 +97,7 @@
 | 19 | `partner` | — | ⬜ 未覆盖 | — | — |
 | 20 | `platform` | — | ⬜ 未覆盖 | — | — |
 | 21 | `playback` | — | ⬜ 未覆盖 | — | — |
-| 22 | `player` | — | ⬜ 未覆盖 | — | — |
+| 22 | `player` | 09 | ✅ 已执行成功 ⁵ | 7983934 | [09](./09-brand-watchpage-player.md) |
 | 23 | `product` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
 | 24 | `promotion` | — | ⬜ 未覆盖 | — | — |
 | 25 | `qa` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
@@ -110,7 +113,7 @@
 | 35 | `user` | — | ⬜ 未覆盖 | — | — |
 | 36 | `viewer` | 08 | ✅ 已执行成功 ⁴ | 7983932（频道落点；观众为账号级） | [08](./08-viewer-segmentation-custom-field.md) |
 | 37 | `watch-condition` | 05 | ✅ 已执行成功 ¹ | 7983898 | [05](./05-member-exclusive-whitelist.md) |
-| 38 | `web` | — | ⬜ 未覆盖 | — | — |
+| 38 | `web` | 09 | ✅ 已执行成功 ⁵ | 7983934 | [09](./09-brand-watchpage-player.md) |
 | 39 | `webapp` | — | ⬜ 未覆盖 | — | — |
 | 40 | `whitelist` | 05 | ✅ 已执行成功 | 7983898 | [05](./05-member-exclusive-whitelist.md) |
 
@@ -121,6 +124,8 @@
 > ³ `session` 的 `list`/`legacy-list`/`data-list` 真实执行成功；`create` 真实执行但**已执行失败**——测试账号 `nicksu` 未开通「新版场次手动创建」权益，返回 `当前用户不允许手动创建场次`，详见 [场景 07 第 12.2 节](./07-session-statistics-replay.md)。`statistics` 的 `max-concurrent`/`channel-statistic`/`session-summary-list`/`channel-session-stats`/`view`/`product-click`/`product-list-click`/`audience device`/`audience region` 九条只读命令真实执行成功；`channel-summary` 真实执行但**输出字面 `undefined`**（CLI handler 空值处理缺陷），详见 [场景 07 第 12.3 节](./07-session-statistics-replay.md)。`session`/`statistics` 两族均因只读命令真实执行成功而计入已覆盖。
 >
 > ⁴ `viewer` 与 `custom-field` 两族均为**账号级**命令（写入对本账号所有频道可见），本场景以新建测试频道 `7983932` 作为「标签关联频道」的频道侧落点。`viewer` 的 `list`/`get`/`tag create`/`tag list`/`tag add`（tag add 经 `viewer get` 的 `labels` 数组交叉验证已确认持久化）/`label create`/`label list`/`label channel-ref add`/`lottery-wins` 真实执行成功；`custom-field` 的 `add`（经 `custom-field list` 交叉验证已确认持久化）/`list`/`value save` 真实执行成功。其中 `viewer label channel-ref add` 与 `custom-field value save` 真实执行返回 `success` 但**当前 CLI 无只读读回路径**（`channel get` 的 `labelData` 复查仍空、`custom-field value` 下无 list/get、`viewer get` 不回显字段值），详见 [场景 08 第 12.1、12.2 节](./08-viewer-segmentation-custom-field.md)。`viewer`/`custom-field` 两族均因多条业务命令真实执行成功（且 tag add、custom-field add 经交叉验证确认持久化）而计入已覆盖。
+>
+> ⁵ `web` 与 `player` 两族在专用测试频道 `7983934` 上真实执行。`web` 族的 `info likes-get`/`splash-get`/`splash-set`（Y→N→Y 前后对比验证持久化）/`countdown-get`/`countdown-set`（countEnabled N→Y、startTime 写入，前后对比验证持久化）/`publisher-set`（经 `channel get` 的 `publisher` 字段复查持久化）/`menu list`/`menu intro-set`（经 `menu list` 复查 menuType=desc 内容持久化）/`share get`/`share update`（标题/描述前后对比验证持久化）真实执行成功；其中 `--base-pv 1000` 经 `web info likes-get` 的 `viewers=1000` 观众侧交叉验证。`player` 族的 `config get`（基线 + 多次复查）/`config update`（水印 URL/位置/透明度/base-pv 等**标量参数真实持久化**）/`warmup switch-update`（暖场开关经 `config get` 复查 N→Y 确认持久化）/`logo-update`/`anti-record get`/`watch-feedback-list` 真实执行成功。其中 `player config update` 的 Y/N 开关类参数（`--watermark-enabled`/`--warmup-enabled`）真实执行但**已执行失败**——返回 `success:true` + 列入 `updatedFields` 但 `config get` 复查未持久化（暖场开关的正确入口是独立子命令 `warmup switch-update`）；`player anti-record update` 真实执行但**已执行失败**——CLI `--model-type` 未映射到后端 `modelType`，报 `param should not be empty: modelType`。详见 [场景 09 第 12.1、12.2 节](./09-brand-watchpage-player.md)。`web`/`player` 两族均因多条业务命令真实执行成功（且 splash-set/countdown-set/share update/menu intro-set/publisher-set/player 标量水印/warmup switch-update 均经只读复查确认持久化）而计入已覆盖。
 
 ---
 
@@ -134,3 +139,4 @@
 - 2026-06-22：新增场景 06「直播间互动暖场促活 — 打赏激励 + 暖场签到」，真实执行覆盖 `donate`、`checkin`（测试频道 `7983902`，`donate config get`/`list`/`likes` 与 `checkin sessions`/`list` 五条只读命令真实执行成功；`donate config update` 4 次回显请求参数但 `get` 复查未持久化已执行失败并记录「成功假象」问题，`checkin start` 在未开播频道失败已执行失败并记录「签到需开播」问题）。累计覆盖 12 / 40。
 - 2026-06-22：新增场景 07「场次级直播运营 — 新版场次编排 + 场次/频道数据复盘」，真实执行覆盖 `session`、`statistics`（测试频道 `7983903`，`session list`/`legacy-list`/`data-list` 与 `statistics` 九条只读命令真实执行成功建立全 0 基线；`session create` 因账号级「新版场次手动创建」权益未开通已执行失败并记录，`statistics channel-summary` 输出 `undefined` 已记录为 CLI handler 空值处理缺陷）。累计覆盖 14 / 40。
 - 2026-06-23：新增场景 08「观众分层运营 — 观众画像查询 + 用户自定义字段标签体系」，真实执行覆盖 `viewer`、`custom-field`（测试频道 `7983932` 作为频道侧落点；`viewer list`/`get`/`tag create` 建 3 档分层标签 1282/1283/1284/`tag list`/`tag add` 打标并经 `viewer get` 交叉验证持久化/`label create`/`label list`/`label channel-ref add`/`lottery-wins` 与 `custom-field add` 新增字段并 `list` 交叉验证落库/`value save` 真实执行成功；`viewer label channel-ref add` 与 `custom-field value save` 返回 success 但 CLI 无读回路径已记录；发现 `viewer tag` 数字 id 与 `viewer label` 字符串 id 是两套不互通实体）。累计覆盖 16 / 40。
+- 2026-06-23：新增场景 09「直播间品牌化装修 — 观看页品牌物料 + 播放器水印/防录屏」，真实执行覆盖 `web`、`player`（测试频道 `7983934`；`web` 的 splash-set Y→N→Y、countdown-set（countEnabled N→Y、startTime 写入）、publisher-set（经 channel get 复查）、menu intro-set（经 menu list 复查）、share update（标题/描述前后对比）均真实持久化，likes-get/splash-get/countdown-get/menu list/share get 只读成功；`player` 的 config update 水印标量 url/position/opacity + base-pv 真实持久化、warmup switch-update 暖场开关 N→Y 持久化、logo-update 成功、anti-record get/watch-feedback-list 只读成功；`player config update` 的 Y/N 开关与 `anti-record update` 已执行失败并记录 `--model-type` 透传缺陷与「成功假象」问题；basePv 经 `web info likes-get` viewers=1000 观众侧交叉验证）。累计覆盖 18 / 40。
