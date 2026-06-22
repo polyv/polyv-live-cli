@@ -25,14 +25,15 @@
 | 07 | 场次级直播运营（新版场次编排+场次/频道数据复盘） | 预热 / 数据复盘 | `account`、`channel`、`session`、`statistics` | [07-session-statistics-replay.md](./07-session-statistics-replay.md) |
 | 08 | 观众分层运营（观众画像查询+用户自定义字段标签体系） | 数据复盘 / 治理 / 预热 | `account`、`channel`、`viewer`、`custom-field` | [08-viewer-segmentation-custom-field.md](./08-viewer-segmentation-custom-field.md) |
 | 09 | 直播间品牌化装修（观看页品牌物料+播放器水印/防录屏） | 预热 / 治理 | `account`、`channel`、`web`、`player` | [09-brand-watchpage-player.md](./09-brand-watchpage-player.md) |
+| 10 | 直播后回放复购（回放开关+回放/录制设置复盘） | 复购 / 数据复盘 | `account`、`channel`、`playback`、`record` | [10-postlive-playback-record-replay.md](./10-postlive-playback-record-replay.md) |
 
 ---
 
 ## 二、覆盖统计
 
-- **已覆盖一级命令**：18 / 40
+- **已覆盖一级命令**：20 / 40
   - `account`（每个场景写入前的账号预检，真实执行）
-  - `channel`（场景 01、02、03、04、05、06、07：建测试频道 + 验证）
+  - `channel`（场景 01、02、03、04、05、06、07、08、09、10：建测试频道 + 验证）
   - `coupon`（场景 01：建券 + 绑定频道 + 开领券开关 + 验证）
   - `product`（场景 02：上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
   - `card-push`（场景 02：建手动秒杀卡 + 观看触发红包卡 + push/cancel 状态流转验证）
@@ -49,9 +50,11 @@
   - `custom-field`（场景 08：custom-field add 新增 text 业务字段并 list 复核落库 + value save 写入观众字段值；add 经 list 交叉验证持久化，value save 返回 success 但 CLI 无读回路径已记录）
   - `web`（场景 09：观看页开屏 splash-set Y→N→Y + 倒计时 countdown-set（countEnabled N→Y、startTime 写入）+ 主播名 publisher-set（经 channel get 复查）+ 直播介绍 menu intro-set（经 menu list 复查）+ 微信分享 share update（标题/描述前后对比）均真实持久化；likes-get/splash-get/countdown-get/menu list/share get 只读基线成功；basePv 经 likes-get viewers=1000 观众侧交叉验证）
   - `player`（场景 09：player config update 水印标量参数 url/position/opacity + base-pv 真实持久化（get 复查命中）；warmup switch-update 暖场开关真实持久化（get 复查 N→Y）；logo-update 成功；anti-record get/watch-feedback-list 只读成功；config update 的 Y/N 开关与 anti-record update 已执行失败并记录）
-- **未覆盖一级命令**：22 / 40（见下表「未覆盖」）
+  - `playback`（场景 10：playback enabled set 回放总开关 N→Y→N 真实写入并经 enabled get 前后对比 + 跨频道 7983934 作用域对照验证持久化；list/setting-list/video-info 只读成功建立跨频道基线）
+  - `record`（场景 10：record setting get/file list/material-list 三条只读命令真实执行成功建立回放设置与录制暂存基线；setting set 6 种组合全部已执行失败并记录「新建未开播频道默认 origin=vod/videoId=null 被后端校验拒绝」问题，convert 已执行失败并记录「无录制 fileIds」问题）
+- **未覆盖一级命令**：20 / 40（见下表「未覆盖」）
 
-> 进度：18 / 40 = 45%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
+> 进度：20 / 40 = 50%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
 
 ---
 
@@ -79,7 +82,7 @@
 | 1 | `account` | 01（写入前预检，共享） | ✅ 已执行成功 | — | [01](./01-coupon-redemption.md) |
 | 2 | `ai` | — | ⬜ 未覆盖 | — | — |
 | 3 | `card-push` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
-| 4 | `channel` | 01、02、03、04、05、06、07、08、09 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md) |
+| 4 | `channel` | 01、02、03、04、05、06、07、08、09、10 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 / 7983898 / 7983902 / 7983903 / 7983932 / 7983934 / 7983937 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md)、[05](./05-member-exclusive-whitelist.md)、[06](./06-donate-checkin-warmup.md)、[07](./07-session-statistics-replay.md)、[08](./08-viewer-segmentation-custom-field.md)、[09](./09-brand-watchpage-player.md)、[10](./10-postlive-playback-record-replay.md) |
 | 5 | `chat` | — | ⬜ 未覆盖 | — | — |
 | 6 | `checkin` | 06 | ✅ 已执行成功 ² | 7983902 | [06](./06-donate-checkin-warmup.md) |
 | 7 | `coupon` | 01 | ✅ 已执行成功 | 7983877 | [01](./01-coupon-redemption.md) |
@@ -96,13 +99,13 @@
 | 18 | `monitor` | — | ⬜ 未覆盖 | — | — |
 | 19 | `partner` | — | ⬜ 未覆盖 | — | — |
 | 20 | `platform` | — | ⬜ 未覆盖 | — | — |
-| 21 | `playback` | — | ⬜ 未覆盖 | — | — |
+| 21 | `playback` | 10 | ✅ 已执行成功 ⁶ | 7983937 | [10](./10-postlive-playback-record-replay.md) |
 | 22 | `player` | 09 | ✅ 已执行成功 ⁵ | 7983934 | [09](./09-brand-watchpage-player.md) |
 | 23 | `product` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
 | 24 | `promotion` | — | ⬜ 未覆盖 | — | — |
 | 25 | `qa` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
 | 26 | `questionnaire` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
-| 27 | `record` | — | ⬜ 未覆盖 | — | — |
+| 27 | `record` | 10 | ✅ 已执行成功 ⁶ | 7983937 | [10](./10-postlive-playback-record-replay.md) |
 | 28 | `robot` | — | ⬜ 未覆盖 | — | — |
 | 29 | `session` | 07 | ✅ 已执行成功 ³ | 7983903 | [07](./07-session-statistics-replay.md) |
 | 30 | `setup` | — | ⬜ 未覆盖 | — | — |
@@ -126,6 +129,8 @@
 > ⁴ `viewer` 与 `custom-field` 两族均为**账号级**命令（写入对本账号所有频道可见），本场景以新建测试频道 `7983932` 作为「标签关联频道」的频道侧落点。`viewer` 的 `list`/`get`/`tag create`/`tag list`/`tag add`（tag add 经 `viewer get` 的 `labels` 数组交叉验证已确认持久化）/`label create`/`label list`/`label channel-ref add`/`lottery-wins` 真实执行成功；`custom-field` 的 `add`（经 `custom-field list` 交叉验证已确认持久化）/`list`/`value save` 真实执行成功。其中 `viewer label channel-ref add` 与 `custom-field value save` 真实执行返回 `success` 但**当前 CLI 无只读读回路径**（`channel get` 的 `labelData` 复查仍空、`custom-field value` 下无 list/get、`viewer get` 不回显字段值），详见 [场景 08 第 12.1、12.2 节](./08-viewer-segmentation-custom-field.md)。`viewer`/`custom-field` 两族均因多条业务命令真实执行成功（且 tag add、custom-field add 经交叉验证确认持久化）而计入已覆盖。
 >
 > ⁵ `web` 与 `player` 两族在专用测试频道 `7983934` 上真实执行。`web` 族的 `info likes-get`/`splash-get`/`splash-set`（Y→N→Y 前后对比验证持久化）/`countdown-get`/`countdown-set`（countEnabled N→Y、startTime 写入，前后对比验证持久化）/`publisher-set`（经 `channel get` 的 `publisher` 字段复查持久化）/`menu list`/`menu intro-set`（经 `menu list` 复查 menuType=desc 内容持久化）/`share get`/`share update`（标题/描述前后对比验证持久化）真实执行成功；其中 `--base-pv 1000` 经 `web info likes-get` 的 `viewers=1000` 观众侧交叉验证。`player` 族的 `config get`（基线 + 多次复查）/`config update`（水印 URL/位置/透明度/base-pv 等**标量参数真实持久化**）/`warmup switch-update`（暖场开关经 `config get` 复查 N→Y 确认持久化）/`logo-update`/`anti-record get`/`watch-feedback-list` 真实执行成功。其中 `player config update` 的 Y/N 开关类参数（`--watermark-enabled`/`--warmup-enabled`）真实执行但**已执行失败**——返回 `success:true` + 列入 `updatedFields` 但 `config get` 复查未持久化（暖场开关的正确入口是独立子命令 `warmup switch-update`）；`player anti-record update` 真实执行但**已执行失败**——CLI `--model-type` 未映射到后端 `modelType`，报 `param should not be empty: modelType`。详见 [场景 09 第 12.1、12.2 节](./09-brand-watchpage-player.md)。`web`/`player` 两族均因多条业务命令真实执行成功（且 splash-set/countdown-set/share update/menu intro-set/publisher-set/player 标量水印/warmup switch-update 均经只读复查确认持久化）而计入已覆盖。
+>
+> ⁶ `playback` 与 `record` 两族在专用测试频道 `7983937` 上真实执行。`playback` 族的 `enabled get`（基线/写后/回滚后/作用域对照 4 次）/`enabled set`（回放总开关 N→Y→N **真实写入并经 `enabled get` 前后对比 + 跨频道 `7983934` 作用域对照确认持久化**）/`list`（playback/vod 两种 list-type）/`setting-list`（批量 3 频道）/`video-info`（批量 2 频道）真实执行成功。`record` 族的 `setting get`（基线 + 收尾，返回全量回放设置字段）/`file list --user-id`（返回 `[]`）/`material-list`（totalItems=0）真实执行成功。其中 `record setting set` 真实执行但**已执行失败**——6 种取值组合全部报 `illegal playback origin`（`--origin record` 报 `unsupported record list`），根因是新建未开播频道默认回放配置 `origin=vod`/`videoId=null` 被后端「来源+视频」合法性校验拒绝（交叉验证既有频道 `7983934` 默认配置完全相同），即便纯开关或显式 `--playback-enabled N` 也无法绕过；`record convert` 真实执行但**已执行失败**——报 `param should not be empty: fileIds`，转存需真实录制文件 ID，未开播频道无录制文件。详见 [场景 10 第 12.2、12.3 节](./10-postlive-playback-record-replay.md)。`playback` 族因 `enabled set` 真实写入成功（前后对比验证）+ 四条只读命令真实执行成功而计入已覆盖；`record` 族因 `setting get`/`file list`/`material-list` 三条业务命令真实执行成功而计入已覆盖（与场景 06/07 只读命令计入覆盖的先例一致）。
 
 ---
 
@@ -140,3 +145,4 @@
 - 2026-06-22：新增场景 07「场次级直播运营 — 新版场次编排 + 场次/频道数据复盘」，真实执行覆盖 `session`、`statistics`（测试频道 `7983903`，`session list`/`legacy-list`/`data-list` 与 `statistics` 九条只读命令真实执行成功建立全 0 基线；`session create` 因账号级「新版场次手动创建」权益未开通已执行失败并记录，`statistics channel-summary` 输出 `undefined` 已记录为 CLI handler 空值处理缺陷）。累计覆盖 14 / 40。
 - 2026-06-23：新增场景 08「观众分层运营 — 观众画像查询 + 用户自定义字段标签体系」，真实执行覆盖 `viewer`、`custom-field`（测试频道 `7983932` 作为频道侧落点；`viewer list`/`get`/`tag create` 建 3 档分层标签 1282/1283/1284/`tag list`/`tag add` 打标并经 `viewer get` 交叉验证持久化/`label create`/`label list`/`label channel-ref add`/`lottery-wins` 与 `custom-field add` 新增字段并 `list` 交叉验证落库/`value save` 真实执行成功；`viewer label channel-ref add` 与 `custom-field value save` 返回 success 但 CLI 无读回路径已记录；发现 `viewer tag` 数字 id 与 `viewer label` 字符串 id 是两套不互通实体）。累计覆盖 16 / 40。
 - 2026-06-23：新增场景 09「直播间品牌化装修 — 观看页品牌物料 + 播放器水印/防录屏」，真实执行覆盖 `web`、`player`（测试频道 `7983934`；`web` 的 splash-set Y→N→Y、countdown-set（countEnabled N→Y、startTime 写入）、publisher-set（经 channel get 复查）、menu intro-set（经 menu list 复查）、share update（标题/描述前后对比）均真实持久化，likes-get/splash-get/countdown-get/menu list/share get 只读成功；`player` 的 config update 水印标量 url/position/opacity + base-pv 真实持久化、warmup switch-update 暖场开关 N→Y 持久化、logo-update 成功、anti-record get/watch-feedback-list 只读成功；`player config update` 的 Y/N 开关与 `anti-record update` 已执行失败并记录 `--model-type` 透传缺陷与「成功假象」问题；basePv 经 `web info likes-get` viewers=1000 观众侧交叉验证）。累计覆盖 18 / 40。
+- 2026-06-23：新增场景 10「直播后回放复购 — 回放开关 + 回放/录制设置复盘」，真实执行覆盖 `playback`、`record`（测试频道 `7983937`；`playback enabled set` 回放总开关 N→Y→N 真实写入并经 `enabled get` 前后对比 + 跨频道 `7983934` 作用域对照确认持久化，`playback list`/`setting-list`/`video-info`/`enabled get` 只读成功；`record setting get`/`file list`/`material-list` 三条只读命令真实执行成功建立回放设置与录制暂存基线；`record setting set` 6 种组合全部已执行失败并记录「新建未开播频道默认 origin=vod/videoId=null 被后端校验拒绝」问题，`record convert` 已执行失败并记录「无录制 fileIds」问题）。累计覆盖 20 / 40。
