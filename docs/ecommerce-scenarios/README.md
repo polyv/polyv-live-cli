@@ -19,21 +19,24 @@
 | 01 | 直播间优惠券承接（满减券配置+频道绑定+领券开关） | 预热 / 转化 | `account`、`channel`、`coupon` | [01-coupon-redemption.md](./01-coupon-redemption.md) |
 | 02 | 新品直播首发（商品上架+商品卡片节奏推送） | 转化 / 互动 | `account`、`channel`、`product`、`card-push` | [02-product-card-push.md](./02-product-card-push.md) |
 | 03 | 直播互动抽奖促活（多条件福袋配置+生命周期演练） | 互动 / 转化 | `account`、`channel`、`lottery` | [03-live-lottery.md](./03-live-lottery.md) |
+| 04 | 售前答疑与问卷收集（新品首发购买意向摸底+答疑卡编排） | 预热 / 互动 / 数据复盘 | `account`、`channel`、`questionnaire`、`qa` | [04-presale-qa-questionnaire.md](./04-presale-qa-questionnaire.md) |
 
 ---
 
 ## 二、覆盖统计
 
-- **已覆盖一级命令**：6 / 40
+- **已覆盖一级命令**：8 / 40
   - `account`（每个场景写入前的账号预检，真实执行）
-  - `channel`（场景 01、02、03：建测试频道 + 验证）
+  - `channel`（场景 01、02、03、04：建测试频道 + 验证）
   - `coupon`（场景 01：建券 + 绑定频道 + 开领券开关 + 验证）
   - `product`（场景 02：上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
   - `card-push`（场景 02：建手动秒杀卡 + 观看触发红包卡 + push/cancel 状态流转验证）
   - `lottery`（场景 03：建 none/duration/invite 三类福袋 + 列表/详情/更新加码/删除全生命周期；comment 类型已执行失败并记录）
-- **未覆盖一级命令**：34 / 40（见下表「未覆盖」）
+  - `questionnaire`（场景 04：建 2 张售前问卷 + detail 验证题目落库 + legacy-list 列出；V4 list 对未发布问卷返回空已记录）
+  - `qa`（场景 04：qa list 只读验证；qa add-edit 新建答题卡已执行失败并记录 CLI 三层限制）
+- **未覆盖一级命令**：32 / 40（见下表「未覆盖」）
 
-> 进度：6 / 40 = 15%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
+> 进度：8 / 40 = 20%。距离停止条件（40 / 40 全部至少被一个场景真实执行覆盖）仍需继续逐轮补充场景。
 
 ---
 
@@ -61,7 +64,7 @@
 | 1 | `account` | 01（写入前预检，共享） | ✅ 已执行成功 | — | [01](./01-coupon-redemption.md) |
 | 2 | `ai` | — | ⬜ 未覆盖 | — | — |
 | 3 | `card-push` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
-| 4 | `channel` | 01、02、03 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md) |
+| 4 | `channel` | 01、02、03、04 | ✅ 已执行成功 | 7983877 / 7983883 / 7983885 / 7983889 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md)、[03](./03-live-lottery.md)、[04](./04-presale-qa-questionnaire.md) |
 | 5 | `chat` | — | ⬜ 未覆盖 | — | — |
 | 6 | `checkin` | — | ⬜ 未覆盖 | — | — |
 | 7 | `coupon` | 01 | ✅ 已执行成功 | 7983877 | [01](./01-coupon-redemption.md) |
@@ -82,8 +85,8 @@
 | 22 | `player` | — | ⬜ 未覆盖 | — | — |
 | 23 | `product` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
 | 24 | `promotion` | — | ⬜ 未覆盖 | — | — |
-| 25 | `qa` | — | ⬜ 未覆盖 | — | — |
-| 26 | `questionnaire` | — | ⬜ 未覆盖 | — | — |
+| 25 | `qa` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
+| 26 | `questionnaire` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
 | 27 | `record` | — | ⬜ 未覆盖 | — | — |
 | 28 | `robot` | — | ⬜ 未覆盖 | — | — |
 | 29 | `session` | — | ⬜ 未覆盖 | — | — |
@@ -106,3 +109,4 @@
 - 2026-06-22：新增场景 01「直播间优惠券承接」，真实执行覆盖 `account`、`channel`、`coupon`（测试频道 `7983877`，领券开关已打开并验证）。
 - 2026-06-22：新增场景 02「新品直播首发 — 商品上架 + 商品卡片节奏推送」，真实执行覆盖 `product`、`card-push`（测试频道 `7983883`，上架 2 件商品，建 2 张卡片并验证 pushStatus N→Y→L 流转）。累计覆盖 5 / 40。
 - 2026-06-22：新增场景 03「直播互动抽奖促活 — 多条件福袋配置 + 生命周期演练」，真实执行覆盖 `lottery`（测试频道 `7983885`，建 none/duration/invite 三类福袋，演练列表/详情/更新加码/删除全生命周期；`--type comment` 真实执行失败并记录「活动时长不能为空」）。累计覆盖 6 / 40。
+- 2026-06-22：新增场景 04「售前答疑与问卷收集 — 新品首发购买意向摸底 + 答疑卡编排」，真实执行覆盖 `questionnaire`、`qa`（测试频道 `7983889`，建 2 张售前问卷并 detail/legacy-list 验证落库；记录 V4 `questionnaire list` 对未发布问卷返回空、`qa add-edit` 因 CLI 三层强制 question-id 非空无法新建两条问题）。累计覆盖 8 / 40。
