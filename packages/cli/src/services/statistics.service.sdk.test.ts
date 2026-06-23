@@ -25,7 +25,10 @@ const mockCreateSdkClient = sdkModule.createSdkClient as jest.MockedFunction<typ
 
 describe('StatisticsServiceSdk', () => {
   let service: StatisticsServiceSdk;
-  let mockSdkClient: { statistics: { [key: string]: jest.Mock } };
+  let mockSdkClient: {
+    statistics: { [key: string]: jest.Mock };
+    channel: { [key: string]: jest.Mock };
+  };
   const mockAuthConfig: AuthConfig = {
     appId: 'test-app-id',
     appSecret: 'test-app-secret',
@@ -51,6 +54,9 @@ describe('StatisticsServiceSdk', () => {
         getViewlog: jest.fn(),
         exportSessionStats: jest.fn(),
       },
+      channel: {
+        getSummary: jest.fn(),
+      },
     };
 
     mockCreateSdkClient.mockReturnValue(mockSdkClient as any);
@@ -68,6 +74,44 @@ describe('StatisticsServiceSdk', () => {
   describe('constructor', () => {
     it('should create instance with valid config', () => {
       expect(service).toBeInstanceOf(StatisticsServiceSdk);
+    });
+  });
+
+  describe('getSummary', () => {
+    it('should return summary data successfully', async () => {
+      const mockResponse = [
+        {
+          currentDay: '2026-06-01',
+          channelId: '7983903',
+          videoView: 12,
+        },
+      ];
+
+      mockSdkClient.channel.getSummary.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.getSummary({
+        channelId: '7983903',
+        startDay: '2026-06-01',
+        endDay: '2026-06-30',
+      });
+
+      expect(result).toEqual(mockResponse);
+      expect(mockSdkClient.channel.getSummary).toHaveBeenCalledWith('7983903', {
+        startDay: '2026-06-01',
+        endDay: '2026-06-30',
+      });
+    });
+
+    it('should return an empty array when summary response is undefined', async () => {
+      mockSdkClient.channel.getSummary.mockResolvedValueOnce(undefined);
+
+      const result = await service.getSummary({
+        channelId: '7983903',
+        startDay: '2026-06-01',
+        endDay: '2026-06-30',
+      });
+
+      expect(result).toEqual([]);
     });
   });
 

@@ -129,7 +129,7 @@ export class StatisticsServiceSdk {
   async getSummary(params: any): Promise<any> {
     const { channelId, ...options } = params;
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
-    return client.channel.getSummary(channelId, options);
+    return (await client.channel.getSummary(channelId, options)) ?? [];
   }
 
   async getProductClickStats(params: any): Promise<any> {
