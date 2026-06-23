@@ -239,6 +239,22 @@ describe('CheckinHandler', () => {
       );
     });
 
+    it('11.3-UNIT-008a: should not print placeholder checkin ID when API response has no ID', async () => {
+      const options: CheckinStartOptions = {
+        channelId: '3151318',
+        output: 'table'
+      };
+
+      mockCheckinService.startCheckin.mockResolvedValue(undefined);
+
+      await checkinHandler.startCheckin(options);
+
+      const output = mockConsoleLog.mock.calls.map(call => String(call[0])).join('\n');
+      expect(output).toContain('Checkin started successfully');
+      expect(output).toContain('checkin sessions -c 3151318');
+      expect(output).not.toContain('Checkin ID: N/A');
+    });
+
     it('11.3-UNIT-009: should format success message for scheduled checkin', async () => {
       const scheduledTime = Date.now() + 3600000;
       const options: CheckinStartOptions = {
@@ -460,6 +476,37 @@ describe('CheckinHandler', () => {
       );
     });
 
+    it('11.3-UNIT-017a: should display unwrapped SDK checkin list response', async () => {
+      const options: CheckinListOptions = {
+        channelId: '3151318',
+        output: 'json'
+      };
+
+      mockCheckinService.listCheckins.mockResolvedValue({
+        pageNumber: 1,
+        totalPages: 1,
+        pageSize: 20,
+        totalItems: 1,
+        contents: [
+          {
+            checkinid: 'db14ef80-81b8-11eb-b114-e7477b',
+            nickname: 'User1',
+            userid: 'user123',
+            timeFormat: '2021-03-19 12:00:00'
+          }
+        ]
+      });
+
+      await checkinHandler.listCheckins(options);
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        expect.stringContaining('user123')
+      );
+      expect(mockConsoleLog).not.toHaveBeenCalledWith(
+        expect.stringContaining('No checkins found')
+      );
+    });
+
     it('11.3-UNIT-018: should display empty message when no checkins found', async () => {
       const options: CheckinListOptions = {
         channelId: '3151318',
@@ -527,6 +574,33 @@ describe('CheckinHandler', () => {
         checkinId: 'db14ef80-81b8-11eb-b114-e7477b'
       });
     });
+
+    it('11.3-UNIT-020a: should display unwrapped SDK checkin result array', async () => {
+      const options: CheckinResultOptions = {
+        channelId: '3151318',
+        checkinId: 'db14ef80-81b8-11eb-b114-e7477b',
+        output: 'json'
+      };
+
+      mockCheckinService.getCheckinResult.mockResolvedValue([
+        {
+          userid: 'user123',
+          nickname: 'User1',
+          checked: 'Y',
+          timeFormat: '2021-03-19 12:00:00'
+        }
+      ]);
+
+      await checkinHandler.getCheckinResult(options);
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        expect.stringContaining('user123')
+      );
+      expect(mockConsoleLog).not.toHaveBeenCalledWith(
+        expect.stringContaining('No checkin result found')
+      );
+    });
+
 
     it('11.3-UNIT-021: should display checked-in users (checked=Y)', async () => {
       const options: CheckinResultOptions = {
@@ -769,6 +843,32 @@ describe('CheckinHandler', () => {
 
       expect(mockConsoleLog).toHaveBeenCalledWith(
         expect.stringContaining('Checkin ID')
+      );
+    });
+
+    it('11.3-UNIT-032a: should display unwrapped SDK sessions array', async () => {
+      const options: CheckinSessionsOptions = {
+        channelId: '3151318',
+        startDate: '2024-01-01',
+        endDate: '2024-01-31',
+        output: 'json'
+      };
+
+      mockCheckinService.listSessions.mockResolvedValue([
+        {
+          checkinid: 'db14ef80-81b8-11eb-b114-e7477b',
+          createtime: '2024-01-01 10:00:00',
+          message: 'Warmup checkin'
+        }
+      ]);
+
+      await checkinHandler.listSessions(options);
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        expect.stringContaining('db14ef80-81b8-11eb-b114-e7477b')
+      );
+      expect(mockConsoleLog).not.toHaveBeenCalledWith(
+        expect.stringContaining('No checkin sessions found')
       );
     });
 

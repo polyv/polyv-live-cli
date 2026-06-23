@@ -254,7 +254,7 @@ export class V4ChatService {
    *       channelId: '123456',
    *       limitTime: 60,
    *       message: 'Please check in',
-   *       forceCheckInEnabled: true,
+   *       forceCheckInEnabled: 'Y',
    *     },
    *   ],
    * });

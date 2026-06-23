@@ -221,8 +221,8 @@ export interface BatchCheckinItem {
   delayTime?: number;
   /** Check-in message */
   message?: string;
-  /** Whether force check-in is enabled */
-  forceCheckInEnabled?: boolean;
+  /** Whether force check-in is enabled (Y/N) */
+  forceCheckInEnabled?: 'Y' | 'N';
 }
 
 /**

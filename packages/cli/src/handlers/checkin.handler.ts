@@ -347,36 +347,45 @@ export class CheckinHandler extends BaseHandler {
   // ===== Private Display Methods =====
 
   private displayStartResult(result: any, options: CheckinStartOptions): void {
-    const checkinId = result?.data?.checkinId || result?.checkinId || 'N/A';
+    const checkinId = result?.data?.checkinId || result?.checkinId;
+    const nextStep = `Run "checkin sessions -c ${options.channelId}" to find the generated checkin ID.`;
 
     if (options.output === 'json') {
-      this.displayData({
+      const data: Record<string, any> = {
         channelId: options.channelId,
-        checkinId,
         limitTime: options.limitTime,
         delayTime: options.delayTime,
         message: options.message,
         force: options.force,
         result
-      }, 'json');
+      };
+      if (checkinId) {
+        data['checkinId'] = checkinId;
+      } else {
+        data['nextStep'] = nextStep;
+      }
+      this.displayData(data, 'json');
     } else {
       if (options.delayTime) {
-        this.displaySuccess(`Scheduled checkin started successfully`, {
-          channelId: options.channelId,
-          checkinId,
-          scheduledTime: new Date(options.delayTime).toLocaleString()
-        }, 'table');
+        console.log(`Scheduled checkin submitted successfully`);
+        console.log(`Channel ID: ${options.channelId}`);
+        console.log(`Scheduled time: ${new Date(options.delayTime).toLocaleString()}`);
       } else {
         console.log(`Checkin started successfully`);
         console.log(`Channel ID: ${options.channelId}`);
+      }
+      if (checkinId) {
         console.log(`Checkin ID: ${checkinId}`);
+      } else {
+        console.log(`Next step: ${nextStep}`);
       }
     }
   }
 
   private displayListResult(result: any, options: CheckinListOptions): void {
-    const contents = result?.data?.contents || [];
-    const count = result?.data?.count || contents.length;
+    const data = result?.data ?? result;
+    const contents = data?.contents || [];
+    const count = data?.count || data?.totalItems || contents.length;
 
     if (contents.length === 0) {
       this.displayInfo(`No checkins found for channel ${options.channelId}`);
@@ -403,7 +412,7 @@ export class CheckinHandler extends BaseHandler {
   }
 
   private displayResultResult(result: any, options: CheckinResultOptions): void {
-    const data = result?.data || [];
+    const data = result?.data ?? result ?? [];
 
     if (!data || (Array.isArray(data) && data.length === 0)) {
       this.displayInfo(`No checkin result found for checkin ID ${options.checkinId}`);
@@ -434,7 +443,7 @@ export class CheckinHandler extends BaseHandler {
   }
 
   private displaySessionsResult(result: any, options: CheckinSessionsOptions): void {
-    const data = result?.data || [];
+    const data = result?.data ?? result ?? [];
 
     if (!data || (Array.isArray(data) && data.length === 0)) {
       this.displayInfo(`No checkin sessions found for the specified date range`);

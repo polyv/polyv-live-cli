@@ -147,6 +147,43 @@ describe('DonateHandler (ATDD RED PHASE)', () => {
       );
     });
 
+    it('11.6-UNIT-004a: should output unwrapped SDK donate config response', async () => {
+      const options: DonateConfigGetOptions = {
+        channelId: '3151318',
+        output: 'json',
+      };
+
+      mockDonateService.getDonateConfig.mockResolvedValue({
+        donateCashEnabled: 'Y',
+        donateGiftEnabled: 'Y',
+        cashDonate: {
+          cashs: [0.88, 6.66, 8.88, 18.88, 66.6, 88.8],
+          cashMin: 0.01,
+        },
+        giftDonate: {
+          payWay: 'CASH',
+          cashPays: [
+            {
+              name: '0.88',
+              price: 0.88,
+              enabled: 'Y',
+              img: '//s1.videocc.net/default-img/donate/666.png',
+            },
+          ],
+          pointPays: [],
+        },
+      });
+
+      await donateHandler.getConfig(options);
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        expect.stringContaining('donateGiftEnabled')
+      );
+      expect(mockConsoleLog).not.toHaveBeenCalledWith(
+        expect.stringContaining('No donate configuration found')
+      );
+    });
+
     it('11.6-UNIT-005: should output in table format by default', async () => {
       const options: DonateConfigGetOptions = {
         channelId: '3151318',

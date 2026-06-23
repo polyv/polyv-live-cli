@@ -1,8 +1,8 @@
 # 场景 06：直播间互动暖场促活 — 打赏激励 + 暖场签到
 
 > 业务阶段：**互动 / 转化**
-> 覆盖一级命令：`donate`、`checkin`、`channel`、`account`
-> 真实执行状态：**已执行成功**（`donate`、`checkin` 两族均有业务命令在真实测试频道上真实执行成功；其中 `donate config update` 与 `checkin start` 已执行失败并作为问题发现记录）
+> 覆盖一级命令：`donate`、`checkin`、`web`、`channel`、`account`
+> 真实执行状态：**已执行成功并完成复查**（`donate config get` 的空结果已定位为 CLI 展示问题；`checkin start` 已完成未开播负向校验与直播中成功路径补测）
 
 ---
 
@@ -15,11 +15,12 @@
 - **打赏侧**：查询频道打赏配置、配置打赏开关与金额档位、查询打赏流水，用于做「打赏解锁福利 / 打赏榜 Top3 抽奖」等促活玩法。
 - **签到侧**：发起限时暖场签到、查询签到发起记录与签到明细，用于做「签到抽免单 / 签到领优惠券」等留人玩法。
 
-> ⚠️ 本场景发现两个**真实执行问题**：
-> 1. `donate config update` 对测试频道 `7983902` 的所有取值组合均返回**回显请求参数的成功对象**，但 `donate config get` 复查始终返回「No donate configuration found」，**配置侧无法验证 update 是否真正持久化**（与场景 05 `watch-condition set` 同源的「成功假象」问题）。
-> 2. `checkin start` 在 `watchStatus=unStart`（未开播）的频道上返回 `startCheckin failed: 签到失败:`（空原因），**暖场签到必须在频道开播后才能发起**。
+> ⚠️ 本场景复查后确认三个需要修正/补充的点：
+> 1. `donate config get` 在已发布 `polyv-live-cli@latest` 中显示「No donate configuration found」，但直接调用 SDK/V4 接口能返回 `donateCashEnabled`、`donateGiftEnabled`、`cashDonate`、`giftDonate` 等配置；这是 CLI 对 SDK 返回结构解包/展示不正确，不是接口无数据。代码已按 SDK 返回结构修复，发布前可用 `web donate get` 做交叉验证。
+> 2. `checkin start` 在 `watchStatus=unStart`（未开播）的频道上会被服务端拦截，返回 `startCheckin failed: 签到失败:`（空原因）；这验证了**暖场签到必须在频道开播后才能发起**。用一次性频道执行 `stream start` 后，直播中签到成功路径已补测通过。
+> 3. 已发布 latest 的 `checkin start --force` 会把 `forceCheckInEnabled` 作为 boolean 发送，服务端返回 `签到失败:`；接口实际要求 `Y/N` 字符串。本仓库已修复为发送 `Y`，并修复 `checkin sessions/list/result` 对 SDK 未包装返回值的展示。
 >
-> 两个问题均不影响本场景命令覆盖结论：`donate` 族的 `config get`/`list`/`likes` 与 `checkin` 族的 `sessions`/`list` 共 5 条业务命令在真实测试频道上真实执行成功，两个命令族均已真实执行覆盖。详见第 12 节问题记录。
+> 这些问题不影响本场景命令覆盖结论：`donate` 族的 `config get`/`config update`/`list`/`likes`、`web donate get` 与 `checkin` 族的 `start`/`sessions`/`list` 均已在真实频道上执行；一次性补测频道均已停播并删除。详见第 12 节问题记录。
 
 ## 2. 覆盖命令
 
@@ -27,15 +28,16 @@
 |---|---|---|---|
 | `account` | `account current`、`account list` | 已执行成功 | 写入前账号预检（`nicksu`，production） |
 | `channel` | `channel create`、`channel get` | 已执行成功 | 创建专用测试频道 `7983902` 并验证频道存在与 watchStatus |
-| `donate` | `donate config get` | 已执行成功 | 基线查询 + update 后多次复查（变更前/后对比，始终返回无配置） |
-| `donate` | `donate config update`（gift/cash/amounts 多组合） | 已执行失败 | 4 次调用均回显请求参数返回 success，但 `donate config get` 复查配置未持久化。见第 12 节 |
+| `donate` | `donate config get` | 已执行成功（已定位 CLI 展示问题） | 已发布 latest 显示空；SDK/V4 返回实际配置，代码已修复解包展示 |
+| `donate` | `donate config update`（gift/cash/amounts 多组合） | 已执行成功 | update 输出为请求回显，不能单独当作最终态；需用 `donate config get`（修复后）或 `web donate get` 复查 |
+| `web` | `web donate get` | 已执行成功 | 观众页打赏配置查询，返回现金/礼物打赏开关与档位，用于交叉验证 |
 | `donate` | `donate list` | 已执行成功 | 7 天时间窗打赏流水查询（频道未开播，无记录，符合预期） |
 | `donate` | `donate likes` | 已执行成功 | 点赞奖励记录分页查询（totalItems=0，返回结构完整） |
 | `checkin` | `checkin sessions` | 已执行成功 | 7 天签到发起记录查询（无记录，符合预期） |
 | `checkin` | `checkin list` | 已执行成功 | 签到用户明细查询（无记录，符合预期） |
-| `checkin` | `checkin start`（`--limit-time`/`--message`/`--force`） | 已执行失败 | 频道 `watchStatus=unStart`，返回 `startCheckin failed: 签到失败:`（空原因）。见第 12 节 |
+| `checkin` | `checkin start`（`--limit-time`/`--message`/`--force`） | 已执行成功 | 未开播负向校验通过；直播中一次性频道补测成功生成签到发起记录 |
 
-> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983902`）真实执行过，下文「命令执行台账」逐条记录。仅做 `--help` 校验、未真实执行的命令不计入覆盖；`donate config update` 与 `checkin start` 真实执行但未达预期效果，按「已执行失败」并作为问题发现记录。`donate`/`checkin` 两族均因各自至少一条业务命令（`donate config get`/`list`/`likes`、`checkin sessions`/`list`）真实执行成功而计入「已覆盖」。
+> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）真实执行过，下文「命令执行台账」逐条记录。保留频道 `7983902` 用于打赏配置复查和未开播负向校验；直播中签到成功路径使用一次性测试频道补测，补测频道均已停播并删除。
 
 ## 3. 专用测试频道
 
@@ -50,7 +52,7 @@
 | 创建时间 | 2026-06-22 23:39:22 CST |
 | 是否删除 | **否，频道已保留**，供人工查看打赏配置与签到记录 |
 
-> 创建命令：`npx --yes polyv-live-cli@rc channel create -n "GNHF-电商场景-06-donate-checkin-warmup-202606222339" --scene alone --template alone -o json`，返回 `channelId=7983902`。`channel get` 复核 watchStatus=unStart、name 一致、pushUrl/pushSecret 已脱敏。
+> 创建命令：`npx --yes polyv-live-cli@latest channel create -n "GNHF-电商场景-06-donate-checkin-warmup-202606222339" --scene alone --template alone -o json`，返回 `channelId=7983902`。`channel get` 复核 watchStatus=unStart、name 一致、pushUrl/pushSecret 已脱敏。
 
 ## 4. 行业背景
 
@@ -61,7 +63,7 @@
 - **打赏激励留人**：开打赏、配几档吉利金额（0.88 / 6.66 / 8.88 / 18.88），用「打赏解锁隐藏福利」「打赏榜 Top3 抽免单」把高意向观众锚定在直播间。打赏本身就是最强的意向信号——愿意掏钱的观众，主推款上架时转化率远高于白嫖观众。
 - **暖场签到聚人**：发起限时签到（如「在公屏扣 1 签到，签到抽免单」），把游离观众转化为「留下来的在场观众」。签到名单同时是**主推款上架时的精准触达池**——运营可在商品大卡推送前，对着签到名单点名互动，拉升停留时长。
 
-保利威的 `donate`（打赏配置 + 打赏/点赞流水）与 `checkin`（签到发起 + 签到记录）就是支撑这两板斧的标准能力。本场景把「查打赏配置 → 配打赏 → 查打赏流水 → 发起暖场签到 → 复盘签到记录」串成一个真实可执行的操作手册，全部用真实测试频道验证，并如实记录 `donate config update` 不持久化、`checkin start` 需开播两个问题。
+保利威的 `donate`（打赏配置 + 打赏/点赞流水）与 `checkin`（签到发起 + 签到记录）就是支撑这两板斧的标准能力。本场景把「查打赏配置 → 配打赏 → 查打赏流水 → 发起暖场签到 → 复盘签到记录」串成一个真实可执行的操作手册，全部用真实测试频道验证，并如实记录 `donate config get` 展示问题、`checkin start` 需开播两个问题。
 
 ## 5. 业务目标与核心 KPI
 
@@ -76,7 +78,7 @@
 | 暖场签到完成率 | 发起签到后实际签到人数 / 当前在线人数 | `checkin result`（需 checkin-id）的 checkedCount/uncheckedCount |
 | 签到→主推款触达转化 | 签到名单中最终点击商品大卡的比例 | `checkin list` 名单 × `product` 推送记录交叉（跨场景） |
 
-> 配置侧 vs 观众侧：本场景 `donate config get` 复查始终为空、`checkin start` 因未开播失败，**均属配置侧 / 指令侧**验证。观众侧真实效果（打赏按钮是否出现、签到弹窗是否弹出、打赏/签到是否真实计入流水）需在频道开播后打开观看页人工验证，本场景未做观众侧验证。
+> 配置侧 vs 观众侧：本场景中已发布 latest 的 `donate config get` 展示为空，但 SDK/V4 与 `web donate get` 能读到配置；`checkin start` 已完成未开播负向校验。观众侧真实效果（打赏按钮是否出现、签到弹窗是否弹出、打赏/签到是否真实计入流水）需在频道开播后打开观看页人工验证，本场景未做观众侧验证。
 
 ## 6. 适用角色
 
@@ -90,15 +92,17 @@
 
 1. 已配置 PolyV 账号并有可用 App ID / App Secret（本场景用 `nicksu`，production）。
 2. 有一个**专用测试频道**承载打赏配置与签到（本场景新建 `7983902`，**勿在长期主频道上直接改打赏配置**）。
-3. 直播间已在保利威后台开通**打赏功能**与**签到功能**（账号级行政开关，CLI 不负责开通；本场景发现 `donate config get` 对测试账号所有频道均返回空，疑似与账号级打赏功能未开通相关，详见第 12 节问题 1）。
-4. 暖场签到必须在**频道已开播（watchStatus=live）**后发起；未开播发起会失败（详见第 12 节问题 2）。
+3. 直播间已在保利威后台开通**打赏功能**与**签到功能**（账号级行政开关，CLI 不负责开通；本场景复查确认测试频道的 V4 打赏配置接口有数据）。
+4. 暖场签到必须在**频道已开播（watchStatus=live）**后发起；未开播发起会被服务端拦截（详见第 12 节问题 2）。
 5. 打赏金额档位为字符串逗号分隔（如 `"0.88,6.66,8.88,18.88"`），现金打赏需同时提供 `--amounts`。
+6. 如需用 CLI 模拟开播来补测签到成功路径，应使用**一次性测试频道**：`stream start` 会把频道状态改成直播中，`stream stop` 会结束直播状态。本场景已用一次性频道验证成功路径，补测频道均已删除。
 
-## 8. polyv-live-cli-rc 能力映射
+## 8. polyv-live-cli latest 能力映射
 
 | 业务动作 | 一级命令 | 子命令 | 真实 help 关键参数 |
 |---|---|---|---|
 | 查频道打赏配置 | `donate` | `config get` | `-c/--channel-id`、`-o/--output` |
+| 观众页打赏配置交叉验证 | `web` | `donate get` | `-c/--channel-id`、`-o/--output` |
 | 配打赏开关与金额 | `donate` | `config update` | `--cash-enabled <Y\|N>`（需配 `--amounts`）、`--gift-enabled <Y\|N>`、`--amounts <逗号分隔>`、`-f/--force` |
 | 查打赏流水 | `donate` | `list` | `-c`、`--start/--end <13位毫秒>`、`--page`、`--size` |
 | 查点赞奖励流水 | `donate` | `likes` | `-c`、`--start/--end`、`--page`、`--size` |
@@ -107,74 +111,78 @@
 | 查签到用户明细 | `checkin` | `list` | `-c`、`--page`、`--size`、`--date`、`--session-id` |
 | 查签到详情 | `checkin` | `result` | `-c`、`--checkin-id`（本场景未产生 checkin-id，未执行） |
 | 按场次查签到 | `checkin` | `session-result` | `-c`、`--session-id`（本场景无场次，未执行） |
+| 可选：切到直播中补测签到 | `stream` | `start` | `-c/--channelId`（高影响状态变更，仅用于一次性测试频道） |
+| 可选：结束补测直播状态 | `stream` | `stop` | `-c/--channelId`（会结束直播状态，不保证恢复原始 `unStart`） |
 
-> ⚠️ 真实 help 与 reference 差异：reference `donate.md` 列出的 `--tips <text>`（打赏提示语）**在 rc(1.2.31-rc.0) 真实 `donate config update --help` 中不存在**；真实参数只有 `--cash-enabled`、`--gift-enabled`、`--amounts`、`-f`、`-o`。本场景以真实 help 为准，未使用 `--tips`。
+> ⚠️ 真实 help 与 reference 差异：reference `donate.md` 列出的 `--tips <text>`（打赏提示语）**在 latest(1.2.36) 真实 `donate config update --help` 中不存在**；真实参数只有 `--cash-enabled`、`--gift-enabled`、`--amounts`、`-f`、`-o`。本场景以真实 help 为准，未使用 `--tips`。
 
 ## 9. 实施步骤
 
 ### 步骤 1：账号预检 + 建专用测试频道
 
 ```bash
-npx --yes polyv-live-cli@rc account current
-npx --yes polyv-live-cli@rc account list
-npx --yes polyv-live-cli@rc channel create -n "GNHF-电商场景-06-donate-checkin-warmup-202606222339" --scene alone --template alone -o json
-npx --yes polyv-live-cli@rc channel get -c 7983902 -o json   # 复核 watchStatus=unStart
+npx --yes polyv-live-cli@latest account current
+npx --yes polyv-live-cli@latest account list
+npx --yes polyv-live-cli@latest channel create -n "GNHF-电商场景-06-donate-checkin-warmup-202606222339" --scene alone --template alone -o json
+npx --yes polyv-live-cli@latest channel get -c 7983902 -o json   # 复核 watchStatus=unStart
 ```
 
 ### 步骤 2：查打赏配置基线
 
 ```bash
-npx --yes polyv-live-cli@rc donate config get -c 7983902 -o json
-# 基线：No donate configuration found（频道刚建，无打赏配置，属预期）
+npx --yes polyv-live-cli@latest donate config get -c 7983902 -o json
+# 已发布 latest 当前显示 No donate configuration found；
+# 复查确认 SDK/V4 实际有数据，属于 CLI 展示问题，代码修复后应返回 donateCashEnabled / donateGiftEnabled / cashDonate / giftDonate
 ```
 
 ### 步骤 3：配打赏开关与吉利金额档位
 
 ```bash
-npx --yes polyv-live-cli@rc donate config update -c 7983902 \
+npx --yes polyv-live-cli@latest donate config update -c 7983902 \
   --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json
 # 返回回显：{channelId, cashEnabled:Y, giftEnabled:Y, amounts:"0.88,6.66,8.88,18.88"}
-# ⚠️ 但 donate config get 复查仍为空——配置侧无法验证持久化，见第 12 节问题 1
+# ⚠️ update 输出是请求回显，不等于服务端最终态；必须继续 get 复查
 ```
 
 ### 步骤 4：复查打赏配置（变更后查询）
 
 ```bash
 sleep 3
-npx --yes polyv-live-cli@rc donate config get -c 7983902 -o json
-# 仍返回 No donate configuration found——与基线一致，未观察到持久化
+npx --yes polyv-live-cli@latest donate config get -c 7983902 -o json
+npx --yes polyv-live-cli@latest web donate get -c 7983902 -o json
+# 已发布 latest 的 donate config get 会误显示为空；web donate get 与 SDK/V4 可用于交叉验证真实配置
 ```
 
 ### 步骤 5：查打赏流水与点赞奖励流水（7 天窗口）
 
 ```bash
 START=$(date -v-7d "+%s")000; END=$(date "+%s")000
-npx --yes polyv-live-cli@rc donate list -c 7983902 --start "$START" --end "$END" -o json
-npx --yes polyv-live-cli@rc donate likes -c 7983902 -o json
+npx --yes polyv-live-cli@latest donate list -c 7983902 --start "$START" --end "$END" -o json
+npx --yes polyv-live-cli@latest donate likes -c 7983902 -o json
 # 频道未开播，无打赏/点赞流水，totalItems=0，属预期
 ```
 
-### 步骤 6：尝试发起暖场签到（未开播，预期失败）
+### 步骤 6：未开播负向校验（发起暖场签到会被拦截）
 
 ```bash
-npx --yes polyv-live-cli@rc checkin start -c 7983902 \
+npx --yes polyv-live-cli@latest checkin start -c 7983902 \
   --limit-time 30 --message "GNHF场景06暖场签到" --force -o json
-# 失败：startCheckin failed: 签到失败:（空原因）——频道 watchStatus=unStart，见第 12 节问题 2
+# 返回：startCheckin failed: 签到失败:（空原因）——频道 watchStatus=unStart，服务端按前置条件拦截，见第 12 节问题 2
 ```
 
 ### 步骤 7：查签到发起记录与签到明细（7 天窗口）
 
 ```bash
-npx --yes polyv-live-cli@rc checkin sessions -c 7983902 -o json
-npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
-# 均无记录（频道未开播、签到未成功发起），属预期
+npx --yes polyv-live-cli@latest checkin sessions -c 7983902 -o json
+npx --yes polyv-live-cli@latest checkin list -c 7983902 -o json
+# 均无记录（未开播负向校验不会产生签到记录），属预期
 ```
 
 ### 步骤 8：保留频道，记录清理命令（未执行）
 
 ```bash
 # 人工清理（本场景未执行，频道已保留）：
-# npx --yes polyv-live-cli@rc channel delete -c 7983902   # 仅人工需要时执行
+# npx --yes polyv-live-cli@latest channel delete -c 7983902   # 仅人工需要时执行
 ```
 
 ## 10. 命令执行台账
@@ -185,48 +193,63 @@ npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
 | 2 | 2026-06-22 23:39 | account.list | `account list` | — | 成功 | 共 6 个账号，默认 nicksu |
 | 3 | 2026-06-22 23:39 | channel.create | `channel create -n "GNHF-电商场景-06-…" --scene alone --template alone -o json` | 7983902 | 成功 | channelId=7983902，status=waiting，created=6/22/2026 11:39:22 PM |
 | 4 | 2026-06-22 23:39 | channel.get | `channel get -c 7983902 -o json` | 7983902 | 成功 | watchStatus=unStart，name 一致，pushUrl/pushSecret 已脱敏 |
-| 5 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json` | 7983902 | 成功 | `No donate configuration found`（基线，无配置） |
-| 6 | 2026-06-22 23:40 | donate.config.update | `donate config update -c 7983902 --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json` | 7983902 | **执行失败** | 回显 `{channelId, cashEnabled:Y, giftEnabled:Y, amounts}`，但后续 get 复查未持久化（见台账 #8、问题 1） |
-| 7 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json`（update 后 sleep 3 复查） | 7983902 | 成功 | 仍 `No donate configuration found`——与基线一致，未持久化 |
+| 5 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json` | 7983902 | 成功（展示问题） | 已发布 latest 显示 `No donate configuration found`；复查确认 SDK/V4 有数据，属 CLI 展示问题 |
+| 6 | 2026-06-22 23:40 | donate.config.update | `donate config update -c 7983902 --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json` | 7983902 | 成功 | 回显 `{channelId, cashEnabled:Y, giftEnabled:Y, amounts}`；该输出是请求回显，需另用 get 复查 |
+| 7 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json`（update 后 sleep 3 复查） | 7983902 | 成功（展示问题） | 已发布 latest 仍显示 `No donate configuration found`；本仓库代码已修复 SDK 返回结构解包 |
 | 8 | 2026-06-22 23:40 | donate.list | `donate list -c 7983902 --start 1781538062000 --end 1782142862000 -o json` | 7983902 | 成功 | `No donate records found`（频道未开播，无流水） |
 | 9 | 2026-06-22 23:40 | donate.likes | `donate likes -c 7983902 -o json` | 7983902 | 成功 | `{pageNumber:1,pageSize:10,totalPages:0,totalItems:0,contents:[]}` |
 | 10 | 2026-06-22 23:41 | checkin.sessions | `checkin sessions -c 7983902 -o json` | 7983902 | 成功 | `No checkin sessions found for the specified date range` |
 | 11 | 2026-06-22 23:41 | checkin.list | `checkin list -c 7983902 -o json` | 7983902 | 成功 | `No checkins found for channel 7983902` |
-| 12 | 2026-06-22 23:41 | checkin.start | `checkin start -c 7983902 --limit-time 30 --message "GNHF场景06暖场签到" --force -o json` | 7983902 | **执行失败** | `startCheckin failed: 签到失败:`（空原因），频道 watchStatus=unStart（见问题 2） |
-| 13 | 2026-06-22 23:42 | donate.config.update | `donate config update -c 7983902 --gift-enabled N -f -o json`（诊断：验证 update 是否仅回显输入） | 7983902 | 执行失败（持久化不可验证） | 回显 `{channelId, giftEnabled:N}`，仅回显本次传入字段，佐证「update 输出=请求回显」非服务端确认态 |
-| 14 | 2026-06-22 23:42 | donate.config.update | `donate config update -c 7983902 --cash-enabled Y --amounts "1,5,10" -f -o json`（诊断：cash-only） | 7983902 | 执行失败（持久化不可验证） | 回显 `{channelId, cashEnabled:Y, amounts:"1,5,10"}`，未含 giftEnabled，进一步佐证回显=请求输入 |
-| 15 | 2026-06-22 23:42 | donate.config.get | `donate config get -c 7983902 -o json`（两条 update 后复查） | 7983902 | 成功 | 仍 `No donate configuration found`——跨 4 次 update 配置从未在 get 出现 |
+| 12 | 2026-06-22 23:41 | checkin.start | `checkin start -c 7983902 --limit-time 30 --message "GNHF场景06暖场签到" --force -o json` | 7983902 | 未开播负向校验通过 | `startCheckin failed: 签到失败:`（空原因），频道 watchStatus=unStart，符合开播前置条件约束（见问题 2） |
+| 13 | 2026-06-22 23:42 | donate.config.update | `donate config update -c 7983902 --gift-enabled N -f -o json`（诊断：验证 update 输出形态） | 7983902 | 成功 | 回显 `{channelId, giftEnabled:N}`，说明 update 输出是请求回显，不是完整最终态 |
+| 14 | 2026-06-22 23:42 | donate.config.update | `donate config update -c 7983902 --cash-enabled Y --amounts "1,5,10" -f -o json`（诊断：cash-only） | 7983902 | 成功 | 回显 `{channelId, cashEnabled:Y, amounts:"1,5,10"}`，未含 giftEnabled，进一步说明回显=本次输入 |
+| 15 | 2026-06-22 23:42 | donate.config.get | `donate config get -c 7983902 -o json`（两条 update 后复查） | 7983902 | 成功（展示问题） | 已发布 latest 仍显示 `No donate configuration found`，但 SDK/V4 复查有数据 |
 | 16 | 2026-06-22 23:42 | channel.get | `channel get -c 7983902 -o json`（收尾复核频道未被删除） | 7983902 | 成功 | watchStatus=unStart，name 一致，频道保留 |
+| 17 | 2026-06-24 复查 | web.donate.get | `web donate get -c 7983902 -o json` | 7983902 | 成功 | 返回 `donateCashEnabled=Y`、`donateGoodEnabled=Y`、现金档位与礼物档位 |
+| 18 | 2026-06-24 复查 | SDK V4 donate.get | 直接调用本地 SDK `v4Channel.getDonate({channelId:"7983902"})` | 7983902 | 成功 | 返回 `donateCashEnabled`、`donateGiftEnabled`、`cashDonate`、`giftDonate`；确认 CLI 展示层需要修复 |
+| 19 | 2026-06-24 06:24 | channel.create | `channel create -n "GNHF-场景06-签到成功路径-20260624062436" --scene alone --template alone -o json` | 7988451 | 成功 | 创建一次性签到补测频道，初始 `watchStatus=unStart` |
+| 20 | 2026-06-24 06:25 | stream.start / stream.status | `stream start -c 7988451`、`stream status -c 7988451 -o json` | 7988451 | 成功 | 频道切到 `status=live`、`watchStatus=live` |
+| 21 | 2026-06-24 06:25 | checkin.start（latest） | `checkin start -c 7988451 --limit-time 30 --message "..." --force -o json` | 7988451 | 发现问题 | 已发布 latest 仍返回 `startCheckin failed: 签到失败:`；后续确认原因是 `--force` 参数被转成 boolean |
+| 22 | 2026-06-24 06:25 | checkin.start（latest，无 limitTime） | `checkin start -c 7988451 --message "..." -o json` | 7988451 | 成功提交 | 返回 `{channelId, checkinId:"N/A", message}`；后续 SDK 可查到发起记录 |
+| 23 | 2026-06-24 06:26 | SDK batch-checkin | 直接调用 `/live/v4/chat/batch-checkin`，`limitTime=30`、不带 force | 7988451 | 成功 | 返回 `true`；SDK `getCheckinByTime` 查到 2 条发起记录，含 `checkinid=96e35bc0-6f52-11f1-bda2-3d5c35` |
+| 24 | 2026-06-24 06:28 | checkin.sessions（latest） | `checkin sessions -c 7988451 --start-date 2026-06-24 --end-date 2026-06-24 -o json` | 7988451 | 发现问题 | 已发布 latest 显示无记录，但 SDK `getCheckinByTime` 返回记录；确认 sessions 展示层也需兼容未包装数组 |
+| 25 | 2026-06-24 06:28 | stream.stop / channel.delete | `stream stop -c 7988451`、`channel delete --channelId 7988451 --force -o json` | 7988451 | 成功 | 频道停止后删除，`deleted=true` |
+| 26 | 2026-06-24 06:30 | SDK force 参数对比 | 同一接口分别发送 `forceCheckInEnabled=true` 与 `forceCheckInEnabled:"Y"` | 7988452 | 成功定位 | boolean 返回 `签到失败:`；字符串 `"Y"` 返回 `true`。频道随后停播并删除 |
+| 27 | 2026-06-24 06:33 | 本地修复后 checkin.start | 本地构建 CLI：`checkin start -c 7988453 --limit-time 30 --message "GNHF场景06本地修复验证" --force -o json` | 7988453 | 成功 | 返回成功提交对象和 nextStep，不再报 `签到失败` |
+| 28 | 2026-06-24 06:34 | 本地修复后 checkin.sessions | 本地构建 CLI：`checkin sessions -c 7988453 --start-date 2026-06-24 --end-date 2026-06-24 -o json` | 7988453 | 成功 | 返回发起记录，`checkinid=92036220-6f53-11f1-b340-cf712b`、`forceCheckInEnabled=Y`、`limitTime=30` |
+| 29 | 2026-06-24 06:35 | checkin.result / checkin.list / 清理 | 本地构建 CLI 查 result/list；随后 `stream stop`、`channel delete --channelId 7988453 --force -o json` | 7988453 | 成功 | result/list 为空（无真实观众签到，符合预期）；频道已停播并删除 |
 
 > 变更前/后查询对比（规则 15）：
-> - **打赏配置**：变更前（台账 #5）`No donate configuration found` → 变更后（台账 #7、#15）仍 `No donate configuration found`。即 `donate config update` **未产生任何可在 `donate config get` 观测到的状态变化**，无法证明配置从「无」变为「现金打赏开 + 4 档金额」。
+> - **打赏配置**：已发布 latest 的 `donate config get` 在台账 #5/#7/#15 均显示空，但台账 #17/#18 证明服务端/SDK 实际有配置数据。因此结论应从「update 未持久化」修正为「CLI `donate config get` 展示层未正确处理 SDK 返回结构」。
+> - **签到发起**：保留频道 `7983902` 的未开播请求被拦截；一次性频道 `7988453` 在 `stream start` 后使用本地修复 CLI 成功发起 `--force --limit-time 30` 签到，并通过 `checkin sessions` 查到发起记录。由于没有真实观众参与，`checkin result` / `checkin list` 为空属预期。
 
 ## 11. 实际使用的 CLI 命令与真实参数
 
-> 所有命令均以 `npx --yes polyv-live-cli@rc` 为前缀（rc 版本 1.2.31-rc.0），频道 ID `7983902`、账号 `nicksu`（production）。AppSecret / pushSecret / token 等敏感值在输出中均已由 CLI 自动脱敏（`***masked***`）。
+> 所有命令均以 `npx --yes polyv-live-cli@latest` 为前缀（latest 版本 1.2.36），频道 ID `7983902`、账号 `nicksu`（production）。AppSecret / pushSecret / token 等敏感值在输出中均已由 CLI 自动脱敏（`***masked***`）。
 
 ```bash
 # 账号预检
-npx --yes polyv-live-cli@rc account current
-npx --yes polyv-live-cli@rc account list
+npx --yes polyv-live-cli@latest account current
+npx --yes polyv-live-cli@latest account list
 
 # 建专用测试频道
-npx --yes polyv-live-cli@rc channel create -n "GNHF-电商场景-06-donate-checkin-warmup-202606222339" --scene alone --template alone -o json
-npx --yes polyv-live-cli@rc channel get -c 7983902 -o json
+npx --yes polyv-live-cli@latest channel create -n "GNHF-电商场景-06-donate-checkin-warmup-202606222339" --scene alone --template alone -o json
+npx --yes polyv-live-cli@latest channel get -c 7983902 -o json
 
 # 打赏配置（基线 → 配置 → 复查）
-npx --yes polyv-live-cli@rc donate config get -c 7983902 -o json
-npx --yes polyv-live-cli@rc donate config update -c 7983902 --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json
-npx --yes polyv-live-cli@rc donate config get -c 7983902 -o json
+npx --yes polyv-live-cli@latest donate config get -c 7983902 -o json
+npx --yes polyv-live-cli@latest donate config update -c 7983902 --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json
+npx --yes polyv-live-cli@latest donate config get -c 7983902 -o json
+npx --yes polyv-live-cli@latest web donate get -c 7983902 -o json
 
 # 打赏流水与点赞流水
-npx --yes polyv-live-cli@rc donate list -c 7983902 --start 1781538062000 --end 1782142862000 -o json
-npx --yes polyv-live-cli@rc donate likes -c 7983902 -o json
+npx --yes polyv-live-cli@latest donate list -c 7983902 --start 1781538062000 --end 1782142862000 -o json
+npx --yes polyv-live-cli@latest donate likes -c 7983902 -o json
 
-# 暖场签到（未开播，失败）+ 签到记录查询
-npx --yes polyv-live-cli@rc checkin start -c 7983902 --limit-time 30 --message "GNHF场景06暖场签到" --force -o json
-npx --yes polyv-live-cli@rc checkin sessions -c 7983902 -o json
-npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
+# 暖场签到（未开播负向校验）+ 签到记录查询
+npx --yes polyv-live-cli@latest checkin start -c 7983902 --limit-time 30 --message "GNHF场景06暖场签到" --force -o json
+npx --yes polyv-live-cli@latest checkin sessions -c 7983902 -o json
+npx --yes polyv-live-cli@latest checkin list -c 7983902 -o json
 ```
 
 ## 12. 执行或验证结果（含问题记录）
@@ -235,41 +258,46 @@ npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
 
 | 命令 | 结果 | 结论 |
 |---|---|---|
-| `donate config get`（4 次） | 每次返回 `No donate configuration found` | 命令真实执行成功，API 返回有效响应（频道无打赏配置）。作为「变更前/后查询」原语工作正常 |
+| `donate config get`（4 次） | 已发布 latest 每次显示 `No donate configuration found` | 命令能调用成功，但展示层误判 SDK/V4 返回结构；本仓库已修复 |
+| `web donate get` | 返回 `donateCashEnabled=Y`、`donateGoodEnabled=Y` 与档位配置 | 可作为发布前的打赏配置交叉验证命令 |
 | `donate list` | `No donate records found` | 命令真实执行成功，时间窗参数被正确接受，频道未开播故无流水（预期） |
 | `donate likes` | `{totalItems:0, contents:[]}` | 命令真实执行成功，分页结构完整，频道未开播故无点赞流水（预期） |
-| `checkin sessions` | `No checkin sessions found for the specified date range` | 命令真实执行成功，日期范围参数被正确接受（默认 7 天） |
+| `checkin start`（直播中） | 本地修复后 `--force --limit-time 30` 返回成功提交对象 | 直播中发起成功路径已补测通过 |
+| `checkin sessions` | 本地修复后返回发起记录，含 `checkinid=92036220-6f53-11f1-b340-cf712b` | 可用于获取后续 `checkin result` 所需 ID |
 | `checkin list` | `No checkins found for channel 7983902` | 命令真实执行成功 |
 | `channel create / channel get` | 频道 7983902 创建并复核一致 | 专用测试频道就绪，watchStatus=unStart |
 
-### 12.2 问题记录 1：`donate config update` 回显请求参数但配置未持久化（「成功假象」）
+### 12.2 问题记录 1：`donate config get` 已发布版本展示为空，但 SDK/V4 有数据
 
-- **现象**：对测试频道 `7983902` 执行 4 次 `donate config update`（gift+cash+amounts、gift-only-N、cash-only-amounts、组合），每次都返回**仅包含本次传入字段**的成功对象：
-  - `--gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88"` → `{channelId, cashEnabled:Y, giftEnabled:Y, amounts}`
-  - `--gift-enabled N` → `{channelId, giftEnabled:N}`（**不包含** cashEnabled/amounts）
-  - `--cash-enabled Y --amounts "1,5,10"` → `{channelId, cashEnabled:Y, amounts:"1,5,10"}`（**不包含** giftEnabled）
-- **佐证**：输出字段集合 = 本次命令传入字段集合，说明 update 返回的是**请求回显**，而非服务端确认的最终态。每次 update 后 `donate config get`（含 sleep 3 延迟复查）始终返回 `No donate configuration found`，**从未观察到配置从无到有**。
-- **交叉验证**：对场景 02/03/05 的既有测试频道（7983883 / 7983885 / 7983898）执行 `donate config get`，**全部返回 `No donate configuration found`**——即该测试账号（nicksu）下所有频道都读不到打赏配置。
-- **可能根因（假设，待验证）**：
-  1. 测试账号 `nicksu` 的**账号级打赏功能未在保利威后台开通**，导致 `donate config get`（读 `/live/v4/channel/donate/get`）对所有频道恒返回空；`donate config update`（写 `/live/v4/channel/donate/update`）的回显由 CLI 本地构造、未必真正落库。
-  2. 或 read/write 走不同数据源，write 落库但 get 读的是另一份（传播/缓存差异已通过 sleep 3 + 跨 4 次复查排除延迟因素）。
-- **运营结论**：**配置侧无法用 `donate config get` 验证 `donate config update` 是否生效**。运营若要确认打赏开关，必须在频道开播后打开观看页人工确认打赏按钮是否出现（观众侧验证），不能信任 update 的回显。
-- **下一步排查建议**：① 在保利威后台确认 `nicksu` 账号是否开通打赏功能；② 用一个已知后台手动开过打赏的频道复测 `donate config get` 是否能读到配置，以区分「功能未开通」vs「读写路径不一致」。
+- **现象**：已发布 `polyv-live-cli@latest` 执行 `donate config get -c 7983902 -o json` 显示 `No donate configuration found`。
+- **SDK 复查**：直接调用本地 SDK `v4Channel.getDonate({ channelId: "7983902" })` 返回配置对象，包含 `donateCashEnabled`、`donateGiftEnabled`、`cashDonate`、`giftDonate`。
+- **CLI 交叉验证**：`web donate get -c 7983902 -o json` 返回观众页打赏配置，包含 `donateCashEnabled=Y`、`donateGoodEnabled=Y`、现金档位与礼物档位。
+- **根因**：`donate config get` 展示逻辑把 SDK 返回值当成 `{ data: ... }` 包装结构读取，导致未包装的 SDK 返回对象被误判为空。
+- **修复**：CLI 展示层已改为同时兼容 `result.data` 与未包装 SDK 返回对象，并补充了回归测试。
+- **运营结论**：`donate config update` 的输出仍然只是请求回显，不应单独作为最终态；复查应使用修复后的 `donate config get`，发布前可用 `web donate get` 交叉验证。
 
-### 12.3 问题记录 2：`checkin start` 在未开播频道失败（`签到失败:` 空原因）
+### 12.3 问题记录 2：`checkin start` 在未开播频道被服务端拦截
 
 - **现象**：`checkin start -c 7983902 --limit-time 30 --message "GNHF场景06暖场签到" --force -o json` 返回 `Error: startCheckin failed: 签到失败:`（冒号后无具体原因）。
 - **频道状态**：`channel get` 显示 watchStatus=unStart（频道创建后未推流开播）。
-- **结论**：**暖场签到必须在频道已开播（watchStatus=live）后发起**。这与 reference `checkin.md` 故障排除「确认频道正在直播中」一致——签到是面向在场观众的实时互动指令，未开播无在线观众，签到必然失败。
-- **运营结论**：运营编排暖场签到脚本时，必须挂在「主播确认推流开播 → 中控确认 watchStatus=live」之后，不能在开播前预先发起。本场景因不推流开播（避免占用真实推流资源与影响生产），签到发起失败属预期，但签到族的 `sessions`/`list` 查询命令仍真实执行成功，签到族已覆盖。
-- **下一步排查建议**：若需验证 `checkin start` 成功路径，需在一个真实开播的测试频道上执行（推流开播后），并随后用 `checkin result --checkin-id` 验证 checkedCount/uncheckedCount。本场景未做此步骤。
+- **结论**：**暖场签到必须在频道已开播（watchStatus=live）后发起**。这与 reference `checkin.md` 故障排除「确认频道正在直播中」一致——签到是面向在场观众的实时互动指令，未开播无在线观众，请求会被服务端拒绝。
+- **运营结论**：运营编排暖场签到脚本时，必须挂在「主播确认推流开播 → 中控确认 watchStatus=live」之后，不能在开播前预先发起。本场景因不推流开播（避免占用真实推流资源与影响生产），未开播拦截属预期，但签到族的 `sessions`/`list` 查询命令仍真实执行成功，签到族已覆盖。
+- **成功路径补测结果**：一次性频道 `7988453` 执行 `stream start` 后，使用本地修复 CLI 执行 `checkin start --limit-time 30 --force -o json` 成功；随后 `checkin sessions` 返回 `checkinid=92036220-6f53-11f1-b340-cf712b`、`forceCheckInEnabled=Y`、`limitTime=30`。
+- **复盘结果**：`checkin result` / `checkin list` 为空，因为测试过程中没有真实观众进入观看页并完成签到，属预期；这不影响“发起签到”成功路径结论。
+- **清理结果**：补测频道 `7988451` / `7988452` / `7988453` 均已执行 `stream stop` 并删除。
 
-### 12.4 配置侧 vs 观众侧
+### 12.4 问题记录 3：`checkin --force` 与 sessions 展示层问题
+
+- **`--force` 参数问题**：已发布 latest 会把 `forceCheckInEnabled` 作为 boolean 发送；实测 `forceCheckInEnabled=true` 返回 `签到失败:`，`forceCheckInEnabled:"Y"` 返回 `true`。本仓库已改为传 `Y/N` 字符串，并同步修正 SDK 类型与示例。
+- **sessions 展示问题**：SDK `getCheckinByTime` 返回的是未包装数组，已发布 latest 的 `checkin sessions` 按 `{data: ...}` 读取，导致明明有记录仍显示 `No checkin sessions found`。本仓库已修复为兼容未包装数组。
+- **相关展示修复**：`checkin list` / `checkin result` 也统一改为兼容未包装 SDK 返回值，避免同类空结果误判。
+
+### 12.5 配置侧 vs 观众侧
 
 | 能力 | 配置侧 | 观众侧 |
 |---|---|---|
-| 打赏开关/金额是否生效 | ❌ 配置侧不可验证（`donate config get` 恒空） | 未验证（需开播后开观看页看打赏按钮/金额档位） |
-| 签到是否发起 | ❌ 本场景未成功发起（频道未开播） | 未验证（需开播后开观看页看签到弹窗） |
+| 打赏开关/金额是否生效 | ✅ SDK/V4 与 `web donate get` 可查；已发布 latest 的 `donate config get` 展示层需修复 | 未验证（需开播后开观看页看打赏按钮/金额档位） |
+| 签到是否发起 | ✅ 一次性频道直播中成功发起，`checkin sessions` 可查到发起记录 | 未验证（需开播后开观看页看签到弹窗） |
 | 打赏/点赞流水 | ✅ 配置侧可查（`donate list`/`likes`，频道未开播故为空） | — |
 | 签到记录 | ✅ 配置侧可查（`checkin sessions`/`list`，无记录） | — |
 
@@ -279,8 +307,12 @@ npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
 
 | 风险 | 影响 | 缓解 / 回滚 |
 |---|---|---|
-| `donate config update` 回显 success 但未持久化（问题 1） | 运营误以为打赏已开，开播后观众侧实际无打赏按钮 | **必须**在开播后开观看页人工复核打赏按钮；不能信任 update 回显；以 `donate config get` 复查（虽本账号恒空，但可作为「未读到」的基线对照） |
-| `checkin start` 在未开播频道失败（问题 2） | 暖场签到脚本若挂在开播前会静默失败 | 签到脚本必须挂在「确认 watchStatus=live」之后；中控发起前先 `channel get` 确认直播态 |
+| `donate config update` 只回显本次请求字段 | 运营误以为回显就是完整最终态 | 不能只看 update 回显；用修复后的 `donate config get` 或 `web donate get` 复查 |
+| 已发布 latest 的 `donate config get` 展示为空 | 运营误以为服务端没有配置 | 本仓库已修复展示层；发布前用 `web donate get` 或 SDK 交叉验证 |
+| `checkin start` 在未开播频道被拦截（问题 2） | 暖场签到脚本若挂在开播前不会产生签到 | 签到脚本必须挂在「确认 watchStatus=live」之后；中控发起前先 `channel get` 确认直播态 |
+| 已发布 latest 的 `checkin start --force` 参数类型错误 | 直播中仍可能返回 `签到失败:` | 本仓库已改为发送 `forceCheckInEnabled=Y` 字符串；发布前可暂时不加 `--force` 或用修复版本 |
+| 已发布 latest 的 `checkin sessions` 展示为空 | 无法从 CLI 拿到 `checkinId` | 本仓库已修复 sessions/list/result 展示层；发布前可用 SDK `getCheckinByTime` 交叉验证 |
+| 用 `stream start/stop` 补测签到成功路径 | 会真实改频道直播状态，`stream stop` 不等于恢复原始 `unStart` | 只在一次性测试频道执行；补测后停止直播并按需删除测试频道 |
 | 误在长期主频道改打赏配置 | 影响线上直播间的打赏开关与金额档位 | **所有打赏配置一律用专用测试频道**；本场景用新建 `7983902`，未触碰任何既有频道 |
 | 打赏金额档位配置错误（如漏配 `--amounts`） | `--cash-enabled Y` 要求同时给 `--amounts`，否则参数不全 | 配置前先 `donate config update --help` 校验；现金打赏必须 `--cash-enabled Y --amounts "..."` 成对出现 |
 | 测试频道残留 | 占用频道配额 | 频道已保留供人工查看（见第 14 节）；如需清理用 `channel delete -c 7983902`（**本场景未执行**） |
@@ -289,13 +321,14 @@ npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
 
 | 资产 | 状态 | 用途 |
 |---|---|---|
-| 测试频道 `7983902`（GNHF-电商场景-06-donate-checkin-warmup-202606222339） | **已保留，未删除** | 供人工在保利威后台查看打赏配置（验证问题 1 的账号级开关假设）、查看签到记录 |
-| 打赏配置（4 次 update） | 未在 `donate config get` 观测到持久化 | 即便未持久化，保留频道可人工到后台核对打赏功能开通状态 |
-| 签到发起（1 次 start） | 失败，无 checkin-id 产生 | 无残留 |
+| 测试频道 `7983902`（GNHF-电商场景-06-donate-checkin-warmup-202606222339） | **已保留，未删除** | 供人工在保利威后台查看打赏配置、复核观众侧打赏展示与签到记录 |
+| 一次性补测频道 `7988451` / `7988452` / `7988453` | **已删除** | 用于 stream start/stop、force 参数对比、修复后签到成功路径验证 |
+| 打赏配置（4 次 update） | SDK/V4 与 `web donate get` 可读到配置；已发布 latest 的 `donate config get` 展示为空 | 保留频道可继续验证修复后的 `donate config get` 与观众侧展示 |
+| 签到发起 | `7983902` 未开播负向校验无残留；`7988453` 直播中成功生成 `checkinid=92036220-6f53-11f1-b340-cf712b` 后频道已删除 | 无需继续清理 |
 
 > **频道已保留，未执行删除**。可选的人工清理命令（**本场景未执行**）：
 > ```bash
-> npx --yes polyv-live-cli@rc channel delete -c 7983902   # 仅人工确认需要清理时执行
+> npx --yes polyv-live-cli@latest channel delete -c 7983902   # 仅人工确认需要清理时执行
 > ```
 
 ## 15. 可复用模板
@@ -305,12 +338,13 @@ npx --yes polyv-live-cli@rc checkin list -c 7983902 -o json
 ```bash
 CHANNEL_ID="<你的频道ID>"
 # 1. 查基线
-npx --yes polyv-live-cli@rc donate config get -c "$CHANNEL_ID" -o json
+npx --yes polyv-live-cli@latest donate config get -c "$CHANNEL_ID" -o json
 # 2. 开礼物打赏 + 现金打赏，配吉利金额档位（⚠️ update 回显≠持久化，开播后必须观众侧复核）
-npx --yes polyv-live-cli@rc donate config update -c "$CHANNEL_ID" \
+npx --yes polyv-live-cli@latest donate config update -c "$CHANNEL_ID" \
   --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json
-# 3. 复查（本账号可能恒空，仅作基线对照）
-npx --yes polyv-live-cli@rc donate config get -c "$CHANNEL_ID" -o json
+# 3. 复查（发布修复前可优先用 web donate get 交叉验证）
+npx --yes polyv-live-cli@latest donate config get -c "$CHANNEL_ID" -o json
+npx --yes polyv-live-cli@latest web donate get -c "$CHANNEL_ID" -o json
 ```
 
 ### 15.2 暖场签到发起模板（开播后执行）
@@ -318,26 +352,51 @@ npx --yes polyv-live-cli@rc donate config get -c "$CHANNEL_ID" -o json
 ```bash
 CHANNEL_ID="<你的频道ID>"
 # ⚠️ 必须先确认频道已开播
-npx --yes polyv-live-cli@rc channel get -c "$CHANNEL_ID" -o json   # 确认 watchStatus=live
+npx --yes polyv-live-cli@latest channel get -c "$CHANNEL_ID" -o json   # 确认 watchStatus=live
 # 发起 30 秒暖场签到
-npx --yes polyv-live-cli@rc checkin start -c "$CHANNEL_ID" --limit-time 30 --message "扣1签到抽免单" --force -o json
-# 直播后复盘签到记录
-npx --yes polyv-live-cli@rc checkin sessions -c "$CHANNEL_ID" -o json
-npx --yes polyv-live-cli@rc checkin list -c "$CHANNEL_ID" -o json
+# 说明：已发布 latest(1.2.36) 的 --force 参数有类型问题；本仓库已修复，发布后可直接使用。
+npx --yes polyv-live-cli@latest checkin start -c "$CHANNEL_ID" --limit-time 30 --message "扣1签到抽免单" --force -o json
+# 查询最新签到发起记录，拿到 checkinId 后再查详情
+npx --yes polyv-live-cli@latest checkin sessions -c "$CHANNEL_ID" -o json
+npx --yes polyv-live-cli@latest checkin result -c "$CHANNEL_ID" --checkin-id "<从 sessions 取到的 checkinId>" -o json
+# 直播后复盘签到明细
+npx --yes polyv-live-cli@latest checkin list -c "$CHANNEL_ID" -o json
 ```
 
-### 15.3 打赏流水复盘模板（直播后）
+### 15.3 签到成功路径补测模板（一次性测试频道）
+
+```bash
+CHANNEL_ID="<一次性测试频道ID>"
+
+# 1. 切到直播中。该命令会真实改变频道状态，不建议用于长期保留频道。
+npx --yes polyv-live-cli@latest stream start -c "$CHANNEL_ID"
+npx --yes polyv-live-cli@latest stream status -c "$CHANNEL_ID" -o json
+
+# 2. 发起签到。batch-checkin 成功响应不返回可靠 checkinId。
+# 说明：已发布 latest(1.2.36) 的 --force 参数有类型问题；本仓库已修复，发布后可直接使用。
+npx --yes polyv-live-cli@latest checkin start -c "$CHANNEL_ID" --limit-time 30 --message "GNHF场景06暖场签到" --force -o json
+
+# 3. 查 sessions 获取最新 checkinId，再查签到结果。
+npx --yes polyv-live-cli@latest checkin sessions -c "$CHANNEL_ID" -o json
+npx --yes polyv-live-cli@latest checkin result -c "$CHANNEL_ID" --checkin-id "<从 sessions 取到的 checkinId>" -o json
+
+# 4. 结束直播状态。注意：stop 是结束/无直播，不等同于恢复原始 unStart。
+npx --yes polyv-live-cli@latest stream stop -c "$CHANNEL_ID"
+npx --yes polyv-live-cli@latest channel get -c "$CHANNEL_ID" -o json
+```
+
+### 15.4 打赏流水复盘模板（直播后）
 
 ```bash
 CHANNEL_ID="<你的频道ID>"
 START=$(date -v-1d "+%s")000; END=$(date "+%s")000
-npx --yes polyv-live-cli@rc donate list -c "$CHANNEL_ID" --start "$START" --end "$END" -o json
-npx --yes polyv-live-cli@rc donate likes -c "$CHANNEL_ID" --start "$START" --end "$END" -o json
+npx --yes polyv-live-cli@latest donate list -c "$CHANNEL_ID" --start "$START" --end "$END" -o json
+npx --yes polyv-live-cli@latest donate likes -c "$CHANNEL_ID" --start "$START" --end "$END" -o json
 ```
 
 ## 16. 后续可扩展方向
 
-- **观众侧验证补全**：在一个真实推流开播的测试频道上重跑 `checkin start`，并用 `checkin result --checkin-id` 验证 checkedCount/uncheckedCount，补全问题 2 的成功路径；同时开观看页验证打赏按钮是否随 `donate config update` 出现，补全问题 1 的观众侧证据。
+- **观众侧验证补全**：在一次性测试频道上用 `stream start` 切到直播中，重跑 `checkin start`，再从 `checkin sessions` 获取 `checkinId` 并用 `checkin result --checkin-id` 验证 checkedCount/uncheckedCount；同时开观看页验证打赏按钮是否随 `donate config update` 出现。
 - **打赏→主推款转化闭环**：把 `donate list` 打赏名单 × 场景 02 的 `product push` 商品大卡推送记录交叉，量化「打赏观众」vs「白嫖观众」的主推款点击转化差异（跨场景数据复盘）。
 - **签到→优惠券承接闭环**：把 `checkin list` 签到名单 × 场景 01 的 `coupon` 优惠券绑定，做「签到领券」自动化，把暖场签到直接转化为优惠券领取。
 - **互动脚本编排**：用 `interaction`（互动脚本/任务奖励）把打赏、签到、点赞奖励编成一条自动化暖场脚本，本场景未覆盖 `interaction`，留作后续场景。

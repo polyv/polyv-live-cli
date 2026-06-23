@@ -226,7 +226,7 @@ describe('CheckinServiceSdk', () => {
   // Additional Integration Tests
   // ============================================================
   describe('startCheckin', () => {
-    it('should convert force flag to boolean format for SDK', async () => {
+    it('should pass force flag as API Y/N string to SDK', async () => {
       mockV4ChatService.batchCheckin.mockResolvedValue({
         code: 200,
         status: 'success',
@@ -244,7 +244,7 @@ describe('CheckinServiceSdk', () => {
         expect.objectContaining({
           items: expect.arrayContaining([
             expect.objectContaining({
-              forceCheckInEnabled: true
+              forceCheckInEnabled: 'Y'
             })
           ])
         })

@@ -307,9 +307,9 @@ export class DonateHandler extends BaseHandler {
   // ===== Private Display Methods =====
 
   private displayConfigGetResult(result: any, options: DonateConfigGetOptions): void {
-    const data = result?.data;
+    const data = result?.data ?? result;
 
-    if (!data) {
+    if (!data || (typeof data === 'object' && Object.keys(data).length === 0)) {
       this.displayInfo(`No donate configuration found for channel ${options.channelId}`);
       return;
     }
@@ -320,19 +320,38 @@ export class DonateHandler extends BaseHandler {
         ...data
       }, 'json');
     } else {
+      const cashDonate = data.cashDonate ?? {};
+      const giftDonate = data.giftDonate ?? {};
+      const cashAmounts = cashDonate.cashs ?? data.cashes;
+      const cashMin = cashDonate.cashMin ?? data.cashMin;
+      const giftEnabled = data.donateGiftEnabled ?? data.donateGoodEnabled;
+      const cashPayGifts = giftDonate.cashPays ?? data.goods ?? [];
+      const pointPayGifts = giftDonate.pointPays ?? [];
+
       console.log(`Donate Configuration for Channel: ${options.channelId}`);
       console.log('');
       console.log(`Global Setting Enabled: ${data.globalSettingEnabled || 'N'}`);
       console.log(`Cash Donate Enabled: ${data.donateCashEnabled || 'N'}`);
-      console.log(`Good Donate Enabled: ${data.donateGoodEnabled || 'N'}`);
+      console.log(`Gift Donate Enabled: ${giftEnabled || 'N'}`);
       console.log(`Point Donate Enabled: ${data.donatePointEnabled || 'N'}`);
       console.log(`Donate Tips: ${data.donateTips || '-'}`);
-      console.log(`Cash Min: ${data.cashMin ?? '-'}`);
-      console.log(`Cash Amounts: ${data.cashes?.join(', ') || '-'}`);
-      if (data.goods && data.goods.length > 0) {
-        console.log(`Goods:`);
-        data.goods.forEach((good: any) => {
-          console.log(`  - ${good.goodName} (${good.goodPrice}) - ${good.goodEnabled === 'Y' ? 'Enabled' : 'Disabled'}`);
+      console.log(`Cash Min: ${cashMin ?? '-'}`);
+      console.log(`Cash Amounts: ${cashAmounts?.join(', ') || '-'}`);
+      if (cashPayGifts.length > 0) {
+        console.log(`Cash Pay Gifts:`);
+        cashPayGifts.forEach((gift: any) => {
+          const name = gift.name ?? gift.goodName ?? '-';
+          const price = gift.price ?? gift.goodPrice ?? '-';
+          const enabled = gift.enabled ?? gift.goodEnabled;
+          console.log(`  - ${name} (${price}) - ${enabled === 'Y' ? 'Enabled' : 'Disabled'}`);
+        });
+      }
+      if (pointPayGifts.length > 0) {
+        console.log(`Point Pay Gifts:`);
+        pointPayGifts.forEach((gift: any) => {
+          const name = gift.name ?? '-';
+          const price = gift.price ?? '-';
+          console.log(`  - ${name} (${price}) - ${gift.enabled === 'Y' ? 'Enabled' : 'Disabled'}`);
         });
       }
     }

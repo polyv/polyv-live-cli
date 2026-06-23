@@ -235,13 +235,19 @@ describe('V4ChatService', () => {
             channelId: '123456',
             limitTime: 60,
             message: 'Please check in',
+            forceCheckInEnabled: 'Y',
           },
         ],
       });
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/chat/batch-checkin',
-        expect.arrayContaining([expect.objectContaining({ channelId: '123456' })])
+        expect.arrayContaining([
+          expect.objectContaining({
+            channelId: '123456',
+            forceCheckInEnabled: 'Y',
+          }),
+        ])
       );
     });
 

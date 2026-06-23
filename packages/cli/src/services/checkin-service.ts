@@ -61,9 +61,8 @@ export class CheckinServiceSdk {
         if (params.message !== undefined) {
           item.message = params.message;
         }
-        // Convert 'Y'/'N' string to boolean for SDK
         if (params.forceCheckInEnabled !== undefined) {
-          item.forceCheckInEnabled = params.forceCheckInEnabled === 'Y';
+          item.forceCheckInEnabled = params.forceCheckInEnabled;
         }
 
         return item;
