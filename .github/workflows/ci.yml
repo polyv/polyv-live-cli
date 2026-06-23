@@ -46,11 +46,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Check AI Agent skill regression
-        run: pnpm skill:check
-
       - name: Build project
         run: pnpm build
+
+      - name: Check AI Agent skill regression
+        run: pnpm skill:check
 
       - name: Run CLI tests with coverage
         run: pnpm --filter polyv-live-cli test:coverage
@@ -127,11 +127,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Check AI Agent skill regression
-        run: pnpm skill:check
-
       - name: Build project
         run: pnpm build
+
+      - name: Check AI Agent skill regression
+        run: pnpm skill:check
 
       - name: Check build output
         run: |
