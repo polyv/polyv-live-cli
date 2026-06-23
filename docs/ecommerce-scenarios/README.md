@@ -16,8 +16,8 @@
 
 | 序号 | 场景 | 业务阶段 | 覆盖一级命令 | 文档 |
 |---|---|---|---|---|
-| 01 | 直播间优惠券承接（满减券配置+频道绑定+领券开关） | 预热 / 转化 | `account`、`channel`、`coupon` | [01-coupon-redemption.md](./01-coupon-redemption.md) |
-| 02 | 新品直播首发（商品上架+商品卡片节奏推送） | 转化 / 互动 | `account`、`channel`、`product`、`card-push` | [02-product-card-push.md](./02-product-card-push.md) |
+| 01 | 直播间优惠券承接（商品库开启+商品上架+满减券配置+频道绑定+领券开关） | 预热 / 转化 | `account`、`channel`、`product`、`coupon` | [01-coupon-redemption.md](./01-coupon-redemption.md) |
+| 02 | 新品直播首发（商品库开启+商品上架+商品卡片节奏推送） | 转化 / 互动 | `account`、`channel`、`product`、`card-push` | [02-product-card-push.md](./02-product-card-push.md) |
 | 03 | 直播互动抽奖促活（多条件福袋配置+生命周期演练） | 互动 / 转化 | `account`、`channel`、`lottery` | [03-live-lottery.md](./03-live-lottery.md) |
 | 04 | 售前答疑与问卷收集（新品首发购买意向摸底+答疑卡编排） | 预热 / 互动 / 数据复盘 | `account`、`channel`、`questionnaire`、`qa` | [04-presale-qa-questionnaire.md](./04-presale-qa-questionnaire.md) |
 | 05 | 会员专享直播（白名单观看+观看条件鉴权+VIP 成员全生命周期） | 治理 / 预热 | `account`、`channel`、`whitelist`、`watch-condition` | [05-member-exclusive-whitelist.md](./05-member-exclusive-whitelist.md) |
@@ -49,7 +49,7 @@
   - `ai`（场景 19：账号级数字人/TTS/PPT/视频制作任务为账号级。`digital-human list`（59 个数字人形象，含性别/服装/默认音色）+ `digital-human list-org`（候选数字人组织授权现状，返回 `[]`）+ `video-produce tts-voice list`（107 个 TTS 音色，含中/阿/德多语种与 FEMALE/MALE 标签）+ `video-produce list`（13 个制作任务，含 type=1 无数字人 / type=3 有数字人产出形态）+ `video-produce ppt list`（课件库基线）+ `video-produce ppt get` 真实执行成功；`video-produce ppt upload` **真实写入**新建测试课件「GNHF-AI-电商数字人话术课件」（fileId `d3a5786c…`）并经 `ppt list`（1→2）+ `ppt get`（status waitConvert→normal）前后对比交叉验证持久化；`video-produce get` 已执行失败并记录 `--id → aiPPTVideoId` 参数映射缺陷；`digital-human set-org` 为账号级授权写入、无 CLI 可创建的测试数字人按风险规则未执行并记录）
   - `channel`（场景 01、02、03、04、05、06、07、08、09、10、11、12、13、14、15：建测试频道 + 验证）
   - `coupon`（场景 01：建券 + 绑定频道 + 开领券开关 + 验证）
-  - `product`（场景 02：上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
+  - `product`（场景 01：按 `e-commerce.yaml` 示例商品补充上架承接商品 999016 + `product update-enabled` 打开商品库开关 enabled=Y + 列表验证；场景 02：`product update-enabled` 打开商品库开关 enabled=Y + 上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
   - `card-push`（场景 02：建手动秒杀卡 + 观看触发红包卡 + push/cancel 状态流转验证）
   - `lottery`（场景 03：建 none/duration/invite 三类福袋 + 列表/详情/更新加码/删除全生命周期；comment 类型已执行失败并记录）
   - `questionnaire`（场景 04：建 2 张售前问卷 + detail 验证题目落库 + legacy-list 列出；V4 list 对未发布问卷返回空已记录）
@@ -132,7 +132,7 @@
 | 20 | `platform` | 18 | ✅ 已执行成功 ¹⁴ | 7983960（频道落点；平台设置为账号级） | [18](./18-account-platform-governance.md) |
 | 21 | `playback` | 10 | ✅ 已执行成功 ⁶ | 7983937 | [10](./10-postlive-playback-record-replay.md) |
 | 22 | `player` | 09 | ✅ 已执行成功 ⁵ | 7983934 | [09](./09-brand-watchpage-player.md) |
-| 23 | `product` | 02 | ✅ 已执行成功 | 7983883 | [02](./02-product-card-push.md) |
+| 23 | `product` | 01、02 | ✅ 已执行成功 | 7983877 / 7983883 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md) |
 | 24 | `promotion` | 11 | ✅ 已执行成功 ⁷ | 7983938 | [11](./11-promotion-invite-sales-distribution.md) |
 | 25 | `qa` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
 | 26 | `questionnaire` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
@@ -189,8 +189,8 @@
 
 ## 五、变更记录
 
-- 2026-06-22：新增场景 01「直播间优惠券承接」，真实执行覆盖 `account`、`channel`、`coupon`（测试频道 `7983877`，领券开关已打开并验证）。
-- 2026-06-22：新增场景 02「新品直播首发 — 商品上架 + 商品卡片节奏推送」，真实执行覆盖 `product`、`card-push`（测试频道 `7983883`，上架 2 件商品，建 2 张卡片并验证 pushStatus N→Y→L 流转）。累计覆盖 5 / 40。
+- 2026-06-22：新增场景 01「直播间优惠券承接」，真实执行覆盖 `account`、`channel`、`coupon`（测试频道 `7983877`，领券开关已打开并验证）；2026-06-23 按 `e-commerce.yaml` 补充 `product update-enabled --enabled Y` 打开商品库开关、上架商品 `999016`「GNHF场景01-Allowish英国进口香氛沐浴露」，经 `product enabled` / `product list` 验证，补齐「商品 + 券」转化闭环。
+- 2026-06-22：新增场景 02「新品直播首发 — 商品库开启 + 商品上架 + 商品卡片节奏推送」，真实执行覆盖 `product`、`card-push`（测试频道 `7983883`，上架 2 件商品，建 2 张卡片并验证 pushStatus N→Y→L 流转）；2026-06-23 补充 `product update-enabled --enabled Y` 打开商品库开关，经 `product enabled` / `product list` 验证，补齐观看页商品展示闭环。累计覆盖 5 / 40。
 - 2026-06-22：新增场景 03「直播互动抽奖促活 — 多条件福袋配置 + 生命周期演练」，真实执行覆盖 `lottery`（测试频道 `7983885`，建 none/duration/invite 三类福袋，演练列表/详情/更新加码/删除全生命周期；`--type comment` 真实执行失败并记录「活动时长不能为空」）。累计覆盖 6 / 40。
 - 2026-06-22：新增场景 04「售前答疑与问卷收集 — 新品首发购买意向摸底 + 答疑卡编排」，真实执行覆盖 `questionnaire`、`qa`（测试频道 `7983889`，建 2 张售前问卷并 detail/legacy-list 验证落库；记录 V4 `questionnaire list` 对未发布问卷返回空、`qa add-edit` 因 CLI 三层强制 question-id 非空无法新建两条问题）。累计覆盖 8 / 40。
 - 2026-06-22：新增场景 05「会员专享直播 — 白名单观看 + 观看条件鉴权 + VIP 成员全生命周期」，真实执行覆盖 `whitelist`、`watch-condition`（测试频道 `7983898`，rank2 白名单 add 3 名 VIP + keyword 搜索 + update 会员升级换码 + remove 删除演练全生命周期并前后对比验证；`watch-condition get` 成功，`watch-condition set` 已执行失败并记录「返回 success:true 但 rank1 配置未持久化」静默问题，会员专享鉴权门由 rank2 默认 phone 白名单承载）。累计覆盖 10 / 40。

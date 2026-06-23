@@ -50,6 +50,20 @@ describe('Product Commands', () => {
       expect(listCmd?.description()).toBe('List products with pagination');
     });
 
+    it('should register product update-enabled subcommand', () => {
+      const productCmd = program.commands.find(cmd => cmd.name() === 'product');
+      const updateEnabledCmd = productCmd?.commands.find(cmd => cmd.name() === 'update-enabled');
+
+      expect(updateEnabledCmd).toBeDefined();
+      expect(updateEnabledCmd?.description()).toBe('Update channel product library enabled status');
+
+      const optionNames = (updateEnabledCmd?.options || []).map(opt => opt.long);
+      expect(optionNames).toContain('--channel-id');
+      expect(optionNames).toContain('--enabled');
+      expect(optionNames).toContain('--force');
+      expect(optionNames).toContain('--output');
+    });
+
     it('should register correct options for list command', () => {
       const productCmd = program.commands.find(cmd => cmd.name() === 'product');
       const listCmd = productCmd?.commands.find(cmd => cmd.name() === 'list');
@@ -786,6 +800,48 @@ describe('action execution', () => {
         'node', 'test', 'product', 'delete',
         '-c', '123456',
         '-p', '789',
+      ])).rejects.toThrow('process.exit:1');
+
+      expect(logError).toHaveBeenCalled();
+    });
+  });
+
+  describe('update-enabled action', () => {
+    it('[P0] should call updateChannelProductEnabled handler with correct params', async () => {
+      const mockHandler = { updateChannelProductEnabled: jest.fn().mockResolvedValue(undefined) };
+      MockProductHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerProductCommands(program);
+      await program.parseAsync([
+        'node', 'test', 'product', 'update-enabled',
+        '-c', '123456',
+        '--enabled', 'Y',
+        '--force',
+        '-o', 'json',
+      ]);
+
+      expect(MockProductHandler).toHaveBeenCalled();
+      expect(mockHandler.updateChannelProductEnabled).toHaveBeenCalledWith({
+        channelId: '123456',
+        enabled: 'Y',
+        force: true,
+        output: 'json',
+      });
+    });
+
+    it('[P1] should handle API errors in update-enabled action', async () => {
+      const mockHandler = { updateChannelProductEnabled: jest.fn().mockRejectedValue(new Error('Update enabled failed')) };
+      MockProductHandler.mockImplementation(() => mockHandler);
+      const { logError } = require('../utils/errors');
+
+      const program = createTestProgram();
+      registerProductCommands(program);
+      await expect(program.parseAsync([
+        'node', 'test', 'product', 'update-enabled',
+        '-c', '123456',
+        '--enabled', 'N',
+        '--force',
       ])).rejects.toThrow('process.exit:1');
 
       expect(logError).toHaveBeenCalled();

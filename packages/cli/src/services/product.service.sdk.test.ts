@@ -46,6 +46,7 @@ describe('ProductServiceSdk', () => {
       channel: {
         addChannelProduct: jest.fn(),
         updateChannelProduct: jest.fn(),
+        updateChannelProductEnabled: jest.fn(),
         deleteChannelProduct: jest.fn(),
         listChannelProducts: jest.fn()
       },
@@ -380,6 +381,23 @@ describe('ProductServiceSdk', () => {
       const invalidOptions = { ...validOptions, productId: undefined as any };
 
       await expect(service.deleteProduct(invalidOptions)).rejects.toThrow(PolyVValidationError);
+    });
+  });
+
+  describe('updateChannelProductEnabled', () => {
+    it('should update channel product library enabled status', async () => {
+      mockClient.channel.updateChannelProductEnabled.mockResolvedValue(true);
+
+      const result = await service.updateChannelProductEnabled({
+        channelId: 'test-channel-id',
+        enabled: 'Y',
+      });
+
+      expect(result).toBe(true);
+      expect(mockClient.channel.updateChannelProductEnabled).toHaveBeenCalledWith({
+        channelId: 'test-channel-id',
+        enabled: 'Y',
+      });
     });
   });
 

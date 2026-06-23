@@ -91,6 +91,7 @@ describe('channel historical operate/state/marquee handlers', () => {
 
   it('forwards product, chat, and transmit historical writes after force confirmation', async () => {
     const productService = {
+      updateChannelProductEnabled: jest.fn().mockResolvedValue(true),
       batchAddChannelProducts: jest.fn().mockResolvedValue(true),
       batchDeleteChannelProducts: jest.fn().mockResolvedValue(true),
       pushChannelProduct: jest.fn().mockResolvedValue(true),
@@ -99,11 +100,13 @@ describe('channel historical operate/state/marquee handlers', () => {
     const productHandler = new ProductHandler(authConfig, serviceConfig as any);
     (productHandler as any).productService = productService;
 
+    await productHandler.updateChannelProductEnabled({ channelId: '1', enabled: 'Y', force: true, output: 'json' });
     await productHandler.batchAddChannelProducts({ channelId: '1', products: [{ productId: 1 }], force: true, output: 'json' });
     await productHandler.batchDeleteChannelProducts({ channelId: '1', productIds: [1], force: true, output: 'json' });
     await productHandler.pushChannelProduct({ channelId: '1', productId: 1, force: true, output: 'json' });
     await productHandler.referenceProduct({ channelId: '1', originId: 'p1', status: 1, force: true, output: 'json' });
 
+    expect(productService.updateChannelProductEnabled).toHaveBeenCalledWith({ channelId: '1', enabled: 'Y' });
     expect(productService.batchAddChannelProducts).toHaveBeenCalledWith({ channelId: '1', products: [{ productId: 1 }] });
     expect(productService.batchDeleteChannelProducts).toHaveBeenCalledWith({ channelId: '1', productIds: [1] });
     expect(productService.pushChannelProduct).toHaveBeenCalledWith({ channelId: '1', productId: 1, force: true, output: 'json' });

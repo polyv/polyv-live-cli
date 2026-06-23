@@ -499,6 +499,7 @@
 | `product channel-tag` | `packages/cli/src/commands/product.commands.ts:755` |
 | `product delete` | `packages/cli/src/commands/product.commands.ts:608` |
 | `product enabled` | `packages/cli/src/commands/product.commands.ts:649` |
+| `product update-enabled` | `packages/cli/src/commands/product.commands.ts:655` |
 | `product library` | `packages/cli/src/commands/product.commands.ts:859` |
 | `product list` | `packages/cli/src/commands/product.commands.ts:325` |
 | `product order` | `packages/cli/src/commands/product.commands.ts:947` |
@@ -1091,7 +1092,7 @@
 | 修改频道礼物打赏设置<br><sub>1、修改频道礼物打赏设置，礼物打赏又分为现金支付和积分支付</sub> | POST | `/live/v4/channel/donate/gift/update` | json-body | channelId, donateGiftEnabled | V4ChannelService#updateDonateGift (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateDonateGift (packages/cli/src/services/donate-service.ts:66) |
 | 修改频道聊天室发言开关<br><sub>1、修改频道聊天室发言开关</sub> | POST | `/live/v4/channel/chat/update-chatEnabled` | json-body | channelIds, chatEnabled | V4ChannelService#batchUpdateChatEnabled (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#batchUpdateChatEnabled (packages/cli/src/services/chat.service.sdk.ts:558) |
 | 修改频道密码<br><sub>1、修改单个频道号的密码，或者修改账号下所有频道号的密码</sub> | POST | `/live/v2/channels/{param}/passwdSetting` | query/form | passwd | ChannelService#updateChannelPassword (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelPassword (packages/cli/src/services/channel.service.sdk.ts:604) |
-| 修改频道商品库开关状态<br><sub>1、修改频道商品库开关状态，如果没有开启商品库权限请联系客服</sub> | POST | `/live/v3/channel/product/update-enabled` | query/form | channelId, enabled | ChannelService#updateChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/setup/resource-handlers.ts:199) |
+| 修改频道商品库开关状态<br><sub>1、修改频道商品库开关状态，如果没有开启商品库权限请联系客服</sub> | POST | `/live/v3/channel/product/update-enabled` | query/form | channelId, enabled | ChannelService#updateChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | cmd: `product update-enabled` (packages/cli/src/commands/product.commands.ts:655)<br>handler: ProductHandler#updateChannelProductEnabled (packages/cli/src/handlers/product.handler.ts:513)<br>sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/services/product.service.sdk.ts:321)<br>sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/setup/resource-handlers.ts:199) |
 | 修改频道商品库上下架状态<br><sub>1、修改频道商品库商品上下架状态</sub> | POST | `/live/v3/channel/product/shelf` | query/form | channelId, productId | ChannelService#shelfChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#shelfChannelProduct (packages/cli/src/services/product.service.sdk.ts:350) |
 | 修改频道商品配置<br><sub>1、修改频道商品配置</sub> | POST | `/live/v4/channel/product/push/rule` | json-body | channelId | V4ChannelService#updateProductPushRule (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateProductPushRule (packages/cli/src/services/product.service.sdk.ts:505) |
 | 修改频道商品信息<br><sub>1、编辑频道商品库商品信息</sub> | POST | `/live/v3/channel/product/update` | json-body | channelId, linkType, name, productId, status | ChannelService#updateChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelProduct (packages/cli/src/services/product.service.sdk.ts:235) |
@@ -1453,4 +1454,3 @@
 | 删除应用角色<br><sub>1、删除应用角色</sub> | POST | `/live/v4/user/webapp-role/delete` | query/form | id | V4WebAppService#deleteRole (packages/sdk/src/services/v4/webapp.service.ts) | sdk: V4WebAppService#deleteRole (packages/cli/src/services/webapp-service.ts:38) |
 | 添加应用角色<br><sub>1、添加应用角色</sub> | POST | `/live/v4/user/webapp-role/create` | query/form | name, permissionIds, roleType | V4WebAppService#createRole (packages/sdk/src/services/v4/webapp.service.ts) | sdk: V4WebAppService#createRole (packages/cli/src/services/webapp-service.ts:18) |
 | 应用权限列表<br><sub>1、应用权限列表</sub> | GET | `/live/v4/user/webapp-role/permission/list` | query | - | V4WebAppService#listPermissions (packages/sdk/src/services/v4/webapp.service.ts) | sdk: V4WebAppService#listPermissions (packages/cli/src/services/webapp-service.ts:13) |
-

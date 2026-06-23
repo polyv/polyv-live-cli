@@ -12,7 +12,7 @@ module.exports = {
       }
     ]
   },
-  maxWorkers: 4,
+  maxWorkers: 2,
   cache: true,
   forceExit: false,
   setupFiles: [

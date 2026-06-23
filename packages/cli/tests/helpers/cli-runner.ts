@@ -15,6 +15,8 @@ export interface CliRunOptions {
   includeTestEnv?: boolean;
   isolatedHome?: boolean;
   rejectOnError?: boolean;
+  retries?: number;
+  retryDelayMs?: number;
   timeout?: number;
 }
 
@@ -30,6 +32,21 @@ export interface CliRunResult {
 const cliPackageRoot = path.resolve(__dirname, '../..');
 const cliEntryPath = path.join(cliPackageRoot, 'dist', 'index.js');
 let sharedIsolatedHome: string | null = null;
+
+const transientFailurePatterns = [
+  /No response from server/i,
+  /Request timeout/i,
+  /timeout of \d+ms exceeded/i,
+  /\bECONNRESET\b/i,
+  /\bETIMEDOUT\b/i,
+  /\bECONNABORTED\b/i,
+  /socket hang up/i,
+];
+
+function sleep(ms: number): void {
+  const buffer = new SharedArrayBuffer(4);
+  Atomics.wait(new Int32Array(buffer), 0, 0, ms);
+}
 
 function resolveSharedIsolatedHome(): string {
   if (!sharedIsolatedHome) {
@@ -92,34 +109,59 @@ export function getCliEntryPath(): string {
   return cliEntryPath;
 }
 
+function isTransientCliFailure(result: CliRunResult): boolean {
+  if (result.exitCode === 0) {
+    return false;
+  }
+
+  const text = `${result.output}\n${result.error?.message || ''}`;
+  return transientFailurePatterns.some((pattern) => pattern.test(text));
+}
+
 export function runCli(args: string[], options: CliRunOptions = {}): CliRunResult {
   if (!fs.existsSync(cliEntryPath)) {
     throw new Error(`CLI entry not found: ${cliEntryPath}. Run npm run build before integration tests.`);
   }
 
-  const result = spawnSync(process.execPath, [cliEntryPath, ...args], {
-    cwd: cliPackageRoot,
-    encoding: 'utf8',
-    env: getCliTestEnv(options),
-    input: options.input,
-    timeout: options.timeout || 30000,
-  });
+  const maxRetries = options.retries ?? 2;
+  const retryDelayMs = options.retryDelayMs ?? 1000;
+  let runResult: CliRunResult | undefined;
 
-  const stdout = result.stdout || '';
-  const stderr = result.stderr || '';
-  const exitCode = result.status ?? (result.error ? 1 : 0);
-  const runResult: CliRunResult = {
-    stdout,
-    stderr,
-    output: `${stdout}${stderr}`,
-    exitCode,
-    signal: result.signal,
-    ...(result.error && { error: result.error }),
-  };
+  for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+    const result = spawnSync(process.execPath, [cliEntryPath, ...args], {
+      cwd: cliPackageRoot,
+      encoding: 'utf8',
+      env: getCliTestEnv(options),
+      input: options.input,
+      timeout: options.timeout || 30000,
+    });
 
-  if (options.rejectOnError && exitCode !== 0) {
+    const stdout = result.stdout || '';
+    const stderr = result.stderr || '';
+    const exitCode = result.status ?? (result.error ? 1 : 0);
+    runResult = {
+      stdout,
+      stderr,
+      output: `${stdout}${stderr}`,
+      exitCode,
+      signal: result.signal,
+      ...(result.error && { error: result.error }),
+    };
+
+    if (!isTransientCliFailure(runResult) || attempt === maxRetries) {
+      break;
+    }
+
+    sleep(retryDelayMs * (attempt + 1));
+  }
+
+  if (!runResult) {
+    throw new Error(`CLI did not run: ${args.join(' ')}`);
+  }
+
+  if (options.rejectOnError && runResult.exitCode !== 0) {
     throw new Error(
-      `CLI failed with exit code ${exitCode}: ${args.join(' ')}\nSTDOUT:\n${stdout}\nSTDERR:\n${stderr}`
+      `CLI failed with exit code ${runResult.exitCode}: ${args.join(' ')}\nSTDOUT:\n${runResult.stdout}\nSTDERR:\n${runResult.stderr}`
     );
   }
 

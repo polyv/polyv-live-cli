@@ -46,6 +46,13 @@ export interface ProductListOptions {
   output?: OutputFormat;
 }
 
+export interface ProductUpdateEnabledOptions {
+  channelId: string;
+  enabled: 'Y' | 'N';
+  force?: boolean;
+  output?: OutputFormat;
+}
+
 /**
  * Handler for product-related CLI commands
  */
@@ -503,6 +510,22 @@ export class ProductHandler extends BaseHandler {
     }, 'product.enabled.get');
   }
 
+  async updateChannelProductEnabled(options: ProductUpdateEnabledOptions): Promise<void> {
+    return this.executeWithErrorHandling(async () => {
+      this.requireFields(options, ['channelId', 'enabled']);
+      this.validateYn(options.enabled, 'enabled');
+      await confirmWrite(options.force, `Update channel product library switch for channel ${options.channelId}?`);
+      await this.productService.updateChannelProductEnabled({
+        channelId: options.channelId,
+        enabled: options.enabled,
+      });
+      this.displayWriteResult('Channel product library switch updated successfully', {
+        channelId: options.channelId,
+        enabled: options.enabled,
+      }, options.output);
+    }, 'product.update-enabled');
+  }
+
   async batchAddChannelProducts(options: { channelId: string; products: any[]; force?: boolean; output?: OutputFormat }): Promise<void> {
     return this.executeWithErrorHandling(async () => {
       this.requireFields(options, ['channelId', 'products']);
@@ -714,6 +737,12 @@ export class ProductHandler extends BaseHandler {
         options,
         'validation_failed'
       );
+    }
+  }
+
+  private validateYn(value: string, fieldName: string): void {
+    if (value !== 'Y' && value !== 'N') {
+      throw new PolyVValidationError(`${fieldName} must be Y or N`, fieldName, value, 'invalid_value');
     }
   }
 

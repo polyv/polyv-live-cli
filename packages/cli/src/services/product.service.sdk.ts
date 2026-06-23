@@ -29,6 +29,7 @@ import { createSdkClient } from '../sdk';
 import type {
   AddChannelProductParams,
   UpdateChannelProductParams,
+  UpdateChannelProductEnabledParams,
   ProductOrder,
   ListProductOrdersResponse,
   BatchUpdateOrderStatusResponse,
@@ -314,6 +315,15 @@ export class ProductServiceSdk {
       return await client.channel.getChannelProductEnabled(channelId);
     } catch (error) {
       throw this.handleError(error, 'getChannelProductEnabled');
+    }
+  }
+
+  async updateChannelProductEnabled(options: UpdateChannelProductEnabledParams): Promise<boolean> {
+    try {
+      const client = createSdkClient(this.authConfig, this.config.baseUrl);
+      return await client.channel.updateChannelProductEnabled(options);
+    } catch (error) {
+      throw this.handleError(error, 'updateChannelProductEnabled');
     }
   }
 

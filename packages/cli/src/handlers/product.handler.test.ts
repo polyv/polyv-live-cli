@@ -55,6 +55,7 @@ describe('ProductHandler', () => {
       listProducts: jest.fn(),
       addProduct: jest.fn(),
       updateProduct: jest.fn(),
+      updateChannelProductEnabled: jest.fn(),
       deleteProduct: jest.fn()
     } as any;
 
@@ -736,6 +737,39 @@ describe('ProductHandler', () => {
       expect(mockConsoleLog).toHaveBeenCalledWith(
         expect.stringContaining('123456')
       );
+    });
+  });
+
+  describe('updateChannelProductEnabled', () => {
+    it('should update channel product library enabled status', async () => {
+      const options = {
+        channelId: 'test-channel-id',
+        enabled: 'Y' as const,
+        force: true,
+        output: 'json' as const
+      };
+
+      mockProductService.updateChannelProductEnabled.mockResolvedValue(true);
+
+      await productHandler.updateChannelProductEnabled(options);
+
+      expect(mockProductService.updateChannelProductEnabled).toHaveBeenCalledWith({
+        channelId: 'test-channel-id',
+        enabled: 'Y',
+      });
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        expect.stringContaining('test-channel-id')
+      );
+    });
+
+    it('should reject invalid enabled value', async () => {
+      await expect(productHandler.updateChannelProductEnabled({
+        channelId: 'test-channel-id',
+        enabled: 'YES' as any,
+        force: true,
+      })).rejects.toThrow(PolyVValidationError);
+
+      expect(mockProductService.updateChannelProductEnabled).not.toHaveBeenCalled();
     });
   });
 

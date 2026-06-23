@@ -58,6 +58,7 @@ describe('channel historical operate/state/marquee service wrappers', () => {
         resume: jest.fn().mockResolvedValue(true),
         updateStreamType: jest.fn().mockResolvedValue(true),
         getChannelProductEnabled: jest.fn().mockResolvedValue({ enabled: 'Y' }),
+        updateChannelProductEnabled: jest.fn().mockResolvedValue(true),
         batchAddChannelProducts: jest.fn().mockResolvedValue(true),
         batchDeleteChannelProducts: jest.fn().mockResolvedValue(true),
         batchShelfChannelProducts: jest.fn().mockResolvedValue(true),
@@ -141,6 +142,7 @@ describe('channel historical operate/state/marquee service wrappers', () => {
     (transmit as any).channel = transmitChannel;
 
     await product.getChannelProductEnabled('1');
+    await product.updateChannelProductEnabled({ channelId: '1', enabled: 'Y' });
     await product.batchAddChannelProducts({ channelId: '1', products: [{ productId: 1 }] });
     await product.batchDeleteChannelProducts({ channelId: '1', productIds: [1] });
     await product.batchShelfChannelProducts({ channelId: '1', productIds: [1], shelf: 1 });
@@ -152,6 +154,7 @@ describe('channel historical operate/state/marquee service wrappers', () => {
     await transmit.associationReceiveChannels({ channelId: '1', receiveChannelIds: ['2'], type: 'add' });
 
     expect(sdkClient.channel.getChannelProductEnabled).toHaveBeenCalledWith('1');
+    expect(sdkClient.channel.updateChannelProductEnabled).toHaveBeenCalledWith({ channelId: '1', enabled: 'Y' });
     expect(sdkClient.channel.batchAddChannelProducts).toHaveBeenCalledWith({ channelId: '1', products: [{ productId: 1 }] });
     expect(sdkClient.channel.batchDeleteChannelProducts).toHaveBeenCalledWith({ channelId: '1', productIds: [1] });
     expect(sdkClient.channel.batchShelfChannelProducts).toHaveBeenCalledWith({ channelId: '1', productIds: [1], shelf: 1 });

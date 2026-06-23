@@ -652,6 +652,14 @@ Note:
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withProductHandler(program, handler => handler.getChannelProductEnabled(options)));
 
+  productCmd.command('update-enabled')
+    .description('Update channel product library enabled status')
+    .requiredOption('-c, --channel-id <channelId>', 'channel ID')
+    .requiredOption('--enabled <yn>', 'enabled flag (Y|N)', validateYn)
+    .option('-f, --force', 'skip confirmation prompt')
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action((options) => withProductHandler(program, handler => handler.updateChannelProductEnabled(options)));
+
   productCmd.command('batch-add')
     .description('Batch add products to a channel')
     .requiredOption('-c, --channel-id <channelId>', 'channel ID')
