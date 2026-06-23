@@ -116,7 +116,55 @@ Examples:
   // ========================================
   const listCmd = questionnaireCmd
     .command('list')
-    .description('List questionnaires with pagination')
+    .description('List questionnaires')
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .option('--start-time <timestamp>', 'start timestamp', parsePositiveNumber)
+    .option('--end-time <timestamp>', 'end timestamp', parsePositiveNumber)
+    .option('--page <number>', 'page number', parsePositiveInteger)
+    .option('--size <number>', 'page size', parsePositiveInteger)
+    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
+    .action(async (options) => {
+      try {
+        const parentOptions = program.opts();
+        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
+
+        const handler = new QaQuestionnaireHandler(authConfig, serviceConfig);
+
+        await handler.listQuestionnaire({
+          channelId: options.channelId,
+          startTime: options.startTime,
+          endTime: options.endTime,
+          page: options.page,
+          size: options.size,
+          output: options.output,
+        });
+      } catch (error) {
+        logError(error instanceof Error ? error : new Error(String(error)));
+        process.exit(1);
+      }
+    });
+
+  listCmd.addHelpText('after', `
+Examples:
+  # List all questionnaires
+  $ polyv-live-cli questionnaire list -c "3151318"
+
+  # List with pagination
+  $ polyv-live-cli questionnaire list -c "3151318" --page 1 --size 20
+
+  # List by timestamp range
+  $ polyv-live-cli questionnaire list -c "3151318" --start-time 1704067200000 --end-time 1706745599000
+
+  # JSON output
+  $ polyv-live-cli questionnaire list -c "3151318" -o json
+`);
+
+  // ========================================
+  // questionnaire result-list
+  // ========================================
+  const resultListCmd = questionnaireCmd
+    .command('result-list')
+    .description('List questionnaire results with pagination')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
     .option('--page <number>', 'page number', parseInt)
     .option('--size <number>', 'page size', parseInt)
@@ -146,64 +194,22 @@ Examples:
       }
     });
 
-  listCmd.addHelpText('after', `
+  resultListCmd.addHelpText('after', `
 Examples:
-  # List all questionnaires
-  $ polyv-live-cli questionnaire list -c "3151318"
+  # List questionnaire results
+  $ polyv-live-cli questionnaire result-list -c "3151318"
 
-  # List with pagination
-  $ polyv-live-cli questionnaire list -c "3151318" --page 1 --size 20
+  # List results with pagination
+  $ polyv-live-cli questionnaire result-list -c "3151318" --page 1 --size 20
 
   # Filter by session ID
-  $ polyv-live-cli questionnaire list -c "3151318" --session-id "fwly13xczv"
+  $ polyv-live-cli questionnaire result-list -c "3151318" --session-id "fwly13xczv"
 
   # Filter by date range
-  $ polyv-live-cli questionnaire list -c "3151318" --start-date "2024-01-01" --end-date "2024-01-31"
+  $ polyv-live-cli questionnaire result-list -c "3151318" --start-date "2024-01-01" --end-date "2024-01-31"
 
   # JSON output
-  $ polyv-live-cli questionnaire list -c "3151318" -o json
-`);
-
-  // ========================================
-  // questionnaire legacy-list
-  // ========================================
-  const legacyListCmd = questionnaireCmd
-    .command('legacy-list')
-    .description('List questionnaires through the legacy V3 API')
-    .requiredOption('-c, --channel-id <id>', 'channel ID')
-    .option('--start-time <timestamp>', 'start timestamp', parsePositiveNumber)
-    .option('--end-time <timestamp>', 'end timestamp', parsePositiveNumber)
-    .option('--page <number>', 'page number', parsePositiveInteger)
-    .option('--size <number>', 'page size', parsePositiveInteger)
-    .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action(async (options) => {
-      try {
-        const parentOptions = program.opts();
-        const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
-
-        const handler = new QaQuestionnaireHandler(authConfig, serviceConfig);
-
-        await handler.listQuestionnaire({
-          channelId: options.channelId,
-          startTime: options.startTime,
-          endTime: options.endTime,
-          page: options.page,
-          size: options.size,
-          output: options.output,
-        });
-      } catch (error) {
-        logError(error instanceof Error ? error : new Error(String(error)));
-        process.exit(1);
-      }
-    });
-
-  legacyListCmd.addHelpText('after', `
-Examples:
-  # List questionnaires through legacy API
-  $ polyv-live-cli questionnaire legacy-list -c "3151318" --page 1 --size 20
-
-  # List by timestamp range
-  $ polyv-live-cli questionnaire legacy-list -c "3151318" --start-time 1704067200000 --end-time 1706745599000
+  $ polyv-live-cli questionnaire result-list -c "3151318" -o json
 `);
 
   // ========================================

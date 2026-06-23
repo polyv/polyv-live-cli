@@ -171,7 +171,9 @@ export class LiveInteractionService {
 
   private validateQuestionPayload(params: AddEditQuestionParams): void {
     this.validateRequiredChannelId(params.channelId);
-    this.validateRequiredString(params.questionId, 'questionId');
+    if (params.questionId !== undefined) {
+      this.validateRequiredString(params.questionId, 'questionId');
+    }
     this.validateRequiredString(params.type, 'type');
     this.validateRequiredString(params.answer, 'answer');
     this.validateRequiredString(params.name, 'name');

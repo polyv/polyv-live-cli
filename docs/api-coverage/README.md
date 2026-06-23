@@ -184,7 +184,8 @@ API 文档列中的路径均相对于本仓库根目录解析的 `../document-ce
 | 命令 | SDK 方法 | API Endpoint | API 文档 |
 |------|----------|--------------|---------|
 | `questionnaire create` | V4 问卷接口 | `POST /live/v4/channel/questionnaire/create` | `live_interaction/create_questionnaire.md` |
-| `questionnaire list` | V4 问卷接口 | `GET /live/v4/channel/questionnaire/list` | `live_interaction/list_questionaire.md` |
+| `questionnaire list` | 查询频道问卷列表 | `GET /live/v3/channel/questionnaire/list` | `live_interaction/list_questionaire.md` |
+| `questionnaire result-list` | 分页查询频道问卷结果 | `GET /live/v3/channel/questionnaire/list-answer-records` | `live_interaction/list_questionnaire_by_page.md` |
 | `questionnaire detail` | V4 问卷接口 | `GET /live/v4/channel/questionnaire/detail` | `live_interaction/get_questionnaire_detail.md` |
 
 ---

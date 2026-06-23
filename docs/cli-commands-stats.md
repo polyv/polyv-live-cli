@@ -206,10 +206,11 @@
 | 子命令 | 作用 | API |
 |--------|------|-----|
 | `questionnaire create` | 创建问卷 | createQuestionnaire |
-| `questionnaire list` | 问卷列表 | listQuestionnaires |
+| `questionnaire list` | 问卷列表 | listQuestionnaire |
+| `questionnaire result-list` | 问卷结果列表 | listQuestionnaires |
 | `questionnaire detail` | 问卷详情 | getQuestionnaireDetail |
 
-**API 数量：3**
+**API 数量：4**
 
 ---
 

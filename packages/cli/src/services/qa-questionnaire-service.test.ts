@@ -9,8 +9,10 @@ import {
   SendQaParams,
   ListQaParams,
   StopQaParams,
+  AddEditQuestionParams,
   CreateQuestionnaireParams,
-  ListQuestionnairesParams,
+  ListQuestionnaireParams,
+  ListQuestionnaireResultsParams,
   GetQuestionnaireDetailParams,
   QuestionnaireQuestionItem,
 } from '../types/qa';
@@ -31,9 +33,11 @@ describe('QaQuestionnaireServiceSdk', () => {
     sendQuestion: jest.Mock;
     listQuestion: jest.Mock;
     stopQuestion: jest.Mock;
+    addEditQuestion: jest.Mock;
     createQuestionnaire: jest.Mock;
     addEditQuestionnaire: jest.Mock;
     createQuestionnaire: jest.Mock;
+    listQuestionnaire: jest.Mock;
     listQuestionnaireByPage: jest.Mock;
     getQuestionnaireDetail: jest.Mock;
   };
@@ -54,6 +58,7 @@ describe('QaQuestionnaireServiceSdk', () => {
       sendQuestion: jest.fn(),
       listQuestion: jest.fn(),
       stopQuestion: jest.fn(),
+      addEditQuestion: jest.fn(),
       createQuestionnaire: jest.fn(),
       addEditQuestionnaire: jest.fn(),
       createQuestionnaire: jest.fn((payload) => mockLiveInteraction.addEditQuestionnaire(
@@ -69,6 +74,7 @@ describe('QaQuestionnaireServiceSdk', () => {
           })),
         }
       )),
+      listQuestionnaire: jest.fn(),
       listQuestionnaireByPage: jest.fn(),
       getQuestionnaireDetail: jest.fn(),
     };
@@ -284,6 +290,65 @@ describe('QaQuestionnaireServiceSdk', () => {
     });
   });
 
+  describe('addEditQuestion', () => {
+    it('should create QA question without questionId', async () => {
+      const params: AddEditQuestionParams = {
+        channelId: '3151318',
+        type: 'R',
+        answer: 'A',
+        name: 'Question',
+        itemType: 0,
+        options: ['299元', '399元'],
+        tips: ['正确答案是299元'],
+      };
+      const mockResponse = {
+        code: 200,
+        message: 'success',
+        data: 'gv0uf9s5v7',
+      };
+
+      mockLiveInteraction.addEditQuestion.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.addEditQuestion(params);
+
+      expect(result).toEqual(mockResponse);
+      expect(mockLiveInteraction.addEditQuestion).toHaveBeenCalledWith({
+        channelId: '3151318',
+        type: 'R',
+        answer: 'A',
+        name: 'Question',
+        itemType: 0,
+        option1: '299元',
+        option2: '399元',
+        tips1: '正确答案是299元',
+      });
+    });
+
+    it('should update QA question with questionId', async () => {
+      const params: AddEditQuestionParams = {
+        channelId: '3151318',
+        questionId: 'gv0uf9s5v7',
+        type: 'R',
+        answer: 'A',
+        name: 'Question',
+        itemType: 0,
+      };
+
+      mockLiveInteraction.addEditQuestion.mockResolvedValueOnce({ code: 200 });
+
+      await service.addEditQuestion(params);
+
+      expect(mockLiveInteraction.addEditQuestion).toHaveBeenCalledWith({
+        channelId: '3151318',
+        questionId: 'gv0uf9s5v7',
+        type: 'R',
+        answer: 'A',
+        name: 'Question',
+        itemType: 0,
+      });
+    });
+  });
+
   // ============================================
   // createQuestionnaire Tests
   // ============================================
@@ -420,7 +485,7 @@ describe('QaQuestionnaireServiceSdk', () => {
   // ============================================
 
   describe('listQuestionnaires', () => {
-    const validParams: ListQuestionnairesParams = {
+    const validParams: ListQuestionnaireResultsParams = {
       channelId: '3151318',
     };
 
@@ -483,6 +548,61 @@ describe('QaQuestionnaireServiceSdk', () => {
         expect(error).toBeInstanceOf(PolyVError);
         expect((error as PolyVError).message).toContain('listQuestionnaires failed');
       }
+    });
+  });
+
+  // ============================================
+  // listQuestionnaire Tests
+  // ============================================
+
+  describe('listQuestionnaire', () => {
+    const validParams: ListQuestionnaireParams = {
+      channelId: '3151318',
+    };
+
+    it('should list questionnaires successfully', async () => {
+      const mockResponse = {
+        code: 200,
+        data: {
+          contents: [
+            { questionnaireId: 'q1', questionnaireTitle: 'Survey 1' },
+          ],
+          totalItems: 1,
+        },
+      };
+
+      mockLiveInteraction.listQuestionnaire.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.listQuestionnaire(validParams);
+
+      expect(result).toEqual(mockResponse);
+      expect(mockLiveInteraction.listQuestionnaire).toHaveBeenCalledWith({
+        channelId: '3151318',
+        startTime: undefined,
+        endTime: undefined,
+        page: undefined,
+        pageSize: undefined,
+      });
+    });
+
+    it('should include optional parameters', async () => {
+      mockLiveInteraction.listQuestionnaire.mockResolvedValueOnce({ code: 200 });
+
+      await service.listQuestionnaire({
+        channelId: '3151318',
+        startTime: 1704067200000,
+        endTime: 1706745599000,
+        page: 2,
+        pageSize: 20,
+      });
+
+      expect(mockLiveInteraction.listQuestionnaire).toHaveBeenCalledWith({
+        channelId: '3151318',
+        startTime: 1704067200000,
+        endTime: 1706745599000,
+        page: 2,
+        pageSize: 20,
+      });
     });
   });
 

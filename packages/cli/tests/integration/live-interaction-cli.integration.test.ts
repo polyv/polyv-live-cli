@@ -14,7 +14,7 @@ describe('live interaction CLI integration', () => {
       { args: ['checkin', '--help'], text: 'session-result' },
       { args: ['qa', '--help'], text: 'send-times' },
       { args: ['qa', '--help'], text: 'question-list' },
-      { args: ['questionnaire', '--help'], text: 'legacy-list' },
+      { args: ['questionnaire', '--help'], text: 'result-list' },
       { args: ['lottery', '--help'], text: 'channel-records' },
       { args: ['interaction', '--help'], text: 'teacher-answer' },
     ];
@@ -63,7 +63,7 @@ describe('live interaction CLI integration', () => {
         ['qa', 'answers', '--channel-id', id, '--output', 'json'],
         ['qa', 'question-list', '--channel-id', id, '--output', 'json'],
         ['questionnaire', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
-        ['questionnaire', 'legacy-list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
+        ['questionnaire', 'result-list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
         ['questionnaire', 'results', '--channel-id', id, '--output', 'json'],
         ['interaction', 'task-reward', 'list', '--channel-id', id, '--page', '1', '--size', '5', '--output', 'json'],
         ['interaction', 'event', 'list', '--room-id', id, '--output', 'json'],

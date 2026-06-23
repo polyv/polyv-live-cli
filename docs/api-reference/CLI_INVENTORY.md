@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-23T09:40:28.828Z
+生成时间：2026-06-23T11:21:02.118Z
 
 ## 来源与规则
 
@@ -547,12 +547,12 @@
 | `qa send-times` | `packages/cli/src/commands/qa.commands.ts:177` |
 | `qa stop` | `packages/cli/src/commands/qa.commands.ts:137` |
 | `questionnaire` | `packages/cli/src/commands/questionnaire.commands.ts:48` |
-| `questionnaire batch-create` | `packages/cli/src/commands/questionnaire.commands.ts:290` |
+| `questionnaire batch-create` | `packages/cli/src/commands/questionnaire.commands.ts:296` |
 | `questionnaire create` | `packages/cli/src/commands/questionnaire.commands.ts:54` |
-| `questionnaire detail` | `packages/cli/src/commands/questionnaire.commands.ts:212` |
-| `questionnaire legacy-list` | `packages/cli/src/commands/questionnaire.commands.ts:170` |
+| `questionnaire detail` | `packages/cli/src/commands/questionnaire.commands.ts:218` |
 | `questionnaire list` | `packages/cli/src/commands/questionnaire.commands.ts:117` |
-| `questionnaire results` | `packages/cli/src/commands/questionnaire.commands.ts:248` |
+| `questionnaire result-list` | `packages/cli/src/commands/questionnaire.commands.ts:165` |
+| `questionnaire results` | `packages/cli/src/commands/questionnaire.commands.ts:254` |
 | `record` | `packages/cli/src/commands/record.commands.ts:183` |
 | `record breakpoint` | `packages/cli/src/commands/record.commands.ts:567` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:480` |

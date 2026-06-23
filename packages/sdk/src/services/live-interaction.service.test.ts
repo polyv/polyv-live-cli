@@ -212,6 +212,30 @@ describe('LiveInteractionService', () => {
         },
       },
       {
+        name: 'addEditQuestion without questionId',
+        call: (svc) => svc.addEditQuestion({
+          channelId: '12345678',
+          type: 'R',
+          answer: 'A',
+          name: 'Question',
+          itemType: 0,
+          option1: 'A',
+          option2: 'B',
+        }),
+        path: '/live/v3/channel/interact/question/add-edit-question',
+        config: {
+          params: {
+            channelId: '12345678',
+            type: 'R',
+            answer: 'A',
+            name: 'Question',
+            itemType: 0,
+            option1: 'A',
+            option2: 'B',
+          },
+        },
+      },
+      {
         name: 'deleteQuestion',
         call: (svc) => svc.deleteQuestion({ channelId: '12345678', questionId: 'question1' }),
         path: '/live/v3/channel/interact/question/delete-question',

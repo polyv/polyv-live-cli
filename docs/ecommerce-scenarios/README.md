@@ -52,10 +52,10 @@
   - `product`（场景 01：按 `e-commerce.yaml` 示例商品补充上架承接商品 999016 + `product update-enabled` 打开商品库开关 enabled=Y + 列表验证；场景 02：`product update-enabled` 打开商品库开关 enabled=Y + 上架主打款+引流款 + 商品大卡推送/取消 + 列表验证）
   - `card-push`（场景 02：建手动秒杀卡 + 观看触发红包卡 + push/cancel 状态流转验证）
   - `lottery`（场景 03：建 none/duration/invite/comment 四类福袋 + 列表/详情/更新加码/删除全生命周期；2026-06-23 发布 latest 1.2.32 后，comment 类型用 `--duration` + `--comment` 真实创建成功）
-  - `questionnaire`（场景 04：建 2 张售前问卷 + detail 验证题目落库 + legacy-list 列出；V4 list 对未发布问卷返回空已记录）
-  - `qa`（场景 04：qa list 只读验证；qa add-edit 新建答题卡已执行失败并记录 CLI 三层限制）
-  - `whitelist`（场景 05：rank2 白名单 add 3 名 VIP + list/keyword 搜索 + update 会员升级换码 + remove 删除演练全生命周期，均前后对比验证）
-  - `watch-condition`（场景 05：get 查询鉴权现状成功；set 写入 rank1 已执行失败并记录「返回 success:true 但配置未持久化」静默问题）
+  - `questionnaire`（场景 04：2026-06-23 发布 latest 1.2.35 后复测，建 2 张售前问卷 + detail 验证题目落库 + `questionnaire list` 列出；`questionnaire result-list` 对未回收答卷返回空结果，符合预期）
+  - `qa`（场景 04：2026-06-23 发布 latest 1.2.35 后复测，`qa add-edit` 省略 `--question-id` 真实创建答题卡 `hjqpl563p3`，`qa list` 可查回）
+  - `whitelist`（场景 05：历史频道 rank2 白名单 add 3 名 VIP + list/keyword 搜索 + update 会员升级换码 + remove 删除演练全生命周期；修复复测频道 rank1 保留 1 名测试白名单会员）
+  - `watch-condition`（场景 05：旧版 set 写入 rank1 曾失败并记录「返回 success:true 但配置未持久化」问题；2026-06-23 发布 latest 1.2.36 后，频道 `7988182` 复测 rank1=phone、rank2=N 已可持久化并经 `watch-condition get` / `channel get` 双读回验证）
   - `donate`（场景 06：config get/list/likes 三个只读命令真实执行成功；config update 4 次回显请求参数但 get 复查未持久化，已执行失败并记录「成功假象」问题）
   - `checkin`（场景 06：sessions/list 两个只读命令真实执行成功；start 在未开播频道失败已执行失败并记录「签到需开播」问题）
   - `session`（场景 07：list/legacy-list/data-list 三条只读命令真实执行成功；create 已执行失败并记录「账号级场次手动创建权益未开通」问题）
@@ -134,8 +134,8 @@
 | 22 | `player` | 09 | ✅ 已执行成功 ⁵ | 7983934 | [09](./09-brand-watchpage-player.md) |
 | 23 | `product` | 01、02 | ✅ 已执行成功 | 7983877 / 7983883 | [01](./01-coupon-redemption.md)、[02](./02-product-card-push.md) |
 | 24 | `promotion` | 11 | ✅ 已执行成功 ⁷ | 7983938 | [11](./11-promotion-invite-sales-distribution.md) |
-| 25 | `qa` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
-| 26 | `questionnaire` | 04 | ✅ 已执行成功 | 7983889 | [04](./04-presale-qa-questionnaire.md) |
+| 25 | `qa` | 04 | ✅ 已执行成功 | 7987540 | [04](./04-presale-qa-questionnaire.md) |
+| 26 | `questionnaire` | 04 | ✅ 已执行成功 | 7987540 | [04](./04-presale-qa-questionnaire.md) |
 | 27 | `record` | 10 | ✅ 已执行成功 ⁶ | 7983937 | [10](./10-postlive-playback-record-replay.md) |
 | 28 | `robot` | 17 | ✅ 已执行成功 ¹³ | 7983959（频道落点；全局机器人为账号级） | [17](./17-robot-webapp-team-governance.md) |
 | 29 | `session` | 07 | ✅ 已执行成功 ³ | 7983903 | [07](./07-session-statistics-replay.md) |
@@ -146,12 +146,12 @@
 | 34 | `use` | 18 | ✅ 已执行成功 ¹⁴ | —（终端会话级；无频道落点） | [18](./18-account-platform-governance.md) |
 | 35 | `user` | 18 | ✅ 已执行成功 ¹⁴ | 7983960（频道落点；用户设置为账号级） | [18](./18-account-platform-governance.md) |
 | 36 | `viewer` | 08 | ✅ 已执行成功 ⁴ | 7983932（频道落点；观众为账号级） | [08](./08-viewer-segmentation-custom-field.md) |
-| 37 | `watch-condition` | 05 | ✅ 已执行成功 ¹ | 7983898 | [05](./05-member-exclusive-whitelist.md) |
+| 37 | `watch-condition` | 05 | ✅ 已执行成功 ¹ | 7983898 / 7988182 | [05](./05-member-exclusive-whitelist.md) |
 | 38 | `web` | 09 | ✅ 已执行成功 ⁵ | 7983934 | [09](./09-brand-watchpage-player.md) |
 | 39 | `webapp` | 17 | ✅ 已执行成功 ¹³ | 7983959（频道落点；WebApp 角色为账号级） | [17](./17-robot-webapp-team-governance.md) |
-| 40 | `whitelist` | 05 | ✅ 已执行成功 | 7983898 | [05](./05-member-exclusive-whitelist.md) |
+| 40 | `whitelist` | 05 | ✅ 已执行成功 | 7983898 / 7988182 | [05](./05-member-exclusive-whitelist.md) |
 
-> ¹ `watch-condition` 的 `get` 真实执行成功；`set` 真实执行但**已执行失败**——对所有 `--auth-type`（phone/code/none）与 config-file 路径均返回 `success:true` 但配置未持久化（rank1 始终停留 custom），详见 [场景 05 第 12 节](./05-member-exclusive-whitelist.md)。`watch-condition` 命令族已被真实执行覆盖（get 成功），会员专享鉴权门由 rank2 默认 phone 白名单承载。
+> ¹ `watch-condition` 的历史 rc 执行在频道 `7983898` 发现过 set 返回 `success:true` 但 rank1 未持久化的问题；2026-06-23 发布 `polyv-live-cli@1.2.36` 后，在频道 `7988182` 使用 latest 复测通过：config-file 写入 rank1=`phone`、rank2=`N`，并经 `watch-condition get --channel-id` 与 `channel get` 双读回一致。旧失败记录与修复复测详见 [场景 05 第 10.1、10.2、12 节](./05-member-exclusive-whitelist.md)。
 >
 > ² `donate` 的 `config get`/`list`/`likes` 真实执行成功；`config update` 真实执行但**已执行失败**——4 次调用均回显请求参数返回 success，但 `config get` 复查始终为空（跨所有测试频道），疑似账号级打赏功能未开通，详见 [场景 06 第 12.2 节](./06-donate-checkin-warmup.md)。`checkin` 的 `sessions`/`list` 真实执行成功；`start` 真实执行但**已执行失败**——未开播频道返回 `startCheckin failed: 签到失败:`，详见 [场景 06 第 12.3 节](./06-donate-checkin-warmup.md)。`donate`/`checkin` 两族均因只读命令真实执行成功而计入已覆盖。
 >
@@ -192,8 +192,8 @@
 - 2026-06-22：新增场景 01「直播间优惠券承接」，真实执行覆盖 `account`、`channel`、`coupon`（测试频道 `7983877`，领券开关已打开并验证）；2026-06-23 按 `e-commerce.yaml` 补充 `product update-enabled --enabled Y` 打开商品库开关、上架商品 `999016`「GNHF场景01-Allowish英国进口香氛沐浴露」，经 `product enabled` / `product list` 验证，补齐「商品 + 券」转化闭环。
 - 2026-06-22：新增场景 02「新品直播首发 — 商品库开启 + 商品上架 + 商品卡片节奏推送」，真实执行覆盖 `product`、`card-push`（测试频道 `7983883`，上架 2 件商品，建 2 张卡片并验证 pushStatus N→Y→L 流转）；2026-06-23 补充 `product update-enabled --enabled Y` 打开商品库开关，经 `product enabled` / `product list` 验证，补齐观看页商品展示闭环。累计覆盖 5 / 40。
 - 2026-06-22：新增场景 03「直播互动抽奖促活 — 多条件福袋配置 + 生命周期演练」，真实执行覆盖 `lottery`（测试频道 `7983885`，建 none/duration/invite 三类福袋，演练列表/详情/更新加码/删除全生命周期；`--type comment` 真实执行失败并记录「活动时长不能为空」）。2026-06-23 用 `polyv-live-cli@latest` 1.2.31 在频道 `7986869` 复测，none/duration/invite/list/get/update/delete 通过，comment 在 npm latest 仍失败；随后发布 `polyv-live-cli@latest` 1.2.32，新增 `--comment` 映射并用 latest 创建 comment 福袋 `73739` 成功。累计覆盖 6 / 40。
-- 2026-06-22：新增场景 04「售前答疑与问卷收集 — 新品首发购买意向摸底 + 答疑卡编排」，真实执行覆盖 `questionnaire`、`qa`（测试频道 `7983889`，建 2 张售前问卷并 detail/legacy-list 验证落库；记录 V4 `questionnaire list` 对未发布问卷返回空、`qa add-edit` 因 CLI 三层强制 question-id 非空无法新建两条问题）。累计覆盖 8 / 40。
-- 2026-06-22：新增场景 05「会员专享直播 — 白名单观看 + 观看条件鉴权 + VIP 成员全生命周期」，真实执行覆盖 `whitelist`、`watch-condition`（测试频道 `7983898`，rank2 白名单 add 3 名 VIP + keyword 搜索 + update 会员升级换码 + remove 删除演练全生命周期并前后对比验证；`watch-condition get` 成功，`watch-condition set` 已执行失败并记录「返回 success:true 但 rank1 配置未持久化」静默问题，会员专享鉴权门由 rank2 默认 phone 白名单承载）。累计覆盖 10 / 40。
+- 2026-06-22：新增场景 04「售前答疑与问卷收集 — 新品首发购买意向摸底 + 答疑卡编排」，真实执行覆盖 `questionnaire`、`qa`。2026-06-23 发布 `polyv-live-cli@1.2.35` 后，在频道 `7987540` 用 latest 完整复测通过：`questionnaire list` 查询问卷列表并列出 2 张 `saved` 问卷，`questionnaire result-list` 查询问卷结果且未回收答卷时返回空结果，`qa add-edit` 省略 `--question-id` 创建答题卡 `hjqpl563p3`，`qa list` 可查回。累计覆盖 8 / 40。
+- 2026-06-22：新增场景 05「会员专享直播 — 白名单观看 + 观看条件鉴权 + VIP 成员全生命周期」，真实执行覆盖 `whitelist`、`watch-condition`（历史测试频道 `7983898` 完成 rank2 白名单 add 3 名 VIP + keyword 搜索 + update 会员升级换码 + remove 删除演练全生命周期，并记录旧版 `watch-condition set` 返回 success 但 rank1 配置未持久化的问题；2026-06-23 发布 `polyv-live-cli@1.2.36` 后，在修复复测频道 `7988182` 用 latest 验证 `watch-condition set` 已可频道级持久化，rank1=phone、rank2=N 经 `watch-condition get` 与 `channel get` 双读回一致）。累计覆盖 10 / 40。
 - 2026-06-22：新增场景 06「直播间互动暖场促活 — 打赏激励 + 暖场签到」，真实执行覆盖 `donate`、`checkin`（测试频道 `7983902`，`donate config get`/`list`/`likes` 与 `checkin sessions`/`list` 五条只读命令真实执行成功；`donate config update` 4 次回显请求参数但 `get` 复查未持久化已执行失败并记录「成功假象」问题，`checkin start` 在未开播频道失败已执行失败并记录「签到需开播」问题）。累计覆盖 12 / 40。
 - 2026-06-22：新增场景 07「场次级直播运营 — 新版场次编排 + 场次/频道数据复盘」，真实执行覆盖 `session`、`statistics`（测试频道 `7983903`，`session list`/`legacy-list`/`data-list` 与 `statistics` 九条只读命令真实执行成功建立全 0 基线；`session create` 因账号级「新版场次手动创建」权益未开通已执行失败并记录，`statistics channel-summary` 输出 `undefined` 已记录为 CLI handler 空值处理缺陷）。累计覆盖 14 / 40。
 - 2026-06-23：新增场景 08「观众分层运营 — 观众画像查询 + 用户自定义字段标签体系」，真实执行覆盖 `viewer`、`custom-field`（测试频道 `7983932` 作为频道侧落点；`viewer list`/`get`/`tag create` 建 3 档分层标签 1282/1283/1284/`tag list`/`tag add` 打标并经 `viewer get` 交叉验证持久化/`label create`/`label list`/`label channel-ref add`/`lottery-wins` 与 `custom-field add` 新增字段并 `list` 交叉验证落库/`value save` 真实执行成功；`viewer label channel-ref add` 与 `custom-field value save` 返回 success 但 CLI 无读回路径已记录；发现 `viewer tag` 数字 id 与 `viewer label` 字符串 id 是两套不互通实体）。累计覆盖 16 / 40。

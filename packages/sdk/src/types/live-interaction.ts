@@ -194,7 +194,7 @@ export interface ListQuestionSendTimeParams {
 
 export interface AddEditQuestionParams {
   channelId: LiveInteractionChannelId;
-  questionId: string;
+  questionId?: string;
   type: QuestionType;
   answer: string;
   name: string;

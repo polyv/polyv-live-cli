@@ -58,6 +58,25 @@ describe('Questionnaire Commands Registration', () => {
       expect(options.some(opt => opt.long === '--channel-id')).toBe(true);
       expect(options.some(opt => opt.long === '--page')).toBe(true);
       expect(options.some(opt => opt.long === '--size')).toBe(true);
+      expect(options.some(opt => opt.long === '--start-time')).toBe(true);
+      expect(options.some(opt => opt.long === '--end-time')).toBe(true);
+      expect(options.some(opt => opt.long === '--session-id')).toBe(false);
+      expect(options.some(opt => opt.long === '--start-date')).toBe(false);
+      expect(options.some(opt => opt.long === '--end-date')).toBe(false);
+      expect(options.some(opt => opt.long === '--output')).toBe(true);
+    });
+
+    it('should register questionnaire result-list command with correct options', () => {
+      registerQuestionnaireCommands(program);
+
+      const command = program.commands.find(cmd => cmd.name() === 'questionnaire');
+      const resultListSubcommand = command?.commands.find(cmd => cmd.name() === 'result-list');
+      expect(resultListSubcommand).toBeDefined();
+
+      const options = resultListSubcommand?.options || [];
+      expect(options.some(opt => opt.long === '--channel-id')).toBe(true);
+      expect(options.some(opt => opt.long === '--page')).toBe(true);
+      expect(options.some(opt => opt.long === '--size')).toBe(true);
       expect(options.some(opt => opt.long === '--session-id')).toBe(true);
       expect(options.some(opt => opt.long === '--start-date')).toBe(true);
       expect(options.some(opt => opt.long === '--end-date')).toBe(true);
@@ -151,24 +170,34 @@ describe('Questionnaire Commands Registration', () => {
   });
 
   describe('11.4-UNIT-063: should parse date range options', () => {
-    it('should have --start-date option in questionnaire list command', () => {
+    it('should have --start-time option in questionnaire list command', () => {
       registerQuestionnaireCommands(program);
 
       const command = program.commands.find(cmd => cmd.name() === 'questionnaire');
       const listSubcommand = command?.commands.find(cmd => cmd.name() === 'list');
 
-      const startDateOption = listSubcommand?.options.find(opt => opt.long === '--start-date');
-      expect(startDateOption).toBeDefined();
+      const startTimeOption = listSubcommand?.options.find(opt => opt.long === '--start-time');
+      expect(startTimeOption).toBeDefined();
     });
 
-    it('should have --end-date option in questionnaire list command', () => {
+    it('should have --end-time option in questionnaire list command', () => {
       registerQuestionnaireCommands(program);
 
       const command = program.commands.find(cmd => cmd.name() === 'questionnaire');
       const listSubcommand = command?.commands.find(cmd => cmd.name() === 'list');
 
-      const endDateOption = listSubcommand?.options.find(opt => opt.long === '--end-date');
-      expect(endDateOption).toBeDefined();
+      const endTimeOption = listSubcommand?.options.find(opt => opt.long === '--end-time');
+      expect(endTimeOption).toBeDefined();
+    });
+
+    it('should have --start-date and --end-date options in questionnaire result-list command', () => {
+      registerQuestionnaireCommands(program);
+
+      const command = program.commands.find(cmd => cmd.name() === 'questionnaire');
+      const resultListSubcommand = command?.commands.find(cmd => cmd.name() === 'result-list');
+
+      expect(resultListSubcommand?.options.find(opt => opt.long === '--start-date')).toBeDefined();
+      expect(resultListSubcommand?.options.find(opt => opt.long === '--end-date')).toBeDefined();
     });
   });
 
@@ -369,13 +398,72 @@ describe('action execution', () => {
   });
 
   describe('list action', () => {
+    it('[P0] should call listQuestionnaire handler with correct params', async () => {
+      const mockHandler = { listQuestionnaire: jest.fn().mockResolvedValue(undefined) };
+      MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerQuestionnaireCommands(program);
+      await program.parseAsync(['node', 'test', 'questionnaire', 'list', '-c', '123456']);
+
+      expect(MockQaQuestionnaireHandler).toHaveBeenCalled();
+      expect(mockHandler.listQuestionnaire).toHaveBeenCalledWith({
+        channelId: '123456',
+        startTime: undefined,
+        endTime: undefined,
+        page: undefined,
+        size: undefined,
+        output: 'table',
+      });
+    });
+
+    it('[P1] should call listQuestionnaire with all options', async () => {
+      const mockHandler = { listQuestionnaire: jest.fn().mockResolvedValue(undefined) };
+      MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerQuestionnaireCommands(program);
+      await program.parseAsync([
+        'node', 'test', 'questionnaire', 'list',
+        '-c', '123456',
+        '--page', '2',
+        '--size', '50',
+        '--start-time', '1704067200000',
+        '--end-time', '1706745599000',
+        '-o', 'json',
+      ]);
+
+      expect(mockHandler.listQuestionnaire).toHaveBeenCalledWith({
+        channelId: '123456',
+        startTime: 1704067200000,
+        endTime: 1706745599000,
+        page: 2,
+        size: 50,
+        output: 'json',
+      });
+    });
+
+    it('[P1] should handle API errors in list action', async () => {
+      const mockHandler = { listQuestionnaire: jest.fn().mockRejectedValue(new Error('List failed')) };
+      MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
+      const { logError } = require('../utils/errors');
+
+      const program = createTestProgram();
+      registerQuestionnaireCommands(program);
+      await expect(program.parseAsync(['node', 'test', 'questionnaire', 'list', '-c', '123456'])).rejects.toThrow('process.exit:1');
+
+      expect(logError).toHaveBeenCalled();
+    });
+  });
+
+  describe('result-list action', () => {
     it('[P0] should call listQuestionnaires handler with correct params', async () => {
       const mockHandler = { listQuestionnaires: jest.fn().mockResolvedValue(undefined) };
       MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
 
       const program = createTestProgram();
       registerQuestionnaireCommands(program);
-      await program.parseAsync(['node', 'test', 'questionnaire', 'list', '-c', '123456']);
+      await program.parseAsync(['node', 'test', 'questionnaire', 'result-list', '-c', '123456']);
 
       expect(MockQaQuestionnaireHandler).toHaveBeenCalled();
       expect(mockHandler.listQuestionnaires).toHaveBeenCalledWith({
@@ -396,7 +484,7 @@ describe('action execution', () => {
       const program = createTestProgram();
       registerQuestionnaireCommands(program);
       await program.parseAsync([
-        'node', 'test', 'questionnaire', 'list',
+        'node', 'test', 'questionnaire', 'result-list',
         '-c', '123456',
         '--page', '2',
         '--size', '50',
@@ -415,18 +503,6 @@ describe('action execution', () => {
         endDate: '2024-01-31',
         output: 'json',
       });
-    });
-
-    it('[P1] should handle API errors in list action', async () => {
-      const mockHandler = { listQuestionnaires: jest.fn().mockRejectedValue(new Error('List failed')) };
-      MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
-      const { logError } = require('../utils/errors');
-
-      const program = createTestProgram();
-      registerQuestionnaireCommands(program);
-      await expect(program.parseAsync(['node', 'test', 'questionnaire', 'list', '-c', '123456'])).rejects.toThrow('process.exit:1');
-
-      expect(logError).toHaveBeenCalled();
     });
   });
 

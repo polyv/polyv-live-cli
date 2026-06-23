@@ -107,6 +107,17 @@ describe('QA Commands Registration', () => {
       const questionIdOption = stopSubcommand?.options.find(opt => opt.long === '--question-id');
       expect(questionIdOption).toBeDefined();
     });
+
+    it('should have optional --question-id option in qa add-edit command', () => {
+      registerQaCommands(program);
+
+      const command = program.commands.find(cmd => cmd.name() === 'qa');
+      const addEditSubcommand = command?.commands.find(cmd => cmd.name() === 'add-edit');
+
+      const questionIdOption = addEditSubcommand?.options.find(opt => opt.long === '--question-id');
+      expect(questionIdOption).toBeDefined();
+      expect(questionIdOption?.mandatory).toBe(false);
+    });
   });
 
   describe('11.4-UNIT-050: should parse --duration option correctly', () => {
@@ -375,6 +386,91 @@ describe('action execution', () => {
       await expect(program.parseAsync(['node', 'test', 'qa', 'stop', '-c', '123456', '--question-id', 'gv0uf9s5v7'])).rejects.toThrow('process.exit:1');
 
       expect(logError).toHaveBeenCalled();
+    });
+  });
+
+  describe('add-edit action', () => {
+    it('[P0] should call addEditQuestion handler without questionId when creating', async () => {
+      const mockHandler = { addEditQuestion: jest.fn().mockResolvedValue(undefined) };
+      MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerQaCommands(program);
+      await program.parseAsync([
+        'node',
+        'test',
+        'qa',
+        'add-edit',
+        '-c',
+        '123456',
+        '--name',
+        '新品首发到手价是多少？',
+        '--type',
+        'R',
+        '--item-type',
+        '0',
+        '--option',
+        '299元',
+        '--option',
+        '399元',
+        '--answer',
+        'A',
+        '--tip',
+        '正确答案是299元',
+        '-f',
+        '-o',
+        'json',
+      ]);
+
+      expect(MockQaQuestionnaireHandler).toHaveBeenCalled();
+      expect(mockHandler.addEditQuestion).toHaveBeenCalledWith({
+        channelId: '123456',
+        questionId: undefined,
+        type: 'R',
+        answer: 'A',
+        name: '新品首发到手价是多少？',
+        itemType: 0,
+        options: ['299元', '399元'],
+        tips: ['正确答案是299元'],
+        force: true,
+        output: 'json',
+      });
+    });
+
+    it('[P1] should pass questionId when updating', async () => {
+      const mockHandler = { addEditQuestion: jest.fn().mockResolvedValue(undefined) };
+      MockQaQuestionnaireHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerQaCommands(program);
+      await program.parseAsync([
+        'node',
+        'test',
+        'qa',
+        'add-edit',
+        '-c',
+        '123456',
+        '--question-id',
+        'gv0uf9s5v7',
+        '--name',
+        '新品首发到手价是多少？',
+        '--type',
+        'R',
+        '--item-type',
+        '0',
+        '--answer',
+        'A',
+        '-f',
+      ]);
+
+      expect(mockHandler.addEditQuestion).toHaveBeenCalledWith(expect.objectContaining({
+        channelId: '123456',
+        questionId: 'gv0uf9s5v7',
+        type: 'R',
+        answer: 'A',
+        name: '新品首发到手价是多少？',
+        itemType: 0,
+      }));
     });
   });
 });

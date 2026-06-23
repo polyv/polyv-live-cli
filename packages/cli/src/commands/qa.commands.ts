@@ -257,7 +257,7 @@ Output Formats:
     .command('add-edit')
     .description('Create or update a QA question card')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
-    .requiredOption('--question-id <id>', 'question ID')
+    .option('--question-id <id>', 'question ID; omit to create a new question card')
     .requiredOption('--type <type>', 'question type (R|C|S|V)')
     .requiredOption('--answer <answer>', 'correct answer')
     .requiredOption('--name <name>', 'question title')

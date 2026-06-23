@@ -19,7 +19,7 @@ import {
   QaSendResultOptions,
   QuestionnaireCreateOptions,
   QuestionnaireListOptions,
-  QuestionnaireLegacyListOptions,
+  QuestionnaireResultListOptions,
   QuestionnaireDetailOptions,
   QuestionnaireResultOptions,
   QuestionnaireBatchCreateOptions,
@@ -178,7 +178,8 @@ export class QaQuestionnaireHandler extends BaseHandler {
 
   async addEditQuestion(options: QaAddEditOptions): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      this.validateRequiredOptions(options, ['channelId', 'questionId', 'type', 'answer', 'name', 'itemType']);
+      this.validateRequiredOptions(options, ['channelId', 'type', 'answer', 'name', 'itemType']);
+      this.validateOptionalNonBlankString('questionId', options.questionId);
       if (!Number.isInteger(options.itemType) || options.itemType < 0) {
         throw new PolyVValidationError(
           'itemType must be a non-negative integer',
@@ -188,15 +189,18 @@ export class QaQuestionnaireHandler extends BaseHandler {
         );
       }
 
-      await confirmWrite(options.force, `Create or update QA question ${options.questionId}?`);
+      const actionLabel = options.questionId
+        ? `Create or update QA question ${options.questionId}?`
+        : `Create QA question "${options.name}"?`;
+      await confirmWrite(options.force, actionLabel);
       const params: any = {
         channelId: options.channelId,
-        questionId: options.questionId,
         type: options.type,
         answer: options.answer,
         name: options.name,
         itemType: options.itemType,
       };
+      if (options.questionId !== undefined) params.questionId = options.questionId;
       if (options.options !== undefined) params.options = options.options;
       if (options.tips !== undefined) params.tips = options.tips;
 
@@ -272,18 +276,18 @@ export class QaQuestionnaireHandler extends BaseHandler {
   }
 
   // ========================================
-  // questionnaire list (AC #5)
+  // questionnaire result-list
   // ========================================
 
   /**
-   * List questionnaires
-   * @param options Questionnaire list options from CLI
-   * @returns Promise that resolves when questionnaires are listed
+   * List questionnaire results
+   * @param options Questionnaire result-list options from CLI
+   * @returns Promise that resolves when questionnaire results are listed
    *
    * @throws {PolyVValidationError} When parameters are invalid
    * @throws {PolyVError} When API call fails
    */
-  async listQuestionnaires(options: QuestionnaireListOptions): Promise<void> {
+  async listQuestionnaires(options: QuestionnaireResultListOptions): Promise<void> {
     return this.executeWithErrorHandling(async () => {
       // Validate input options
       this.validateListQuestionnairesOptions(options);
@@ -300,10 +304,10 @@ export class QaQuestionnaireHandler extends BaseHandler {
 
       // Display results
       this.displayListQuestionnairesResult(result, options);
-    }, 'questionnaire.list');
+    }, 'questionnaire.result-list');
   }
 
-  async listQuestionnaire(options: QuestionnaireLegacyListOptions): Promise<void> {
+  async listQuestionnaire(options: QuestionnaireListOptions): Promise<void> {
     return this.executeWithErrorHandling(async () => {
       this.validateRequiredOptions(options, ['channelId']);
       this.validateOptionalPositiveInteger('page', options.page);
@@ -320,7 +324,7 @@ export class QaQuestionnaireHandler extends BaseHandler {
       const result = await this.service.listQuestionnaire(params);
 
       this.displayGenericResult(result, options.output);
-    }, 'questionnaire.legacy-list');
+    }, 'questionnaire.list');
   }
 
   // ========================================
@@ -436,6 +440,18 @@ export class QaQuestionnaireHandler extends BaseHandler {
     if (!Number.isInteger(value) || value < 1) {
       throw new PolyVValidationError(
         `${field} must be a positive integer`,
+        field,
+        value,
+        'validation_failed'
+      );
+    }
+  }
+
+  private validateOptionalNonBlankString(field: string, value: string | undefined): void {
+    if (value === undefined) return;
+    if (value.trim() === '') {
+      throw new PolyVValidationError(
+        `${field} is required`,
         field,
         value,
         'validation_failed'
@@ -600,7 +616,7 @@ export class QaQuestionnaireHandler extends BaseHandler {
     (options as any)._parsedQuestions = parsedQuestions || [];
   }
 
-  private validateListQuestionnairesOptions(options: QuestionnaireListOptions): void {
+  private validateListQuestionnairesOptions(options: QuestionnaireResultListOptions): void {
     const errors: string[] = [];
 
     if (!options.channelId || options.channelId.trim() === '') {
@@ -687,7 +703,7 @@ export class QaQuestionnaireHandler extends BaseHandler {
   }
 
   private displayListResult(result: any, options: QaListOptions): void {
-    const questions = result?.data?.questions || result?.data?.contents || result?.questions || [];
+    const questions = result?.data?.questions || result?.data?.contents || result?.questions || result?.list || [];
 
     if (questions.length === 0) {
       this.displayInfo(`No QA found`);
@@ -773,12 +789,12 @@ export class QaQuestionnaireHandler extends BaseHandler {
     }
   }
 
-  private displayListQuestionnairesResult(result: any, options: QuestionnaireListOptions): void {
+  private displayListQuestionnairesResult(result: any, options: QuestionnaireResultListOptions): void {
     const contents = result?.data?.contents || result?.contents || [];
     const count = result?.data?.totalItems || contents.length;
 
     if (contents.length === 0) {
-      this.displayInfo(`No questionnaires found for channel ${options.channelId}`);
+      this.displayInfo(`No questionnaire results found for channel ${options.channelId}`);
       return;
     }
 
@@ -796,7 +812,7 @@ export class QaQuestionnaireHandler extends BaseHandler {
         'Users': item.users?.length || 0,
       }));
 
-      console.log(`Found ${count} questionnaires`);
+      console.log(`Found ${count} questionnaire result records`);
       this.displayAsTable(tableData);
     }
   }

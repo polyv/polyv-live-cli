@@ -11,8 +11,10 @@ import {
   QaSendOptions,
   QaListOptions,
   QaStopOptions,
+  QaAddEditOptions,
   QuestionnaireCreateOptions,
   QuestionnaireListOptions,
+  QuestionnaireResultListOptions,
   QuestionnaireDetailOptions,
 } from '../types/qa';
 import { AuthConfig } from '../types/auth';
@@ -55,7 +57,9 @@ describe('QaQuestionnaireHandler', () => {
       sendQa: jest.fn(),
       listQa: jest.fn(),
       stopQa: jest.fn(),
+      addEditQuestion: jest.fn(),
       createQuestionnaire: jest.fn(),
+      listQuestionnaire: jest.fn(),
       listQuestionnaires: jest.fn(),
       getQuestionnaireDetail: jest.fn()
     } as any;
@@ -201,6 +205,56 @@ describe('QaQuestionnaireHandler', () => {
     });
   });
 
+  describe('addEditQuestion', () => {
+    it('should create qa question without questionId', async () => {
+      const options: QaAddEditOptions = {
+        channelId: '3151318',
+        type: 'R',
+        answer: 'A',
+        name: '新品首发到手价是多少？',
+        itemType: 0,
+        options: ['299元', '399元'],
+        tips: ['正确答案是299元'],
+        force: true,
+        output: 'json'
+      };
+
+      mockQaQuestionnaireService.addEditQuestion.mockResolvedValue({
+        code: 200,
+        status: 'success',
+        data: 'gv0uf9s5v7'
+      });
+
+      await qaQuestionnaireHandler.addEditQuestion(options);
+
+      expect(mockQaQuestionnaireService.addEditQuestion).toHaveBeenCalledWith({
+        channelId: '3151318',
+        type: 'R',
+        answer: 'A',
+        name: '新品首发到手价是多少？',
+        itemType: 0,
+        options: ['299元', '399元'],
+        tips: ['正确答案是299元']
+      });
+    });
+
+    it('should reject an explicitly blank questionId', async () => {
+      const options: QaAddEditOptions = {
+        channelId: '3151318',
+        questionId: '',
+        type: 'R',
+        answer: 'A',
+        name: '新品首发到手价是多少？',
+        itemType: 0,
+        force: true,
+        output: 'json'
+      };
+
+      await expect(qaQuestionnaireHandler.addEditQuestion(options)).rejects.toThrow(PolyVValidationError);
+      await expect(qaQuestionnaireHandler.addEditQuestion(options)).rejects.toThrow('questionId is required');
+    });
+  });
+
   // ============================================================
   // AC #2: qa list command
   // ============================================================
@@ -232,6 +286,31 @@ describe('QaQuestionnaireHandler', () => {
       expect(mockQaQuestionnaireService.listQa).toHaveBeenCalledWith({
         channelId: '3151318'
       });
+    });
+
+    it('should render qa list responses returned in top-level list', async () => {
+      const options: QaListOptions = {
+        channelId: '3151318',
+        output: 'json'
+      };
+
+      mockQaQuestionnaireService.listQa.mockResolvedValue({
+        templateId: 'template-1',
+        list: [
+          {
+            questionId: 'gv0uf9s5v7',
+            name: '新品首发到手价是多少？',
+            type: 'R',
+            status: 'draft',
+            times: 0
+          }
+        ]
+      });
+
+      await qaQuestionnaireHandler.listQa(options);
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringContaining('"count": 1'));
+      expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringContaining('"questionId": "gv0uf9s5v7"'));
     });
 
     it('11.4-UNIT-009: should validate channelId is required', async () => {
@@ -636,7 +715,7 @@ describe('QaQuestionnaireHandler', () => {
   // ============================================================
   describe('listQuestionnaires (AC #5)', () => {
     it('11.4-UNIT-029: should list questionnaires with minimal parameters', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         output: 'table'
       };
@@ -670,7 +749,7 @@ describe('QaQuestionnaireHandler', () => {
     });
 
     it('11.4-UNIT-030: should list questionnaires with pagination (page, size)', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         page: 1,
         size: 20,
@@ -697,7 +776,7 @@ describe('QaQuestionnaireHandler', () => {
     });
 
     it('11.4-UNIT-031: should list questionnaires filtered by sessionId', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         sessionId: 'fwly13xczv',
         output: 'table'
@@ -722,7 +801,7 @@ describe('QaQuestionnaireHandler', () => {
     });
 
     it('11.4-UNIT-032: should list questionnaires filtered by date range', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         startDate: '2024-01-01',
         endDate: '2024-01-31',
@@ -759,7 +838,7 @@ describe('QaQuestionnaireHandler', () => {
     });
 
     it('11.4-UNIT-034: should output results in table format by default', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         output: 'table'
       };
@@ -788,7 +867,7 @@ describe('QaQuestionnaireHandler', () => {
     });
 
     it('11.4-UNIT-035: should output results in JSON format when specified', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         output: 'json'
       };
@@ -816,8 +895,8 @@ describe('QaQuestionnaireHandler', () => {
       );
     });
 
-    it('11.4-UNIT-036: should display empty message when no questionnaires found', async () => {
-      const options: QuestionnaireListOptions = {
+    it('11.4-UNIT-036: should display empty message when no questionnaire results found', async () => {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         output: 'table'
       };
@@ -834,12 +913,12 @@ describe('QaQuestionnaireHandler', () => {
       await qaQuestionnaireHandler.listQuestionnaires(options);
 
       expect(mockConsoleLog).toHaveBeenCalledWith(
-        expect.stringContaining('No questionnaires found')
+        expect.stringContaining('No questionnaire results found')
       );
     });
 
     it('11.4-UNIT-037: should handle API errors gracefully', async () => {
-      const options: QuestionnaireListOptions = {
+      const options: QuestionnaireResultListOptions = {
         channelId: '3151318',
         output: 'table'
       };
@@ -848,6 +927,57 @@ describe('QaQuestionnaireHandler', () => {
       mockQaQuestionnaireService.listQuestionnaires.mockRejectedValue(apiError);
 
       await expect(qaQuestionnaireHandler.listQuestionnaires(options)).rejects.toThrow(PolyVError);
+    });
+  });
+
+  describe('listQuestionnaire', () => {
+    it('should list questionnaires with minimal parameters', async () => {
+      const options: QuestionnaireListOptions = {
+        channelId: '3151318',
+        output: 'table'
+      };
+
+      mockQaQuestionnaireService.listQuestionnaire.mockResolvedValue({
+        code: 200,
+        data: {
+          contents: [
+            { questionnaireId: 'q1', questionnaireTitle: 'Survey 1' }
+          ],
+          totalItems: 1
+        }
+      });
+
+      await qaQuestionnaireHandler.listQuestionnaire(options);
+
+      expect(mockQaQuestionnaireService.listQuestionnaire).toHaveBeenCalledWith({
+        channelId: '3151318'
+      });
+    });
+
+    it('should pass timestamp and pagination options', async () => {
+      const options: QuestionnaireListOptions = {
+        channelId: '3151318',
+        startTime: 1704067200000,
+        endTime: 1706745599000,
+        page: 2,
+        size: 20,
+        output: 'json'
+      };
+
+      mockQaQuestionnaireService.listQuestionnaire.mockResolvedValue({
+        code: 200,
+        data: { contents: [], totalItems: 0 }
+      });
+
+      await qaQuestionnaireHandler.listQuestionnaire(options);
+
+      expect(mockQaQuestionnaireService.listQuestionnaire).toHaveBeenCalledWith({
+        channelId: '3151318',
+        startTime: 1704067200000,
+        endTime: 1706745599000,
+        page: 2,
+        pageSize: 20
+      });
     });
   });
 

@@ -92,8 +92,8 @@ export interface QaQuestionListOptions {
 export interface QaAddEditOptions {
   /** Channel ID (required) */
   channelId: string;
-  /** Question ID (required) */
-  questionId: string;
+  /** Question ID; omit to create a new question */
+  questionId?: string;
   /** Question type */
   type: string;
   /** Correct answer */
@@ -189,9 +189,9 @@ export interface QuestionnaireCreateOptions {
 }
 
 /**
- * Options for listing questionnaires
+ * Options for listing questionnaire results
  */
-export interface QuestionnaireListOptions {
+export interface QuestionnaireResultListOptions {
   /** Channel ID (required) */
   channelId: string;
   /** Page number */
@@ -209,9 +209,9 @@ export interface QuestionnaireListOptions {
 }
 
 /**
- * Options for listing questionnaires through the legacy V3 API
+ * Options for listing questionnaires
  */
-export interface QuestionnaireLegacyListOptions {
+export interface QuestionnaireListOptions {
   /** Channel ID (required) */
   channelId: string;
   /** Start timestamp */
@@ -343,7 +343,7 @@ export interface GetQuestionListParams {
  */
 export interface AddEditQuestionParams {
   channelId: string;
-  questionId: string;
+  questionId?: string;
   type: string;
   answer: string;
   name: string;
@@ -383,9 +383,9 @@ export interface CreateQuestionnaireParams {
 }
 
 /**
- * Parameters for listing questionnaires via SDK
+ * Parameters for listing questionnaire results via SDK
  */
-export interface ListQuestionnairesParams {
+export interface ListQuestionnaireResultsParams {
   channelId: string;
   page?: number | undefined;
   pageSize?: number | undefined;
@@ -395,9 +395,9 @@ export interface ListQuestionnairesParams {
 }
 
 /**
- * Parameters for listing questionnaires through the legacy V3 API
+ * Parameters for listing questionnaires via SDK
  */
-export interface ListQuestionnaireLegacyParams {
+export interface ListQuestionnaireParams {
   channelId: string;
   startTime?: number;
   endTime?: number;

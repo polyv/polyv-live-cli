@@ -392,8 +392,8 @@ Manage live streaming questionnaires
 - `questionnaire batch-create`: Batch create questionnaires
 - `questionnaire create`: Create a new questionnaire
 - `questionnaire detail`: Get questionnaire detail with questions
-- `questionnaire legacy-list`: List questionnaires through the legacy V3 API
-- `questionnaire list`: List questionnaires with pagination
+- `questionnaire list`: List questionnaires
+- `questionnaire result-list`: List questionnaire results with pagination
 - `questionnaire results`: List questionnaire answer records
 
 ### record

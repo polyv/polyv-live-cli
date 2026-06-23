@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T09:40:28.828Z",
+  "generatedAt": "2026-06-23T11:21:02.118Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -5875,7 +5875,7 @@
       "depth": 2,
       "signature": "batch-create",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 290
+      "line": 296
     },
     {
       "command": "questionnaire create",
@@ -5897,18 +5897,7 @@
       "depth": 2,
       "signature": "detail",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 212
-    },
-    {
-      "command": "questionnaire legacy-list",
-      "path": [
-        "questionnaire",
-        "legacy-list"
-      ],
-      "depth": 2,
-      "signature": "legacy-list",
-      "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 170
+      "line": 218
     },
     {
       "command": "questionnaire list",
@@ -5922,6 +5911,17 @@
       "line": 117
     },
     {
+      "command": "questionnaire result-list",
+      "path": [
+        "questionnaire",
+        "result-list"
+      ],
+      "depth": 2,
+      "signature": "result-list",
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 165
+    },
+    {
       "command": "questionnaire results",
       "path": [
         "questionnaire",
@@ -5930,7 +5930,7 @@
       "depth": 2,
       "signature": "results",
       "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 248
+      "line": 254
     },
     {
       "command": "record",

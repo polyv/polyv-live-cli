@@ -19,8 +19,8 @@ import {
   DeleteQuestionParams,
   SendQuestionResultParams,
   CreateQuestionnaireParams,
-  ListQuestionnairesParams,
-  ListQuestionnaireLegacyParams,
+  ListQuestionnaireResultsParams,
+  ListQuestionnaireParams,
   GetQuestionnaireDetailParams,
   GetQuestionnaireResultParams,
   BatchCreateQuestionnaireParams,
@@ -259,11 +259,11 @@ export class QaQuestionnaireServiceSdk {
   }
 
   /**
-   * List questionnaires with pagination
+   * List questionnaire results with pagination
    * @param params List parameters
-   * @returns API response with questionnaire list
+   * @returns API response with questionnaire results
    */
-  async listQuestionnaires(params: ListQuestionnairesParams): Promise<any> {
+  async listQuestionnaires(params: ListQuestionnaireResultsParams): Promise<any> {
     try {
       const result = await this.liveInteraction.listQuestionnaireByPage({
         channelId: params.channelId,
@@ -280,11 +280,11 @@ export class QaQuestionnaireServiceSdk {
   }
 
   /**
-   * List questionnaires through the legacy V3 API
+   * List questionnaires
    * @param params List parameters
    * @returns API response with questionnaire list
    */
-  async listQuestionnaire(params: ListQuestionnaireLegacyParams): Promise<any> {
+  async listQuestionnaire(params: ListQuestionnaireParams): Promise<any> {
     try {
       const result = await this.liveInteraction.listQuestionnaire({
         channelId: params.channelId,
@@ -355,12 +355,14 @@ export class QaQuestionnaireServiceSdk {
   private toSdkQuestion(params: AddEditQuestionParams): Record<string, unknown> {
     const question: Record<string, unknown> = {
       channelId: params.channelId,
-      questionId: params.questionId,
       type: params.type,
       answer: params.answer,
       name: params.name,
       itemType: params.itemType,
     };
+    if (params.questionId !== undefined) {
+      question.questionId = params.questionId;
+    }
 
     params.options?.slice(0, 15).forEach((option, index) => {
       question[`option${index + 1}`] = option;
