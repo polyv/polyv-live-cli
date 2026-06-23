@@ -921,11 +921,11 @@ describe('WebService', () => {
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v3/channel/auth/update',
         {
-          channelId: '123456',
           authSettings: [
             { rank: 1, enabled: 'Y', authType: 'code' },
           ],
-        }
+        },
+        { params: { channelId: '123456' }, headers: { 'Content-Type': 'application/json' } }
       );
       expect(result).toBe('success');
     });

@@ -1109,17 +1109,15 @@ export class WebService {
       }
     }
 
-    // Build request body
-    const body: Record<string, unknown> = {
-      authSettings: params.authSettings,
-    };
+    const requestParams: Record<string, string> = {};
     if (params.channelId) {
-      body.channelId = params.channelId;
+      requestParams.channelId = params.channelId;
     }
 
     const response = await this.client.httpClient.post<string>(
       '/live/v3/channel/auth/update',
-      body
+      { authSettings: params.authSettings },
+      { params: requestParams, headers: { 'Content-Type': 'application/json' } }
     );
     return response as unknown as string;
   }
