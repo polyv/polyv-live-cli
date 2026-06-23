@@ -41,10 +41,12 @@ export interface LotteryCreateOptions {
   prizeName: string;
   /** Receive info JSON string */
   receiveInfo?: string;
-  /** Duration in seconds (for invite/duration types) */
+  /** Duration in seconds (for conditional lottery types) */
   duration?: number;
   /** Number of invites required (for invite type) */
   inviteNum?: number;
+  /** Comment content required for comment type */
+  comment?: string;
   /** Output format (table or json) */
   output?: OutputFormat;
   /** Skip confirmation prompt */
@@ -246,6 +248,7 @@ export interface CreateLotteryActivityParams {
   receiveInfo?: string;
   duration?: number;
   inviteNum?: number;
+  comment?: string;
 }
 
 /**

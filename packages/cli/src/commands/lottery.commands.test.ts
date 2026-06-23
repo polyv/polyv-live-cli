@@ -656,6 +656,30 @@ describe('Lottery Commands', () => {
       );
     });
 
+    it('[P1] should pass comment text to createLottery', async () => {
+      const { LotteryHandler } = await import('../handlers/lottery.handler');
+      const mockHandler = {
+        createLottery: jest.fn().mockResolvedValue(undefined),
+      };
+      (LotteryHandler as jest.Mock).mockImplementation(() => mockHandler);
+
+      const prog = createProgramWithLottery();
+      await prog.parseAsync([
+        'node', 'test', 'lottery', 'create',
+        '-c', '123456',
+        '--name', 'Comment Lottery',
+        '--type', 'comment',
+        '--amount', '3',
+        '--prize-name', 'Gift',
+        '--duration', '60',
+        '--comment', '参与抽奖',
+      ]);
+
+      expect(mockHandler.createLottery).toHaveBeenCalledWith(
+        expect.objectContaining({ duration: 60, comment: '参与抽奖' })
+      );
+    });
+
     it('[P1] should handle handler errors gracefully', async () => {
       const { LotteryHandler } = await import('../handlers/lottery.handler');
       const mockHandler = {

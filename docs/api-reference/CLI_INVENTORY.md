@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-20T16:25:27.213Z
+生成时间：2026-06-23T09:40:28.828Z
 
 ## 来源与规则
 
@@ -18,12 +18,12 @@
 | CLI 已使用最新 API 数 | 578 |
 | CLI 未使用最新 API 数 | 0 |
 | CLI 最新 API 覆盖率 | 100% |
-| CLI 调用引用数 | 581 |
-| 其中 SDK service 调用 | 581 |
+| CLI 调用引用数 | 582 |
+| 其中 SDK service 调用 | 582 |
 | 其中直接 httpClient 调用 | 0 |
 | 未解析 SDK 调用 | 0 |
 | 旧版/额外 CLI endpoint 调用 | 0 |
-| CLI 命令路径数 | 723 |
+| CLI 命令路径数 | 724 |
 | CLI 一级命令数 | 40 |
 
 ## 模块覆盖率
@@ -296,8 +296,8 @@
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `donate` | `packages/cli/src/commands/donate.commands.ts:33` |
 | `donate config` | `packages/cli/src/commands/donate.commands.ts:39` |
-| `donate likes` | `packages/cli/src/commands/donate.commands.ts:186` |
-| `donate list` | `packages/cli/src/commands/donate.commands.ts:134` |
+| `donate likes` | `packages/cli/src/commands/donate.commands.ts:184` |
+| `donate list` | `packages/cli/src/commands/donate.commands.ts:132` |
 | `donate config get` | `packages/cli/src/commands/donate.commands.ts:45` |
 | `donate config update` | `packages/cli/src/commands/donate.commands.ts:83` |
 | `finance` | `packages/cli/src/commands/finance.commands.ts:39` |
@@ -372,35 +372,35 @@
 | `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
 | `invite-sales follow-viewer list` | `packages/cli/src/commands/invite-sales.commands.ts:66` |
 | `lottery` | `packages/cli/src/commands/lottery.commands.ts:58` |
-| `lottery blacklist` | `packages/cli/src/commands/lottery.commands.ts:707` |
-| `lottery channel-records` | `packages/cli/src/commands/lottery.commands.ts:445` |
+| `lottery blacklist` | `packages/cli/src/commands/lottery.commands.ts:712` |
+| `lottery channel-records` | `packages/cli/src/commands/lottery.commands.ts:450` |
 | `lottery create` | `packages/cli/src/commands/lottery.commands.ts:75` |
-| `lottery delete` | `packages/cli/src/commands/lottery.commands.ts:265` |
-| `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:486` |
-| `lottery get` | `packages/cli/src/commands/lottery.commands.ts:177` |
-| `lottery group` | `packages/cli/src/commands/lottery.commands.ts:577` |
-| `lottery group-viewer` | `packages/cli/src/commands/lottery.commands.ts:639` |
-| `lottery legacy-records` | `packages/cli/src/commands/lottery.commands.ts:404` |
-| `lottery list` | `packages/cli/src/commands/lottery.commands.ts:132` |
-| `lottery lucky-bag` | `packages/cli/src/commands/lottery.commands.ts:753` |
-| `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:519` |
-| `lottery records` | `packages/cli/src/commands/lottery.commands.ts:353` |
-| `lottery update` | `packages/cli/src/commands/lottery.commands.ts:217` |
-| `lottery wait` | `packages/cli/src/commands/lottery.commands.ts:557` |
-| `lottery winners` | `packages/cli/src/commands/lottery.commands.ts:304` |
-| `lottery blacklist add` | `packages/cli/src/commands/lottery.commands.ts:725` |
-| `lottery blacklist delete` | `packages/cli/src/commands/lottery.commands.ts:739` |
-| `lottery blacklist list` | `packages/cli/src/commands/lottery.commands.ts:711` |
-| `lottery group create` | `packages/cli/src/commands/lottery.commands.ts:595` |
-| `lottery group delete` | `packages/cli/src/commands/lottery.commands.ts:625` |
-| `lottery group list` | `packages/cli/src/commands/lottery.commands.ts:581` |
-| `lottery group update` | `packages/cli/src/commands/lottery.commands.ts:609` |
-| `lottery group-viewer add` | `packages/cli/src/commands/lottery.commands.ts:659` |
-| `lottery group-viewer add-names` | `packages/cli/src/commands/lottery.commands.ts:675` |
-| `lottery group-viewer delete` | `packages/cli/src/commands/lottery.commands.ts:691` |
-| `lottery group-viewer list` | `packages/cli/src/commands/lottery.commands.ts:643` |
-| `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:757` |
-| `lottery wait create` | `packages/cli/src/commands/lottery.commands.ts:561` |
+| `lottery delete` | `packages/cli/src/commands/lottery.commands.ts:270` |
+| `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
+| `lottery get` | `packages/cli/src/commands/lottery.commands.ts:182` |
+| `lottery group` | `packages/cli/src/commands/lottery.commands.ts:582` |
+| `lottery group-viewer` | `packages/cli/src/commands/lottery.commands.ts:644` |
+| `lottery legacy-records` | `packages/cli/src/commands/lottery.commands.ts:409` |
+| `lottery list` | `packages/cli/src/commands/lottery.commands.ts:137` |
+| `lottery lucky-bag` | `packages/cli/src/commands/lottery.commands.ts:758` |
+| `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
+| `lottery records` | `packages/cli/src/commands/lottery.commands.ts:358` |
+| `lottery update` | `packages/cli/src/commands/lottery.commands.ts:222` |
+| `lottery wait` | `packages/cli/src/commands/lottery.commands.ts:562` |
+| `lottery winners` | `packages/cli/src/commands/lottery.commands.ts:309` |
+| `lottery blacklist add` | `packages/cli/src/commands/lottery.commands.ts:730` |
+| `lottery blacklist delete` | `packages/cli/src/commands/lottery.commands.ts:744` |
+| `lottery blacklist list` | `packages/cli/src/commands/lottery.commands.ts:716` |
+| `lottery group create` | `packages/cli/src/commands/lottery.commands.ts:600` |
+| `lottery group delete` | `packages/cli/src/commands/lottery.commands.ts:630` |
+| `lottery group list` | `packages/cli/src/commands/lottery.commands.ts:586` |
+| `lottery group update` | `packages/cli/src/commands/lottery.commands.ts:614` |
+| `lottery group-viewer add` | `packages/cli/src/commands/lottery.commands.ts:664` |
+| `lottery group-viewer add-names` | `packages/cli/src/commands/lottery.commands.ts:680` |
+| `lottery group-viewer delete` | `packages/cli/src/commands/lottery.commands.ts:696` |
+| `lottery group-viewer list` | `packages/cli/src/commands/lottery.commands.ts:648` |
+| `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
+| `lottery wait create` | `packages/cli/src/commands/lottery.commands.ts:566` |
 | `material` | `packages/cli/src/commands/material.commands.ts:25` |
 | `material category` | `packages/cli/src/commands/material.commands.ts:49` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
@@ -492,47 +492,47 @@
 | `player warmup switch-update` | `packages/cli/src/commands/player.commands.ts:378` |
 | `product` | `packages/cli/src/commands/product.commands.ts:321` |
 | `product add` | `packages/cli/src/commands/product.commands.ts:418` |
-| `product batch-add` | `packages/cli/src/commands/product.commands.ts:655` |
-| `product batch-delete` | `packages/cli/src/commands/product.commands.ts:666` |
-| `product batch-shelf` | `packages/cli/src/commands/product.commands.ts:674` |
-| `product cancel-push` | `packages/cli/src/commands/product.commands.ts:711` |
-| `product channel-tag` | `packages/cli/src/commands/product.commands.ts:755` |
+| `product batch-add` | `packages/cli/src/commands/product.commands.ts:663` |
+| `product batch-delete` | `packages/cli/src/commands/product.commands.ts:674` |
+| `product batch-shelf` | `packages/cli/src/commands/product.commands.ts:682` |
+| `product cancel-push` | `packages/cli/src/commands/product.commands.ts:719` |
+| `product channel-tag` | `packages/cli/src/commands/product.commands.ts:763` |
 | `product delete` | `packages/cli/src/commands/product.commands.ts:608` |
 | `product enabled` | `packages/cli/src/commands/product.commands.ts:649` |
-| `product update-enabled` | `packages/cli/src/commands/product.commands.ts:655` |
-| `product library` | `packages/cli/src/commands/product.commands.ts:859` |
+| `product library` | `packages/cli/src/commands/product.commands.ts:867` |
 | `product list` | `packages/cli/src/commands/product.commands.ts:325` |
-| `product order` | `packages/cli/src/commands/product.commands.ts:947` |
-| `product push` | `packages/cli/src/commands/product.commands.ts:702` |
-| `product push-rule` | `packages/cli/src/commands/product.commands.ts:729` |
-| `product rank` | `packages/cli/src/commands/product.commands.ts:831` |
-| `product reference` | `packages/cli/src/commands/product.commands.ts:719` |
-| `product shelf` | `packages/cli/src/commands/product.commands.ts:683` |
-| `product sort` | `packages/cli/src/commands/product.commands.ts:692` |
-| `product stats` | `packages/cli/src/commands/product.commands.ts:807` |
-| `product tag` | `packages/cli/src/commands/product.commands.ts:896` |
-| `product topping` | `packages/cli/src/commands/product.commands.ts:840` |
-| `product untopping` | `packages/cli/src/commands/product.commands.ts:848` |
+| `product order` | `packages/cli/src/commands/product.commands.ts:955` |
+| `product push` | `packages/cli/src/commands/product.commands.ts:710` |
+| `product push-rule` | `packages/cli/src/commands/product.commands.ts:737` |
+| `product rank` | `packages/cli/src/commands/product.commands.ts:839` |
+| `product reference` | `packages/cli/src/commands/product.commands.ts:727` |
+| `product shelf` | `packages/cli/src/commands/product.commands.ts:691` |
+| `product sort` | `packages/cli/src/commands/product.commands.ts:700` |
+| `product stats` | `packages/cli/src/commands/product.commands.ts:815` |
+| `product tag` | `packages/cli/src/commands/product.commands.ts:904` |
+| `product topping` | `packages/cli/src/commands/product.commands.ts:848` |
+| `product untopping` | `packages/cli/src/commands/product.commands.ts:856` |
 | `product update` | `packages/cli/src/commands/product.commands.ts:523` |
-| `product channel-tag create` | `packages/cli/src/commands/product.commands.ts:766` |
-| `product channel-tag delete` | `packages/cli/src/commands/product.commands.ts:794` |
-| `product channel-tag list` | `packages/cli/src/commands/product.commands.ts:757` |
-| `product channel-tag update` | `packages/cli/src/commands/product.commands.ts:779` |
-| `product library create` | `packages/cli/src/commands/product.commands.ts:872` |
-| `product library delete` | `packages/cli/src/commands/product.commands.ts:882` |
-| `product library list` | `packages/cli/src/commands/product.commands.ts:861` |
-| `product library update` | `packages/cli/src/commands/product.commands.ts:877` |
-| `product order batch-status` | `packages/cli/src/commands/product.commands.ts:965` |
-| `product order get` | `packages/cli/src/commands/product.commands.ts:956` |
-| `product order list` | `packages/cli/src/commands/product.commands.ts:949` |
-| `product push-rule get` | `packages/cli/src/commands/product.commands.ts:731` |
-| `product push-rule update` | `packages/cli/src/commands/product.commands.ts:737` |
-| `product stats list` | `packages/cli/src/commands/product.commands.ts:809` |
-| `product stats summary` | `packages/cli/src/commands/product.commands.ts:824` |
-| `product tag create` | `packages/cli/src/commands/product.commands.ts:909` |
-| `product tag delete` | `packages/cli/src/commands/product.commands.ts:933` |
-| `product tag list` | `packages/cli/src/commands/product.commands.ts:898` |
-| `product tag update` | `packages/cli/src/commands/product.commands.ts:920` |
+| `product update-enabled` | `packages/cli/src/commands/product.commands.ts:655` |
+| `product channel-tag create` | `packages/cli/src/commands/product.commands.ts:774` |
+| `product channel-tag delete` | `packages/cli/src/commands/product.commands.ts:802` |
+| `product channel-tag list` | `packages/cli/src/commands/product.commands.ts:765` |
+| `product channel-tag update` | `packages/cli/src/commands/product.commands.ts:787` |
+| `product library create` | `packages/cli/src/commands/product.commands.ts:880` |
+| `product library delete` | `packages/cli/src/commands/product.commands.ts:890` |
+| `product library list` | `packages/cli/src/commands/product.commands.ts:869` |
+| `product library update` | `packages/cli/src/commands/product.commands.ts:885` |
+| `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
+| `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
+| `product order list` | `packages/cli/src/commands/product.commands.ts:957` |
+| `product push-rule get` | `packages/cli/src/commands/product.commands.ts:739` |
+| `product push-rule update` | `packages/cli/src/commands/product.commands.ts:745` |
+| `product stats list` | `packages/cli/src/commands/product.commands.ts:817` |
+| `product stats summary` | `packages/cli/src/commands/product.commands.ts:832` |
+| `product tag create` | `packages/cli/src/commands/product.commands.ts:917` |
+| `product tag delete` | `packages/cli/src/commands/product.commands.ts:941` |
+| `product tag list` | `packages/cli/src/commands/product.commands.ts:906` |
+| `product tag update` | `packages/cli/src/commands/product.commands.ts:928` |
 | `promotion` | `packages/cli/src/commands/promotion.commands.ts:89` |
 | `promotion create` | `packages/cli/src/commands/promotion.commands.ts:114` |
 | `promotion list` | `packages/cli/src/commands/promotion.commands.ts:94` |
@@ -837,8 +837,8 @@
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 裁剪录制文件<br><sub>1、裁剪直播录制视频文件，裁剪文件过程为异步处理过程</sub> | POST | `/live/v3/channel/record/clip` | query/form | channelId, fileId | ChannelService#clipRecordFile (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#clipRecordFile (packages/cli/src/services/record.service.sdk.ts:231) |
-| 查询抽奖活动<br><sub>1、查询抽奖活动</sub> | GET | `/live/v4/channel/lottery-activity/get` | query | channelId, id | V4ChannelService#getLotteryActivityExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getLotteryActivityExact (packages/cli/src/services/lottery-service.ts:81)<br>sdk: V4ChannelService#getLotteryActivityExact (packages/cli/src/services/lottery-service.ts:95) |
-| 查询抽奖活动列表<br><sub>1、查询抽奖活动列表</sub> | GET | `/live/v4/channel/lottery-activity/list` | query | channelId | V4ChannelService#listLotteryActivitiesExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listLotteryActivitiesExact (packages/cli/src/services/lottery-service.ts:67) |
+| 查询抽奖活动<br><sub>1、查询抽奖活动</sub> | GET | `/live/v4/channel/lottery-activity/get` | query | channelId, id | V4ChannelService#lotteryActivityGet (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#lotteryActivityGet (packages/cli/src/services/lottery-service.ts:81)<br>sdk: V4ChannelService#lotteryActivityGet (packages/cli/src/services/lottery-service.ts:95) |
+| 查询抽奖活动列表<br><sub>1、查询抽奖活动列表</sub> | GET | `/live/v4/channel/lottery-activity/list` | query | channelId | V4ChannelService#lotteryActivityList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#lotteryActivityList (packages/cli/src/services/lottery-service.ts:67) |
 | 查询单个角色信息<br><sub>1、查询频道内某个助教或嘉宾的具体信息</sub> | GET | `/live/v2/channelAccount/{param}/account` | query | account | ChannelService#getAccount (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getAccount (packages/cli/src/services/channel.service.sdk.ts:370) |
 | 查询多个频道概览统计数据<br><sub>1、根据提交的频道号，查询频道有关信息的统计数据，数据会根据频道号进行汇总，返回pc端播放时长、pc端播放流量、移动端播放时长、移动端播放流量等。</sub> | POST | `/live/v2/statistics/{param}/channel_summary` | query/form | endDate, startDate | ChannelService#getChannelPlaySummary (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelPlaySummary (packages/cli/src/services/statistics.service.sdk.ts:96) |
 | 查询多个频道回放设置<br><sub>1、查询多个频道回放设置</sub> | GET | `/live/v4/channel/playback/list` | query | channelIds | V4ChannelService#listPlaybackSettings (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listPlaybackSettings (packages/cli/src/services/playback.service.sdk.ts:107) |
@@ -877,12 +877,12 @@
 | 查询频道连麦详情数据<br><sub>1、接口用于查询某个频道的一段时间区间内的连麦详情数据，支持分页</sub> | GET | `/live/v3/channel/mic/log/list-detail` | query | channelId, endDate, startDate | ChannelService#getLinkMicDetailList (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getLinkMicDetailList (packages/cli/src/services/statistics.service.sdk.ts:126) |
 | 查询频道某段时间的直播观看详情数据<br><sub>1、通过频道号获取该频道某段时间的直播观看的统计数据</sub> | GET | `/live/v2/statistics/{param}/summary` | query | endDay, startDay | ChannelService#getSummary (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getSummary (packages/cli/src/services/statistics.service.sdk.ts:132) |
 | 查询频道商品点击统计<br><sub>1、分页查询直播频道商品点击数据</sub> | GET | `/live/v4/channel/product/click` | query | channelId | ChannelService#getProductClickStats (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getProductClickStats (packages/cli/src/services/statistics.service.sdk.ts:137) |
-| 查询频道商品库开关状态<br><sub>1、查询频道商品库开关状态</sub> | GET | `/live/v3/channel/product/get-enabled` | query | channelId | ChannelService#getChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelProductEnabled (packages/cli/src/services/product.service.sdk.ts:314) |
-| 查询频道商品列表<br><sub>1、获取频道商品库商品列表</sub> | GET | `/live/v3/channel/product/list` | query | channelId | ChannelService#listChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelProducts (packages/cli/src/services/product.service.sdk.ts:104) |
+| 查询频道商品库开关状态<br><sub>1、查询频道商品库开关状态</sub> | GET | `/live/v3/channel/product/get-enabled` | query | channelId | ChannelService#getChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelProductEnabled (packages/cli/src/services/product.service.sdk.ts:315) |
+| 查询频道商品列表<br><sub>1、获取频道商品库商品列表</sub> | GET | `/live/v3/channel/product/list` | query | channelId | ChannelService#listChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelProducts (packages/cli/src/services/product.service.sdk.ts:105) |
 | 查询频道商品列表点击统计<br><sub>1、分页查询直播频道购物袋展开次数</sub> | GET | `/live/v4/channel/product/click/product-list` | query | channelId | ChannelService#getProductListStats (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getProductListStats (packages/cli/src/services/statistics.service.sdk.ts:142) |
-| 查询频道商品配置<br><sub>1、查询频道商品配置</sub> | GET | `/live/v4/channel/product/push/rule` | query | channelId | V4ChannelService#getProductPushRule (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getProductPushRule (packages/cli/src/services/product.service.sdk.ts:495) |
+| 查询频道商品配置<br><sub>1、查询频道商品配置</sub> | GET | `/live/v4/channel/product/push/rule` | query | channelId | V4ChannelService#getProductPushRule (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getProductPushRule (packages/cli/src/services/product.service.sdk.ts:505) |
 | 查询频道实时并发数据<br><sub>1、在直播中，查询频道实时在线人数</sub> | GET | `/live/v1/statistics/{param}/realtime` | query | userId | ChannelService#getRealtimeViewersV1 (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getRealtimeViewersV1 (packages/cli/src/services/statistics.service.sdk.ts:151) |
-| 查询频道微信分享信息(新版)<br><sub>1、查询频道微信分享信息，对应新版后台的 营销-分享设置</sub> | GET | `/live/v4/channel/share/get` | query | channelId | V4ChannelService#getShareExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getShareExact (packages/cli/src/services/card-push-service.ts:209) |
+| 查询频道微信分享信息(新版)<br><sub>1、查询频道微信分享信息，对应新版后台的 营销-分享设置</sub> | GET | `/live/v4/channel/share/get` | query | channelId | V4ChannelService#shareGet (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#shareGet (packages/cli/src/services/card-push-service.ts:209) |
 | 查询频道文档转码状态<br><sub>1、查询频道文档转换状态接口</sub> | GET | `/live/v3/channel/document/status/get` | query | channelId, fileId | ChannelService#getDocConvertStatus (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getDocConvertStatus (packages/cli/src/services/document.service.sdk.ts:216) |
 | 查询频道信息<br><sub>1、查询频道基本信息，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/basic/get` | query | channelId | V4ChannelService#getChannel (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getChannel (packages/cli/src/services/channel.service.sdk.ts:145)<br>sdk: V4ChannelService#getChannel (packages/cli/src/services/stream.service.sdk.ts:218) |
 | 查询频道页面装修<br><sub>1、查询频道的页面装修设置</sub> | GET | `/live/v4/channel/decorate/get` | query | channelId | PlayerService#getChannelDecorate (packages/sdk/src/services/player.service.ts) | sdk: PlayerService#getChannelDecorate (packages/cli/src/services/player.service.sdk.ts:50) |
@@ -902,12 +902,12 @@
 | 查询任务奖励活动分页列表<br><sub>1、查询任务奖励活动分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/page` | query | channelId | V4ChannelService#listTaskRewardActivities (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listTaskRewardActivities (packages/cli/src/services/interaction-service.ts:190) |
 | 查询任务奖励活动观众奖励明细分页列表<br><sub>1、查询任务奖励活动观众奖励明细分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/viewer-detail` | query | activityId, channelId | V4ChannelService#listTaskRewardViewerDetails (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listTaskRewardViewerDetails (packages/cli/src/services/interaction-service.ts:206) |
 | 查询任务奖励活动统计数据分页列表<br><sub>1、查询任务奖励活动统计数据分页列表</sub> | GET | `/live/v4/channel/task-reward-activity/stats` | query | channelId | V4ChannelService#listTaskRewardStats (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listTaskRewardStats (packages/cli/src/services/interaction-service.ts:198) |
-| 查询商品标签列表<br><sub>1、查询商品标签列表</sub> | GET | `/live/v4/channel/product/tag/list` | query | channelId | V4ChannelService#listProductTagsExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listProductTagsExact (packages/cli/src/services/product.service.sdk.ts:528) |
+| 查询商品标签列表<br><sub>1、查询商品标签列表</sub> | GET | `/live/v4/channel/product/tag/list` | query | channelId | V4ChannelService#productTagList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#productTagList (packages/cli/src/services/product.service.sdk.ts:538) |
 | 查询时间范围内频道直播观看详情数据<br><sub>1、通过频道号获取该频道某段时间的直播观看的统计数据</sub> | GET | `/live/v3/channel/statistics/daily/summary` | query | channelId, endDay, startDay | ChannelService#getDailySummary (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getDailyViewStatistics (packages/cli/src/services/statistics.service.sdk.ts:186) |
 | 查询时间内直播场次数据<br><sub>1、查询时间内直播场次数据</sub> | POST | `/live/v4/statistics/session-stats/list` | query/form | - | V4ChannelService#listSessionStats (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listSessionStats (packages/cli/src/services/statistics.service.sdk.ts:76) |
 | 查询实时字幕语言类型枚举<br><sub>1、查询实时字幕语言类型枚举</sub> | GET | `/live/v4/channel/subtitle/language/list-all` | query | - | V4ChannelService#listSubtitleLanguages (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listSubtitleLanguages (packages/cli/src/services/channel.service.sdk.ts:686) |
 | 查询视频库列表<br><sub>1、管理系统视频列表信息入口：云直播-我的直播-频道设置-回放管理-视频库-回放列表/点播列表</sub> | GET | `/live/v2/channel/recordFile/{param}/playback/list` | query | - | ChannelService#getPlaybackList (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPlaybackList (packages/cli/src/services/playback.service.sdk.ts:72) |
-| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/basic/list` | query | - | V4ChannelService#listChannelBasicExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listChannelBasicExact (packages/cli/src/services/channel.service.sdk.ts:621) |
+| 查询所有频道的基础信息<br><sub>1、查询账号下所有的频道基础信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/basic/list` | query | - | V4ChannelService#listAllChannelBasic (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listAllChannelBasic (packages/cli/src/services/channel.service.sdk.ts:621) |
 | 查询所有频道的缩略信息<br><sub>1、查询账号下所有的频道缩略信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/simple/list` | query | - | V4ChannelService#listChannelSimple (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listChannelSimple (packages/cli/src/services/channel.service.sdk.ts:626) |
 | 查询所有频道的详细信息<br><sub>1、查询账号下所有频道详细信息列表，观看页状态与新版后台一致</sub> | GET | `/live/v4/channel/detail/list` | query | - | V4ChannelService#channelDetailList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#channelDetailList (packages/cli/src/services/channel.service.sdk.ts:101) |
 | 查询微信预约数据<br><sub>1、查询微信预约数据</sub> | GET | `/live/v4/channel/booking/list` | query | channelId | V4ChannelService#listWeixinBookings (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listWeixinBookings (packages/cli/src/services/statistics.service.sdk.ts:81) |
@@ -921,14 +921,14 @@
 | 查询转播频道信息<br><sub>1、查询账号或频道下的转播列表信息</sub> | GET | `/live/v3/channel/transmit/get-associations` | query | - | ChannelService#getTransmitAssociations (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getTransmitAssociations (packages/cli/src/services/transmit-service.ts:69) |
 | 查询子账号频道列表<br><sub>1、查询子账号频道列表</sub> | GET | `/live/v4/channel/channel-user-children/get-channels` | query | childUserId, pageNumber, pageSize | ChannelService#getUserChildrenChannels (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getUserChildrenChannels (packages/cli/src/services/channel.service.sdk.ts:487) |
 | 创建并初始化频道<br><sub>1、根据请求参数与默认模板创建频道</sub> | POST | `/live/v4/channel/create-init` | json-body | basicSetting | V4ChannelService#createInit (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createInit (packages/cli/src/services/channel.service.sdk.ts:726) |
-| 创建抽奖活动<br><sub>1、创建抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/create` | json-body | activityName, amount, channelId, lotteryCondition, prizeName | V4ChannelService#createLotteryActivityExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryActivityExact (packages/cli/src/services/lottery-service.ts:51) |
+| 创建抽奖活动<br><sub>1、创建抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/create` | json-body | activityName, amount, channelId, lotteryCondition, prizeName | V4ChannelService#lotteryActivityCreate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#lotteryActivityCreate (packages/cli/src/services/lottery-service.ts:51) |
 | 创建互动监听事件<br><sub>1、创建互动监听事件</sub> | POST | `/live/v4/channel/interaction-event/save` | json-body | allDone, channelId, tasks | V4ChannelService#interactionEventSave (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#interactionEventSave (packages/cli/src/services/interaction-service.ts:123) |
 | 创建角色<br><sub>1、创建频道的助教或嘉宾角色</sub> | POST | `/live/v4/channel/account/create` | json-body | channelId, role | V4ChannelService#createAccount (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createAccount (packages/cli/src/services/channel.service.sdk.ts:656) |
 | 创建频道<br><sub>1、根据直播默认模板创建频道</sub> | POST | `/live/v4/channel/create` | json-body | name, newScene, template | ChannelService#createChannelV4 (packages/sdk/src/services/channel.service.ts) | sdk: V4ChannelService#create (packages/cli/src/services/channel.service.sdk.ts:69)<br>sdk: ChannelService#createChannelV4 (packages/cli/src/setup/resource-handlers.ts:67) |
-| 创建频道卡片推送<br><sub>1、创建频道卡片推送，对应新版后台的 营销-卡片</sub> | GET | `/live/v4/channel/card-push/create` | query | channelId, duration, imageType, link, showCondition, title | V4ChannelService#createCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createCardPushExact (packages/cli/src/services/card-push-service.ts:102) |
+| 创建频道卡片推送<br><sub>1、创建频道卡片推送，对应新版后台的 营销-卡片</sub> | GET | `/live/v4/channel/card-push/create` | query | channelId, duration, imageType, link, showCondition, title | V4ChannelService#cardPushCreate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushCreate (packages/cli/src/services/card-push-service.ts:102) |
 | 创建频道新版场次<br><sub>1、创建频道新版场次</sub> | POST | `/live/v4/channel/session/new/create` | json-body | channelId, name, planEndTime, planStartTime | V4ChannelService#sessionCreate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sessionCreate (packages/cli/src/services/session.service.sdk.ts:147) |
 | 创建任务奖励活动<br><sub>1、创建任务奖励活动</sub> | POST | `/live/v4/channel/task-reward-activity/save` | json-body | activityName, channelId, endTime, startTime, taskRule, tasks | V4ChannelService#createTaskRewardActivity (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createTaskRewardActivity (packages/cli/src/services/interaction-service.ts:182) |
-| 创建商品标签<br><sub>1、创建商品标签</sub> | POST | `/live/v4/channel/product/tag/create` | json-body | channelId, name | V4ChannelService#createProductTagExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createProductTagExact (packages/cli/src/services/product.service.sdk.ts:545) |
+| 创建商品标签<br><sub>1、创建商品标签</sub> | POST | `/live/v4/channel/product/tag/create` | json-body | channelId, name | V4ChannelService#productTagCreate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#productTagCreate (packages/cli/src/services/product.service.sdk.ts:555) |
 | 创建邀请者<br><sub>1、邀请海报-创建邀请者</sub> | POST | `/live/v4/channel/invite/poster/create` | query/form | channelId, nickname, openId | V4ChannelService#createInvitePoster (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createInvitePoster (packages/cli/src/services/interaction-service.ts:141) |
 | 创建暂存视频大纲<br><sub>- 用于创建暂存视频的 AI 大纲任务</sub> | POST | `/live/v4/channel/record-file/subtitle/outline/create` | query/form | fileId | V4ChannelService#createRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:298) |
 | 创建重制课件任务<br><sub>1、创建重制课件任务，需等候任务队列执行完成，不是实时重制</sub> | POST | `/live/v3/channel/pptRecord/addRecordTask` | query/form | channelId, videoId | ChannelService#addPptRecordTask (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addPptRecordTask (packages/cli/src/services/channel.service.sdk.ts:451) |
@@ -937,7 +937,7 @@
 | 分页查询频道抽奖统计记录<br><sub>1、分页查询频道抽奖统计记录</sub> | GET | `/live/v4/channel/lottery/activity-record/list` | query | channelId | V4ChannelService#listLotteryActivityRecords (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listLotteryActivityRecords (packages/cli/src/services/lottery-service.ts:161) |
 | 分页查询频道打赏记录<br><sub>1、分页查询频道打赏记录</sub> | GET | `/live/v4/channel/reward/gift-list` | query | channelId, end, start | V4ChannelService#listRewardGifts (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listRewardGifts (packages/cli/src/services/donate-service.ts:88) |
 | 分页查询频道点赞记录<br><sub>1、分页查询频道点赞记录</sub> | GET | `/live/v4/channel/reward/like-list` | query | channelId | V4ChannelService#listRewardLikes (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listRewardLikes (packages/cli/src/services/donate-service.ts:108) |
-| 分页查询频道商品统计列表<br><sub>1、分页查询频道商品统计列表</sub> | GET | `/live/v4/channel/product/stats/page` | query | channelId | V4ChannelService#listProductStats (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listProductStats (packages/cli/src/services/product.service.sdk.ts:597) |
+| 分页查询频道商品统计列表<br><sub>1、分页查询频道商品统计列表</sub> | GET | `/live/v4/channel/product/stats/page` | query | channelId | V4ChannelService#listProductStats (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listProductStats (packages/cli/src/services/product.service.sdk.ts:607) |
 | 分页查询频道直播观看详情数据<br><sub>1、分页获取频道的直播观看日志</sub> | GET | `/live/v2/statistics/{param}/viewlog` | query | - | ChannelService#getViewlog2 (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getViewlog2 (packages/cli/src/services/statistics.service.sdk.ts:167) |
 | 分页查询素材库频道直播回放列表<br><sub>1、分页查询素材库频道直播回放列表</sub> | GET | `/live/v4/channel/record-file/m-list` | query | channelId | V4ChannelService#listMaterialRecordFiles (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listMaterialRecordFiles (packages/cli/src/services/record.service.sdk.ts:220) |
 | 分页查询账号直播观看详情数据<br><sub>1、分页获取账号下所有频道观看详情数据</sub> | GET | `/live/v3/user/statistics/viewlog` | query | endDate, startDate | ChannelService#getUserViewlog (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#getViewlog (packages/cli/src/services/statistics.service.sdk.ts:598) |
@@ -946,10 +946,10 @@
 | 复制频道<br><sub>1、通过一个频道复制出一个新的频道</sub> | POST | `/live/v3/channel/basic/copy` | query/form | channelId | ChannelService#copyChannel (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#copyChannel (packages/cli/src/services/channel.service.sdk.ts:478) |
 | 根据自定义场次ID查询频道暂存文件ID<br><sub>1、根据自定义场次ID查询频道暂存文件ID</sub> | GET | `/live/v3/channel/session/list-file-id-by-external` | query | channelId, externalSessionId | ChannelService#listFileIdByExternal (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listFileIdByExternal (packages/cli/src/services/session.service.sdk.ts:174) |
 | 根据自定义场次UUID查询直播场次<br><sub>1、查询根据自定义场次UUID查询直播场次</sub> | GET | `/live/v3/channel/session/list-session-by-external` | query | channelId, externalSessionId | ChannelService#getSessionByExternal (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getSessionByExternal (packages/cli/src/services/session.service.sdk.ts:169) |
-| 更新抽奖活动<br><sub>1、更新抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/update` | json-body | activityName, amount, channelId, id, lotteryCondition, prizeName | V4ChannelService#updateLotteryActivityExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateLotteryActivityExact (packages/cli/src/services/lottery-service.ts:100) |
+| 更新抽奖活动<br><sub>1、更新抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/update` | json-body | activityName, amount, channelId, id, lotteryCondition, prizeName | V4ChannelService#lotteryActivityUpdate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#lotteryActivityUpdate (packages/cli/src/services/lottery-service.ts:100) |
 | 更新频道新版场次<br><sub>1、更新频道新版场次</sub> | POST | `/live/v4/channel/session/new/update` | json-body | name, planEndTime, planStartTime, sessionId | V4ChannelService#sessionUpdate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sessionUpdate (packages/cli/src/services/session.service.sdk.ts:159) |
 | 更新频道重制课件设置<br><sub>1、更新频道重制课件设置</sub> | POST | `/live/v3/channel/pptRecord/setting` | query/form | channelId | ChannelService#updatePptRecordSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updatePptRecordSetting (packages/cli/src/services/channel.service.sdk.ts:460) |
-| 更新商品标签<br><sub>1、更新商品标签</sub> | POST | `/live/v4/channel/product/tag/update` | json-body | channelId, id, name | V4ChannelService#updateProductTagExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateProductTagExact (packages/cli/src/services/product.service.sdk.ts:562) |
+| 更新商品标签<br><sub>1、更新商品标签</sub> | POST | `/live/v4/channel/product/tag/update` | json-body | channelId, id, name | V4ChannelService#productTagUpdate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#productTagUpdate (packages/cli/src/services/product.service.sdk.ts:572) |
 | 关联音视频文件到频道<br><sub>1、关联音视频文件到频道</sub> | POST | `/live/v4/channel/multimedia/resource/save-batch` | query/form | channelId, vids | ChannelService#linkChannelMultimediaResource (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#linkChannelMultimediaResource (packages/cli/src/services/document.service.sdk.ts:252) |
 | 观众查询奖励明细分页列表<br><sub>1、观众查询奖励明细分页列表</sub> | GET | `/live/v4/user/viewer-task-reward/page` | query | viewerId | V4ChannelService#listViewerTaskRewardDetails (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listViewerTaskRewardDetails (packages/cli/src/services/interaction-service.ts:241) |
 | 观众提交任务奖励表单<br><sub>1、观众提交任务奖励表单</sub> | POST | `/live/v4/user/viewer-task-reward/submit-accept-info` | json-body | formInfo, id, viewerId | V4ChannelService#submitViewerTaskRewardAcceptInfo (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#submitViewerTaskRewardAcceptInfo (packages/cli/src/services/interaction-service.ts:249) |
@@ -965,7 +965,7 @@
 | 获取频道关注公众号设置信息<br><sub>1、查询关注公众号设置接口</sub> | GET | `/live/v3/channel/promotion/list-channels-follow` | query | channelIds | ChannelService#listChannelsFollow (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#listChannelsFollow (packages/cli/src/services/channel.service.sdk.ts:532) |
 | 获取频道聊天室的在线人数<br><sub>1、获取频道聊天室的在线人数</sub> | GET | `/live/v3/channel/chat/count-online-user` | query | channelId | ChannelService#getChatOnlineCount (packages/sdk/src/services/channel.service.ts) | sdk: ChatService#countOnlineUser (packages/cli/src/services/chat.service.sdk.ts:273)<br>sdk: ChannelService#getChatOnlineCount (packages/cli/src/services/chat.service.sdk.ts:278) |
 | 获取频道聊天室在线人数接口<br><sub>1、获取频道聊天室在线人数接口</sub> | POST | `/live/v3/channel/chat/count-online-user` | query/form | channelId | ChannelService#getChatOnlineCount (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChatOnlineCount (packages/cli/src/services/chat.service.sdk.ts:278) |
-| 获取频道商品统计概览<br><sub>1、查询频道商品整体统计数据概览（点击、下单、成交等指标汇总）</sub> | GET | `/live/v4/channel/product/stats/summary` | query | channelId | V4ChannelService#getProductStatsSummary (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getProductStatsSummary (packages/cli/src/services/product.service.sdk.ts:614) |
+| 获取频道商品统计概览<br><sub>1、查询频道商品整体统计数据概览（点击、下单、成交等指标汇总）</sub> | GET | `/live/v4/channel/product/stats/summary` | query | channelId | V4ChannelService#getProductStatsSummary (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getProductStatsSummary (packages/cli/src/services/product.service.sdk.ts:624) |
 | 获取频道推流URL<br><sub>1、获取频道推流URL，由于推流地址可能发生变化，所以请在使用时获取</sub> | GET | `/live/v3/channel/stream/get-push-url` | query | channelId | ChannelService#getPushUrl (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getPushUrl (packages/cli/src/services/stream.service.sdk.ts:63) |
 | 获取频道新版场次列表<br><sub>1、获取频道新版场次列表</sub> | GET | `/live/v4/channel/session/new/list` | query | - | V4ChannelService#sessionList (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sessionList (packages/cli/src/services/session.service.sdk.ts:74) |
 | 获取频道新版场次信息<br><sub>1、获取频道新版场次信息</sub> | GET | `/live/v4/channel/session/new/get` | query | - | V4ChannelService#sessionGet (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sessionGet (packages/cli/src/services/session.service.sdk.ts:103) |
@@ -991,14 +991,14 @@
 | 批量删除角色<br><sub>1、批量删除角色</sub> | POST | `/live/v4/channel/account/delete-batch` | query/form | accounts, channelId | V4ChannelService#deleteAccountsBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteAccountsBatch (packages/cli/src/services/channel.service.sdk.ts:666) |
 | 批量删除频道<br><sub>1、批量删除直播频道</sub> | POST | `/live/v3/channel/basic/batch-delete` | json-body | channelIds | ChannelService#batchDeleteChannels (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchDeleteChannels (packages/cli/src/services/channel.service.sdk.ts:197)<br>sdk: ChannelService#batchDeleteChannels (packages/cli/src/services/channel.service.sdk.ts:220) |
 | 批量删除频道多条聊天记录<br><sub>1、根据聊天的id删除对应聊天记录</sub> | POST | `/live/v3/channel/chat/remove-contents` | query/form | channelId, ids | ChannelService#removeChatContents (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#removeChatContents (packages/cli/src/services/chat.service.sdk.ts:283) |
-| 批量删除频道商品<br><sub>1、批量删除频道商品</sub> | POST | `/live/v3/channel/product/batch-delete` | json-body | channelId, productIds | ChannelService#batchDeleteChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchDeleteChannelProducts (packages/cli/src/services/product.service.sdk.ts:332) |
+| 批量删除频道商品<br><sub>1、批量删除频道商品</sub> | POST | `/live/v3/channel/product/batch-delete` | json-body | channelId, productIds | ChannelService#batchDeleteChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchDeleteChannelProducts (packages/cli/src/services/product.service.sdk.ts:342) |
 | 批量添加分发地址<br><sub>1、批量添加分发地址</sub> | POST | `/live/v4/channel/distribute/create-batch` | json-body | channelId | V4ChannelService#distributeCreateBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#distributeCreateBatch (packages/cli/src/services/channel.service.sdk.ts:696) |
-| 批量添加频道商品<br><sub>1、批量添加频道商品库商品</sub> | POST | `/live/v3/channel/product/batch-add` | json-body | channelId | ChannelService#batchAddChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchAddChannelProducts (packages/cli/src/services/product.service.sdk.ts:323) |
+| 批量添加频道商品<br><sub>1、批量添加频道商品库商品</sub> | POST | `/live/v3/channel/product/batch-add` | json-body | channelId | ChannelService#batchAddChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchAddChannelProducts (packages/cli/src/services/product.service.sdk.ts:333) |
 | 批量修改分分发地址<br><sub>1、修改分发地址</sub> | POST | `/live/v4/channel/distribute/update-batch` | json-body | channelId | V4ChannelService#distributeUpdateBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#distributeUpdateBatch (packages/cli/src/services/channel.service.sdk.ts:701) |
 | 批量修改频道弹幕开关<br><sub>1、批量修改频道弹幕开关</sub> | POST | `/live/v3/channel/basic/batchUpdateDanmu` | query/form | channelIds, closeDanmu, showDanmuInfoEnabled | ChannelService#batchUpdateDanmu (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchUpdateDanmu (packages/cli/src/services/channel.service.sdk.ts:568) |
 | 批量修改频道回放字幕<br><sub>1、批量修改频道回放字幕</sub> | POST | `/live/v4/channel/subtitle/update-batch` | json-body | body, channelId | V4ChannelService#updateChannelSubtitleBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateChannelSubtitleBatch (packages/cli/src/services/playback.service.sdk.ts:117) |
 | 批量修改频道皮肤<br><sub>1、批量修改频道装修皮肤</sub> | POST | `/live/v4/channel/decorate/skin/update-batch` | query/form | channelIds, skin | V4ChannelService#updateSkinBatch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateSkinBatch (packages/cli/src/services/player.service.sdk.ts:179) |
-| 批量修改频道商品库上下架状态<br><sub>1、批量修改频道商品库商品上下架状态</sub> | POST | `/live/v3/channel/product/batch-shelf` | json-body | channelId, productIds | ChannelService#batchShelfChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchShelfChannelProducts (packages/cli/src/services/product.service.sdk.ts:341) |
+| 批量修改频道商品库上下架状态<br><sub>1、批量修改频道商品库商品上下架状态</sub> | POST | `/live/v3/channel/product/batch-shelf` | json-body | channelId, productIds | ChannelService#batchShelfChannelProducts (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#batchShelfChannelProducts (packages/cli/src/services/product.service.sdk.ts:351) |
 | 批量修改频道云分发开关<br><sub>1、批量修改频道云分发开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-switch` | query/form | channelId, distributeIds | V4ChannelService#updateSwitch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateSwitch (packages/cli/src/services/channel.service.sdk.ts:721) |
 | 批量转存暂存视频到云点播<br><sub>1、批量转存直播暂存录制视频文件到点播列表，接口转存过程为异步处理过程</sub> | POST | `/live/v3/channel/record/convert` | query/form | channelId | ChannelService#recordConvert (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:134)<br>sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:165) |
 | 频道观看页观众退出登录<br><sub>1、频道观看页观众退出登录</sub> | POST | `/live/v4/channel/watch/viewer/logout` | json-body | channelId | V4ChannelService#logoutWatchViewer (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#logoutWatchViewer (packages/cli/src/services/chat.service.sdk.ts:566) |
@@ -1029,21 +1029,21 @@
 | 频道直播录制打点功能<br><sub>1、设置直播录制打点</sub> | POST | `/live/v3/channel/record/add-breakpoint` | query/form | channelId, type | ChannelService#recordAddBreakpoint (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordAddBreakpoint (packages/cli/src/services/record.service.sdk.ts:288) |
 | 渠道推广列表<br><sub>1、查询渠道推广列表</sub> | GET | `/live/v4/channel/popularization/list` | query | channelId | V4ChannelService#listPopularizations (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listPopularizations (packages/cli/src/services/promotion-service.ts:54) |
 | 取消频道的关联音视频文件<br><sub>1、取消频道的关联音视频文件</sub> | POST | `/live/v4/channel/multimedia/resource/delete-batch` | query/form | channelId, vids | ChannelService#unlinkChannelMultimediaResource (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#unlinkChannelMultimediaResource (packages/cli/src/services/document.service.sdk.ts:257) |
-| 取消推送卡片<br><sub>1、取消推送卡片，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/cancel-push` | query/form | cardPushId, channelId | V4ChannelService#cancelCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cancelCardPushExact (packages/cli/src/services/card-push-service.ts:179) |
-| 取消推送频道商品库商品<br><sub>1、取消推送频道商品库商品</sub> | POST | `/live/v3/channel/product/cancel-push-product` | query/form | channelId, productId | ChannelService#cancelPushChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#cancelPushChannelProduct (packages/cli/src/services/product.service.sdk.ts:377) |
-| 取消置顶频道商品<br><sub>1、取消指定频道商品的置顶状态</sub> | POST | `/live/v4/channel/product/un-topping` | json-body | channelId, productId | V4ChannelService#untoppingChannelProduct (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#untoppingChannelProduct (packages/cli/src/services/product.service.sdk.ts:658) |
-| 删除抽奖活动<br><sub>1、删除抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/delete` | json-body | channelId, id | V4ChannelService#deleteLotteryActivityExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteLotteryActivityExact (packages/cli/src/services/lottery-service.ts:116) |
+| 取消推送卡片<br><sub>1、取消推送卡片，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/cancel-push` | query/form | cardPushId, channelId | V4ChannelService#cardPushCancelPush (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushCancelPush (packages/cli/src/services/card-push-service.ts:179) |
+| 取消推送频道商品库商品<br><sub>1、取消推送频道商品库商品</sub> | POST | `/live/v3/channel/product/cancel-push-product` | query/form | channelId, productId | ChannelService#cancelPushChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#cancelPushChannelProduct (packages/cli/src/services/product.service.sdk.ts:387) |
+| 取消置顶频道商品<br><sub>1、取消指定频道商品的置顶状态</sub> | POST | `/live/v4/channel/product/un-topping` | json-body | channelId, productId | V4ChannelService#untoppingChannelProduct (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#untoppingChannelProduct (packages/cli/src/services/product.service.sdk.ts:668) |
+| 删除抽奖活动<br><sub>1、删除抽奖活动</sub> | POST | `/live/v4/channel/lottery-activity/delete` | json-body | channelId, id | V4ChannelService#lotteryActivityDelete (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#lotteryActivityDelete (packages/cli/src/services/lottery-service.ts:116) |
 | 删除单个频道<br><sub>1、删除单个直播频道</sub> | POST | `/live/v2/channels/{param}/delete` | query/form | userId | ChannelService#deleteChannel (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannel (packages/cli/src/setup/resource-handlers.ts:89) |
 | 删除分组<br><sub>1、删除分组</sub> | POST | `/live/v4/channel/lottery-viewer-group/whitelist/delete` | json-body | channelId, id | V4ChannelService#deleteLotteryViewerGroup (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteLotteryViewerGroup (packages/cli/src/services/lottery-service.ts:289) |
 | 删除互动监听事件<br><sub>1、删除互动监听事件</sub> | POST | `/live/v4/channel/interaction-event/delete` | json-body | channelId, taskIds | V4ChannelService#interactionEventDelete (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#interactionEventDelete (packages/cli/src/services/interaction-service.ts:132) |
 | 删除互动脚本<br><sub>1、删除互动脚本</sub> | POST | `/live/v4/channel/interaction-script/delete` | json-body | channelId, id | V4ChannelService#deleteInteractionScript (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteInteractionScript (packages/cli/src/services/interaction-service.ts:173) |
 | 删除角色<br><sub>1、删除频道内某个助教或嘉宾</sub> | POST | `/live/v2/channelAccount/{param}/delete` | query/form | account | ChannelService#deleteAccount (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteAccount (packages/cli/src/services/channel.service.sdk.ts:388) |
-| 删除卡片推送<br><sub>1、删除卡片推送，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/delete` | query/form | cardPushId, channelId | V4ChannelService#deleteCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteCardPushExact (packages/cli/src/services/card-push-service.ts:198) |
-| 删除频道商品<br><sub>1、删除频道商品库商品</sub> | POST | `/live/v3/channel/product/delete` | query/form | channelId, productId | ChannelService#deleteChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannelProduct (packages/cli/src/services/product.service.sdk.ts:252)<br>sdk: ChannelService#deleteChannelProduct (packages/cli/src/setup/resource-handlers.ts:175) |
+| 删除卡片推送<br><sub>1、删除卡片推送，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/delete` | query/form | cardPushId, channelId | V4ChannelService#cardPushDelete (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushDelete (packages/cli/src/services/card-push-service.ts:198) |
+| 删除频道商品<br><sub>1、删除频道商品库商品</sub> | POST | `/live/v3/channel/product/delete` | query/form | channelId, productId | ChannelService#deleteChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteChannelProduct (packages/cli/src/services/product.service.sdk.ts:253)<br>sdk: ChannelService#deleteChannelProduct (packages/cli/src/setup/resource-handlers.ts:175) |
 | 删除频道新版场次<br><sub>1、删除频道新版场次</sub> | POST | `/live/v4/channel/session/new/delete` | json-body | channelId, sessionId | V4ChannelService#sessionDelete (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sessionDelete (packages/cli/src/services/session.service.sdk.ts:164) |
 | 删除频道优惠券<br><sub>1、批量删除频道优惠券</sub> | POST | `/live/v4/channel/coupon/delete` | json-body | channelId, couponIds | V4ChannelService#deleteChannelCoupons (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteChannelCoupons (packages/cli/src/handlers/coupon.handler.ts:329) |
 | 删除任务奖励活动<br><sub>1、删除任务奖励活动</sub> | GET | `/live/v4/channel/task-reward-activity/delete` | query | activityId | V4ChannelService#deleteTaskRewardActivity (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteTaskRewardActivity (packages/cli/src/services/interaction-service.ts:223) |
-| 删除商品标签<br><sub>1、删除商品标签</sub> | POST | `/live/v4/channel/product/tag/delete` | json-body | channelId, id | V4ChannelService#deleteProductTagExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteProductTagExact (packages/cli/src/services/product.service.sdk.ts:577) |
+| 删除商品标签<br><sub>1、删除商品标签</sub> | POST | `/live/v4/channel/product/tag/delete` | json-body | channelId, id | V4ChannelService#productTagDelete (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#productTagDelete (packages/cli/src/services/product.service.sdk.ts:587) |
 | 删除视频库中的视频<br><sub>1、删除频道回放管理视频库中的某个视频，只是在频道视频库列表删除，点播后台中视频依然存在</sub> | POST | `/live/v2/channel/recordFile/{param}/playback/delete` | query/form | - | ChannelService#deletePlayback (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deletePlayback (packages/cli/src/services/playback.service.sdk.ts:243) |
 | 删除伪直播视频<br><sub>1、删除伪直播中的视频，不允许删除正在伪直播中的视频</sub> | POST | `/live/v3/channel/stream/delete-disk-videos` | query/form | channelId | ChannelService#deleteDiskVideos (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteDiskVideos (packages/cli/src/services/stream.service.sdk.ts:386) |
 | 删除文档<br><sub>1、删除频道文档接口</sub> | POST | `/live/v3/channel/document/delete` | query/form | channelId, fileId, type | ChannelService#deleteDocument (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteDocument (packages/cli/src/services/document.service.sdk.ts:194) |
@@ -1063,15 +1063,15 @@
 | 设置子频道单点登录token<br><sub>1、设置子频道单点登录的token</sub> | POST | `/live/v2/channels/{param}/set-account-token` | query/form | token | ChannelService#setAccountToken (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setAccountToken (packages/cli/src/services/channel.service.sdk.ts:586) |
 | 手动结束问卷<br><sub>1、手动结束问卷</sub> | POST | `/live/v3/channel/questionnaire/end` | query/form | channelIds | ChannelService#channelsStopQuestionnaire (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#channelsStopQuestionnaire (packages/cli/src/services/channel.service.sdk.ts:559) |
 | 授权和连麦token<br><sub>1、获取授权和连麦的token</sub> | POST | `/live/v3/channel/common/get-chat-token` | query/form | channelId, role, userId | ChannelService#getChatToken (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChatToken (packages/cli/src/services/channel.service.sdk.ts:523) |
-| 添加频道商品<br><sub>1、添加频道商品库商品</sub> | POST | `/live/v3/channel/product/add` | json-body | channelId, linkType, name, status | ChannelService#addChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addChannelProduct (packages/cli/src/services/product.service.sdk.ts:179)<br>sdk: ChannelService#addChannelProduct (packages/cli/src/setup/resource-handlers.ts:154) |
+| 添加频道商品<br><sub>1、添加频道商品库商品</sub> | POST | `/live/v3/channel/product/add` | json-body | channelId, linkType, name, status | ChannelService#addChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addChannelProduct (packages/cli/src/services/product.service.sdk.ts:180)<br>sdk: ChannelService#addChannelProduct (packages/cli/src/setup/resource-handlers.ts:154) |
 | 停止任务奖励活动<br><sub>1、提前结束正在进行中的任务奖励活动</sub> | GET | `/live/v4/channel/task-reward-activity/stop` | query | activityId | V4ChannelService#stopTaskRewardActivity (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#stopTaskRewardActivity (packages/cli/src/services/interaction-service.ts:232) |
 | 停止硬盘推流<br><sub>1、停止硬盘推流</sub> | POST | `/live/v3/channel/stream/end-disk-push` | query/form | channelId, diskVideoId | ChannelService#endDiskPush (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#endDiskPush (packages/cli/src/services/stream.service.sdk.ts:395) |
 | 通过抽奖活动模板发起定时抽奖抽奖<br><sub>1、通过抽奖活动模板发起定时抽奖抽奖</sub> | POST | `/live/v4/channel/condition-lottery/create-wait-lottery` | json-body | channelId, id, lotteryTime | V4ChannelService#createConditionWaitLottery (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createConditionWaitLottery (packages/cli/src/services/lottery-service.ts:256) |
-| 通过上移下移修改频道商品库列表顺序<br><sub>1、修改商品库商品列表顺序</sub> | POST | `/live/v3/channel/product/sort` | query/form | channelId, productId, type | ChannelService#sortChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#sortChannelProduct (packages/cli/src/services/product.service.sdk.ts:359) |
-| 通过序号修改频道商品库列表顺序<br><sub>1、设置频道商品排序</sub> | POST | `/live/v4/channel/product/sort-rank` | query/form | channelId, productId, rank | V4ChannelService#sortChannelProductRank (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sortChannelProductRank (packages/cli/src/services/product.service.sdk.ts:629) |
+| 通过上移下移修改频道商品库列表顺序<br><sub>1、修改商品库商品列表顺序</sub> | POST | `/live/v3/channel/product/sort` | query/form | channelId, productId, type | ChannelService#sortChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#sortChannelProduct (packages/cli/src/services/product.service.sdk.ts:369) |
+| 通过序号修改频道商品库列表顺序<br><sub>1、设置频道商品排序</sub> | POST | `/live/v4/channel/product/sort-rank` | query/form | channelId, productId, rank | V4ChannelService#sortChannelProductRank (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sortChannelProductRank (packages/cli/src/services/product.service.sdk.ts:639) |
 | 同步转存录制文件到点播<br><sub>1、将直播录制文件转存至点播后台中</sub> | POST | `/live/v2/channel/recordFile/{param}/convert` | query/form | - | ChannelService#convertRecordFileToVod (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#convertRecordFileToVod (packages/cli/src/services/record.service.sdk.ts:283) |
-| 推送频道卡片<br><sub>1、推送频道卡片，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/push` | query/form | cardPushId, channelId | V4ChannelService#pushCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#pushCardPushExact (packages/cli/src/services/card-push-service.ts:160) |
-| 推送频道商品库商品<br><sub>1、推送频道商品库商品</sub> | POST | `/live/v3/channel/product/push-product` | query/form | channelId, productId | ChannelService#pushChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#pushChannelProduct (packages/cli/src/services/product.service.sdk.ts:368) |
+| 推送频道卡片<br><sub>1、推送频道卡片，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/push` | query/form | cardPushId, channelId | V4ChannelService#cardPushPush (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushPush (packages/cli/src/services/card-push-service.ts:160) |
+| 推送频道商品库商品<br><sub>1、推送频道商品库商品</sub> | POST | `/live/v3/channel/product/push-product` | query/form | channelId, productId | ChannelService#pushChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#pushChannelProduct (packages/cli/src/services/product.service.sdk.ts:378) |
 | 新建分组<br><sub>1、新建分组</sub> | POST | `/live/v4/channel/lottery-viewer-group/whitelist/create` | json-body | channelId, title | V4ChannelService#createLotteryViewerGroup (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryViewerGroup (packages/cli/src/services/lottery-service.ts:273) |
 | 新增频道优惠券<br><sub>1、将平台优惠券添加到频道中</sub> | POST | `/live/v4/channel/coupon/create` | json-body | channelId, couponIds | V4ChannelService#addChannelCoupon (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#addChannelCoupon (packages/cli/src/handlers/coupon.handler.ts:309) |
 | 修改分组<br><sub>1、修改分组</sub> | POST | `/live/v4/channel/lottery-viewer-group/whitelist/update` | json-body | channelId, title | V4ChannelService#updateLotteryViewerGroup (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateLotteryViewerGroup (packages/cli/src/services/lottery-service.ts:281) |
@@ -1087,18 +1087,18 @@
 | 修改频道回放开关<br><sub>1、修改单个或全部频道的回放开关</sub> | POST | `/live/v2/channelSetting/{param}/setPlayBackEnabled` | query/form | playBackEnabled | ChannelService#setUserPlaybackEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setUserPlaybackEnabled (packages/cli/src/services/playback.service.sdk.ts:131) |
 | 修改频道回放设置<br><sub>1、修改频道回放设置</sub> | POST | `/live/v3/channel/playback/set-setting` | query/form | channelId | ChannelService#setPlaybackSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setPlaybackSetting (packages/cli/src/services/record.service.sdk.ts:106) |
 | 修改频道角色权限设置<br><sub>1、修改频道角色权限设置</sub> | POST | `/live/v4/channel/role-config/update-by-role` | json-body | body, channelId, role | V4ChannelService#updateByRole (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateByRole (packages/cli/src/services/channel.service.sdk.ts:651) |
-| 修改频道卡片推送<br><sub>1、修改频道卡片推送，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/update` | json-body | cardPushId, channelId | V4ChannelService#updateCardPushExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateCardPushExact (packages/cli/src/services/card-push-service.ts:141) |
+| 修改频道卡片推送<br><sub>1、修改频道卡片推送，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/update` | json-body | cardPushId, channelId | V4ChannelService#cardPushUpdate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushUpdate (packages/cli/src/services/card-push-service.ts:141) |
 | 修改频道拉流码率<br><sub>1、修改频道拉流码率</sub> | POST | `/live/v4/channel/set-pull-bitrate` | query/form | channelId, pullBitRate | V4ChannelService#setPullBitrate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#setPullBitrate (packages/cli/src/services/channel.service.sdk.ts:736) |
 | 修改频道礼物打赏设置<br><sub>1、修改频道礼物打赏设置，礼物打赏又分为现金支付和积分支付</sub> | POST | `/live/v4/channel/donate/gift/update` | json-body | channelId, donateGiftEnabled | V4ChannelService#updateDonateGift (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateDonateGift (packages/cli/src/services/donate-service.ts:66) |
 | 修改频道聊天室发言开关<br><sub>1、修改频道聊天室发言开关</sub> | POST | `/live/v4/channel/chat/update-chatEnabled` | json-body | channelIds, chatEnabled | V4ChannelService#batchUpdateChatEnabled (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#batchUpdateChatEnabled (packages/cli/src/services/chat.service.sdk.ts:558) |
 | 修改频道密码<br><sub>1、修改单个频道号的密码，或者修改账号下所有频道号的密码</sub> | POST | `/live/v2/channels/{param}/passwdSetting` | query/form | passwd | ChannelService#updateChannelPassword (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelPassword (packages/cli/src/services/channel.service.sdk.ts:604) |
-| 修改频道商品库开关状态<br><sub>1、修改频道商品库开关状态，如果没有开启商品库权限请联系客服</sub> | POST | `/live/v3/channel/product/update-enabled` | query/form | channelId, enabled | ChannelService#updateChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | cmd: `product update-enabled` (packages/cli/src/commands/product.commands.ts:655)<br>handler: ProductHandler#updateChannelProductEnabled (packages/cli/src/handlers/product.handler.ts:513)<br>sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/services/product.service.sdk.ts:321)<br>sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/setup/resource-handlers.ts:199) |
-| 修改频道商品库上下架状态<br><sub>1、修改频道商品库商品上下架状态</sub> | POST | `/live/v3/channel/product/shelf` | query/form | channelId, productId | ChannelService#shelfChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#shelfChannelProduct (packages/cli/src/services/product.service.sdk.ts:350) |
-| 修改频道商品配置<br><sub>1、修改频道商品配置</sub> | POST | `/live/v4/channel/product/push/rule` | json-body | channelId | V4ChannelService#updateProductPushRule (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateProductPushRule (packages/cli/src/services/product.service.sdk.ts:505) |
-| 修改频道商品信息<br><sub>1、编辑频道商品库商品信息</sub> | POST | `/live/v3/channel/product/update` | json-body | channelId, linkType, name, productId, status | ChannelService#updateChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelProduct (packages/cli/src/services/product.service.sdk.ts:235) |
+| 修改频道商品库开关状态<br><sub>1、修改频道商品库开关状态，如果没有开启商品库权限请联系客服</sub> | POST | `/live/v3/channel/product/update-enabled` | query/form | channelId, enabled | ChannelService#updateChannelProductEnabled (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/services/product.service.sdk.ts:324)<br>sdk: ChannelService#updateChannelProductEnabled (packages/cli/src/setup/resource-handlers.ts:199) |
+| 修改频道商品库上下架状态<br><sub>1、修改频道商品库商品上下架状态</sub> | POST | `/live/v3/channel/product/shelf` | query/form | channelId, productId | ChannelService#shelfChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#shelfChannelProduct (packages/cli/src/services/product.service.sdk.ts:360) |
+| 修改频道商品配置<br><sub>1、修改频道商品配置</sub> | POST | `/live/v4/channel/product/push/rule` | json-body | channelId | V4ChannelService#updateProductPushRule (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateProductPushRule (packages/cli/src/services/product.service.sdk.ts:515) |
+| 修改频道商品信息<br><sub>1、编辑频道商品库商品信息</sub> | POST | `/live/v3/channel/product/update` | json-body | channelId, linkType, name, productId, status | ChannelService#updateChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelProduct (packages/cli/src/services/product.service.sdk.ts:236) |
 | 修改频道设置<br><sub>1、修改频道设置</sub> | POST | `/live/v4/channel/update` | json-body | channelId | V4ChannelService#update (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#update (packages/cli/src/services/channel.service.sdk.ts:763) |
 | 修改频道推流方式<br><sub>1、修改频道的直播推流方式</sub> | POST | `/live/v3/channel/stream/update` | query/form | channelId, streamType | ChannelService#updateStreamType (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateStreamType (packages/cli/src/services/stream.service.sdk.ts:422) |
-| 修改频道微信分享信息(新版)<br><sub>1、修改频道微信分享信息，对应新版后台的 营销-分享设置</sub> | GET | `/live/v4/channel/share/update` | query | channelId, shareBtnEnable, titleType | V4ChannelService#updateShareExact (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateShareExact (packages/cli/src/services/card-push-service.ts:236) |
+| 修改频道微信分享信息(新版)<br><sub>1、修改频道微信分享信息，对应新版后台的 营销-分享设置</sub> | GET | `/live/v4/channel/share/update` | query | channelId, shareBtnEnable, titleType | V4ChannelService#shareUpdate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#shareUpdate (packages/cli/src/services/card-push-service.ts:236) |
 | 修改频道信息<br><sub>1、修改频道的相关设置</sub> | POST | `/live/v3/channel/basic/update` | json-body | channelId, enabled, rank | ChannelService#updateChannel (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannel (packages/cli/src/services/channel.service.sdk.ts:168) |
 | 修改频道优惠券开关状态<br><sub>1、修改频道优惠券开关状态</sub> | POST | `/live/v4/channel/coupon/update-enabled` | json-body | channelId, enabled | V4ChannelService#updateCouponEnabled (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateCouponEnabled (packages/cli/src/handlers/coupon.handler.ts:273)<br>sdk: V4ChannelService#updateCouponEnabled (packages/cli/src/setup/resource-handlers.ts:235) |
 | 修改频道直播模版<br><sub>1、修改频道直播模板信息</sub> | POST | `/live/v4/channel/update-template` | query/form | channelId, template | V4ChannelService#updateTemplate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateTemplate (packages/cli/src/services/channel.service.sdk.ts:741) |
@@ -1113,10 +1113,10 @@
 | 修改视频库的默认视频<br><sub>1、将回放列表中的某个视频设置为默认回放视频</sub> | POST | `/live/v2/channel/recordFile/{param}/playback/set-Default` | query/form | - | ChannelService#setDefaultPlaybackVideo (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#setDefaultPlaybackVideo (packages/cli/src/services/record.service.sdk.ts:189) |
 | 修改视频库的视频排序<br><sub>1、修改视频库回放列表的视频排序</sub> | POST | `/live/v3/channel/playback/sort` | json-body | - | ChannelService#sortPlaybackVideos (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#sortPlaybackVideos (packages/cli/src/services/playback.service.sdk.ts:165) |
 | 修改云分发频道总开关<br><sub>1、修改单个频道云分发总开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-master-switch` | query/form | channelId | V4ChannelService#updateMasterSwitch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateMasterSwitch (packages/cli/src/services/channel.service.sdk.ts:716) |
-| 引用平台商品到频道商品<br><sub>1、将平台商品引用到指定频道（支持是否同步平台商品标签）</sub> | POST | `/live/v3/channel/product/reference` | json-body | channelId, originId, status | ChannelService#referenceProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#referenceProduct (packages/cli/src/services/product.service.sdk.ts:386) |
+| 引用平台商品到频道商品<br><sub>1、将平台商品引用到指定频道（支持是否同步平台商品标签）</sub> | POST | `/live/v3/channel/product/reference` | json-body | channelId, originId, status | ChannelService#referenceProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#referenceProduct (packages/cli/src/services/product.service.sdk.ts:396) |
 | 暂存视频的字幕文件批量发布<br><sub>1、用于批量设置暂存视频字幕文件的发布状态，控制字幕在观看页是否显示</sub> | POST | `/live/v4/channel/record-file/subtitle/batch-publish` | query/form | subtitles, subtitles[].id, subtitles[].status | V4ChannelService#batchPublishRecordFileSubtitles (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#batchPublishRecordFileSubtitles (packages/cli/src/services/record.service.sdk.ts:308) |
 | 直播场次关联自定义ID<br><sub>1、将直播场次关联自定义的直播场次UUID，关联频道之后开播的场次、以及这些开播场次衍生出来的裁剪和合并视频</sub> | POST | `/live/v3/channel/session/relevance` | query/form | channelId, externalSessionId | ChannelService#relevanceSession (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#relevanceSession (packages/cli/src/services/session.service.sdk.ts:179) |
-| 置顶频道商品<br><sub>1、将指定频道商品置顶</sub> | POST | `/live/v4/channel/product/topping` | json-body | channelId, productId | V4ChannelService#toppingChannelProduct (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#toppingChannelProduct (packages/cli/src/services/product.service.sdk.ts:644) |
+| 置顶频道商品<br><sub>1、将指定频道商品置顶</sub> | POST | `/live/v4/channel/product/topping` | json-body | channelId, productId | V4ChannelService#toppingChannelProduct (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#toppingChannelProduct (packages/cli/src/services/product.service.sdk.ts:654) |
 | v4/channel/lottery_viewer/group_create_viewer_name<br><sub>1、分组添加观众支持传昵称</sub> | POST | `/live/v4/channel/lottery-viewer-list/create-viewer-name` | json-body | channelId, groupId, viewerNames | V4ChannelService#createLotteryGroupViewerNames (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryGroupViewerNames (packages/cli/src/services/lottery-service.ts:314) |
 | v4/channel/recordfile/get_record_file_outline<br><sub>- 根据频道ID与暂存文件ID查询AI大纲与答题内容（若已生成）</sub> | GET | `/live/v4/channel/record-file/subtitle/outline/get-by-fileId` | query | channelId, fileId | V4ChannelService#getRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:303) |
 
@@ -1326,7 +1326,7 @@
 | 功能/用途 | Method | Path | 请求形态 | 业务必填参数 | SDK 实现 | CLI 使用 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 编辑标签<br><sub>1、编辑标签</sub> | POST | `/live/v4/user/label/update` | json-body | labelId, labelName | V4UserService#updateLabel (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateLabel (packages/cli/src/services/viewer-service.ts:270) |
-| 编辑商品<br><sub>1、编辑标签</sub> | POST | `/live/v4/user/product/update` | json-body | link, linkType, name, productId | V4UserService#updateProduct (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateProduct (packages/cli/src/services/product.service.sdk.ts:293) |
+| 编辑商品<br><sub>1、编辑标签</sub> | POST | `/live/v4/user/product/update` | json-body | link, linkType, name, productId | V4UserService#updateProduct (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateProduct (packages/cli/src/services/product.service.sdk.ts:294) |
 | 查询观看次数显示开关<br><sub>1、查询观看页观看次数显示开关</sub> | GET | `/live/v4/user/global-setting/pv-show/get` | query | - | V4UserService#getPvShowEnable (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getPvShowEnable (packages/cli/src/services/user.service.ts:108) |
 | 查询观看记录<br><sub>1、查询观看记录</sub> | GET | `/live/v4/user/viewlog/list` | query | - | V4UserService#getWatchLogList (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getWatchLogList (packages/cli/src/services/user.service.ts:132) |
 | 查询观众详情<br><sub>1、查询观众详情</sub> | GET | `/live/v4/user/viewer-record/get` | query | viewerUnionId | V4UserService#getViewerRecord (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getViewerRecord (packages/cli/src/services/viewer-service.ts:90) |
@@ -1339,8 +1339,8 @@
 | 查询默认模板音频审核<br><sub>1、查询音频审核默认模板设置</sub> | GET | `/live/v4/user/template/audio-moderation/get` | query | - | V4UserService#getAudioModerationSetting (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getAudioModerationSetting (packages/cli/src/services/user.service.ts:84) |
 | 查询全局回调设置<br><sub>1、查询全局回调设置</sub> | GET | `/live/v4/user/global-setting/callback/get` | query | - | V4UserService#getCallback (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getCallback (packages/cli/src/services/platform-service.ts:146) |
 | 查询全局频道设置<br><sub>1、查询全局频道设置</sub> | GET | `/live/v4/user/global-setting/switch/get` | query | - | V4UserService#getGlobalChannelSettings (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getGlobalChannelSettings (packages/cli/src/services/platform-service.ts:234) |
-| 查询商品订单列表<br><sub>1、查询商品订单列表</sub> | GET | `/live/v4/user/product/order/list` | query | - | V4UserService#listProductOrders (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listProductOrders (packages/cli/src/services/product.service.sdk.ts:451) |
-| 查询商品订单详情<br><sub>1、查询商品订单详情</sub> | GET | `/live/v4/user/product/order/get` | query | orderNo | V4UserService#getProductOrder (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getProductOrder (packages/cli/src/services/product.service.sdk.ts:466) |
+| 查询商品订单列表<br><sub>1、查询商品订单列表</sub> | GET | `/live/v4/user/product/order/list` | query | - | V4UserService#listProductOrders (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listProductOrders (packages/cli/src/services/product.service.sdk.ts:461) |
+| 查询商品订单详情<br><sub>1、查询商品订单详情</sub> | GET | `/live/v4/user/product/order/get` | query | orderNo | V4UserService#getProductOrder (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getProductOrder (packages/cli/src/services/product.service.sdk.ts:476) |
 | 查询页脚设置<br><sub>1、查询全局页脚设置</sub> | GET | `/live/v4/user/global-setting/footer/get` | query | - | V4UserService#getGlobalFooter (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getGlobalFooter (packages/cli/src/services/user.service.ts:100) |
 | 查询用户账单使用明细数据<br><sub>1、查询用户账单使用明细数据</sub> | GET | `/live/v4/channel/use-detail/list` | query | endDate, itemCategory, startDate | V4UserService#getBillUseDetailList (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getBillUseDetailList (packages/cli/src/services/user.service.ts:128) |
 | 查询用户中奖记录<br><sub>1、查询用户中奖记录</sub> | GET | `/live/v4/user/lottery/list-personal-win` | query | pageNumber, pageSize, viewerId | V4UserService#viewerLotteryWin (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#viewerLotteryWin (packages/cli/src/services/viewer-service.ts:309) |
@@ -1349,15 +1349,15 @@
 | 查询组织架构列表<br><sub>1、组织架构列表</sub> | GET | `/live/v4/user/organization/list` | query | - | V4UserService#listOrganizations (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listOrganizations (packages/cli/src/services/user.service.ts:40) |
 | 创建标签<br><sub>1、创建标签</sub> | POST | `/live/v4/user/label/save` | json-body | labelName | V4UserService#createLabel (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#createLabel (packages/cli/src/services/viewer-service.ts:256) |
 | 创建标签<br><sub>1、创建标签</sub> | POST | `/live/v4/user/viewer-label/create-batch` | json-body | labels | V4UserService#createViewerLabel (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#createViewerLabel (packages/cli/src/services/viewer-service.ts:202) |
-| 创建商品<br><sub>1、创建标签</sub> | POST | `/live/v4/user/product/save` | json-body | link, linkType, name | V4UserService#createProduct (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#createProduct (packages/cli/src/services/product.service.sdk.ts:283) |
-| 创建商品标签<br><sub>1、创建商品标签</sub> | POST | `/live/v4/user/product/tag/create` | json-body | name | V4UserService#createProductTag (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#createProductTag (packages/cli/src/services/product.service.sdk.ts:415) |
+| 创建商品<br><sub>1、创建标签</sub> | POST | `/live/v4/user/product/save` | json-body | link, linkType, name | V4UserService#createProduct (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#createProduct (packages/cli/src/services/product.service.sdk.ts:284) |
+| 创建商品标签<br><sub>1、创建商品标签</sub> | POST | `/live/v4/user/product/tag/create` | json-body | name | V4UserService#createProductTag (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#createProductTag (packages/cli/src/services/product.service.sdk.ts:425) |
 | 发送阿里云短信通知<br><sub>1、根据用户配置的模板发送短信通知</sub> | POST | `/live/v4/user/sms/send` | json-body | phoneNumbers, templateParamNames, templateParamValues | V4UserService#sendSms (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#sendSms (packages/cli/src/services/user.service.ts:116) |
 | 分页查询标签<br><sub>1、分页查询标签</sub> | GET | `/live/v4/user/label/page` | query | pageNumber, pageSize | V4UserService#listLabels (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listLabels (packages/cli/src/services/viewer-service.ts:242) |
-| 分页查询商品<br><sub>1、分页查询标签</sub> | GET | `/live/v4/user/product/list` | query | pageNumber, pageSize | V4UserService#listProducts (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listProducts (packages/cli/src/services/product.service.sdk.ts:80)<br>sdk: V4UserService#listProducts (packages/cli/src/services/product.service.sdk.ts:268) |
-| 分页查询商品标签<br><sub>1、分页查询商品标签</sub> | GET | `/live/v4/user/product/tag/list` | query | channelId, pageNumber, pageSize | V4UserService#listProductTags (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listProductTags (packages/cli/src/services/product.service.sdk.ts:398) |
+| 分页查询商品<br><sub>1、分页查询标签</sub> | GET | `/live/v4/user/product/list` | query | pageNumber, pageSize | V4UserService#listProducts (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listProducts (packages/cli/src/services/product.service.sdk.ts:81)<br>sdk: V4UserService#listProducts (packages/cli/src/services/product.service.sdk.ts:269) |
+| 分页查询商品标签<br><sub>1、分页查询商品标签</sub> | GET | `/live/v4/user/product/tag/list` | query | channelId, pageNumber, pageSize | V4UserService#listProductTags (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listProductTags (packages/cli/src/services/product.service.sdk.ts:408) |
 | 分页查询自定义字段<br><sub>1、分页查询自定义字段</sub> | GET | `/live/v4/user/custom-field/list` | query | - | V4UserService#listCustomFields (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listCustomFields (packages/cli/src/services/custom-field-service.ts:13) |
 | 更新标签信息<br><sub>1、更新标签信息</sub> | POST | `/live/v4/user/viewer-label/update` | json-body | id | V4UserService#updateViewerLabel (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateViewerLabel (packages/cli/src/services/viewer-service.ts:216) |
-| 更新商品标签<br><sub>1、更新商品标签</sub> | POST | `/live/v4/user/product/tag/update` | json-body | id, name | V4UserService#updateProductTag (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateProductTag (packages/cli/src/services/product.service.sdk.ts:430) |
+| 更新商品标签<br><sub>1、更新商品标签</sub> | POST | `/live/v4/user/product/tag/update` | json-body | id, name | V4UserService#updateProductTag (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateProductTag (packages/cli/src/services/product.service.sdk.ts:440) |
 | 更新用户身份信息<br><sub>1、更新用户身份信息</sub> | POST | `/live/v4/user/viewer-record/update` | json-body | area, device, email, latestAccessIp, name, viewerUnionId | V4UserService#updateViewerRecord (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#updateViewerRecord (packages/cli/src/services/viewer-service.ts:132) |
 | 观众自定义信息同步<br><sub>1、观众自定义信息同步</sub> | POST | `/live/v4/user/custom-field/viewer-value/save` | json-body | - | V4UserService#addCustomFieldValue (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#addCustomFieldValue (packages/cli/src/services/custom-field-service.ts:23) |
 | 获取标签列表<br><sub>1、分页获取标签列表</sub> | GET | `/live/v4/user/viewer-label/list` | query | - | V4UserService#listViewerLabels (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listViewerLabels (packages/cli/src/services/viewer-service.ts:188) |
@@ -1366,13 +1366,13 @@
 | 获取邀请员的绑定观众列表<br><sub>1、支持按特定的条件去过滤、获取账号下的邀请员的绑定观众列表</sub> | GET | `/live/v4/user/invite-sales/follow-viewer/list` | query | - | V4UserService#listFollowViewers (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listFollowViewers (packages/cli/src/services/invite-sales-service.ts:33) |
 | 获取邀请员列表<br><sub>1、支持按特定的条件去过滤、获取账号下的邀请员列表</sub> | GET | `/live/v4/user/invite-sales/list` | query | - | V4UserService#listInviteSales (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#listInviteSales (packages/cli/src/services/invite-sales-service.ts:13) |
 | 获取账号MR并发详情信息<br><sub>1、获取账号MR并发详情信息</sub> | GET | `/live/v4/user/mr/concurrency-detail/get` | query | - | V4UserService#getMrConcurrencyDetail (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#getMrConcurrencyDetail (packages/cli/src/services/user.service.ts:124) |
-| 批量更新订单状态<br><sub>1、量更新订单状态</sub> | POST | `/live/v4/user/product/order/update-batch-status` | json-body | orderNos, status | V4UserService#batchUpdateOrderStatus (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#batchUpdateOrderStatus (packages/cli/src/services/product.service.sdk.ts:482) |
+| 批量更新订单状态<br><sub>1、量更新订单状态</sub> | POST | `/live/v4/user/product/order/update-batch-status` | json-body | orderNos, status | V4UserService#batchUpdateOrderStatus (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#batchUpdateOrderStatus (packages/cli/src/services/product.service.sdk.ts:492) |
 | 频道批量添加标签<br><sub>1、频道批量添加标签</sub> | POST | `/live/v4/channel/label-ref/save-batch` | json-body | channelIds, labelIds | V4UserService#addChannelLabelRefs (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#addChannelLabelRefs (packages/cli/src/services/viewer-service.ts:296) |
 | 删除标签<br><sub>1、删除标签</sub> | GET | `/live/v4/user/label/delete` | query | labelId | V4UserService#deleteLabel (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteLabel (packages/cli/src/services/viewer-service.ts:283) |
 | 删除标签信息<br><sub>1、删除标签信息</sub> | POST | `/live/v4/user/viewer-label/delete` | query/form | id | V4UserService#deleteViewerLabel (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteViewerLabel (packages/cli/src/services/viewer-service.ts:229) |
 | 删除观众信息<br><sub>1、删除观众信息</sub> | GET | `/live/v4/user/viewer-record/delete` | query | viewerUnionId | V4UserService#deleteViewerRecord (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteViewerRecord (packages/cli/src/services/viewer-service.ts:145) |
-| 删除商品<br><sub>1、删除标签</sub> | POST | `/live/v4/user/product/delete` | query/form | productId | V4UserService#deleteProduct (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteProduct (packages/cli/src/services/product.service.sdk.ts:305) |
-| 删除商品标签<br><sub>1、删除商品标签</sub> | POST | `/live/v4/user/product/tag/delete` | json-body | id | V4UserService#deleteProductTag (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteProductTag (packages/cli/src/services/product.service.sdk.ts:442) |
+| 删除商品<br><sub>1、删除标签</sub> | POST | `/live/v4/user/product/delete` | query/form | productId | V4UserService#deleteProduct (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteProduct (packages/cli/src/services/product.service.sdk.ts:306) |
+| 删除商品标签<br><sub>1、删除商品标签</sub> | POST | `/live/v4/user/product/tag/delete` | json-body | id | V4UserService#deleteProductTag (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteProductTag (packages/cli/src/services/product.service.sdk.ts:452) |
 | 删除用户标签关联<br><sub>1、删除用户标签关联</sub> | POST | `/live/v4/user/viewer-label/remove-viewers-label` | json-body | labelIds, viewerUnionIds | V4UserService#deleteViewerLabelRef (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteViewerLabelRef (packages/cli/src/services/viewer-service.ts:354) |
 | 删除子账号<br><sub>1、通过子账号登录邮箱删除子账号</sub> | POST | `/live/v4/user/children/delete` | query/form | childEmail | V4UserService#deleteChildAccounts (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteChildAccounts (packages/cli/src/services/user.service.ts:32) |
 | 删除组织<br><sub>1、通过组织ID删除组织</sub> | POST | `/live/v4/user/organization/delete` | query/form | organizationId | V4UserService#deleteOrganization (packages/sdk/src/services/v4/user.service.ts) | sdk: V4UserService#deleteOrganization (packages/cli/src/services/user.service.ts:48) |

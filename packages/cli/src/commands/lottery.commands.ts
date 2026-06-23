@@ -81,8 +81,9 @@ export function registerLotteryCommands(program: Command): void {
     .requiredOption('--amount <number>', 'number of winners', parseInt)
     .requiredOption('--prize-name <name>', 'prize name')
     .option('--receive-info <json>', 'receive info JSON string')
-    .option('--duration <seconds>', 'duration in seconds (for invite/duration types)', parseInt)
+    .option('--duration <seconds>', 'duration in seconds (for conditional lottery types)', parseInt)
     .option('--invite-num <number>', 'number of invites required (for invite type)', parseInt)
+    .option('--comment <text>', 'comment content required for comment type')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -101,6 +102,7 @@ export function registerLotteryCommands(program: Command): void {
           receiveInfo: options.receiveInfo,
           duration: options.duration,
           inviteNum: options.inviteNum,
+          comment: options.comment,
           force: options.force,
           output: options.output,
         });
@@ -120,6 +122,9 @@ Examples:
 
   # Create duration lottery
   $ polyv-live-cli lottery create -c "3151318" --name "Watch Duration Lottery" --type duration --amount 2 --prize-name "Member Card" --duration 10
+
+  # Create comment lottery
+  $ polyv-live-cli lottery create -c "3151318" --name "Comment Lottery" --type comment --amount 3 --prize-name "Gift Pack" --duration 60 --comment "参与抽奖"
 
 Output Formats:
   table       - Formatted table output (default)

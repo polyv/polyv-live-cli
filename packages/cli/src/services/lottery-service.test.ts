@@ -200,6 +200,36 @@ describe('LotteryServiceSdk', () => {
       );
     });
 
+    it('should derive activity duration for comment-type lottery activity', async () => {
+      const params: CreateLotteryActivityParams = {
+        channelId: '3151318',
+        activityName: 'Comment Lottery',
+        lotteryCondition: 'comment',
+        amount: 3,
+        prizeName: 'Comment Prize',
+        duration: 60,
+        comment: '参与抽奖',
+      };
+
+      mockV4ChannelService.lotteryActivityCreate.mockResolvedValue({
+        code: 200,
+        status: 'success',
+        data: { id: '20524' },
+      });
+
+      await lotteryService.createLotteryActivity(params);
+
+      expect(mockV4ChannelService.lotteryActivityCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          lotteryCondition: 'comment',
+          duration: 60,
+          comment: '参与抽奖',
+          activityDuration: '1',
+          activityDurationType: 'minute',
+        })
+      );
+    });
+
     it('11.5-SVC-006: should handle API errors', async () => {
       const params: CreateLotteryActivityParams = {
         channelId: '3151318',

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T05:16:21.304Z",
+  "generatedAt": "2026-06-23T09:40:27.469Z",
   "source": {
     "apiDocsRoot": "../document-center/docs/live/api",
     "resolvedApiDocsRoot": "/Users/nick/projects/polyv/document-center/docs/live/api",
@@ -18,7 +18,7 @@
     "parsedApis": 590,
     "latestApis": 578,
     "supersededApis": 12,
-    "sdkEndpoints": 694,
+    "sdkEndpoints": 693,
     "sdkImplemented": 578,
     "sdkMissing": 0
   },
@@ -20607,15 +20607,6 @@
       "className": "V4ChannelService",
       "methodName": "getDonate",
       "reference": "V4ChannelService#getDonate"
-    },
-    {
-      "method": "POST",
-      "path": "/live/v4/channel/donate/update",
-      "normalizedPath": "/live/v4/channel/donate/update",
-      "file": "packages/sdk/src/services/v4/channel.service.ts",
-      "className": "V4ChannelService",
-      "methodName": "updateDonate",
-      "reference": "V4ChannelService#updateDonate"
     },
     {
       "method": "GET",

@@ -79,12 +79,15 @@ export class LotteryHandler extends BaseHandler {
       }
 
       // Add type-specific parameters
-      if (options.type === 'invite' || options.type === 'duration') {
+      if (options.type !== 'none') {
         if (options.duration !== undefined) {
           params.duration = options.duration;
         }
         if (options.type === 'invite' && options.inviteNum !== undefined) {
           params.inviteNum = options.inviteNum;
+        }
+        if (options.type === 'comment' && options.comment !== undefined) {
+          params.comment = options.comment;
         }
       }
 
@@ -532,6 +535,15 @@ export class LotteryHandler extends BaseHandler {
 
     if (!options.prizeName || options.prizeName.trim() === '') {
       errors.push('prizeName is required');
+    }
+
+    if (options.type === 'comment') {
+      if (options.duration === undefined) {
+        errors.push('duration is required for comment lottery');
+      }
+      if (!options.comment || options.comment.trim() === '') {
+        errors.push('comment is required for comment lottery');
+      }
     }
 
     if (options.output && !['table', 'json'].includes(options.output)) {

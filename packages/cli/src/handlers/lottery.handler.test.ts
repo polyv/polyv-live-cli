@@ -217,6 +217,8 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
         type: 'comment',
         amount: 3,
         prizeName: 'Comment Prize',
+        duration: 60,
+        comment: '参与抽奖',
         force: true,
         output: 'table',
       };
@@ -232,7 +234,26 @@ describe('LotteryHandler (ATDD RED PHASE)', () => {
       expect(mockLotteryService.createLotteryActivity).toHaveBeenCalledWith(
         expect.objectContaining({
           lotteryCondition: 'comment',
+          duration: 60,
+          comment: '参与抽奖',
         })
+      );
+    });
+
+    it('should require comment text for comment-type lottery activity', async () => {
+      const options: LotteryCreateOptions = {
+        channelId: '3151318',
+        name: 'Comment Lottery',
+        type: 'comment',
+        amount: 3,
+        prizeName: 'Comment Prize',
+        duration: 60,
+        force: true,
+        output: 'table',
+      };
+
+      await expect(lotteryHandler.createLottery(options)).rejects.toThrow(
+        'comment is required for comment lottery'
       );
     });
 
