@@ -187,15 +187,17 @@ npx --yes polyv-live-cli@latest checkin list -c 7983902 -o json
 
 ## 10. 命令执行台账
 
+> 说明：#1～#29 是发布前执行与问题定位记录，其中标注“历史 1.2.36 发布版”的行仅用于保留故障证据；#30 起是发布 `polyv-live-cli@1.2.37` 后的最新回归记录，当前结论以 #30～#41 为准。
+
 | # | 执行时间 (CST) | 一级命令.子命令 | 实际执行命令（敏感值脱敏） | 频道/对象 ID | 结果 | 关键输出摘要 |
 |---|---|---|---|---|---|---|
 | 1 | 2026-06-22 23:39 | account.current | `account current` | — | 成功 | 默认账号 nicksu（App ID h2wazzobbq，production） |
 | 2 | 2026-06-22 23:39 | account.list | `account list` | — | 成功 | 共 6 个账号，默认 nicksu |
 | 3 | 2026-06-22 23:39 | channel.create | `channel create -n "GNHF-电商场景-06-…" --scene alone --template alone -o json` | 7983902 | 成功 | channelId=7983902，status=waiting，created=6/22/2026 11:39:22 PM |
 | 4 | 2026-06-22 23:39 | channel.get | `channel get -c 7983902 -o json` | 7983902 | 成功 | watchStatus=unStart，name 一致，pushUrl/pushSecret 已脱敏 |
-| 5 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json` | 7983902 | 成功（展示问题） | 当时 latest(1.2.36) 显示 `No donate configuration found`；复查确认 SDK/V4 有数据，属 CLI 展示问题 |
+| 5 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json` | 7983902 | 历史问题定位（已修复） | 历史 1.2.36 发布版显示 `No donate configuration found`；复查确认 SDK/V4 有数据，属 CLI 展示问题 |
 | 6 | 2026-06-22 23:40 | donate.config.update | `donate config update -c 7983902 --gift-enabled Y --cash-enabled Y --amounts "0.88,6.66,8.88,18.88" -f -o json` | 7983902 | 成功 | 回显 `{channelId, cashEnabled:Y, giftEnabled:Y, amounts}`；该输出是请求回显，需另用 get 复查 |
-| 7 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json`（update 后 sleep 3 复查） | 7983902 | 成功（展示问题） | 当时 latest(1.2.36) 仍显示 `No donate configuration found`；后续 1.2.37 已修复 SDK 返回结构解包 |
+| 7 | 2026-06-22 23:40 | donate.config.get | `donate config get -c 7983902 -o json`（update 后 sleep 3 复查） | 7983902 | 历史问题定位（已修复） | 历史 1.2.36 发布版仍显示 `No donate configuration found`；后续 1.2.37 已修复 SDK 返回结构解包 |
 | 8 | 2026-06-22 23:40 | donate.list | `donate list -c 7983902 --start 1781538062000 --end 1782142862000 -o json` | 7983902 | 成功 | `No donate records found`（频道未开播，无流水） |
 | 9 | 2026-06-22 23:40 | donate.likes | `donate likes -c 7983902 -o json` | 7983902 | 成功 | `{pageNumber:1,pageSize:10,totalPages:0,totalItems:0,contents:[]}` |
 | 10 | 2026-06-22 23:41 | checkin.sessions | `checkin sessions -c 7983902 -o json` | 7983902 | 成功 | `No checkin sessions found for the specified date range` |
@@ -203,16 +205,16 @@ npx --yes polyv-live-cli@latest checkin list -c 7983902 -o json
 | 12 | 2026-06-22 23:41 | checkin.start | `checkin start -c 7983902 --limit-time 30 --message "GNHF场景06暖场签到" --force -o json` | 7983902 | 未开播负向校验通过 | `startCheckin failed: 签到失败:`（空原因），频道 watchStatus=unStart，符合开播前置条件约束（见问题 2） |
 | 13 | 2026-06-22 23:42 | donate.config.update | `donate config update -c 7983902 --gift-enabled N -f -o json`（诊断：验证 update 输出形态） | 7983902 | 成功 | 回显 `{channelId, giftEnabled:N}`，说明 update 输出是请求回显，不是完整最终态 |
 | 14 | 2026-06-22 23:42 | donate.config.update | `donate config update -c 7983902 --cash-enabled Y --amounts "1,5,10" -f -o json`（诊断：cash-only） | 7983902 | 成功 | 回显 `{channelId, cashEnabled:Y, amounts:"1,5,10"}`，未含 giftEnabled，进一步说明回显=本次输入 |
-| 15 | 2026-06-22 23:42 | donate.config.get | `donate config get -c 7983902 -o json`（两条 update 后复查） | 7983902 | 成功（展示问题） | 当时 latest(1.2.36) 仍显示 `No donate configuration found`，但 SDK/V4 复查有数据 |
+| 15 | 2026-06-22 23:42 | donate.config.get | `donate config get -c 7983902 -o json`（两条 update 后复查） | 7983902 | 历史问题定位（已修复） | 历史 1.2.36 发布版仍显示 `No donate configuration found`，但 SDK/V4 复查有数据 |
 | 16 | 2026-06-22 23:42 | channel.get | `channel get -c 7983902 -o json`（收尾复核频道未被删除） | 7983902 | 成功 | watchStatus=unStart，name 一致，频道保留 |
 | 17 | 2026-06-24 复查 | web.donate.get | `web donate get -c 7983902 -o json` | 7983902 | 成功 | 返回 `donateCashEnabled=Y`、`donateGoodEnabled=Y`、现金档位与礼物档位 |
 | 18 | 2026-06-24 复查 | SDK V4 donate.get | 直接调用本地 SDK `v4Channel.getDonate({channelId:"7983902"})` | 7983902 | 成功 | 返回 `donateCashEnabled`、`donateGiftEnabled`、`cashDonate`、`giftDonate`；确认 CLI 展示层需要修复 |
 | 19 | 2026-06-24 06:24 | channel.create | `channel create -n "GNHF-场景06-签到成功路径-20260624062436" --scene alone --template alone -o json` | 7988451 | 成功 | 创建一次性签到补测频道，初始 `watchStatus=unStart` |
 | 20 | 2026-06-24 06:25 | stream.start / stream.status | `stream start -c 7988451`、`stream status -c 7988451 -o json` | 7988451 | 成功 | 频道切到 `status=live`、`watchStatus=live` |
-| 21 | 2026-06-24 06:25 | checkin.start（latest 1.2.36） | `checkin start -c 7988451 --limit-time 30 --message "..." --force -o json` | 7988451 | 发现问题 | 当时 latest(1.2.36) 返回 `startCheckin failed: 签到失败:`；后续确认原因是 `--force` 参数被转成 boolean |
-| 22 | 2026-06-24 06:25 | checkin.start（latest，无 limitTime） | `checkin start -c 7988451 --message "..." -o json` | 7988451 | 成功提交 | 返回 `{channelId, checkinId:"N/A", message}`；后续 SDK 可查到发起记录 |
+| 21 | 2026-06-24 06:25 | checkin.start（历史 1.2.36 发布版） | `checkin start -c 7988451 --limit-time 30 --message "..." --force -o json` | 7988451 | 历史问题定位（已修复） | 历史 1.2.36 发布版返回 `startCheckin failed: 签到失败:`；后续确认原因是 `--force` 参数被转成 boolean |
+| 22 | 2026-06-24 06:25 | checkin.start（历史 1.2.36，无 limitTime） | `checkin start -c 7988451 --message "..." -o json` | 7988451 | 历史问题定位（已修复） | 返回 `{channelId, checkinId:"N/A", message}`；后续 SDK 可查到发起记录，1.2.37 已改为输出 nextStep |
 | 23 | 2026-06-24 06:26 | SDK batch-checkin | 直接调用 `/live/v4/chat/batch-checkin`，`limitTime=30`、不带 force | 7988451 | 成功 | 返回 `true`；SDK `getCheckinByTime` 查到 2 条发起记录，含 `checkinid=96e35bc0-6f52-11f1-bda2-3d5c35` |
-| 24 | 2026-06-24 06:28 | checkin.sessions（latest 1.2.36） | `checkin sessions -c 7988451 --start-date 2026-06-24 --end-date 2026-06-24 -o json` | 7988451 | 发现问题 | 当时 latest(1.2.36) 显示无记录，但 SDK `getCheckinByTime` 返回记录；确认 sessions 展示层也需兼容未包装数组 |
+| 24 | 2026-06-24 06:28 | checkin.sessions（历史 1.2.36 发布版） | `checkin sessions -c 7988451 --start-date 2026-06-24 --end-date 2026-06-24 -o json` | 7988451 | 历史问题定位（已修复） | 历史 1.2.36 发布版显示无记录，但 SDK `getCheckinByTime` 返回记录；确认 sessions 展示层也需兼容未包装数组 |
 | 25 | 2026-06-24 06:28 | stream.stop / channel.delete | `stream stop -c 7988451`、`channel delete --channelId 7988451 --force -o json` | 7988451 | 成功 | 频道停止后删除，`deleted=true` |
 | 26 | 2026-06-24 06:30 | SDK force 参数对比 | 同一接口分别发送 `forceCheckInEnabled=true` 与 `forceCheckInEnabled:"Y"` | 7988452 | 成功定位 | boolean 返回 `签到失败:`；字符串 `"Y"` 返回 `true`。频道随后停播并删除 |
 | 27 | 2026-06-24 06:33 | 本地修复后 checkin.start | 本地构建 CLI：`checkin start -c 7988453 --limit-time 30 --message "GNHF场景06本地修复验证" --force -o json` | 7988453 | 成功 | 返回成功提交对象和 nextStep，不再报 `签到失败` |
