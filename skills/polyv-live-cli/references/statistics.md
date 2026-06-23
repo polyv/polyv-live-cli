@@ -5,13 +5,13 @@
 ## 每日观看统计
 
 ```bash
-npx --yes polyv-live-cli@latest statistics view \
-  -c 3151318 \
+<CLI> statistics view \
+  -c <频道ID> \
   --start-day 2024-01-01 \
   --end-day 2024-01-31
 
-npx --yes polyv-live-cli@latest statistics view \
-  -c 3151318 \
+<CLI> statistics view \
+  -c <频道ID> \
   --start-day 2024-01-01 \
   --end-day 2024-01-31 \
   -o json
@@ -20,8 +20,8 @@ npx --yes polyv-live-cli@latest statistics view \
 ## 历史并发数据
 
 ```bash
-npx --yes polyv-live-cli@latest statistics concurrency \
-  -c 3151318 \
+<CLI> statistics concurrency \
+  -c <频道ID> \
   --start-date 2024-01-01 \
   --end-date 2024-01-31
 ```
@@ -29,8 +29,8 @@ npx --yes polyv-live-cli@latest statistics concurrency \
 ## 历史最高并发
 
 ```bash
-npx --yes polyv-live-cli@latest statistics max-concurrent \
-  -c 3151318 \
+<CLI> statistics max-concurrent \
+  -c <频道ID> \
   --start-time 1704067200000 \
   --end-time 1706745600000
 ```
@@ -40,15 +40,15 @@ npx --yes polyv-live-cli@latest statistics max-concurrent \
 ## 观众统计
 
 ```bash
-npx --yes polyv-live-cli@latest statistics audience device -c 3151318
-npx --yes polyv-live-cli@latest statistics audience region -c 3151318
+<CLI> statistics audience device -c <频道ID>
+<CLI> statistics audience region -c <频道ID>
 ```
 
 ## 导出观看日志
 
 ```bash
-npx --yes polyv-live-cli@latest statistics export viewlog \
-  -c 3151318 \
+<CLI> statistics export viewlog \
+  -c <频道ID> \
   --start-time "2024-01-01 00:00:00" \
   --end-time "2024-01-31 23:59:59"
 ```
@@ -56,8 +56,8 @@ npx --yes polyv-live-cli@latest statistics export viewlog \
 导出 CSV 文件：
 
 ```bash
-npx --yes polyv-live-cli@latest statistics export viewlog \
-  -c 3151318 \
+<CLI> statistics export viewlog \
+  -c <频道ID> \
   --start-time "2024-01-01 00:00:00" \
   --end-time "2024-01-31 23:59:59" \
   --watch-type live \
@@ -76,12 +76,12 @@ npx --yes polyv-live-cli@latest statistics export viewlog \
 ## 导出场次报表
 
 ```bash
-npx --yes polyv-live-cli@latest statistics export session \
-  -c 3151318 \
+<CLI> statistics export session \
+  -c <频道ID> \
   --session-id fv3ma84e63
 
-npx --yes polyv-live-cli@latest statistics export session \
-  -c 3151318 \
+<CLI> statistics export session \
+  -c <频道ID> \
   --session-id fv3ma84e63 \
   -o json
 ```

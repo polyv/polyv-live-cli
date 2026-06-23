@@ -7,21 +7,21 @@
 ### 账号配置
 
 ```bash
-npx --yes polyv-live-cli@latest account add production \
+<CLI> account add production \
   --app-id your-app-id \
   --app-secret your-app-secret \
   --user-id your-user-id
 
-npx --yes polyv-live-cli@latest account set-default production
-npx --yes polyv-live-cli@latest account current
-npx --yes polyv-live-cli@latest account list
+<CLI> account set-default production
+<CLI> account current
+<CLI> account list
 ```
 
 移除账号：
 
 ```bash
-npx --yes polyv-live-cli@latest account remove old-account
-npx --yes polyv-live-cli@latest account remove old-account --force
+<CLI> account remove old-account
+<CLI> account remove old-account --force
 ```
 
 ### 环境变量
@@ -31,14 +31,14 @@ export POLYV_APP_ID="your-app-id"
 export POLYV_APP_SECRET="your-app-secret"
 export POLYV_USER_ID="your-user-id"
 
-npx --yes polyv-live-cli@latest channel list
+<CLI> channel list
 ```
 
 ### 单次命令指定账号或凭证
 
 ```bash
-npx --yes polyv-live-cli@latest channel list -a production
-npx --yes polyv-live-cli@latest channel list --appId <id> --appSecret <secret> --userId <userId>
+<CLI> channel list -a production
+<CLI> channel list --appId <id> --appSecret <secret> --userId <userId>
 ```
 
 ## 推荐流程
@@ -49,14 +49,14 @@ npx --yes polyv-live-cli@latest channel list --appId <id> --appSecret <secret> -
 4. 再执行频道、商品、统计等业务命令。
 
 ```bash
-npx --yes polyv-live-cli@latest account add customer-prod \
+<CLI> account add customer-prod \
   --app-id "$POLYV_APP_ID" \
   --app-secret "$POLYV_APP_SECRET" \
   --user-id "$POLYV_USER_ID"
 
-npx --yes polyv-live-cli@latest account set-default customer-prod
-npx --yes polyv-live-cli@latest account current
-npx --yes polyv-live-cli@latest channel list -o json
+<CLI> account set-default customer-prod
+<CLI> account current
+<CLI> channel list -o json
 ```
 
 ## CI/CD 示例
@@ -69,7 +69,7 @@ env:
 
 steps:
   - name: 列出频道
-    run: npx --yes polyv-live-cli@latest channel list -o json
+    run: <CLI> channel list -o json
 ```
 
 ## 安全建议
@@ -84,14 +84,14 @@ steps:
 ### 认证配置不完整
 
 ```bash
-npx --yes polyv-live-cli@latest account current
-npx --yes polyv-live-cli@latest account list
+<CLI> account current
+<CLI> account list
 ```
 
 如果没有默认账号，执行：
 
 ```bash
-npx --yes polyv-live-cli@latest account set-default <账号名称>
+<CLI> account set-default <账号名称>
 ```
 
 也可以在单次命令中用 `-a <账号名称>` 指定账号。

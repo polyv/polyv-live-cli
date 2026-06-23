@@ -5,16 +5,16 @@
 ## 查看可用场景
 
 ```bash
-npx --yes polyv-live-cli@latest setup --list
-npx --yes polyv-live-cli@latest setup --list --detailed
-npx --yes polyv-live-cli@latest setup --list -o json
+<CLI> setup --list
+<CLI> setup --list --detailed
+<CLI> setup --list -o json
 ```
 
 ## 预览初始化内容
 
 ```bash
-npx --yes polyv-live-cli@latest setup e-commerce --dry-run
-npx --yes polyv-live-cli@latest setup e-commerce --dry-run -o json
+<CLI> setup e-commerce --dry-run
+<CLI> setup e-commerce --dry-run -o json
 ```
 
 `--dry-run` 只预览将创建的资源，不实际变更账号或频道资源。
@@ -22,8 +22,8 @@ npx --yes polyv-live-cli@latest setup e-commerce --dry-run -o json
 ## 初始化电商场景
 
 ```bash
-npx --yes polyv-live-cli@latest setup e-commerce
-npx --yes polyv-live-cli@latest setup e-commerce -o json
+<CLI> setup e-commerce
+<CLI> setup e-commerce -o json
 ```
 
 ## 命令选项
@@ -40,7 +40,7 @@ npx --yes polyv-live-cli@latest setup e-commerce -o json
 CLI 帮助提示支持在 `~/.polyv/scenes/` 目录放置自定义场景配置。使用自定义场景前，先运行：
 
 ```bash
-npx --yes polyv-live-cli@latest setup --list --detailed
+<CLI> setup --list --detailed
 ```
 
 确认 CLI 是否已经识别到目标场景，再执行初始化。
@@ -48,10 +48,10 @@ npx --yes polyv-live-cli@latest setup --list --detailed
 ## 初始化后常见检查
 
 ```bash
-npx --yes polyv-live-cli@latest channel list -o json
-npx --yes polyv-live-cli@latest product list -c <频道ID> -o json
-npx --yes polyv-live-cli@latest coupon list -o json
-npx --yes polyv-live-cli@latest stream get-key -c <频道ID>
+<CLI> channel list -o json
+<CLI> product list -c <频道ID> -o json
+<CLI> coupon list -o json
+<CLI> stream get-key -c <频道ID>
 ```
 
 ## 使用注意

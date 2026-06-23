@@ -18,7 +18,7 @@
 ### 语法
 
 ```bash
-npx --yes polyv-live-cli@latest viewer get -i <观众ID> [-o table|json]
+<CLI> viewer get -i <观众ID> [-o table|json]
 ```
 
 ### 参数
@@ -32,13 +32,13 @@ npx --yes polyv-live-cli@latest viewer get -i <观众ID> [-o table|json]
 
 ```bash
 # 获取观众详情（表格格式）
-npx --yes polyv-live-cli@latest viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
+<CLI> viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
 
 # 获取观众详情（JSON格式）
-npx --yes polyv-live-cli@latest viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
+<CLI> viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
 
 # 使用完整参数名
-npx --yes polyv-live-cli@latest viewer get --viewer-id "2_v378gn997yovtl3p8h77db9e224t6hg9" --output json
+<CLI> viewer get --viewer-id "2_v378gn997yovtl3p8h77db9e224t6hg9" --output json
 ```
 
 ### 输出字段
@@ -63,7 +63,7 @@ npx --yes polyv-live-cli@latest viewer get --viewer-id "2_v378gn997yovtl3p8h77db
 ### 语法
 
 ```bash
-npx --yes polyv-live-cli@latest viewer list [选项]
+<CLI> viewer list [选项]
 ```
 
 ### 参数
@@ -82,30 +82,30 @@ npx --yes polyv-live-cli@latest viewer list [选项]
 
 ```bash
 # 查询所有观众（默认分页）
-npx --yes polyv-live-cli@latest viewer list
+<CLI> viewer list
 
 # 分页查询
-npx --yes polyv-live-cli@latest viewer list --page 1 --size 20
+<CLI> viewer list --page 1 --size 20
 
 # 按来源过滤
-npx --yes polyv-live-cli@latest viewer list --source IMPORT
-npx --yes polyv-live-cli@latest viewer list --source WX
-npx --yes polyv-live-cli@latest viewer list --source MOBILE
+<CLI> viewer list --source IMPORT
+<CLI> viewer list --source WX
+<CLI> viewer list --source MOBILE
 
 # 按手机号过滤
-npx --yes polyv-live-cli@latest viewer list --mobile "13800138000"
+<CLI> viewer list --mobile "13800138000"
 
 # 按邮箱过滤
-npx --yes polyv-live-cli@latest viewer list --email "user@example.com"
+<CLI> viewer list --email "user@example.com"
 
 # 按地址过滤
-npx --yes polyv-live-cli@latest viewer list --area "北京"
+<CLI> viewer list --area "北京"
 
 # 组合过滤条件
-npx --yes polyv-live-cli@latest viewer list --source IMPORT --page 1 --size 50 -o json
+<CLI> viewer list --source IMPORT --page 1 --size 50 -o json
 
 # JSON 格式输出
-npx --yes polyv-live-cli@latest viewer list --source WX -o json
+<CLI> viewer list --source WX -o json
 ```
 
 ### 输出字段

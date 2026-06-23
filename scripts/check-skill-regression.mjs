@@ -8,6 +8,9 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const skillPath = 'skills/polyv-live-cli/SKILL.md';
 const readmePath = 'README.md';
 const npxPackage = 'polyv-live-cli@latest';
+const cliMode = process.env.POLYV_SKILL_CHECK_CLI || 'local';
+const localCliEntry = resolve(repoRoot, 'packages/cli/dist/index.js');
+const cliLabel = cliMode === 'local' ? 'local packages/cli/dist/index.js' : `npx --yes ${npxPackage}`;
 
 const failures = [];
 const passes = [];
@@ -24,7 +27,25 @@ function readText(relativePath) {
   return readFileSync(resolve(repoRoot, relativePath), 'utf8');
 }
 
-function runLatestCli(args) {
+function runCli(args) {
+  if (cliMode === 'local') {
+    if (!existsSync(localCliEntry)) {
+      throw new Error(`Local CLI entry does not exist: ${localCliEntry}. Run pnpm --filter polyv-live-cli build first.`);
+    }
+
+    try {
+      return execFileSync('node', [localCliEntry, ...args], {
+        cwd: repoRoot,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: 60_000
+      });
+    } catch (error) {
+      const stderr = error.stderr ? `\n${String(error.stderr).trim()}` : '';
+      throw new Error(`node ${localCliEntry} ${args.join(' ')} failed${stderr}`);
+    }
+  }
+
   try {
     return execFileSync('npx', ['--yes', npxPackage, ...args], {
       cwd: repoRoot,
@@ -54,14 +75,14 @@ function parseFrontmatter(markdown) {
 function parseTopLevelCommands(helpOutput) {
   const commandsBlock = helpOutput.match(/\nCommands:\n([\s\S]*?)(?:\n\n[A-Z][^\n]*:|\nQuick Start:|$)/);
   if (!commandsBlock) {
-    fail('Unable to parse the Commands block from polyv-live-cli@latest --help output.');
+    fail(`Unable to parse the Commands block from ${cliLabel} --help output.`);
     return new Set();
   }
 
   const commands = new Set();
   for (const line of commandsBlock[1].split('\n')) {
-    const match = line.match(/^\s{2}([a-z][a-z0-9-]*)(?:\s|\[|$)/);
-    if (match) commands.add(match[1]);
+    const match = line.match(/^ {2}([a-z][a-z0-9-]*)(?:\s|\[|$)/);
+    if (match && match[1] !== 'help') commands.add(match[1]);
   }
 
   return commands;
@@ -199,17 +220,17 @@ for (const [label, content] of [
   }
 }
 
-const version = runLatestCli(['--version']).trim();
+const version = runCli(['--version']).trim();
 if (version) {
-  pass(`Resolved ${npxPackage} version ${version}.`);
+  pass(`Resolved ${cliLabel} version ${version}.`);
 } else {
-  fail('polyv-live-cli@latest --version returned an empty version.');
+  fail(`${cliLabel} --version returned an empty version.`);
 }
 
-const help = runLatestCli(['--help']);
+const help = runCli(['--help']);
 const topLevelCommands = parseTopLevelCommands(help);
 if (topLevelCommands.size > 0) {
-  pass(`Parsed ${topLevelCommands.size} top-level commands from polyv-live-cli@latest --help.`);
+  pass(`Parsed ${topLevelCommands.size} top-level commands from ${cliLabel} --help.`);
 }
 
 const requiredCommands = [
@@ -220,10 +241,18 @@ const requiredCommands = [
   'chat',
   'checkin',
   'coupon',
+  'custom-field',
   'document',
   'donate',
+  'finance',
+  'global',
+  'group',
+  'interaction',
+  'invite-sales',
   'lottery',
+  'material',
   'monitor',
+  'partner',
   'platform',
   'playback',
   'player',
@@ -232,20 +261,24 @@ const requiredCommands = [
   'qa',
   'questionnaire',
   'record',
+  'robot',
   'session',
   'setup',
   'statistics',
   'stream',
   'transmit',
   'use',
+  'user',
   'viewer',
   'watch-condition',
+  'web',
+  'webapp',
   'whitelist'
 ];
 
 for (const command of requiredCommands) {
   if (!topLevelCommands.has(command)) {
-    fail(`polyv-live-cli@latest --help no longer lists required command: ${command}.`);
+    fail(`${cliLabel} --help does not list required command: ${command}.`);
   }
 }
 

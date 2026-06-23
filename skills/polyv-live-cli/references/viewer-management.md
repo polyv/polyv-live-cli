@@ -19,8 +19,8 @@ Viewer information query and tag management commands for managing viewers.
 Get single viewer details by viewer unique ID.
 
 ```bash
-polyv-live-cli viewer get -i <viewerID>
-polyv-live-cli viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
+<CLI> viewer get -i <viewerID>
+<CLI> viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
 ```
 
 **Options:**
@@ -30,10 +30,10 @@ polyv-live-cli viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
 **Examples:**
 ```bash
 # Get viewer details
-polyv-live-cli viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
+<CLI> viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9"
 
 # JSON output
-polyv-live-cli viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
+<CLI> viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
 ```
 
 ### viewer list
@@ -41,12 +41,12 @@ polyv-live-cli viewer get -i "2_v378gn997yovtl3p8h77db9e224t6hg9" -o json
 List viewers with pagination and filters.
 
 ```bash
-polyv-live-cli viewer list
-polyv-live-cli viewer list --page 1 --size 20
-polyv-live-cli viewer list --source IMPORT
-polyv-live-cli viewer list --mobile "13800138000"
-polyv-live-cli viewer list --email "user@example.com"
-polyv-live-cli viewer list --area "Beijing"
+<CLI> viewer list
+<CLI> viewer list --page 1 --size 20
+<CLI> viewer list --source IMPORT
+<CLI> viewer list --mobile "13800138000"
+<CLI> viewer list --email "user@example.com"
+<CLI> viewer list --area "Beijing"
 ```
 
 **Options:**
@@ -63,9 +63,9 @@ polyv-live-cli viewer list --area "Beijing"
 List all viewer tags with optional keyword filter and pagination.
 
 ```bash
-polyv-live-cli viewer tag list
-polyv-live-cli viewer tag list --keyword "VIP"
-polyv-live-cli viewer tag list --page 1 --size 20
+<CLI> viewer tag list
+<CLI> viewer tag list --keyword "VIP"
+<CLI> viewer tag list --page 1 --size 20
 ```
 
 **Options:**
@@ -77,16 +77,16 @@ polyv-live-cli viewer tag list --page 1 --size 20
 **Examples:**
 ```bash
 # List all tags
-polyv-live-cli viewer tag list
+<CLI> viewer tag list
 
 # Search tags by keyword
-polyv-live-cli viewer tag list -k "VIP"
+<CLI> viewer tag list -k "VIP"
 
 # Pagination
-polyv-live-cli viewer tag list --page 1 --size 20
+<CLI> viewer tag list --page 1 --size 20
 
 # JSON output
-polyv-live-cli viewer tag list -o json
+<CLI> viewer tag list -o json
 ```
 
 ### viewer tag add
@@ -94,9 +94,9 @@ polyv-live-cli viewer tag list -o json
 Add tags to viewers (supports batch operation)
 
 ```bash
-polyv-live-cli viewer tag add -V <viewer-ids> -l <label-ids>
-polyv-live-cli viewer tag add -V "viewer1" -l 1
-polyv-live-cli viewer tag add -V "viewer1,viewer2,viewer3" -l 1,2,3
+<CLI> viewer tag add -V <viewer-ids> -l <label-ids>
+<CLI> viewer tag add -V "viewer1" -l 1
+<CLI> viewer tag add -V "viewer1,viewer2,viewer3" -l 1,2,3
 ```
 
 **Options:**
@@ -107,16 +107,16 @@ polyv-live-cli viewer tag add -V "viewer1,viewer2,viewer3" -l 1,2,3
 **Examples:**
 ```bash
 # Add single tag to single viewer
-polyv-live-cli viewer tag add -V "viewer1" -l 1
+<CLI> viewer tag add -V "viewer1" -l 1
 
 # Add multiple tags to single viewer
-polyv-live-cli viewer tag add -V "viewer1" -l 1,2,3
+<CLI> viewer tag add -V "viewer1" -l 1,2,3
 
 # Batch: add tags to multiple viewers
-polyv-live-cli viewer tag add -V "viewer1,viewer2,viewer3" -l 1,2
+<CLI> viewer tag add -V "viewer1,viewer2,viewer3" -l 1,2
 
 # JSON output
-polyv-live-cli viewer tag add -V "viewer1" -l 1 -o json
+<CLI> viewer tag add -V "viewer1" -l 1 -o json
 ```
 
 ### viewer tag remove
@@ -124,9 +124,9 @@ polyv-live-cli viewer tag add -V "viewer1" -l 1 -o json
 Remove tags from viewers (supports batch operation)
 
 ```bash
-polyv-live-cli viewer tag remove -V <viewer-ids> -l <label-ids>
-polyv-live-cli viewer tag remove -V "viewer1" -l 1
-polyv-live-cli viewer tag remove -V "viewer1,viewer2" -l 1,2,3
+<CLI> viewer tag remove -V <viewer-ids> -l <label-ids>
+<CLI> viewer tag remove -V "viewer1" -l 1
+<CLI> viewer tag remove -V "viewer1,viewer2" -l 1,2,3
 ```
 
 **Options:**
@@ -137,16 +137,16 @@ polyv-live-cli viewer tag remove -V "viewer1,viewer2" -l 1,2,3
 **Examples:**
 ```bash
 # Remove single tag from single viewer
-polyv-live-cli viewer tag remove -V "viewer1" -l 1
+<CLI> viewer tag remove -V "viewer1" -l 1
 
 # Remove multiple tags from single viewer
-polyv-live-cli viewer tag remove -V "viewer1" -l 1,2,3
+<CLI> viewer tag remove -V "viewer1" -l 1,2,3
 
 # Batch: remove tags from multiple viewers
-polyv-live-cli viewer tag remove -V "viewer1,viewer2" -l 1,2
+<CLI> viewer tag remove -V "viewer1,viewer2" -l 1,2
 
 # JSON output
-polyv-live-cli viewer tag remove -V "viewer1" -l 1 -o json
+<CLI> viewer tag remove -V "viewer1" -l 1 -o json
 ```
 
 ## Output Formats
@@ -178,9 +178,9 @@ All viewer commands support these global options
 
 Before using viewer commands, ensure you authentication is configured:
 
-1. **Session account**: `polyv-live-cli use <account-name>`
+1. **Session account**: `<CLI> use <account-name>`
 2. **Environment variables**: `POLYV_APP_ID`, `POLYV_APP_SECRET`
-3. **Default account**: `polyv-live-cli account set-default <name>`
+3. **Default account**: `<CLI> account set-default <name>`
 4. **Command-line options**: `--appId`, `--appSecret`, `--userId`
 
 See [Authentication Guide](./authentication.md) for more details.

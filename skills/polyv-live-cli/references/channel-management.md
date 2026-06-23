@@ -10,13 +10,13 @@
 
 ```bash
 # 基本创建
-npx --yes polyv-live-cli@latest channel create -n "我的直播"
+<CLI> channel create -n "我的直播"
 
 # 带描述
-npx --yes polyv-live-cli@latest channel create -n "产品演示" -d "新产品功能演示"
+<CLI> channel create -n "产品演示" -d "新产品功能演示"
 
 # 完整选项
-npx --yes polyv-live-cli@latest channel create \
+<CLI> channel create \
   -n "高级网络研讨会" \
   -d "月度付费用户专属研讨会" \
   --scene topclass \
@@ -26,7 +26,7 @@ npx --yes polyv-live-cli@latest channel create \
   --auto-record
 
 # JSON输出（便于程序化处理）
-npx --yes polyv-live-cli@latest channel create -n "API频道" -o json
+<CLI> channel create -n "API频道" -o json
 ```
 
 ### 场景类型 (newScene)
@@ -56,46 +56,46 @@ npx --yes polyv-live-cli@latest channel create -n "API频道" -o json
 
 ```bash
 # 基本列表（第一页，20条）
-npx --yes polyv-live-cli@latest channel list
+<CLI> channel list
 
 # 分页查询
-npx --yes polyv-live-cli@latest channel list -P 2 -l 10
+<CLI> channel list -P 2 -l 10
 
 # 按关键词筛选
-npx --yes polyv-live-cli@latest channel list --keyword "研讨会"
+<CLI> channel list --keyword "研讨会"
 
 # 按分类筛选
-npx --yes polyv-live-cli@latest channel list --category-id "cat123"
+<CLI> channel list --category-id "cat123"
 
 # JSON输出
-npx --yes polyv-live-cli@latest channel list -o json
+<CLI> channel list -o json
 ```
 
 ### 查看频道详情
 
 ```bash
 # 表格格式
-npx --yes polyv-live-cli@latest channel get -c 3151318
+<CLI> channel get -c <频道ID>
 
 # JSON格式
-npx --yes polyv-live-cli@latest channel get -c 3151318 -o json
+<CLI> channel get -c <频道ID> -o json
 ```
 
 ### 更新频道
 
 ```bash
 # 更新名称
-npx --yes polyv-live-cli@latest channel update -c 3151318 -n "新名称"
+<CLI> channel update -c <频道ID> -n "新名称"
 
 # 更新描述
-npx --yes polyv-live-cli@latest channel update -c 3151318 -d "更新后的描述"
+<CLI> channel update -c <频道ID> -d "更新后的描述"
 
 # 更新密码
-npx --yes polyv-live-cli@latest channel update -c 3151318 -p "newpass123"
+<CLI> channel update -c <频道ID> -p "newpass123"
 
 # 更新多个字段
-npx --yes polyv-live-cli@latest channel update \
-  -c 3151318 \
+<CLI> channel update \
+  -c <频道ID> \
   -n "重命名频道" \
   --max-viewers 5000 \
   --publisher "主持人姓名"
@@ -105,23 +105,23 @@ npx --yes polyv-live-cli@latest channel update \
 
 ```bash
 # 带确认提示
-npx --yes polyv-live-cli@latest channel delete -c 3151318
+<CLI> channel delete -c <频道ID>
 
 # 强制删除（无确认）
-npx --yes polyv-live-cli@latest channel delete -c 3151318 -f
+<CLI> channel delete -c <频道ID> -f
 
 # JSON输出
-npx --yes polyv-live-cli@latest channel delete -c 3151318 -o json
+<CLI> channel delete -c <频道ID> -o json
 ```
 
 ### 批量删除
 
 ```bash
 # 删除多个频道
-npx --yes polyv-live-cli@latest channel batch-delete --channelIds 3151318 3151319 3151320
+<CLI> channel batch-delete --channelIds <频道ID> <频道ID2> <频道ID3>
 
 # 强制批量删除
-npx --yes polyv-live-cli@latest channel batch-delete --channelIds 3151318 3151319 -f
+<CLI> channel batch-delete --channelIds <频道ID> <频道ID2> -f
 ```
 
 ## 频道配置
@@ -130,40 +130,40 @@ npx --yes polyv-live-cli@latest channel batch-delete --channelIds 3151318 315131
 
 ```bash
 # 创建时设置密码
-npx --yes polyv-live-cli@latest channel create -n "私密直播" -p "secure123"
+<CLI> channel create -n "私密直播" -p "secure123"
 
 # 更新密码
-npx --yes polyv-live-cli@latest channel update -c 3151318 -p "newpass456"
+<CLI> channel update -c <频道ID> -p "newpass456"
 
 # 移除密码（设置为空）
-npx --yes polyv-live-cli@latest channel update -c 3151318 -p ""
+<CLI> channel update -c <频道ID> -p ""
 ```
 
 ### 观众人数限制
 
 ```bash
 # 设置最大观看人数
-npx --yes polyv-live-cli@latest channel create -n "限定直播" --max-viewers 500
+<CLI> channel create -n "限定直播" --max-viewers 500
 
 # 更新人数限制
-npx --yes polyv-live-cli@latest channel update -c 3151318 --max-viewers 1000
+<CLI> channel update -c <频道ID> --max-viewers 1000
 ```
 
 ### 自动录制
 
 ```bash
 # 启用自动录制
-npx --yes polyv-live-cli@latest channel create -n "录制直播" --auto-record
+<CLI> channel create -n "录制直播" --auto-record
 ```
 
 ### 封面和引导图
 
 ```bash
 # 更新封面图
-npx --yes polyv-live-cli@latest channel update -c 3151318 --cover-img "https://example.com/cover.jpg"
+<CLI> channel update -c <频道ID> --cover-img "https://example.com/cover.jpg"
 
 # 更新引导图
-npx --yes polyv-live-cli@latest channel update -c 3151318 --splash-img "https://example.com/splash.jpg"
+<CLI> channel update -c <频道ID> --splash-img "https://example.com/splash.jpg"
 ```
 
 ## 输出格式
@@ -171,7 +171,7 @@ npx --yes polyv-live-cli@latest channel update -c 3151318 --splash-img "https://
 ### 表格格式（默认）
 
 ```bash
-npx --yes polyv-live-cli@latest channel list
+<CLI> channel list
 # 显示表格，包含以下列：
 # 频道ID | 名称 | 状态 | 场景 | 创建时间
 ```
@@ -179,7 +179,7 @@ npx --yes polyv-live-cli@latest channel list
 ### JSON格式
 
 ```bash
-npx --yes polyv-live-cli@latest channel list -o json
+<CLI> channel list -o json
 
 # 返回：
 # {
@@ -199,7 +199,7 @@ npx --yes polyv-live-cli@latest channel list -o json
 ### 创建网络研讨会频道
 
 ```bash
-npx --yes polyv-live-cli@latest channel create \
+<CLI> channel create \
   -n "Q4战略研讨会" \
   -d "全员季度战略回顾" \
   --scene seminar \
@@ -212,7 +212,7 @@ npx --yes polyv-live-cli@latest channel create \
 ### 创建电商直播频道
 
 ```bash
-npx --yes polyv-live-cli@latest channel create \
+<CLI> channel create \
   -n "限时特卖活动" \
   -d "24小时限时特卖直播" \
   --scene alone \
@@ -225,10 +225,10 @@ npx --yes polyv-live-cli@latest channel create \
 
 ```bash
 # 列出测试频道
-npx --yes polyv-live-cli@latest channel list --keyword "test" -o json | jq '.data.contents[].channelId'
+<CLI> channel list --keyword "test" -o json | jq '.data.contents[].channelId'
 
 # 批量删除
-npx --yes polyv-live-cli@latest channel batch-delete --channelIds 123 456 789 -f
+<CLI> channel batch-delete --channelIds 123 456 789 -f
 ```
 
 ## 故障排除

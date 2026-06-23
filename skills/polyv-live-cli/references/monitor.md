@@ -8,19 +8,19 @@
 
 ```bash
 # 启动默认监控面板
-npx --yes polyv-live-cli@latest monitor
+<CLI> monitor
 
 # 设置刷新间隔（秒）
-npx --yes polyv-live-cli@latest monitor -r 3
+<CLI> monitor -r 3
 
 # 使用紧凑布局
-npx --yes polyv-live-cli@latest monitor -l compact
+<CLI> monitor -l compact
 
 # 使用暗色主题
-npx --yes polyv-live-cli@latest monitor -t dark
+<CLI> monitor -t dark
 
 # 使用配置文件
-npx --yes polyv-live-cli@latest monitor -c ./monitor-config.json
+<CLI> monitor -c ./monitor-config.json
 ```
 
 ### 监控选项
@@ -39,10 +39,10 @@ npx --yes polyv-live-cli@latest monitor -c ./monitor-config.json
 
 ```bash
 # 查看当前监控状态
-npx --yes polyv-live-cli@latest monitor status
+<CLI> monitor status
 
 # JSON输出
-npx --yes polyv-live-cli@latest monitor status -o json
+<CLI> monitor status -o json
 ```
 
 ## 管理配置
@@ -50,24 +50,24 @@ npx --yes polyv-live-cli@latest monitor status -o json
 ### 查看当前配置
 
 ```bash
-npx --yes polyv-live-cli@latest monitor config
+<CLI> monitor config
 
 # JSON输出
-npx --yes polyv-live-cli@latest monitor config -o json
+<CLI> monitor config -o json
 ```
 
 ### 导出配置
 
 ```bash
 # 导出配置到文件
-npx --yes polyv-live-cli@latest monitor export ./my-monitor-config.json
+<CLI> monitor export ./my-monitor-config.json
 ```
 
 ### 导入配置
 
 ```bash
 # 从文件导入配置
-npx --yes polyv-live-cli@latest monitor import ./my-monitor-config.json
+<CLI> monitor import ./my-monitor-config.json
 ```
 
 ## 列出可用选项
@@ -75,7 +75,7 @@ npx --yes polyv-live-cli@latest monitor import ./my-monitor-config.json
 ### 可用布局
 
 ```bash
-npx --yes polyv-live-cli@latest monitor layouts
+<CLI> monitor layouts
 
 # 输出：
 # ┌───────────┬────────────────────────────┐
@@ -90,7 +90,7 @@ npx --yes polyv-live-cli@latest monitor layouts
 ### 可用主题
 
 ```bash
-npx --yes polyv-live-cli@latest monitor themes
+<CLI> monitor themes
 
 # 输出：
 # ┌───────────┬────────────────────────────┐
@@ -105,7 +105,7 @@ npx --yes polyv-live-cli@latest monitor themes
 
 ```bash
 # 测试终端兼容性
-npx --yes polyv-live-cli@latest monitor test
+<CLI> monitor test
 
 # 输出包含：
 # ✅ 终端尺寸: 120x30
@@ -155,10 +155,10 @@ npx --yes polyv-live-cli@latest monitor test
 
 ```bash
 # 1. 启动频道直播
-npx --yes polyv-live-cli@latest stream start -c 3151318
+<CLI> stream start -c <频道ID>
 
 # 2. 在另一个终端启动监控
-npx --yes polyv-live-cli@latest monitor -r 3 -t dark
+<CLI> monitor -r 3 -t dark
 ```
 
 ### 配置监控告警
@@ -179,17 +179,17 @@ cat > monitor-alerts.json << 'EOF'
 EOF
 
 # 2. 使用配置启动监控
-npx --yes polyv-live-cli@latest monitor -c monitor-alerts.json
+<CLI> monitor -c monitor-alerts.json
 ```
 
 ### 保存和恢复配置
 
 ```bash
 # 导出当前配置
-npx --yes polyv-live-cli@latest monitor export ./saved-config.json
+<CLI> monitor export ./saved-config.json
 
 # 之后恢复配置
-npx --yes polyv-live-cli@latest monitor import ./saved-config.json
+<CLI> monitor import ./saved-config.json
 ```
 
 ## 面板布局说明

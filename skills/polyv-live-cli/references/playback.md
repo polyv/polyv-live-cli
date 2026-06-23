@@ -5,23 +5,23 @@
 ## 回放列表
 
 ```bash
-npx --yes polyv-live-cli@latest playback list -c 3151318
-npx --yes polyv-live-cli@latest playback list -c 3151318 -o json
+<CLI> playback list -c <频道ID>
+<CLI> playback list -c <频道ID> -o json
 ```
 
 ## 获取回放详情
 
 ```bash
-npx --yes polyv-live-cli@latest playback get -c 3151318 --video-id 1b96d90bf5
-npx --yes polyv-live-cli@latest playback get -c 3151318 --video-id 1b96d90bf5 -o json
+<CLI> playback get -c <频道ID> --video-id 1b96d90bf5
+<CLI> playback get -c <频道ID> --video-id 1b96d90bf5 -o json
 ```
 
 ## 删除回放
 
 ```bash
-npx --yes polyv-live-cli@latest playback delete -c 3151318 --video-id 1b96d90bf5
-npx --yes polyv-live-cli@latest playback delete -c 3151318 --video-id 1b96d90bf5 --force
-npx --yes polyv-live-cli@latest playback delete -c 3151318 --video-id 1b96d90bf5 --list-type vod --force
+<CLI> playback delete -c <频道ID> --video-id 1b96d90bf5
+<CLI> playback delete -c <频道ID> --video-id 1b96d90bf5 --force
+<CLI> playback delete -c <频道ID> --video-id 1b96d90bf5 --list-type vod --force
 ```
 
 | 参数 | 说明 |
@@ -37,16 +37,16 @@ npx --yes polyv-live-cli@latest playback delete -c 3151318 --video-id 1b96d90bf5
 同步合并：
 
 ```bash
-npx --yes polyv-live-cli@latest playback merge \
-  -c 3151318 \
+<CLI> playback merge \
+  -c <频道ID> \
   --file-ids "file1,file2,file3"
 ```
 
 指定合并后文件名：
 
 ```bash
-npx --yes polyv-live-cli@latest playback merge \
-  -c 3151318 \
+<CLI> playback merge \
+  -c <频道ID> \
   --file-ids "file1,file2" \
   --file-name "合并回放"
 ```
@@ -54,8 +54,8 @@ npx --yes polyv-live-cli@latest playback merge \
 异步合并并配置回调：
 
 ```bash
-npx --yes polyv-live-cli@latest playback merge \
-  -c 3151318 \
+<CLI> playback merge \
+  -c <频道ID> \
   --file-ids "file1,file2" \
   --async \
   --callback-url "https://example.com/callback" \

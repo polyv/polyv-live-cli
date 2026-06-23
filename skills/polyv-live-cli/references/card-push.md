@@ -5,12 +5,12 @@
 ## 当前 npm 命令面
 
 ```bash
-npx --yes polyv-live-cli@latest card-push list --channelId <频道ID>
-npx --yes polyv-live-cli@latest card-push create --channelId <频道ID> ...
-npx --yes polyv-live-cli@latest card-push update --channelId <频道ID> --cardPushId <卡片ID> ...
-npx --yes polyv-live-cli@latest card-push push --channelId <频道ID> --cardPushId <卡片ID>
-npx --yes polyv-live-cli@latest card-push cancel --channelId <频道ID> --cardPushId <卡片ID>
-npx --yes polyv-live-cli@latest card-push delete --channelId <频道ID> --cardPushId <卡片ID>
+<CLI> card-push list --channelId <频道ID>
+<CLI> card-push create --channelId <频道ID> ...
+<CLI> card-push update --channelId <频道ID> --cardPushId <卡片ID> ...
+<CLI> card-push push --channelId <频道ID> --cardPushId <卡片ID>
+<CLI> card-push cancel --channelId <频道ID> --cardPushId <卡片ID>
+<CLI> card-push delete --channelId <频道ID> --cardPushId <卡片ID>
 ```
 
 `card-push` 使用 camelCase 参数，例如 `--channelId`、`--cardPushId`、`--imageType`、`--showCondition`。
@@ -18,8 +18,8 @@ npx --yes polyv-live-cli@latest card-push delete --channelId <频道ID> --cardPu
 ## 列出卡片
 
 ```bash
-npx --yes polyv-live-cli@latest card-push list --channelId 3151318
-npx --yes polyv-live-cli@latest card-push list --channelId 3151318 -o json
+<CLI> card-push list --channelId <频道ID>
+<CLI> card-push list --channelId <频道ID> -o json
 ```
 
 ## 创建卡片
@@ -27,8 +27,8 @@ npx --yes polyv-live-cli@latest card-push list --channelId 3151318 -o json
 手动推送卡片：
 
 ```bash
-npx --yes polyv-live-cli@latest card-push create \
-  --channelId 3151318 \
+<CLI> card-push create \
+  --channelId <频道ID> \
   --cardType common \
   --imageType giftbox \
   --title "限时优惠" \
@@ -40,8 +40,8 @@ npx --yes polyv-live-cli@latest card-push create \
 观看时长触发卡片：
 
 ```bash
-npx --yes polyv-live-cli@latest card-push create \
-  --channelId 3151318 \
+<CLI> card-push create \
+  --channelId <频道ID> \
   --cardType common \
   --imageType redpack \
   --title "新手红包" \
@@ -55,8 +55,8 @@ npx --yes polyv-live-cli@latest card-push create \
 ## 更新卡片
 
 ```bash
-npx --yes polyv-live-cli@latest card-push update \
-  --channelId 3151318 \
+<CLI> card-push update \
+  --channelId <频道ID> \
   --cardPushId 123 \
   --title "更新后的标题" \
   --duration 20
@@ -65,9 +65,9 @@ npx --yes polyv-live-cli@latest card-push update \
 ## 推送、取消、删除
 
 ```bash
-npx --yes polyv-live-cli@latest card-push push --channelId 3151318 --cardPushId 123
-npx --yes polyv-live-cli@latest card-push cancel --channelId 3151318 --cardPushId 123
-npx --yes polyv-live-cli@latest card-push delete --channelId 3151318 --cardPushId 123
+<CLI> card-push push --channelId <频道ID> --cardPushId 123
+<CLI> card-push cancel --channelId <频道ID> --cardPushId 123
+<CLI> card-push delete --channelId <频道ID> --cardPushId 123
 ```
 
 ## 常用参数

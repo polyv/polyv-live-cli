@@ -2,13 +2,13 @@
 
 用于为主频道批量创建转播频道，并查询频道的转播关联。
 
-## 当前 npm 命令面
+## 当前发布版命令面
 
-npm 版 `polyv-live-cli@latest` 的转播命令使用 `--channelId`，没有 `-c` 简写。
+当前发布版 help 中的转播命令使用 `--channelId`，没有 `-c` 简写。
 
 ```bash
-npx --yes polyv-live-cli@latest transmit create --channelId <主频道ID> --names "转播频道1,转播频道2"
-npx --yes polyv-live-cli@latest transmit list --channelId <频道ID>
+<CLI> transmit create --channelId <主频道ID> --names "转播频道1,转播频道2"
+<CLI> transmit list --channelId <频道ID>
 ```
 
 输出格式使用 `-o table` 或 `-o json`，默认为表格。
@@ -16,16 +16,16 @@ npx --yes polyv-live-cli@latest transmit list --channelId <频道ID>
 ## 创建转播频道
 
 ```bash
-npx --yes polyv-live-cli@latest transmit create \
-  --channelId 3151318 \
+<CLI> transmit create \
+  --channelId <频道ID> \
   --names "北京分会场,上海分会场,广州分会场"
 ```
 
 JSON 输出：
 
 ```bash
-npx --yes polyv-live-cli@latest transmit create \
-  --channelId 3151318 \
+<CLI> transmit create \
+  --channelId <频道ID> \
   --names "北京分会场,上海分会场" \
   -o json
 ```
@@ -39,8 +39,8 @@ npx --yes polyv-live-cli@latest transmit create \
 ## 查询转播关联
 
 ```bash
-npx --yes polyv-live-cli@latest transmit list --channelId 3151318
-npx --yes polyv-live-cli@latest transmit list --channelId 3151318 -o json
+<CLI> transmit list --channelId <频道ID>
+<CLI> transmit list --channelId <频道ID> -o json
 ```
 
 ## 使用注意

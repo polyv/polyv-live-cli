@@ -1,6 +1,6 @@
 ---
 name: polyv-live-cli
-description: 保利威官方skill。用于查询或管理直播频道、推流地址和状态、商品、优惠券、回放、文档、场次、聊天、签到、问答、问卷、抽奖、打赏、观众、观看条件、白名单、平台设置、卡片推送、推广渠道、转播频道、AI 数字人、监控面板、场景初始化和直播统计。
+description: 保利威官方 skill。通过 npm 发布版 polyv-live-cli 管理保利威云直播服务。用于查询或管理直播频道、推流地址和状态、商品、优惠券、回放、文档、场次、聊天、签到、问答、问卷、抽奖、打赏、观众、观看条件、白名单、平台设置、播放器、卡片推送、推广渠道、转播频道、AI 数字人、监控面板、场景初始化和直播统计。
 allowed-tools: Bash(npx --yes polyv-live-cli@latest:*)
 ---
 
@@ -8,192 +8,96 @@ allowed-tools: Bash(npx --yes polyv-live-cli@latest:*)
 
 以 npm 发布版 CLI 为准。不要根据旧示例、缓存文档、历史记忆或其他非发布版资料推断命令语法；只要能访问 npm，就先用发布版 `--help` 校验。
 
+## CLI 前缀
+
+本文档和 `references/` 中的 `<CLI>` 表示：
+
+```bash
+npx --yes polyv-live-cli@latest
+```
+
+执行命令前必须把 `<CLI>` 展开为上面的真实命令；不要直接执行字面量 `<CLI>`。如果 npm latest help 与 reference 冲突，必须以 npm latest 的 `<CLI> ... --help` 为准。
+
+## 入口校验
+
+先确认 npm 发布版命令面：
+
+```bash
+<CLI> --version
+<CLI> --help
+```
+
+`<CLI> --version` 应返回当前 npm latest 版本。
+
+每次处理某个命令族前，先运行最相关 help：
+
+```bash
+<CLI> <command> --help
+<CLI> <command> <subcommand> --help
+```
+
+不要根据本地源码、旧示例、缓存文档或记忆推断 npm latest 语法。
+
 ## 认证预检
 
-除 `--help`、`--version` 和 `account` 管理命令外，直播 API 命令通常需要先配置至少一个账号的 AppID 和 AppSecret。
+除 `--help`、`--version`、`account` 和 `use` 外，直播 API 命令通常需要账号配置。
 
-执行频道、推流、商品、优惠券、回放、互动、统计等业务命令前，先检查认证状态：
-
-```bash
-npx --yes polyv-live-cli@latest account current
-npx --yes polyv-live-cli@latest account list
-```
-
-如果没有任何账号，或没有可用默认账号，不要继续执行业务命令。请用户提供凭据后再配置：
+执行业务命令前先检查：
 
 ```bash
-npx --yes polyv-live-cli@latest account add <账号名> --app-id <appId> --app-secret <appSecret> --user-id <userId> --env production
-npx --yes polyv-live-cli@latest account set-default <账号名>
+<CLI> account current
+<CLI> account list
 ```
 
-如果已配置账号但 API 返回 `application not found`、签名错误或无权限，优先按账号凭据、UserID、环境类型不匹配排查，不要先怀疑命令语法。
+缺少账号或默认账号时，停止并请用户提供凭据。不要回显 AppSecret。用户明确请求推流地址/推流密钥时，可以返回 `stream get-key -o json` 的推流凭证，但提醒只提供给可信推流端。
 
-## 执行规则
+## 任务路由
 
-1. 所有 CLI 调用都使用 `npx --yes polyv-live-cli@latest ...`。
-2. 每次处理某个命令族前，先运行对应 help：
-   ```bash
-   npx --yes polyv-live-cli@latest <command> --help
-   npx --yes polyv-live-cli@latest <command> <subcommand> --help
-   ```
-3. 执行需要账号的 API 操作前，先运行：
-   ```bash
-   npx --yes polyv-live-cli@latest account current
-   npx --yes polyv-live-cli@latest account list
-   ```
-4. 做数据提取、脚本处理、对比或报告时，优先使用 `-o json` 或 `--output json`。
-5. 不要回显账号 AppSecret。缺少认证时，请用户配置账号，或明确提供所需凭据。
-6. 删除、清空、停播、开播、修改配置等影响生产的操作，除非用户已经给出明确命令或明确要求执行，否则先复述目标并等待确认。
-7. 如果 `references/` 里的示例和 `npx --yes polyv-live-cli@latest ... --help` 冲突，必须以 npm help 为准。
+自然语言任务先读 `references/task-routing.md`。如果仍不确定命令路径，再读 `references/command-index.md`，然后用对应 help 校验真实参数。
 
-## 高风险操作
+高频路由：
 
-以下操作需要确认后再执行：
+- 频道基础、状态、角色、装修、分发、MR、频道 token：`channel`
+- 推流地址、直播状态、断流恢复、推流开关：`stream`
+- 观看页菜单、分享、退出跳转、页面信息、观看页打赏：`web`
+- 播放器 Logo、水印、暖场、片头、暂停页：`player`
+- 观看条件、鉴权、白名单观看：`watch-condition`、`whitelist`
+- 回放、录制文件、合并、转码、断点续录：`playback`、`record`
+- 文档、课件、多媒体资源关联：`document`
+- 场次、外部 ID、场次统计：`session`、`statistics`
+- 聊天消息、聊天开关、在线人数、禁言、踢人：`chat`
+- 抽奖、签到、问答、问卷、打赏：`lottery`、`checkin`、`qa`、`questionnaire`、`donate`
+- 互动脚本、互动监听、任务奖励、点赞/奖励：`interaction`
+- 商品、优惠券、商品标签、商品统计/设置：`product`、`coupon`
+- 卡片推送、推广渠道、转播频道：`card-push`、`promotion`、`transmit`
+- 观众、用户自定义字段、邀请榜单：`viewer`、`custom-field`、`invite-sales`
+- 平台/账号/全局设置、分组账号、伙伴账号：`platform`、`global`、`user`、`group`、`partner`
+- 素材库、WebApp、机器人、财务/审核、AI 数字人：`material`、`webapp`、`robot`、`finance`、`ai`
 
-- 删除频道、批量删除频道、删除回放、清空聊天消息。
-- 开始直播、结束直播、推送本地文件、长时间 watch 或 monitor。
-- 新增、更新、删除商品、优惠券、问卷、抽奖、打赏配置、观看条件、白名单、平台设置、回调设置、卡片推送、推广渠道、转播频道、AI 数字人组织关联。
-- 全局禁言、全局踢人、清空白名单。
-- 未加 `--dry-run` 的 `setup <scene>`。
+## 风险规则
 
-能预演时先预演：
+只读命令如 `list`、`get`、`detail`、`status`、`export` 通常可以直接执行。写入或影响生产状态的命令必须先确认，或者在用户已经明确授权时使用命令支持的 `--force`。
+
+下列动词默认视为高风险：`create`、`add`、`update`、`delete`、`remove`、`clear`、`batch-delete`、`enable`、`disable`、`start`、`stop`、`end`、`push`、`send`、`import`、`apply`、`register`、`allocate`、`merge`、`transcode`、`resume`、`cancel`。
+
+测试写入类真实命令时，优先临时创建频道或测试对象，结束后清理；不要默认修改用户长期使用的频道，除非用户明确指定并授权。
+
+## 输出规则
+
+做数据提取、对比、报告或后续脚本处理时，优先使用 JSON：
 
 ```bash
-npx --yes polyv-live-cli@latest setup e-commerce --dry-run -o json
+<CLI> channel list -o json
 ```
 
-## 账号认证
-
-查看账号配置和当前账号：
-
-```bash
-npx --yes polyv-live-cli@latest account list
-npx --yes polyv-live-cli@latest account current
-```
-
-只有在用户提供凭据或明确要求配置时，才添加或切换账号：
-
-```bash
-npx --yes polyv-live-cli@latest account add <账号名> --app-id <appId> --app-secret <appSecret>
-npx --yes polyv-live-cli@latest account set-default <账号名>
-npx --yes polyv-live-cli@latest use <账号名>
-```
-
-单次调用可使用指定账号或显式凭据：
-
-```bash
-npx --yes polyv-live-cli@latest channel list -a <账号名> -o json
-npx --yes polyv-live-cli@latest channel list --appId <appId> --appSecret <appSecret> -o json
-```
-
-## 常用流程
-
-确认 npm 版本和顶层命令：
-
-```bash
-npx --yes polyv-live-cli@latest --version
-npx --yes polyv-live-cli@latest --help
-```
-
-查询频道：
-
-```bash
-npx --yes polyv-live-cli@latest channel list -o json
-npx --yes polyv-live-cli@latest channel list -P 1 -l 20 --keyword <关键词> -o json
-```
-
-创建频道：
-
-```bash
-npx --yes polyv-live-cli@latest channel create -n <频道名称> -d <频道描述> --scene topclass --template ppt -o json
-```
-
-获取推流信息和直播状态：
-
-```bash
-npx --yes polyv-live-cli@latest stream get-key -c <频道ID> -o json
-npx --yes polyv-live-cli@latest stream status -c <频道ID> -o json
-```
-
-用户明确要求“获取推流密钥”“获取推流地址”时，推流地址和推流密钥就是目标结果，允许完整返回。`stream get-key` 的表格输出会脱敏；需要完整凭证时必须使用 JSON：
-
-```bash
-npx --yes polyv-live-cli@latest stream get-key -c <频道ID> -o json
-```
-
-不要把推流密钥和账号 AppSecret 混为一类：AppSecret 不回显；推流密钥可在用户明确请求时返回，但提醒只提供给可信推流端，不要发到公开渠道或日志。
-
-只有用户需要长时间监控时，才运行持续命令：
-
-```bash
-npx --yes polyv-live-cli@latest stream status -c <频道ID> -w
-npx --yes polyv-live-cli@latest stream monitor -c <频道ID> -r 5 --alerts
-```
-
-导出统计：
-
-```bash
-npx --yes polyv-live-cli@latest statistics export viewlog -c <频道ID> --start-time "2024-01-01 00:00:00" --end-time "2024-01-31 23:59:59" --output-file ./viewlog.csv
-npx --yes polyv-live-cli@latest statistics export session -c <频道ID> --session-id <场次ID> -o json
-```
-
-## 已知语法差异提示
-
-以下是历史验证过的高频易错点。执行前仍必须以当前 npm 发布版 `--help` 为准。
-
-- `transmit` 使用 `--channelId`，不是 `-c`：
-  ```bash
-  npx --yes polyv-live-cli@latest transmit create --channelId <频道ID> --names "转播1,转播2" -o json
-  npx --yes polyv-live-cli@latest transmit list --channelId <频道ID> -o json
-  ```
-- `card-push` 使用 camelCase 参数名：
-  ```bash
-  npx --yes polyv-live-cli@latest card-push create --channelId <频道ID> --imageType giftbox --title <标题> --link <链接> --duration 10 --showCondition PUSH -o json
-  npx --yes polyv-live-cli@latest card-push push --channelId <频道ID> --cardPushId <卡片ID> -o json
-  ```
-- `watch-condition set` 的 JSON 配置文件参数是 `--config-file`：
-  ```bash
-  npx --yes polyv-live-cli@latest watch-condition set --channel-id <频道ID> --config-file ./watch-condition.json -o json
-  ```
-- `product` 只有 `add`、`list`、`update`、`delete`；当前 help 没有列出 `product get` 时，不要生成 `product get` 示例。
-- `product add` 必须提供状态和链接类型：
-  ```bash
-  npx --yes polyv-live-cli@latest product add -c <频道ID> -n <商品名> --status 1 --link-type 10 -l <商品链接> --real-price 99.9 --price 199.9 -o json
-  ```
-- `coupon` 命令不接收 `-c`；创建优惠券使用账号级参数：
-  ```bash
-  npx --yes polyv-live-cli@latest coupon add --name <优惠券名> --type MAX_OUT --availableAmount 100 --receiveStart <毫秒时间戳> --receiveEnd <毫秒时间戳> --useTimeType RANGE --useStart <毫秒时间戳> --useEnd <毫秒时间戳> --condition FULL_REDUCE --full 100 --reduce 20 --limitPerPerson 1 -o json
-  ```
-- `statistics export` 有 `viewlog` 和 `session` 子命令；不是扁平的 `statistics export -c ... -f csv`。
-- `monitor` 是监控面板命令；如果当前 help 没有列出 `monitor start` 或 `monitor stop`，不要生成这些子命令。
-- `setup --help` 当前只列出 `e-commerce`；不要假设存在 `setup education`，除非 help 明确列出。
-- `promotion` 和 `ai digital-human` 是真实命令族：
-  ```bash
-  npx --yes polyv-live-cli@latest promotion create --channelId <频道ID> --names "渠道1,渠道2" --force -o json
-  npx --yes polyv-live-cli@latest ai digital-human list -o json
-  ```
-- `lottery records` 查询新版抽奖活动记录；`lottery legacy-records` 查询旧版 V3 单频道抽奖记录，必须传时间范围：
-  ```bash
-  npx --yes polyv-live-cli@latest lottery records -c <频道ID> --start-time <毫秒时间戳> --end-time <毫秒时间戳> -o json
-  npx --yes polyv-live-cli@latest lottery legacy-records -c <频道ID> --start-time <毫秒时间戳> --end-time <毫秒时间戳> -o json
-  ```
-- `lottery create` / `lottery update` 使用 `--prize-name`；`lottery winners` 默认查单场中奖名单，需要查某个观众中奖记录时才加 `--viewer-id`：
-  ```bash
-  npx --yes polyv-live-cli@latest lottery create -c <频道ID> --name <名称> --type none --amount 3 --prize-name <奖品名> --force -o json
-  npx --yes polyv-live-cli@latest lottery winners -c <频道ID> --lottery-id <抽奖ID> -o json
-  npx --yes polyv-live-cli@latest lottery winners -c <频道ID> --lottery-id <抽奖ID> --viewer-id <观众ID> -o json
-  ```
-- `player config update` 管理水印、暖场图和基础 PV：
-  ```bash
-  npx --yes polyv-live-cli@latest player config update -c <频道ID> --watermark-enabled Y --watermark-url <图片URL> --watermark-position br --watermark-opacity 0.8 -o json
-  ```
+示例里的 `<频道ID>`、`<商品ID>`、`<回放ID>`、`<账号名>` 都是占位符。不要直接执行 reference 中的示例 ID。
 
 ## 参考资料路由
 
-`references/` 下的文件只作为补充背景使用。部分示例可能滞后于 npm 版本。读取它们了解业务含义、API 概念和流程后，执行前必须用 npm help 校验真实语法。
-
 按最小范围读取：
 
+- `task-routing.md`：自然语言任务到命令族的映射。
+- `command-index.md`：npm latest help 生成的一级命令和直接子命令索引。
 - `authentication.md`：账号配置和认证来源。
 - `channel-management.md`、`streaming.md`、`monitor.md`、`scene-setup.md`：频道和推流流程。
 - `products.md`、`coupons.md`、`card-push.md`、`transmit.md`：商品、优惠券、卡片推送、转播等营销能力。
@@ -201,21 +105,26 @@ npx --yes polyv-live-cli@latest statistics export session -c <频道ID> --sessio
 - `chat-management.md`、`checkin.md`、`qa-questionnaire.md`、`lottery.md`、`donate.md`：直播互动工具。
 - `viewer.md`、`viewer-management.md`、`watch-condition.md`、`whitelist.md`：观众、标签、观看条件、白名单。
 - `platform.md`、`player.md`、`statistics.md`：平台设置、播放器配置、统计报表。
+- `ai.md`、`finance.md`、`material.md`、`robot.md`、`webapp.md`：AI、财务审核、素材库、机器人、WebApp。
+- `custom-field.md`、`invite-sales.md`、`user.md`、`group.md`、`global.md`、`partner.md`：用户、字段、邀请销售、分组、全局、伙伴账号。
+- `interaction.md`、`promotion.md`、`web.md`：跨互动能力、推广渠道、观看页配置。
+
+新增 npm latest 命令若没有专门 reference，先查 `command-index.md` 和对应 help，不要编造参数。
 
 ## 失败处理
 
-如果命令在参数解析阶段失败：
+参数解析失败时：
 
 1. 对最深层命令重新运行 `--help`。
-2. 检查 camelCase 和 kebab-case 是否写错。
-3. 删除 help 没列出的短参数别名。
+2. 检查 camelCase、kebab-case 和短参数是否真实存在。
+3. 删除 help 没列出的参数。
 4. 修正文档或回复时优先使用完整参数名。
 
-如果命令进入 API 阶段后失败：
+API 阶段失败时：
 
 1. 运行 `account current` 和 `account list`。
-2. 用只读 list/get 命令核对账号、频道 ID 和对象 ID。
-3. 报告实际错误和命令形态，不暴露账号 AppSecret。若用户明确请求推流凭证，可返回 `stream get-key -o json` 的推流地址和推流密钥。
+2. 用只读 `list`、`get`、`status` 命令核对账号、频道 ID 和对象 ID。
+3. 报告实际错误和命令形态，不暴露 AppSecret。
 
 ## 官方资源与支持
 
@@ -225,16 +134,3 @@ npx --yes polyv-live-cli@latest statistics export session -c <频道ID> --sessio
 - 保利威直播 API 文档：https://help.polyv.net/#/live/api/
 - 邮箱：support@polyv.net
 - 技术支持：400-993-9533
-
-## 更新此 Skill
-
-修改命令示例后，必须用 npm help 做回归：
-
-```bash
-npx --yes polyv-live-cli@latest --version
-npx --yes polyv-live-cli@latest --help
-npx --yes polyv-live-cli@latest <command> --help
-npx --yes polyv-live-cli@latest <command> <subcommand> --help
-```
-
-同时验证已知旧写法是否仍然失败或已被删除。例如，除非 npm help 新增了 `-c`，否则不要出现 `transmit create -c ...` 这种可执行示例。

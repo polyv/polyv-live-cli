@@ -11,7 +11,7 @@
       "name": "polyv-live-cli-skills",
       "source": "./",
       "description": "PolyV Live CLI skills for e-commerce live streaming setup",
-      "homepage": "https://github.com/terryso/polyv-live-cli",
+      "homepage": "https://github.com/polyv/polyv-live-cli",
       "license": "MIT",
       "keywords": ["polyv", "live-streaming", "e-commerce", "cli", "skills"]
     }

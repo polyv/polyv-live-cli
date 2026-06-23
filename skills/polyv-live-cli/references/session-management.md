@@ -16,7 +16,7 @@
 ### 语法
 
 ```bash
-npx --yes polyv-live-cli@latest session list [-c <频道ID>] [--page <页码>] [--page-size <数量>] [-o <格式>]
+<CLI> session list [-c <频道ID>] [--page <页码>] [--page-size <数量>] [-o <格式>]
 ```
 
 ### 参数
@@ -32,16 +32,16 @@ npx --yes polyv-live-cli@latest session list [-c <频道ID>] [--page <页码>] [
 
 ```bash
 # 获取频道场次列表
-npx --yes polyv-live-cli@latest session list -c 2588188
+<CLI> session list -c 2588188
 
 # 获取整个账号下的场次
-npx --yes polyv-live-cli@latest session list
+<CLI> session list
 
 # 分页查询
-npx --yes polyv-live-cli@latest session list -c 2588188 --page 2 --page-size 20
+<CLI> session list -c 2588188 --page 2 --page-size 20
 
 # JSON 格式输出
-npx --yes polyv-live-cli@latest session list -c 2588188 -o json
+<CLI> session list -c 2588188 -o json
 ```
 
 ### 表格输出示例
@@ -62,7 +62,7 @@ k7d9f2h1l5     测试场次2     直播中    2024-01-15 14:00     -
 ### 语法
 
 ```bash
-npx --yes polyv-live-cli@latest session get -c <频道ID> --session-id <场次ID> [-o <格式>]
+<CLI> session get -c <频道ID> --session-id <场次ID> [-o <格式>]
 ```
 
 ### 参数
@@ -77,10 +77,10 @@ npx --yes polyv-live-cli@latest session get -c <频道ID> --session-id <场次ID
 
 ```bash
 # 获取场次详情
-npx --yes polyv-live-cli@latest session get -c 2588188 --session-id e9s2h3jd8f
+<CLI> session get -c 2588188 --session-id e9s2h3jd8f
 
 # JSON 格式输出
-npx --yes polyv-live-cli@latest session get -c 2588188 --session-id e9s2h3jd8f -o json
+<CLI> session get -c 2588188 --session-id e9s2h3jd8f -o json
 ```
 
 ### 表格输出示例
@@ -162,10 +162,8 @@ npx --yes polyv-live-cli@latest session get -c 2588188 --session-id e9s2h3jd8f -
 
 ## 相关 API 文档
 
-以下路径相对于本仓库根目录解析的 `../document-center/docs/live/api`：
-
-- `v4/channel/session/new/list.md`
-- `v4/channel/session/new/get.md`
+- [获取场次列表](../../docs/api/v4/channel/session/new/list.md)
+- [获取场次详情](../../docs/api/v4/channel/session/new/get.md)
 
 ## 相关命令
 

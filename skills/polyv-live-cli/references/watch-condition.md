@@ -18,7 +18,7 @@
 ### 语法
 
 ```bash
-npx --yes polyv-live-cli@latest watch-condition get [--channel-id <ID>] [-o table|json]
+<CLI> watch-condition get [--channel-id <ID>] [-o table|json]
 ```
 
 ### 参数
@@ -32,13 +32,13 @@ npx --yes polyv-live-cli@latest watch-condition get [--channel-id <ID>] [-o tabl
 
 ```bash
 # 获取频道观看条件（表格格式）
-npx --yes polyv-live-cli@latest watch-condition get --channel-id 123456
+<CLI> watch-condition get --channel-id 123456
 
 # 获取全局观看条件设置
-npx --yes polyv-live-cli@latest watch-condition get
+<CLI> watch-condition get
 
 # 获取观看条件（JSON格式）
-npx --yes polyv-live-cli@latest watch-condition get --channel-id 123456 -o json
+<CLI> watch-condition get --channel-id 123456 -o json
 ```
 
 ### 输出字段
@@ -57,7 +57,7 @@ npx --yes polyv-live-cli@latest watch-condition get --channel-id 123456 -o json
 ### 语法
 
 ```bash
-npx --yes polyv-live-cli@latest watch-condition set [options]
+<CLI> watch-condition set [options]
 ```
 
 ### 参数
@@ -90,19 +90,19 @@ npx --yes polyv-live-cli@latest watch-condition set [options]
 
 ```bash
 # 设置公开观看（无限制）
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1 --auth-type none --enabled Y
+<CLI> watch-condition set --channel-id 123456 --rank 1 --auth-type none --enabled Y
 
 # 设置密码观看
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1 --auth-type code --enabled Y --auth-code "abc123"
+<CLI> watch-condition set --channel-id 123456 --rank 1 --auth-type code --enabled Y --auth-code "abc123"
 
 # 设置付费观看（99.9元）
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1 --auth-type pay --enabled Y --price 99.9
+<CLI> watch-condition set --channel-id 123456 --rank 1 --auth-type pay --enabled Y --price 99.9
 
 # 禁用主要观看条件
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1 --enabled N
+<CLI> watch-condition set --channel-id 123456 --rank 1 --enabled N
 
 # 使用配置文件设置复杂条件
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --config-file ./watch-condition.json
+<CLI> watch-condition set --channel-id 123456 --config-file ./watch-condition.json
 ```
 
 ### 配置文件格式
@@ -137,14 +137,14 @@ npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --config
 
 ```bash
 # 设置主要条件为密码观看
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1 --auth-type code --auth-code "mypassword" --enabled Y
+<CLI> watch-condition set --channel-id 123456 --rank 1 --auth-type code --auth-code "mypassword" --enabled Y
 ```
 
 ### 2. 设置付费直播
 
 ```bash
 # 设置付费观看（19.9元）
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1 --auth-type pay --price 19.9 --enabled Y
+<CLI> watch-condition set --channel-id 123456 --rank 1 --auth-type pay --price 19.9 --enabled Y
 ```
 
 ### 3. 配置多级认证
@@ -174,7 +174,7 @@ npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --rank 1
 ```
 
 ```bash
-npx --yes polyv-live-cli@latest watch-condition set --channel-id 123456 --config-file ./auth-config.json
+<CLI> watch-condition set --channel-id 123456 --config-file ./auth-config.json
 ```
 
 ## 注意事项

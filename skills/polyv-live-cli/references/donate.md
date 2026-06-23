@@ -6,7 +6,7 @@ Manage live streaming donation (打赏) interactions through the PolyV CLI.
 
 The donate commands allow you to:
 - Get channel donate configuration settings
-- Update donate settings (cash enabled, gift enabled, tips, amounts)
+- Update donate settings (cash enabled, gift enabled, amounts)
 - List donation records with time range filtering
 
 ## Commands
@@ -16,7 +16,7 @@ The donate commands allow you to:
 Get the donate configuration for a channel.
 
 ```bash
-polyv-live-cli donate config get -c <channelId> [options]
+<CLI> donate config get -c <channelId> [options]
 ```
 
 **Required Options:**
@@ -28,15 +28,15 @@ polyv-live-cli donate config get -c <channelId> [options]
 **Examples:**
 ```bash
 # Get donate configuration
-polyv-live-cli donate config get -c "3151318"
+<CLI> donate config get -c "<频道ID>"
 
 # Get configuration in JSON format
-polyv-live-cli donate config get -c "3151318" -o json
+<CLI> donate config get -c "<频道ID>" -o json
 ```
 
 **Output (table format):**
 ```
-Donate Configuration for Channel: 3151318
+Donate Configuration for Channel: <频道ID>
 
 Global Setting Enabled: Y
 Cash Donate Enabled: Y
@@ -57,7 +57,7 @@ Goods:
 Update the donate configuration for a channel.
 
 ```bash
-polyv-live-cli donate config update -c <channelId> [options]
+<CLI> donate config update -c <channelId> [options]
 ```
 
 **Required Options:**
@@ -66,25 +66,23 @@ polyv-live-cli donate config update -c <channelId> [options]
 **Optional Options:**
 - `--cash-enabled <Y|N>` - Enable/disable cash donations
 - `--gift-enabled <Y|N>` - Enable/disable gift donations
-- `--tips <text>` - Donate tips text to display
 - `--amounts <values>` - Comma-separated donation amounts (e.g., "0.88,6.66,8.88")
+- `-f, --force` - Skip confirmation prompt
 - `-o, --output <format>` - Output format: `table` (default) or `json`
 
 **Examples:**
 ```bash
 # Enable cash donations
-polyv-live-cli donate config update -c "3151318" --cash-enabled Y
+<CLI> donate config update -c "<频道ID>" --cash-enabled Y
 
-# Update with tips and custom amounts
-polyv-live-cli donate config update -c "3151318" \
-  --tips "Thank you for your support!" \
+# Update custom amounts
+<CLI> donate config update -c "<频道ID>" \
   --amounts "0.88,6.66,8.88,18.88"
 
 # Update all settings at once
-polyv-live-cli donate config update -c "3151318" \
+<CLI> donate config update -c "<频道ID>" \
   --cash-enabled Y \
   --gift-enabled Y \
-  --tips "Thanks!" \
   --amounts "1,5,10"
 ```
 
@@ -95,7 +93,7 @@ polyv-live-cli donate config update -c "3151318" \
 List donation records for a channel within a time range.
 
 ```bash
-polyv-live-cli donate list -c <channelId> --start <timestamp> --end <timestamp> [options]
+<CLI> donate list -c <channelId> --start <timestamp> --end <timestamp> [options]
 ```
 
 **Required Options:**
@@ -111,19 +109,19 @@ polyv-live-cli donate list -c <channelId> --start <timestamp> --end <timestamp> 
 **Examples:**
 ```bash
 # List donations within a time range
-polyv-live-cli donate list -c "3151318" \
+<CLI> donate list -c "<频道ID>" \
   --start 1615772426000 \
   --end 1615858826000
 
 # List with pagination
-polyv-live-cli donate list -c "3151318" \
+<CLI> donate list -c "<频道ID>" \
   --start 1615772426000 \
   --end 1615858826000 \
   --page 2 \
   --size 20
 
 # JSON output
-polyv-live-cli donate list -c "3151318" \
+<CLI> donate list -c "<频道ID>" \
   --start 1615772426000 \
   --end 1615858826000 \
   -o json
