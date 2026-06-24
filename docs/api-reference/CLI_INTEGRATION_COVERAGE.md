@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T07:19:34.273Z
+Generated at: 2026-06-24T07:24:19.202Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,17 +12,17 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 193 |
-| Missing real-execution leaf subcommands | 374 |
-| Real-execution coverage | 34.04% |
-| Leaf subcommands referenced including help | 332 |
-| Missing including help | 235 |
+| Real-executed leaf subcommands | 197 |
+| Missing real-execution leaf subcommands | 370 |
+| Real-execution coverage | 34.74% |
+| Leaf subcommands referenced including help | 336 |
+| Missing including help | 231 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
-| `account` | 23 | 17 | 6 | 73.91% | 17 | 6 |
+| `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 3 | 5 | 37.50% | 3 | 5 |
 | `channel` | 78 | 31 | 47 | 39.74% | 60 | 18 |
@@ -66,10 +66,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Command | Source |
 |---------|--------|
 | `account api callback set` | `packages/cli/src/commands/account.commands.ts:862` |
-| `account api category create` | `packages/cli/src/commands/account.commands.ts:788` |
-| `account api category delete` | `packages/cli/src/commands/account.commands.ts:800` |
-| `account api category update-name` | `packages/cli/src/commands/account.commands.ts:812` |
-| `account api category update-rank` | `packages/cli/src/commands/account.commands.ts:826` |
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `ai digital-human list-org` | `packages/cli/src/commands/ai.commands.ts:170` |
 | `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |

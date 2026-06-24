@@ -6,6 +6,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
@@ -16,6 +17,28 @@ const accountCredentials = getDefaultCredentials();
 
 function formatDate(date: Date): string {
   return date.toISOString().slice(0, 10);
+}
+
+function getResponseField(parsed: Record<string, unknown>, field: string): unknown {
+  const data = parsed.data && typeof parsed.data === 'object' ? parsed.data as Record<string, unknown> : undefined;
+  const result = parsed.result && typeof parsed.result === 'object' ? parsed.result as Record<string, unknown> : undefined;
+  const resultData = result?.data && typeof result.data === 'object'
+    ? result.data as Record<string, unknown>
+    : undefined;
+
+  return parsed[field] ?? data?.[field] ?? result?.[field] ?? resultData?.[field];
+}
+
+function extractCategoryId(output: string): number {
+  const parsed = parseJsonObject(output);
+  const candidate = getResponseField(parsed, 'categoryId');
+  const categoryId = Number(candidate);
+
+  if (!Number.isInteger(categoryId) || categoryId <= 0) {
+    throw new Error(`Cannot extract categoryId from CLI output:\n${output}`);
+  }
+
+  return categoryId;
 }
 
 describe('Account, platform, and global CLI integration', () => {
@@ -145,4 +168,95 @@ describe('Account, platform, and global CLI integration', () => {
       }
     }
   }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs account category write lifecycle through the real CLI', () => {
+    let channelId: string | undefined;
+    let categoryId: number | undefined;
+    const uniqueName = `CLI Integration Category ${Date.now()}`;
+    const renamedName = `${uniqueName} Renamed`;
+
+    try {
+      channelId = createTemporaryChannel('Account Category Lifecycle');
+
+      const createdOutput = runCliSuccess([
+        'account',
+        'api',
+        'category',
+        'create',
+        '--name',
+        uniqueName,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const created = parseJsonObject(createdOutput);
+      categoryId = extractCategoryId(createdOutput);
+      expect(categoryId).toBeGreaterThan(0);
+      expect(String(getResponseField(created, 'categoryName') ?? '')).toBe(uniqueName);
+
+      const renamed = parseJsonObject(runCliSuccess([
+        'account',
+        'api',
+        'category',
+        'update-name',
+        '--category-id',
+        String(categoryId),
+        '--name',
+        renamedName,
+        '--force',
+        '--output',
+        'json',
+      ]));
+      expect(getResponseField(renamed, 'success')).toBe(true);
+
+      const updatedRank = parseJsonObject(runCliSuccess([
+        'account',
+        'api',
+        'category',
+        'update-rank',
+        '--category-id',
+        String(categoryId),
+        '--rank',
+        String(Math.max(1, Number(getResponseField(created, 'rank')) || 1)),
+        '--force',
+        '--output',
+        'json',
+      ]));
+      expect(getResponseField(updatedRank, 'success')).toBe(true);
+
+      const deleted = parseJsonObject(runCliSuccess([
+        'account',
+        'api',
+        'category',
+        'delete',
+        '--category-id',
+        String(categoryId),
+        '--force',
+        '--output',
+        'json',
+      ]));
+      expect(getResponseField(deleted, 'success')).toBe(true);
+      categoryId = undefined;
+    } finally {
+      try {
+        if (categoryId !== undefined) {
+          runCliSuccess([
+            'account',
+            'api',
+            'category',
+            'delete',
+            '--category-id',
+            String(categoryId),
+            '--force',
+            '--output',
+            'json',
+          ]);
+        }
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    }
+  }, 180000);
 });
