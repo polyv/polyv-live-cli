@@ -2,6 +2,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -85,6 +86,72 @@ describe('chat CLI integration', () => {
       for (const args of readCommands) {
         runCliSuccess(args);
       }
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // Real CLI execution of self-contained chat write subcommands. Each target
+  // is a channel-scoped write that returns success on a fresh (non-live)
+  // channel and is fully reversible: notice add -> clean forms a closed loop,
+  // and the remaining writes are transient state on a temp channel that gets
+  // deleted in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)('runs chat write commands against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Chat Write Smoke');
+      const id = channelId;
+
+      // chat notice add returns the JSON boolean `true`.
+      const noticeAdd = runCliSuccess([
+        'chat', 'notice', 'add',
+        '--channel-id', id,
+        '--content', 'gnhf-integration-notice',
+        '--force', '--output', 'json',
+      ]);
+      expect(JSON.parse(noticeAdd.trim())).toBe(true);
+
+      // chat notice clean returns `{ success: true }` (also cleans up the add above).
+      const noticeClean = parseJsonObject(runCliSuccess([
+        'chat', 'notice', 'clean',
+        '--channel-id', id,
+        '--force', '--output', 'json',
+      ]));
+      expect(noticeClean.success).toBe(true);
+
+      // chat role teacher-update returns the JSON boolean `true`.
+      const teacherUpdate = runCliSuccess([
+        'chat', 'role', 'teacher-update',
+        '--channel-id', id,
+        '--nickname', 'gnhf-teacher',
+        '--actor', '讲师',
+        '--force', '--output', 'json',
+      ]);
+      expect(JSON.parse(teacherUpdate.trim())).toBe(true);
+
+      // chat message admin-send requires the role enum value `ADMIN` and returns
+      // a success message string.
+      const adminSend = runCliSuccess([
+        'chat', 'message', 'admin-send',
+        '--channel-id', id,
+        '--content', 'gnhf-admin-hello',
+        '--role', 'ADMIN',
+        '--output', 'json',
+      ]);
+      expect(JSON.parse(adminSend.trim())).toMatch(/success/i);
+
+      // chat message alert-special returns the JSON boolean `true`.
+      const alert = runCliSuccess([
+        'chat', 'message', 'alert-special',
+        '--channel-id', id,
+        '--title', '提醒',
+        '--message', 'gnhf-alert',
+        '--force', '--output', 'json',
+      ]);
+      expect(JSON.parse(alert.trim())).toBe(true);
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);

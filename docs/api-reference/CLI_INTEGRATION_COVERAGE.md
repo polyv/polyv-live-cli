@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T17:13:10.560Z
+Generated at: 2026-06-24T17:26:52.618Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 67 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 291 |
-| Missing real-execution leaf subcommands | 276 |
-| Real-execution coverage | 51.32% |
-| Leaf subcommands referenced including help | 397 |
-| Missing including help | 170 |
+| Real-executed leaf subcommands | 296 |
+| Missing real-execution leaf subcommands | 271 |
+| Real-execution coverage | 52.20% |
+| Leaf subcommands referenced including help | 400 |
+| Missing including help | 167 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
-| `chat` | 44 | 28 | 16 | 63.64% | 34 | 10 |
+| `chat` | 44 | 33 | 11 | 75.00% | 37 | 7 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
@@ -85,21 +85,16 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
-| `chat message admin-send` | `packages/cli/src/commands/chat.commands.ts:489` |
-| `chat message alert-special` | `packages/cli/src/commands/chat.commands.ts:524` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `chat message custom-send` | `packages/cli/src/commands/chat.commands.ts:549` |
 | `chat message custom-send-encode` | `packages/cli/src/commands/chat.commands.ts:562` |
 | `chat message emit-by-user-id` | `packages/cli/src/commands/chat.commands.ts:574` |
 | `chat message hidden-send` | `packages/cli/src/commands/chat.commands.ts:473` |
 | `chat message remove-contents` | `packages/cli/src/commands/chat.commands.ts:505` |
-| `chat notice add` | `packages/cli/src/commands/chat.commands.ts:661` |
-| `chat notice clean` | `packages/cli/src/commands/chat.commands.ts:672` |
 | `chat robot list-update` | `packages/cli/src/commands/chat.commands.ts:783` |
 | `chat robot pause` | `packages/cli/src/commands/chat.commands.ts:797` |
 | `chat robot setting-update` | `packages/cli/src/commands/chat.commands.ts:771` |
 | `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:714` |
-| `chat role teacher-update` | `packages/cli/src/commands/chat.commands.ts:732` |
 | `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:744` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
