@@ -86,6 +86,22 @@ describe('user business commands', () => {
     }
   });
 
+  it('documents custom-field add required options in help descriptions', () => {
+    registerCustomFieldCommands(program);
+
+    const customField = program.commands.find(cmd => cmd.name() === 'custom-field')!;
+    const add = customField.commands.find(cmd => cmd.name() === 'add')!;
+    const customFieldId = add.options.find(option => option.long === '--custom-field-id')!;
+    const customFieldName = add.options.find(option => option.long === '--custom-field-name')!;
+    const customFieldType = add.options.find(option => option.long === '--custom-field-type')!;
+
+    expect(customFieldId.required).toBe(true);
+    expect(customFieldId.description).toContain('required');
+    expect(customFieldId.description).toContain('max 64');
+    expect(customFieldName.description).toContain('required');
+    expect(customFieldType.description).toContain('text|image|link');
+  });
+
   it('maps product library create options to handler', async () => {
     const restoreConsole = suppressConsole();
     const restoreExit = mockProcessExit();

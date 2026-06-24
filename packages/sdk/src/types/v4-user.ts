@@ -1015,7 +1015,7 @@ export interface DeleteLabelParams {
  * Parameters for adding channel label refs
  */
 export interface AddChannelLabelRefsParams {
-  /** Label IDs */
+  /** Account label IDs from listLabels */
   labelIds: string[];
   /** Channel IDs */
   channelIds: Array<string | number>;

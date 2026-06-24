@@ -763,4 +763,32 @@ describe('action execution', () => {
       expect(logError).toHaveBeenCalled();
     });
   });
+
+  describe('label command help', () => {
+    it('should describe account label name length limit', () => {
+      const program = createTestProgram();
+      registerViewerCommands(program);
+
+      const viewerCommand = program.commands.find(cmd => cmd.name() === 'viewer');
+      const labelCommand = viewerCommand?.commands.find(cmd => cmd.name() === 'label');
+      const createSubcommand = labelCommand?.commands.find(cmd => cmd.name() === 'create');
+      const labelNameOption = createSubcommand?.options.find(opt => opt.long === '--label-name');
+
+      expect(labelNameOption?.description).toContain('max 8');
+    });
+
+    it('should describe channel-ref label IDs as account label IDs', () => {
+      const program = createTestProgram();
+      registerViewerCommands(program);
+
+      const viewerCommand = program.commands.find(cmd => cmd.name() === 'viewer');
+      const labelCommand = viewerCommand?.commands.find(cmd => cmd.name() === 'label');
+      const channelRefCommand = labelCommand?.commands.find(cmd => cmd.name() === 'channel-ref');
+      const addSubcommand = channelRefCommand?.commands.find(cmd => cmd.name() === 'add');
+      const labelIdsOption = addSubcommand?.options.find(opt => opt.long === '--label-ids');
+
+      expect(addSubcommand?.description()).toContain('account label refs');
+      expect(labelIdsOption?.description).toContain('account label IDs');
+    });
+  });
 });

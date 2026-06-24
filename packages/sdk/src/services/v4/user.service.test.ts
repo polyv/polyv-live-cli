@@ -813,21 +813,21 @@ describe('V4UserService', () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
       await service.addChannelLabelRefs({
-        labelIds: ['label_001', 'label_002'],
+        labelIds: ['zylw8zzi3p7mrqr4', 'k48fuvchvmsirky0'],
         channelIds: ['123456', '789012'],
       });
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/channel/label-ref/save-batch',
         {
-          labelIds: ['label_001', 'label_002'],
+          labelIds: ['zylw8zzi3p7mrqr4', 'k48fuvchvmsirky0'],
           channelIds: ['123456', '789012'],
         }
       );
     });
 
     it('should throw validation error when channelIds is empty', async () => {
-      await expect(service.addChannelLabelRefs({ labelIds: ['label_001'], channelIds: [] }))
+      await expect(service.addChannelLabelRefs({ labelIds: ['zylw8zzi3p7mrqr4'], channelIds: [] }))
         .rejects.toThrow(PolyVValidationError);
     });
 
@@ -835,6 +835,7 @@ describe('V4UserService', () => {
       await expect(service.addChannelLabelRefs({ labelIds: [], channelIds: ['123456'] }))
         .rejects.toThrow(PolyVValidationError);
     });
+
   });
 
   // ============================================

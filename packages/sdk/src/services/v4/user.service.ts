@@ -1137,14 +1137,14 @@ export class V4UserService {
   }
 
   /**
-   * Add channel label refs
+   * Add account label refs to channels
    *
    * @param params - Add parameters
    *
    * @example
    * ```typescript
    * await client.v4User.addChannelLabelRefs({
-   *   labelIds: ['label_001'],
+   *   labelIds: ['zylw8zzi3p7mrqr4'],
    *   channelIds: ['123456', '789012'],
    * });
    * ```

@@ -53,6 +53,8 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
       listViewerLabels: jest.fn(),
       addViewersLabels: jest.fn(),
       removeViewersLabels: jest.fn(),
+      createLabel: jest.fn(),
+      addChannelLabelRefs: jest.fn(),
     } as any;
 
     try {
@@ -819,6 +821,52 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
       };
 
       await expect(viewerHandler.listViewers(options)).rejects.toThrow(PolyVValidationError);
+    });
+  });
+
+  // ============================================================
+  // Account label and channel-ref validation
+  // ============================================================
+  describe('Account label and channel-ref validation', () => {
+    it('should create an account label when label name is within 8 characters', async () => {
+      mockViewerService.createLabel = jest.fn().mockResolvedValue({
+        id: '9zu68aethm9eivf1',
+        name: 'GNHF分层',
+      });
+
+      await viewerHandler.createLabel({
+        labelName: 'GNHF分层',
+        force: true,
+        output: 'json',
+      });
+
+      expect(mockViewerService.createLabel).toHaveBeenCalledWith({ labelName: 'GNHF分层' });
+    });
+
+    it('should reject account label names longer than 8 characters before calling the API', async () => {
+      await expect(viewerHandler.createLabel({
+        labelName: 'GNHF直播分层标签',
+        force: true,
+        output: 'json',
+      })).rejects.toThrow('标签名称最大长度为 8');
+
+      expect(mockViewerService.createLabel).not.toHaveBeenCalled();
+    });
+
+    it('should add channel label refs with account label IDs', async () => {
+      mockViewerService.addChannelLabelRefs = jest.fn().mockResolvedValue(undefined);
+
+      await viewerHandler.addChannelLabelRefs({
+        channelIds: '7983932',
+        labelIds: '9zu68aethm9eivf1',
+        force: true,
+        output: 'json',
+      });
+
+      expect(mockViewerService.addChannelLabelRefs).toHaveBeenCalledWith({
+        channelIds: ['7983932'],
+        labelIds: ['9zu68aethm9eivf1'],
+      });
     });
   });
 

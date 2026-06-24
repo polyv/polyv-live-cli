@@ -490,7 +490,7 @@ Examples:
   labelCmd
     .command('create')
     .description('Create an account label')
-    .requiredOption('--label-name <name>', 'account label name')
+    .requiredOption('--label-name <name>', 'account label name (required, max 8 characters)')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -537,7 +537,7 @@ Examples:
     .command('add')
     .description('Add account label refs to channels')
     .requiredOption('-c, --channel-ids <ids>', 'comma-separated channel IDs')
-    .requiredOption('-l, --label-ids <ids>', 'comma-separated label IDs')
+    .requiredOption('-l, --label-ids <ids>', 'comma-separated account label IDs from viewer label list')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {

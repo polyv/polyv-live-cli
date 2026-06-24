@@ -492,6 +492,7 @@ export class ViewerHandler extends BaseHandler {
   async createLabel(options: ViewerLabelCreateOptions): Promise<void> {
     return this.executeWithErrorHandling(async () => {
       this.validateRequiredStringOptions(options, ['labelName']);
+      this.validateAccountLabelName(options.labelName);
       this.validateOutputOption(options.output);
       await confirmWrite(options.force, `Create account label "${options.labelName}"?`);
 
@@ -617,6 +618,17 @@ export class ViewerHandler extends BaseHandler {
     }
   }
 
+  private validateAccountLabelName(labelName: string): void {
+    if (Array.from(labelName.trim()).length > 8) {
+      throw new PolyVValidationError(
+        '标签名称最大长度为 8',
+        'labelName',
+        labelName,
+        'length_exceeded'
+      );
+    }
+  }
+
   private validateViewerConfigOptions(options: ViewerConfigUpdateOptions): void {
     const errors: string[] = [];
 
@@ -653,11 +665,6 @@ export class ViewerHandler extends BaseHandler {
     }
     if (labelIds.length > 50) {
       errors.push('标签ID数量不能超过 50');
-    }
-
-    const invalidLabelIds = labelIds.filter(id => !/^[1-9]\d*$/.test(id));
-    if (invalidLabelIds.length > 0) {
-      errors.push(`标签ID必须是正整数: ${invalidLabelIds.join(', ')}`);
     }
 
     if (errors.length > 0) {

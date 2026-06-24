@@ -29,9 +29,9 @@ export function registerCustomFieldCommands(program: Command): void {
 
   customFieldCmd.command('add')
     .description('Add a custom field')
-    .requiredOption('--custom-field-id <id>', 'custom field ID')
-    .requiredOption('--custom-field-name <name>', 'custom field name')
-    .requiredOption('--custom-field-type <type>', 'custom field type, e.g. text|image|link')
+    .requiredOption('--custom-field-id <id>', 'custom field ID (required, max 64 chars)')
+    .requiredOption('--custom-field-name <name>', 'custom field name (required, max 64 chars)')
+    .requiredOption('--custom-field-type <type>', 'custom field type (required: text|image|link)')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withCustomFieldHandler(program, handler => handler.add(options)));
