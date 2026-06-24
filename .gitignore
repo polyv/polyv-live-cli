@@ -115,3 +115,6 @@ docs/api/
 # 自动生成的报告文件
 packages/sdk/_bmad-output/type-generation-report.json
 .coverage-watch
+
+# gnhf 自动化一次性运行脚本（每次带随机后缀重新生成，不提交）
+scripts/run-cli-subcommand-integration-*.sh
