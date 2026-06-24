@@ -991,10 +991,12 @@ export class V4ChannelService {
    */
   async distributeCreateBatch(params: CreateDistributeBatchParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    const { channelId, distributes } = params;
 
     await this.client.httpClient.post(
       '/live/v4/channel/distribute/create-batch',
-      params
+      distributes,
+      { params: { channelId } }
     );
   }
 
@@ -1005,10 +1007,12 @@ export class V4ChannelService {
    */
   async distributeUpdateBatch(params: UpdateDistributeBatchParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    const { channelId, distributes } = params;
 
     await this.client.httpClient.post(
       '/live/v4/channel/distribute/update-batch',
-      params
+      distributes,
+      { params: { channelId } }
     );
   }
 

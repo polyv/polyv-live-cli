@@ -180,19 +180,23 @@ describe('V4ChannelService - Batch Operations', () => {
     it('[P0] should create distribute batch successfully', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
+      const distributes = [
+        { viewerId: 'viewer1', weight: 1 },
+        { viewerId: 'viewer2', weight: 2 }
+      ];
+
       await service.distributeCreateBatch({
         channelId: '12345678',
-        distributes: [
-          { viewerId: 'viewer1', weight: 1 },
-          { viewerId: 'viewer2', weight: 2 }
-        ]
+        distributes
       });
 
+      // channelId must travel in the signed query params, and the distributes
+      // array is sent as the bare request body (server deserializes the body
+      // into a List, not an object).
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/channel/distribute/create-batch',
-        expect.objectContaining({
-          channelId: '12345678'
-        })
+        distributes,
+        { params: { channelId: '12345678' } }
       );
     });
 
@@ -216,14 +220,18 @@ describe('V4ChannelService - Batch Operations', () => {
     it('[P0] should update distribute batch successfully', async () => {
       mockHttpClient.post.mockResolvedValueOnce(undefined);
 
+      const distributes = [{ viewerId: 'viewer1', weight: 3 }];
+
       await service.distributeUpdateBatch({
         channelId: '12345678',
-        distributes: [
-          { viewerId: 'viewer1', weight: 3 }
-        ]
+        distributes
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/distribute/update-batch',
+        distributes,
+        { params: { channelId: '12345678' } }
+      );
     });
   });
 

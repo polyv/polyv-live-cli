@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T15:12:59.208Z",
+  "generatedAt": "2026-06-24T15:41:49.337Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,20 +16,20 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 60,
+    "integrationFiles": 61,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 400,
-    "referencedCommandPathsExcludingHelp": 258,
+    "referencedCommandPathsExcludingHelp": 260,
     "coveredLeafTargetsIncludingHelp": 363,
     "missingLeafTargetsIncludingHelp": 204,
-    "coveredRealExecutionLeafTargets": 252,
-    "missingRealExecutionLeafTargets": 315,
-    "realExecutionCoveragePercent": 44.44,
+    "coveredRealExecutionLeafTargets": 254,
+    "missingRealExecutionLeafTargets": 313,
+    "realExecutionCoveragePercent": 44.8,
     "includingHelpCoveragePercent": 64.02,
-    "integrationReferences": 611,
-    "realExecutionReferences": 343,
+    "integrationReferences": 614,
+    "realExecutionReferences": 346,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -66,11 +66,11 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 65,
-      "missingRealExecutionLeafTargets": 13,
+      "coveredRealExecutionLeafTargets": 67,
+      "missingRealExecutionLeafTargets": 11,
       "coveredLeafTargetsIncludingHelp": 73,
       "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 83.33,
+      "realExecutionCoveragePercent": 85.9,
       "includingHelpCoveragePercent": 93.59
     },
     {
@@ -580,28 +580,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1164
-    },
-    {
-      "command": "channel distribute master-switch",
-      "path": [
-        "channel",
-        "distribute",
-        "master-switch"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1183
-    },
-    {
-      "command": "channel distribute statistic",
-      "path": [
-        "channel",
-        "distribute",
-        "statistic"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1175
     },
     {
       "command": "channel distribute switch",
@@ -6647,6 +6625,28 @@
       "line": 1128
     },
     {
+      "command": "channel distribute master-switch",
+      "path": [
+        "channel",
+        "distribute",
+        "master-switch"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1183
+    },
+    {
+      "command": "channel distribute statistic",
+      "path": [
+        "channel",
+        "distribute",
+        "statistic"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1175
+    },
+    {
       "command": "channel follow list",
       "path": [
         "channel",
@@ -9333,11 +9333,11 @@
     },
     {
       "command": "channel distribute list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 199,
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 49,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9348,9 +9348,13 @@
     },
     {
       "command": "channel distribute master-switch",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 94,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 164,
@@ -9359,9 +9363,13 @@
     },
     {
       "command": "channel distribute statistic",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 63,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 163,

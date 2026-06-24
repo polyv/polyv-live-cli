@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T15:12:59.208Z
+Generated at: 2026-06-24T15:41:49.337Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,12 +9,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 60 |
+| Integration files scanned | 61 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 252 |
-| Missing real-execution leaf subcommands | 315 |
-| Real-execution coverage | 44.44% |
+| Real-executed leaf subcommands | 254 |
+| Missing real-execution leaf subcommands | 313 |
+| Real-execution coverage | 44.80% |
 | Leaf subcommands referenced including help | 363 |
 | Missing including help | 204 |
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 65 | 13 | 83.33% | 73 | 5 |
+| `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
 | `chat` | 44 | 27 | 17 | 61.36% | 33 | 11 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -80,8 +80,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel submeeting-batch-add` | `packages/cli/src/commands/channel.commands.ts:1390` |
 | `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1134` |
 | `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1164` |
-| `channel distribute master-switch` | `packages/cli/src/commands/channel.commands.ts:1183` |
-| `channel distribute statistic` | `packages/cli/src/commands/channel.commands.ts:1175` |
 | `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1194` |
 | `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1149` |
 | `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
