@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T22:16:21.428Z
+Generated at: 2026-06-24T22:24:44.721Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 84 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 416 |
-| Missing real-execution leaf subcommands | 151 |
-| Real-execution coverage | 73.37% |
+| Real-executed leaf subcommands | 418 |
+| Missing real-execution leaf subcommands | 149 |
+| Real-execution coverage | 73.72% |
 | Leaf subcommands referenced including help | 469 |
 | Missing including help | 98 |
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 19 | 12 | 61.29% | 28 | 3 |
+| `user` | 31 | 21 | 10 | 67.74% | 28 | 3 |
 | `viewer` | 19 | 17 | 2 | 89.47% | 18 | 1 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
@@ -198,8 +198,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user child sale-get` | `packages/cli/src/commands/user.commands.ts:82` |
 | `user child update` | `packages/cli/src/commands/user.commands.ts:68` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
-| `user org create` | `packages/cli/src/commands/user.commands.ts:92` |
-| `user org delete` | `packages/cli/src/commands/user.commands.ts:98` |
 | `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |

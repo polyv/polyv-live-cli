@@ -270,7 +270,8 @@ describe('V4UserService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/user/organization/delete',
-        { organizationId: 1 }
+        undefined,
+        { params: { organizationId: 1 } },
       );
     });
 

@@ -2,7 +2,8 @@
  * @fileoverview Real-CLI integration tests for the account-scoped `user` write
  * subcommands (`user setting footer update`, `user template donate update`,
  * `user template marquee update`, `user template audio-moderation update`,
- * `user template video-moderation update`).
+ * `user template video-moderation update`, `user org create`,
+ * `user org delete`).
  *
  * Each target is exercised through the local CLI entry (dist/index.js). These
  * are account-scoped template/setting writes, so every test follows a strict
@@ -10,6 +11,11 @@
  * unchanged. The restore is performed in a `finally` block so the account is
  * always returned to its original state even if an assertion fails mid-test
  * (these writes affect every channel account-wide).
+ *
+ * `user org create` → `user org delete` is an account-scoped CRUD lifecycle:
+ * the parent organization is discovered from the existing org tree, the created
+ * org is deleted in the same test (with a `finally` fallback) so no orphan
+ * organization is left on the account.
  *
  * Per the integration-test convention, every test still creates (and deletes in
  * `finally`) a temporary channel as the real test asset, even though these
@@ -21,6 +27,7 @@ import {
   createTemporaryChannel,
   deleteTemporaryChannel,
   parseJsonObject,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -318,6 +325,75 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
     expect(String(afterRestore.imageFrequency)).toBe(original!.freq);
   }, 120000);
 
+  // `user org create` → `user org delete` is an account-scoped CRUD lifecycle.
+  // The parent organization is discovered from the existing org tree (the root
+  // org has parentId 0), the created org id is captured from the create result,
+  // and the new org is deleted in the same test (with a `finally` fallback) so
+  // no orphan organization is left on the account.
+  (shouldRunRealChannelTests ? it : it.skip)('runs the user organization create→delete lifecycle via real CLI', () => {
+    let channelId: string | undefined;
+    let createdOrgId: number | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Org Create Delete');
+
+      const orgs = parseJsonValue(
+        runCliSuccess(['user', 'org', 'list', '--output', 'json']),
+      ) as Array<{ id: number; parentId: number; name: string }>;
+      expect(Array.isArray(orgs)).toBe(true);
+      expect(orgs.length).toBeGreaterThan(0);
+      const root = orgs.find((o) => o.parentId === 0) ?? orgs[0];
+      const parentId = root.id;
+
+      const uniqueName = `it-org-${Date.now()}`;
+      const created = parseJsonObject(
+        runCliSuccess([
+          'user', 'org', 'create',
+          '--name', uniqueName,
+          '--parent-id', String(parentId),
+          '--description', 'cli integration test org',
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(created.success).toBe(true);
+      const createdResult = created.result as { id: number; name: string };
+      expect(createdResult.name).toBe(uniqueName);
+      createdOrgId = createdResult.id;
+
+      const deleted = parseJsonObject(
+        runCliSuccess([
+          'user', 'org', 'delete',
+          '--organization-id', String(createdOrgId),
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(deleted.success).toBe(true);
+      expect(deleted.organizationId).toBe(createdOrgId);
+      createdOrgId = undefined;
+
+      // Verify the new org is actually gone from the account org tree.
+      const afterDelete = parseJsonValue(
+        runCliSuccess(['user', 'org', 'list', '--output', 'json']),
+      ) as Array<{ id: number }>;
+      expect(afterDelete.find((o) => o.id === createdResult.id)).toBeUndefined();
+    } finally {
+      if (createdOrgId !== undefined) {
+        try {
+          runCliSuccess([
+            'user', 'org', 'delete',
+            '--organization-id', String(createdOrgId),
+            '--force', '--output', 'json',
+          ]);
+        } catch {
+          // best-effort cleanup of an orphan organization
+        }
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted user writes through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -326,6 +402,8 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
       [['user', 'template', 'marquee', 'update', '--help'], 'marquee'],
       [['user', 'template', 'audio-moderation', 'update', '--help'], 'audio-moderation'],
       [['user', 'template', 'video-moderation', 'update', '--help'], 'video-moderation'],
+      [['user', 'org', 'create', '--help'], 'organization'],
+      [['user', 'org', 'delete', '--help'], 'organization'],
     ];
 
     for (const [args, marker] of checks) {

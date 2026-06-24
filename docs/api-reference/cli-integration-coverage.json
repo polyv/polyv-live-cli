@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T22:16:21.428Z",
+  "generatedAt": "2026-06-24T22:24:44.721Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,16 +21,16 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 508,
-    "referencedCommandPathsExcludingHelp": 422,
+    "referencedCommandPathsExcludingHelp": 424,
     "coveredLeafTargetsIncludingHelp": 469,
     "missingLeafTargetsIncludingHelp": 98,
-    "coveredRealExecutionLeafTargets": 416,
-    "missingRealExecutionLeafTargets": 151,
-    "realExecutionCoveragePercent": 73.37,
+    "coveredRealExecutionLeafTargets": 418,
+    "missingRealExecutionLeafTargets": 149,
+    "realExecutionCoveragePercent": 73.72,
     "includingHelpCoveragePercent": 82.72,
-    "integrationReferences": 976,
-    "realExecutionReferences": 600,
-    "helpReferences": 376
+    "integrationReferences": 983,
+    "realExecutionReferences": 605,
+    "helpReferences": 378
   },
   "byTopLevel": [
     {
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 19,
-      "missingRealExecutionLeafTargets": 12,
+      "coveredRealExecutionLeafTargets": 21,
+      "missingRealExecutionLeafTargets": 10,
       "coveredLeafTargetsIncludingHelp": 28,
       "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 61.29,
+      "realExecutionCoveragePercent": 67.74,
       "includingHelpCoveragePercent": 90.32
     },
     {
@@ -1839,28 +1839,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 136
-    },
-    {
-      "command": "user org create",
-      "path": [
-        "user",
-        "org",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 92
-    },
-    {
-      "command": "user org delete",
-      "path": [
-        "user",
-        "org",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 98
     },
     {
       "command": "user viewlog detail",
@@ -6783,6 +6761,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 55
+    },
+    {
+      "command": "user org create",
+      "path": [
+        "user",
+        "org",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 92
+    },
+    {
+      "command": "user org delete",
+      "path": [
+        "user",
+        "org",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 98
     },
     {
       "command": "user org list",
@@ -12996,9 +12996,13 @@
     },
     {
       "command": "user org create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 350,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 32,
@@ -13007,9 +13011,13 @@
     },
     {
       "command": "user org delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 364,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 33,
@@ -13018,7 +13026,7 @@
     },
     {
       "command": "user org list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
@@ -13059,7 +13067,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 50,
+        "line": 57,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13137,7 +13145,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 219,
+        "line": 226,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13167,7 +13175,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 109,
+        "line": 116,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13197,7 +13205,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 152,
+        "line": 159,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13279,7 +13287,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 282,
+        "line": 289,
         "source": "array-literal"
       },
       "firstHelpReference": {

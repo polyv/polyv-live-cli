@@ -415,9 +415,16 @@ export class V4UserService {
   async deleteOrganization(params: DeleteOrganizationParams): Promise<void> {
     this.validateRequiredNumber(params.organizationId, 'organizationId');
 
+    // The PolyV organization/delete endpoint takes `organizationId` as a signed
+    // query parameter (per the Java example in delete.md: organizationId is added
+    // to requestMap which participates in signing, then appended to the URL with a
+    // null body via postFormBody(url, null)). The signing interceptor only signs
+    // config.params, so organizationId must be passed via the 3-arg params form
+    // rather than the unsigned request body.
     await this.client.httpClient.post(
       '/live/v4/user/organization/delete',
-      params
+      undefined,
+      { params: { organizationId: params.organizationId } },
     );
   }
 
