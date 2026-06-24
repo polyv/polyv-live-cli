@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T21:01:40.578Z
+Generated at: 2026-06-24T21:09:13.978Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 83 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 384 |
-| Missing real-execution leaf subcommands | 183 |
-| Real-execution coverage | 67.72% |
-| Leaf subcommands referenced including help | 451 |
-| Missing including help | 116 |
+| Real-executed leaf subcommands | 391 |
+| Missing real-execution leaf subcommands | 176 |
+| Real-execution coverage | 68.96% |
+| Leaf subcommands referenced including help | 454 |
+| Missing including help | 113 |
 
 ## By Top-Level Command
 
@@ -44,7 +44,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform` | 22 | 13 | 9 | 59.09% | 15 | 7 |
 | `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
 | `player` | 11 | 6 | 5 | 54.55% | 6 | 5 |
-| `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
+| `product` | 36 | 31 | 5 | 86.11% | 33 | 3 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -176,14 +176,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player config update` | `packages/cli/src/commands/player.commands.ts:271` |
 | `product batch-add` | `packages/cli/src/commands/product.commands.ts:663` |
 | `product batch-shelf` | `packages/cli/src/commands/product.commands.ts:682` |
-| `product cancel-push` | `packages/cli/src/commands/product.commands.ts:719` |
-| `product push` | `packages/cli/src/commands/product.commands.ts:710` |
-| `product rank` | `packages/cli/src/commands/product.commands.ts:839` |
 | `product reference` | `packages/cli/src/commands/product.commands.ts:727` |
-| `product sort` | `packages/cli/src/commands/product.commands.ts:700` |
-| `product topping` | `packages/cli/src/commands/product.commands.ts:848` |
-| `product untopping` | `packages/cli/src/commands/product.commands.ts:856` |
-| `product update-enabled` | `packages/cli/src/commands/product.commands.ts:655` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |

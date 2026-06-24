@@ -16,6 +16,14 @@
  *    where productId is a string (snowflake-style id); update/delete echo
  *    `{ success, data: { productId } }`. The v4 `/live/v4/user/product/*`
  *    endpoints accept an unsigned body (2-arg post).
+ *  - channel-scoped product operations `topping` / `untopping` / `rank` /
+ *    `sort` / `push` / `cancel-push` / `update-enabled`: all seven are
+ *    reversible writes that share a single `product add` fixture. The
+ *    product-id ops return `{ success, data: { channelId, productId[, rank] } }`,
+ *    `sort` returns `{ success, data: 'SUCCESS' }`, `push`/`cancel-push`
+ *    return `{ success, data: null }`, and `update-enabled` returns
+ *    `{ success, data: { channelId, enabled } }`. The fixture is closed by a
+ *    single `product delete` at the end.
  *
  * Each test runs a create -> update -> delete loop through the real CLI entry
  * and cleans up the created product (plus the temporary channel) in `finally`.
@@ -276,6 +284,229 @@ describe('product CLI write lifecycle integration', () => {
     180000,
   );
 
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs the channel product topping / untopping / rank / sort / push / cancel-push / update-enabled operations via real CLI',
+    () => {
+      // All seven operations are channel-scoped reversible writes that operate
+      // on (or for) a single channel product, so they share one temporary
+      // channel + one `product add` fixture and are closed by a single
+      // `product delete` at the end. update-enabled flips the channel product
+      // library switch (N then Y restore); the product-id ops return
+      // { success, data: { channelId, productId[, rank] } }, sort returns
+      // { success, data: 'SUCCESS' }, push/cancel-push return
+      // { success, data: null }.
+      let channelId: string | undefined;
+      let productId: number | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Product Ops Lifecycle');
+        const ts = Date.now();
+        const name = `polyv-it-ops-${ts}`;
+
+        const addOutput = runCliSuccess([
+          'product',
+          'add',
+          '--channel-id',
+          channelId,
+          '--name',
+          name,
+          '--status',
+          '1',
+          '--link-type',
+          '10',
+          '--link',
+          `https://example.com/p-${ts}`,
+          '--cover',
+          REAL_COVER_URL,
+          '--real-price',
+          '12.3',
+          '--output',
+          'json',
+        ]);
+        const added = parseJsonObject(addOutput) as { productId?: number };
+        productId = Number(added.productId);
+        expect(Number.isInteger(productId) && productId > 0).toBe(true);
+
+        const topOut = runCliSuccess([
+          'product',
+          'topping',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const topped = parseJsonObject(topOut) as {
+          success?: boolean;
+          data?: { channelId?: string | number; productId?: number };
+        };
+        expect(topped.success).toBe(true);
+        expect(Number(topped.data?.productId)).toBe(productId);
+
+        const untopOut = runCliSuccess([
+          'product',
+          'untopping',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const untopped = parseJsonObject(untopOut) as {
+          success?: boolean;
+          data?: { productId?: number };
+        };
+        expect(untopped.success).toBe(true);
+        expect(Number(untopped.data?.productId)).toBe(productId);
+
+        const rankOut = runCliSuccess([
+          'product',
+          'rank',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--rank',
+          '1',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const ranked = parseJsonObject(rankOut) as {
+          success?: boolean;
+          data?: { productId?: number; rank?: number };
+        };
+        expect(ranked.success).toBe(true);
+        expect(Number(ranked.data?.productId)).toBe(productId);
+        expect(ranked.data?.rank).toBe(1);
+
+        const sortOut = runCliSuccess([
+          'product',
+          'sort',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--type',
+          '50',
+          '--sort',
+          '1',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const sorted = parseJsonObject(sortOut) as {
+          success?: boolean;
+          data?: unknown;
+        };
+        expect(sorted.success).toBe(true);
+        expect(sorted.data).toBe('SUCCESS');
+
+        const pushOut = runCliSuccess([
+          'product',
+          'push',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--push-card-type',
+          'smallCard',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const pushed = parseJsonObject(pushOut) as { success?: boolean };
+        expect(pushed.success).toBe(true);
+
+        const cancelOut = runCliSuccess([
+          'product',
+          'cancel-push',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const cancelled = parseJsonObject(cancelOut) as { success?: boolean };
+        expect(cancelled.success).toBe(true);
+
+        const enabledNOut = runCliSuccess([
+          'product',
+          'update-enabled',
+          '--channel-id',
+          channelId,
+          '--enabled',
+          'N',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const disabled = parseJsonObject(enabledNOut) as {
+          success?: boolean;
+          data?: { channelId?: string | number; enabled?: string };
+        };
+        expect(disabled.success).toBe(true);
+        expect(disabled.data?.enabled).toBe('N');
+
+        // Restore the channel product library switch to enabled.
+        runCliSuccess([
+          'product',
+          'update-enabled',
+          '--channel-id',
+          channelId,
+          '--enabled',
+          'Y',
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        const deleteOutput = runCliSuccess([
+          'product',
+          'delete',
+          '--channel-id',
+          channelId,
+          '--product-id',
+          String(productId),
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const deleted = parseJsonObject(deleteOutput) as { deleted?: boolean };
+        expect(deleted.deleted).toBe(true);
+        productId = undefined;
+      } finally {
+        if (channelId && productId !== undefined) {
+          try {
+            runCliSuccess([
+              'product',
+              'delete',
+              '--channel-id',
+              channelId,
+              '--product-id',
+              String(productId),
+              '--force',
+              '--output',
+              'json',
+            ]);
+          } catch {
+            // Best-effort; the product may already be gone.
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the product write subcommands through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -285,6 +516,13 @@ describe('product CLI write lifecycle integration', () => {
       [['product', 'library', 'create', '--help'], '--link-type'],
       [['product', 'library', 'update', '--help'], '--product-id'],
       [['product', 'library', 'delete', '--help'], '--product-id'],
+      [['product', 'topping', '--help'], '--product-id'],
+      [['product', 'untopping', '--help'], '--product-id'],
+      [['product', 'rank', '--help'], '--rank'],
+      [['product', 'sort', '--help'], '--type'],
+      [['product', 'push', '--help'], '--product-id'],
+      [['product', 'cancel-push', '--help'], '--product-id'],
+      [['product', 'update-enabled', '--help'], '--enabled'],
     ];
 
     for (const [args, marker] of checks) {
