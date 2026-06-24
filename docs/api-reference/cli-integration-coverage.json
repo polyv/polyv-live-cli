@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T20:31:22.075Z",
+  "generatedAt": "2026-06-24T20:41:37.456Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 82,
+    "integrationFiles": 83,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 484,
-    "referencedCommandPathsExcludingHelp": 382,
-    "coveredLeafTargetsIncludingHelp": 445,
-    "missingLeafTargetsIncludingHelp": 122,
-    "coveredRealExecutionLeafTargets": 376,
-    "missingRealExecutionLeafTargets": 191,
-    "realExecutionCoveragePercent": 66.31,
-    "includingHelpCoveragePercent": 78.48,
-    "integrationReferences": 862,
-    "realExecutionReferences": 513,
-    "helpReferences": 349
+    "referencedCommandPathsIncludingHelp": 487,
+    "referencedCommandPathsExcludingHelp": 385,
+    "coveredLeafTargetsIncludingHelp": 448,
+    "missingLeafTargetsIncludingHelp": 119,
+    "coveredRealExecutionLeafTargets": 379,
+    "missingRealExecutionLeafTargets": 188,
+    "realExecutionCoveragePercent": 66.84,
+    "includingHelpCoveragePercent": 79.01,
+    "integrationReferences": 870,
+    "realExecutionReferences": 518,
+    "helpReferences": 352
   },
   "byTopLevel": [
     {
@@ -46,12 +46,12 @@
     {
       "command": "ai",
       "targetLeafCommands": 12,
-      "coveredRealExecutionLeafTargets": 5,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 5,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 41.67,
-      "includingHelpCoveragePercent": 41.67
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 8,
+      "missingLeafTargetsIncludingHelp": 4,
+      "realExecutionCoveragePercent": 66.67,
+      "includingHelpCoveragePercent": 66.67
     },
     {
       "command": "card-push",
@@ -461,17 +461,6 @@
       "line": 310
     },
     {
-      "command": "ai video-produce get",
-      "path": [
-        "ai",
-        "video-produce",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 272
-    },
-    {
       "command": "ai video-produce ppt async-upload",
       "path": [
         "ai",
@@ -482,30 +471,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 394
-    },
-    {
-      "command": "ai video-produce ppt get",
-      "path": [
-        "ai",
-        "video-produce",
-        "ppt",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 354
-    },
-    {
-      "command": "ai video-produce ppt upload",
-      "path": [
-        "ai",
-        "video-produce",
-        "ppt",
-        "upload"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 372
     },
     {
       "command": "channel ccb-focus-reset",
@@ -2516,17 +2481,6 @@
       "line": 310
     },
     {
-      "command": "ai video-produce get",
-      "path": [
-        "ai",
-        "video-produce",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 272
-    },
-    {
       "command": "ai video-produce ppt async-upload",
       "path": [
         "ai",
@@ -2537,30 +2491,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 394
-    },
-    {
-      "command": "ai video-produce ppt get",
-      "path": [
-        "ai",
-        "video-produce",
-        "ppt",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 354
-    },
-    {
-      "command": "ai video-produce ppt upload",
-      "path": [
-        "ai",
-        "video-produce",
-        "ppt",
-        "upload"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 372
     },
     {
       "command": "channel children-list",
@@ -4046,6 +3976,17 @@
       "line": 290
     },
     {
+      "command": "ai video-produce get",
+      "path": [
+        "ai",
+        "video-produce",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 272
+    },
+    {
       "command": "ai video-produce list",
       "path": [
         "ai",
@@ -4055,6 +3996,18 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 242
+    },
+    {
+      "command": "ai video-produce ppt get",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 354
     },
     {
       "command": "ai video-produce ppt list",
@@ -4067,6 +4020,18 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 334
+    },
+    {
+      "command": "ai video-produce ppt upload",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "upload"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 372
     },
     {
       "command": "ai video-produce tts-voice list",
@@ -8109,26 +8074,71 @@
       "firstHelpReference": null
     },
     {
-      "command": "ai video-produce list",
+      "command": "ai video-produce get",
       "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 75,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 179,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "ai video-produce list",
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/ai-video-produce.integration.test.ts",
-        "line": 51,
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 55,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
-      "command": "ai video-produce ppt list",
+      "command": "ai video-produce ppt get",
       "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 134,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 180,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "ai video-produce ppt list",
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/ai-video-produce.integration.test.ts",
-        "line": 52,
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 107,
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "ai video-produce ppt upload",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 152,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 181,
+        "source": "array-literal"
+      }
     },
     {
       "command": "ai video-produce tts-voice list",

@@ -188,9 +188,11 @@ export class V4AiService {
       throw new PolyVValidationError('id is required');
     }
 
+    // The server expects the query parameter `aiPPTVideoId` (not `id`); see
+    // video-produce-get.md. Keep the public API on `id` and map it here.
     const response = await this.client.httpClient.get<VideoProduceTask>(
       '/live/v4/ai/video-produce/get',
-      { params }
+      { params: { aiPPTVideoId: params.id } }
     );
     return response as unknown as VideoProduceTask;
   }

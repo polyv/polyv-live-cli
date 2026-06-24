@@ -148,7 +148,7 @@ describe('V4AiService', () => {
       expect(result).toEqual(mockResponse);
       expect(mockHttpClient.get).toHaveBeenCalledWith(
         '/live/v4/ai/video-produce/get',
-        { params: { id: 2001 } }
+        { params: { aiPPTVideoId: 2001 } }
       );
     });
 

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T20:31:22.075Z
+Generated at: 2026-06-24T20:41:37.456Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,21 +9,21 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 82 |
+| Integration files scanned | 83 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 376 |
-| Missing real-execution leaf subcommands | 191 |
-| Real-execution coverage | 66.31% |
-| Leaf subcommands referenced including help | 445 |
-| Missing including help | 122 |
+| Real-executed leaf subcommands | 379 |
+| Missing real-execution leaf subcommands | 188 |
+| Real-execution coverage | 66.84% |
+| Leaf subcommands referenced including help | 448 |
+| Missing including help | 119 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
-| `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
+| `ai` | 12 | 8 | 4 | 66.67% | 8 | 4 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
 | `chat` | 44 | 37 | 7 | 84.09% | 41 | 3 |
@@ -69,10 +69,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai digital-human list-org` | `packages/cli/src/commands/ai.commands.ts:170` |
 | `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:310` |
-| `ai video-produce get` | `packages/cli/src/commands/ai.commands.ts:272` |
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |
-| `ai video-produce ppt get` | `packages/cli/src/commands/ai.commands.ts:354` |
-| `ai video-produce ppt upload` | `packages/cli/src/commands/ai.commands.ts:372` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1459` |
 | `channel children-list` | `packages/cli/src/commands/channel.commands.ts:1290` |
 | `channel questionnaire-stop` | `packages/cli/src/commands/channel.commands.ts:1401` |
