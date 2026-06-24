@@ -453,6 +453,53 @@ describe('viewer CLI CRUD lifecycle integration', () => {
     },
   );
 
+  // lottery-wins takes a viewer-id; a freshly imported viewer (no lottery
+  // activity) returns a well-formed empty page rather than an error.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'lists viewer lottery wins via real CLI',
+    () => {
+      let channelId: string | undefined;
+      let viewerUnionId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Viewer Lottery Wins');
+        const ts = Date.now();
+        const mobile = `138${String(ts).slice(-8)}`;
+
+        const createOutput = runCliSuccess([
+          'viewer', 'create',
+          '--nickname', `lottery-it-${ts}`,
+          '--mobile', mobile,
+          '--force', '--output', 'json',
+        ]);
+        viewerUnionId = String(
+          (parseJsonObject(createOutput).data as Record<string, unknown>).viewerUnionId,
+        );
+        expect(viewerUnionId.length).toBeGreaterThan(0);
+
+        const payload = parseJsonObject(
+          runCliSuccess(['viewer', 'lottery-wins', '--viewer-id', viewerUnionId, '--output', 'json']),
+        );
+
+        expect(typeof payload.pageNumber).toBe('number');
+        expect(typeof payload.pageSize).toBe('number');
+        expect(payload.totalItems).toBe(0);
+        expect(Array.isArray(payload.contents)).toBe(true);
+      } finally {
+        if (viewerUnionId) {
+          try {
+            runCliSuccess(['viewer', 'delete', '--viewer-union-id', viewerUnionId, '--force', '--output', 'json']);
+          } catch {
+            // best-effort viewer cleanup
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+  );
+
   // Command-surface checks run unconditionally (no real credentials needed).
   it('exposes the viewer CRUD subcommands via --help', () => {
     const checks: Array<{ args: string[]; text: string }> = [

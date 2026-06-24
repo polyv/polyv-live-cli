@@ -2,6 +2,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -86,4 +87,113 @@ describe('user business CLI integration', () => {
       }
     }
   }, 240000);
+
+  // invite-sales add/update/remove is account-scoped (no channel-id). The
+  // --viewer-union-ids accepts the viewerUnionId returned by `viewer create`,
+  // giving a clean add -> update(verify org change) -> remove(verify gone)
+  // lifecycle. A temporary channel is still created/removed per convention.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs the invite-sales add -> update -> remove lifecycle via real CLI',
+    () => {
+      let channelId: string | undefined;
+      let viewerUnionId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Invite Sales Lifecycle');
+        const ts = Date.now();
+        const mobile = `138${String(ts).slice(-8)}`;
+        const nickname = `invite-it-${ts}`;
+
+        // Create a real viewer to supply a viewerUnionId for invite-sales.
+        const createOutput = runCliSuccess([
+          'viewer',
+          'create',
+          '--nickname',
+          nickname,
+          '--mobile',
+          mobile,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const created = parseJsonObject(createOutput);
+        expect(created.success).toBe(true);
+        viewerUnionId = String((created.data as Record<string, unknown>).viewerUnionId);
+        expect(viewerUnionId.length).toBeGreaterThan(0);
+
+        // add: registers the viewer as an invite sale.
+        const addOutput = runCliSuccess([
+          'invite-sales',
+          'add',
+          '--viewer-union-ids',
+          viewerUnionId,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const added = parseJsonObject(addOutput);
+        expect(added.success).toBe(true);
+
+        // list confirms the viewer was persisted as an invite sale.
+        const listAfterAdd = parseJsonObject(
+          runCliSuccess(['invite-sales', 'list', '--viewer-union-id', viewerUnionId, '--output', 'json'])
+        );
+        expect(listAfterAdd.totalItems).toBe(1);
+
+        // update: moves the invite sale to a child organization (46101 = 子组织1).
+        const updateOutput = runCliSuccess([
+          'invite-sales',
+          'update',
+          '--viewer-union-ids',
+          viewerUnionId,
+          '--organization-id',
+          '46101',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        expect(parseJsonObject(updateOutput).success).toBe(true);
+
+        // list confirms the organization change persisted.
+        const listAfterUpdate = parseJsonObject(
+          runCliSuccess(['invite-sales', 'list', '--viewer-union-id', viewerUnionId, '--output', 'json'])
+        );
+        const updatedContents = listAfterUpdate.contents as Array<Record<string, unknown>>;
+        expect(updatedContents[0].organizationId).toBe(46101);
+
+        // remove: unregisters the invite sale.
+        const removeOutput = runCliSuccess([
+          'invite-sales',
+          'remove',
+          '--viewer-union-ids',
+          viewerUnionId,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        expect(parseJsonObject(removeOutput).success).toBe(true);
+
+        // list confirms the invite sale is gone.
+        const listAfterRemove = parseJsonObject(
+          runCliSuccess(['invite-sales', 'list', '--viewer-union-id', viewerUnionId, '--output', 'json'])
+        );
+        expect(listAfterRemove.totalItems).toBe(0);
+      } finally {
+        if (viewerUnionId) {
+          try {
+            runCliSuccess(['invite-sales', 'remove', '--viewer-union-ids', viewerUnionId, '--force', '--output', 'json']);
+          } catch {
+            // best-effort: ensure no invite sale lingers if the test failed mid-lifecycle
+          }
+          try {
+            runCliSuccess(['viewer', 'delete', '--viewer-union-id', viewerUnionId, '--force', '--output', 'json']);
+          } catch {
+            // best-effort viewer cleanup
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    }, 240000);
 });

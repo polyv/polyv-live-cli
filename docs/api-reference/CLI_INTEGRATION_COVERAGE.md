@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T23:44:20.947Z
+Generated at: 2026-06-24T23:55:04.677Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 87 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 440 |
-| Missing real-execution leaf subcommands | 127 |
-| Real-execution coverage | 77.60% |
-| Leaf subcommands referenced including help | 483 |
-| Missing including help | 84 |
+| Real-executed leaf subcommands | 445 |
+| Missing real-execution leaf subcommands | 122 |
+| Real-execution coverage | 78.48% |
+| Leaf subcommands referenced including help | 485 |
+| Missing including help | 82 |
 
 ## By Top-Level Command
 
@@ -36,7 +36,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 14 | 8 | 63.64% | 18 | 4 |
-| `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
+| `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
@@ -54,8 +54,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 24 | 7 | 77.42% | 28 | 3 |
-| `viewer` | 19 | 17 | 2 | 89.47% | 18 | 1 |
+| `user` | 31 | 25 | 6 | 80.65% | 29 | 2 |
+| `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 26 | 8 | 76.47% | 29 | 5 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -119,9 +119,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
 | `interaction task-reward viewer-list` | `packages/cli/src/commands/interaction.commands.ts:397` |
-| `invite-sales add` | `packages/cli/src/commands/invite-sales.commands.ts:40` |
-| `invite-sales remove` | `packages/cli/src/commands/invite-sales.commands.ts:56` |
-| `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
 | `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
@@ -178,11 +175,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
 | `user child sale-get` | `packages/cli/src/commands/user.commands.ts:82` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
-| `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
-| `viewer lottery-wins` | `packages/cli/src/commands/viewer.commands.ts:269` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
 | `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
 | `web auth record-info-download` | `packages/cli/src/commands/web.commands.ts:245` |

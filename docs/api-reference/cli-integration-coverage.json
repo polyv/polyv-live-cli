@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T23:44:20.947Z",
+  "generatedAt": "2026-06-24T23:55:04.677Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 522,
-    "referencedCommandPathsExcludingHelp": 446,
-    "coveredLeafTargetsIncludingHelp": 483,
-    "missingLeafTargetsIncludingHelp": 84,
-    "coveredRealExecutionLeafTargets": 440,
-    "missingRealExecutionLeafTargets": 127,
-    "realExecutionCoveragePercent": 77.6,
-    "includingHelpCoveragePercent": 85.19,
-    "integrationReferences": 1035,
-    "realExecutionReferences": 645,
+    "referencedCommandPathsIncludingHelp": 524,
+    "referencedCommandPathsExcludingHelp": 451,
+    "coveredLeafTargetsIncludingHelp": 485,
+    "missingLeafTargetsIncludingHelp": 82,
+    "coveredRealExecutionLeafTargets": 445,
+    "missingRealExecutionLeafTargets": 122,
+    "realExecutionCoveragePercent": 78.48,
+    "includingHelpCoveragePercent": 85.54,
+    "integrationReferences": 1050,
+    "realExecutionReferences": 660,
     "helpReferences": 390
   },
   "byTopLevel": [
@@ -176,11 +176,11 @@
     {
       "command": "invite-sales",
       "targetLeafCommands": 5,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 3,
+      "coveredRealExecutionLeafTargets": 5,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 5,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 40,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -356,22 +356,22 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 24,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 28,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 77.42,
-      "includingHelpCoveragePercent": 90.32
+      "coveredRealExecutionLeafTargets": 25,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 29,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 80.65,
+      "includingHelpCoveragePercent": 93.55
     },
     {
       "command": "viewer",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 17,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 18,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 89.47,
-      "includingHelpCoveragePercent": 94.74
+      "coveredRealExecutionLeafTargets": 18,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 19,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 94.74,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "watch-condition",
@@ -1006,36 +1006,6 @@
       "line": 397
     },
     {
-      "command": "invite-sales add",
-      "path": [
-        "invite-sales",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/invite-sales.commands.ts",
-      "line": 40
-    },
-    {
-      "command": "invite-sales remove",
-      "path": [
-        "invite-sales",
-        "remove"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/invite-sales.commands.ts",
-      "line": 56
-    },
-    {
-      "command": "invite-sales update",
-      "path": [
-        "invite-sales",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/invite-sales.commands.ts",
-      "line": 48
-    },
-    {
       "command": "lottery download-winners",
       "path": [
         "lottery",
@@ -1627,17 +1597,6 @@
       "line": 136
     },
     {
-      "command": "user viewlog detail",
-      "path": [
-        "user",
-        "viewlog",
-        "detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 150
-    },
-    {
       "command": "user setting pv-show update",
       "path": [
         "user",
@@ -1672,16 +1631,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 183
-    },
-    {
-      "command": "viewer lottery-wins",
-      "path": [
-        "viewer",
-        "lottery-wins"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 269
     },
     {
       "command": "viewer config update",
@@ -2609,27 +2558,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 136
-    },
-    {
-      "command": "user viewlog detail",
-      "path": [
-        "user",
-        "viewlog",
-        "detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 150
-    },
-    {
-      "command": "viewer lottery-wins",
-      "path": [
-        "viewer",
-        "lottery-wins"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 269
     },
     {
       "command": "web auth record-field-get",
@@ -4747,6 +4675,16 @@
       "line": 111
     },
     {
+      "command": "invite-sales add",
+      "path": [
+        "invite-sales",
+        "add"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 40
+    },
+    {
       "command": "invite-sales list",
       "path": [
         "invite-sales",
@@ -4755,6 +4693,26 @@
       "depth": 2,
       "file": "packages/cli/src/commands/invite-sales.commands.ts",
       "line": 33
+    },
+    {
+      "command": "invite-sales remove",
+      "path": [
+        "invite-sales",
+        "remove"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 56
+    },
+    {
+      "command": "invite-sales update",
+      "path": [
+        "invite-sales",
+        "update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 48
     },
     {
       "command": "invite-sales follow-viewer list",
@@ -6625,6 +6583,17 @@
       "line": 89
     },
     {
+      "command": "user viewlog detail",
+      "path": [
+        "user",
+        "viewlog",
+        "detail"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 150
+    },
+    {
       "command": "user viewlog list",
       "path": [
         "user",
@@ -6840,6 +6809,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 78
+    },
+    {
+      "command": "viewer lottery-wins",
+      "path": [
+        "viewer",
+        "lottery-wins"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 269
     },
     {
       "command": "viewer update",
@@ -9698,7 +9677,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 31,
+        "line": 32,
         "source": "array-literal"
       }
     },
@@ -9739,7 +9718,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 32,
+        "line": 33,
         "source": "array-literal"
       }
     },
@@ -10246,18 +10225,22 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 29,
+        "line": 30,
         "source": "array-literal"
       }
     },
     {
       "command": "invite-sales add",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
+        "line": 125,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 51,
+        "line": 52,
         "source": "array-literal"
       }
     },
@@ -10268,7 +10251,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 30,
+        "line": 31,
         "source": "array-literal"
       }
     },
@@ -10278,14 +10261,14 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 76,
+        "line": 77,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
       "command": "invite-sales list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
@@ -10300,23 +10283,31 @@
     },
     {
       "command": "invite-sales remove",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
+        "line": 165,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 53,
+        "line": 54,
         "source": "array-literal"
       }
     },
     {
       "command": "invite-sales update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
+        "line": 144,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 52,
+        "line": 53,
         "source": "array-literal"
       }
     },
@@ -11331,7 +11322,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 14,
+        "line": 15,
         "source": "array-literal"
       }
     },
@@ -11499,7 +11490,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 15,
+        "line": 16,
         "source": "array-literal"
       }
     },
@@ -11539,7 +11530,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 73,
+        "line": 74,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11581,7 +11572,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 17,
+        "line": 18,
         "source": "array-literal"
       }
     },
@@ -11592,7 +11583,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 50,
+        "line": 51,
         "source": "array-literal"
       }
     },
@@ -11602,7 +11593,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 75,
+        "line": 76,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11745,7 +11736,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 16,
+        "line": 17,
         "source": "array-literal"
       }
     },
@@ -11785,7 +11776,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 74,
+        "line": 75,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12912,12 +12903,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 241,
+        "line": 285,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 301,
+        "line": 345,
         "source": "array-literal"
       }
     },
@@ -12979,12 +12970,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 272,
+        "line": 316,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 302,
+        "line": 346,
         "source": "array-literal"
       }
     },
@@ -13014,7 +13005,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 299,
+        "line": 343,
         "source": "array-literal"
       }
     },
@@ -13103,7 +13094,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 297,
+        "line": 341,
         "source": "array-literal"
       }
     },
@@ -13133,7 +13124,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 298,
+        "line": 342,
         "source": "array-literal"
       }
     },
@@ -13181,7 +13172,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 295,
+        "line": 339,
         "source": "array-literal"
       }
     },
@@ -13211,7 +13202,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 291,
+        "line": 335,
         "source": "array-literal"
       }
     },
@@ -13241,7 +13232,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 292,
+        "line": 336,
         "source": "array-literal"
       }
     },
@@ -13271,7 +13262,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 294,
+        "line": 338,
         "source": "array-literal"
       }
     },
@@ -13297,7 +13288,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 293,
+        "line": 337,
         "source": "array-literal"
       }
     },
@@ -13323,7 +13314,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 296,
+        "line": 340,
         "source": "array-literal"
       }
     },
@@ -13354,6 +13345,17 @@
       }
     },
     {
+      "command": "user viewlog detail",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 254,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "user viewlog list",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -13364,7 +13366,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 300,
+        "line": 344,
         "source": "array-literal"
       }
     },
@@ -13392,7 +13394,7 @@
     },
     {
       "command": "viewer create",
-      "realExecutionReferences": 3,
+      "realExecutionReferences": 6,
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/custom-field-cli.integration.test.ts",
@@ -13401,13 +13403,13 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 459,
+        "line": 506,
         "source": "array-literal"
       }
     },
     {
       "command": "viewer delete",
-      "realExecutionReferences": 7,
+      "realExecutionReferences": 10,
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/custom-field-cli.integration.test.ts",
@@ -13416,7 +13418,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 462,
+        "line": 509,
         "source": "array-literal"
       }
     },
@@ -13431,7 +13433,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 460,
+        "line": 507,
         "source": "array-literal"
       }
     },
@@ -13446,7 +13448,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 463,
+        "line": 510,
         "source": "array-literal"
       }
     },
@@ -13472,7 +13474,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 466,
+        "line": 513,
         "source": "array-literal"
       }
     },
@@ -13544,6 +13546,17 @@
       "firstHelpReference": null
     },
     {
+      "command": "viewer lottery-wins",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 481,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "viewer tag",
       "realExecutionReferences": 0,
       "helpReferences": 2,
@@ -13565,7 +13578,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 464,
+        "line": 511,
         "source": "array-literal"
       }
     },
@@ -13621,7 +13634,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 465,
+        "line": 512,
         "source": "array-literal"
       }
     },
@@ -13651,7 +13664,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 461,
+        "line": 508,
         "source": "array-literal"
       }
     },

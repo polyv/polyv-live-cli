@@ -228,6 +228,50 @@ describe('user template CLI integration (account-scoped reads)', () => {
     }
   }, 120000);
 
+  // viewlog detail takes a viewer-id; a freshly imported viewer (no watch
+  // activity) returns a well-formed empty page rather than an error.
+  (shouldRunRealChannelTests ? it : it.skip)('gets user view log detail via real CLI', () => {
+    let channelId: string | undefined;
+    let viewerUnionId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Viewlog Detail');
+      const ts = Date.now();
+      const mobile = `138${String(ts).slice(-8)}`;
+
+      const createOutput = runCliSuccess([
+        'viewer', 'create',
+        '--nickname', `viewlog-it-${ts}`,
+        '--mobile', mobile,
+        '--force', '--output', 'json',
+      ]);
+      viewerUnionId = String(
+        (parseJsonObject(createOutput).data as Record<string, unknown>).viewerUnionId,
+      );
+      expect(viewerUnionId.length).toBeGreaterThan(0);
+
+      const payload = parseJsonObject(
+        runCliSuccess(['user', 'viewlog', 'detail', '--viewer-id', viewerUnionId, '--output', 'json']),
+      );
+
+      expect(typeof payload.pageNumber).toBe('number');
+      expect(typeof payload.pageSize).toBe('number');
+      expect(payload.totalItems).toBe(0);
+      expect(Array.isArray(payload.contents)).toBe(true);
+    } finally {
+      if (viewerUnionId) {
+        try {
+          runCliSuccess(['viewer', 'delete', '--viewer-union-id', viewerUnionId, '--force', '--output', 'json']);
+        } catch {
+          // best-effort viewer cleanup
+        }
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('lists user bill use details via real CLI', () => {
     let channelId: string | undefined;
 
