@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T21:57:04.365Z",
+  "generatedAt": "2026-06-24T22:05:24.510Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 507,
-    "referencedCommandPathsExcludingHelp": 415,
-    "coveredLeafTargetsIncludingHelp": 468,
-    "missingLeafTargetsIncludingHelp": 99,
-    "coveredRealExecutionLeafTargets": 409,
-    "missingRealExecutionLeafTargets": 158,
-    "realExecutionCoveragePercent": 72.13,
-    "includingHelpCoveragePercent": 82.54,
-    "integrationReferences": 952,
-    "realExecutionReferences": 580,
+    "referencedCommandPathsIncludingHelp": 508,
+    "referencedCommandPathsExcludingHelp": 418,
+    "coveredLeafTargetsIncludingHelp": 469,
+    "missingLeafTargetsIncludingHelp": 98,
+    "coveredRealExecutionLeafTargets": 412,
+    "missingRealExecutionLeafTargets": 155,
+    "realExecutionCoveragePercent": 72.66,
+    "includingHelpCoveragePercent": 82.72,
+    "integrationReferences": 957,
+    "realExecutionReferences": 585,
     "helpReferences": 372
   },
   "byTopLevel": [
@@ -76,12 +76,12 @@
     {
       "command": "chat",
       "targetLeafCommands": 44,
-      "coveredRealExecutionLeafTargets": 37,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 41,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 84.09,
-      "includingHelpCoveragePercent": 93.18
+      "coveredRealExecutionLeafTargets": 40,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 42,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 90.91,
+      "includingHelpCoveragePercent": 95.45
     },
     {
       "command": "checkin",
@@ -579,39 +579,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 505
-    },
-    {
-      "command": "chat robot list-update",
-      "path": [
-        "chat",
-        "robot",
-        "list-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 783
-    },
-    {
-      "command": "chat robot pause",
-      "path": [
-        "chat",
-        "robot",
-        "pause"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 797
-    },
-    {
-      "command": "chat robot setting-update",
-      "path": [
-        "chat",
-        "robot",
-        "setting-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 771
     },
     {
       "command": "chat role admin-update",
@@ -2208,17 +2175,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 534
-    },
-    {
-      "command": "chat robot list-update",
-      "path": [
-        "chat",
-        "robot",
-        "list-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 783
     },
     {
       "command": "chat role user-list",
@@ -4700,6 +4656,28 @@
       "line": 683
     },
     {
+      "command": "chat robot list-update",
+      "path": [
+        "chat",
+        "robot",
+        "list-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 783
+    },
+    {
+      "command": "chat robot pause",
+      "path": [
+        "chat",
+        "robot",
+        "pause"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 797
+    },
+    {
       "command": "chat robot setting-get",
       "path": [
         "chat",
@@ -4709,6 +4687,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 757
+    },
+    {
+      "command": "chat robot setting-update",
+      "path": [
+        "chat",
+        "robot",
+        "setting-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 771
     },
     {
       "command": "chat robot stats",
@@ -9480,10 +9469,25 @@
       }
     },
     {
+      "command": "chat robot list-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 277,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "chat robot pause",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 262,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
         "line": 34,
@@ -9492,7 +9496,7 @@
     },
     {
       "command": "chat robot setting-get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
@@ -9503,9 +9507,13 @@
     },
     {
       "command": "chat robot setting-update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 244,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
         "line": 33,

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T21:57:04.365Z
+Generated at: 2026-06-24T22:05:24.510Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 84 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 409 |
-| Missing real-execution leaf subcommands | 158 |
-| Real-execution coverage | 72.13% |
-| Leaf subcommands referenced including help | 468 |
-| Missing including help | 99 |
+| Real-executed leaf subcommands | 412 |
+| Missing real-execution leaf subcommands | 155 |
+| Real-execution coverage | 72.66% |
+| Leaf subcommands referenced including help | 469 |
+| Missing including help | 98 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 8 | 4 | 66.67% | 8 | 4 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 70 | 8 | 89.74% | 76 | 2 |
-| `chat` | 44 | 37 | 7 | 84.09% | 41 | 3 |
+| `chat` | 44 | 40 | 4 | 90.91% | 42 | 2 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
@@ -80,9 +80,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `chat message remove-contents` | `packages/cli/src/commands/chat.commands.ts:505` |
-| `chat robot list-update` | `packages/cli/src/commands/chat.commands.ts:783` |
-| `chat robot pause` | `packages/cli/src/commands/chat.commands.ts:797` |
-| `chat robot setting-update` | `packages/cli/src/commands/chat.commands.ts:771` |
 | `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:714` |
 | `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:744` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |

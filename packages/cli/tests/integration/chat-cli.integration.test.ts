@@ -225,4 +225,73 @@ describe('chat CLI integration', () => {
       }
     }
   }, 240000);
+
+  // Real CLI execution of the chat robot channel-scoped write subcommands
+  // (setting-update / list-update / pause). Each target takes only the channel
+  // id plus trivial numeric/text values, reports `{ success: true }`, and
+  // persists verifiable state (robot setting-get re-reads robotNumber). These
+  // are transient robot settings on a temp channel deleted in `finally`, so
+  // there is no lasting side effect (channel-scoped writes need no restore).
+  (shouldRunRealChannelTests ? it : it.skip)('runs chat robot write commands against a temporary real channel', async () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Chat Robot Writes');
+      const id = channelId;
+
+      // chat robot setting-update sets robotNumber/addRobotModel and returns
+      // `{ success: true }`; verify the new robotNumber persisted via setting-get.
+      const settingUpdate = parseJsonObject(runCliSuccess([
+        'chat', 'robot', 'setting-update',
+        '--channel-id', id,
+        '--robot-number', '5',
+        '--add-robot-model', 'timely',
+        '--force', '--output', 'json',
+      ]));
+      expect(settingUpdate.success).toBe(true);
+      const afterSetting = parseJsonObject(runCliSuccess([
+        'chat', 'robot', 'setting-get',
+        '--channel-id', id,
+        '--output', 'json',
+      ]));
+      expect(afterSetting.robotNumber).toBe(5);
+
+      // chat robot pause pauses channel robot growth and returns
+      // `{ success: true }`. pause does not change the virtual-viewer number,
+      // so it does not incur the number-change cooldown below.
+      const pause = parseJsonObject(runCliSuccess([
+        'chat', 'robot', 'pause',
+        '--channel-id', id,
+        '--force', '--output', 'json',
+      ]));
+      expect(pause.success).toBe(true);
+
+      // The server enforces a ~20s cooldown between consecutive virtual-viewer
+      // number changes on the same channel (error: 虚拟人数设置频繁 需等待), so we
+      // wait it out before the second number-setting write (list-update).
+      await new Promise((resolve) => setTimeout(resolve, 25000));
+
+      // chat robot list-update also only needs robotNumber + addRobotModel
+      // (robot-list is optional) and returns `{ success: true }`; verify the new
+      // robotNumber persisted via setting-get.
+      const listUpdate = parseJsonObject(runCliSuccess([
+        'chat', 'robot', 'list-update',
+        '--channel-id', id,
+        '--robot-number', '3',
+        '--add-robot-model', 'timely',
+        '--force', '--output', 'json',
+      ]));
+      expect(listUpdate.success).toBe(true);
+      const afterList = parseJsonObject(runCliSuccess([
+        'chat', 'robot', 'setting-get',
+        '--channel-id', id,
+        '--output', 'json',
+      ]));
+      expect(afterList.robotNumber).toBe(3);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });
