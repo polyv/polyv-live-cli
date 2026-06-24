@@ -2,7 +2,7 @@
 
 > 业务阶段：**数据复盘 / 治理 / 预热**
 > 覆盖一级命令：`viewer`、`custom-field`、`channel`、`account`
-> 真实执行状态：**主体命令验收通过，已用 `polyv-live-cli@latest` 复跑关键失败点**（`viewer`、`custom-field` 两族均有业务命令在真实账号 + 真实测试频道/真实测试观众上真实执行成功；其中 `viewer label channel-ref add` 发现 CLI 对账号标签 ID 的校验与官方文档冲突，已在本地修复并用构建后的 CLI 验证 `channel get.labelData` 可读回；`custom-field value save` 仍缺少 CLI/SDK/文档读回路径）
+> 真实执行状态：**主体命令验收通过，已用 `polyv-live-cli@latest` 复跑关键失败点**（`viewer`、`custom-field` 两族均有业务命令在真实账号 + 真实测试频道/真实测试观众上真实执行成功；其中 `viewer label channel-ref add` 发现 CLI 对账号标签 ID 的校验与官方文档冲突，已在 `polyv-live-cli@1.2.39` 修复并用 `polyv-live-cli@latest` 验证 `channel get.labelData` 可读回；`custom-field value save` 仍缺少 CLI/SDK/文档读回路径）
 
 ---
 
@@ -17,10 +17,10 @@
 - **分层联动侧（viewer tag / label channel-ref）**：把分层标签关联到专用频道，做「**不同场次给不同分层观众推不同货**」的精细化编排。
 
 > ⚠️ 本场景发现两个**真实执行问题**（均已用 `polyv-live-cli@latest` 复跑或源码/文档交叉确认，且不影响主体覆盖结论）：
-> 1. `viewer label channel-ref add` 的正确入参应是 `viewer label list` 返回的账号标签字符串 ID，例如 `9zu68aethm9eivf1`；官方文档同时说明 `channel get` 的 `labelData` 可作为频道侧读回字段。本轮发现 CLI 旧校验错误地要求正整数，导致正确字符串 ID 无法执行，而误用数字 viewer tag id `1282` 虽返回 success 但 `labelData` 为空。该问题已在本地代码修正，并用构建后的 CLI 实际执行确认 `channel get.labelData` 可读回 `9zu68aethm9eivf1`；发布后仍需用 `polyv-live-cli@latest` 包复验。
+> 1. `viewer label channel-ref add` 的正确入参应是 `viewer label list` 返回的账号标签字符串 ID，例如 `9zu68aethm9eivf1`；官方文档同时说明 `channel get` 的 `labelData` 可作为频道侧读回字段。本轮发现 CLI 旧校验错误地要求正整数，导致正确字符串 ID 无法执行，而误用数字 viewer tag id `1282` 虽返回 success 但 `labelData` 为空。该问题已在 `polyv-live-cli@1.2.39` 修正，并用 `polyv-live-cli@latest` 实际执行确认 `channel get.labelData` 可读回 `9zu68aethm9eivf1`。
 > 2. `custom-field value save` 返回 `{success:true}`，但 `custom-field value` 子命令族下**只有 `save`、没有 list/get 读回命令**，SDK 与官方文档也只列出 `viewer-value/save`，且 `viewer get` 不回显观众的自定义字段值，**当前无只读路径可读回自定义字段值**。
 >
-> 两个问题均不影响本场景主体命令覆盖结论：`viewer` 族的 `list`/`get`/`tag create`/`tag list`/`tag add`（tag add 经 `viewer get` 的 `labels` 数组交叉验证已确认持久化）/`label create`/`label list`/`lottery-wins` 与 `custom-field` 族的 `add`（经 `custom-field list` 交叉验证已确认持久化）/`list` 均真实执行成功。`channel-ref` 已定位为旧 CLI 入参校验问题，本地修复后已完成真实写入 + `channel get.labelData` 读回验证。详见第 12 节问题记录。
+> 两个问题均不影响本场景主体命令覆盖结论：`viewer` 族的 `list`/`get`/`tag create`/`tag list`/`tag add`（tag add 经 `viewer get` 的 `labels` 数组交叉验证已确认持久化）/`label create`/`label list`/`lottery-wins` 与 `custom-field` 族的 `add`（经 `custom-field list` 交叉验证已确认持久化）/`list` 均真实执行成功。`channel-ref` 已定位为旧 CLI 入参校验问题，并已在 `polyv-live-cli@latest` 完成真实写入 + `channel get.labelData` 读回验证。详见第 12 节问题记录。
 
 ## 2. 覆盖命令
 
@@ -35,13 +35,13 @@
 | `viewer` | `viewer tag add`（`-V`/`-l`） | 已执行成功 | 为观众 `4_aksysv...358` 打「GNHF高意向客户」(1282)；`viewer get` 复查 labels 命中 |
 | `viewer` | `viewer label create` | 已执行成功（超长失败已确认） | 正确命令使用 6 字「GNHF分层」成功（id `9zu68aethm9eivf1`），`label list` 复查 10→11；超长名称会失败，见第 13 节 |
 | `viewer` | `viewer label list` | 已执行成功 | 账号级标签列表（基线 10、新建后 11） |
-| `viewer` | `viewer label channel-ref add`（`-c`/`-l`） | 本地修复后已验证通过，待发布复验 | 官方文档要求账号 label 字符串 ID，旧 CLI 错误要求正整数；本地修复后用 `9zu68aethm9eivf1` 写入并通过 `channel get.labelData` 读回。见第 12.1 节 |
+| `viewer` | `viewer label channel-ref add`（`-c`/`-l`） | 已用 `polyv-live-cli@latest` 复验通过 | 官方文档要求账号 label 字符串 ID，旧 CLI 错误要求正整数；`1.2.39` 修复后用 `9zu68aethm9eivf1` 写入并通过 `channel get.labelData` 读回。见第 12.1 节 |
 | `viewer` | `viewer lottery-wins` | 已执行成功 | 观众中奖记录查询（totalItems=0，结构完整） |
 | `custom-field` | `custom-field add` | 已执行成功（缺 id 失败已确认） | 正确命令必须提供 `--custom-field-id`；补 `gnhf_cust_level` 后成功，`custom-field list` 复查已入库 |
 | `custom-field` | `custom-field list` | 已执行成功 | 自定义字段列表（基线空 → 新建后含 `gnhf_cust_level` / text） |
 | `custom-field` | `custom-field value save`（`--viewer-id`/`--custom-field-id`/`--custom-field-value`） | 已执行成功（持久化未验证） | 为观众写入「GNHF客户等级=高意向VIP」返回 success；但 CLI 无读回路径。见第 12.2 节 |
 
-> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983932`）/真实测试观众（`4_aksysv...358`）真实执行过，下文「命令执行台账」逐条记录。仅做 `--help` 校验、未真实执行的命令不计入覆盖。`viewer label channel-ref add` 已定位为旧 CLI 入参校验问题，本地修复后已用账号 label 字符串 ID 重新执行并通过 `channel get.labelData` 读回；`custom-field value save` 真实执行返回 success 但当前无 CLI/SDK/文档只读路径可交叉验证。`viewer`/`custom-field` 两族均因各自多条业务命令真实执行成功（且 tag add、custom-field add、channel-ref 经交叉验证确认持久化）而计入「已覆盖」。
+> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983932`）/真实测试观众（`4_aksysv...358`）真实执行过，下文「命令执行台账」逐条记录。仅做 `--help` 校验、未真实执行的命令不计入覆盖。`viewer label channel-ref add` 已定位为旧 CLI 入参校验问题，`1.2.39` 修复后已用账号 label 字符串 ID 重新执行并通过 `channel get.labelData` 读回；`custom-field value save` 真实执行返回 success 但当前无 CLI/SDK/文档只读路径可交叉验证。`viewer`/`custom-field` 两族均因各自多条业务命令真实执行成功（且 tag add、custom-field add、channel-ref 经交叉验证确认持久化）而计入「已覆盖」。
 
 ## 3. 专用测试频道
 
@@ -150,7 +150,7 @@
 | 14 | 00:20 | `custom-field add`（首次，缺 id） | `npx ... custom-field add --custom-field-name "GNHF客户等级" --custom-field-type text -f -o json` | — | **失败** | `error: required option '--custom-field-id <id>' not specified`（`--custom-field-id` 必填） |
 | 15 | 00:20 | `custom-field add`（补 id） | `npx ... custom-field add --custom-field-id gnhf_cust_level --custom-field-name "GNHF客户等级" --custom-field-type text -f -o json` | `gnhf_cust_level` | 成功 | 返回 `{success:true, result:true}` |
 | 16 | 00:20 | `custom-field list`（复查） | `npx ... custom-field list -o json` | `gnhf_cust_level` | 成功 | 返回 1 条 `gnhf_cust_level / GNHF客户等级 / text`（**持久化已验证**） |
-| 17 | 00:20 | `viewer label channel-ref add`（账号 label 字符串 id） | `npx ... viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json` | 7983932 | **失败（CLI 校验问题）** | `Error: 标签ID必须是正整数: 9zu68aethm9eivf1`；官方文档显示该接口应接受账号 label 字符串 id，已修复本地校验，待发布后复验 |
+| 17 | 00:20 | `viewer label channel-ref add`（账号 label 字符串 id） | `npx ... viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json` | 7983932 | **失败（CLI 校验问题）** | `Error: 标签ID必须是正整数: 9zu68aethm9eivf1`；官方文档显示该接口应接受账号 label 字符串 id，已在 `1.2.39` 修复并复验通过，见 #25/#26 |
 | 18 | 00:20 | `viewer label channel-ref add`（误用数字 viewer tag id） | `npx ... viewer label channel-ref add -c 7983932 -l 1282 -f -o json` | 7983932 | 成功（但语义不成立） | `{success:true, data:{channelIds:["7983932"], labelIds:["1282"]}}`；但 `channel get` 的 `labelData` 复查仍空，说明数字 viewer tag id 不是正确读回实体（见 12.1） |
 | 19 | 00:20 | `viewer tag add` | `npx ... viewer tag add -V "4_aksysv...358" -l 1282 -f -o json` | 观众 `4_aksysv...358` / 标签 1282 | 成功 | `{succeeded:1, failed:0, results:[{viewerUnionId, labelId:1282, success:true}]}` |
 | 20 | 00:20 | `viewer get`（复查打标） | `npx ... viewer get -i "4_aksysv...358" -o json` | 观众 `4_aksysv...358` | 成功 | `labels:[{id:1282, label:"GNHF高意向客户"}]`（**打标持久化已验证**） |
@@ -158,12 +158,12 @@
 | 22 | 00:20 | `viewer get`（复查字段值） | `npx ... viewer get -i "4_aksysv...358" -o json` | 观众 `4_aksysv...358` | 成功 | `viewer get` **不回显** custom field value（仅回 labels），无法读回（见 12.2） |
 | 23 | 00:20 | `viewer label list`（复查 label create） | `npx ... viewer label list -o json` | — | 成功 | totalItems 10→**11**，「GNHF分层」(`9zu68aethm9eivf1`) 在列（**label create 持久化已验证**） |
 | 24 | 00:20 | `viewer lottery-wins` | `npx ... viewer lottery-wins -i "4_aksysv...358" -o json` | 观众 `4_aksysv...358` | 成功 | totalItems=0、contents=[]（该观众无中奖记录，结构完整） |
-| 25 | 11:25 | `viewer label channel-ref add`（本地修复后复验） | `node packages/cli/dist/index.js viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json` | 7983932 / `9zu68aethm9eivf1` | 成功 | 返回 `{success:true, data:{channelIds:["7983932"], labelIds:["9zu68aethm9eivf1"]}}` |
-| 26 | 11:25 | `channel get`（复查 channel-ref） | `node packages/cli/dist/index.js channel get -c 7983932 -o json \| jq -c '{labelData:.labelData}'` | 7983932 | 成功 | `labelData:["9zu68aethm9eivf1"]`（**channel-ref 持久化已验证**） |
+| 25 | 11:35 | `viewer label channel-ref add`（`1.2.39` 发布版复验） | `npx --yes polyv-live-cli@latest viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json` | 7983932 / `9zu68aethm9eivf1` | 成功 | 返回 `{success:true, data:{channelIds:["7983932"], labelIds:["9zu68aethm9eivf1"]}}` |
+| 26 | 11:35 | `channel get`（复查 channel-ref） | `npx --yes polyv-live-cli@latest channel get -c 7983932 -o json \| jq -c '{labelData:.labelData}'` | 7983932 | 成功 | `labelData:["9zu68aethm9eivf1"]`（**channel-ref 持久化已验证**） |
 
 ## 11. 实际使用的 CLI 命令与真实参数
 
-> 以下为本场景真实执行过的命令（占位符处替换为真实值）。`<CLI>` = `npx --yes polyv-live-cli@latest`；`<LOCAL_CLI>` = `node packages/cli/dist/index.js`，仅用于记录本地修复后的复验命令。
+> 以下为本场景真实执行过的命令（占位符处替换为真实值）。`<CLI>` = `npx --yes polyv-live-cli@latest`。
 
 ### 11.1 画像底盘（viewer list / get）
 
@@ -226,13 +226,13 @@
 
 ### 12.1 问题：`viewer label channel-ref add` 的 CLI 校验与官方文档冲突
 
-- **现象**：`viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json` 使用 `viewer label create/list` 产出的账号 label 字符串 ID 时，被 `polyv-live-cli@latest` 旧校验拦截为 `标签ID必须是正整数`；改用 viewer tag 数字 ID `1282` 后虽然返回 `{success:true}`，但 `channel get -c 7983932 -o json` 的 `labelData` 仍为 `[]`。本地修复后重新用字符串 ID 执行，`channel get.labelData` 已读回 `9zu68aethm9eivf1`。
+- **现象**：发布前，`viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json` 使用 `viewer label create/list` 产出的账号 label 字符串 ID 时，被旧 CLI 校验拦截为 `标签ID必须是正整数`；改用 viewer tag 数字 ID `1282` 后虽然返回 `{success:true}`，但 `channel get -c 7983932 -o json` 的 `labelData` 仍为 `[]`。`1.2.39` 发布后重新用字符串 ID 执行，`channel get.labelData` 已读回 `9zu68aethm9eivf1`。
 - **已做排查**：
   1. 官方 API 文档 `v4/user/label/add_channel_label_refs.md` 的请求示例使用账号 label 字符串 ID（如 `zylw8zzi3p7mrqr4`），不是 viewer tag 数字 ID。
   2. 官方 `channel get` 文档声明 `labelData` 是频道标签 ID 数组，可作为频道侧读回字段。
   3. 因此旧 CLI 的“正整数”校验是命令层缺陷；数字 tag ID 返回 success 但不出现在 `labelData`，不能作为正确验证路径。
-- **结论**：`channel-ref` 本身不是缺少读回能力，而是旧 CLI 把账号 label 字符串 ID 错拦了。本地代码已修复为允许账号 label ID，并已用真实测试频道完成写入 + `channel get.labelData` 读回验证。
-- **下一步建议**：发版后用 `polyv-live-cli@latest` 复跑 `viewer label channel-ref add -c 7983932 -l 9zu68aethm9eivf1 -f -o json`，再用 `channel get -c 7983932 -o json` 检查 `labelData` 是否包含 `9zu68aethm9eivf1`。
+- **结论**：`channel-ref` 本身不是缺少读回能力，而是旧 CLI 把账号 label 字符串 ID 错拦了。`polyv-live-cli@1.2.39` 已修复为允许账号 label ID，并已用真实测试频道完成发布版写入 + `channel get.labelData` 读回验证。
+- **下一步建议**：后续执行频道标签关联时，固定使用 `viewer label list` 返回的字符串 ID，并用 `channel get -c <channelId> -o json` 检查 `labelData` 是否包含该 ID。
 
 ### 12.2 问题：`custom-field value save` 返回 success，但 CLI 无只读读回路径
 
@@ -259,7 +259,7 @@
 | `viewer tag create` | `viewer tag list -k GNHF` | ✅ 3 标签全部入库（1282/1283/1284） |
 | `viewer tag add` | `viewer get` 的 `labels` 数组 | ✅ 观众 `4_aksysv...358` 命中 1282「GNHF高意向客户」 |
 | `viewer label create` | `viewer label list` 计数 10→11 | ✅ 「GNHF分层」(`9zu68aethm9eivf1`) 在列 |
-| `viewer label channel-ref add` | `channel get` 的 `labelData` 数组 | ✅ 本地修复后，频道 `7983932` 读回 `9zu68aethm9eivf1` |
+| `viewer label channel-ref add` | `channel get` 的 `labelData` 数组 | ✅ `1.2.39` 发布版复验后，频道 `7983932` 读回 `9zu68aethm9eivf1` |
 | `custom-field add` | `custom-field list` 由 `[]` → 含 1 条 | ✅ `gnhf_cust_level / text` 落库 |
 
 ## 13. 风险点与回滚 / 清理方式
