@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isDeepStrictEqual } from 'node:util';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const apiInventoryPath = resolve(repoRoot, 'docs/api-reference/api-inventory.json');
@@ -128,10 +129,7 @@ async function main() {
   const { matchedApis, unmatchedUsages } = applyCliCoverage(latestApis, cliUsages);
   const moduleSummaries = buildModuleSummaries(latestApis);
   const recommendations = buildRecommendations(moduleSummaries);
-  const generatedAt = new Date().toISOString();
-
-  const inventory = {
-    generatedAt,
+  const inventoryContent = {
     source: {
       apiInventory: 'docs/api-reference/api-inventory.json',
       cliSourceRoot: 'packages/cli/src',
@@ -176,12 +174,19 @@ async function main() {
     }))
   };
 
-  await mkdir(outputDir, { recursive: true });
-  await writeFile(cliInventoryJsonPath, `${JSON.stringify(inventory, null, 2)}\n`, 'utf8');
-  await writeFile(cliInventoryMarkdownPath, buildMarkdown(inventory), 'utf8');
+  // Reuse the previous generatedAt when the inventory content hasn't changed,
+  // so reruns that produce no substantive change yield an empty diff.
+  const generatedAt = await resolveGeneratedAt(inventoryContent);
+  const inventory = { generatedAt, ...inventoryContent };
 
-  console.log(`Generated ${toPosix(relative(repoRoot, cliInventoryMarkdownPath))}`);
-  console.log(`Generated ${toPosix(relative(repoRoot, cliInventoryJsonPath))}`);
+  await mkdir(outputDir, { recursive: true });
+  const wroteMarkdown = await writeIfChanged(cliInventoryMarkdownPath, buildMarkdown(inventory));
+  const wroteJson = await writeIfChanged(cliInventoryJsonPath, `${JSON.stringify(inventory, null, 2)}\n`);
+
+  const label = (pathValue, wrote) =>
+    `${toPosix(relative(repoRoot, pathValue))}${wrote ? '' : ' (unchanged, no diff)'}`;
+  console.log(`${wroteMarkdown ? 'Generated' : 'Skipped'} ${label(cliInventoryMarkdownPath, wroteMarkdown)}`);
+  console.log(`${wroteJson ? 'Generated' : 'Skipped'} ${label(cliInventoryJsonPath, wroteJson)}`);
   console.log(
     `CLI coverage: ${inventory.summary.cliUsedLatestApis}/${inventory.summary.latestApis} (${formatPercent(
       inventory.summary.cliCoverage
@@ -206,6 +211,37 @@ async function walkFiles(rootDir, predicate = () => true) {
 
   await visit(rootDir);
   return results.sort((left, right) => toPosix(left).localeCompare(toPosix(right)));
+}
+
+function contentMatches(existing, nextContent) {
+  if (!existing || typeof existing !== 'object') return false;
+  // Compare every content field of the freshly built inventory against the
+  // previously generated one. The generatedAt timestamp (present only on the
+  // parsed existing object) is deliberately ignored.
+  return Object.keys(nextContent).every((key) => isDeepStrictEqual(existing[key], nextContent[key]));
+}
+
+async function resolveGeneratedAt(inventoryContent) {
+  try {
+    if (!existsSync(cliInventoryJsonPath)) return new Date().toISOString();
+    const existing = JSON.parse(await readFile(cliInventoryJsonPath, 'utf8'));
+    if (contentMatches(existing, inventoryContent)) return existing.generatedAt;
+  } catch {
+    // Ignore read/parse errors and fall back to a fresh timestamp.
+  }
+  return new Date().toISOString();
+}
+
+async function writeIfChanged(filePath, nextContent) {
+  let previous = null;
+  try {
+    previous = await readFile(filePath, 'utf8');
+  } catch {
+    // File may not exist yet; proceed to write.
+  }
+  if (previous === nextContent) return false;
+  await writeFile(filePath, nextContent, 'utf8');
+  return true;
 }
 
 function toPosix(pathValue) {

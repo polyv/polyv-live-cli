@@ -18,7 +18,7 @@ fi
 
 GNHF_AGENT="${GNHF_AGENT:-claude}"
 MAX_ITERATIONS="${MAX_ITERATIONS:-1}"
-STOP_WHEN="docs/api-reference/cli-inventory.json 中的所有可执行 CLI 子命令，都有 packages/cli/tests/integration 下真实执行本地 CLI 的集成测试覆盖；每个需要账号或频道上下文的测试都创建临时测试频道并在测试结束删除；补充的集成测试全部通过"
+STOP_WHEN="node scripts/report-cli-subcommand-integration-coverage.mjs 统计显示 missingRealExecutionLeafTargets 为 0；docs/api-reference/cli-inventory.json 中的所有可执行 CLI 子命令，都有 packages/cli/tests/integration 下真实执行本地 CLI 的集成测试覆盖；每个需要账号或频道上下文的测试都创建临时测试频道并在测试结束删除；补充的集成测试全部通过"
 
 gnhf \
   --agent "$GNHF_AGENT" \
@@ -39,7 +39,12 @@ gnhf \
 每轮必须执行以下流程：
 
 1. 重新确认仓库状态和命令清单：
-   - 运行 `node scripts/generate-cli-inventory.mjs` 刷新 `docs/api-reference/cli-inventory.json` 和 `docs/api-reference/CLI_INVENTORY.md`。
+   - 默认不要运行 `node scripts/generate-cli-inventory.mjs`；每轮只补集成测试时，命令树不会变化，直接使用现有 `docs/api-reference/cli-inventory.json` 即可。
+   - 只有在本轮修改了 `packages/cli/src/commands/**`、命令注册、命令路径/参数，或发现 `docs/api-reference/cli-inventory.json` 缺失/明显过期时，才运行 `node scripts/generate-cli-inventory.mjs` 刷新 `docs/api-reference/cli-inventory.json` 和 `docs/api-reference/CLI_INVENTORY.md`。
+   - 运行 `node scripts/report-cli-subcommand-integration-coverage.mjs` 刷新 `docs/api-reference/cli-integration-coverage.json` 和 `docs/api-reference/CLI_INTEGRATION_COVERAGE.md`。
+   - 先读取 `docs/api-reference/cli-integration-coverage.json` 的 `summary.missingRealExecutionLeafTargets` 和 `missingRealExecutionTargets`：
+     - 如果 `summary.missingRealExecutionLeafTargets === 0`，说明已经没有未真实执行覆盖的目标子命令，本轮不要再改代码，直接停止并报告覆盖完成。
+     - 如果仍大于 0，只能从 `missingRealExecutionTargets` 中选择本轮目标；不要靠人工猜测或 help 覆盖判断缺口。
    - 读取 `docs/api-reference/cli-inventory.json` 的 `commands` 列表，优先从 `depth >= 2` 的命令路径中选择覆盖缺口。
    - 读取对应命令源码文件、现有 integration 测试和 helper，确认该命令是否已经被真实执行覆盖。
 2. 找缺口时必须只把真实命令执行算作已覆盖：
@@ -90,15 +95,17 @@ gnhf \
    - 如修改了共享 helper、handler、service 或命令注册，再运行受影响的单元测试或更宽的 integration 子集。
 9. 每轮完成前检查：
    - 目标子命令已经被真实 CLI 集成测试执行，且不是 `--help`。
+   - 再次运行 `node scripts/report-cli-subcommand-integration-coverage.mjs` 刷新覆盖报告，并确认本轮目标已不在 `missingRealExecutionTargets` 中。
    - 本轮新增或修改测试使用临时频道，并在测试结束删除。
    - 测试通过后没有遗留临时频道；如清理命令报告失败，必须继续修复或记录明确原因，不要沉默。
    - 没有引入无关源码改动。
-   - `git diff` 只包含本轮测试、必要修复和由 `node scripts/generate-cli-inventory.mjs` 产生的合理清单更新。
+   - `git diff` 只包含本轮测试、必要修复，以及覆盖统计报告更新；只有本轮确实改了命令树时，才应包含由 `node scripts/generate-cli-inventory.mjs` 产生的清单更新。
 10. 每轮由 GNHF 提交本轮改动。提交信息要点明新增覆盖的子命令路径。
 
 可用上下文和约定：
 
 - 当前 CLI 覆盖清单来源：`docs/api-reference/cli-inventory.json`，其中 summary 目前应显示约 40 个一级命令、约 724 条命令路径、578 个 OpenAPI CLI 映射。
+- 当前真实集成测试覆盖报告来源：`docs/api-reference/cli-integration-coverage.json`，由 `node scripts/report-cli-subcommand-integration-coverage.mjs` 生成；以 `summary.missingRealExecutionLeafTargets` 和 `missingRealExecutionTargets` 作为每轮选题依据。
 - 真实 CLI 测试入口 helper：`packages/cli/tests/helpers/cli-runner.ts`。
 - 临时频道 fixture：`packages/cli/tests/helpers/channel-fixture.ts`。
 - 现有可参考测试：
@@ -121,4 +128,5 @@ gnhf \
 停止条件：
 
 当 `docs/api-reference/cli-inventory.json` 中所有可执行 CLI 子命令，都能在 `packages/cli/tests/integration` 下找到真实本地 CLI 执行测试覆盖，并且这些测试遵守临时频道创建/删除约定、目标集成测试全部通过时停止。
+具体停止判定以 `node scripts/report-cli-subcommand-integration-coverage.mjs` 生成的 `docs/api-reference/cli-integration-coverage.json` 为准：当 `summary.missingRealExecutionLeafTargets` 为 0 时停止。
 GNHF_PROMPT

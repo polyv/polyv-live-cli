@@ -16,6 +16,7 @@
     "skill:check:latest": "POLYV_SKILL_CHECK_CLI=latest node scripts/check-skill-regression.mjs",
     "api:inventory": "node scripts/generate-api-inventory.mjs",
     "cli:inventory": "node scripts/generate-cli-inventory.mjs",
+    "cli:integration-coverage": "node scripts/report-cli-subcommand-integration-coverage.mjs",
     "lint": "pnpm -r lint",
     "clean": "pnpm -r clean",
     "changeset": "changeset",
