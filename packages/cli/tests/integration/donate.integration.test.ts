@@ -6,7 +6,12 @@
 
 import { DonateServiceSdk } from '../../src/services/donate-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
-import { createTemporaryChannel, deleteTemporaryChannel } from '../helpers/channel-fixture';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  parseJsonObject,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -374,4 +379,46 @@ function getTimestamp(daysOffset: number = 0): number {
       }
     }, 30000);
   });
+});
+
+// ========================================
+// Real CLI execution coverage (donate config get)
+// The tests above exercise DonateServiceSdk directly; the block below drives the
+// local CLI entry (`polyv-live-cli donate config get`) end-to-end so the
+// `donate config get` leaf command counts as real-execution integration coverage.
+// ========================================
+(shouldRunTests ? describe : describe.skip)('donate config get CLI real execution', () => {
+  it('returns donate configuration for a temporary channel via real CLI and cleans it up', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Donate Config Get CLI');
+
+      const output = runCliSuccess([
+        'donate',
+        'config',
+        'get',
+        '-c',
+        channelId,
+        '-o',
+        'json',
+      ]);
+
+      const parsed = parseJsonObject(output);
+      // channelId echoes back the requested channel
+      expect(String(parsed.channelId)).toBe(channelId);
+      // donate config payload fields present for any channel
+      expect(parsed).toHaveProperty('donateCashEnabled');
+      expect(parsed).toHaveProperty('donateGiftEnabled');
+      expect(parsed).toHaveProperty('cashDonate');
+      expect(parsed).toHaveProperty('giftDonate');
+      // cashDonate must carry the amount list
+      const cashDonate = parsed.cashDonate as Record<string, unknown>;
+      expect(Array.isArray(cashDonate.cashs)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T05:22:02.773Z
+Generated at: 2026-06-24T05:33:04.828Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 188 |
-| Missing real-execution leaf subcommands | 379 |
-| Real-execution coverage | 33.16% |
-| Leaf subcommands referenced including help | 327 |
-| Missing including help | 240 |
+| Real-executed leaf subcommands | 189 |
+| Missing real-execution leaf subcommands | 378 |
+| Real-execution coverage | 33.33% |
+| Leaf subcommands referenced including help | 328 |
+| Missing including help | 239 |
 
 ## By Top-Level Command
 
@@ -31,7 +31,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
 | `document` | 11 | 3 | 8 | 27.27% | 4 | 7 |
-| `donate` | 4 | 1 | 3 | 25.00% | 2 | 2 |
+| `donate` | 4 | 2 | 2 | 50.00% | 3 | 1 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
@@ -183,7 +183,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document media user-detail` | `packages/cli/src/commands/document.commands.ts:552` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `donate list` | `packages/cli/src/commands/donate.commands.ts:132` |
-| `donate config get` | `packages/cli/src/commands/donate.commands.ts:45` |
 | `donate config update` | `packages/cli/src/commands/donate.commands.ts:83` |
 | `finance audio-moderation get` | `packages/cli/src/commands/finance.commands.ts:42` |
 | `finance audio-moderation list` | `packages/cli/src/commands/finance.commands.ts:48` |
