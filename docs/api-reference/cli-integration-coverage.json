@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T18:47:41.248Z",
+  "generatedAt": "2026-06-24T18:54:43.687Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 72,
+    "integrationFiles": 73,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 462,
-    "referencedCommandPathsExcludingHelp": 338,
-    "coveredLeafTargetsIncludingHelp": 423,
-    "missingLeafTargetsIncludingHelp": 144,
-    "coveredRealExecutionLeafTargets": 332,
-    "missingRealExecutionLeafTargets": 235,
-    "realExecutionCoveragePercent": 58.55,
-    "includingHelpCoveragePercent": 74.6,
-    "integrationReferences": 752,
-    "realExecutionReferences": 440,
-    "helpReferences": 312
+    "referencedCommandPathsIncludingHelp": 464,
+    "referencedCommandPathsExcludingHelp": 344,
+    "coveredLeafTargetsIncludingHelp": 425,
+    "missingLeafTargetsIncludingHelp": 142,
+    "coveredRealExecutionLeafTargets": 338,
+    "missingRealExecutionLeafTargets": 229,
+    "realExecutionCoveragePercent": 59.61,
+    "includingHelpCoveragePercent": 74.96,
+    "integrationReferences": 766,
+    "realExecutionReferences": 448,
+    "helpReferences": 318
   },
   "byTopLevel": [
     {
@@ -256,12 +256,12 @@
     {
       "command": "product",
       "targetLeafCommands": 36,
-      "coveredRealExecutionLeafTargets": 12,
-      "missingRealExecutionLeafTargets": 24,
-      "coveredLeafTargetsIncludingHelp": 25,
-      "missingLeafTargetsIncludingHelp": 11,
-      "realExecutionCoveragePercent": 33.33,
-      "includingHelpCoveragePercent": 69.44
+      "coveredRealExecutionLeafTargets": 18,
+      "missingRealExecutionLeafTargets": 18,
+      "coveredLeafTargetsIncludingHelp": 27,
+      "missingLeafTargetsIncludingHelp": 9,
+      "realExecutionCoveragePercent": 50,
+      "includingHelpCoveragePercent": 75
     },
     {
       "command": "promotion",
@@ -1904,39 +1904,6 @@
       "line": 655
     },
     {
-      "command": "product channel-tag create",
-      "path": [
-        "product",
-        "channel-tag",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 774
-    },
-    {
-      "command": "product channel-tag delete",
-      "path": [
-        "product",
-        "channel-tag",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 802
-    },
-    {
-      "command": "product channel-tag update",
-      "path": [
-        "product",
-        "channel-tag",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 787
-    },
-    {
       "command": "product library create",
       "path": [
         "product",
@@ -1990,39 +1957,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 964
-    },
-    {
-      "command": "product tag create",
-      "path": [
-        "product",
-        "tag",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 917
-    },
-    {
-      "command": "product tag delete",
-      "path": [
-        "product",
-        "tag",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 941
-    },
-    {
-      "command": "product tag update",
-      "path": [
-        "product",
-        "tag",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 928
     },
     {
       "command": "qa add-edit",
@@ -3911,28 +3845,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 655
-    },
-    {
-      "command": "product channel-tag delete",
-      "path": [
-        "product",
-        "channel-tag",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 802
-    },
-    {
-      "command": "product channel-tag update",
-      "path": [
-        "product",
-        "channel-tag",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 787
     },
     {
       "command": "product order get",
@@ -6787,6 +6699,28 @@
       "line": 691
     },
     {
+      "command": "product channel-tag create",
+      "path": [
+        "product",
+        "channel-tag",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 774
+    },
+    {
+      "command": "product channel-tag delete",
+      "path": [
+        "product",
+        "channel-tag",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 802
+    },
+    {
       "command": "product channel-tag list",
       "path": [
         "product",
@@ -6796,6 +6730,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 765
+    },
+    {
+      "command": "product channel-tag update",
+      "path": [
+        "product",
+        "channel-tag",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 787
     },
     {
       "command": "product library list",
@@ -6864,6 +6809,28 @@
       "line": 832
     },
     {
+      "command": "product tag create",
+      "path": [
+        "product",
+        "tag",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 917
+    },
+    {
+      "command": "product tag delete",
+      "path": [
+        "product",
+        "tag",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 941
+    },
+    {
       "command": "product tag list",
       "path": [
         "product",
@@ -6873,6 +6840,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 906
+    },
+    {
+      "command": "product tag update",
+      "path": [
+        "product",
+        "tag",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 928
     },
     {
       "command": "promotion create",
@@ -11486,12 +11464,31 @@
     },
     {
       "command": "product channel-tag create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 144,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/v4-channel-marketing-content-cli.integration.test.ts",
-        "line": 81,
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 242,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "product channel-tag delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 189,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 244,
         "source": "array-literal"
       }
     },
@@ -11507,6 +11504,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-marketing-content-cli.integration.test.ts",
         "line": 80,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "product channel-tag update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 166,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 243,
         "source": "array-literal"
       }
     },
@@ -11730,23 +11742,31 @@
     },
     {
       "command": "product tag create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 48,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 47,
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 239,
         "source": "array-literal"
       }
     },
     {
       "command": "product tag delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 89,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 49,
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 241,
         "source": "array-literal"
       }
     },
@@ -11763,12 +11783,16 @@
     },
     {
       "command": "product tag update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 68,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 48,
+        "file": "packages/cli/tests/integration/product-tag-cli.integration.test.ts",
+        "line": 240,
         "source": "array-literal"
       }
     },
