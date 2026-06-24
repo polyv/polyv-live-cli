@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T19:49:11.518Z
+Generated at: 2026-06-24T20:03:28.766Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 78 |
+| Integration files scanned | 80 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 363 |
-| Missing real-execution leaf subcommands | 204 |
-| Real-execution coverage | 64.02% |
-| Leaf subcommands referenced including help | 437 |
-| Missing including help | 130 |
+| Real-executed leaf subcommands | 367 |
+| Missing real-execution leaf subcommands | 200 |
+| Real-execution coverage | 64.73% |
+| Leaf subcommands referenced including help | 439 |
+| Missing including help | 128 |
 
 ## By Top-Level Command
 
@@ -43,13 +43,13 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 10 | 12 | 45.45% | 12 | 10 |
 | `playback` | 13 | 4 | 9 | 30.77% | 5 | 8 |
-| `player` | 11 | 4 | 7 | 36.36% | 5 | 6 |
+| `player` | 11 | 6 | 5 | 54.55% | 6 | 5 |
 | `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 3 | 3 | 50.00% | 4 | 2 |
 | `record` | 17 | 4 | 13 | 23.53% | 6 | 11 |
-| `robot` | 3 | 1 | 2 | 33.33% | 2 | 1 |
+| `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
@@ -182,9 +182,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player logo-update` | `packages/cli/src/commands/player.commands.ts:510` |
 | `player marquee-url` | `packages/cli/src/commands/player.commands.ts:451` |
 | `player advert head-update` | `packages/cli/src/commands/player.commands.ts:469` |
-| `player advert stop-update` | `packages/cli/src/commands/player.commands.ts:492` |
 | `player anti-record get` | `packages/cli/src/commands/player.commands.ts:413` |
-| `player anti-record update` | `packages/cli/src/commands/player.commands.ts:427` |
 | `player config update` | `packages/cli/src/commands/player.commands.ts:271` |
 | `product batch-add` | `packages/cli/src/commands/product.commands.ts:663` |
 | `product batch-shelf` | `packages/cli/src/commands/product.commands.ts:682` |
@@ -215,8 +213,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record outline get` | `packages/cli/src/commands/record.commands.ts:596` |
 | `record setting set` | `packages/cli/src/commands/record.commands.ts:242` |
 | `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:608` |
-| `robot batch-delete` | `packages/cli/src/commands/robot.commands.ts:42` |
-| `robot batch-save` | `packages/cli/src/commands/robot.commands.ts:35` |
 | `session create` | `packages/cli/src/commands/session.commands.ts:313` |
 | `session delete` | `packages/cli/src/commands/session.commands.ts:338` |
 | `session get` | `packages/cli/src/commands/session.commands.ts:221` |

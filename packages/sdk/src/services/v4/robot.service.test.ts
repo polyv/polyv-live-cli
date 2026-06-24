@@ -82,7 +82,7 @@ describe('V4RobotService', () => {
       expect(result).toEqual(mockResponse);
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/global/robot/save-batch',
-        params
+        params.robots
       );
     });
 

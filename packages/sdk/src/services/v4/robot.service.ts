@@ -122,9 +122,13 @@ export class V4RobotService {
       }
     }
 
+    // The /live/v4/global/robot/save-batch endpoint expects the request body to be
+    // a bare JSON array of GlobalRobotSaveBatchReq items (server deserializes into
+    // ArrayList<GlobalRobotSaveBatchReq>), NOT an object wrapper. Sending
+    // `{ robots: [...] }` triggers "Cannot deserialize ArrayList out of START_OBJECT".
     const response = await this.client.httpClient.post<BatchSaveRobotsResponse>(
       '/live/v4/global/robot/save-batch',
-      params
+      params.robots
     );
     return response as unknown as BatchSaveRobotsResponse;
   }

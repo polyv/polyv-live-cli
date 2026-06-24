@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T19:49:11.518Z",
+  "generatedAt": "2026-06-24T20:03:28.766Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 78,
+    "integrationFiles": 80,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 476,
-    "referencedCommandPathsExcludingHelp": 369,
-    "coveredLeafTargetsIncludingHelp": 437,
-    "missingLeafTargetsIncludingHelp": 130,
-    "coveredRealExecutionLeafTargets": 363,
-    "missingRealExecutionLeafTargets": 204,
-    "realExecutionCoveragePercent": 64.02,
-    "includingHelpCoveragePercent": 77.07,
-    "integrationReferences": 829,
-    "realExecutionReferences": 491,
-    "helpReferences": 338
+    "referencedCommandPathsIncludingHelp": 478,
+    "referencedCommandPathsExcludingHelp": 373,
+    "coveredLeafTargetsIncludingHelp": 439,
+    "missingLeafTargetsIncludingHelp": 128,
+    "coveredRealExecutionLeafTargets": 367,
+    "missingRealExecutionLeafTargets": 200,
+    "realExecutionCoveragePercent": 64.73,
+    "includingHelpCoveragePercent": 77.43,
+    "integrationReferences": 841,
+    "realExecutionReferences": 498,
+    "helpReferences": 343
   },
   "byTopLevel": [
     {
@@ -246,12 +246,12 @@
     {
       "command": "player",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 5,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 36.36,
-      "includingHelpCoveragePercent": 45.45
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 5,
+      "coveredLeafTargetsIncludingHelp": 6,
+      "missingLeafTargetsIncludingHelp": 5,
+      "realExecutionCoveragePercent": 54.55,
+      "includingHelpCoveragePercent": 54.55
     },
     {
       "command": "product",
@@ -306,12 +306,12 @@
     {
       "command": "robot",
       "targetLeafCommands": 3,
-      "coveredRealExecutionLeafTargets": 1,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 2,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 33.33,
-      "includingHelpCoveragePercent": 66.67
+      "coveredRealExecutionLeafTargets": 3,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 3,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "session",
@@ -1675,17 +1675,6 @@
       "line": 469
     },
     {
-      "command": "player advert stop-update",
-      "path": [
-        "player",
-        "advert",
-        "stop-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 492
-    },
-    {
       "command": "player anti-record get",
       "path": [
         "player",
@@ -1695,17 +1684,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/player.commands.ts",
       "line": 413
-    },
-    {
-      "command": "player anti-record update",
-      "path": [
-        "player",
-        "anti-record",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 427
     },
     {
       "command": "player config update",
@@ -2017,26 +1995,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 608
-    },
-    {
-      "command": "robot batch-delete",
-      "path": [
-        "robot",
-        "batch-delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/robot.commands.ts",
-      "line": 42
-    },
-    {
-      "command": "robot batch-save",
-      "path": [
-        "robot",
-        "batch-save"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/robot.commands.ts",
-      "line": 35
     },
     {
       "command": "session create",
@@ -3437,17 +3395,6 @@
       "line": 469
     },
     {
-      "command": "player advert stop-update",
-      "path": [
-        "player",
-        "advert",
-        "stop-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 492
-    },
-    {
       "command": "player anti-record get",
       "path": [
         "player",
@@ -3665,16 +3612,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 608
-    },
-    {
-      "command": "robot batch-save",
-      "path": [
-        "robot",
-        "batch-save"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/robot.commands.ts",
-      "line": 35
     },
     {
       "command": "session create",
@@ -6294,6 +6231,28 @@
       "line": 529
     },
     {
+      "command": "player advert stop-update",
+      "path": [
+        "player",
+        "advert",
+        "stop-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 492
+    },
+    {
+      "command": "player anti-record update",
+      "path": [
+        "player",
+        "anti-record",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 427
+    },
+    {
       "command": "player config get",
       "path": [
         "player",
@@ -6754,6 +6713,26 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 191
+    },
+    {
+      "command": "robot batch-delete",
+      "path": [
+        "robot",
+        "batch-delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/robot.commands.ts",
+      "line": 42
+    },
+    {
+      "command": "robot batch-save",
+      "path": [
+        "robot",
+        "batch-save"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/robot.commands.ts",
+      "line": 35
     },
     {
       "command": "robot list",
@@ -11273,13 +11252,32 @@
       "firstHelpReference": null
     },
     {
-      "command": "player anti-record update",
-      "realExecutionReferences": 0,
+      "command": "player advert stop-update",
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 65,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 44,
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 93,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "player anti-record update",
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 42,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 92,
         "source": "array-literal"
       }
     },
@@ -12076,25 +12074,48 @@
     },
     {
       "command": "robot batch-delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/robot-cli.integration.test.ts",
+        "line": 78,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 42,
+        "file": "packages/cli/tests/integration/robot-cli.integration.test.ts",
+        "line": 139,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "robot batch-save",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/robot-cli.integration.test.ts",
+        "line": 49,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/robot-cli.integration.test.ts",
+        "line": 137,
         "source": "array-literal"
       }
     },
     {
       "command": "robot list",
-      "realExecutionReferences": 1,
-      "helpReferences": 0,
+      "realExecutionReferences": 3,
+      "helpReferences": 1,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 82,
+        "file": "packages/cli/tests/integration/robot-cli.integration.test.ts",
+        "line": 60,
         "source": "array-literal"
       },
-      "firstHelpReference": null
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/robot-cli.integration.test.ts",
+        "line": 138,
+        "source": "array-literal"
+      }
     },
     {
       "command": "session data-list",
