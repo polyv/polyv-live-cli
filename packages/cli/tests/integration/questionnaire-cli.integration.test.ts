@@ -11,6 +11,8 @@
  *  - `questionnaire batch-create` (V4 /live/v4/channel/questionnaire/create-batch)
  *    creates one or more questionnaires and returns
  *    `{ questionnaires: [{ channelId, questionnaireId, questionIds, questionnaireTitle }] }`.
+ *  - `channel questionnaire-stop` stops active questionnaires for the channel;
+ *    idempotent, returns `{ result: true }` whether or not one is running.
  *
  * The create -> detail -> batch-create loop runs entirely through the real CLI
  * entry. There is no questionnaire delete endpoint, but every questionnaire is
@@ -123,6 +125,22 @@ describe('questionnaire CLI write lifecycle integration', () => {
         expect(batched.questionnaires?.length).toBe(1);
         expect(batched.questionnaires?.[0].questionnaireId?.length).toBeGreaterThan(0);
         expect(String(batched.questionnaires?.[0].channelId)).toBe(channelId);
+
+        // `channel questionnaire-stop` stops active questionnaires for the
+        // channel. It is idempotent — returns {result:true} whether or not a
+        // questionnaire is currently running — and is channel-scoped, so the
+        // temporary channel deletion disposes of any state.
+        const stopOutput = runCliSuccess([
+          'channel',
+          'questionnaire-stop',
+          '--channel-ids',
+          channelId,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const stopped = parseJsonObject(stopOutput) as { result?: boolean };
+        expect(stopped.result).toBe(true);
       } finally {
         // No questionnaire delete endpoint exists; channel deletion disposes
         // of every questionnaire scoped to the temporary channel.

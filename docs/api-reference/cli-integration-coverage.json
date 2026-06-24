@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T21:35:45.912Z",
+  "generatedAt": "2026-06-24T21:45:19.841Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 501,
-    "referencedCommandPathsExcludingHelp": 406,
-    "coveredLeafTargetsIncludingHelp": 462,
-    "missingLeafTargetsIncludingHelp": 105,
-    "coveredRealExecutionLeafTargets": 400,
-    "missingRealExecutionLeafTargets": 167,
-    "realExecutionCoveragePercent": 70.55,
-    "includingHelpCoveragePercent": 81.48,
-    "integrationReferences": 938,
-    "realExecutionReferences": 570,
+    "referencedCommandPathsIncludingHelp": 502,
+    "referencedCommandPathsExcludingHelp": 410,
+    "coveredLeafTargetsIncludingHelp": 463,
+    "missingLeafTargetsIncludingHelp": 104,
+    "coveredRealExecutionLeafTargets": 404,
+    "missingRealExecutionLeafTargets": 163,
+    "realExecutionCoveragePercent": 71.25,
+    "includingHelpCoveragePercent": 81.66,
+    "integrationReferences": 942,
+    "realExecutionReferences": 574,
     "helpReferences": 368
   },
   "byTopLevel": [
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 68,
-      "missingRealExecutionLeafTargets": 10,
-      "coveredLeafTargetsIncludingHelp": 74,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 87.18,
-      "includingHelpCoveragePercent": 94.87
+      "coveredRealExecutionLeafTargets": 69,
+      "missingRealExecutionLeafTargets": 9,
+      "coveredLeafTargetsIncludingHelp": 75,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 88.46,
+      "includingHelpCoveragePercent": 96.15
     },
     {
       "command": "chat",
@@ -166,11 +166,11 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 11,
-      "missingRealExecutionLeafTargets": 11,
+      "coveredRealExecutionLeafTargets": 14,
+      "missingRealExecutionLeafTargets": 8,
       "coveredLeafTargetsIncludingHelp": 18,
       "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 50,
+      "realExecutionCoveragePercent": 63.64,
       "includingHelpCoveragePercent": 81.82
     },
     {
@@ -481,16 +481,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1459
-    },
-    {
-      "command": "channel questionnaire-stop",
-      "path": [
-        "channel",
-        "questionnaire-stop"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1401
     },
     {
       "command": "channel submeeting-batch-add",
@@ -1065,16 +1055,6 @@
       "line": 195
     },
     {
-      "command": "interaction favor",
-      "path": [
-        "interaction",
-        "favor"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 51
-    },
-    {
       "command": "interaction reward",
       "path": [
         "interaction",
@@ -1083,16 +1063,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 67
-    },
-    {
-      "command": "interaction teacher-answer",
-      "path": [
-        "interaction",
-        "teacher-answer"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 137
     },
     {
       "command": "interaction event delete",
@@ -1115,17 +1085,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 173
-    },
-    {
-      "command": "interaction invite-poster create",
-      "path": [
-        "interaction",
-        "invite-poster",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 207
     },
     {
       "command": "interaction script delete",
@@ -2268,16 +2227,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 394
-    },
-    {
-      "command": "channel questionnaire-stop",
-      "path": [
-        "channel",
-        "questionnaire-stop"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1401
     },
     {
       "command": "channel submeeting-batch-add",
@@ -3936,6 +3885,16 @@
       "line": 945
     },
     {
+      "command": "channel questionnaire-stop",
+      "path": [
+        "channel",
+        "questionnaire-stop"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1401
+    },
+    {
       "command": "channel simple-list",
       "path": [
         "channel",
@@ -5097,6 +5056,26 @@
       "line": 143
     },
     {
+      "command": "interaction favor",
+      "path": [
+        "interaction",
+        "favor"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 51
+    },
+    {
+      "command": "interaction teacher-answer",
+      "path": [
+        "interaction",
+        "teacher-answer"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 137
+    },
+    {
       "command": "interaction event list",
       "path": [
         "interaction",
@@ -5106,6 +5085,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 163
+    },
+    {
+      "command": "interaction invite-poster create",
+      "path": [
+        "interaction",
+        "invite-poster",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 207
     },
     {
       "command": "interaction task-reward create",
@@ -8559,6 +8549,17 @@
       }
     },
     {
+      "command": "channel questionnaire-stop",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
+        "line": 133,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "channel role account-create",
       "realExecutionReferences": 2,
       "helpReferences": 1,
@@ -10096,9 +10097,13 @@
     },
     {
       "command": "interaction favor",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 300,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 37,
@@ -10107,9 +10112,13 @@
     },
     {
       "command": "interaction invite-poster create",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 335,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 113,
@@ -10236,9 +10245,13 @@
     },
     {
       "command": "interaction teacher-answer",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 317,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 41,
@@ -12003,7 +12016,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
-        "line": 110,
+        "line": 112,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12018,12 +12031,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
-        "line": 55,
+        "line": 57,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
-        "line": 140,
+        "line": 158,
         "source": "array-literal"
       }
     },
@@ -12033,12 +12046,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
-        "line": 81,
+        "line": 83,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
-        "line": 141,
+        "line": 159,
         "source": "array-literal"
       }
     },

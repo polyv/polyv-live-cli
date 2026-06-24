@@ -5,7 +5,7 @@ import {
   parseJsonObject,
   runCliSuccess,
 } from '../helpers/channel-fixture';
-import { hasRealCredentials } from '../helpers/integration-config';
+import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
 
@@ -276,4 +276,88 @@ describe('live interaction CLI integration', () => {
       }
     }
   }, 240000);
+
+  // favor / teacher-answer / invite-poster create are self-contained
+  // channel-scoped writes that work on a freshly created (non-live) channel.
+  // The viewer id / viewer-user-id resolve to the account user id; the created
+  // answer and invite poster are scoped to the temporary channel, so deleting
+  // it in `finally` disposes of them.
+  (shouldRunRealChannelTests ? it : it.skip)('runs interaction favor, teacher-answer, and invite-poster create against a temporary real channel', () => {
+    const credentials = getAccountCredentials();
+    if (!credentials?.userId) {
+      // favor / teacher-answer need an account user id; skip cleanly if absent.
+      return;
+    }
+    const viewerId = credentials.userId;
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Interaction Favor Answer Poster');
+      const id = channelId;
+
+      // favor sends likes for a viewer; the API returns the like count as a
+      // bare JSON number (no object wrapper), so parse directly.
+      const favorOutput = runCliSuccess([
+        'interaction',
+        'favor',
+        '-c',
+        id,
+        '--viewer-id',
+        viewerId,
+        '--times',
+        '2',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(Number.isInteger(JSON.parse(favorOutput.trim()))).toBe(true);
+
+      // teacher-answer sends a teacher answer to a student question; room-id is
+      // the channel id and viewer-user-id is the account user id. Returns {id}.
+      const answerOutput = runCliSuccess([
+        'interaction',
+        'teacher-answer',
+        '--room-id',
+        id,
+        '--viewer-user-id',
+        viewerId,
+        '--content',
+        'cli-integration-answer',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const answer = parseJsonObject(answerOutput) as { id?: number };
+      expect(Number.isInteger(answer.id)).toBe(true);
+
+      // invite-poster create registers an invite poster inviter for the
+      // channel; returns the new poster object with invitePosterId + channelId.
+      const posterOutput = runCliSuccess([
+        'interaction',
+        'invite-poster',
+        'create',
+        '-c',
+        id,
+        '--open-id',
+        `it-open-${Date.now()}`,
+        '--nickname',
+        'IT Inviter',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const poster = parseJsonObject(posterOutput) as {
+        invitePosterId?: string;
+        channelId?: number;
+        openId?: string;
+      };
+      expect(typeof poster.invitePosterId).toBe('string');
+      expect(poster.invitePosterId?.length).toBeGreaterThan(0);
+      expect(String(poster.channelId)).toBe(id);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 180000);
 });
