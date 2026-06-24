@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T16:26:11.132Z
+Generated at: 2026-06-24T16:40:37.865Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 65 |
+| Integration files scanned | 66 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 269 |
-| Missing real-execution leaf subcommands | 298 |
-| Real-execution coverage | 47.44% |
-| Leaf subcommands referenced including help | 377 |
-| Missing including help | 190 |
+| Real-executed leaf subcommands | 275 |
+| Missing real-execution leaf subcommands | 292 |
+| Real-execution coverage | 48.50% |
+| Leaf subcommands referenced including help | 383 |
+| Missing including help | 184 |
 
 ## By Top-Level Command
 
@@ -39,7 +39,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
 | `lottery` | 24 | 11 | 13 | 45.83% | 17 | 7 |
 | `material` | 7 | 3 | 4 | 42.86% | 4 | 3 |
-| `monitor` | 9 | 2 | 7 | 22.22% | 3 | 6 |
+| `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 7 | 15 | 31.82% | 9 | 13 |
 | `playback` | 13 | 4 | 9 | 30.77% | 5 | 8 |
@@ -181,13 +181,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `material label create` | `packages/cli/src/commands/material.commands.ts:66` |
 | `material label delete` | `packages/cli/src/commands/material.commands.ts:81` |
 | `material label update` | `packages/cli/src/commands/material.commands.ts:73` |
-| `monitor config` | `packages/cli/src/commands/monitor.commands.ts:116` |
-| `monitor export` | `packages/cli/src/commands/monitor.commands.ts:152` |
-| `monitor import` | `packages/cli/src/commands/monitor.commands.ts:160` |
-| `monitor status` | `packages/cli/src/commands/monitor.commands.ts:107` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
-| `monitor test` | `packages/cli/src/commands/monitor.commands.ts:143` |
-| `monitor themes` | `packages/cli/src/commands/monitor.commands.ts:134` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:663` |
 | `platform anchor get` | `packages/cli/src/commands/platform.commands.ts:642` |

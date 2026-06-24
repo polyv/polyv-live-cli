@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T16:26:11.132Z",
+  "generatedAt": "2026-06-24T16:40:37.865Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 65,
+    "integrationFiles": 66,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 415,
-    "referencedCommandPathsExcludingHelp": 275,
-    "coveredLeafTargetsIncludingHelp": 377,
-    "missingLeafTargetsIncludingHelp": 190,
-    "coveredRealExecutionLeafTargets": 269,
-    "missingRealExecutionLeafTargets": 298,
-    "realExecutionCoveragePercent": 47.44,
-    "includingHelpCoveragePercent": 66.49,
-    "integrationReferences": 641,
-    "realExecutionReferences": 361,
-    "helpReferences": 280
+    "referencedCommandPathsIncludingHelp": 421,
+    "referencedCommandPathsExcludingHelp": 281,
+    "coveredLeafTargetsIncludingHelp": 383,
+    "missingLeafTargetsIncludingHelp": 184,
+    "coveredRealExecutionLeafTargets": 275,
+    "missingRealExecutionLeafTargets": 292,
+    "realExecutionCoveragePercent": 48.5,
+    "includingHelpCoveragePercent": 67.55,
+    "integrationReferences": 653,
+    "realExecutionReferences": 367,
+    "helpReferences": 286
   },
   "byTopLevel": [
     {
@@ -206,12 +206,12 @@
     {
       "command": "monitor",
       "targetLeafCommands": 9,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 3,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 22.22,
-      "includingHelpCoveragePercent": 33.33
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 9,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 88.89,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "partner",
@@ -1669,46 +1669,6 @@
       "line": 73
     },
     {
-      "command": "monitor config",
-      "path": [
-        "monitor",
-        "config"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 116
-    },
-    {
-      "command": "monitor export",
-      "path": [
-        "monitor",
-        "export"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 152
-    },
-    {
-      "command": "monitor import",
-      "path": [
-        "monitor",
-        "import"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 160
-    },
-    {
-      "command": "monitor status",
-      "path": [
-        "monitor",
-        "status"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 107
-    },
-    {
       "command": "monitor tencent-stream-info-list",
       "path": [
         "monitor",
@@ -1717,26 +1677,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/monitor.commands.ts",
       "line": 73
-    },
-    {
-      "command": "monitor test",
-      "path": [
-        "monitor",
-        "test"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 143
-    },
-    {
-      "command": "monitor themes",
-      "path": [
-        "monitor",
-        "themes"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 134
     },
     {
       "command": "partner tencent-order create",
@@ -4411,66 +4351,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/material.commands.ts",
       "line": 73
-    },
-    {
-      "command": "monitor config",
-      "path": [
-        "monitor",
-        "config"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 116
-    },
-    {
-      "command": "monitor export",
-      "path": [
-        "monitor",
-        "export"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 152
-    },
-    {
-      "command": "monitor import",
-      "path": [
-        "monitor",
-        "import"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 160
-    },
-    {
-      "command": "monitor status",
-      "path": [
-        "monitor",
-        "status"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 107
-    },
-    {
-      "command": "monitor test",
-      "path": [
-        "monitor",
-        "test"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 143
-    },
-    {
-      "command": "monitor themes",
-      "path": [
-        "monitor",
-        "themes"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 134
     },
     {
       "command": "platform anchor get",
@@ -7430,6 +7310,36 @@
       "line": 58
     },
     {
+      "command": "monitor config",
+      "path": [
+        "monitor",
+        "config"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 116
+    },
+    {
+      "command": "monitor export",
+      "path": [
+        "monitor",
+        "export"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 152
+    },
+    {
+      "command": "monitor import",
+      "path": [
+        "monitor",
+        "import"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 160
+    },
+    {
       "command": "monitor layouts",
       "path": [
         "monitor",
@@ -7440,6 +7350,16 @@
       "line": 125
     },
     {
+      "command": "monitor status",
+      "path": [
+        "monitor",
+        "status"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 107
+    },
+    {
       "command": "monitor stream-info-list",
       "path": [
         "monitor",
@@ -7448,6 +7368,26 @@
       "depth": 2,
       "file": "packages/cli/src/commands/monitor.commands.ts",
       "line": 89
+    },
+    {
+      "command": "monitor test",
+      "path": [
+        "monitor",
+        "test"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 143
+    },
+    {
+      "command": "monitor themes",
+      "path": [
+        "monitor",
+        "themes"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 134
     },
     {
       "command": "partner user-register",
@@ -11302,6 +11242,51 @@
       "firstHelpReference": null
     },
     {
+      "command": "monitor config",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 53,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 113,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "monitor export",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 89,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 116,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "monitor import",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 100,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 117,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "monitor layouts",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -11311,6 +11296,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "monitor status",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 43,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 112,
+        "source": "array-literal"
+      }
     },
     {
       "command": "monitor stream-info-list",
@@ -11335,6 +11335,36 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 59,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "monitor test",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 75,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 115,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "monitor themes",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 64,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/monitor-cli-local.integration.test.ts",
+        "line": 114,
         "source": "array-literal"
       }
     },
