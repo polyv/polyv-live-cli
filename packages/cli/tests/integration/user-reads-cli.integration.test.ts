@@ -16,6 +16,7 @@ import {
   createTemporaryChannel,
   deleteTemporaryChannel,
   parseJsonObject,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -182,6 +183,108 @@ describe('user template CLI integration (account-scoped reads)', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('gets user mic duration via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Mic Duration');
+
+      // mic-duration is account-scoped; with no time window it returns the
+      // cumulative history (a number) plus the account userId.
+      const payload = parseJsonObject(
+        runCliSuccess(['user', 'mic-duration', '--output', 'json']),
+      );
+
+      expect(typeof payload.userId).toBe('string');
+      expect(typeof payload.history).toBe('number');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('lists user view logs via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Viewlog List');
+
+      // viewlog list is account-scoped with optional paging; an account with no
+      // watch activity returns a well-formed empty page.
+      const payload = parseJsonObject(
+        runCliSuccess(['user', 'viewlog', 'list', '--size', '5', '--output', 'json']),
+      );
+
+      expect(typeof payload.pageNumber).toBe('number');
+      expect(typeof payload.pageSize).toBe('number');
+      expect(typeof payload.totalPages).toBe('number');
+      expect(typeof payload.totalItems).toBe('number');
+      expect(Array.isArray(payload.contents)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('lists user bill use details via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Bill Use Detail');
+
+      // bill use-detail is account-scoped; item-category 'duration' (直播分钟数)
+      // is a valid enum on every account and returns a paginated list (empty for
+      // a fresh account / date range with no usage).
+      const payload = parseJsonObject(
+        runCliSuccess([
+          'user', 'bill', 'use-detail',
+          '--item-category', 'duration',
+          '--start-date', '2026-06-01',
+          '--end-date', '2026-06-25',
+          '--size', '5',
+          '--output', 'json',
+        ]),
+      );
+
+      expect(typeof payload.pageNumber).toBe('number');
+      expect(typeof payload.pageSize).toBe('number');
+      expect(typeof payload.totalPages).toBe('number');
+      expect(typeof payload.totalItems).toBe('number');
+      expect(Array.isArray(payload.contents)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('lists user child account roles via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Child Roles');
+
+      // child roles is account-scoped and returns the role catalog as a JSON
+      // array; every account ships with at least the built-in roles.
+      const payload = parseJsonValue(
+        runCliSuccess(['user', 'child', 'roles', '--output', 'json']),
+      );
+
+      expect(Array.isArray(payload)).toBe(true);
+      const roles = payload as Array<Record<string, unknown>>;
+      expect(roles.length).toBeGreaterThan(0);
+      const first = roles[0];
+      expect(typeof first.id).toBe('number');
+      expect(typeof first.name).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted user template reads through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -193,6 +296,10 @@ describe('user template CLI integration (account-scoped reads)', () => {
       [['user', 'template', 'video-moderation', 'get', '--help'], 'video'],
       [['user', 'setting', 'footer', 'get', '--help'], 'footer'],
       [['user', 'setting', 'pv-show', 'get', '--help'], 'pv-show'],
+      [['user', 'mic-duration', '--help'], 'mic'],
+      [['user', 'viewlog', 'list', '--help'], 'viewlog'],
+      [['user', 'bill', 'use-detail', '--help'], 'use-detail'],
+      [['user', 'child', 'roles', '--help'], 'roles'],
     ];
 
     for (const [args, marker] of checks) {

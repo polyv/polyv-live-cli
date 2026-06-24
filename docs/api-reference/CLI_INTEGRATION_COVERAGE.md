@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T16:55:44.035Z
+Generated at: 2026-06-24T17:03:20.165Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 67 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 281 |
-| Missing real-execution leaf subcommands | 286 |
-| Real-execution coverage | 49.56% |
-| Leaf subcommands referenced including help | 388 |
-| Missing including help | 179 |
+| Real-executed leaf subcommands | 285 |
+| Missing real-execution leaf subcommands | 282 |
+| Real-execution coverage | 50.26% |
+| Leaf subcommands referenced including help | 392 |
+| Missing including help | 175 |
 
 ## By Top-Level Command
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 11 | 8 | 57.89% | 12 | 7 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 10 | 21 | 32.26% | 24 | 7 |
+| `user` | 31 | 14 | 17 | 45.16% | 28 | 3 |
 | `viewer` | 19 | 3 | 16 | 15.79% | 17 | 2 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
 | `web` | 34 | 10 | 24 | 29.41% | 17 | 17 |
@@ -282,19 +282,15 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
-| `user mic-duration` | `packages/cli/src/commands/user.commands.ts:130` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
-| `user bill use-detail` | `packages/cli/src/commands/user.commands.ts:140` |
 | `user child create` | `packages/cli/src/commands/user.commands.ts:58` |
 | `user child delete` | `packages/cli/src/commands/user.commands.ts:78` |
-| `user child roles` | `packages/cli/src/commands/user.commands.ts:55` |
 | `user child sale-get` | `packages/cli/src/commands/user.commands.ts:82` |
 | `user child update` | `packages/cli/src/commands/user.commands.ts:68` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
 | `user org create` | `packages/cli/src/commands/user.commands.ts:92` |
 | `user org delete` | `packages/cli/src/commands/user.commands.ts:98` |
 | `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
-| `user viewlog list` | `packages/cli/src/commands/user.commands.ts:148` |
 | `user setting footer update` | `packages/cli/src/commands/user.commands.ts:110` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template audio-moderation update` | `packages/cli/src/commands/user.commands.ts:197` |

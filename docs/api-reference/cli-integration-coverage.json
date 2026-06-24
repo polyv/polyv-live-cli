@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T16:55:44.035Z",
+  "generatedAt": "2026-06-24T17:03:20.165Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 426,
-    "referencedCommandPathsExcludingHelp": 287,
-    "coveredLeafTargetsIncludingHelp": 388,
-    "missingLeafTargetsIncludingHelp": 179,
-    "coveredRealExecutionLeafTargets": 281,
-    "missingRealExecutionLeafTargets": 286,
-    "realExecutionCoveragePercent": 49.56,
-    "includingHelpCoveragePercent": 68.43,
-    "integrationReferences": 663,
-    "realExecutionReferences": 373,
-    "helpReferences": 290
+    "referencedCommandPathsIncludingHelp": 430,
+    "referencedCommandPathsExcludingHelp": 291,
+    "coveredLeafTargetsIncludingHelp": 392,
+    "missingLeafTargetsIncludingHelp": 175,
+    "coveredRealExecutionLeafTargets": 285,
+    "missingRealExecutionLeafTargets": 282,
+    "realExecutionCoveragePercent": 50.26,
+    "includingHelpCoveragePercent": 69.14,
+    "integrationReferences": 671,
+    "realExecutionReferences": 377,
+    "helpReferences": 294
   },
   "byTopLevel": [
     {
@@ -356,12 +356,12 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 21,
-      "coveredLeafTargetsIncludingHelp": 24,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 32.26,
-      "includingHelpCoveragePercent": 77.42
+      "coveredRealExecutionLeafTargets": 14,
+      "missingRealExecutionLeafTargets": 17,
+      "coveredLeafTargetsIncludingHelp": 28,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 45.16,
+      "includingHelpCoveragePercent": 90.32
     },
     {
       "command": "viewer",
@@ -2735,16 +2735,6 @@
       "line": 506
     },
     {
-      "command": "user mic-duration",
-      "path": [
-        "user",
-        "mic-duration"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 130
-    },
-    {
       "command": "user sms-send",
       "path": [
         "user",
@@ -2753,17 +2743,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 124
-    },
-    {
-      "command": "user bill use-detail",
-      "path": [
-        "user",
-        "bill",
-        "use-detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 140
     },
     {
       "command": "user child create",
@@ -2786,17 +2765,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 78
-    },
-    {
-      "command": "user child roles",
-      "path": [
-        "user",
-        "child",
-        "roles"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 55
     },
     {
       "command": "user child sale-get",
@@ -2863,17 +2831,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 150
-    },
-    {
-      "command": "user viewlog list",
-      "path": [
-        "user",
-        "viewlog",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 148
     },
     {
       "command": "user setting footer update",
@@ -5054,38 +5011,6 @@
       "line": 506
     },
     {
-      "command": "user mic-duration",
-      "path": [
-        "user",
-        "mic-duration"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 130
-    },
-    {
-      "command": "user bill use-detail",
-      "path": [
-        "user",
-        "bill",
-        "use-detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 140
-    },
-    {
-      "command": "user child roles",
-      "path": [
-        "user",
-        "child",
-        "roles"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 55
-    },
-    {
       "command": "user child sale-get",
       "path": [
         "user",
@@ -5117,17 +5042,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 150
-    },
-    {
-      "command": "user viewlog list",
-      "path": [
-        "user",
-        "viewlog",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 148
     },
     {
       "command": "viewer get",
@@ -8099,6 +8013,27 @@
       "line": 121
     },
     {
+      "command": "user mic-duration",
+      "path": [
+        "user",
+        "mic-duration"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 130
+    },
+    {
+      "command": "user bill use-detail",
+      "path": [
+        "user",
+        "bill",
+        "use-detail"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 140
+    },
+    {
       "command": "user child list",
       "path": [
         "user",
@@ -8110,6 +8045,17 @@
       "line": 51
     },
     {
+      "command": "user child roles",
+      "path": [
+        "user",
+        "child",
+        "roles"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 55
+    },
+    {
       "command": "user org list",
       "path": [
         "user",
@@ -8119,6 +8065,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 89
+    },
+    {
+      "command": "user viewlog list",
+      "path": [
+        "user",
+        "viewlog",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 148
     },
     {
       "command": "user setting footer get",
@@ -12814,6 +12771,21 @@
       }
     },
     {
+      "command": "user bill use-detail",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 241,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 301,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "user child",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -12858,6 +12830,21 @@
       "firstHelpReference": null
     },
     {
+      "command": "user child roles",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 272,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 302,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "user child update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -12865,6 +12852,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 30,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user mic-duration",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 195,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 299,
         "source": "array-literal"
       }
     },
@@ -12940,12 +12942,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 153,
+        "line": 154,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 194,
+        "line": 297,
         "source": "array-literal"
       }
     },
@@ -12966,12 +12968,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 174,
+        "line": 175,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 195,
+        "line": 298,
         "source": "array-literal"
       }
     },
@@ -13014,12 +13016,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 111,
+        "line": 112,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 192,
+        "line": 295,
         "source": "array-literal"
       }
     },
@@ -13040,12 +13042,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 33,
+        "line": 34,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 188,
+        "line": 291,
         "source": "array-literal"
       }
     },
@@ -13066,12 +13068,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 54,
+        "line": 55,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 189,
+        "line": 292,
         "source": "array-literal"
       }
     },
@@ -13092,12 +13094,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 92,
+        "line": 93,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 191,
+        "line": 294,
         "source": "array-literal"
       }
     },
@@ -13118,12 +13120,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 72,
+        "line": 73,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 190,
+        "line": 293,
         "source": "array-literal"
       }
     },
@@ -13144,12 +13146,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 133,
+        "line": 134,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 193,
+        "line": 296,
         "source": "array-literal"
       }
     },
@@ -13172,6 +13174,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 16,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user viewlog list",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 216,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 300,
         "source": "array-literal"
       }
     },
