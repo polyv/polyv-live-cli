@@ -5,6 +5,12 @@
  */
 
 import { CardPushServiceSdk } from '../../src/services/card-push-service';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  parseJsonObject,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
 
 // Use test config from CLI accounts or environment
@@ -15,6 +21,25 @@ function isExpectedCardPushUnavailable(message: string): boolean {
   return ['404', 'not found', '找不到', '不存在', '已达上限', 'limit', 'exceeded'].some(e =>
     message.includes(e)
   );
+}
+
+function extractCardPushId(value: Record<string, unknown>): string {
+  const data = value.data && typeof value.data === 'object' ? value.data as Record<string, unknown> : undefined;
+  const result = value.result && typeof value.result === 'object' ? value.result as Record<string, unknown> : undefined;
+  const candidates = [
+    value.id,
+    value.cardPushId,
+    data?.id,
+    data?.cardPushId,
+    result?.id,
+    result?.cardPushId,
+  ];
+  const id = candidates.find((candidate) => /^\d+$/.test(String(candidate ?? '')));
+  if (id === undefined) {
+    throw new Error(`Cannot extract cardPushId from CLI output: ${JSON.stringify(value)}`);
+  }
+
+  return String(id);
 }
 
 (shouldRunTests ? describe : describe.skip)('Card-Push Integration Tests', () => {
@@ -732,4 +757,83 @@ function isExpectedCardPushUnavailable(message: string): boolean {
       ).rejects.toThrow();
     });
   });
+});
+
+(shouldRunTests ? describe : describe.skip)('Card-Push real CLI lifecycle coverage', () => {
+  it('runs create, update, and delete through the local CLI with a temporary channel', () => {
+    let channelId: string | undefined;
+    let cardPushId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Card Push CLI');
+
+      const createOutput = runCliSuccess([
+        'card-push',
+        'create',
+        '--channelId',
+        channelId,
+        '--imageType',
+        'giftbox',
+        '--title',
+        `Card${Date.now().toString().slice(-8)}`,
+        '--link',
+        'https://example.com/card-push-cli',
+        '--duration',
+        '5',
+        '--showCondition',
+        'PUSH',
+        '--output',
+        'json',
+      ]);
+      const created = parseJsonObject(createOutput);
+      cardPushId = extractCardPushId(created);
+
+      const updateOutput = runCliSuccess([
+        'card-push',
+        'update',
+        '--channelId',
+        channelId,
+        '--cardPushId',
+        cardPushId,
+        '--title',
+        `Upd${Date.now().toString().slice(-8)}`,
+        '--duration',
+        '10',
+        '--output',
+        'json',
+      ]);
+      const updated = parseJsonObject(updateOutput);
+      expect(updated.success).toBe(true);
+
+      const deleteOutput = runCliSuccess([
+        'card-push',
+        'delete',
+        '--channelId',
+        channelId,
+        '--cardPushId',
+        cardPushId,
+        '--output',
+        'json',
+      ]);
+      const deleted = parseJsonObject(deleteOutput);
+      expect(deleted.success).toBe(true);
+      cardPushId = undefined;
+    } finally {
+      if (cardPushId && channelId) {
+        runCliSuccess([
+          'card-push',
+          'delete',
+          '--channelId',
+          channelId,
+          '--cardPushId',
+          cardPushId,
+          '--output',
+          'json',
+        ]);
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

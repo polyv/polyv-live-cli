@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T07:24:19.202Z",
+  "generatedAt": "2026-06-24T07:28:18.738Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 373,
-    "referencedCommandPathsExcludingHelp": 203,
-    "coveredLeafTargetsIncludingHelp": 336,
-    "missingLeafTargetsIncludingHelp": 231,
-    "coveredRealExecutionLeafTargets": 197,
-    "missingRealExecutionLeafTargets": 370,
-    "realExecutionCoveragePercent": 34.74,
-    "includingHelpCoveragePercent": 59.26,
-    "integrationReferences": 548,
-    "realExecutionReferences": 280,
+    "referencedCommandPathsIncludingHelp": 376,
+    "referencedCommandPathsExcludingHelp": 206,
+    "coveredLeafTargetsIncludingHelp": 339,
+    "missingLeafTargetsIncludingHelp": 228,
+    "coveredRealExecutionLeafTargets": 200,
+    "missingRealExecutionLeafTargets": 367,
+    "realExecutionCoveragePercent": 35.27,
+    "includingHelpCoveragePercent": 59.79,
+    "integrationReferences": 552,
+    "realExecutionReferences": 284,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -56,12 +56,12 @@
     {
       "command": "card-push",
       "targetLeafCommands": 8,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 5,
-      "coveredLeafTargetsIncludingHelp": 3,
-      "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 37.5,
-      "includingHelpCoveragePercent": 37.5
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 6,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 75,
+      "includingHelpCoveragePercent": 75
     },
     {
       "command": "channel",
@@ -530,26 +530,6 @@
       "line": 280
     },
     {
-      "command": "card-push create",
-      "path": [
-        "card-push",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 164
-    },
-    {
-      "command": "card-push delete",
-      "path": [
-        "card-push",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 302
-    },
-    {
       "command": "card-push push",
       "path": [
         "card-push",
@@ -558,16 +538,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/card-push.commands.ts",
       "line": 258
-    },
-    {
-      "command": "card-push update",
-      "path": [
-        "card-push",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 210
     },
     {
       "command": "channel batch-create",
@@ -4517,26 +4487,6 @@
       "line": 280
     },
     {
-      "command": "card-push create",
-      "path": [
-        "card-push",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 164
-    },
-    {
-      "command": "card-push delete",
-      "path": [
-        "card-push",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 302
-    },
-    {
       "command": "card-push push",
       "path": [
         "card-push",
@@ -4545,16 +4495,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/card-push.commands.ts",
       "line": 258
-    },
-    {
-      "command": "card-push update",
-      "path": [
-        "card-push",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 210
     },
     {
       "command": "channel children-list",
@@ -7170,6 +7110,26 @@
       "line": 222
     },
     {
+      "command": "card-push create",
+      "path": [
+        "card-push",
+        "create"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 164
+    },
+    {
+      "command": "card-push delete",
+      "path": [
+        "card-push",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 302
+    },
+    {
       "command": "card-push list",
       "path": [
         "card-push",
@@ -7178,6 +7138,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/card-push.commands.ts",
       "line": 144
+    },
+    {
+      "command": "card-push update",
+      "path": [
+        "card-push",
+        "update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 210
     },
     {
       "command": "card-push share get",
@@ -9300,6 +9270,28 @@
       "firstHelpReference": null
     },
     {
+      "command": "card-push create",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 770,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "card-push delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 808,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "card-push list",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -9343,6 +9335,17 @@
         "line": 72,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "card-push update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 791,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "channel",
