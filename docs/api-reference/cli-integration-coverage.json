@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T20:50:54.468Z",
+  "generatedAt": "2026-06-24T21:01:40.578Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,16 +21,16 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 490,
-    "referencedCommandPathsExcludingHelp": 388,
+    "referencedCommandPathsExcludingHelp": 390,
     "coveredLeafTargetsIncludingHelp": 451,
     "missingLeafTargetsIncludingHelp": 116,
-    "coveredRealExecutionLeafTargets": 382,
-    "missingRealExecutionLeafTargets": 185,
-    "realExecutionCoveragePercent": 67.37,
+    "coveredRealExecutionLeafTargets": 384,
+    "missingRealExecutionLeafTargets": 183,
+    "realExecutionCoveragePercent": 67.72,
     "includingHelpCoveragePercent": 79.54,
-    "integrationReferences": 886,
-    "realExecutionReferences": 531,
-    "helpReferences": 355
+    "integrationReferences": 898,
+    "realExecutionReferences": 541,
+    "helpReferences": 357
   },
   "byTopLevel": [
     {
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 17,
-      "missingRealExecutionLeafTargets": 14,
+      "coveredRealExecutionLeafTargets": 19,
+      "missingRealExecutionLeafTargets": 12,
       "coveredLeafTargetsIncludingHelp": 28,
       "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 54.84,
+      "realExecutionCoveragePercent": 61.29,
       "includingHelpCoveragePercent": 90.32
     },
     {
@@ -2177,18 +2177,6 @@
       "line": 120
     },
     {
-      "command": "user template audio-moderation update",
-      "path": [
-        "user",
-        "template",
-        "audio-moderation",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 197
-    },
-    {
       "command": "user template playback update",
       "path": [
         "user",
@@ -2211,18 +2199,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 183
-    },
-    {
-      "command": "user template video-moderation update",
-      "path": [
-        "user",
-        "template",
-        "video-moderation",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 207
     },
     {
       "command": "viewer import-external",
@@ -7111,6 +7087,18 @@
       "line": 195
     },
     {
+      "command": "user template audio-moderation update",
+      "path": [
+        "user",
+        "template",
+        "audio-moderation",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 197
+    },
+    {
       "command": "user template donate get",
       "path": [
         "user",
@@ -7193,6 +7181,18 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 205
+    },
+    {
+      "command": "user template video-moderation update",
+      "path": [
+        "user",
+        "template",
+        "video-moderation",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 207
     },
     {
       "command": "viewer create",
@@ -12969,7 +12969,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 49,
+        "line": 50,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13028,7 +13028,7 @@
     },
     {
       "command": "user template audio-moderation get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -13043,9 +13043,13 @@
     },
     {
       "command": "user template audio-moderation update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 219,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 38,
@@ -13073,7 +13077,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 108,
+        "line": 109,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13103,7 +13107,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 151,
+        "line": 152,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13166,7 +13170,7 @@
     },
     {
       "command": "user template video-moderation get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -13181,9 +13185,13 @@
     },
     {
       "command": "user template video-moderation update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 282,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 39,

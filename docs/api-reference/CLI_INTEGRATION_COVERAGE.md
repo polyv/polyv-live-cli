@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T20:50:54.468Z
+Generated at: 2026-06-24T21:01:40.578Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 83 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 382 |
-| Missing real-execution leaf subcommands | 185 |
-| Real-execution coverage | 67.37% |
+| Real-executed leaf subcommands | 384 |
+| Missing real-execution leaf subcommands | 183 |
+| Real-execution coverage | 67.72% |
 | Leaf subcommands referenced including help | 451 |
 | Missing including help | 116 |
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 17 | 14 | 54.84% | 28 | 3 |
+| `user` | 31 | 19 | 12 | 61.29% | 28 | 3 |
 | `viewer` | 19 | 13 | 6 | 68.42% | 18 | 1 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
@@ -230,10 +230,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user org delete` | `packages/cli/src/commands/user.commands.ts:98` |
 | `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
-| `user template audio-moderation update` | `packages/cli/src/commands/user.commands.ts:197` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
-| `user template video-moderation update` | `packages/cli/src/commands/user.commands.ts:207` |
 | `viewer import-external` | `packages/cli/src/commands/viewer.commands.ts:217` |
 | `viewer lottery-wins` | `packages/cli/src/commands/viewer.commands.ts:269` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |

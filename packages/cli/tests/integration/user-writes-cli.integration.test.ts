@@ -1,7 +1,8 @@
 /**
  * @fileoverview Real-CLI integration tests for the account-scoped `user` write
  * subcommands (`user setting footer update`, `user template donate update`,
- * `user template marquee update`).
+ * `user template marquee update`, `user template audio-moderation update`,
+ * `user template video-moderation update`).
  *
  * Each target is exercised through the local CLI entry (dist/index.js). These
  * are account-scoped template/setting writes, so every test follows a strict
@@ -194,12 +195,137 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
     expect(String(afterRestore.enable)).toBe('N');
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('updates and restores the audio moderation template via real CLI', () => {
+    let channelId: string | undefined;
+    let original: { enabled: string; strategy: string; badword: string; illegalNotify: object } | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Template Audio Moderation Update');
+
+      const before = parseJsonObject(
+        runCliSuccess(['user', 'template', 'audio-moderation', 'get', '--output', 'json']),
+      );
+      // Capture the originals so the account-wide template is restored exactly.
+      original = {
+        enabled: String(before.moderationEnabled ?? 'N'),
+        strategy: String(before.moderationStrategy ?? 'easy'),
+        badword: String(before.badwordEnabled ?? 'N'),
+        illegalNotify: (before.illegalNotify as object) ?? {},
+      };
+      const toggled = original.badword === 'Y' ? 'N' : 'Y';
+      const notify = JSON.stringify(original.illegalNotify);
+
+      const updated = parseJsonObject(
+        runCliSuccess([
+          'user', 'template', 'audio-moderation', 'update',
+          '--moderation-enabled', original.enabled,
+          '--moderation-strategy', original.strategy,
+          '--badword-enabled', toggled,
+          '--illegal-notify', notify,
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(updated.success).toBe(true);
+      expect(updated.badwordEnabled).toBe(toggled);
+
+      const afterUpdate = parseJsonObject(
+        runCliSuccess(['user', 'template', 'audio-moderation', 'get', '--output', 'json']),
+      );
+      expect(String(afterUpdate.badwordEnabled)).toBe(toggled);
+    } finally {
+      if (original) {
+        const notify = JSON.stringify(original.illegalNotify);
+        runCliSuccess([
+          'user', 'template', 'audio-moderation', 'update',
+          '--moderation-enabled', original.enabled,
+          '--moderation-strategy', original.strategy,
+          '--badword-enabled', original.badword,
+          '--illegal-notify', notify,
+          '--force', '--output', 'json',
+        ]);
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+
+    const afterRestore = parseJsonObject(
+      runCliSuccess(['user', 'template', 'audio-moderation', 'get', '--output', 'json']),
+    );
+    expect(String(afterRestore.badwordEnabled)).toBe(original!.badword);
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('updates and restores the video moderation template via real CLI', () => {
+    let channelId: string | undefined;
+    let original: { enabled: string; strategy: string; freq: string; illegalNotify: object } | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Template Video Moderation Update');
+
+      const before = parseJsonObject(
+        runCliSuccess(['user', 'template', 'video-moderation', 'get', '--output', 'json']),
+      );
+      // The server only accepts imageFrequency in {5, 20, 60} (per
+      // docs/live/api: 截帧时长取值 5/20/60 秒), so toggle between two valid
+      // values regardless of the current one.
+      const origFreq = String(before.imageFrequency ?? '60');
+      original = {
+        enabled: String(before.moderationEnabled ?? 'N'),
+        strategy: String(before.moderationStrategy ?? 'finance_easy'),
+        freq: origFreq,
+        illegalNotify: (before.illegalNotify as object) ?? {},
+      };
+      const toggled = origFreq === '60' ? '5' : '60';
+      const notify = JSON.stringify(original.illegalNotify);
+
+      const updated = parseJsonObject(
+        runCliSuccess([
+          'user', 'template', 'video-moderation', 'update',
+          '--moderation-enabled', original.enabled,
+          '--moderation-strategy', original.strategy,
+          '--image-frequency', toggled,
+          '--illegal-notify', notify,
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(updated.success).toBe(true);
+      expect(String(updated.imageFrequency)).toBe(toggled);
+
+      const afterUpdate = parseJsonObject(
+        runCliSuccess(['user', 'template', 'video-moderation', 'get', '--output', 'json']),
+      );
+      expect(String(afterUpdate.imageFrequency)).toBe(toggled);
+    } finally {
+      if (original) {
+        const notify = JSON.stringify(original.illegalNotify);
+        runCliSuccess([
+          'user', 'template', 'video-moderation', 'update',
+          '--moderation-enabled', original.enabled,
+          '--moderation-strategy', original.strategy,
+          '--image-frequency', original.freq,
+          '--illegal-notify', notify,
+          '--force', '--output', 'json',
+        ]);
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+
+    const afterRestore = parseJsonObject(
+      runCliSuccess(['user', 'template', 'video-moderation', 'get', '--output', 'json']),
+    );
+    expect(String(afterRestore.imageFrequency)).toBe(original!.freq);
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted user writes through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
       [['user', 'setting', 'footer', 'update', '--help'], 'footer'],
       [['user', 'template', 'donate', 'update', '--help'], 'donate'],
       [['user', 'template', 'marquee', 'update', '--help'], 'marquee'],
+      [['user', 'template', 'audio-moderation', 'update', '--help'], 'audio-moderation'],
+      [['user', 'template', 'video-moderation', 'update', '--help'], 'video-moderation'],
     ];
 
     for (const [args, marker] of checks) {
