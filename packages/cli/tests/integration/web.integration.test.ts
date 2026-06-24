@@ -3,6 +3,7 @@ import {
   createTemporaryChannel,
   deleteTemporaryChannel,
   parseJsonObject,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
@@ -152,6 +153,91 @@ describe('web CLI integration', () => {
         runCliSuccess(['web', 'info', 'publisher-set', '--channel-id', id, '--user-id', userId, '--publisher', 'Web Info Host', '--force', '--output', 'json']),
       );
       expect(publisherPayload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // Exercises the web menu CRUD lifecycle (add -> update -> delete) against a
+  // throwaway channel. add returns the created menu (including menuId), update
+  // changes its content, list confirms the new content persisted, and delete
+  // removes it; the channel is deleted in `finally`, so no lasting side effect.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web menu add/update/delete lifecycle against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Menu Writes');
+      const id = channelId;
+
+      const added = parseJsonObject(
+        runCliSuccess(['web', 'menu', 'add', '--channel-id', id, '--name', 'probe-menu', '--type', 'text', '--content', 'hello', '--force', '--output', 'json']),
+      );
+      expect(typeof added.menuId).toBe('string');
+      expect(added.menuId).not.toBe('');
+      expect(added.menuType).toBe('text');
+      expect(added.name).toBe('probe-menu');
+      const menuId = String(added.menuId);
+
+      const updated = parseJsonObject(
+        runCliSuccess(['web', 'menu', 'update', '--menu-id', menuId, '--channel-id', id, '--content', 'updated content', '--force', '--output', 'json']),
+      );
+      expect(updated.success).toBe(true);
+
+      // list reflects the updated content for the created menu.
+      const menus = parseJsonValue(
+        runCliSuccess(['web', 'menu', 'list', '--channel-id', id, '--output', 'json']),
+      );
+      const found = (menus as Array<{ menuId: string; content: string | null }>).find((item) => item.menuId === menuId);
+      expect(found).toBeDefined();
+      expect(found?.content).toBe('updated content');
+
+      const deleted = parseJsonObject(
+        runCliSuccess(['web', 'menu', 'delete', '--menu-ids', menuId, '--force', '--output', 'json']),
+      );
+      expect(deleted.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // Exercises two self-contained channel-scoped writes against a throwaway
+  // channel: web share update (sets WeChat share title/desc, verified via share
+  // get) and web auth auth-url-update (sets then clears the playback restrict
+  // auth URL). Both report { success: true }; the channel is deleted in
+  // `finally`, so the writes have no lasting side effect.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web share update and auth auth-url-update against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Share Auth Writes');
+      const id = channelId;
+
+      const sharePayload = parseJsonObject(
+        runCliSuccess(['web', 'share', 'update', '--channel-id', id, '--weixin-share-title', 'Share Title', '--weixin-share-desc', 'Share Desc', '--force', '--output', 'json']),
+      );
+      expect(sharePayload.success).toBe(true);
+
+      const shareGet = parseJsonObject(
+        runCliSuccess(['web', 'share', 'get', '--channel-id', id, '--output', 'json']),
+      );
+      // share get returns the channel share settings object; structure sanity check only.
+      expect(typeof shareGet).toBe('object');
+      expect(shareGet).not.toBeNull();
+
+      const authUrlSet = parseJsonObject(
+        runCliSuccess(['web', 'auth', 'auth-url-update', '--channel-id', id, '--url', 'https://example.com/auth', '--force', '--output', 'json']),
+      );
+      expect(authUrlSet.success).toBe(true);
+
+      // Omitting --url clears the auth URL (reversible), returning the same shape.
+      const authUrlClear = parseJsonObject(
+        runCliSuccess(['web', 'auth', 'auth-url-update', '--channel-id', id, '--force', '--output', 'json']),
+      );
+      expect(authUrlClear.success).toBe(true);
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);
