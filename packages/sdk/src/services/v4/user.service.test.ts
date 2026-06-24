@@ -174,7 +174,8 @@ describe('V4UserService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/user/children/delete',
-        { childEmail: 'child@example.com' }
+        undefined,
+        { params: { childEmail: 'child@example.com' } }
       );
     });
 

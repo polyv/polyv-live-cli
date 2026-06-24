@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T22:24:44.721Z",
+  "generatedAt": "2026-06-24T22:33:14.344Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,16 +21,16 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 508,
-    "referencedCommandPathsExcludingHelp": 424,
+    "referencedCommandPathsExcludingHelp": 427,
     "coveredLeafTargetsIncludingHelp": 469,
     "missingLeafTargetsIncludingHelp": 98,
-    "coveredRealExecutionLeafTargets": 418,
-    "missingRealExecutionLeafTargets": 149,
-    "realExecutionCoveragePercent": 73.72,
+    "coveredRealExecutionLeafTargets": 421,
+    "missingRealExecutionLeafTargets": 146,
+    "realExecutionCoveragePercent": 74.25,
     "includingHelpCoveragePercent": 82.72,
-    "integrationReferences": 983,
-    "realExecutionReferences": 605,
-    "helpReferences": 378
+    "integrationReferences": 993,
+    "realExecutionReferences": 612,
+    "helpReferences": 381
   },
   "byTopLevel": [
     {
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 21,
-      "missingRealExecutionLeafTargets": 10,
+      "coveredRealExecutionLeafTargets": 24,
+      "missingRealExecutionLeafTargets": 7,
       "coveredLeafTargetsIncludingHelp": 28,
       "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 67.74,
+      "realExecutionCoveragePercent": 77.42,
       "includingHelpCoveragePercent": 90.32
     },
     {
@@ -1786,28 +1786,6 @@
       "line": 124
     },
     {
-      "command": "user child create",
-      "path": [
-        "user",
-        "child",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 58
-    },
-    {
-      "command": "user child delete",
-      "path": [
-        "user",
-        "child",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 78
-    },
-    {
       "command": "user child sale-get",
       "path": [
         "user",
@@ -1817,17 +1795,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 82
-    },
-    {
-      "command": "user child update",
-      "path": [
-        "user",
-        "child",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 68
     },
     {
       "command": "user mr-concurrency detail",
@@ -6741,6 +6708,28 @@
       "line": 140
     },
     {
+      "command": "user child create",
+      "path": [
+        "user",
+        "child",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 58
+    },
+    {
+      "command": "user child delete",
+      "path": [
+        "user",
+        "child",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 78
+    },
+    {
       "command": "user child list",
       "path": [
         "user",
@@ -6761,6 +6750,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 55
+    },
+    {
+      "command": "user child update",
+      "path": [
+        "user",
+        "child",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 68
     },
     {
       "command": "user org create",
@@ -12900,9 +12900,13 @@
     },
     {
       "command": "user child create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 431,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 29,
@@ -12911,9 +12915,13 @@
     },
     {
       "command": "user child delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 469,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 31,
@@ -12922,7 +12930,7 @@
     },
     {
       "command": "user child list",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 4,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
@@ -12933,7 +12941,7 @@
     },
     {
       "command": "user child roles",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -12948,9 +12956,13 @@
     },
     {
       "command": "user child update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 450,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 30,
@@ -13000,7 +13012,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 350,
+        "line": 357,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13015,7 +13027,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 364,
+        "line": 371,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13067,7 +13079,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 57,
+        "line": 64,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13145,7 +13157,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 226,
+        "line": 233,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13175,7 +13187,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 116,
+        "line": 123,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13205,7 +13217,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 159,
+        "line": 166,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13287,7 +13299,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 289,
+        "line": 296,
         "source": "array-literal"
       },
       "firstHelpReference": {

@@ -3,7 +3,8 @@
  * subcommands (`user setting footer update`, `user template donate update`,
  * `user template marquee update`, `user template audio-moderation update`,
  * `user template video-moderation update`, `user org create`,
- * `user org delete`).
+ * `user org delete`, `user child create`, `user child update`,
+ * `user child delete`).
  *
  * Each target is exercised through the local CLI entry (dist/index.js). These
  * are account-scoped template/setting writes, so every test follows a strict
@@ -16,6 +17,12 @@
  * the parent organization is discovered from the existing org tree, the created
  * org is deleted in the same test (with a `finally` fallback) so no orphan
  * organization is left on the account.
+ *
+ * `user child create` → `update` → `delete` is an account-scoped sub-account
+ * CRUD lifecycle: the role-id is discovered from the existing role list, the
+ * sub-account is keyed by a unique login email, renamed via update (verified
+ * through a filtered list), and deleted in the same test (with a `finally`
+ * fallback) so no orphan sub-account is left on the account.
  *
  * Per the integration-test convention, every test still creates (and deletes in
  * `finally`) a temporary channel as the real test asset, even though these
@@ -394,6 +401,104 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
     }
   }, 120000);
 
+  // `user child create` → `update` → `delete` is an account-scoped CRUD
+  // lifecycle. The role-id is discovered from the existing role list (so the
+  // test does not assume a fixed role id), the child account is keyed by a
+  // unique login email, renamed via update (verified through a filtered list),
+  // and deleted in the same test (with a `finally` fallback) so no orphan
+  // sub-account is left on the account. The delete endpoint signs childEmail
+  // as a query parameter (not a request body), exercised for real here.
+  (shouldRunRealChannelTests ? it : it.skip)('runs the user child create→update→delete lifecycle via real CLI', () => {
+    let channelId: string | undefined;
+    let childEmail: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Child Create Update Delete');
+
+      // Discover a real role-id from the account's role list (the list always
+      // contains at least the built-in roles). Prefer a non-full-admin role so
+      // the transient sub-account never holds platform-wide privileges.
+      const roles = parseJsonValue(
+        runCliSuccess(['user', 'child', 'roles', '--output', 'json']),
+      ) as Array<{ id: number; name: string }>;
+      expect(Array.isArray(roles)).toBe(true);
+      expect(roles.length).toBeGreaterThan(0);
+      const role = roles.find((r) => r.id !== 1) ?? roles[0];
+      const roleId = role.id;
+
+      childEmail = `it-child-${Date.now()}@itest.com`;
+      const created = parseJsonObject(
+        runCliSuccess([
+          'user', 'child', 'create',
+          '--child-email', childEmail,
+          '--child-name', 'ItChildOriginal',
+          '--password', 'ItChild1234Pass',
+          '--role-id', String(roleId),
+          '--description', 'cli integration test child account',
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(created.success).toBe(true);
+      const createdResult = created.result as { childUserId: string; childEmail: string; childName: string; roleId: number };
+      expect(createdResult.childEmail).toBe(childEmail);
+      expect(createdResult.childName).toBe('ItChildOriginal');
+      expect(createdResult.childUserId).toBeTruthy();
+
+      // Rename the sub-account and verify the new name persists through a fresh
+      // filtered list read.
+      const updated = parseJsonObject(
+        runCliSuccess([
+          'user', 'child', 'update',
+          '--child-email', childEmail,
+          '--child-name', 'ItChildRenamed',
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(updated.success).toBe(true);
+      expect(updated.childName).toBe('ItChildRenamed');
+
+      const listed = parseJsonObject(
+        runCliSuccess(['user', 'child', 'list', '--child-email', childEmail, '--output', 'json']),
+      );
+      expect(listed.totalItems).toBeGreaterThanOrEqual(1);
+      const listedChild = (listed.contents as Array<{ childEmail: string; childName: string }>)[0];
+      expect(listedChild.childEmail).toBe(childEmail);
+      expect(listedChild.childName).toBe('ItChildRenamed');
+
+      const deleted = parseJsonObject(
+        runCliSuccess([
+          'user', 'child', 'delete',
+          '--child-email', childEmail,
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(deleted.success).toBe(true);
+      expect(deleted.childEmail).toBe(childEmail);
+      childEmail = undefined;
+
+      // Verify the sub-account is actually gone from the account.
+      const afterDelete = parseJsonObject(
+        runCliSuccess(['user', 'child', 'list', '--child-email', listedChild.childEmail, '--output', 'json']),
+      );
+      expect(afterDelete.totalItems).toBe(0);
+    } finally {
+      if (childEmail !== undefined) {
+        try {
+          runCliSuccess([
+            'user', 'child', 'delete',
+            '--child-email', childEmail,
+            '--force', '--output', 'json',
+          ]);
+        } catch {
+          // best-effort cleanup of an orphan sub-account
+        }
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted user writes through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -404,6 +509,9 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
       [['user', 'template', 'video-moderation', 'update', '--help'], 'video-moderation'],
       [['user', 'org', 'create', '--help'], 'organization'],
       [['user', 'org', 'delete', '--help'], 'organization'],
+      [['user', 'child', 'create', '--help'], 'child'],
+      [['user', 'child', 'update', '--help'], 'child'],
+      [['user', 'child', 'delete', '--help'], 'child'],
     ];
 
     for (const [args, marker] of checks) {

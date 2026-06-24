@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T22:24:44.721Z
+Generated at: 2026-06-24T22:33:14.344Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 84 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 418 |
-| Missing real-execution leaf subcommands | 149 |
-| Real-execution coverage | 73.72% |
+| Real-executed leaf subcommands | 421 |
+| Missing real-execution leaf subcommands | 146 |
+| Real-execution coverage | 74.25% |
 | Leaf subcommands referenced including help | 469 |
 | Missing including help | 98 |
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 21 | 10 | 67.74% | 28 | 3 |
+| `user` | 31 | 24 | 7 | 77.42% | 28 | 3 |
 | `viewer` | 19 | 17 | 2 | 89.47% | 18 | 1 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
@@ -193,10 +193,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
-| `user child create` | `packages/cli/src/commands/user.commands.ts:58` |
-| `user child delete` | `packages/cli/src/commands/user.commands.ts:78` |
 | `user child sale-get` | `packages/cli/src/commands/user.commands.ts:82` |
-| `user child update` | `packages/cli/src/commands/user.commands.ts:68` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
 | `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |

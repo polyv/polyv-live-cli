@@ -272,9 +272,13 @@ export class V4UserService {
    */
   async deleteChildAccounts(params: DeleteChildAccountsParams): Promise<void> {
     if (params.childEmail) {
+      // childEmail is a signed query parameter (not a request body): per
+      // v4/user/children/delete.md the Java example puts childEmail into the
+      // signed requestMap and appends it to the URL, with a null form body.
       await this.client.httpClient.post(
         '/live/v4/user/children/delete',
-        { childEmail: params.childEmail }
+        undefined,
+        { params: { childEmail: params.childEmail } }
       );
       return;
     }
@@ -282,7 +286,8 @@ export class V4UserService {
     if (params.childEmails && params.childEmails.length > 0) {
       await this.client.httpClient.post(
         '/live/v4/user/children/delete',
-        { childEmails: params.childEmails }
+        undefined,
+        { params: { childEmails: params.childEmails } }
       );
       return;
     }
