@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T08:25:50.527Z
+Generated at: 2026-06-24T08:30:33.095Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 60 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 242 |
-| Missing real-execution leaf subcommands | 325 |
-| Real-execution coverage | 42.68% |
-| Leaf subcommands referenced including help | 358 |
-| Missing including help | 209 |
+| Real-executed leaf subcommands | 247 |
+| Missing real-execution leaf subcommands | 320 |
+| Real-execution coverage | 43.56% |
+| Leaf subcommands referenced including help | 361 |
+| Missing including help | 206 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 65 | 13 | 83.33% | 73 | 5 |
-| `chat` | 44 | 17 | 27 | 38.64% | 28 | 16 |
+| `chat` | 44 | 22 | 22 | 50.00% | 31 | 13 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
@@ -87,15 +87,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
-| `chat ban` | `packages/cli/src/commands/chat.commands.ts:289` |
 | `chat kick` | `packages/cli/src/commands/chat.commands.ts:349` |
-| `chat unban` | `packages/cli/src/commands/chat.commands.ts:319` |
 | `chat unkick` | `packages/cli/src/commands/chat.commands.ts:382` |
 | `chat badword add` | `packages/cli/src/commands/chat.commands.ts:593` |
 | `chat badword delete` | `packages/cli/src/commands/chat.commands.ts:603` |
-| `chat banned delete` | `packages/cli/src/commands/chat.commands.ts:638` |
-| `chat banned ip-add` | `packages/cli/src/commands/chat.commands.ts:611` |
-| `chat banned user-list` | `packages/cli/src/commands/chat.commands.ts:620` |
 | `chat censor update` | `packages/cli/src/commands/chat.commands.ts:695` |
 | `chat message admin-send` | `packages/cli/src/commands/chat.commands.ts:489` |
 | `chat message alert-special` | `packages/cli/src/commands/chat.commands.ts:524` |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T08:25:50.527Z",
+  "generatedAt": "2026-06-24T08:30:33.095Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 395,
-    "referencedCommandPathsExcludingHelp": 248,
-    "coveredLeafTargetsIncludingHelp": 358,
-    "missingLeafTargetsIncludingHelp": 209,
-    "coveredRealExecutionLeafTargets": 242,
-    "missingRealExecutionLeafTargets": 325,
-    "realExecutionCoveragePercent": 42.68,
-    "includingHelpCoveragePercent": 63.14,
-    "integrationReferences": 600,
-    "realExecutionReferences": 332,
+    "referencedCommandPathsIncludingHelp": 398,
+    "referencedCommandPathsExcludingHelp": 253,
+    "coveredLeafTargetsIncludingHelp": 361,
+    "missingLeafTargetsIncludingHelp": 206,
+    "coveredRealExecutionLeafTargets": 247,
+    "missingRealExecutionLeafTargets": 320,
+    "realExecutionCoveragePercent": 43.56,
+    "includingHelpCoveragePercent": 63.67,
+    "integrationReferences": 605,
+    "realExecutionReferences": 337,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -76,12 +76,12 @@
     {
       "command": "chat",
       "targetLeafCommands": 44,
-      "coveredRealExecutionLeafTargets": 17,
-      "missingRealExecutionLeafTargets": 27,
-      "coveredLeafTargetsIncludingHelp": 28,
-      "missingLeafTargetsIncludingHelp": 16,
-      "realExecutionCoveragePercent": 38.64,
-      "includingHelpCoveragePercent": 63.64
+      "coveredRealExecutionLeafTargets": 22,
+      "missingRealExecutionLeafTargets": 22,
+      "coveredLeafTargetsIncludingHelp": 31,
+      "missingLeafTargetsIncludingHelp": 13,
+      "realExecutionCoveragePercent": 50,
+      "includingHelpCoveragePercent": 70.45
     },
     {
       "command": "checkin",
@@ -659,16 +659,6 @@
       "line": 1271
     },
     {
-      "command": "chat ban",
-      "path": [
-        "chat",
-        "ban"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 289
-    },
-    {
       "command": "chat kick",
       "path": [
         "chat",
@@ -677,16 +667,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 349
-    },
-    {
-      "command": "chat unban",
-      "path": [
-        "chat",
-        "unban"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 319
     },
     {
       "command": "chat unkick",
@@ -719,39 +699,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 603
-    },
-    {
-      "command": "chat banned delete",
-      "path": [
-        "chat",
-        "banned",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 638
-    },
-    {
-      "command": "chat banned ip-add",
-      "path": [
-        "chat",
-        "banned",
-        "ip-add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 611
-    },
-    {
-      "command": "chat banned user-list",
-      "path": [
-        "chat",
-        "banned",
-        "user-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 620
     },
     {
       "command": "chat censor update",
@@ -4072,16 +4019,6 @@
       "line": 1271
     },
     {
-      "command": "chat ban",
-      "path": [
-        "chat",
-        "ban"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 289
-    },
-    {
       "command": "chat kick",
       "path": [
         "chat",
@@ -4092,16 +4029,6 @@
       "line": 349
     },
     {
-      "command": "chat unban",
-      "path": [
-        "chat",
-        "unban"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 319
-    },
-    {
       "command": "chat unkick",
       "path": [
         "chat",
@@ -4110,17 +4037,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 382
-    },
-    {
-      "command": "chat banned user-list",
-      "path": [
-        "chat",
-        "banned",
-        "user-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 620
     },
     {
       "command": "chat message admin-send",
@@ -7230,6 +7146,16 @@
       "line": 713
     },
     {
+      "command": "chat ban",
+      "path": [
+        "chat",
+        "ban"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 289
+    },
+    {
       "command": "chat delete",
       "path": [
         "chat",
@@ -7270,6 +7196,16 @@
       "line": 111
     },
     {
+      "command": "chat unban",
+      "path": [
+        "chat",
+        "unban"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 319
+    },
+    {
       "command": "chat viewer-logout",
       "path": [
         "chat",
@@ -7291,6 +7227,17 @@
       "line": 587
     },
     {
+      "command": "chat banned delete",
+      "path": [
+        "chat",
+        "banned",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 638
+    },
+    {
       "command": "chat banned forbid-list",
       "path": [
         "chat",
@@ -7302,6 +7249,17 @@
       "line": 628
     },
     {
+      "command": "chat banned ip-add",
+      "path": [
+        "chat",
+        "banned",
+        "ip-add"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 611
+    },
+    {
       "command": "chat banned list",
       "path": [
         "chat",
@@ -7311,6 +7269,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 418
+    },
+    {
+      "command": "chat banned user-list",
+      "path": [
+        "chat",
+        "banned",
+        "user-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 620
     },
     {
       "command": "chat enabled update",
@@ -10219,10 +10188,25 @@
       }
     },
     {
+      "command": "chat ban",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 360,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "chat banned delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 429,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
         "line": 28,
@@ -10246,9 +10230,13 @@
     },
     {
       "command": "chat banned ip-add",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 408,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
         "line": 27,
@@ -10262,6 +10250,17 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
         "line": 72,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "chat banned user-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 455,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10514,6 +10513,17 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
         "line": 294,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "chat unban",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 380,
         "source": "array-literal"
       },
       "firstHelpReference": null

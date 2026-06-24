@@ -350,5 +350,127 @@ const shouldRunTests = hasRealCredentials();
       ]);
       expect(parseJsonObject(output).success).toBe(true);
     }, 60000);
+
+    it('should ban and unban channel chat users through the local CLI', () => {
+      const userId = `cli-user-${Date.now()}`;
+      let banSucceeded = false;
+      let unbanPayload: Record<string, unknown> | undefined;
+
+      try {
+        const banOutput = runCliSuccess([
+          'chat',
+          'ban',
+          '-c',
+          testChannelId,
+          '-u',
+          userId,
+          '-o',
+          'json',
+        ]);
+        const banPayload = parseJsonObject(banOutput);
+        expect(banPayload).toMatchObject({
+          channelId: testChannelId,
+          userIds: [userId],
+          global: false,
+        });
+        expect(banPayload.result).toBeDefined();
+        banSucceeded = true;
+      } finally {
+        if (banSucceeded) {
+          const unbanOutput = runCliSuccess([
+            'chat',
+            'unban',
+            '-c',
+            testChannelId,
+            '-u',
+            userId,
+            '-o',
+            'json',
+          ]);
+          unbanPayload = parseJsonObject(unbanOutput);
+        }
+      }
+
+      expect(unbanPayload).toMatchObject({
+        channelId: testChannelId,
+        userIds: [userId],
+        global: false,
+      });
+      expect(unbanPayload?.result).toBeDefined();
+    }, 60000);
+
+    it('should add and delete a channel banned IP through the local CLI', () => {
+      const ip = `203.0.113.${(Date.now() % 200) + 1}`;
+      let ipAdded = false;
+      let deletePayload: Record<string, unknown> | undefined;
+
+      try {
+        const addOutput = runCliSuccess([
+          'chat',
+          'banned',
+          'ip-add',
+          '-c',
+          testChannelId,
+          '--ip',
+          ip,
+          '--force',
+          '-o',
+          'json',
+        ]);
+        const addPayload = parseJsonObject(addOutput);
+        expect(addPayload).toEqual(expect.objectContaining({
+          status: expect.any(String),
+          message: expect.any(String),
+        }));
+        expect(addPayload.data).toBeDefined();
+        ipAdded = true;
+      } finally {
+        if (ipAdded) {
+          const deleteOutput = runCliSuccess([
+            'chat',
+            'banned',
+            'delete',
+            '-c',
+            testChannelId,
+            '-t',
+            'ip',
+            '--content',
+            ip,
+            '--force',
+            '-o',
+            'json',
+          ]);
+          deletePayload = parseJsonObject(deleteOutput);
+        }
+      }
+
+      expect(deletePayload).toEqual(expect.objectContaining({
+        status: expect.any(String),
+        message: expect.any(String),
+        data: expect.any(String),
+      }));
+    }, 60000);
+
+    it('should list account banned users through the local CLI', () => {
+      const output = runCliSuccess([
+        'chat',
+        'banned',
+        'user-list',
+        '--page',
+        '1',
+        '--size',
+        '10',
+        '-o',
+        'json',
+      ]);
+      const payload = parseJsonObject(output);
+      expect(payload).toEqual(expect.objectContaining({
+        status: expect.any(String),
+        message: expect.any(String),
+        data: expect.objectContaining({
+          contents: expect.any(Array),
+        }),
+      }));
+    }, 60000);
   });
 });
