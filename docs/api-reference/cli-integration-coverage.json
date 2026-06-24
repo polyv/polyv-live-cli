@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T20:10:22.347Z",
+  "generatedAt": "2026-06-24T20:21:33.145Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 81,
+    "integrationFiles": 82,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 480,
-    "referencedCommandPathsExcludingHelp": 376,
-    "coveredLeafTargetsIncludingHelp": 441,
-    "missingLeafTargetsIncludingHelp": 126,
-    "coveredRealExecutionLeafTargets": 370,
-    "missingRealExecutionLeafTargets": 197,
-    "realExecutionCoveragePercent": 65.26,
-    "includingHelpCoveragePercent": 77.78,
-    "integrationReferences": 847,
-    "realExecutionReferences": 501,
-    "helpReferences": 346
+    "referencedCommandPathsIncludingHelp": 483,
+    "referencedCommandPathsExcludingHelp": 379,
+    "coveredLeafTargetsIncludingHelp": 444,
+    "missingLeafTargetsIncludingHelp": 123,
+    "coveredRealExecutionLeafTargets": 373,
+    "missingRealExecutionLeafTargets": 194,
+    "realExecutionCoveragePercent": 65.78,
+    "includingHelpCoveragePercent": 78.31,
+    "integrationReferences": 856,
+    "realExecutionReferences": 507,
+    "helpReferences": 349
   },
   "byTopLevel": [
     {
@@ -236,12 +236,12 @@
     {
       "command": "playback",
       "targetLeafCommands": 13,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 5,
-      "missingLeafTargetsIncludingHelp": 8,
-      "realExecutionCoveragePercent": 30.77,
-      "includingHelpCoveragePercent": 38.46
+      "coveredRealExecutionLeafTargets": 5,
+      "missingRealExecutionLeafTargets": 8,
+      "coveredLeafTargetsIncludingHelp": 6,
+      "missingLeafTargetsIncludingHelp": 7,
+      "realExecutionCoveragePercent": 38.46,
+      "includingHelpCoveragePercent": 46.15
     },
     {
       "command": "player",
@@ -296,12 +296,12 @@
     {
       "command": "record",
       "targetLeafCommands": 17,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 13,
-      "coveredLeafTargetsIncludingHelp": 6,
-      "missingLeafTargetsIncludingHelp": 11,
-      "realExecutionCoveragePercent": 23.53,
-      "includingHelpCoveragePercent": 35.29
+      "coveredRealExecutionLeafTargets": 5,
+      "missingRealExecutionLeafTargets": 12,
+      "coveredLeafTargetsIncludingHelp": 7,
+      "missingLeafTargetsIncludingHelp": 10,
+      "realExecutionCoveragePercent": 29.41,
+      "includingHelpCoveragePercent": 41.18
     },
     {
       "command": "robot",
@@ -376,12 +376,12 @@
     {
       "command": "watch-condition",
       "targetLeafCommands": 2,
-      "coveredRealExecutionLeafTargets": 1,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 1,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 50,
-      "includingHelpCoveragePercent": 50
+      "coveredRealExecutionLeafTargets": 2,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 2,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "web",
@@ -1589,17 +1589,6 @@
       "line": 405
     },
     {
-      "command": "playback enabled set",
-      "path": [
-        "playback",
-        "enabled",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 533
-    },
-    {
       "command": "playback sort move",
       "path": [
         "playback",
@@ -1943,17 +1932,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 596
-    },
-    {
-      "command": "record setting set",
-      "path": [
-        "record",
-        "setting",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 242
     },
     {
       "command": "record subtitle publish",
@@ -2409,16 +2387,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 536
-    },
-    {
-      "command": "watch-condition set",
-      "path": [
-        "watch-condition",
-        "set"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/watch-condition.commands.ts",
-      "line": 80
     },
     {
       "command": "web auth authorized-address-set",
@@ -3290,17 +3258,6 @@
       "line": 405
     },
     {
-      "command": "playback enabled set",
-      "path": [
-        "playback",
-        "enabled",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 533
-    },
-    {
       "command": "playback sort move",
       "path": [
         "playback",
@@ -3540,17 +3497,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 596
-    },
-    {
-      "command": "record setting set",
-      "path": [
-        "record",
-        "setting",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 242
     },
     {
       "command": "record subtitle publish",
@@ -3804,16 +3750,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 269
-    },
-    {
-      "command": "watch-condition set",
-      "path": [
-        "watch-condition",
-        "set"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/watch-condition.commands.ts",
-      "line": 80
     },
     {
       "command": "web auth authorized-address-set",
@@ -6171,6 +6107,17 @@
       "line": 526
     },
     {
+      "command": "playback enabled set",
+      "path": [
+        "playback",
+        "enabled",
+        "set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 533
+    },
+    {
       "command": "player watch-feedback-list",
       "path": [
         "player",
@@ -6693,6 +6640,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 191
+    },
+    {
+      "command": "record setting set",
+      "path": [
+        "record",
+        "setting",
+        "set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 242
     },
     {
       "command": "robot batch-delete",
@@ -7461,6 +7419,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/watch-condition.commands.ts",
       "line": 39
+    },
+    {
+      "command": "watch-condition set",
+      "path": [
+        "watch-condition",
+        "set"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/watch-condition.commands.ts",
+      "line": 80
     },
     {
       "command": "web auth auth-url-update",
@@ -11174,7 +11142,7 @@
     },
     {
       "command": "playback enabled get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
@@ -11182,6 +11150,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "playback enabled set",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 109,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 197,
+        "source": "array-literal"
+      }
     },
     {
       "command": "playback list",
@@ -12062,7 +12045,7 @@
     },
     {
       "command": "record setting get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
@@ -12070,6 +12053,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "record setting set",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 65,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 196,
+        "source": "array-literal"
+      }
     },
     {
       "command": "record temp-list",
@@ -13460,16 +13458,31 @@
     },
     {
       "command": "watch-condition get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/legacy-read-cli.integration.test.ts",
-        "line": 43,
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 167,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/legacy-read-cli.integration.test.ts",
         "line": 19,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "watch-condition set",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 143,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
+        "line": 198,
         "source": "array-literal"
       }
     },

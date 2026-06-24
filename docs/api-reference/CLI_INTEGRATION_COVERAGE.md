@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T20:10:22.347Z
+Generated at: 2026-06-24T20:21:33.145Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 81 |
+| Integration files scanned | 82 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 370 |
-| Missing real-execution leaf subcommands | 197 |
-| Real-execution coverage | 65.26% |
-| Leaf subcommands referenced including help | 441 |
-| Missing including help | 126 |
+| Real-executed leaf subcommands | 373 |
+| Missing real-execution leaf subcommands | 194 |
+| Real-execution coverage | 65.78% |
+| Leaf subcommands referenced including help | 444 |
+| Missing including help | 123 |
 
 ## By Top-Level Command
 
@@ -42,13 +42,13 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 10 | 12 | 45.45% | 12 | 10 |
-| `playback` | 13 | 4 | 9 | 30.77% | 5 | 8 |
+| `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
 | `player` | 11 | 6 | 5 | 54.55% | 6 | 5 |
 | `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
-| `record` | 17 | 4 | 13 | 23.53% | 6 | 11 |
+| `record` | 17 | 5 | 12 | 29.41% | 7 | 10 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
@@ -56,7 +56,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 17 | 14 | 54.84% | 28 | 3 |
 | `viewer` | 19 | 13 | 6 | 68.42% | 18 | 1 |
-| `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
+| `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
@@ -174,7 +174,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `playback delete` | `packages/cli/src/commands/playback.commands.ts:319` |
 | `playback get` | `packages/cli/src/commands/playback.commands.ts:241` |
 | `playback merge` | `packages/cli/src/commands/playback.commands.ts:405` |
-| `playback enabled set` | `packages/cli/src/commands/playback.commands.ts:533` |
 | `playback sort move` | `packages/cli/src/commands/playback.commands.ts:572` |
 | `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
@@ -208,7 +207,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record file merge` | `packages/cli/src/commands/record.commands.ts:530` |
 | `record outline create` | `packages/cli/src/commands/record.commands.ts:585` |
 | `record outline get` | `packages/cli/src/commands/record.commands.ts:596` |
-| `record setting set` | `packages/cli/src/commands/record.commands.ts:242` |
 | `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:608` |
 | `session create` | `packages/cli/src/commands/session.commands.ts:313` |
 | `session delete` | `packages/cli/src/commands/session.commands.ts:338` |
@@ -251,7 +249,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `viewer tag add` | `packages/cli/src/commands/viewer.commands.ts:385` |
 | `viewer tag remove` | `packages/cli/src/commands/viewer.commands.ts:429` |
 | `viewer label channel-ref add` | `packages/cli/src/commands/viewer.commands.ts:536` |
-| `watch-condition set` | `packages/cli/src/commands/watch-condition.commands.ts:80` |
 | `web auth authorized-address-set` | `packages/cli/src/commands/web.commands.ts:221` |
 | `web auth external-set` | `packages/cli/src/commands/web.commands.ts:215` |
 | `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
