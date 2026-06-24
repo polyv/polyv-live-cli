@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T18:35:04.851Z
+Generated at: 2026-06-24T18:47:41.248Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 72 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 328 |
-| Missing real-execution leaf subcommands | 239 |
-| Real-execution coverage | 57.85% |
-| Leaf subcommands referenced including help | 419 |
-| Missing including help | 148 |
+| Real-executed leaf subcommands | 332 |
+| Missing real-execution leaf subcommands | 235 |
+| Real-execution coverage | 58.55% |
+| Leaf subcommands referenced including help | 423 |
+| Missing including help | 144 |
 
 ## By Top-Level Command
 
@@ -57,7 +57,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 14 | 17 | 45.16% | 28 | 3 |
 | `viewer` | 19 | 9 | 10 | 47.37% | 17 | 2 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
-| `web` | 34 | 20 | 14 | 58.82% | 24 | 10 |
+| `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 1 | 3 | 25.00% | 1 | 3 |
 
@@ -291,13 +291,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `web auth external-set` | `packages/cli/src/commands/web.commands.ts:215` |
 | `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
 | `web auth record-info-download` | `packages/cli/src/commands/web.commands.ts:245` |
-| `web auth type-set` | `packages/cli/src/commands/web.commands.ts:210` |
 | `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
 | `web donate good-update` | `packages/cli/src/commands/web.commands.ts:180` |
 | `web info channel-logo-update` | `packages/cli/src/commands/web.commands.ts:90` |
-| `web menu consulting-update` | `packages/cli/src/commands/web.commands.ts:157` |
-| `web menu intro-set` | `packages/cli/src/commands/web.commands.ts:151` |
-| `web menu rank-update` | `packages/cli/src/commands/web.commands.ts:145` |
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
 | `web setting image-upload` | `packages/cli/src/commands/web.commands.ts:204` |
 | `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:251` |

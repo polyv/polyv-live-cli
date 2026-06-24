@@ -244,4 +244,80 @@ describe('web CLI integration', () => {
       }
     }
   }, 240000);
+
+  // Exercises three self-contained channel-scoped writes against a throwaway
+  // channel: web menu consulting-update (toggle consulting menu on), web menu
+  // intro-set (set the live introduction/desc menu content, needs the account
+  // userId), and web auth type-set (set watch auth type to none). Each reports
+  // { success: true }; the channel is deleted in `finally`, so no lasting side
+  // effect.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web menu consulting-update, intro-set, and auth type-set against a temporary real channel', () => {
+    const credentials = getAccountCredentials();
+    const userId = credentials?.userId;
+    if (!userId) {
+      throw new Error('POLYV_USER_ID is required for web menu intro-set');
+    }
+
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Menu Auth Writes');
+      const id = channelId;
+
+      const consultingPayload = parseJsonObject(
+        runCliSuccess(['web', 'menu', 'consulting-update', '--channel-id', id, '--enabled', 'Y', '--force', '--output', 'json']),
+      );
+      expect(consultingPayload.success).toBe(true);
+
+      const introPayload = parseJsonObject(
+        runCliSuccess(['web', 'menu', 'intro-set', '--user-id', userId, '--channel-id', id, '--content', '<p>intro content</p>', '--force', '--output', 'json']),
+      );
+      expect(introPayload.success).toBe(true);
+      expect(typeof introPayload.result).toBe('string');
+
+      const authTypePayload = parseJsonObject(
+        runCliSuccess(['web', 'auth', 'type-set', '--channel-id', id, '--auth-type', 'none', '--force', '--output', 'json']),
+      );
+      expect(authTypePayload.success).toBe(true);
+      expect(typeof authTypePayload.result).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // Exercises web menu rank-update against a throwaway channel. The reorder
+  // endpoint requires the complete, comma-separated list of the channel's menu
+  // IDs, so we add a menu, list all menus, reverse their order, and submit the
+  // full reversed list. It reports { success: true }; the channel (and its
+  // menus) are deleted in `finally`, so no lasting side effect.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web menu rank-update against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Menu Rank');
+      const id = channelId;
+
+      runCliSuccess(['web', 'menu', 'add', '--channel-id', id, '--name', 'rank-probe', '--type', 'text', '--content', 'rank content', '--force', '--output', 'json']);
+
+      const menus = parseJsonValue(
+        runCliSuccess(['web', 'menu', 'list', '--channel-id', id, '--output', 'json']),
+      ) as Array<{ menuId: string }>;
+      expect(Array.isArray(menus)).toBe(true);
+      expect(menus.length).toBeGreaterThan(0);
+      const menuIds = menus.map((menu) => menu.menuId);
+      expect(menuIds.every((menuId) => typeof menuId === 'string' && menuId !== '')).toBe(true);
+
+      const reversedIds = menuIds.slice().reverse().join(',');
+      const rankPayload = parseJsonObject(
+        runCliSuccess(['web', 'menu', 'rank-update', '--channel-id', id, '--menu-ids', reversedIds, '--force', '--output', 'json']),
+      );
+      expect(rankPayload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });
