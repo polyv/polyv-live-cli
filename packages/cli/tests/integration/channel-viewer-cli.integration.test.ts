@@ -1,4 +1,21 @@
 import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  parseJsonObject,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealChannelTests = hasRealCredentials();
+
+function expectPagedPayload(payload: Record<string, unknown>): void {
+  expect(payload).toEqual(expect.any(Object));
+  expect(Object.keys(payload).length).toBeGreaterThan(0);
+  if (payload.contents !== undefined) {
+    expect(payload.contents).toEqual(expect.any(Array));
+  }
+}
 
 describe('channel viewer CLI integration', () => {
   it('shows channel viewer command help', () => {
@@ -34,6 +51,100 @@ describe('channel viewer CLI integration', () => {
       expect(result.exitCode).toBe(0);
       expect(result.output).toContain('--force');
       expect(result.output).toContain('--output');
+    }
+  });
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs viewer list mutations against a temporary real channel', () => {
+    let channelId: string | undefined;
+    const viewerId = `cli-viewer-${Date.now()}`;
+
+    try {
+      channelId = createTemporaryChannel('Channel Viewer CLI');
+      const id = channelId;
+
+      const listOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'list',
+        '--channel-id',
+        id,
+        '--page',
+        '1',
+        '--size',
+        '10',
+        '--output',
+        'json',
+      ]);
+      expectPagedPayload(parseJsonObject(listOutput));
+
+      const addOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'add',
+        '--channel-id',
+        id,
+        '--viewer-ids',
+        viewerId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const addPayload = parseJsonObject(addOutput);
+      expect(addPayload.success).toBe(true);
+      expect(addPayload.viewerIds).toContain(viewerId);
+
+      const transferOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'transfer',
+        '--channel-id',
+        id,
+        '--viewer-ids',
+        viewerId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const transferPayload = parseJsonObject(transferOutput);
+      expect(transferPayload.success).toBe(true);
+      expect(transferPayload.viewerIds).toContain(viewerId);
+
+      const unrelatedOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'unrelated-list',
+        '--channel-id',
+        id,
+        '--viewer-id',
+        viewerId,
+        '--page',
+        '1',
+        '--size',
+        '10',
+        '--output',
+        'json',
+      ]);
+      expectPagedPayload(parseJsonObject(unrelatedOutput));
+
+      const deleteOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'delete',
+        '--channel-id',
+        id,
+        '--viewer-ids',
+        viewerId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const deletePayload = parseJsonObject(deleteOutput);
+      expect(deletePayload.success).toBe(true);
+      expect(deletePayload.viewerIds).toContain(viewerId);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
     }
   });
 });
