@@ -111,8 +111,8 @@ export class PlayerService {
       this.validateYNValue(params.autoZoomEnabled, 'autoZoomEnabled');
     }
 
-    // Build request body
-    const body: Record<string, unknown> = {
+    const requestParams: Record<string, unknown> = {
+      channelId,
       antiRecordType: params.antiRecordType,
       modelType: params.modelType,
       content: params.content,
@@ -120,25 +120,25 @@ export class PlayerService {
     };
 
     if (params.opacity !== undefined) {
-      body.opacity = params.opacity;
+      requestParams.opacity = params.opacity;
     }
     if (params.fontColor !== undefined) {
-      body.fontColor = params.fontColor;
+      requestParams.fontColor = params.fontColor;
     }
     if (params.showMode !== undefined) {
-      body.showMode = params.showMode;
+      requestParams.showMode = params.showMode;
     }
     if (params.doubleEnabled !== undefined) {
-      body.doubleEnabled = params.doubleEnabled;
+      requestParams.doubleEnabled = params.doubleEnabled;
     }
     if (params.autoZoomEnabled !== undefined) {
-      body.autoZoomEnabled = params.autoZoomEnabled;
+      requestParams.autoZoomEnabled = params.autoZoomEnabled;
     }
 
     const response = await this.client.httpClient.post<string>(
       '/live/v3/channel/anti/record/setting',
-      body,
-      { params: { channelId } }
+      null,
+      { params: requestParams }
     );
     return response as unknown as string;
   }

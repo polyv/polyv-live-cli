@@ -17,7 +17,8 @@
 
 > ⚠️ 本场景发现两个**真实执行问题**（均不影响覆盖结论）：
 > 1. `player config update` 的 Y/N 开关类参数（`--watermark-enabled`、`--warmup-enabled`）返回 `success:true` 并把字段列入 `updatedFields`，但 `player config get` 复查显示这些开关**并未真正持久化**（`watermarkEnabled` 始终为 `null`，`--warmup-enabled Y` 后仍为 `N`）。而同一命令的**标量参数**（`--watermark-url`/`--watermark-position`/`--watermark-opacity`/`--base-pv`）则正常持久化。播放器水印 / 暖场的真正开关应使用独立子命令 `player warmup switch-update`（已验证可持久化）与后台水印开关。
-> 2. `player anti-record update` 真实执行失败：CLI 的 `--model-type` 参数**未被映射到后端 `modelType` 字段**，无论传 `fixed`/`nickname`/`diyurl` 均报 `param should not be empty: modelType`；且 `--font-size` 在 help 中未标 required 但 CLI 强制必填。
+> 2. `player anti-record update` 真实执行失败：`@latest`（1.2.39）复跑仍报 `param should not be empty: modelType`。源码排查显示 commander/handler 层已拿到 `modelType`，更准确的根因是 SDK 把该 `query/form` 接口的业务字段放进 JSON body，只把 `channelId` 放进 query/form，导致后端表单参数解析不到 `modelType`；且 `--font-size` 在 help 展示中不明显，但 CLI 通过 `requiredOption` 强制必填。
+> 3. 2026-06-24 本地修复版（`node packages/cli/dist/index.js`）已验证：`anti-record update` 可成功写入，`config update --warmup-enabled Y` 可持久化；`--watermark-enabled Y` 仍读回 `null`，但已不再把 `warmupEnabled` 副作用覆盖为 `N`。
 >
 > 两个问题均不影响本场景命令覆盖结论：`player` 族的 `config get`（基线 + 多次复查）、`config update`（标量参数真实持久化）、`warmup switch-update`（已验证持久化）、`logo-update`、`watch-feedback-list`、`anti-record get`（真实执行，未开时返回错误）均真实执行；`web` 族的 `info likes-get`/`splash-get`/`splash-set`（前后对比验证持久化）/`countdown-get`/`countdown-set`（前后对比验证持久化）/`publisher-set`（经 `channel get` 复查持久化）/`menu list`/`menu intro-set`（经 `menu list` 复查持久化）/`share get`/`share update`（前后对比验证持久化）全部真实执行成功。`web`/`player` 两族均已真实执行覆盖。详见第 12 节问题记录。
 
@@ -30,11 +31,11 @@
 | `player` | `player config get`（基线 + 3 次复查） | 已执行成功 | 播放器水印 / 暖场 / 基础访问量配置查询；建立基线并复查标量参数持久化 |
 | `player` | `player config update`（`--watermark-*` 标量） | 已执行成功 | 水印 URL/位置/透明度**真实持久化**（get 复查 url/position=br/opacity=0.8 全部命中）；Y/N 开关未持久化（见 12.1） |
 | `player` | `player config update`（`--base-pv 1000`） | 已执行成功 | 基础访问量真实持久化，且经 `web info likes-get` 的 `viewers=1000` **观众侧交叉验证** |
-| `player` | `player config update`（`--warmup-enabled Y`） | 已执行失败（成功假象） | 返回 success + 列入 updatedFields，但 get 复查 warmupEnabled 仍为 N。见 12.1 |
+| `player` | `player config update`（`--warmup-enabled Y`） | `@latest` 失败；本地修复版成功 | `@latest` 返回 success 但不持久化；本地修复版改走 `warmup switch` 后 get 复查 warmupEnabled=N→Y。见 12.1 |
 | `player` | `player warmup switch-update`（`--warm-up-enabled Y`） | 已执行成功 | 暖场开关**真实持久化**（get 复查 warmupEnabled 由 N→Y）。这是暖场开关的正确入口 |
 | `player` | `player logo-update`（`--logo-image`/`--logo-position`/`--logo-opacity`） | 已执行成功 | 播放器 Logo 更新返回 success（图片由保利威服务端抓取并 re-host 到 `liveimages.videocc.net`） |
 | `player` | `player anti-record get` | 已执行成功 | 防录屏配置查询；未开启时返回 `Anti-screen recording is not turned on`（读出错误而非空数据） |
-| `player` | `player anti-record update`（`--anti-record-type marquee`） | 已执行失败 | CLI `--model-type` 未映射到后端 `modelType`，报 `param should not be empty: modelType`。见 12.2 |
+| `player` | `player anti-record update`（`--anti-record-type marquee`） | `@latest` 失败；本地修复版成功 | `@latest` 报 `param should not be empty: modelType`；本地修复版修正 SDK 表单请求形态后返回 SUCCESS，并可 get 复查。见 12.2 |
 | `player` | `player watch-feedback-list` | 已执行成功 | 观看反馈记录查询（totalItems=0，结构完整分页 JSON） |
 | `web` | `web info likes-get`（`--channel-ids`） | 已执行成功 | 点赞 / 观看数查询（likes=0、viewers=1000）；并交叉验证 player `base-pv` |
 | `web` | `web info splash-get` | 已执行成功 | 开屏图配置查询（基线 splashEnabled=Y） |
@@ -47,7 +48,7 @@
 | `web` | `web share get` | 已执行成功 | 微信分享配置查询（默认标题=频道名、默认描述） |
 | `web` | `web share update`（`--weixin-share-title`/`--weixin-share-desc`） | 已执行成功 | 微信分享标题 / 描述真实持久化，get 复查前后对比验证 |
 
-> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983934`）真实执行过，下文「命令执行台账」逐条记录。仅做 `--help` 校验、未真实执行的命令不计入覆盖。`player config update` 的 Y/N 开关与 `player anti-record update` 真实执行失败，按「已执行失败」记录于第 12 节。`web`/`player` 两族均因各自多条业务命令真实执行成功（且 splash-set / countdown-set / share update / menu intro-set / publisher-set / player 标量水印 / warmup switch-update 均经只读复查确认持久化）而计入「已覆盖」。
+> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983934`）真实执行过，下文「命令执行台账」逐条记录。仅做 `--help` 校验、未真实执行的命令不计入覆盖。`@latest` 1.2.39 中 `player config update` 的 Y/N 开关与 `player anti-record update` 曾真实执行失败，按「问题记录」保留于第 12 节；2026-06-24 本地修复版已补跑并验证 `--warmup-enabled` 与 `anti-record update` 成功。`web`/`player` 两族均因各自多条业务命令真实执行成功（且 splash-set / countdown-set / share update / menu intro-set / publisher-set / player 标量水印 / warmup switch-update 均经只读复查确认持久化）而计入「已覆盖」。
 
 ## 3. 专用测试频道
 
@@ -253,22 +254,28 @@ npx --yes polyv-live-cli@rc web share get -c 7983934 -o json
 **排查**：
 - 已用独立子命令 `player warmup switch-update --warm-up-enabled Y` 验证：返回 success 后 `player config get` 的 `warmupEnabled` 立刻变为 `Y`。证明暖场开关的**正确入口是 `player warmup switch-update`**，而非 `player config update --warmup-enabled`。
 - 水印开关同理推测存在独立入口（本场景 CLI 未暴露独立 watermark switch 子命令），`player config update --watermark-enabled` 对开关无效。
+- 2026-06-24 使用 `npx --yes polyv-live-cli@latest`（1.2.39）复跑确认问题仍存在：`player config update -c 7983934 --watermark-enabled Y -o json` 返回 success，但 `player config get` 仍显示 `watermarkEnabled=null`，且再次把 `warmupEnabled` 从 `Y` 翻为 `N`；随后 `player config update -c 7983934 --warmup-enabled Y -o json` 返回 success，但读回仍为 `warmupEnabled=N`。已用 `player warmup switch-update -c 7983934 --warm-up-enabled Y -f -o json` 恢复频道状态。
+- 2026-06-24 本地修复版复跑：先用 `player warmup switch-update -c 7983934 --warm-up-enabled N -f -o json` 切到 N，再用 `player config update -c 7983934 --warmup-enabled Y -o json` 切回 Y，`player config get` 复查 `warmupEnabled=Y`。随后执行 `player config update -c 7983934 --watermark-enabled Y -o json`，`watermarkEnabled` 仍为 `null`，但 `warmupEnabled` 保持 `Y`，未再出现副作用翻转。
 
 **结论与建议**：
 - `player config update` 适合配置**标量物料**（水印图 / 位置 / 透明度 / basePv），**不适合**切换 Y/N 开关。
 - 暖场开关一律用 `player warmup switch-update`；水印开关需在保利威后台开启或确认权益。
 - 运营必须用 `player config get` 复查，不能仅凭 `success:true` + `updatedFields` 判定生效——这是与 `watch-condition set`、`donate config update` 同源的「成功假象」模式。
 
-### 12.2 问题记录：`player anti-record update` 因 `--model-type` 未映射到后端 `modelType` 而失败
+### 12.2 问题记录：`player anti-record update` 因 SDK 请求参数落点错误而失败
 
 **现象**：
 - `player anti-record update -c 7983934 --anti-record-type marquee --model-type nickname --content "..." --font-size 30 ...` 报 `Unexpected error: param should not be empty: modelType`。
 - 分别尝试 `--model-type fixed`、`--model-type nickname`、补全全部参数（font-size/opacity/font-color/show-mode/double-enabled/auto-zoom-enabled）均报同一错误。
 - 排查发现 `--font-size` 在 `--help` 中未标 required，但缺省时报 `required option '--font-size <size>' not specified`（CLI 强制必填）。
+- 2026-06-24 使用 `npx --yes polyv-live-cli@latest`（1.2.39）复跑，命令 `player anti-record update -c 7983934 --anti-record-type marquee --model-type nickname --content "GNHF09品牌直播防录屏" --font-size 30 --opacity 60 --font-color "#FFFFFF" --show-mode roll --double-enabled Y -f -o json` 仍报同一错误。
 
 **排查与结论**：
-- CLI 的 `--model-type <type>`（kebab-case）参数**未被映射到后端 API 的 `modelType` 字段**（与场景 03 `lottery create --type comment` 的 `activityDuration` 未写入同类 CLI 透传缺陷）。
-- 因此 `player anti-record update` 在当前 rc（`1.2.31-rc.0`）**无法通过 CLI 开启防录屏**，需到保利威后台手动开启；`player anti-record get` 在防录屏未开时返回 `Anti-screen recording is not turned on`（读出错误而非空数据，命令本身执行成功）。
+- 最新源码中 commander 已用 `.requiredOption('--model-type <type>', ...)` 注册参数，`PlayerHandler.updateAntiRecord` 也校验 `modelType` 并通过 `apiParams` 保留 camelCase 字段，因此问题不是 CLI option 在 commander/handler 层丢失。
+- 原始接口文档 `player/anti_record_setting.md` 明确该接口是 `POST /live/v3/channel/anti/record/setting` 的表单参数接口，Java 示例使用 `HttpUtil.postFormBody`，`channelId`、`antiRecordType`、`modelType`、`content`、`fontSize` 等都放在同一个 requestMap/form body 中。
+- 当前 SDK 实现为 `httpClient.post('/live/v3/channel/anti/record/setting', body, { params: { channelId } })`，只把 `channelId` 放进 query/form，`antiRecordType/modelType/content/fontSize` 等业务字段放进 JSON body。SDK 请求拦截器只基于 `config.params` 生成签名，因此业务字段既没有按表单参数提交，也没有参与签名。后端按表单参数读取时看不到 `modelType`，于是返回 `param should not be empty: modelType`。
+- 因此 `player anti-record update` 在 `@latest`（1.2.39）仍**无法通过 CLI 开启防录屏**。修复方向应在 SDK：按该接口文档使用表单/query 参数提交并让所有业务字段参与签名，然后补充真实请求形态的单元测试；修复前需到保利威后台手动开启防录屏。`player anti-record get` 在防录屏未开时返回 `Anti-screen recording is not turned on`（读出错误而非空数据，命令本身执行成功）。
+- 2026-06-24 本地修复版已验证：`player anti-record update -c 7983934 --anti-record-type marquee --model-type nickname --content "GNHF09品牌直播防录屏" --font-size 30 --opacity 60 --font-color "#FFFFFF" --show-mode roll --double-enabled Y -f -o json` 返回 `{ "success": true, "result": "SUCCESS" }`。`player anti-record get -c 7983934 -o json` 复查返回 `antiRecordType=marquee`、`modelType=nickname`、`opacity=60`、`fontSize="30"`、`fontColor="#FFFFFF"`、`doubleEnabled=Y`、`showMode=roll`。其中 `content` 服务端返回为「测试内容」，推测 nickname 模式不按传入文案展示。
 - 该问题不影响 `player` 命令族覆盖结论：本族 `config get`/`config update`（标量持久化）/`warmup switch-update`/`logo-update`/`watch-feedback-list`/`anti-record get` 均真实执行成功。
 
 ### 12.3 已验证持久化的写入（前后对比）
@@ -278,6 +285,8 @@ npx --yes polyv-live-cli@rc web share get -c 7983934 -o json
 | `player config update --watermark-url/position/opacity` | `player config get` | url="" / pos=tr / opacity=1 | url=re-host 地址 / pos=br / opacity=0.8 | ✅ 持久化 |
 | `player config update --base-pv 1000` | `player config get` + `web info likes-get` | basePv=0 / viewers=0 | basePv=1000 / viewers=1000 | ✅ 持久化（配置侧 + 观众侧交叉验证） |
 | `player warmup switch-update --warm-up-enabled Y` | `player config get` | warmupEnabled=N | warmupEnabled=Y | ✅ 持久化 |
+| 本地修复版 `player config update --warmup-enabled Y` | `player config get` | warmupEnabled=N | warmupEnabled=Y | ✅ 持久化（通过专用 warmup switch API 落库） |
+| 本地修复版 `player anti-record update` | `player anti-record get` | 未开启 / latest 报 modelType 空 | antiRecordType=marquee / modelType=nickname | ✅ 持久化（SDK 表单请求形态修复后） |
 | `web info splash-set --splash-enabled N/Y` | `web info splash-get` | splashEnabled=Y | N → Y | ✅ 持久化（双向验证） |
 | `web info countdown-set --start-time` | `web info countdown-get` | countEnabled=N / startTime=null | countEnabled=Y / startTime=2026-06-23 20:00:00 | ✅ 持久化 |
 | `web info publisher-set --publisher` | `channel get` | publisher=空 | publisher="GNHF09品牌主播小妮" | ✅ 持久化 |
@@ -288,7 +297,7 @@ npx --yes polyv-live-cli@rc web share get -c 7983934 -o json
 
 | 项 | 验证方式 | 结论 |
 |---|---|---|
-| 水印 / 暖场 / basePv / 开屏 / 倒计时 / 主播名 / 介绍 / 分享文案 | CLI 只读命令（`player config get`/`web info *-get`/`channel get`/`web menu list`/`web share get`） | **配置侧已满足条件** |
+| 水印 / 暖场 / 防录屏 / basePv / 开屏 / 倒计时 / 主播名 / 介绍 / 分享文案 | CLI 只读命令（`player config get`/`player anti-record get`/`web info *-get`/`channel get`/`web menu list`/`web share get`） | **配置侧已满足条件**（防录屏为本地修复版验证） |
 | basePv 锚定的观看数 | `web info likes-get` 的 viewers=1000 | **观众侧可见**（观看页显示访问量含基础访问量） |
 | 水印 / 暖场封面 / Logo / 开屏图 / 防录屏跑马灯 的实际渲染 | 本轮未打开真实观看页验证 | **仅配置侧已满足**，观众侧渲染需人工打开观看页或开播后验证 |
 
@@ -300,8 +309,8 @@ npx --yes polyv-live-cli@rc web share get -c 7983934 -o json
 |---|---|---|
 | 图片域名白名单 | 非保利威域名（如 placehold.co）被拒「非法图片域名」 | 仅使用保利威自有 CDN 域名（s2.videocc.net / liveimages.videocc.net） |
 | Y/N 开关「成功假象」 | `player config update` 的 `--watermark-enabled`/`--warmup-enabled` 不持久化 | 暖场用 `player warmup switch-update`；写入后一律 `get` 复查 |
-| 暖场副作用 | 仅传水印参数的 update 可能把 warmupEnabled 覆盖为 N | update 后立即用 `switch-update` 复位，或分两次 update |
-| 防录屏无法 CLI 开启 | `--model-type` 透传缺陷 | 到保利威后台手动开启防录屏 |
+| 暖场副作用 | `@latest` 1.2.39 仅传水印参数的 update 可能把 warmupEnabled 覆盖为 N；本地修复版已在 decorate update 后恢复原开关 | 发布前继续用 `switch-update` 复位；发布后用新版 CLI 并继续 `get` 复查 |
+| 防录屏无法 CLI 开启 | `@latest` 1.2.39 SDK 将表单接口的 `antiRecordType/modelType/content/fontSize` 等业务字段放进 JSON body，后端表单参数读不到 `modelType`；本地修复版已验证成功 | 发布前到后台手动开启或用本地修复版；发布后用新版 CLI 补录观众侧验证 |
 | 频道保留 | 测试频道 `7983934` 已保留未删除 | 见第 14 节，清理命令未执行 |
 
 > **回滚物料**：所有写入均可反向操作恢复默认（splash-set N、countdown-set countEnabled 复位、share update 改回频道名、warmup switch-update N、player config update 水印 url 置空）。本场景为品牌物料落地，未执行回滚，保留最终品牌配置供人工查看。
@@ -315,6 +324,7 @@ npx --yes polyv-live-cli@rc web share get -c 7983934 -o json
 | basePv=1000 | player 配置 | 保留 | 已在观看侧 viewers=1000 体现 |
 | 暖场封面 Y | player 配置 | 保留 | 经 switch-update 持久化 |
 | 播放器 Logo | player 配置 | 保留 | logo-update 已执行 |
+| 防录屏跑马灯 | player 配置 | 保留 | 本地修复版已写入；antiRecordType=marquee、modelType=nickname、doubleEnabled=Y |
 | 开屏 Y / 倒计时 2026-06-23 20:00 / 主播名 / 直播介绍 / 微信分享文案 | web 配置 | 保留 | 均经只读复查持久化 |
 
 > 频道与配置均已保留，未执行任何删除 / 回滚。可选人工清理命令（**未执行**）见第 3 节。
@@ -362,4 +372,4 @@ npx --yes polyv-live-cli@rc web share get -c $CID -o json
 - **观看页 web menu add / update / delete / rank-update**：本场景只用了 `intro-set`，菜单的增删改与排序可做「观看页导航装修」续集。
 - **web setting image-upload / global-enabled-update**：观看页图片素材上传与全局设置开关可补充进品牌物料工作流。
 - **web auth / web donate**：观看页鉴权与观看页打赏子族可结合场景 05 / 06 做联动。
-- **防录屏 CLI 修复跟进**：`player anti-record update` 的 `--model-type` 透传缺陷反馈给 CLI 维护方，修复后补录防录屏跑马灯的真实开启与观众侧验证。
+- **防录屏 CLI 修复跟进**：`player anti-record update` 的 SDK 表单请求形态修复后，用下一版 `@latest` 补录防录屏跑马灯的真实开启与观众侧验证。

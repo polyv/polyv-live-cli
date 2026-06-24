@@ -33,13 +33,16 @@ describe('PlayerService', () => {
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v3/channel/anti/record/setting',
+        null,
         {
-          antiRecordType: 'marquee',
-          modelType: 'fixed',
-          content: '用户ID：12345',
-          fontSize: 14,
-        },
-        { params: { channelId: 123456 } }
+          params: {
+            channelId: 123456,
+            antiRecordType: 'marquee',
+            modelType: 'fixed',
+            content: '用户ID：12345',
+            fontSize: 14,
+          },
+        }
       );
       expect(result).toBe('SUCCESS');
     });
@@ -56,13 +59,16 @@ describe('PlayerService', () => {
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v3/channel/anti/record/setting',
+        null,
         {
-          antiRecordType: 'watermark',
-          modelType: 'nickname',
-          content: 'user content',
-          fontSize: 'middle',
-        },
-        { params: { channelId: 123456 } }
+          params: {
+            channelId: 123456,
+            antiRecordType: 'watermark',
+            modelType: 'nickname',
+            content: 'user content',
+            fontSize: 'middle',
+          },
+        }
       );
       expect(result).toBe('SUCCESS');
     });
@@ -84,18 +90,21 @@ describe('PlayerService', () => {
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v3/channel/anti/record/setting',
+        null,
         {
-          antiRecordType: 'marquee',
-          modelType: 'diyurl',
-          content: 'https://example.com/{userId}',
-          fontSize: 20,
-          opacity: 50,
-          fontColor: '#FF0000',
-          showMode: 'roll',
-          doubleEnabled: 'Y',
-          autoZoomEnabled: 'N',
-        },
-        { params: { channelId: 123456 } }
+          params: {
+            channelId: 123456,
+            antiRecordType: 'marquee',
+            modelType: 'diyurl',
+            content: 'https://example.com/{userId}',
+            fontSize: 20,
+            opacity: 50,
+            fontColor: '#FF0000',
+            showMode: 'roll',
+            doubleEnabled: 'Y',
+            autoZoomEnabled: 'N',
+          },
+        }
       );
     });
 

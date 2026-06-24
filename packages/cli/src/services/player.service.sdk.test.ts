@@ -27,6 +27,9 @@ describe('PlayerServiceSdk', () => {
       getChannelDecorate: jest.Mock;
       updateChannelDecorate: jest.Mock;
     };
+    channel: {
+      updateWarmupSwitch: jest.Mock;
+    };
   };
   const mockAuthConfig: AuthConfig = {
     appId: 'test-app-id',
@@ -43,8 +46,15 @@ describe('PlayerServiceSdk', () => {
 
     mockSdkClient = {
       player: {
-        getChannelDecorate: jest.fn(),
+        getChannelDecorate: jest.fn().mockResolvedValue({
+          player: {
+            warmUpEnabled: 'Y',
+          },
+        }),
         updateChannelDecorate: jest.fn(),
+      },
+      channel: {
+        updateWarmupSwitch: jest.fn(),
       },
     };
 
@@ -262,6 +272,7 @@ describe('PlayerServiceSdk', () => {
 
     it('should update multiple fields successfully', async () => {
       mockSdkClient.player.updateChannelDecorate.mockResolvedValueOnce({});
+      mockSdkClient.channel.updateWarmupSwitch.mockResolvedValueOnce('success');
 
       const result = await service.updateChannelDecorate({
         channelId: '3151318',
@@ -283,6 +294,14 @@ describe('PlayerServiceSdk', () => {
       expect(result.updatedFields).toContain('warmupEnabled');
       expect(result.updatedFields).toContain('warmupImageUrl');
       expect(result.updatedFields).toContain('basePv');
+      expect(mockSdkClient.player.updateChannelDecorate).toHaveBeenCalledWith(
+        3151318,
+        expect.not.objectContaining({ warmUpEnabled: 'Y' })
+      );
+      expect(mockSdkClient.channel.updateWarmupSwitch).toHaveBeenCalledWith({
+        channelId: '3151318',
+        warmUpEnabled: 'Y',
+      });
     });
 
     it('should return empty updatedFields when no updates provided', async () => {
@@ -294,6 +313,8 @@ describe('PlayerServiceSdk', () => {
 
       expect(result.success).toBe(true);
       expect(result.updatedFields).toHaveLength(0);
+      expect(mockSdkClient.player.updateChannelDecorate).not.toHaveBeenCalled();
+      expect(mockSdkClient.channel.updateWarmupSwitch).not.toHaveBeenCalled();
     });
 
     it('should throw PolyVValidationError for empty channelId', async () => {
@@ -409,7 +430,7 @@ describe('PlayerServiceSdk', () => {
     });
 
     it('should accept valid warmupEnabled values', async () => {
-      mockSdkClient.player.updateChannelDecorate.mockResolvedValue({});
+      mockSdkClient.channel.updateWarmupSwitch.mockResolvedValue('success');
 
       const result1 = await service.updateChannelDecorate({
         channelId: '3151318',
@@ -422,6 +443,14 @@ describe('PlayerServiceSdk', () => {
         warmupEnabled: 'N',
       });
       expect(result2.success).toBe(true);
+      expect(mockSdkClient.channel.updateWarmupSwitch).toHaveBeenCalledWith({
+        channelId: '3151318',
+        warmUpEnabled: 'Y',
+      });
+      expect(mockSdkClient.channel.updateWarmupSwitch).toHaveBeenCalledWith({
+        channelId: '3151318',
+        warmUpEnabled: 'N',
+      });
     });
 
     it('should include validation error details', async () => {
@@ -443,7 +472,10 @@ describe('PlayerServiceSdk', () => {
     it('should handle API errors', async () => {
       mockSdkClient.player.updateChannelDecorate.mockRejectedValueOnce(new Error('API Error'));
 
-      await expect(service.updateChannelDecorate(validOptions)).rejects.toThrow();
+      await expect(service.updateChannelDecorate({
+        ...validOptions,
+        watermarkEnabled: 'Y',
+      })).rejects.toThrow();
     });
 
     it('should convert string channelId to number for SDK call', async () => {
@@ -499,18 +531,19 @@ describe('PlayerServiceSdk', () => {
       );
     });
 
-    it('should map warmupEnabled to warmUpEnabled in SDK params', async () => {
-      mockSdkClient.player.updateChannelDecorate.mockResolvedValueOnce({});
+    it('should update warmupEnabled through the warmup switch API', async () => {
+      mockSdkClient.channel.updateWarmupSwitch.mockResolvedValueOnce('success');
 
       await service.updateChannelDecorate({
         channelId: '3151318',
         warmupEnabled: 'Y',
       });
 
-      expect(mockSdkClient.player.updateChannelDecorate).toHaveBeenCalledWith(
-        3151318,
-        expect.objectContaining({ warmUpEnabled: 'Y' })
-      );
+      expect(mockSdkClient.player.updateChannelDecorate).not.toHaveBeenCalled();
+      expect(mockSdkClient.channel.updateWarmupSwitch).toHaveBeenCalledWith({
+        channelId: '3151318',
+        warmUpEnabled: 'Y',
+      });
     });
 
     it('should map warmupImageUrl to warmUpImageUrl in SDK params', async () => {

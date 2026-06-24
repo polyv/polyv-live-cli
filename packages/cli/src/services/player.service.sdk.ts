@@ -89,7 +89,6 @@ export class PlayerServiceSdk {
       iconUrl?: string;
       iconPosition?: 'tl' | 'tr' | 'bl' | 'br';
       logoOpacity?: number;
-      warmUpEnabled?: 'Y' | 'N';
       warmUpImageUrl?: string;
       basePV?: number;
     } = {};
@@ -112,10 +111,6 @@ export class PlayerServiceSdk {
       params.logoOpacity = options.watermarkOpacity;
       updatedFields.push('watermarkOpacity');
     }
-    if (options.warmupEnabled !== undefined) {
-      params.warmUpEnabled = options.warmupEnabled;
-      updatedFields.push('warmupEnabled');
-    }
     if (options.warmupImageUrl !== undefined) {
       params.warmUpImageUrl = options.warmupImageUrl;
       updatedFields.push('warmupImageUrl');
@@ -125,8 +120,31 @@ export class PlayerServiceSdk {
       updatedFields.push('basePv');
     }
 
-    // Call SDK
-    await client.player.updateChannelDecorate(parseInt(options.channelId, 10), params);
+    const hasDecorateUpdates = Object.keys(params).length > 0;
+    let warmupEnabledToRestore: 'Y' | 'N' | undefined;
+
+    if (hasDecorateUpdates && options.warmupEnabled === undefined) {
+      const currentDecorate = await client.player.getChannelDecorate(parseInt(options.channelId, 10));
+      const currentWarmupEnabled = currentDecorate?.player?.warmUpEnabled;
+      if (currentWarmupEnabled === 'Y' || currentWarmupEnabled === 'N') {
+        warmupEnabledToRestore = currentWarmupEnabled;
+      }
+    }
+
+    if (hasDecorateUpdates) {
+      await client.player.updateChannelDecorate(parseInt(options.channelId, 10), params);
+    }
+
+    const warmupEnabled = options.warmupEnabled ?? warmupEnabledToRestore;
+    if (warmupEnabled !== undefined) {
+      await client.channel.updateWarmupSwitch({
+        channelId: options.channelId,
+        warmUpEnabled: warmupEnabled,
+      });
+    }
+    if (options.warmupEnabled !== undefined) {
+      updatedFields.push('warmupEnabled');
+    }
 
     return {
       success: true,
