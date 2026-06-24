@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T17:53:42.905Z",
+  "generatedAt": "2026-06-24T18:00:47.230Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 69,
+    "integrationFiles": 70,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 448,
-    "referencedCommandPathsExcludingHelp": 315,
+    "referencedCommandPathsExcludingHelp": 321,
     "coveredLeafTargetsIncludingHelp": 409,
     "missingLeafTargetsIncludingHelp": 158,
-    "coveredRealExecutionLeafTargets": 309,
-    "missingRealExecutionLeafTargets": 258,
-    "realExecutionCoveragePercent": 54.5,
+    "coveredRealExecutionLeafTargets": 315,
+    "missingRealExecutionLeafTargets": 252,
+    "realExecutionCoveragePercent": 55.56,
     "includingHelpCoveragePercent": 72.13,
-    "integrationReferences": 704,
-    "realExecutionReferences": 405,
-    "helpReferences": 299
+    "integrationReferences": 718,
+    "realExecutionReferences": 413,
+    "helpReferences": 305
   },
   "byTopLevel": [
     {
@@ -366,11 +366,11 @@
     {
       "command": "viewer",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 16,
+      "coveredRealExecutionLeafTargets": 9,
+      "missingRealExecutionLeafTargets": 10,
       "coveredLeafTargetsIncludingHelp": 17,
       "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 15.79,
+      "realExecutionCoveragePercent": 47.37,
       "includingHelpCoveragePercent": 89.47
     },
     {
@@ -2794,39 +2794,6 @@
       "line": 243
     },
     {
-      "command": "viewer label create",
-      "path": [
-        "viewer",
-        "label",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 490
-    },
-    {
-      "command": "viewer label delete",
-      "path": [
-        "viewer",
-        "label",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 520
-    },
-    {
-      "command": "viewer label update",
-      "path": [
-        "viewer",
-        "label",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 504
-    },
-    {
       "command": "viewer tag add",
       "path": [
         "viewer",
@@ -2838,28 +2805,6 @@
       "line": 385
     },
     {
-      "command": "viewer tag create",
-      "path": [
-        "viewer",
-        "tag",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 338
-    },
-    {
-      "command": "viewer tag delete",
-      "path": [
-        "viewer",
-        "tag",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 368
-    },
-    {
       "command": "viewer tag remove",
       "path": [
         "viewer",
@@ -2869,17 +2814,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 429
-    },
-    {
-      "command": "viewer tag update",
-      "path": [
-        "viewer",
-        "tag",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 352
     },
     {
       "command": "viewer label channel-ref add",
@@ -7945,6 +7879,28 @@
       "line": 78
     },
     {
+      "command": "viewer label create",
+      "path": [
+        "viewer",
+        "label",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 490
+    },
+    {
+      "command": "viewer label delete",
+      "path": [
+        "viewer",
+        "label",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 520
+    },
+    {
       "command": "viewer label list",
       "path": [
         "viewer",
@@ -7956,6 +7912,39 @@
       "line": 476
     },
     {
+      "command": "viewer label update",
+      "path": [
+        "viewer",
+        "label",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 504
+    },
+    {
+      "command": "viewer tag create",
+      "path": [
+        "viewer",
+        "tag",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 338
+    },
+    {
+      "command": "viewer tag delete",
+      "path": [
+        "viewer",
+        "tag",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 368
+    },
+    {
       "command": "viewer tag list",
       "path": [
         "viewer",
@@ -7965,6 +7954,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 294
+    },
+    {
+      "command": "viewer tag update",
+      "path": [
+        "viewer",
+        "tag",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 352
     },
     {
       "command": "watch-condition get",
@@ -13281,23 +13281,31 @@
     },
     {
       "command": "viewer label create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 150,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 36,
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 238,
         "source": "array-literal"
       }
     },
     {
       "command": "viewer label delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 189,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 38,
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 240,
         "source": "array-literal"
       }
     },
@@ -13314,12 +13322,16 @@
     },
     {
       "command": "viewer label update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 169,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 37,
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 239,
         "source": "array-literal"
       }
     },
@@ -13358,23 +13370,31 @@
     },
     {
       "command": "viewer tag create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 54,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 31,
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 235,
         "source": "array-literal"
       }
     },
     {
       "command": "viewer tag delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 94,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 33,
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 237,
         "source": "array-literal"
       }
     },
@@ -13402,12 +13422,16 @@
     },
     {
       "command": "viewer tag update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 74,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 32,
+        "file": "packages/cli/tests/integration/viewer-tag-label-cli.integration.test.ts",
+        "line": 236,
         "source": "array-literal"
       }
     },

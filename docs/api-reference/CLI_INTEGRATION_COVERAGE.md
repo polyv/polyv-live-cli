@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T17:53:42.905Z
+Generated at: 2026-06-24T18:00:47.230Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,12 +9,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 69 |
+| Integration files scanned | 70 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 309 |
-| Missing real-execution leaf subcommands | 258 |
-| Real-execution coverage | 54.50% |
+| Real-executed leaf subcommands | 315 |
+| Missing real-execution leaf subcommands | 252 |
+| Real-execution coverage | 55.56% |
 | Leaf subcommands referenced including help | 409 |
 | Missing including help | 158 |
 
@@ -55,7 +55,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 14 | 17 | 45.16% | 28 | 3 |
-| `viewer` | 19 | 3 | 16 | 15.79% | 17 | 2 |
+| `viewer` | 19 | 9 | 10 | 47.37% | 17 | 2 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
 | `web` | 34 | 15 | 19 | 44.12% | 21 | 13 |
 | `webapp` | 6 | 2 | 4 | 33.33% | 3 | 3 |
@@ -287,14 +287,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `viewer lottery-wins` | `packages/cli/src/commands/viewer.commands.ts:269` |
 | `viewer update` | `packages/cli/src/commands/viewer.commands.ts:173` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
-| `viewer label create` | `packages/cli/src/commands/viewer.commands.ts:490` |
-| `viewer label delete` | `packages/cli/src/commands/viewer.commands.ts:520` |
-| `viewer label update` | `packages/cli/src/commands/viewer.commands.ts:504` |
 | `viewer tag add` | `packages/cli/src/commands/viewer.commands.ts:385` |
-| `viewer tag create` | `packages/cli/src/commands/viewer.commands.ts:338` |
-| `viewer tag delete` | `packages/cli/src/commands/viewer.commands.ts:368` |
 | `viewer tag remove` | `packages/cli/src/commands/viewer.commands.ts:429` |
-| `viewer tag update` | `packages/cli/src/commands/viewer.commands.ts:352` |
 | `viewer label channel-ref add` | `packages/cli/src/commands/viewer.commands.ts:536` |
 | `watch-condition set` | `packages/cli/src/commands/watch-condition.commands.ts:80` |
 | `web auth auth-url-update` | `packages/cli/src/commands/web.commands.ts:227` |
