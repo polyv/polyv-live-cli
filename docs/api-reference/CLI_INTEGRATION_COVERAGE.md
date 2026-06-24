@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T19:25:04.270Z
+Generated at: 2026-06-24T19:37:22.457Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 77 |
+| Integration files scanned | 78 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 354 |
-| Missing real-execution leaf subcommands | 213 |
-| Real-execution coverage | 62.43% |
-| Leaf subcommands referenced including help | 432 |
-| Missing including help | 135 |
+| Real-executed leaf subcommands | 358 |
+| Missing real-execution leaf subcommands | 209 |
+| Real-execution coverage | 63.14% |
+| Leaf subcommands referenced including help | 434 |
+| Missing including help | 133 |
 
 ## By Top-Level Command
 
@@ -46,7 +46,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player` | 11 | 4 | 7 | 36.36% | 5 | 6 |
 | `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `qa` | 9 | 4 | 5 | 44.44% | 7 | 2 |
+| `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 3 | 3 | 50.00% | 4 | 2 |
 | `record` | 17 | 4 | 13 | 23.53% | 6 | 11 |
 | `robot` | 3 | 1 | 2 | 33.33% | 2 | 1 |
@@ -203,11 +203,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `product update-enabled` | `packages/cli/src/commands/product.commands.ts:655` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
-| `qa add-edit` | `packages/cli/src/commands/qa.commands.ts:256` |
-| `qa delete-question` | `packages/cli/src/commands/qa.commands.ts:295` |
-| `qa send` | `packages/cli/src/commands/qa.commands.ts:54` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
-| `qa stop` | `packages/cli/src/commands/qa.commands.ts:137` |
 | `questionnaire batch-create` | `packages/cli/src/commands/questionnaire.commands.ts:296` |
 | `questionnaire create` | `packages/cli/src/commands/questionnaire.commands.ts:54` |
 | `questionnaire detail` | `packages/cli/src/commands/questionnaire.commands.ts:218` |

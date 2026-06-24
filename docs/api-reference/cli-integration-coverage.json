@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T19:25:04.270Z",
+  "generatedAt": "2026-06-24T19:37:22.457Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 77,
+    "integrationFiles": 78,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 471,
-    "referencedCommandPathsExcludingHelp": 360,
-    "coveredLeafTargetsIncludingHelp": 432,
-    "missingLeafTargetsIncludingHelp": 135,
-    "coveredRealExecutionLeafTargets": 354,
-    "missingRealExecutionLeafTargets": 213,
-    "realExecutionCoveragePercent": 62.43,
-    "includingHelpCoveragePercent": 76.19,
-    "integrationReferences": 813,
-    "realExecutionReferences": 479,
-    "helpReferences": 334
+    "referencedCommandPathsIncludingHelp": 473,
+    "referencedCommandPathsExcludingHelp": 364,
+    "coveredLeafTargetsIncludingHelp": 434,
+    "missingLeafTargetsIncludingHelp": 133,
+    "coveredRealExecutionLeafTargets": 358,
+    "missingRealExecutionLeafTargets": 209,
+    "realExecutionCoveragePercent": 63.14,
+    "includingHelpCoveragePercent": 76.54,
+    "integrationReferences": 823,
+    "realExecutionReferences": 485,
+    "helpReferences": 338
   },
   "byTopLevel": [
     {
@@ -276,12 +276,12 @@
     {
       "command": "qa",
       "targetLeafCommands": 9,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 5,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 44.44,
-      "includingHelpCoveragePercent": 77.78
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 9,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 88.89,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "questionnaire",
@@ -1896,36 +1896,6 @@
       "line": 964
     },
     {
-      "command": "qa add-edit",
-      "path": [
-        "qa",
-        "add-edit"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 256
-    },
-    {
-      "command": "qa delete-question",
-      "path": [
-        "qa",
-        "delete-question"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 295
-    },
-    {
-      "command": "qa send",
-      "path": [
-        "qa",
-        "send"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 54
-    },
-    {
       "command": "qa send-result",
       "path": [
         "qa",
@@ -1934,16 +1904,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/qa.commands.ts",
       "line": 322
-    },
-    {
-      "command": "qa stop",
-      "path": [
-        "qa",
-        "stop"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 137
     },
     {
       "command": "questionnaire batch-create",
@@ -3657,26 +3617,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 964
-    },
-    {
-      "command": "qa send",
-      "path": [
-        "qa",
-        "send"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "qa stop",
-      "path": [
-        "qa",
-        "stop"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 137
     },
     {
       "command": "questionnaire create",
@@ -6697,6 +6637,16 @@
       "line": 94
     },
     {
+      "command": "qa add-edit",
+      "path": [
+        "qa",
+        "add-edit"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 256
+    },
+    {
       "command": "qa answers",
       "path": [
         "qa",
@@ -6705,6 +6655,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/qa.commands.ts",
       "line": 200
+    },
+    {
+      "command": "qa delete-question",
+      "path": [
+        "qa",
+        "delete-question"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 295
     },
     {
       "command": "qa list",
@@ -6727,6 +6687,16 @@
       "line": 229
     },
     {
+      "command": "qa send",
+      "path": [
+        "qa",
+        "send"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 54
+    },
+    {
       "command": "qa send-times",
       "path": [
         "qa",
@@ -6735,6 +6705,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/qa.commands.ts",
       "line": 177
+    },
+    {
+      "command": "qa stop",
+      "path": [
+        "qa",
+        "stop"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 137
     },
     {
       "command": "questionnaire list",
@@ -11844,9 +11824,13 @@
     },
     {
       "command": "qa add-edit",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 63,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 32,
@@ -11866,9 +11850,13 @@
     },
     {
       "command": "qa delete-question",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 149,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 33,
@@ -11877,7 +11865,7 @@
     },
     {
       "command": "qa list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
@@ -11896,6 +11884,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "qa send",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 108,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 193,
+        "source": "array-literal"
+      }
     },
     {
       "command": "qa send-result",
@@ -11918,6 +11921,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "qa stop",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 129,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 194,
+        "source": "array-literal"
+      }
     },
     {
       "command": "questionnaire",
