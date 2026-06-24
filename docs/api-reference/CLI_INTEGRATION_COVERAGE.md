@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T17:44:38.190Z
+Generated at: 2026-06-24T17:53:42.905Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 68 |
+| Integration files scanned | 69 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 304 |
-| Missing real-execution leaf subcommands | 263 |
-| Real-execution coverage | 53.62% |
-| Leaf subcommands referenced including help | 406 |
-| Missing including help | 161 |
+| Real-executed leaf subcommands | 309 |
+| Missing real-execution leaf subcommands | 258 |
+| Real-execution coverage | 54.50% |
+| Leaf subcommands referenced including help | 409 |
+| Missing including help | 158 |
 
 ## By Top-Level Command
 
@@ -35,10 +35,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 4 | 18 | 18.18% | 15 | 7 |
+| `interaction` | 22 | 6 | 16 | 27.27% | 15 | 7 |
 | `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
 | `lottery` | 24 | 12 | 12 | 50.00% | 18 | 6 |
-| `material` | 7 | 3 | 4 | 42.86% | 4 | 3 |
+| `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 7 | 15 | 31.82% | 9 | 13 |
@@ -146,8 +146,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction task-reward update` | `packages/cli/src/commands/interaction.commands.ts:317` |
 | `interaction task-reward viewer-detail` | `packages/cli/src/commands/interaction.commands.ts:379` |
 | `interaction task-reward viewer-list` | `packages/cli/src/commands/interaction.commands.ts:397` |
-| `interaction webhook delete` | `packages/cli/src/commands/interaction.commands.ts:125` |
-| `interaction webhook set` | `packages/cli/src/commands/interaction.commands.ts:111` |
 | `invite-sales add` | `packages/cli/src/commands/invite-sales.commands.ts:40` |
 | `invite-sales remove` | `packages/cli/src/commands/invite-sales.commands.ts:56` |
 | `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
@@ -164,9 +162,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
 | `lottery wait create` | `packages/cli/src/commands/lottery.commands.ts:566` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
-| `material label create` | `packages/cli/src/commands/material.commands.ts:66` |
-| `material label delete` | `packages/cli/src/commands/material.commands.ts:81` |
-| `material label update` | `packages/cli/src/commands/material.commands.ts:73` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:663` |

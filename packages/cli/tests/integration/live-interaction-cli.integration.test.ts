@@ -2,6 +2,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -72,6 +73,64 @@ describe('live interaction CLI integration', () => {
       for (const args of readCommands) {
         runCliSuccess(args);
       }
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // The student-question webhook is an account-scoped config (validated against
+  // roomId belonging to the account). set writes it, get verifies the new
+  // callback URL, delete restores the account to its default (no-config) state.
+  (shouldRunRealChannelTests ? it : it.skip)('runs the interaction webhook set -> get -> delete lifecycle against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Interaction Webhook Set Delete');
+      const roomId = channelId;
+      const callbackUrl = `https://example.com/polyv-it-webhook/${roomId}`;
+
+      // set returns the documented empty-string data payload ("").
+      const setOutput = runCliSuccess([
+        'interaction',
+        'webhook',
+        'set',
+        '--room-id',
+        roomId,
+        '--callback-url',
+        callbackUrl,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(JSON.parse(setOutput.trim())).toBe('');
+
+      // get must reflect the callback URL we just saved.
+      const getOutput = runCliSuccess([
+        'interaction',
+        'webhook',
+        'get',
+        '--room-id',
+        roomId,
+        '--output',
+        'json',
+      ]);
+      const getConfig = parseJsonObject(getOutput) as { callbackUrl?: string };
+      expect(getConfig.callbackUrl).toBe(callbackUrl);
+
+      // delete restores the account config; returns the empty-string payload.
+      const deleteOutput = runCliSuccess([
+        'interaction',
+        'webhook',
+        'delete',
+        '--room-id',
+        roomId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(JSON.parse(deleteOutput.trim())).toBe('');
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T17:44:38.190Z",
+  "generatedAt": "2026-06-24T17:53:42.905Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 68,
+    "integrationFiles": 69,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 445,
-    "referencedCommandPathsExcludingHelp": 310,
-    "coveredLeafTargetsIncludingHelp": 406,
-    "missingLeafTargetsIncludingHelp": 161,
-    "coveredRealExecutionLeafTargets": 304,
-    "missingRealExecutionLeafTargets": 263,
-    "realExecutionCoveragePercent": 53.62,
-    "includingHelpCoveragePercent": 71.6,
-    "integrationReferences": 693,
-    "realExecutionReferences": 397,
-    "helpReferences": 296
+    "referencedCommandPathsIncludingHelp": 448,
+    "referencedCommandPathsExcludingHelp": 315,
+    "coveredLeafTargetsIncludingHelp": 409,
+    "missingLeafTargetsIncludingHelp": 158,
+    "coveredRealExecutionLeafTargets": 309,
+    "missingRealExecutionLeafTargets": 258,
+    "realExecutionCoveragePercent": 54.5,
+    "includingHelpCoveragePercent": 72.13,
+    "integrationReferences": 704,
+    "realExecutionReferences": 405,
+    "helpReferences": 299
   },
   "byTopLevel": [
     {
@@ -166,11 +166,11 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 18,
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 16,
       "coveredLeafTargetsIncludingHelp": 15,
       "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 18.18,
+      "realExecutionCoveragePercent": 27.27,
       "includingHelpCoveragePercent": 68.18
     },
     {
@@ -196,12 +196,12 @@
     {
       "command": "material",
       "targetLeafCommands": 7,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 4,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 42.86,
-      "includingHelpCoveragePercent": 57.14
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 7,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 85.71,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "monitor",
@@ -1295,28 +1295,6 @@
       "line": 397
     },
     {
-      "command": "interaction webhook delete",
-      "path": [
-        "interaction",
-        "webhook",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 125
-    },
-    {
-      "command": "interaction webhook set",
-      "path": [
-        "interaction",
-        "webhook",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 111
-    },
-    {
       "command": "invite-sales add",
       "path": [
         "invite-sales",
@@ -1483,39 +1461,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/material.commands.ts",
       "line": 40
-    },
-    {
-      "command": "material label create",
-      "path": [
-        "material",
-        "label",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 66
-    },
-    {
-      "command": "material label delete",
-      "path": [
-        "material",
-        "label",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 81
-    },
-    {
-      "command": "material label update",
-      "path": [
-        "material",
-        "label",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 73
     },
     {
       "command": "monitor tencent-stream-info-list",
@@ -3894,39 +3839,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 648
-    },
-    {
-      "command": "material label create",
-      "path": [
-        "material",
-        "label",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 66
-    },
-    {
-      "command": "material label delete",
-      "path": [
-        "material",
-        "label",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 81
-    },
-    {
-      "command": "material label update",
-      "path": [
-        "material",
-        "label",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 73
     },
     {
       "command": "platform anchor get",
@@ -6705,6 +6617,17 @@
       "line": 365
     },
     {
+      "command": "interaction webhook delete",
+      "path": [
+        "interaction",
+        "webhook",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 125
+    },
+    {
       "command": "interaction webhook get",
       "path": [
         "interaction",
@@ -6714,6 +6637,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 101
+    },
+    {
+      "command": "interaction webhook set",
+      "path": [
+        "interaction",
+        "webhook",
+        "set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 111
     },
     {
       "command": "invite-sales list",
@@ -6883,6 +6817,28 @@
       "line": 50
     },
     {
+      "command": "material label create",
+      "path": [
+        "material",
+        "label",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 66
+    },
+    {
+      "command": "material label delete",
+      "path": [
+        "material",
+        "label",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 81
+    },
+    {
       "command": "material label list",
       "path": [
         "material",
@@ -6892,6 +6848,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/material.commands.ts",
       "line": 58
+    },
+    {
+      "command": "material label update",
+      "path": [
+        "material",
+        "label",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 73
     },
     {
       "command": "monitor config",
@@ -10206,7 +10173,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 14,
+        "line": 15,
         "source": "array-literal"
       }
     },
@@ -10216,7 +10183,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 59,
+        "line": 60,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10227,7 +10194,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 60,
+        "line": 61,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10597,7 +10564,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 19,
+        "line": 20,
         "source": "array-literal"
       }
     },
@@ -10607,7 +10574,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 69,
+        "line": 70,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10634,7 +10601,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 36,
+        "line": 37,
         "source": "array-literal"
       }
     },
@@ -10656,7 +10623,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 37,
+        "line": 38,
         "source": "array-literal"
       }
     },
@@ -10699,7 +10666,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 68,
+        "line": 69,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10733,28 +10700,32 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 40,
+        "line": 41,
         "source": "array-literal"
       }
     },
     {
       "command": "interaction webhook delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 123,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 39,
+        "line": 40,
         "source": "array-literal"
       }
     },
     {
       "command": "interaction webhook get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
-        "line": 114,
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 110,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10765,12 +10736,16 @@
     },
     {
       "command": "interaction webhook set",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 95,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 38,
+        "line": 39,
         "source": "array-literal"
       }
     },
@@ -10862,7 +10837,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 18,
+        "line": 19,
         "source": "array-literal"
       }
     },
@@ -11032,7 +11007,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 35,
+        "line": 36,
         "source": "array-literal"
       }
     },
@@ -11111,15 +11086,60 @@
       }
     },
     {
-      "command": "material label list",
+      "command": "material label create",
       "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 50,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 132,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "material label delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 93,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 134,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "material label list",
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 79,
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 62,
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "material label update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 78,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 133,
+        "source": "array-literal"
+      }
     },
     {
       "command": "material list",
@@ -11906,7 +11926,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 15,
+        "line": 16,
         "source": "array-literal"
       }
     },
@@ -11917,7 +11937,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 31,
+        "line": 32,
         "source": "array-literal"
       }
     },
@@ -11927,7 +11947,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 63,
+        "line": 64,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11939,7 +11959,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 32,
+        "line": 33,
         "source": "array-literal"
       }
     },
@@ -11949,7 +11969,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 61,
+        "line": 62,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11960,7 +11980,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 64,
+        "line": 65,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11972,7 +11992,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 33,
+        "line": 34,
         "source": "array-literal"
       }
     },
@@ -11982,7 +12002,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 62,
+        "line": 63,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11994,7 +12014,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 17,
+        "line": 18,
         "source": "array-literal"
       }
     },
@@ -12005,23 +12025,12 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 34,
+        "line": 35,
         "source": "array-literal"
       }
     },
     {
       "command": "questionnaire list",
-      "realExecutionReferences": 1,
-      "helpReferences": 0,
-      "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 65,
-        "source": "array-literal"
-      },
-      "firstHelpReference": null
-    },
-    {
-      "command": "questionnaire result-list",
       "realExecutionReferences": 1,
       "helpReferences": 0,
       "firstRealExecutionReference": {
@@ -12032,12 +12041,23 @@
       "firstHelpReference": null
     },
     {
-      "command": "questionnaire results",
+      "command": "questionnaire result-list",
       "realExecutionReferences": 1,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 67,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "questionnaire results",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 68,
         "source": "array-literal"
       },
       "firstHelpReference": null
