@@ -1754,9 +1754,15 @@ export class V4UserService {
   async updatePvShowEnable(params: UpdatePvShowEnableParams): Promise<void> {
     this.validateYnValue(params.enabled, 'enabled');
 
+    // The PolyV update_pv_show_enable endpoint takes `enabled` as a signed query
+    // parameter (per the Java example in update_pv_show_enable.md: enabled is added
+    // to requestMap which participates in signing, then appended to the URL with a
+    // null body). The signing interceptor only signs config.params, so enabled must
+    // be passed via the 3-arg params form rather than the unsigned request body.
     await this.client.httpClient.post(
       '/live/v4/user/global-setting/pv-show/update',
-      params
+      undefined,
+      { params: { enabled: params.enabled } },
     );
   }
 

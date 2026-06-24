@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T19:12:03.844Z",
+  "generatedAt": "2026-06-24T19:25:04.270Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 76,
+    "integrationFiles": 77,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 471,
-    "referencedCommandPathsExcludingHelp": 357,
+    "referencedCommandPathsExcludingHelp": 360,
     "coveredLeafTargetsIncludingHelp": 432,
     "missingLeafTargetsIncludingHelp": 135,
-    "coveredRealExecutionLeafTargets": 351,
-    "missingRealExecutionLeafTargets": 216,
-    "realExecutionCoveragePercent": 61.9,
+    "coveredRealExecutionLeafTargets": 354,
+    "missingRealExecutionLeafTargets": 213,
+    "realExecutionCoveragePercent": 62.43,
     "includingHelpCoveragePercent": 76.19,
-    "integrationReferences": 798,
-    "realExecutionReferences": 467,
-    "helpReferences": 331
+    "integrationReferences": 813,
+    "realExecutionReferences": 479,
+    "helpReferences": 334
   },
   "byTopLevel": [
     {
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 14,
-      "missingRealExecutionLeafTargets": 17,
+      "coveredRealExecutionLeafTargets": 17,
+      "missingRealExecutionLeafTargets": 14,
       "coveredLeafTargetsIncludingHelp": 28,
       "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 45.16,
+      "realExecutionCoveragePercent": 54.84,
       "includingHelpCoveragePercent": 90.32
     },
     {
@@ -2453,18 +2453,6 @@
       "line": 150
     },
     {
-      "command": "user setting footer update",
-      "path": [
-        "user",
-        "setting",
-        "footer",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 110
-    },
-    {
       "command": "user setting pv-show update",
       "path": [
         "user",
@@ -2487,30 +2475,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 197
-    },
-    {
-      "command": "user template donate update",
-      "path": [
-        "user",
-        "template",
-        "donate",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 159
-    },
-    {
-      "command": "user template marquee update",
-      "path": [
-        "user",
-        "template",
-        "marquee",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 167
     },
     {
       "command": "user template playback update",
@@ -7325,6 +7289,18 @@
       "line": 108
     },
     {
+      "command": "user setting footer update",
+      "path": [
+        "user",
+        "setting",
+        "footer",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 110
+    },
+    {
       "command": "user setting pv-show get",
       "path": [
         "user",
@@ -7361,6 +7337,18 @@
       "line": 157
     },
     {
+      "command": "user template donate update",
+      "path": [
+        "user",
+        "template",
+        "donate",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 159
+    },
+    {
       "command": "user template marquee get",
       "path": [
         "user",
@@ -7371,6 +7359,18 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 165
+    },
+    {
+      "command": "user template marquee update",
+      "path": [
+        "user",
+        "template",
+        "marquee",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 167
     },
     {
       "command": "user template playback get",
@@ -12860,7 +12860,7 @@
     },
     {
       "command": "user setting footer get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -12875,9 +12875,13 @@
     },
     {
       "command": "user setting footer update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 49,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 40,
@@ -12960,7 +12964,7 @@
     },
     {
       "command": "user template donate get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -12975,9 +12979,13 @@
     },
     {
       "command": "user template donate update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 108,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 34,
@@ -12986,7 +12994,7 @@
     },
     {
       "command": "user template marquee get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -13001,9 +13009,13 @@
     },
     {
       "command": "user template marquee update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 151,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 35,

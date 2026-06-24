@@ -1372,7 +1372,8 @@ describe('V4UserService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/user/global-setting/pv-show/update',
-        { enabled: 'N' }
+        undefined,
+        { params: { enabled: 'N' } }
       );
     });
 

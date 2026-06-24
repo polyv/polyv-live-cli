@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T19:12:03.844Z
+Generated at: 2026-06-24T19:25:04.270Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,12 +9,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 76 |
+| Integration files scanned | 77 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 351 |
-| Missing real-execution leaf subcommands | 216 |
-| Real-execution coverage | 61.90% |
+| Real-executed leaf subcommands | 354 |
+| Missing real-execution leaf subcommands | 213 |
+| Real-execution coverage | 62.43% |
 | Leaf subcommands referenced including help | 432 |
 | Missing including help | 135 |
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 14 | 17 | 45.16% | 28 | 3 |
+| `user` | 31 | 17 | 14 | 54.84% | 28 | 3 |
 | `viewer` | 19 | 13 | 6 | 68.42% | 18 | 1 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
@@ -256,11 +256,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user org create` | `packages/cli/src/commands/user.commands.ts:92` |
 | `user org delete` | `packages/cli/src/commands/user.commands.ts:98` |
 | `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
-| `user setting footer update` | `packages/cli/src/commands/user.commands.ts:110` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template audio-moderation update` | `packages/cli/src/commands/user.commands.ts:197` |
-| `user template donate update` | `packages/cli/src/commands/user.commands.ts:159` |
-| `user template marquee update` | `packages/cli/src/commands/user.commands.ts:167` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
 | `user template video-moderation update` | `packages/cli/src/commands/user.commands.ts:207` |
