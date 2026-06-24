@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T16:16:28.359Z",
+  "generatedAt": "2026-06-24T16:26:11.132Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 64,
+    "integrationFiles": 65,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 409,
-    "referencedCommandPathsExcludingHelp": 269,
-    "coveredLeafTargetsIncludingHelp": 371,
-    "missingLeafTargetsIncludingHelp": 196,
-    "coveredRealExecutionLeafTargets": 263,
-    "missingRealExecutionLeafTargets": 304,
-    "realExecutionCoveragePercent": 46.38,
-    "includingHelpCoveragePercent": 65.43,
-    "integrationReferences": 629,
-    "realExecutionReferences": 355,
-    "helpReferences": 274
+    "referencedCommandPathsIncludingHelp": 415,
+    "referencedCommandPathsExcludingHelp": 275,
+    "coveredLeafTargetsIncludingHelp": 377,
+    "missingLeafTargetsIncludingHelp": 190,
+    "coveredRealExecutionLeafTargets": 269,
+    "missingRealExecutionLeafTargets": 298,
+    "realExecutionCoveragePercent": 47.44,
+    "includingHelpCoveragePercent": 66.49,
+    "integrationReferences": 641,
+    "realExecutionReferences": 361,
+    "helpReferences": 280
   },
   "byTopLevel": [
     {
@@ -356,12 +356,12 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 29,
-      "coveredLeafTargetsIncludingHelp": 16,
-      "missingLeafTargetsIncludingHelp": 15,
-      "realExecutionCoveragePercent": 6.45,
-      "includingHelpCoveragePercent": 51.61
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 23,
+      "coveredLeafTargetsIncludingHelp": 22,
+      "missingLeafTargetsIncludingHelp": 9,
+      "realExecutionCoveragePercent": 25.81,
+      "includingHelpCoveragePercent": 70.97
     },
     {
       "command": "viewer",
@@ -3005,18 +3005,6 @@
       "line": 120
     },
     {
-      "command": "user template audio-moderation get",
-      "path": [
-        "user",
-        "template",
-        "audio-moderation",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 195
-    },
-    {
       "command": "user template audio-moderation update",
       "path": [
         "user",
@@ -3027,18 +3015,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 197
-    },
-    {
-      "command": "user template donate get",
-      "path": [
-        "user",
-        "template",
-        "donate",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 157
     },
     {
       "command": "user template donate update",
@@ -3053,18 +3029,6 @@
       "line": 159
     },
     {
-      "command": "user template marquee get",
-      "path": [
-        "user",
-        "template",
-        "marquee",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 165
-    },
-    {
       "command": "user template marquee update",
       "path": [
         "user",
@@ -3075,18 +3039,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 167
-    },
-    {
-      "command": "user template playback get",
-      "path": [
-        "user",
-        "template",
-        "playback",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 188
     },
     {
       "command": "user template playback update",
@@ -3101,18 +3053,6 @@
       "line": 190
     },
     {
-      "command": "user template role-config get",
-      "path": [
-        "user",
-        "template",
-        "role-config",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 181
-    },
-    {
       "command": "user template role-config update",
       "path": [
         "user",
@@ -3123,18 +3063,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 183
-    },
-    {
-      "command": "user template video-moderation get",
-      "path": [
-        "user",
-        "template",
-        "video-moderation",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 205
     },
     {
       "command": "user template video-moderation update",
@@ -5433,78 +5361,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 118
-    },
-    {
-      "command": "user template audio-moderation get",
-      "path": [
-        "user",
-        "template",
-        "audio-moderation",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 195
-    },
-    {
-      "command": "user template donate get",
-      "path": [
-        "user",
-        "template",
-        "donate",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 157
-    },
-    {
-      "command": "user template marquee get",
-      "path": [
-        "user",
-        "template",
-        "marquee",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 165
-    },
-    {
-      "command": "user template playback get",
-      "path": [
-        "user",
-        "template",
-        "playback",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 188
-    },
-    {
-      "command": "user template role-config get",
-      "path": [
-        "user",
-        "template",
-        "role-config",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 181
-    },
-    {
-      "command": "user template video-moderation get",
-      "path": [
-        "user",
-        "template",
-        "video-moderation",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 205
     },
     {
       "command": "viewer get",
@@ -8426,6 +8282,78 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 89
+    },
+    {
+      "command": "user template audio-moderation get",
+      "path": [
+        "user",
+        "template",
+        "audio-moderation",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 195
+    },
+    {
+      "command": "user template donate get",
+      "path": [
+        "user",
+        "template",
+        "donate",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 157
+    },
+    {
+      "command": "user template marquee get",
+      "path": [
+        "user",
+        "template",
+        "marquee",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 165
+    },
+    {
+      "command": "user template playback get",
+      "path": [
+        "user",
+        "template",
+        "playback",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 188
+    },
+    {
+      "command": "user template role-config get",
+      "path": [
+        "user",
+        "template",
+        "role-config",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 181
+    },
+    {
+      "command": "user template video-moderation get",
+      "path": [
+        "user",
+        "template",
+        "video-moderation",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 205
     },
     {
       "command": "viewer list",
@@ -13047,6 +12975,21 @@
       }
     },
     {
+      "command": "user template audio-moderation get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 111,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 153,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "user template audio-moderation update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -13054,6 +12997,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 38,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user template donate get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 33,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 149,
         "source": "array-literal"
       }
     },
@@ -13069,6 +13027,21 @@
       }
     },
     {
+      "command": "user template marquee get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 54,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 150,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "user template marquee update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -13076,6 +13049,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 35,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user template playback get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 92,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 152,
         "source": "array-literal"
       }
     },
@@ -13091,6 +13079,21 @@
       }
     },
     {
+      "command": "user template role-config get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 72,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 151,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "user template role-config update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -13098,6 +13101,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 36,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user template video-moderation get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 133,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 154,
         "source": "array-literal"
       }
     },

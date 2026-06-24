@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T16:16:28.359Z
+Generated at: 2026-06-24T16:26:11.132Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 64 |
+| Integration files scanned | 65 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 263 |
-| Missing real-execution leaf subcommands | 304 |
-| Real-execution coverage | 46.38% |
-| Leaf subcommands referenced including help | 371 |
-| Missing including help | 196 |
+| Real-executed leaf subcommands | 269 |
+| Missing real-execution leaf subcommands | 298 |
+| Real-execution coverage | 47.44% |
+| Leaf subcommands referenced including help | 377 |
+| Missing including help | 190 |
 
 ## By Top-Level Command
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
 | `stream` | 19 | 10 | 9 | 52.63% | 11 | 8 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 2 | 29 | 6.45% | 16 | 15 |
+| `user` | 31 | 8 | 23 | 25.81% | 22 | 9 |
 | `viewer` | 19 | 3 | 16 | 15.79% | 17 | 2 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
 | `web` | 34 | 8 | 26 | 23.53% | 16 | 18 |
@@ -307,17 +307,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user setting footer update` | `packages/cli/src/commands/user.commands.ts:110` |
 | `user setting pv-show get` | `packages/cli/src/commands/user.commands.ts:118` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
-| `user template audio-moderation get` | `packages/cli/src/commands/user.commands.ts:195` |
 | `user template audio-moderation update` | `packages/cli/src/commands/user.commands.ts:197` |
-| `user template donate get` | `packages/cli/src/commands/user.commands.ts:157` |
 | `user template donate update` | `packages/cli/src/commands/user.commands.ts:159` |
-| `user template marquee get` | `packages/cli/src/commands/user.commands.ts:165` |
 | `user template marquee update` | `packages/cli/src/commands/user.commands.ts:167` |
-| `user template playback get` | `packages/cli/src/commands/user.commands.ts:188` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
-| `user template role-config get` | `packages/cli/src/commands/user.commands.ts:181` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
-| `user template video-moderation get` | `packages/cli/src/commands/user.commands.ts:205` |
 | `user template video-moderation update` | `packages/cli/src/commands/user.commands.ts:207` |
 | `viewer create` | `packages/cli/src/commands/viewer.commands.ts:143` |
 | `viewer delete` | `packages/cli/src/commands/viewer.commands.ts:203` |
