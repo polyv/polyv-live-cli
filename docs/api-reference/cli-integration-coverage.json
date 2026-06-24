@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T19:37:22.457Z",
+  "generatedAt": "2026-06-24T19:49:11.518Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 473,
-    "referencedCommandPathsExcludingHelp": 364,
-    "coveredLeafTargetsIncludingHelp": 434,
-    "missingLeafTargetsIncludingHelp": 133,
-    "coveredRealExecutionLeafTargets": 358,
-    "missingRealExecutionLeafTargets": 209,
-    "realExecutionCoveragePercent": 63.14,
-    "includingHelpCoveragePercent": 76.54,
-    "integrationReferences": 823,
-    "realExecutionReferences": 485,
+    "referencedCommandPathsIncludingHelp": 476,
+    "referencedCommandPathsExcludingHelp": 369,
+    "coveredLeafTargetsIncludingHelp": 437,
+    "missingLeafTargetsIncludingHelp": 130,
+    "coveredRealExecutionLeafTargets": 363,
+    "missingRealExecutionLeafTargets": 204,
+    "realExecutionCoveragePercent": 64.02,
+    "includingHelpCoveragePercent": 77.07,
+    "integrationReferences": 829,
+    "realExecutionReferences": 491,
     "helpReferences": 338
   },
   "byTopLevel": [
@@ -166,12 +166,12 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 16,
-      "coveredLeafTargetsIncludingHelp": 15,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 27.27,
-      "includingHelpCoveragePercent": 68.18
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 11,
+      "coveredLeafTargetsIncludingHelp": 18,
+      "missingLeafTargetsIncludingHelp": 4,
+      "realExecutionCoveragePercent": 50,
+      "includingHelpCoveragePercent": 81.82
     },
     {
       "command": "invite-sales",
@@ -1206,39 +1206,6 @@
       "line": 245
     },
     {
-      "command": "interaction task-reward create",
-      "path": [
-        "interaction",
-        "task-reward",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 295
-    },
-    {
-      "command": "interaction task-reward delete",
-      "path": [
-        "interaction",
-        "task-reward",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 341
-    },
-    {
-      "command": "interaction task-reward stop",
-      "path": [
-        "interaction",
-        "task-reward",
-        "stop"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 353
-    },
-    {
       "command": "interaction task-reward submit-accept-info",
       "path": [
         "interaction",
@@ -1248,28 +1215,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 411
-    },
-    {
-      "command": "interaction task-reward update",
-      "path": [
-        "interaction",
-        "task-reward",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 317
-    },
-    {
-      "command": "interaction task-reward viewer-detail",
-      "path": [
-        "interaction",
-        "task-reward",
-        "viewer-detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 379
     },
     {
       "command": "interaction task-reward viewer-list",
@@ -3190,39 +3135,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 233
-    },
-    {
-      "command": "interaction task-reward stop",
-      "path": [
-        "interaction",
-        "task-reward",
-        "stop"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 353
-    },
-    {
-      "command": "interaction task-reward update",
-      "path": [
-        "interaction",
-        "task-reward",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 317
-    },
-    {
-      "command": "interaction task-reward viewer-detail",
-      "path": [
-        "interaction",
-        "task-reward",
-        "viewer-detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 379
     },
     {
       "command": "interaction task-reward viewer-list",
@@ -5811,6 +5723,28 @@
       "line": 163
     },
     {
+      "command": "interaction task-reward create",
+      "path": [
+        "interaction",
+        "task-reward",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 295
+    },
+    {
+      "command": "interaction task-reward delete",
+      "path": [
+        "interaction",
+        "task-reward",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 341
+    },
+    {
       "command": "interaction task-reward list",
       "path": [
         "interaction",
@@ -5831,6 +5765,39 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 365
+    },
+    {
+      "command": "interaction task-reward stop",
+      "path": [
+        "interaction",
+        "task-reward",
+        "stop"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 353
+    },
+    {
+      "command": "interaction task-reward update",
+      "path": [
+        "interaction",
+        "task-reward",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 317
+    },
+    {
+      "command": "interaction task-reward viewer-detail",
+      "path": [
+        "interaction",
+        "task-reward",
+        "viewer-detail"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 379
     },
     {
       "command": "interaction webhook delete",
@@ -10384,9 +10351,13 @@
     },
     {
       "command": "interaction task-reward create",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 109,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 115,
@@ -10395,9 +10366,13 @@
     },
     {
       "command": "interaction task-reward delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 189,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 116,
@@ -10427,6 +10402,17 @@
       "firstHelpReference": null
     },
     {
+      "command": "interaction task-reward stop",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 177,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "interaction task-reward submit-accept-info",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -10436,6 +10422,28 @@
         "line": 117,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "interaction task-reward update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 150,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "interaction task-reward viewer-detail",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 134,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "interaction teacher-answer",
@@ -10454,7 +10462,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 123,
+        "line": 262,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10469,7 +10477,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 110,
+        "line": 249,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10484,7 +10492,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 95,
+        "line": 234,
         "source": "array-literal"
       },
       "firstHelpReference": {

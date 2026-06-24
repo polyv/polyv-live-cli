@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T19:37:22.457Z
+Generated at: 2026-06-24T19:49:11.518Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 78 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 358 |
-| Missing real-execution leaf subcommands | 209 |
-| Real-execution coverage | 63.14% |
-| Leaf subcommands referenced including help | 434 |
-| Missing including help | 133 |
+| Real-executed leaf subcommands | 363 |
+| Missing real-execution leaf subcommands | 204 |
+| Real-execution coverage | 64.02% |
+| Leaf subcommands referenced including help | 437 |
+| Missing including help | 130 |
 
 ## By Top-Level Command
 
@@ -35,7 +35,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 6 | 16 | 27.27% | 15 | 7 |
+| `interaction` | 22 | 11 | 11 | 50.00% | 18 | 4 |
 | `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
 | `lottery` | 24 | 12 | 12 | 50.00% | 18 | 6 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
@@ -138,12 +138,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction script delete` | `packages/cli/src/commands/interaction.commands.ts:263` |
 | `interaction script query` | `packages/cli/src/commands/interaction.commands.ts:233` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
-| `interaction task-reward create` | `packages/cli/src/commands/interaction.commands.ts:295` |
-| `interaction task-reward delete` | `packages/cli/src/commands/interaction.commands.ts:341` |
-| `interaction task-reward stop` | `packages/cli/src/commands/interaction.commands.ts:353` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
-| `interaction task-reward update` | `packages/cli/src/commands/interaction.commands.ts:317` |
-| `interaction task-reward viewer-detail` | `packages/cli/src/commands/interaction.commands.ts:379` |
 | `interaction task-reward viewer-list` | `packages/cli/src/commands/interaction.commands.ts:397` |
 | `invite-sales add` | `packages/cli/src/commands/invite-sales.commands.ts:40` |
 | `invite-sales remove` | `packages/cli/src/commands/invite-sales.commands.ts:56` |

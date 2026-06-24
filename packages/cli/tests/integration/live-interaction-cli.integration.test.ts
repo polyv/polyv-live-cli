@@ -83,6 +83,145 @@ describe('live interaction CLI integration', () => {
   // The student-question webhook is an account-scoped config (validated against
   // roomId belonging to the account). set writes it, get verifies the new
   // callback URL, delete restores the account to its default (no-config) state.
+  // Task-reward activities are channel-scoped. create returns the activityId as
+  // a bare number; the activity must be "未开始" (startTime in the future) to be
+  // updated, and "进行中" (startTime in the past) to be stopped, so the lifecycle
+  // uses a near-future startTime and waits past it before stop.
+  (shouldRunRealChannelTests ? it : it.skip)('runs the interaction task-reward create -> viewer-detail -> update -> stop -> delete lifecycle against a temporary real channel', async () => {
+    let channelId: string | undefined;
+    let activityId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Task Reward Lifecycle');
+      const id = channelId;
+
+      const tasks = JSON.stringify([
+        {
+          reachCondition: { type: 'sign', amount: 10 },
+          rewardSetting: { type: 'cash', amount: 1, limit: 10 },
+        },
+      ]);
+      // startTime slightly in the future so update runs while "未开始"; endTime well ahead.
+      const startTime = Date.now() + 8000;
+      const endTime = Date.now() + 7200000;
+
+      // create returns the activityId as a bare number payload.
+      const createOutput = runCliSuccess([
+        'interaction',
+        'task-reward',
+        'create',
+        '--channel-id',
+        id,
+        '--activity-name',
+        'cli-task-reward-activity',
+        '--task-rule',
+        '1',
+        '--start-time',
+        String(startTime),
+        '--end-time',
+        String(endTime),
+        '--tasks-json',
+        tasks,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const idMatch = createOutput.match(/(\d+)\s*$/);
+      activityId = idMatch ? idMatch[1] : '';
+      expect(activityId).toMatch(/^\d+$/);
+
+      // viewer-detail is a clean read of the just-created activity.
+      const detailOutput = runCliSuccess([
+        'interaction',
+        'task-reward',
+        'viewer-detail',
+        '--channel-id',
+        id,
+        '--activity-id',
+        activityId,
+        '--output',
+        'json',
+      ]);
+      const detail = parseJsonObject(detailOutput);
+      expect(Array.isArray(detail.contents)).toBe(true);
+      expect(detail.pageNumber).toBe(1);
+
+      // update requires task-rule + start/end-time (server rejects omitting them).
+      const updateOutput = runCliSuccess([
+        'interaction',
+        'task-reward',
+        'update',
+        '--channel-id',
+        id,
+        '--activity-id',
+        activityId,
+        '--task-rule',
+        '1',
+        '--activity-name',
+        'cli-task-reward-activity-updated',
+        '--start-time',
+        String(startTime),
+        '--end-time',
+        String(endTime),
+        '--tasks-json',
+        tasks,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(parseJsonObject(updateOutput).success).toBe(true);
+
+      // Wait until the activity has "started" (now > startTime) so stop is allowed.
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+
+      const stopOutput = runCliSuccess([
+        'interaction',
+        'task-reward',
+        'stop',
+        '--activity-id',
+        activityId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(parseJsonObject(stopOutput).success).toBe(true);
+
+      const deleteOutput = runCliSuccess([
+        'interaction',
+        'task-reward',
+        'delete',
+        '--activity-id',
+        activityId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(parseJsonObject(deleteOutput).success).toBe(true);
+      activityId = undefined; // deleted; skip finally cleanup
+    } finally {
+      if (activityId) {
+        // Best-effort cleanup if the lifecycle aborted before delete.
+        try {
+          runCliSuccess([
+            'interaction',
+            'task-reward',
+            'delete',
+            '--activity-id',
+            activityId,
+            '--force',
+            '--output',
+            'json',
+          ]);
+        } catch {
+          // activity may already be deleted or never created
+        }
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
   (shouldRunRealChannelTests ? it : it.skip)('runs the interaction webhook set -> get -> delete lifecycle against a temporary real channel', () => {
     let channelId: string | undefined;
 
