@@ -2,6 +2,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -80,4 +81,32 @@ describe('web CLI integration', () => {
       }
     }
   }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('runs web auth enroll-list and whitelist download against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Auth Reads');
+
+      // enroll-list returns the enrollment audit toggle and a (possibly empty)
+      // viewer list as structured JSON, even for a brand-new channel.
+      const enrollPayload = parseJsonObject(
+        runCliSuccess(['web', 'auth', 'enroll-list', '--channel-id', channelId, '--output', 'json']),
+      );
+      expect(typeof enrollPayload.auditEnabled).toBe('string');
+      expect(Array.isArray(enrollPayload.list)).toBe(true);
+
+      // whitelist download streams the whitelist template; with no --output-file
+      // it writes nothing to disk and reports the byte count as JSON.
+      const whitelistPayload = parseJsonObject(
+        runCliSuccess(['web', 'auth', 'whitelist', 'download', '--rank', '1', '--channel-id', channelId, '--output', 'json']),
+      );
+      expect(whitelistPayload.success).toBe(true);
+      expect(typeof whitelistPayload.bytes).toBe('number');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 180000);
 });

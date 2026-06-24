@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T16:40:37.865Z",
+  "generatedAt": "2026-06-24T16:55:44.035Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 66,
+    "integrationFiles": 67,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 421,
-    "referencedCommandPathsExcludingHelp": 281,
-    "coveredLeafTargetsIncludingHelp": 383,
-    "missingLeafTargetsIncludingHelp": 184,
-    "coveredRealExecutionLeafTargets": 275,
-    "missingRealExecutionLeafTargets": 292,
-    "realExecutionCoveragePercent": 48.5,
-    "includingHelpCoveragePercent": 67.55,
-    "integrationReferences": 653,
-    "realExecutionReferences": 367,
-    "helpReferences": 286
+    "referencedCommandPathsIncludingHelp": 426,
+    "referencedCommandPathsExcludingHelp": 287,
+    "coveredLeafTargetsIncludingHelp": 388,
+    "missingLeafTargetsIncludingHelp": 179,
+    "coveredRealExecutionLeafTargets": 281,
+    "missingRealExecutionLeafTargets": 286,
+    "realExecutionCoveragePercent": 49.56,
+    "includingHelpCoveragePercent": 68.43,
+    "integrationReferences": 663,
+    "realExecutionReferences": 373,
+    "helpReferences": 290
   },
   "byTopLevel": [
     {
@@ -186,12 +186,12 @@
     {
       "command": "lottery",
       "targetLeafCommands": 24,
-      "coveredRealExecutionLeafTargets": 11,
-      "missingRealExecutionLeafTargets": 13,
-      "coveredLeafTargetsIncludingHelp": 17,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 45.83,
-      "includingHelpCoveragePercent": 70.83
+      "coveredRealExecutionLeafTargets": 12,
+      "missingRealExecutionLeafTargets": 12,
+      "coveredLeafTargetsIncludingHelp": 18,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 50,
+      "includingHelpCoveragePercent": 75
     },
     {
       "command": "material",
@@ -336,12 +336,12 @@
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 11,
-      "missingLeafTargetsIncludingHelp": 8,
-      "realExecutionCoveragePercent": 52.63,
-      "includingHelpCoveragePercent": 57.89
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 8,
+      "coveredLeafTargetsIncludingHelp": 12,
+      "missingLeafTargetsIncludingHelp": 7,
+      "realExecutionCoveragePercent": 57.89,
+      "includingHelpCoveragePercent": 63.16
     },
     {
       "command": "transmit",
@@ -356,12 +356,12 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 8,
-      "missingRealExecutionLeafTargets": 23,
-      "coveredLeafTargetsIncludingHelp": 22,
-      "missingLeafTargetsIncludingHelp": 9,
-      "realExecutionCoveragePercent": 25.81,
-      "includingHelpCoveragePercent": 70.97
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 21,
+      "coveredLeafTargetsIncludingHelp": 24,
+      "missingLeafTargetsIncludingHelp": 7,
+      "realExecutionCoveragePercent": 32.26,
+      "includingHelpCoveragePercent": 77.42
     },
     {
       "command": "viewer",
@@ -386,12 +386,12 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 8,
-      "missingRealExecutionLeafTargets": 26,
-      "coveredLeafTargetsIncludingHelp": 16,
-      "missingLeafTargetsIncludingHelp": 18,
-      "realExecutionCoveragePercent": 23.53,
-      "includingHelpCoveragePercent": 47.06
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 24,
+      "coveredLeafTargetsIncludingHelp": 17,
+      "missingLeafTargetsIncludingHelp": 17,
+      "realExecutionCoveragePercent": 29.41,
+      "includingHelpCoveragePercent": 50
     },
     {
       "command": "webapp",
@@ -1486,16 +1486,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/invite-sales.commands.ts",
       "line": 48
-    },
-    {
-      "command": "lottery channel-records",
-      "path": [
-        "lottery",
-        "channel-records"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 450
     },
     {
       "command": "lottery download-winners",
@@ -2745,17 +2735,6 @@
       "line": 506
     },
     {
-      "command": "stream live-status get",
-      "path": [
-        "stream",
-        "live-status",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 458
-    },
-    {
       "command": "user mic-duration",
       "path": [
         "user",
@@ -2897,18 +2876,6 @@
       "line": 148
     },
     {
-      "command": "user setting footer get",
-      "path": [
-        "user",
-        "setting",
-        "footer",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 108
-    },
-    {
       "command": "user setting footer update",
       "path": [
         "user",
@@ -2919,18 +2886,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 110
-    },
-    {
-      "command": "user setting pv-show get",
-      "path": [
-        "user",
-        "setting",
-        "pv-show",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 118
     },
     {
       "command": "user setting pv-show update",
@@ -3220,17 +3175,6 @@
       "line": 221
     },
     {
-      "command": "web auth enroll-list",
-      "path": [
-        "web",
-        "auth",
-        "enroll-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 240
-    },
-    {
       "command": "web auth external-set",
       "path": [
         "web",
@@ -3460,18 +3404,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 191
-    },
-    {
-      "command": "web auth whitelist download",
-      "path": [
-        "web",
-        "auth",
-        "whitelist",
-        "download"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 257
     },
     {
       "command": "web auth whitelist upload",
@@ -4244,16 +4176,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 397
-    },
-    {
-      "command": "lottery channel-records",
-      "path": [
-        "lottery",
-        "channel-records"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 450
     },
     {
       "command": "lottery download-winners",
@@ -5132,17 +5054,6 @@
       "line": 506
     },
     {
-      "command": "stream live-status get",
-      "path": [
-        "stream",
-        "live-status",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 458
-    },
-    {
       "command": "user mic-duration",
       "path": [
         "user",
@@ -5219,30 +5130,6 @@
       "line": 148
     },
     {
-      "command": "user setting footer get",
-      "path": [
-        "user",
-        "setting",
-        "footer",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 108
-    },
-    {
-      "command": "user setting pv-show get",
-      "path": [
-        "user",
-        "setting",
-        "pv-show",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 118
-    },
-    {
       "command": "viewer get",
       "path": [
         "viewer",
@@ -5293,17 +5180,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 221
-    },
-    {
-      "command": "web auth enroll-list",
-      "path": [
-        "web",
-        "auth",
-        "enroll-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 240
     },
     {
       "command": "web auth record-field-get",
@@ -7163,6 +7039,16 @@
       "line": 66
     },
     {
+      "command": "lottery channel-records",
+      "path": [
+        "lottery",
+        "channel-records"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 450
+    },
+    {
       "command": "lottery create",
       "path": [
         "lottery",
@@ -8161,6 +8047,17 @@
       "line": 482
     },
     {
+      "command": "stream live-status get",
+      "path": [
+        "stream",
+        "live-status",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 458
+    },
+    {
       "command": "stream live-status list",
       "path": [
         "stream",
@@ -8222,6 +8119,30 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 89
+    },
+    {
+      "command": "user setting footer get",
+      "path": [
+        "user",
+        "setting",
+        "footer",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 108
+    },
+    {
+      "command": "user setting pv-show get",
+      "path": [
+        "user",
+        "setting",
+        "pv-show",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 118
     },
     {
       "command": "user template audio-moderation get",
@@ -8338,6 +8259,17 @@
       "line": 39
     },
     {
+      "command": "web auth enroll-list",
+      "path": [
+        "web",
+        "auth",
+        "enroll-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 240
+    },
+    {
       "command": "web auth record-info-list",
       "path": [
         "web",
@@ -8424,6 +8356,18 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 187
+    },
+    {
+      "command": "web auth whitelist download",
+      "path": [
+        "web",
+        "auth",
+        "whitelist",
+        "download"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 257
     },
     {
       "command": "webapp permission-list",
@@ -11013,6 +10957,21 @@
       "firstHelpReference": null
     },
     {
+      "command": "lottery channel-records",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 39,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 64,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "lottery create",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -12639,7 +12598,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 80,
+        "line": 109,
         "source": "array-literal"
       }
     },
@@ -12677,6 +12636,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
         "line": 135,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "stream live-status get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 87,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 121,
         "source": "array-literal"
       }
     },
@@ -12754,7 +12728,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 86,
+        "line": 115,
         "source": "array-literal"
       }
     },
@@ -12961,6 +12935,21 @@
       }
     },
     {
+      "command": "user setting footer get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 153,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 194,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "user setting footer update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -12968,6 +12957,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 40,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user setting pv-show get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 174,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 195,
         "source": "array-literal"
       }
     },
@@ -13015,7 +13019,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 153,
+        "line": 192,
         "source": "array-literal"
       }
     },
@@ -13041,7 +13045,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 149,
+        "line": 188,
         "source": "array-literal"
       }
     },
@@ -13067,7 +13071,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 150,
+        "line": 189,
         "source": "array-literal"
       }
     },
@@ -13093,7 +13097,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 152,
+        "line": 191,
         "source": "array-literal"
       }
     },
@@ -13119,7 +13123,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 151,
+        "line": 190,
         "source": "array-literal"
       }
     },
@@ -13145,7 +13149,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 154,
+        "line": 193,
         "source": "array-literal"
       }
     },
@@ -13413,49 +13417,23 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 13,
+        "line": 14,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "web auth enroll-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 94,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "web auth external-set",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
-      "firstHelpReference": {
-        "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 28,
-        "source": "array-literal"
-      }
-    },
-    {
-      "command": "web auth record-info-list",
-      "realExecutionReferences": 1,
-      "helpReferences": 1,
-      "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 71,
-        "source": "array-literal"
-      },
-      "firstHelpReference": {
-        "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 45,
-        "source": "array-literal"
-      }
-    },
-    {
-      "command": "web auth whitelist download",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
-      "firstHelpReference": {
-        "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 46,
-        "source": "array-literal"
-      }
-    },
-    {
-      "command": "web auth whitelist upload",
       "realExecutionReferences": 0,
       "helpReferences": 1,
       "firstRealExecutionReference": null,
@@ -13466,13 +13444,54 @@
       }
     },
     {
+      "command": "web auth record-info-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 72,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 46,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "web auth whitelist download",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 102,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 47,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "web auth whitelist upload",
+      "realExecutionReferences": 0,
+      "helpReferences": 1,
+      "firstRealExecutionReference": null,
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 30,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "web donate cash-update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 25,
+        "line": 26,
         "source": "array-literal"
       }
     },
@@ -13482,12 +13501,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 69,
+        "line": 70,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 44,
+        "line": 45,
         "source": "array-literal"
       }
     },
@@ -13497,7 +13516,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 66,
+        "line": 67,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13508,7 +13527,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 65,
+        "line": 66,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13519,12 +13538,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 64,
+        "line": 65,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 42,
+        "line": 43,
         "source": "array-literal"
       }
     },
@@ -13535,7 +13554,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 23,
+        "line": 24,
         "source": "array-literal"
       }
     },
@@ -13546,7 +13565,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 24,
+        "line": 25,
         "source": "array-literal"
       }
     },
@@ -13556,12 +13575,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 67,
+        "line": 68,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 43,
+        "line": 44,
         "source": "array-literal"
       }
     },
@@ -13571,7 +13590,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 68,
+        "line": 69,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13583,7 +13602,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 27,
+        "line": 28,
         "source": "array-literal"
       }
     },
@@ -13593,7 +13612,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 70,
+        "line": 71,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13605,7 +13624,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 26,
+        "line": 27,
         "source": "array-literal"
       }
     },

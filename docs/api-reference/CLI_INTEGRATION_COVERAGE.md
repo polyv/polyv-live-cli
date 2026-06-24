@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T16:40:37.865Z
+Generated at: 2026-06-24T16:55:44.035Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 66 |
+| Integration files scanned | 67 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 275 |
-| Missing real-execution leaf subcommands | 292 |
-| Real-execution coverage | 48.50% |
-| Leaf subcommands referenced including help | 383 |
-| Missing including help | 184 |
+| Real-executed leaf subcommands | 281 |
+| Missing real-execution leaf subcommands | 286 |
+| Real-execution coverage | 49.56% |
+| Leaf subcommands referenced including help | 388 |
+| Missing including help | 179 |
 
 ## By Top-Level Command
 
@@ -37,7 +37,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 4 | 18 | 18.18% | 15 | 7 |
 | `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
-| `lottery` | 24 | 11 | 13 | 45.83% | 17 | 7 |
+| `lottery` | 24 | 12 | 12 | 50.00% | 18 | 6 |
 | `material` | 7 | 3 | 4 | 42.86% | 4 | 3 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
@@ -52,12 +52,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 1 | 2 | 33.33% | 2 | 1 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
 | `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
-| `stream` | 19 | 10 | 9 | 52.63% | 11 | 8 |
+| `stream` | 19 | 11 | 8 | 57.89% | 12 | 7 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 8 | 23 | 25.81% | 22 | 9 |
+| `user` | 31 | 10 | 21 | 32.26% | 24 | 7 |
 | `viewer` | 19 | 3 | 16 | 15.79% | 17 | 2 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
-| `web` | 34 | 8 | 26 | 23.53% | 16 | 18 |
+| `web` | 34 | 10 | 24 | 29.41% | 17 | 17 |
 | `webapp` | 6 | 2 | 4 | 33.33% | 3 | 3 |
 | `whitelist` | 4 | 1 | 3 | 25.00% | 1 | 3 |
 
@@ -164,7 +164,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `invite-sales add` | `packages/cli/src/commands/invite-sales.commands.ts:40` |
 | `invite-sales remove` | `packages/cli/src/commands/invite-sales.commands.ts:56` |
 | `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
-| `lottery channel-records` | `packages/cli/src/commands/lottery.commands.ts:450` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `lottery get` | `packages/cli/src/commands/lottery.commands.ts:182` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
@@ -283,7 +282,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
-| `stream live-status get` | `packages/cli/src/commands/stream.commands.ts:458` |
 | `user mic-duration` | `packages/cli/src/commands/user.commands.ts:130` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
 | `user bill use-detail` | `packages/cli/src/commands/user.commands.ts:140` |
@@ -297,9 +295,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user org delete` | `packages/cli/src/commands/user.commands.ts:98` |
 | `user viewlog detail` | `packages/cli/src/commands/user.commands.ts:150` |
 | `user viewlog list` | `packages/cli/src/commands/user.commands.ts:148` |
-| `user setting footer get` | `packages/cli/src/commands/user.commands.ts:108` |
 | `user setting footer update` | `packages/cli/src/commands/user.commands.ts:110` |
-| `user setting pv-show get` | `packages/cli/src/commands/user.commands.ts:118` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template audio-moderation update` | `packages/cli/src/commands/user.commands.ts:197` |
 | `user template donate update` | `packages/cli/src/commands/user.commands.ts:159` |
@@ -326,7 +322,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `watch-condition set` | `packages/cli/src/commands/watch-condition.commands.ts:80` |
 | `web auth auth-url-update` | `packages/cli/src/commands/web.commands.ts:227` |
 | `web auth authorized-address-set` | `packages/cli/src/commands/web.commands.ts:221` |
-| `web auth enroll-list` | `packages/cli/src/commands/web.commands.ts:240` |
 | `web auth external-set` | `packages/cli/src/commands/web.commands.ts:215` |
 | `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
 | `web auth record-info-download` | `packages/cli/src/commands/web.commands.ts:245` |
@@ -348,7 +343,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
 | `web setting image-upload` | `packages/cli/src/commands/web.commands.ts:204` |
 | `web share update` | `packages/cli/src/commands/web.commands.ts:191` |
-| `web auth whitelist download` | `packages/cli/src/commands/web.commands.ts:257` |
 | `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:251` |
 | `webapp role create` | `packages/cli/src/commands/webapp.commands.ts:54` |
 | `webapp role delete` | `packages/cli/src/commands/webapp.commands.ts:75` |

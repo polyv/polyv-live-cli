@@ -75,8 +75,37 @@ describe('stream channel-scoped read CLI integration', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('gets live status by stream name for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream LiveStatus Get');
+
+      // The stream name for a PolyV channel equals its channel id. For a channel
+      // that has never broadcast, the live-status read returns status "end"
+      // rather than an error, so the read path is verifiable on a temp channel.
+      const output = runCliSuccess([
+        'stream',
+        'live-status',
+        'get',
+        '--stream',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as { stream?: unknown; status?: unknown };
+      expect(String(payload.stream)).toBe(channelId);
+      expect(typeof payload.status).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
-  it('exposes the disk-video and streams subcommands through the real CLI entry', () => {
+  it('exposes the disk-video, streams and live-status subcommands through the real CLI entry', () => {
     const diskVideo = runCli(['stream', 'disk-video', '--help'], {
       includeTestEnv: false,
       rejectOnError: true,
@@ -88,5 +117,11 @@ describe('stream channel-scoped read CLI integration', () => {
       rejectOnError: true,
     });
     expect(streams.stdout).toContain('channel-ids');
+
+    const liveStatus = runCli(['stream', 'live-status', 'get', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(liveStatus.stdout).toContain('stream');
   });
 });

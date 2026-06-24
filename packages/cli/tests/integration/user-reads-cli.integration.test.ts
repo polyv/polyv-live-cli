@@ -143,6 +143,45 @@ describe('user template CLI integration (account-scoped reads)', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('gets setting footer config via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Setting Footer Get');
+
+      const payload = parseJsonObject(
+        runCliSuccess(['user', 'setting', 'footer', 'get', '--output', 'json']),
+      );
+
+      // Footer config is account-scoped; the Y/N toggle and footer text always
+      // exist on a default account.
+      expect(typeof payload.showFooterEnabled).toBe('string');
+      expect(typeof payload.footerText).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('gets setting pv-show config via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Setting PvShow Get');
+
+      const payload = parseJsonObject(
+        runCliSuccess(['user', 'setting', 'pv-show', 'get', '--output', 'json']),
+      );
+
+      expect(typeof payload.enabled).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted user template reads through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -152,6 +191,8 @@ describe('user template CLI integration (account-scoped reads)', () => {
       [['user', 'template', 'playback', 'get', '--help'], 'playback'],
       [['user', 'template', 'audio-moderation', 'get', '--help'], 'audio'],
       [['user', 'template', 'video-moderation', 'get', '--help'], 'video'],
+      [['user', 'setting', 'footer', 'get', '--help'], 'footer'],
+      [['user', 'setting', 'pv-show', 'get', '--help'], 'pv-show'],
     ];
 
     for (const [args, marker] of checks) {
