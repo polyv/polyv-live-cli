@@ -250,6 +250,203 @@ describe('Account, platform, and global CLI integration', () => {
   // omitting --url clears the callback (the SDK drops the url param), which also
   // serves as cleanup. A temporary channel is created as the real test asset per
   // convention even though the command is account-scoped.
+  it('should show platform callback/switch/setting update help with force options', () => {
+    const checks = [
+      { args: ['platform', 'callback', 'update', '--help'], text: '--clear-url' },
+      { args: ['platform', 'switch', 'update', '--help'], text: '--param' },
+      { args: ['platform', 'setting', 'update', '--help'], text: '--cover-img-type' },
+    ];
+
+    for (const check of checks) {
+      const result = runCli(check.args, { includeTestEnv: false });
+      expect(result.exitCode).toBe(0);
+      expect(result.output).toContain('--force');
+      expect(result.output).toContain(check.text);
+    }
+  });
+
+  // `platform callback update` is an account-scoped reversible write: --url sets
+  // streamCallbackUrl and --clear-url restores it to empty. The original value is
+  // captured up front and restored in `finally` so the account-global config is
+  // always left unchanged. Verified via `platform callback get`. A temporary
+  // channel is created as the real test asset per convention.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform callback update (set then clear) through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      let originalUrl: string | undefined;
+      const restoreCallback = () => {
+        if (originalUrl === undefined) return;
+        try {
+          if (originalUrl === '') {
+            runCliSuccess([
+              'platform', 'callback', 'update',
+              '--clear-url', '--force', '--output', 'json',
+            ]);
+          } else {
+            runCliSuccess([
+              'platform', 'callback', 'update',
+              '--url', originalUrl, '--force', '--output', 'json',
+            ]);
+          }
+        } catch {
+          // best-effort cleanup
+        }
+      };
+
+      try {
+        channelId = createTemporaryChannel('Platform Callback Update');
+
+        originalUrl = String(
+          parseJsonObject(runCliSuccess(['platform', 'callback', 'get', '--output', 'json']))
+            .streamCallbackUrl ?? '',
+        );
+
+        // set the stream callback to a throwaway URL
+        const setOutput = runCliSuccess([
+          'platform', 'callback', 'update',
+          '--url', `https://example.com/polyv-it-cb-${Date.now()}`,
+          '--force', '--output', 'json',
+        ]);
+        const set = parseJsonObject(setOutput);
+        expect(set.success).toBe(true);
+        expect(String(set.streamCallbackUrl ?? '')).toMatch(/^https:\/\/example\.com\//);
+
+        // verify persistence through the read command
+        const afterSet = parseJsonObject(
+          runCliSuccess(['platform', 'callback', 'get', '--output', 'json']),
+        );
+        expect(String(afterSet.streamCallbackUrl ?? '')).toMatch(/^https:\/\//);
+
+        // clear: --clear-url restores streamCallbackUrl to empty
+        const clearOutput = runCliSuccess([
+          'platform', 'callback', 'update',
+          '--clear-url', '--force', '--output', 'json',
+        ]);
+        const cleared = parseJsonObject(clearOutput);
+        expect(cleared.success).toBe(true);
+
+        const afterClear = parseJsonObject(
+          runCliSuccess(['platform', 'callback', 'get', '--output', 'json']),
+        );
+        expect(String(afterClear.streamCallbackUrl ?? '')).toBe('');
+      } finally {
+        restoreCallback();
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
+  // `platform switch update` is an account-scoped reversible write that toggles a
+  // global switch (autoPlay). The original enabled value is captured up front and
+  // restored in `finally`. Verified via `platform switch get`.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform switch update (toggle then restore) through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      let originalEnabled: string | undefined;
+      const readSwitch = (type: string): string => {
+        const switches = parseJsonValue(
+          runCliSuccess(['platform', 'switch', 'get', '--output', 'json']),
+        ) as Array<{ type: string; enabled: string }>;
+        const entry = switches.find((item) => item.type === type);
+        return entry ? entry.enabled : 'Y';
+      };
+      const restoreSwitch = () => {
+        if (originalEnabled === undefined) return;
+        try {
+          runCliSuccess([
+            'platform', 'switch', 'update',
+            '--param', 'autoPlay', '--enabled', originalEnabled,
+            '--force', '--output', 'json',
+          ]);
+        } catch {
+          // best-effort cleanup
+        }
+      };
+
+      try {
+        channelId = createTemporaryChannel('Platform Switch Update');
+
+        originalEnabled = readSwitch('autoPlay');
+        const flipped = originalEnabled === 'Y' ? 'N' : 'Y';
+
+        const updateOutput = runCliSuccess([
+          'platform', 'switch', 'update',
+          '--param', 'autoPlay', '--enabled', flipped,
+          '--force', '--output', 'json',
+        ]);
+        const updated = parseJsonObject(updateOutput);
+        expect(updated.success).toBe(true);
+        expect(updated.param).toBe('autoPlay');
+        expect(updated.enabled).toBe(flipped);
+
+        // verify persistence through the read command
+        expect(readSwitch('autoPlay')).toBe(flipped);
+      } finally {
+        restoreSwitch();
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
+  // `platform setting update` is an account-scoped reversible write that toggles a
+  // global setting (coverImgType cover<->contain). The original value is captured
+  // up front and restored in `finally`. Verified via `platform setting get`.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform setting update (toggle then restore) through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      let originalCover: string | undefined;
+      const readCover = (): string =>
+        String(
+          parseJsonObject(runCliSuccess(['platform', 'setting', 'get', '--output', 'json']))
+            .coverImgType ?? 'cover',
+        );
+      const restoreSetting = () => {
+        if (originalCover === undefined) return;
+        try {
+          runCliSuccess([
+            'platform', 'setting', 'update',
+            '--cover-img-type', originalCover, '--force', '--output', 'json',
+          ]);
+        } catch {
+          // best-effort cleanup
+        }
+      };
+
+      try {
+        channelId = createTemporaryChannel('Platform Setting Update');
+
+        originalCover = readCover();
+        const flipped = originalCover === 'cover' ? 'contain' : 'cover';
+
+        const updateOutput = runCliSuccess([
+          'platform', 'setting', 'update',
+          '--cover-img-type', flipped, '--force', '--output', 'json',
+        ]);
+        const updated = parseJsonObject(updateOutput);
+        expect(updated.success).toBe(true);
+        expect(updated.coverImgType).toBe(flipped);
+
+        // verify persistence through the read command
+        expect(readCover()).toBe(flipped);
+      } finally {
+        restoreSetting();
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
   (shouldRunRealChannelTests && accountCredentials?.userId ? it : it.skip)(
     'runs account api callback set (set then clear) through the real CLI',
     () => {

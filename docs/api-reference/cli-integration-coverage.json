@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T20:41:37.456Z",
+  "generatedAt": "2026-06-24T20:50:54.468Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 487,
-    "referencedCommandPathsExcludingHelp": 385,
-    "coveredLeafTargetsIncludingHelp": 448,
-    "missingLeafTargetsIncludingHelp": 119,
-    "coveredRealExecutionLeafTargets": 379,
-    "missingRealExecutionLeafTargets": 188,
-    "realExecutionCoveragePercent": 66.84,
-    "includingHelpCoveragePercent": 79.01,
-    "integrationReferences": 870,
-    "realExecutionReferences": 518,
-    "helpReferences": 352
+    "referencedCommandPathsIncludingHelp": 490,
+    "referencedCommandPathsExcludingHelp": 388,
+    "coveredLeafTargetsIncludingHelp": 451,
+    "missingLeafTargetsIncludingHelp": 116,
+    "coveredRealExecutionLeafTargets": 382,
+    "missingRealExecutionLeafTargets": 185,
+    "realExecutionCoveragePercent": 67.37,
+    "includingHelpCoveragePercent": 79.54,
+    "integrationReferences": 886,
+    "realExecutionReferences": 531,
+    "helpReferences": 355
   },
   "byTopLevel": [
     {
@@ -226,12 +226,12 @@
     {
       "command": "platform",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 12,
-      "coveredLeafTargetsIncludingHelp": 12,
-      "missingLeafTargetsIncludingHelp": 10,
-      "realExecutionCoveragePercent": 45.45,
-      "includingHelpCoveragePercent": 54.55
+      "coveredRealExecutionLeafTargets": 13,
+      "missingRealExecutionLeafTargets": 9,
+      "coveredLeafTargetsIncludingHelp": 15,
+      "missingLeafTargetsIncludingHelp": 7,
+      "realExecutionCoveragePercent": 59.09,
+      "includingHelpCoveragePercent": 68.18
     },
     {
       "command": "playback",
@@ -1417,17 +1417,6 @@
       "line": 729
     },
     {
-      "command": "platform callback update",
-      "path": [
-        "platform",
-        "callback",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 417
-    },
-    {
       "command": "platform coupon status-batch",
       "path": [
         "platform",
@@ -1459,28 +1448,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 833
-    },
-    {
-      "command": "platform setting update",
-      "path": [
-        "platform",
-        "setting",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 530
-    },
-    {
-      "command": "platform switch update",
-      "path": [
-        "platform",
-        "switch",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 311
     },
     {
       "command": "playback add-vod",
@@ -3052,17 +3019,6 @@
       "line": 729
     },
     {
-      "command": "platform callback update",
-      "path": [
-        "platform",
-        "callback",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 417
-    },
-    {
       "command": "platform coupon status-batch",
       "path": [
         "platform",
@@ -3083,28 +3039,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 833
-    },
-    {
-      "command": "platform setting update",
-      "path": [
-        "platform",
-        "setting",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 530
-    },
-    {
-      "command": "platform switch update",
-      "path": [
-        "platform",
-        "switch",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 311
     },
     {
       "command": "playback add-vod",
@@ -5944,6 +5878,17 @@
       "line": 377
     },
     {
+      "command": "platform callback update",
+      "path": [
+        "platform",
+        "callback",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 417
+    },
+    {
       "command": "platform content-group list",
       "path": [
         "platform",
@@ -6010,6 +5955,17 @@
       "line": 490
     },
     {
+      "command": "platform setting update",
+      "path": [
+        "platform",
+        "setting",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 530
+    },
+    {
       "command": "platform switch get",
       "path": [
         "platform",
@@ -6019,6 +5975,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 271
+    },
+    {
+      "command": "platform switch update",
+      "path": [
+        "platform",
+        "switch",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 311
     },
     {
       "command": "playback list",
@@ -7804,7 +7771,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 260,
+        "line": 457,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11027,7 +10994,7 @@
     },
     {
       "command": "platform callback get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -11037,6 +11004,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 72,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "platform callback update",
+      "realExecutionReferences": 4,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 282,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 255,
         "source": "array-literal"
       }
     },
@@ -11139,7 +11121,7 @@
     },
     {
       "command": "platform setting get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -11149,8 +11131,23 @@
       "firstHelpReference": null
     },
     {
+      "command": "platform setting update",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 415,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 257,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "platform switch get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -11158,6 +11155,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "platform switch update",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 361,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 256,
+        "source": "array-literal"
+      }
     },
     {
       "command": "playback enabled get",

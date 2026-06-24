@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T20:41:37.456Z
+Generated at: 2026-06-24T20:50:54.468Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 83 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 379 |
-| Missing real-execution leaf subcommands | 188 |
-| Real-execution coverage | 66.84% |
-| Leaf subcommands referenced including help | 448 |
-| Missing including help | 119 |
+| Real-executed leaf subcommands | 382 |
+| Missing real-execution leaf subcommands | 185 |
+| Real-execution coverage | 67.37% |
+| Leaf subcommands referenced including help | 451 |
+| Missing including help | 116 |
 
 ## By Top-Level Command
 
@@ -41,7 +41,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
-| `platform` | 22 | 10 | 12 | 45.45% | 12 | 10 |
+| `platform` | 22 | 13 | 9 | 59.09% | 15 | 7 |
 | `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
 | `player` | 11 | 6 | 5 | 54.55% | 6 | 5 |
 | `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
@@ -158,12 +158,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform anchor unrelation-list` | `packages/cli/src/commands/platform.commands.ts:779` |
 | `platform anchor update` | `packages/cli/src/commands/platform.commands.ts:694` |
 | `platform anchor update-status` | `packages/cli/src/commands/platform.commands.ts:729` |
-| `platform callback update` | `packages/cli/src/commands/platform.commands.ts:417` |
 | `platform coupon status-batch` | `packages/cli/src/commands/platform.commands.ts:887` |
 | `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
 | `platform coupon viewer-list` | `packages/cli/src/commands/platform.commands.ts:833` |
-| `platform setting update` | `packages/cli/src/commands/platform.commands.ts:530` |
-| `platform switch update` | `packages/cli/src/commands/platform.commands.ts:311` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
 | `playback delete` | `packages/cli/src/commands/playback.commands.ts:319` |
 | `playback get` | `packages/cli/src/commands/playback.commands.ts:241` |
