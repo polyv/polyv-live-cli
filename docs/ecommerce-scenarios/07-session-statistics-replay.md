@@ -2,7 +2,7 @@
 
 > 业务阶段：**预热 / 数据复盘**
 > 覆盖一级命令：`session`、`statistics`、`channel`、`account`
-> 真实执行状态：**已执行成功**（`session`、`statistics` 两族均有业务命令在真实测试频道上真实执行成功；其中 `session create` 已执行失败、`statistics channel-summary` 输出异常，均作为问题发现记录）
+> 真实执行状态：**验收通过**（`session`、`statistics` 两族均有业务命令在真实测试频道上真实执行成功；`statistics channel-summary` 历史空数据输出 `undefined` 问题已在 `polyv-live-cli@1.2.38` 修复并用 latest 复验通过；`session create` 仍受账号级「新版场次手动创建」权益限制，作为已知前置条件记录）
 
 ---
 
@@ -15,11 +15,11 @@
 - **场次编排侧**：用 `session create` 为每场直播建立命名场次（场次名、计划开播/结束时间、暖场图），用 `session list`/`legacy-list`/`data-list` 查询频道场次台账。
 - **数据复盘侧**：用 `statistics` 在直播后拉**场均指标**（UV/播放/停留/峰值并发）、**观众画像**（设备/地域分布）、**商品点击转化**（商品点击/商品列表点击）、**场次级汇总**（场次统计/场次汇总），为「这场为什么爆 / 为什么没爆」提供数据证据。
 
-> ⚠️ 本场景发现两个**真实执行问题**：
+> ⚠️ 本场景发现并处理两个**真实执行问题**：
 > 1. `session create` 对测试账号 `nicksu` 的频道 `7983903` 返回 `当前用户不允许手动创建场次`——**新版场次的「手动创建」是账号级权益**，测试账号未开通，CLI 层无法绕过。
-> 2. `statistics channel-summary`（频道观看汇总）对该频道输出字面 `undefined`（table 与 json 两种格式均如此），疑似 V4 接口对无数据频道返回空时 CLI handler 未做空值处理。
+> 2. `statistics channel-summary`（频道观看汇总）曾对该频道输出字面 `undefined`（table 与 json 两种格式均如此）。已修复发布 `polyv-live-cli@1.2.38`，latest 复验空数据输出为 `[]`。
 >
-> 两个问题均不影响本场景命令覆盖结论：`session` 族的 `list`/`legacy-list`/`data-list` 与 `statistics` 族的 `max-concurrent`/`channel-statistic`/`session-summary-list`/`channel-session-stats`/`view`/`product-click`/`product-list-click`/`audience device`/`audience region` 共 12 条业务命令在真实测试频道上真实执行成功，两个命令族均已真实执行覆盖。详见第 12 节问题记录。
+> 两个问题均不影响本场景命令覆盖结论：`session` 族的 `list`/`legacy-list`/`data-list` 与 `statistics` 族的 `max-concurrent`/`channel-statistic`/`channel-summary`/`session-summary-list`/`channel-session-stats`/`view`/`product-click`/`product-list-click`/`audience device`/`audience region` 共 13 条业务命令在真实测试频道上真实执行成功，两个命令族均已真实执行覆盖。详见第 12 节问题记录。
 
 ## 2. 覆盖命令
 
@@ -40,9 +40,9 @@
 | `statistics` | `statistics product-list-click` | 已执行成功 | 商品列表点击统计，totalItems=0 |
 | `statistics` | `statistics audience device` | 已执行成功 | 观众设备分布，`No device distribution data found` |
 | `statistics` | `statistics audience region` | 已执行成功 | 观众地域分布，`No region distribution data found` |
-| `statistics` | `statistics channel-summary` | 输出异常 | 命令执行（无报错）但输出字面 `undefined`，疑似 CLI handler 空值处理缺陷。见第 12 节问题 2 |
+| `statistics` | `statistics channel-summary` | 已执行成功 | 旧版输出字面 `undefined`；`polyv-live-cli@1.2.38` 修复后 latest 复验返回 `[]`。见第 12 节问题 2 |
 
-> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983903`）真实执行过，下文「命令执行台账」逐条记录。`session create` 真实执行但未达预期效果，按「已执行失败」记录；`statistics channel-summary` 真实执行但输出异常，按问题发现记录。`session` 族因 `list`/`legacy-list`/`data-list` 三条业务命令真实执行成功而计入「已覆盖」；`statistics` 族因 9 条业务命令真实执行成功而计入「已覆盖」。仅做 `--help` 校验、未真实执行的命令（如 `session get`/`update`/`delete`，因无可用 session-id 未执行）不计入覆盖。
+> 说明：本场景所有「已执行成功」命令均使用真实账号（`nicksu`）与真实测试频道（`7983903`）真实执行过，下文「命令执行台账」逐条记录。`session create` 真实执行但未达预期效果，按「已执行失败」记录；`statistics channel-summary` 历史输出异常已在 latest 1.2.38 修复并复验通过。`session` 族因 `list`/`legacy-list`/`data-list` 三条业务命令真实执行成功而计入「已覆盖」；`statistics` 族因 10 条业务命令真实执行成功而计入「已覆盖」。仅做 `--help` 校验、未真实执行的命令（如 `session get`/`update`/`delete`，因无可用 session-id 未执行）不计入覆盖。
 
 ## 3. 专用测试频道
 
@@ -71,7 +71,7 @@
 - **场次编排**：为每场直播建立命名场次，挂计划开播时间与暖场图，让中控、投流、客服对齐「我们今天打的是哪一场」。
 - **数据复盘**：直播后按场次拉场均指标、观众画像、商品点击，把「主播感觉今天场子很热」变成「场均 UV 12k、峰值并发 3.2k、商品点击率 18%、广东观众占 41%」的可量化结论。
 
-本场景把「建场次 → 查场次台账 → 拉场均指标 → 拉观众画像 → 拉商品点击 → 拉场次汇总」串成一个真实可执行的操作手册，全部用真实测试频道验证，并如实记录 `session create` 账号权益受限、`channel-summary` 输出异常两个问题。
+本场景把「建场次 → 查场次台账 → 拉场均指标 → 拉观众画像 → 拉商品点击 → 拉场次汇总」串成一个真实可执行的操作手册，全部用真实测试频道验证，并如实记录 `session create` 账号权益受限，以及 `channel-summary` 历史空数据输出异常已修复的过程。
 
 ## 5. 业务目标与核心 KPI
 
@@ -108,7 +108,7 @@
 4. `statistics` 多数子命令的时间参数为 **13 位毫秒时间戳**（`--start-time`/`--end-time`），少数用日期字符串（`--start-day`/`--end-day` 或 `--start-date`/`--end-date`，注意 `channel-statistic` 用 `--start-date` 而非 `--start-day`，`audience device/region` 用 `--start-time` 而非 `--start-day`）。
 5. `statistics` 查询窗口对未开播频道返回全 0 / 空，属预期；要拿到非零数据需频道真实推流开播并有观众访问。
 
-## 8. polyv-live-cli-rc 能力映射
+## 8. polyv-live-cli 能力映射
 
 | 业务动作 | 一级命令 | 子命令 | 真实 help 关键参数 |
 |---|---|---|---|
@@ -121,7 +121,7 @@
 | 查场次数据列表 | `session` | `data-list` | `-c`、`--start-date/--end-date`、`--page`、`--page-size`、`-o` |
 | 查峰值并发 | `statistics` | `max-concurrent` | `-c`、`--start-time/--end-time <13位毫秒>`（范围≤3 个月）、`-o` |
 | 查频道统计明细 | `statistics` | `channel-statistic` | `-c`、`--start-date/--end-date <yyyy-MM-dd>`、`-o` |
-| 查频道观看汇总 | `statistics` | `channel-summary` | `-c`、`--start-day/--end-day <yyyy-MM-dd>`、`-o`（本场景输出异常 undefined） |
+| 查频道观看汇总 | `statistics` | `channel-summary` | `-c`、`--start-day/--end-day <yyyy-MM-dd>`、`-o`（latest 1.2.38 空数据输出 `[]`） |
 | 查场次统计汇总 | `statistics` | `session-summary-list` | `-c`、`--keyword`、`--start-time/--end-time`、`--page-number`、`--page-size`、`-o` |
 | 查频道场次统计 | `statistics` | `channel-session-stats` | `-c`、`--session-ids`、`--start-time/--end-time`、`-o` |
 | 查频道日报 | `statistics` | `view` | `-c`、`--start-day/--end-day`、`-o` |
@@ -212,7 +212,7 @@ npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --
 
 ```bash
 # 人工清理（本场景未执行，频道已保留）：
-# npx --yes polyv-live-cli@rc channel delete -c 7983903   # 仅人工需要时执行
+# npx --yes polyv-live-cli@latest channel delete -c 7983903   # 仅人工需要时执行
 ```
 
 ## 10. 命令执行台账
@@ -238,6 +238,7 @@ npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --
 | 17 | 2026-06-22 23:52 | statistics.audience.device | `statistics audience device -c 7983903 --start-time 1781558400000 --end-time 1782249600000 -o json` | 7983903 | 成功 | `ℹ️ No device distribution data found for channel 7983903` |
 | 18 | 2026-06-22 23:52 | statistics.audience.region | `statistics audience region -c 7983903 --start-time 1781558400000 --end-time 1782249600000 -o json` | 7983903 | 成功 | `ℹ️ No region distribution data found for channel 7983903` |
 | 19 | 2026-06-22 23:52 | channel.get | `channel get -c 7983903 -o json`（收尾复核频道未被删除） | 7983903 | 成功 | watchStatus=unStart，name 一致，频道保留 |
+| 20 | 2026-06-24 | statistics.channel-summary | `npx --yes polyv-live-cli@latest statistics channel-summary -c 7983903 --start-day 2026-06-01 --end-day 2026-06-30 -o json` | 7983903 | 成功 | latest `1.2.38` 复验返回 `[]`；默认 table 输出同样为 `[]`，不再输出 `undefined` |
 
 > 变更前/后查询对比（规则 15）：
 > - **场次台账**：变更前（台账 #5）`session list` totalItems=0 → 变更后（台账 #5 基线即终态，create 失败未产生场次）`session list`/`legacy-list`/`data-list` 均仍 totalItems=0。即 `session create` **未产生任何可在场次台账观测到的新增场次**，无法证明场次从「无」变为「618 新品首发场」。
@@ -280,6 +281,21 @@ npx --yes polyv-live-cli@rc statistics channel-session-stats -c 7983903 --start-
 npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --end-day 2026-06-30 -o json
 ```
 
+### 11.1 latest 修复复验命令
+
+> 2026-06-24 发布 `polyv-live-cli@1.2.38` 后，用 npm latest 对 `statistics channel-summary` 做回归验证：
+
+```bash
+npx --yes polyv-live-cli@latest --version
+# 1.2.38
+npx --yes polyv-live-cli@latest statistics channel-summary -c 7983903 \
+  --start-day 2026-06-01 --end-day 2026-06-30 -o json
+# []
+npx --yes polyv-live-cli@latest statistics channel-summary -c 7983903 \
+  --start-day 2026-06-01 --end-day 2026-06-30
+# []
+```
+
 ## 12. 执行或验证结果（含问题记录）
 
 ### 12.1 已执行成功的命令（数据侧 / 配置侧）
@@ -298,6 +314,7 @@ npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --
 | `statistics product-list-click` | `{totalItems:0}` | 命令真实执行成功，商品列表点击统计分页结构完整 |
 | `statistics audience device` | `No device distribution data found` | 命令真实执行成功，时间戳参数被正确接受 |
 | `statistics audience region` | `No region distribution data found` | 命令真实执行成功，时间戳参数被正确接受 |
+| `statistics channel-summary` | `[]` | 命令在 latest 1.2.38 复验成功，空数据返回空数组，不再输出 `undefined` |
 | `channel create / channel get` | 频道 7983903 创建并复核一致 | 专用测试频道就绪，watchStatus=unStart |
 
 ### 12.2 问题记录 1：`session create` 返回 `当前用户不允许手动创建场次`（账号级权益受限）
@@ -311,13 +328,14 @@ npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --
 - **运营结论**：运营若要用 `session create` 编排命名场次，**必须先在保利威后台为账号开通「新版场次 + 手动创建场次」权益**。未开通时，可退而用频道本身作为单场次载体（频道级统计仍可用 `statistics` 查询），或联系保利威开通权益后再编排多场次。`session` 族的只读查询（`list`/`legacy-list`/`data-list`）不受此权益限制，仍可正常拉取场次台账。
 - **下一步排查建议**：① 在保利威后台确认 `nicksu` 账号是否开通「新版场次」权益；② 用一个已开通权益的账号复测 `session create` 并随后用 `session get --session-id` 验证场次详情落库，补全 create→get→update→delete 成功路径。本场景未做此步骤。
 
-### 12.3 问题记录 2：`statistics channel-summary` 输出字面 `undefined`（CLI handler 空值处理缺陷）
+### 12.3 问题记录 2：`statistics channel-summary` 输出字面 `undefined`（已修复）
 
 - **现象**：`statistics channel-summary -c 7983903 --start-day 2026-06-01 --end-day 2026-06-30 -o json` 输出字面 `undefined`；去掉 `-o json` 用默认 table 输出**同样是 `undefined`**。命令以 exit 0 退出，无报错信息。
 - **对照**：同族的 `channel-statistic`（用 `--start-date`）、`view`（用 `--start-day`）对同一频道分别返回结构化全 0 指标对象与 `No statistics data found` 的友好提示，**均未出现 undefined**。
-- **结论**：`channel-summary`（V4 频道观看汇总）对未开播/无数据频道返回空时，CLI handler 未做空值处理，直接打印了 JS 的 `undefined`。这是 **CLI 输出侧缺陷**（疑似 `console.log(data)` 而 data 为 undefined），不影响其他 statistics 子命令，也不阻塞 statistics 族覆盖结论。
-- **运营结论**：运营拉「频道观看汇总」时，若遇到 `undefined` 输出，应改用 `statistics channel-statistic`（同语义、返回结构化全 0 指标）或 `statistics view`（返回友好空提示）作为替代，不要依赖 `channel-summary` 的输出。
-- **下一步排查建议**：向 CLI 维护方反馈 `statistics channel-summary` 对空数据的 undefined 输出缺陷，建议 handler 对空返回补友好提示或空结构（与 `channel-statistic`/`view` 对齐）。
+- **根因**：`channel-summary`（V4 频道观看汇总）对未开播/无数据频道返回空时，CLI 服务层未做空值处理，通用输出层继续格式化 `undefined`，最终打印了 JS 的 `undefined`。这是 **CLI 输出侧缺陷**，不影响其他 statistics 子命令。
+- **修复**：2026-06-24 发布 `polyv-live-cli@1.2.38`，在 `StatisticsServiceSdk.getSummary()` 中把底层空响应归一为 `[]`，并补充单元测试覆盖 `undefined` 响应。
+- **复验**：`npx --yes polyv-live-cli@latest --version` 返回 `1.2.38`；同一频道同一时间窗执行 `statistics channel-summary -c 7983903 --start-day 2026-06-01 --end-day 2026-06-30 -o json` 返回 `[]`，默认 table 输出也返回 `[]`。问题已关闭。
+- **运营结论**：运营拉「频道观看汇总」时，可继续使用 `statistics channel-summary`；若频道未开播/无数据，latest 会返回空数组 `[]`，代表没有可汇总的观看数据。
 
 ### 12.4 配置侧 vs 观众侧
 
@@ -336,7 +354,7 @@ npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --
 | 风险 | 影响 | 缓解 / 回滚 |
 |---|---|---|
 | `session create` 账号权益受限（问题 1） | 运营误以为可编排场次，实际未开通权益则 create 静默失败 | 用 `session list` 复查确认 create 是否真的产生场次；权益未开通时退用频道级统计或联系保利威开通 |
-| `statistics channel-summary` 输出 undefined（问题 2） | 运营误以为接口故障或数据丢失 | 改用 `channel-statistic`（结构化全 0 指标）或 `view`（友好空提示）替代 |
+| 旧版 `statistics channel-summary` 输出 undefined（问题 2，已修复） | 运营误以为接口故障或数据丢失 | 升级到 `polyv-live-cli@1.2.38` 或更高版本；latest 空数据输出为 `[]` |
 | statistics 时间参数风格混用 | `channel-statistic` 用 `--start-date`、`channel-summary`/`view` 用 `--start-day`、`audience` 用 `--start-time`，混用报 required option 缺失 | 每个子命令先 `--help` 校验时间参数名；13 位毫秒时间戳用 `date "+%s"` 拼接 `000` 生成 |
 | 误在长期主频道建测试场次 | 影响线上直播间的场次台账与统计 | **所有场次/统计演练一律用专用测试频道**；本场景用新建 `7983903`，未触碰任何既有频道 |
 | statistics 查询窗口超 3 个月 | `max-concurrent` 等要求窗口≤3 个月，超限报错 | 拆分为多个≤3 个月窗口分别查询 |
@@ -348,11 +366,11 @@ npx --yes polyv-live-cli@rc statistics view -c 7983903 --start-day 2026-06-01 --
 |---|---|---|
 | 测试频道 `7983903`（GNHF-电商场景-07-session-statistics-202606222350） | **已保留，未删除** | 供人工在保利威后台查看场次台账、核对账号「新版场次」权益开通状态、查看 statistics 全 0 基线 |
 | 命名场次（1 次 create） | 失败，未产生 session-id | 无残留 |
-| statistics 全 0 基线（12 条只读查询） | 只读，无写入 | 无残留 |
+| statistics 复盘基线（10 条只读查询） | 只读，无写入 | 无残留 |
 
 > **频道已保留，未执行删除**。可选的人工清理命令（**本场景未执行**）：
 > ```bash
-> npx --yes polyv-live-cli@rc channel delete -c 7983903   # 仅人工确认需要清理时执行
+> npx --yes polyv-live-cli@latest channel delete -c 7983903   # 仅人工确认需要清理时执行
 > ```
 
 ## 15. 可复用模板
@@ -365,11 +383,11 @@ CHANNEL_ID="<你的频道ID>"
 START_MS=$(date -v+1d -j -f "%Y-%m-%d %H:%M:%S" "$(date -v+1d "+%Y-%m-%d") 20:00:00" "+%s")000
 END_MS=$(date -v+1d -j -f "%Y-%m-%d %H:%M:%S" "$(date -v+1d "+%Y-%m-%d") 21:00:00" "+%s")000
 # 建命名场次（⚠️ 需账号已开通「新版场次 + 手动创建」权益）
-npx --yes polyv-live-cli@rc session create -c "$CHANNEL_ID" \
+npx --yes polyv-live-cli@latest session create -c "$CHANNEL_ID" \
   --name "618新品首发场-晚场" --plan-start-time "$START_MS" --plan-end-time "$END_MS" \
   --splash-img "https://your-cdn.com/warmup.png" -f -o json
 # 查场次台账
-npx --yes polyv-live-cli@rc session list -c "$CHANNEL_ID" -o json
+npx --yes polyv-live-cli@latest session list -c "$CHANNEL_ID" -o json
 ```
 
 ### 15.2 场次/频道数据复盘模板（直播后执行）
@@ -379,17 +397,18 @@ CHANNEL_ID="<你的频道ID>"
 # 时间窗（13 位毫秒，≤3 个月），示例：最近 7 天
 START_TS=$(date -v-7d "+%s")000; END_TS=$(date "+%s")000
 # 场均指标
-npx --yes polyv-live-cli@rc statistics max-concurrent -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
-npx --yes polyv-live-cli@rc statistics channel-statistic -c "$CHANNEL_ID" --start-date "$(date -v-7d "+%Y-%m-%d")" --end-date "$(date "+%Y-%m-%d")" -o json
+npx --yes polyv-live-cli@latest statistics max-concurrent -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics channel-statistic -c "$CHANNEL_ID" --start-date "$(date -v-7d "+%Y-%m-%d")" --end-date "$(date "+%Y-%m-%d")" -o json
+npx --yes polyv-live-cli@latest statistics channel-summary -c "$CHANNEL_ID" --start-day "$(date -v-7d "+%Y-%m-%d")" --end-day "$(date "+%Y-%m-%d")" -o json
 # 观众画像
-npx --yes polyv-live-cli@rc statistics audience device -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
-npx --yes polyv-live-cli@rc statistics audience region -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics audience device -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics audience region -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
 # 商品点击转化
-npx --yes polyv-live-cli@rc statistics product-click -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
-npx --yes polyv-live-cli@rc statistics product-list-click -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics product-click -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics product-list-click -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
 # 场次级汇总
-npx --yes polyv-live-cli@rc statistics session-summary-list -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
-npx --yes polyv-live-cli@rc statistics channel-session-stats -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics session-summary-list -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
+npx --yes polyv-live-cli@latest statistics channel-session-stats -c "$CHANNEL_ID" --start-time "$START_TS" --end-time "$END_TS" -o json
 ```
 
 ### 15.3 statistics 时间参数速查（避免混用踩坑）
@@ -398,7 +417,7 @@ npx --yes polyv-live-cli@rc statistics channel-session-stats -c "$CHANNEL_ID" --
 |---|---|---|
 | `max-concurrent` | `--start-time`/`--end-time` | 13 位毫秒 |
 | `channel-statistic` | `--start-date`/`--end-date` | yyyy-MM-dd |
-| `channel-summary` | `--start-day`/`--end-day` | yyyy-MM-dd（空数据时输出 undefined，改用 channel-statistic） |
+| `channel-summary` | `--start-day`/`--end-day` | yyyy-MM-dd（latest 1.2.38 起空数据输出 `[]`） |
 | `view` | `--start-day`/`--end-day` | yyyy-MM-dd |
 | `audience device`/`audience region` | `--start-time`/`--end-time` | 13 位毫秒 |
 | `product-click`/`product-list-click` | `--start-time`/`--end-time` | 13 位毫秒 |
@@ -410,4 +429,4 @@ npx --yes polyv-live-cli@rc statistics channel-session-stats -c "$CHANNEL_ID" --
 - **场次×商品转化闭环**：把 `statistics product-click` 商品点击 × 场景 02 的 `product push` 商品大卡推送记录 × `session-summary-list` 场次汇总交叉，量化「单场主推款点击转化率」，做场次级 GMV 归因。
 - **观众地域×投流复盘闭环**：把 `statistics audience region` 观众地域分布 × 投流后台地域出价交叉，判断投流地域命中精度，指导下场投流策略。
 - **覆盖剩余数据/治理命令**：`statistics`/`session` 已覆盖；数据复盘与治理域剩余 `viewer`（观众）、`custom-field`（自定义字段）、`invite-sales`（邀请榜单）可在后续场景补全，做「观众分层运营」「邀请榜单裂变」。
-- **`channel-summary` 缺陷反馈**：将问题 2（undefined 输出）反馈 CLI 维护方，推动 handler 空值处理对齐 `channel-statistic`/`view`。
+- **`channel-summary` 回归监控**：问题 2 已在 `polyv-live-cli@1.2.38` 修复；后续统计类空数据命令应继续保持 `[]` 或友好空提示，避免回退到字面 `undefined`。
