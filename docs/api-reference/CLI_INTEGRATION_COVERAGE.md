@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T07:36:02.338Z
+Generated at: 2026-06-24T07:55:17.665Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 205 |
-| Missing real-execution leaf subcommands | 362 |
-| Real-execution coverage | 36.16% |
-| Leaf subcommands referenced including help | 340 |
-| Missing including help | 227 |
+| Real-executed leaf subcommands | 209 |
+| Missing real-execution leaf subcommands | 358 |
+| Real-execution coverage | 36.86% |
+| Leaf subcommands referenced including help | 344 |
+| Missing including help | 223 |
 
 ## By Top-Level Command
 
@@ -24,7 +24,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
-| `card-push` | 8 | 6 | 2 | 75.00% | 6 | 2 |
+| `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 36 | 42 | 46.15% | 61 | 17 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 1 | 2 | 33.33% | 2 | 1 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
 | `statistics` | 27 | 18 | 9 | 66.67% | 19 | 8 |
-| `stream` | 19 | 6 | 13 | 31.58% | 7 | 12 |
+| `stream` | 19 | 8 | 11 | 42.11% | 9 | 10 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 2 | 29 | 6.45% | 16 | 15 |
 | `viewer` | 19 | 3 | 16 | 15.79% | 17 | 2 |
@@ -74,8 +74,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |
 | `ai video-produce ppt get` | `packages/cli/src/commands/ai.commands.ts:354` |
 | `ai video-produce ppt upload` | `packages/cli/src/commands/ai.commands.ts:372` |
-| `card-push cancel` | `packages/cli/src/commands/card-push.commands.ts:280` |
-| `card-push push` | `packages/cli/src/commands/card-push.commands.ts:258` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1459` |
 | `channel children-list` | `packages/cli/src/commands/channel.commands.ts:1290` |
 | `channel questionnaire-stop` | `packages/cli/src/commands/channel.commands.ts:1401` |
@@ -339,8 +337,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream get-key` | `packages/cli/src/commands/stream.commands.ts:117` |
 | `stream monitor` | `packages/cli/src/commands/stream.commands.ts:713` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
-| `stream start` | `packages/cli/src/commands/stream.commands.ts:200` |
-| `stream stop` | `packages/cli/src/commands/stream.commands.ts:267` |
 | `stream streams` | `packages/cli/src/commands/stream.commands.ts:469` |
 | `stream verify` | `packages/cli/src/commands/stream.commands.ts:622` |
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |

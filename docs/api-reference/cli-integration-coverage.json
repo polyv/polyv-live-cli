@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T07:36:02.338Z",
+  "generatedAt": "2026-06-24T07:55:17.665Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 377,
-    "referencedCommandPathsExcludingHelp": 211,
-    "coveredLeafTargetsIncludingHelp": 340,
-    "missingLeafTargetsIncludingHelp": 227,
-    "coveredRealExecutionLeafTargets": 205,
-    "missingRealExecutionLeafTargets": 362,
-    "realExecutionCoveragePercent": 36.16,
-    "includingHelpCoveragePercent": 59.96,
-    "integrationReferences": 555,
-    "realExecutionReferences": 287,
+    "referencedCommandPathsIncludingHelp": 381,
+    "referencedCommandPathsExcludingHelp": 215,
+    "coveredLeafTargetsIncludingHelp": 344,
+    "missingLeafTargetsIncludingHelp": 223,
+    "coveredRealExecutionLeafTargets": 209,
+    "missingRealExecutionLeafTargets": 358,
+    "realExecutionCoveragePercent": 36.86,
+    "includingHelpCoveragePercent": 60.67,
+    "integrationReferences": 561,
+    "realExecutionReferences": 293,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -56,12 +56,12 @@
     {
       "command": "card-push",
       "targetLeafCommands": 8,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 6,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 75,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 8,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "channel",
@@ -336,12 +336,12 @@
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 13,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 12,
-      "realExecutionCoveragePercent": 31.58,
-      "includingHelpCoveragePercent": 36.84
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 11,
+      "coveredLeafTargetsIncludingHelp": 9,
+      "missingLeafTargetsIncludingHelp": 10,
+      "realExecutionCoveragePercent": 42.11,
+      "includingHelpCoveragePercent": 47.37
     },
     {
       "command": "transmit",
@@ -518,26 +518,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 372
-    },
-    {
-      "command": "card-push cancel",
-      "path": [
-        "card-push",
-        "cancel"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 280
-    },
-    {
-      "command": "card-push push",
-      "path": [
-        "card-push",
-        "push"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 258
     },
     {
       "command": "channel ccb-focus-reset",
@@ -3350,26 +3330,6 @@
       "line": 543
     },
     {
-      "command": "stream start",
-      "path": [
-        "stream",
-        "start"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 200
-    },
-    {
-      "command": "stream stop",
-      "path": [
-        "stream",
-        "stop"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 267
-    },
-    {
       "command": "stream streams",
       "path": [
         "stream",
@@ -4425,26 +4385,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 372
-    },
-    {
-      "command": "card-push cancel",
-      "path": [
-        "card-push",
-        "cancel"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 280
-    },
-    {
-      "command": "card-push push",
-      "path": [
-        "card-push",
-        "push"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/card-push.commands.ts",
-      "line": 258
     },
     {
       "command": "channel children-list",
@@ -6211,26 +6151,6 @@
       "line": 543
     },
     {
-      "command": "stream start",
-      "path": [
-        "stream",
-        "start"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 200
-    },
-    {
-      "command": "stream stop",
-      "path": [
-        "stream",
-        "stop"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 267
-    },
-    {
       "command": "stream streams",
       "path": [
         "stream",
@@ -7050,6 +6970,16 @@
       "line": 222
     },
     {
+      "command": "card-push cancel",
+      "path": [
+        "card-push",
+        "cancel"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 280
+    },
+    {
       "command": "card-push create",
       "path": [
         "card-push",
@@ -7078,6 +7008,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/card-push.commands.ts",
       "line": 144
+    },
+    {
+      "command": "card-push push",
+      "path": [
+        "card-push",
+        "push"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/card-push.commands.ts",
+      "line": 258
     },
     {
       "command": "card-push update",
@@ -8676,6 +8616,16 @@
       "line": 524
     },
     {
+      "command": "stream start",
+      "path": [
+        "stream",
+        "start"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 200
+    },
+    {
       "command": "stream status",
       "path": [
         "stream",
@@ -8684,6 +8634,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 335
+    },
+    {
+      "command": "stream stop",
+      "path": [
+        "stream",
+        "stop"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 267
     },
     {
       "command": "stream type-update",
@@ -9260,8 +9220,19 @@
       "firstHelpReference": null
     },
     {
-      "command": "card-push create",
+      "command": "card-push cancel",
       "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 891,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "card-push create",
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/card-push.integration.test.ts",
@@ -9272,7 +9243,7 @@
     },
     {
       "command": "card-push delete",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/card-push.integration.test.ts",
@@ -9295,6 +9266,17 @@
         "line": 18,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "card-push push",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 878,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "card-push share get",
@@ -12637,6 +12619,17 @@
       "firstHelpReference": null
     },
     {
+      "command": "stream start",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 870,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "stream status",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -12650,6 +12643,17 @@
         "line": 16,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "stream stop",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/card-push.integration.test.ts",
+        "line": 914,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "stream type-update",

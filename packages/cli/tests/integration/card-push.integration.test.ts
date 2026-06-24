@@ -836,4 +836,123 @@ function extractCardPushId(value: Record<string, unknown>): string {
       }
     }
   }, 240000);
+
+  it('runs push and cancel through the local CLI with a temporary channel', () => {
+    let channelId: string | undefined;
+    let cardPushId: string | undefined;
+    let streamStarted = false;
+    let testError: unknown;
+
+    try {
+      channelId = createTemporaryChannel('Card Push Push CLI');
+
+      const createOutput = runCliSuccess([
+        'card-push',
+        'create',
+        '--channelId',
+        channelId,
+        '--imageType',
+        'giftbox',
+        '--title',
+        `Push${Date.now().toString().slice(-8)}`,
+        '--link',
+        'https://example.com/card-push-cli-push',
+        '--duration',
+        '5',
+        '--showCondition',
+        'PUSH',
+        '--output',
+        'json',
+      ]);
+      const created = parseJsonObject(createOutput);
+      cardPushId = extractCardPushId(created);
+
+      runCliSuccess([
+        'stream',
+        'start',
+        '--channelId',
+        channelId,
+      ]);
+      streamStarted = true;
+
+      const pushOutput = runCliSuccess([
+        'card-push',
+        'push',
+        '--channelId',
+        channelId,
+        '--cardPushId',
+        cardPushId,
+        '--output',
+        'json',
+      ]);
+      const pushed = parseJsonObject(pushOutput);
+      expect(pushed.success).toBe(true);
+
+      const cancelOutput = runCliSuccess([
+        'card-push',
+        'cancel',
+        '--channelId',
+        channelId,
+        '--cardPushId',
+        cardPushId,
+        '--output',
+        'json',
+      ]);
+      const cancelled = parseJsonObject(cancelOutput);
+      expect(cancelled.success).toBe(true);
+    } catch (error) {
+      testError = error;
+      throw error;
+    } finally {
+      const cleanupErrors: string[] = [];
+      const recordCleanupError = (action: string, error: unknown) => {
+        cleanupErrors.push(`${action}: ${error instanceof Error ? error.message : String(error)}`);
+      };
+
+      if (streamStarted && channelId) {
+        try {
+          runCliSuccess([
+            'stream',
+            'stop',
+            '--channelId',
+            channelId,
+          ]);
+        } catch (error) {
+          recordCleanupError(`stop temporary stream ${channelId}`, error);
+        }
+      }
+      if (cardPushId && channelId) {
+        try {
+          runCliSuccess([
+            'card-push',
+            'delete',
+            '--channelId',
+            channelId,
+            '--cardPushId',
+            cardPushId,
+            '--output',
+            'json',
+          ]);
+        } catch (error) {
+          recordCleanupError(`delete temporary card-push ${cardPushId}`, error);
+        }
+      }
+      if (channelId) {
+        try {
+          deleteTemporaryChannel(channelId);
+        } catch (error) {
+          recordCleanupError(`delete temporary channel ${channelId}`, error);
+        }
+      }
+
+      if (cleanupErrors.length > 0) {
+        const message = `Card-push CLI cleanup failed:\n${cleanupErrors.join('\n')}`;
+        if (testError) {
+          console.warn(message);
+        } else {
+          throw new Error(message);
+        }
+      }
+    }
+  }, 240000);
 });
