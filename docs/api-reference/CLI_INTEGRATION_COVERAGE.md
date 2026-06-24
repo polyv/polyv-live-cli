@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T18:00:47.230Z
+Generated at: 2026-06-24T18:16:36.118Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,20 +9,20 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 70 |
+| Integration files scanned | 71 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 315 |
-| Missing real-execution leaf subcommands | 252 |
-| Real-execution coverage | 55.56% |
-| Leaf subcommands referenced including help | 409 |
-| Missing including help | 158 |
+| Real-executed leaf subcommands | 319 |
+| Missing real-execution leaf subcommands | 248 |
+| Real-execution coverage | 56.26% |
+| Leaf subcommands referenced including help | 413 |
+| Missing including help | 154 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
-| `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
+| `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
@@ -41,7 +41,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
-| `platform` | 22 | 7 | 15 | 31.82% | 9 | 13 |
+| `platform` | 22 | 10 | 12 | 45.45% | 12 | 10 |
 | `playback` | 13 | 4 | 9 | 30.77% | 5 | 8 |
 | `player` | 11 | 4 | 7 | 36.36% | 5 | 6 |
 | `product` | 36 | 12 | 24 | 33.33% | 25 | 11 |
@@ -65,7 +65,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| `account api callback set` | `packages/cli/src/commands/account.commands.ts:862` |
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `ai digital-human list-org` | `packages/cli/src/commands/ai.commands.ts:170` |
 | `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |
@@ -174,9 +173,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform coupon status-batch` | `packages/cli/src/commands/platform.commands.ts:887` |
 | `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
 | `platform coupon viewer-list` | `packages/cli/src/commands/platform.commands.ts:833` |
-| `platform label create` | `packages/cli/src/commands/platform-label.commands.ts:143` |
-| `platform label delete` | `packages/cli/src/commands/platform-label.commands.ts:215` |
-| `platform label update` | `packages/cli/src/commands/platform-label.commands.ts:178` |
 | `platform setting update` | `packages/cli/src/commands/platform.commands.ts:530` |
 | `platform switch update` | `packages/cli/src/commands/platform.commands.ts:311` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |

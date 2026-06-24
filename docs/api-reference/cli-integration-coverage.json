@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T18:00:47.230Z",
+  "generatedAt": "2026-06-24T18:16:36.118Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,32 +16,32 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 70,
+    "integrationFiles": 71,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 448,
-    "referencedCommandPathsExcludingHelp": 321,
-    "coveredLeafTargetsIncludingHelp": 409,
-    "missingLeafTargetsIncludingHelp": 158,
-    "coveredRealExecutionLeafTargets": 315,
-    "missingRealExecutionLeafTargets": 252,
-    "realExecutionCoveragePercent": 55.56,
-    "includingHelpCoveragePercent": 72.13,
-    "integrationReferences": 718,
-    "realExecutionReferences": 413,
-    "helpReferences": 305
+    "referencedCommandPathsIncludingHelp": 452,
+    "referencedCommandPathsExcludingHelp": 325,
+    "coveredLeafTargetsIncludingHelp": 413,
+    "missingLeafTargetsIncludingHelp": 154,
+    "coveredRealExecutionLeafTargets": 319,
+    "missingRealExecutionLeafTargets": 248,
+    "realExecutionCoveragePercent": 56.26,
+    "includingHelpCoveragePercent": 72.84,
+    "integrationReferences": 728,
+    "realExecutionReferences": 420,
+    "helpReferences": 308
   },
   "byTopLevel": [
     {
       "command": "account",
       "targetLeafCommands": 23,
-      "coveredRealExecutionLeafTargets": 21,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 21,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 91.3,
-      "includingHelpCoveragePercent": 91.3
+      "coveredRealExecutionLeafTargets": 22,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 22,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 95.65,
+      "includingHelpCoveragePercent": 95.65
     },
     {
       "command": "ai",
@@ -226,12 +226,12 @@
     {
       "command": "platform",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 7,
-      "missingRealExecutionLeafTargets": 15,
-      "coveredLeafTargetsIncludingHelp": 9,
-      "missingLeafTargetsIncludingHelp": 13,
-      "realExecutionCoveragePercent": 31.82,
-      "includingHelpCoveragePercent": 40.91
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 12,
+      "coveredLeafTargetsIncludingHelp": 12,
+      "missingLeafTargetsIncludingHelp": 10,
+      "realExecutionCoveragePercent": 45.45,
+      "includingHelpCoveragePercent": 54.55
     },
     {
       "command": "playback",
@@ -415,18 +415,6 @@
     }
   ],
   "missingRealExecutionTargets": [
-    {
-      "command": "account api callback set",
-      "path": [
-        "account",
-        "api",
-        "callback",
-        "set"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 862
-    },
     {
       "command": "account api sso set",
       "path": [
@@ -1592,39 +1580,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 833
-    },
-    {
-      "command": "platform label create",
-      "path": [
-        "platform",
-        "label",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform-label.commands.ts",
-      "line": 143
-    },
-    {
-      "command": "platform label delete",
-      "path": [
-        "platform",
-        "label",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform-label.commands.ts",
-      "line": 215
-    },
-    {
-      "command": "platform label update",
-      "path": [
-        "platform",
-        "label",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform-label.commands.ts",
-      "line": 178
     },
     {
       "command": "platform setting update",
@@ -3124,18 +3079,6 @@
   ],
   "missingIncludingHelpTargets": [
     {
-      "command": "account api callback set",
-      "path": [
-        "account",
-        "api",
-        "callback",
-        "set"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 862
-    },
-    {
       "command": "account api sso set",
       "path": [
         "account",
@@ -3861,39 +3804,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 833
-    },
-    {
-      "command": "platform label create",
-      "path": [
-        "platform",
-        "label",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform-label.commands.ts",
-      "line": 143
-    },
-    {
-      "command": "platform label delete",
-      "path": [
-        "platform",
-        "label",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform-label.commands.ts",
-      "line": 215
-    },
-    {
-      "command": "platform label update",
-      "path": [
-        "platform",
-        "label",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform-label.commands.ts",
-      "line": 178
     },
     {
       "command": "platform setting update",
@@ -4938,6 +4848,18 @@
       "depth": 3,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 760
+    },
+    {
+      "command": "account api callback set",
+      "path": [
+        "account",
+        "api",
+        "callback",
+        "set"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 862
     },
     {
       "command": "account api category create",
@@ -6928,6 +6850,28 @@
       "line": 808
     },
     {
+      "command": "platform label create",
+      "path": [
+        "platform",
+        "label",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform-label.commands.ts",
+      "line": 143
+    },
+    {
+      "command": "platform label delete",
+      "path": [
+        "platform",
+        "label",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform-label.commands.ts",
+      "line": 215
+    },
+    {
       "command": "platform label list",
       "path": [
         "platform",
@@ -6937,6 +6881,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform-label.commands.ts",
       "line": 106
+    },
+    {
+      "command": "platform label update",
+      "path": [
+        "platform",
+        "label",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform-label.commands.ts",
+      "line": 178
     },
     {
       "command": "platform setting get",
@@ -8215,6 +8170,17 @@
         "line": 46,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "account api callback set",
+      "realExecutionReferences": 3,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 260,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "account api category create",
@@ -11380,6 +11346,36 @@
       "firstHelpReference": null
     },
     {
+      "command": "platform label create",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/platform-label-cli.integration.test.ts",
+        "line": 47,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/platform-label-cli.integration.test.ts",
+        "line": 120,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "platform label delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/platform-label-cli.integration.test.ts",
+        "line": 80,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/platform-label-cli.integration.test.ts",
+        "line": 122,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "platform label list",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -11391,6 +11387,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 54,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "platform label update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/platform-label-cli.integration.test.ts",
+        "line": 65,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/platform-label-cli.integration.test.ts",
+        "line": 121,
         "source": "array-literal"
       }
     },

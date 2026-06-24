@@ -244,4 +244,57 @@ describe('Account, platform, and global CLI integration', () => {
       }
     }
   }, 180000);
+
+  // `account api callback set` is an account-scoped write: it sets the stream /
+  // record / playback callback URL for the account. It is cleanly reversible —
+  // omitting --url clears the callback (the SDK drops the url param), which also
+  // serves as cleanup. A temporary channel is created as the real test asset per
+  // convention even though the command is account-scoped.
+  (shouldRunRealChannelTests && accountCredentials?.userId ? it : it.skip)(
+    'runs account api callback set (set then clear) through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      const userId = accountCredentials!.userId!;
+      const clearStreamCallback = () => {
+        try {
+          runCliSuccess([
+            'account', 'api', 'callback', 'set',
+            '--type', 'stream', '--user-id', userId,
+            '--force', '--output', 'json',
+          ]);
+        } catch {
+          // best-effort cleanup
+        }
+      };
+
+      try {
+        channelId = createTemporaryChannel('Account Callback Set');
+
+        // set the stream callback to a throwaway URL
+        const setOutput = runCliSuccess([
+          'account', 'api', 'callback', 'set',
+          '--type', 'stream', '--user-id', userId,
+          '--url', `https://example.com/polyv-it-callback-${Date.now()}`,
+          '--force', '--output', 'json',
+        ]);
+        const set = parseJsonObject(setOutput);
+        expect(set.success).toBe(true);
+
+        // clear: omit --url to drop the callback (restores account default)
+        const clearOutput = runCliSuccess([
+          'account', 'api', 'callback', 'set',
+          '--type', 'stream', '--user-id', userId,
+          '--force', '--output', 'json',
+        ]);
+        const cleared = parseJsonObject(clearOutput);
+        expect(cleared.success).toBe(true);
+      } finally {
+        clearStreamCallback();
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
 });
