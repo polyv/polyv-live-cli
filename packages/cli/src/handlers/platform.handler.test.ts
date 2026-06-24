@@ -187,7 +187,7 @@ describe('PlatformHandler', () => {
   // ========================================
   describe('updateSwitchConfig', () => {
     const validOptions: PlatformSwitchUpdateOptions = {
-      param: 'authEnabled',
+      param: 'chat',
       enabled: 'Y',
       output: 'table',
     };
@@ -198,7 +198,7 @@ describe('PlatformHandler', () => {
       await platformHandler.updateSwitchConfig(validOptions);
 
       expect(mockPlatformService.updateSwitchConfig).toHaveBeenCalledWith({
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'Y',
       });
       // Verify success message was displayed
@@ -227,14 +227,14 @@ describe('PlatformHandler', () => {
       mockPlatformService.updateSwitchConfig.mockResolvedValueOnce({ success: true });
 
       const options: PlatformSwitchUpdateOptions = {
-        param: 'recordEnabled',
+        param: 'autoPlay',
         enabled: 'N',
         output: 'table',
       };
       await platformHandler.updateSwitchConfig(options);
 
       expect(mockPlatformService.updateSwitchConfig).toHaveBeenCalledWith({
-        param: 'recordEnabled',
+        param: 'autoPlay',
         enabled: 'N',
       });
     });
@@ -255,7 +255,7 @@ describe('PlatformHandler', () => {
 
     it('[P1][HDL-008] should throw validation error for invalid enabled value', async () => {
       const invalidOptions: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'YES' as any,
         output: 'table',
       };
@@ -283,7 +283,7 @@ describe('PlatformHandler', () => {
 
     it('[P1] should validate enabled must be Y or N', async () => {
       const invalidOptions: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'yes' as any, // lowercase
         output: 'table',
       };
@@ -295,7 +295,7 @@ describe('PlatformHandler', () => {
 
     it('[P1] should throw validation error when enabled is undefined', async () => {
       const invalidOptions: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: undefined as any,
         output: 'table',
       };
@@ -340,7 +340,7 @@ describe('PlatformHandler', () => {
       mockPlatformService.updateSwitchConfig.mockRejectedValueOnce(permissionError);
 
       await expect(platformHandler.updateSwitchConfig({
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'Y',
         output: 'table',
       })).rejects.toThrow();
@@ -370,7 +370,7 @@ describe('PlatformHandler', () => {
 
     it('[P1] should show friendly message for invalid enabled value', async () => {
       const invalidOptions: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'invalid' as any,
         output: 'table',
       };
@@ -399,7 +399,7 @@ describe('PlatformHandler', () => {
         expect(error).toBeInstanceOf(PolyVValidationError);
         const validationError = error as PolyVValidationError;
         // Should list available params
-        expect(validationError.message).toMatch(/authEnabled|recordEnabled|playbackEnabled|danmuEnabled|globalSettingEnabled/);
+        expect(validationError.message).toMatch(/chat|autoPlay|closeDanmu|mobileWatch|isClosePreview/);
       }
     });
   });
@@ -515,6 +515,24 @@ describe('PlatformHandler', () => {
         url: 'https://example.com/new-callback',
         enabled: true,
       });
+    });
+
+    it('[P0] should clear streamCallbackUrl when clearUrl is provided', async () => {
+      mockPlatformService.updateCallbackSettings = jest.fn().mockResolvedValueOnce({ success: true });
+
+      await platformHandler.updateCallbackSettings({
+        clearUrl: true,
+        output: 'json',
+      });
+
+      expect(mockPlatformService.updateCallbackSettings).toHaveBeenCalledWith({
+        url: '',
+      });
+      const logCalls = mockConsoleLog.mock.calls;
+      const jsonOutputCall = logCalls.find((call: any[]) =>
+        typeof call[0] === 'string' && call[0].includes('"streamCallbackUrl": ""')
+      );
+      expect(jsonOutputCall).toBeDefined();
     });
 
     it('[P0][HDL-CB-006] should update callback settings and output JSON format', async () => {

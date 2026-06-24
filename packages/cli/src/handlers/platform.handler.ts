@@ -191,7 +191,9 @@ export class PlatformHandler extends BaseHandler {
 
       // Call service to update callback settings
       const updateParams: { url?: string; enabled?: boolean } = {};
-      if (options.url !== undefined) {
+      if (options.clearUrl) {
+        updateParams.url = '';
+      } else if (options.url !== undefined) {
         updateParams.url = options.url;
       }
       if (enabledBoolean !== undefined) {
@@ -201,11 +203,14 @@ export class PlatformHandler extends BaseHandler {
 
       // Display results
       if (format === 'json') {
-        this.displayData({ success: true, url: options.url, enabled: options.enabled }, 'json');
+        this.displayData({ success: true, streamCallbackUrl: options.clearUrl ? '' : options.url, enabled: options.enabled }, 'json');
       } else {
         this.displaySuccess(`Successfully updated callback settings.`);
+        if (options.clearUrl) {
+          this.displayInfo(`Live status callback URL cleared.`);
+        }
         if (options.url) {
-          this.displayInfo(`Callback URL: ${options.url}`);
+          this.displayInfo(`Live status callback URL: ${options.url}`);
         }
         if (options.enabled) {
           this.displayInfo(`Enabled: ${options.enabled === 'Y' ? 'Yes' : 'No'}`);
@@ -574,8 +579,8 @@ export class PlatformHandler extends BaseHandler {
     const errors: string[] = [];
 
     // At least one parameter must be provided
-    if (!options.url && !options.enabled) {
-      errors.push('至少需要提供一个参数 (url 或 enabled)');
+    if (!options.url && !options.enabled && !options.clearUrl) {
+      errors.push('至少需要提供一个参数 (url、enabled 或 --clear-url)');
     }
 
     // Validate URL format if provided

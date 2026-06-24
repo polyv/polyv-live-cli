@@ -344,21 +344,20 @@ Output Formats:
   // Add help text for platform switch update command
   switchUpdateCmd.addHelpText('after', `
 Examples:
-  # Enable authentication
-  $ polyv-live-cli platform switch update --param authEnabled --enabled Y
+  # Enable chat
+  $ polyv-live-cli platform switch update --param chat --enabled Y
 
-  # Disable recording
-  $ polyv-live-cli platform switch update --param recordEnabled --enabled N
+  # Disable barrage (danmu)
+  $ polyv-live-cli platform switch update --param closeDanmu --enabled Y
 
   # JSON output
-  $ polyv-live-cli platform switch update --param authEnabled --enabled Y -o json
+  $ polyv-live-cli platform switch update --param autoPlay --enabled N -o json
 
-Available Parameters:
-  globalSettingEnabled  - Global settings switch (全局设置开关)
-  authEnabled           - Authentication switch (认证开关)
-  recordEnabled         - Recording switch (录制开关)
-  playbackEnabled       - Playback switch (回放开关)
-  danmuEnabled          - Danmu (bullet screen) switch (弹幕开关)
+Tip: run \`platform switch get\` to see the available switch \`type\` values and their
+current status; pass any of those \`type\` values to \`--param\`.
+
+Available Parameters (same as the \`type\` values returned by \`switch get\`):
+  ${VALID_SWITCH_PARAMS.join(', ')}
 
 Enable Values:
   Y  - Enable the switch
@@ -417,7 +416,8 @@ Output Formats:
   const callbackUpdateCmd = callbackCmd
     .command('update')
     .description('Update callback settings (更新回调设置)')
-    .option('--url <url>', 'callback URL (must start with http:// or https://)', validateUrlFormat)
+    .option('--url <url>', 'live status callback URL / streamCallbackUrl (must start with http:// or https://)', validateUrlFormat)
+    .option('--clear-url', 'clear the live status callback URL / streamCallbackUrl (sets it to empty)')
     .option('--enabled <value>', 'enable status (Y|N)', validateEnabledValue)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
@@ -433,6 +433,7 @@ Output Formats:
         // Transform commander options to handler options
         const updateOptions: PlatformCallbackUpdateOptions = {
           url: options.url,
+          clearUrl: options.clearUrl,
           enabled: options.enabled,
           output: options.output,
         };
@@ -450,7 +451,7 @@ Output Formats:
   // Add help text for platform callback update command
   callbackUpdateCmd.addHelpText('after', `
 Examples:
-  # Update callback URL
+  # Update live status callback URL (streamCallbackUrl)
   $ polyv-live-cli platform callback update --url https://example.com/callback
 
   # Enable/disable callback
@@ -459,6 +460,9 @@ Examples:
 
   # Combined update
   $ polyv-live-cli platform callback update --url https://example.com/new-callback --enabled Y
+
+  # Clear live status callback URL (streamCallbackUrl)
+  $ polyv-live-cli platform callback update --clear-url
 
   # JSON output
   $ polyv-live-cli platform callback update --url https://example.com/callback -o json
@@ -471,7 +475,9 @@ Enable Values:
   N  - Disable callback
 
 Note:
-  At least one parameter (--url or --enabled) must be provided
+  At least one parameter (--url, --enabled, or --clear-url) must be provided.
+  --url/--clear-url only target streamCallbackUrl (直播状态改变回调URL).
+  --enabled N only disables rebirthVodCallbackEnabled; use --clear-url to remove streamCallbackUrl itself.
 `);
 
   // ========================================
@@ -522,6 +528,13 @@ Examples:
 Output Formats:
   table  - Formatted table output (default)
   json   - JSON format for programmatic use
+
+Note:
+  The backend GET endpoint returns: channelConcurrencesEnabled, timelyConvertEnabled,
+  donateEnabled, rebirthAutoUploadEnabled, rebirthAutoConvertEnabled, pptCoveredEnabled,
+  coverImgType. The \`testModeButtonEnabled\` switch is WRITE-ONLY (set via
+  \`platform setting update --test-mode-button-enabled\`) and is NOT returned here, so it
+  cannot be read back through this command.
 `);
 
 // ========================================
@@ -537,7 +550,7 @@ const settingUpdateCmd = settingCmd
   .option('--rebirth-auto-convert-enabled <value>', 'enable rebirth auto convert (Y|N)', validateGlobalSettingEnabledValue)
   .option('--ppt-covered-enabled <value>', 'enable PPT full screen (Y|N)', validateGlobalSettingEnabledValue)
   .option('--cover-img-type <value>', 'cover image type (contain|cover)', validateCoverImgType)
-  .option('--test-mode-button-enabled <value>', 'enable test mode button (Y|N)', validateGlobalSettingEnabledValue)
+  .option('--test-mode-button-enabled <value>', 'enable test mode button (Y|N) — write-only, NOT returned by `setting get`', validateGlobalSettingEnabledValue)
   .option('-f, --force', 'skip confirmation prompt')
   .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
   .action(async (options) => {

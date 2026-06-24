@@ -5,7 +5,7 @@
  */
 
 import Table from 'cli-table3';
-import { PolyVError, logError } from '../utils/errors';
+import { PolyVError } from '../utils/errors';
 
 /**
  * Output format options for handlers
@@ -39,9 +39,10 @@ export abstract class BaseHandler {
         throw error;
       }
 
-      // Handle other errors
-      logError(error instanceof Error ? error : new Error(String(error)));
-      throw error;
+      // Re-throw other errors without logging here. The command action's catch
+      // handler is the single user-facing logging point, so logging here would
+      // cause every error to be printed twice in the CLI flow.
+      throw error instanceof Error ? error : new Error(String(error));
     }
   }
 

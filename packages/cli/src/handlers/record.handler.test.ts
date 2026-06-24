@@ -327,7 +327,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
       expect(logCalls).toContain('1b448be32353f0f4638f70a9545c75bd_1');
     });
 
-    it('should validate required fileName', async () => {
+    it('should validate required fileName in sync mode', async () => {
       const options: RecordConvertOptions = {
         channelId: '2588188',
         sessionId: 'fvlyin8qz3',
@@ -350,8 +350,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
 
       const options: RecordConvertOptions = {
         channelId: '2588188',
-        sessionId: 'fvlyin8qz3',
-        fileName: '测试转存',
+        fileIds: 'file1,file2',
         async: true,
         force: true,
       };
@@ -361,8 +360,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
       expect(mockRecordService.recordConvertAsync).toHaveBeenCalledWith(
         '2588188',
         expect.objectContaining({
-          sessionId: 'fvlyin8qz3',
-          fileName: '测试转存',
+          fileIds: 'file1,file2',
         })
       );
     });
@@ -374,8 +372,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
 
       const options: RecordConvertOptions = {
         channelId: '2588188',
-        sessionId: 'fvlyin8qz3',
-        fileName: '测试转存',
+        fileIds: 'file1',
         async: true,
         force: true,
       };
@@ -394,8 +391,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
 
       const options: RecordConvertOptions = {
         channelId: '2588188',
-        sessionId: 'fvlyin8qz3',
-        fileName: '测试转存',
+        fileIds: 'file1',
         async: true,
         force: true,
         output: 'json',
@@ -415,8 +411,7 @@ describe('RecordHandler - Story 9.7: Record Settings Commands (ATDD RED Phase)',
 
       const options: RecordConvertOptions = {
         channelId: '2588188',
-        sessionId: 'fvlyin8qz3',
-        fileName: '测试转存',
+        fileIds: 'file1',
         async: true,
         force: true,
       };

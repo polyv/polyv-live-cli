@@ -137,7 +137,7 @@ export class V4AiService {
 
     await this.client.httpClient.post(
       '/live/v4/ai/digital-human/set-organizations',
-      params
+      params.items
     );
   }
 

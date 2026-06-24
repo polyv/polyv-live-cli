@@ -91,9 +91,9 @@ export class AccountServiceSdk {
     return client.account.updateCategoryName({ categoryId, categoryName });
   }
 
-  async updateCategoryRank(categoryId: number, rank: number) {
+  async updateCategoryRank(categoryId: number, afterCategoryId: number) {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
-    return client.account.updateCategoryRank({ categoryId, rank });
+    return client.account.updateCategoryRank({ categoryId, afterCategoryId });
   }
 
   async setUserLoginToken(params: SetUserLoginTokenParams) {

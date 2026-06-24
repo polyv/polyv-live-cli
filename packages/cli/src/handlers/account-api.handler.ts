@@ -127,9 +127,9 @@ export class AccountApiHandler extends BaseHandler {
 
   async updateCategoryRank(options: AccountApiCategoryUpdateRankOptions): Promise<void> {
     this.requirePositiveNumber(options.categoryId, 'categoryId');
-    this.requirePositiveNumber(options.rank, 'rank');
-    await this.confirmWrite(options.force, `Update rank for live category ${options.categoryId}?`);
-    const result = await this.accountService.updateCategoryRank(options.categoryId, options.rank);
+    this.requirePositiveNumber(options.afterCategoryId, 'afterCategoryId');
+    await this.confirmWrite(options.force, `Move live category ${options.categoryId} to after category ${options.afterCategoryId}?`);
+    const result = await this.accountService.updateCategoryRank(options.categoryId, options.afterCategoryId);
     return this.show(result, options);
   }
 

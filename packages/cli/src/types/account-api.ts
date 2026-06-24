@@ -66,7 +66,7 @@ export interface AccountApiCategoryUpdateNameOptions extends AccountApiBaseOptio
 
 export interface AccountApiCategoryUpdateRankOptions extends AccountApiBaseOptions {
   categoryId: number;
-  rank: number;
+  afterCategoryId: number;
   force?: boolean;
 }
 

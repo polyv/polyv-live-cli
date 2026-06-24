@@ -200,13 +200,14 @@ describe('record commands', () => {
       expect(channelIdOption?.required).toBe(true);
     });
 
-    it('[P0] should have required --file-name option', () => {
+    it('[P0] should have optional --file-name option', () => {
       const program = createProgramWithRecord();
 
       const recordCmd = program.commands.find(cmd => cmd.name() === 'record');
       const convertCmd = recordCmd?.commands.find(cmd => cmd.name() === 'convert');
       const fileNameOption = convertCmd?.options.find(opt => opt.long === '--file-name');
-      expect(fileNameOption?.required).toBe(true);
+      expect(fileNameOption).toBeDefined();
+      expect(fileNameOption?.mandatory).toBeFalsy();
     });
 
     it('[P1] should have --async option', () => {
@@ -543,12 +544,12 @@ describe('record commands', () => {
       await program.parseAsync([
         'node', 'test', 'record', 'convert',
         '-c', '123456',
-        '--file-name', 'test-video',
+        '--file-ids', 'file1,file2',
         '--async',
       ]);
 
       expect(mockHandler.recordConvert).toHaveBeenCalledWith(
-        expect.objectContaining({ async: true })
+        expect.objectContaining({ async: true, fileIds: 'file1,file2' })
       );
     });
 

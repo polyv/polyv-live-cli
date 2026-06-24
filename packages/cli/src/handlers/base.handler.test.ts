@@ -98,28 +98,31 @@ describe('BaseHandler', () => {
       expect(logError).not.toHaveBeenCalled();
     });
 
-    it('should log and re-throw other Error objects', async () => {
+    it('should re-throw other Error objects without double-logging', async () => {
       const error = new Error('Regular error');
       const mockOperation = jest.fn().mockRejectedValue(error);
-      
+
       await expect(handler.testExecuteWithErrorHandling(mockOperation, 'test-operation'))
         .rejects.toThrow(error);
-      
-      expect(logError).toHaveBeenCalledWith(error);
+
+      // Logging is the command layer's responsibility; the handler must not log
+      // (otherwise the CLI prints each error twice).
+      expect(logError).not.toHaveBeenCalled();
     });
 
-    it('should convert non-Error objects to Error and log them', async () => {
+    it('should convert non-Error objects to Error and re-throw without logging', async () => {
       const stringError = 'String error';
       const mockOperation = jest.fn().mockRejectedValue(stringError);
-      
+
       try {
         await handler.testExecuteWithErrorHandling(mockOperation, 'test-operation');
         fail('Should have thrown an error');
       } catch (error) {
-        expect(error).toBe(stringError);
+        expect(error).toBeInstanceOf(Error);
+        expect((error as Error).message).toBe(stringError);
       }
-      
-      expect(logError).toHaveBeenCalledWith(new Error(stringError));
+
+      expect(logError).not.toHaveBeenCalled();
     });
 
     it('should log debug information when DEBUG env is set', async () => {

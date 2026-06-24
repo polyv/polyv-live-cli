@@ -825,14 +825,14 @@ export function registerAccountCommands(program: Command): void {
 
   apiCategoryCmd
     .command('update-rank')
-    .description('Update live category rank')
-    .requiredOption('--category-id <id>', 'category ID', parsePositiveInteger)
-    .requiredOption('--rank <rank>', 'new rank', parsePositiveInteger)
+    .description('Move a live category to after another category (更新分类排序：移动到指定分类之后)')
+    .requiredOption('--category-id <id>', 'category ID to move', parsePositiveInteger)
+    .requiredOption('--after-category-id <id>', 'target category ID to move after', parsePositiveInteger)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withAccountApiHandler(program, handler => handler.updateCategoryRank({
       categoryId: options.categoryId,
-      rank: options.rank,
+      afterCategoryId: options.afterCategoryId,
       force: options.force,
       output: options.output,
     })));

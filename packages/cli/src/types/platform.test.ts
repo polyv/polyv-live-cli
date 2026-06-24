@@ -66,18 +66,18 @@ describe('Platform Types', () => {
   describe('PlatformSwitchUpdateOptions', () => {
     it('[P1][TYP-003] should accept valid options', () => {
       const options: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'Y',
         output: 'table',
       };
-      expect(options.param).toBe('authEnabled');
+      expect(options.param).toBe('chat');
       expect(options.enabled).toBe('Y');
       expect(options.output).toBe('table');
     });
 
     it('[P1] should accept N as enabled value', () => {
       const options: PlatformSwitchUpdateOptions = {
-        param: 'recordEnabled',
+        param: 'autoPlay',
         enabled: 'N',
         output: 'json',
       };
@@ -86,7 +86,7 @@ describe('Platform Types', () => {
 
     it('[P1] should allow optional output field', () => {
       const options: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'Y',
       };
       expect(options.output).toBeUndefined();
@@ -94,11 +94,29 @@ describe('Platform Types', () => {
 
     it('[P1] should accept all valid param values', () => {
       const validParams = [
-        'globalSettingEnabled',
-        'authEnabled',
-        'recordEnabled',
-        'playbackEnabled',
-        'danmuEnabled',
+        'isClosePreview',
+        'mobileWatch',
+        'mobileAudio',
+        'autoPlay',
+        'booking',
+        'redPack',
+        'shareBtnEnabled',
+        'chat',
+        'chatPlayBack',
+        'closeChaterList',
+        'consultingMenu',
+        'closeDanmu',
+        'praise',
+        'welcome',
+        'viewerSendImgEnabled',
+        'sendFlowersEnabled',
+        'pushSharingEnabled',
+        'qaMenuEnabled',
+        'filterManagerMsgEnabled',
+        'showCustomMessageEnabled',
+        'chatOnlineNumberEnable',
+        'pvShowEnabled',
+        'rtsEnabled',
       ];
 
       validParams.forEach((param) => {
@@ -171,11 +189,11 @@ describe('Platform Types', () => {
       const enabledN: 'N' = 'N';
 
       const options1: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: enabledY,
       };
       const options2: PlatformSwitchUpdateOptions = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: enabledN,
       };
 

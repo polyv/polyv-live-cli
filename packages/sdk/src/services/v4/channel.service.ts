@@ -2104,9 +2104,13 @@ export class V4ChannelService {
   async updateByRole(params: UpdateByRoleParams): Promise<void> {
     this.validateChannelId(params.channelId);
 
+    // channelId and role are signed URL query params; the config is the
+    // (unsigned) JSON request body. Posting everything as the body leaves role
+    // empty in the query and the backend rejects with "角色不能为空".
     await this.client.httpClient.post(
       '/live/v4/channel/role-config/update-by-role',
-      params
+      params.config,
+      { params: { channelId: params.channelId, role: params.role } }
     );
   }
 

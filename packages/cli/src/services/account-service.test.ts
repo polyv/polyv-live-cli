@@ -84,6 +84,7 @@ describe('AccountServiceSdk', () => {
     await service.deleteCategory(1);
     await service.updateCategoryName(1, 'new name');
     await service.updateCategoryRank(1, 10);
+    // note: 2nd arg is afterCategoryId (move category 1 to after category 10)
     await service.setUserLoginToken({ token: 'token' });
     await service.setUserChildrenLoginToken({ childEmail: 'child@example.com', token: 'token' });
     await service.setStreamCallback({ userId: 'u1', url: 'https://example.com/stream' });
@@ -93,7 +94,7 @@ describe('AccountServiceSdk', () => {
     expect(account.createCategory).toHaveBeenCalledWith({ categoryName: 'category' });
     expect(account.deleteCategory).toHaveBeenCalledWith({ categoryId: 1 });
     expect(account.updateCategoryName).toHaveBeenCalledWith({ categoryId: 1, categoryName: 'new name' });
-    expect(account.updateCategoryRank).toHaveBeenCalledWith({ categoryId: 1, rank: 10 });
+    expect(account.updateCategoryRank).toHaveBeenCalledWith({ categoryId: 1, afterCategoryId: 10 });
     expect(account.setUserLoginToken).toHaveBeenCalledWith({ token: 'token' });
     expect(account.setUserChildrenLoginToken).toHaveBeenCalledWith({ childEmail: 'child@example.com', token: 'token' });
     expect(account.setStreamCallback).toHaveBeenCalledWith({ userId: 'u1', url: 'https://example.com/stream' });

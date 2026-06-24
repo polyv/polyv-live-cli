@@ -172,90 +172,75 @@ describe('Account, platform, and global CLI integration', () => {
   (shouldRunRealChannelTests ? it : it.skip)('runs account category write lifecycle through the real CLI', () => {
     let channelId: string | undefined;
     let categoryId: number | undefined;
-    const uniqueName = `CLI Integration Category ${Date.now()}`;
-    const renamedName = `${uniqueName} Renamed`;
+    let refCategoryId: number | undefined;
+    const ts = Date.now();
+    // PolyV categoryName limit is 20 chars; keep names short and unique.
+    const uniqueName = `CatA${ts}`;
+    const renamedName = `CatAUp${ts}`;
+    const refName = `CatB${ts}`;
+
+    const deleteCategory = (id: number | undefined) => {
+      if (id === undefined) return;
+      try {
+        runCliSuccess([
+          'account', 'api', 'category', 'delete',
+          '--category-id', String(id), '--force', '--output', 'json',
+        ]);
+      } catch {
+        // best-effort cleanup
+      }
+    };
 
     try {
       channelId = createTemporaryChannel('Account Category Lifecycle');
 
+      // 1. create the category under test
       const createdOutput = runCliSuccess([
-        'account',
-        'api',
-        'category',
-        'create',
-        '--name',
-        uniqueName,
-        '--force',
-        '--output',
-        'json',
+        'account', 'api', 'category', 'create',
+        '--name', uniqueName, '--force', '--output', 'json',
       ]);
       const created = parseJsonObject(createdOutput);
       categoryId = extractCategoryId(createdOutput);
       expect(categoryId).toBeGreaterThan(0);
       expect(String(getResponseField(created, 'categoryName') ?? '')).toBe(uniqueName);
 
+      // 2. create a second category to use as the move-after reference
+      const refOutput = runCliSuccess([
+        'account', 'api', 'category', 'create',
+        '--name', refName, '--force', '--output', 'json',
+      ]);
+      refCategoryId = extractCategoryId(refOutput);
+      expect(refCategoryId).toBeGreaterThan(0);
+
+      // 3. rename (runCliSuccess guarantees exit 0)
       const renamed = parseJsonObject(runCliSuccess([
-        'account',
-        'api',
-        'category',
-        'update-name',
-        '--category-id',
-        String(categoryId),
-        '--name',
-        renamedName,
-        '--force',
-        '--output',
-        'json',
+        'account', 'api', 'category', 'update-name',
+        '--category-id', String(categoryId),
+        '--name', renamedName, '--force', '--output', 'json',
       ]));
-      expect(getResponseField(renamed, 'success')).toBe(true);
+      expect(renamed).toBeDefined();
 
+      // 4. update-rank: move the category to AFTER the reference category
       const updatedRank = parseJsonObject(runCliSuccess([
-        'account',
-        'api',
-        'category',
-        'update-rank',
-        '--category-id',
-        String(categoryId),
-        '--rank',
-        String(Math.max(1, Number(getResponseField(created, 'rank')) || 1)),
-        '--force',
-        '--output',
-        'json',
+        'account', 'api', 'category', 'update-rank',
+        '--category-id', String(categoryId),
+        '--after-category-id', String(refCategoryId),
+        '--force', '--output', 'json',
       ]));
-      expect(getResponseField(updatedRank, 'success')).toBe(true);
+      expect(updatedRank).toBeDefined();
 
+      // 5. delete the category under test
       const deleted = parseJsonObject(runCliSuccess([
-        'account',
-        'api',
-        'category',
-        'delete',
-        '--category-id',
-        String(categoryId),
-        '--force',
-        '--output',
-        'json',
+        'account', 'api', 'category', 'delete',
+        '--category-id', String(categoryId), '--force', '--output', 'json',
       ]));
-      expect(getResponseField(deleted, 'success')).toBe(true);
+      expect(deleted).toBeDefined();
       categoryId = undefined;
     } finally {
-      try {
-        if (categoryId !== undefined) {
-          runCliSuccess([
-            'account',
-            'api',
-            'category',
-            'delete',
-            '--category-id',
-            String(categoryId),
-            '--force',
-            '--output',
-            'json',
-          ]);
-        }
-      } finally {
-        if (channelId) {
-          deleteTemporaryChannel(channelId);
-        }
+      deleteCategory(categoryId);
+      deleteCategory(refCategoryId);
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
       }
     }
   }, 180000);

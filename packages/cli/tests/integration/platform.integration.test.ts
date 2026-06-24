@@ -73,10 +73,10 @@ const shouldRunTests = hasRealCredentials();
   // ========================================
 
   describe('platform switch update', () => {
-    it('should update authEnabled switch', async () => {
+    it('should update chat switch', async () => {
       try {
         const result = await platformService.updateSwitchConfig({
-          param: 'authEnabled',
+          param: 'chat',
           enabled: 'Y'
         });
 
@@ -95,10 +95,10 @@ const shouldRunTests = hasRealCredentials();
       }
     }, 15000);
 
-    it('should update recordEnabled switch', async () => {
+    it('should update autoPlay switch', async () => {
       try {
         const result = await platformService.updateSwitchConfig({
-          param: 'recordEnabled',
+          param: 'autoPlay',
           enabled: 'Y'
         });
 
@@ -116,10 +116,10 @@ const shouldRunTests = hasRealCredentials();
       }
     }, 15000);
 
-    it('should update playbackEnabled switch', async () => {
+    it('should update mobileWatch switch', async () => {
       try {
         const result = await platformService.updateSwitchConfig({
-          param: 'playbackEnabled',
+          param: 'mobileWatch',
           enabled: 'Y'
         });
 
@@ -149,7 +149,7 @@ const shouldRunTests = hasRealCredentials();
     it('should validate invalid enabled value', async () => {
       await expect(
         platformService.updateSwitchConfig({
-          param: 'authEnabled',
+          param: 'chat',
           enabled: 'invalid' as any
         })
       ).rejects.toThrow();
@@ -491,7 +491,7 @@ const shouldRunTests = hasRealCredentials();
 
         // 2. Update a switch
         await platformService.updateSwitchConfig({
-          param: 'authEnabled',
+          param: 'chat',
           enabled: 'Y'
         });
 

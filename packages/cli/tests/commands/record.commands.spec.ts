@@ -200,27 +200,21 @@ describe('Record Commands - Story 9.7: Record Settings Commands', () => {
       expect(channelIdOption?.required).toBe(true);
     });
 
-    it('should require --file-name option', async () => {
+    it('should have optional --file-name option', async () => {
       const recordCmd = program.commands.find(c => c.name() === 'record');
       const convertCmd = recordCmd?.commands.find(c => c.name() === 'convert');
 
       const fileNameOption = convertCmd?.options.find(o => o.long === '--file-name');
-      expect(fileNameOption?.required).toBe(true);
+      expect(fileNameOption).toBeDefined();
+      expect(fileNameOption?.mandatory).toBeFalsy();
     });
 
-    it('should fail when fileName is missing', async () => {
-      await expect(
-        program.parseAsync([
-          'node',
-          'cli',
-          'record',
-          'convert',
-          '-c',
-          '2588188',
-          '--session-id',
-          'fvlyin8qz3',
-        ])
-      ).rejects.toThrow("required option '--file-name <fileName>' not specified");
+    it('should allow async mode without --file-name at command parse time', async () => {
+      const recordCmd = program.commands.find(c => c.name() === 'record');
+      const convertCmd = recordCmd?.commands.find(c => c.name() === 'convert');
+
+      const fileNameOption = convertCmd?.options.find(o => o.long === '--file-name');
+      expect(fileNameOption?.mandatory).toBeFalsy();
     });
 
     it('should have --session-id option', async () => {
@@ -237,6 +231,14 @@ describe('Record Commands - Story 9.7: Record Settings Commands', () => {
 
       const asyncOption = convertCmd?.options.find(o => o.long === '--async');
       expect(asyncOption).toBeDefined();
+    });
+
+    it('should have --file-ids option for async mode (AC4)', async () => {
+      const recordCmd = program.commands.find(c => c.name() === 'record');
+      const convertCmd = recordCmd?.commands.find(c => c.name() === 'convert');
+
+      const fileIdsOption = convertCmd?.options.find(o => o.long === '--file-ids');
+      expect(fileIdsOption).toBeDefined();
     });
 
     it('should have --to-play-list option', async () => {

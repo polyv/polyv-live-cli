@@ -87,24 +87,26 @@ export class AIDigitalHumanHandler extends BaseHandler {
 
     let params: SetOrganizationParams[];
 
-    // Parse params from config or individual options
-    if (options.config) {
+    // Parse params from --config-json or individual options. Note: the option is
+    // named --config-json (not --config) to avoid clashing with the top-level
+    // global --config <path> option, which would otherwise shadow it.
+    if (options.configJson) {
       try {
-        params = JSON.parse(options.config);
+        params = JSON.parse(options.configJson);
       } catch {
         throw new PolyVValidationError(
           'Invalid JSON config format',
-          'config',
-          options.config,
+          'configJson',
+          options.configJson,
           'invalid'
         );
       }
 
       if (!Array.isArray(params) || params.length === 0) {
         throw new PolyVValidationError(
-          'config must be a non-empty array',
-          'config',
-          options.config,
+          'config-json must be a non-empty array',
+          'configJson',
+          options.configJson,
           'invalid'
         );
       }
@@ -112,7 +114,7 @@ export class AIDigitalHumanHandler extends BaseHandler {
       // Build from individual options
       if (!options.aiDigitalHumanId || options.aiDigitalHumanId.trim() === '') {
         throw new PolyVValidationError(
-          'aiDigitalHumanId is required when config is not provided',
+          'aiDigitalHumanId is required when config-json is not provided',
           'aiDigitalHumanId',
           options.aiDigitalHumanId,
           'required'
@@ -121,7 +123,7 @@ export class AIDigitalHumanHandler extends BaseHandler {
 
       if (!options.organizationIds || options.organizationIds.trim() === '') {
         throw new PolyVValidationError(
-          'organizationIds is required when config is not provided',
+          'organizationIds is required when config-json is not provided',
           'organizationIds',
           options.organizationIds,
           'required'

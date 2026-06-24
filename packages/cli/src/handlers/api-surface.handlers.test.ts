@@ -255,7 +255,7 @@ describe('API surface handlers', () => {
       ['createCategory', 'createCategory', { name: 'Category' }],
       ['deleteCategory', 'deleteCategory', { categoryId: 1 }],
       ['updateCategoryName', 'updateCategoryName', { categoryId: 1, name: 'New Name' }],
-      ['updateCategoryRank', 'updateCategoryRank', { categoryId: 1, rank: 2 }],
+      ['updateCategoryRank', 'updateCategoryRank', { categoryId: 1, afterCategoryId: 2 }],
       ['listReceiveChannels', 'receiveList', { channelId: 'ch1', page: 1, pageSize: 10 }],
       ['setSsoToken', 'setUserChildrenLoginToken', { childEmail: 'child@example.com', token: 'token' }],
       ['setSsoToken', 'setUserLoginToken', { token: 'token' }],

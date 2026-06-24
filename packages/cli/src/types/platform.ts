@@ -55,14 +55,35 @@ export interface PlatformServiceConfig {
 }
 
 /**
- * Valid switch parameter names
+ * Valid switch parameter names (the same `type` values returned by `switch get`)
+ *
+ * These mirror the PolyV switch API vocabulary. Most accept an enabled value of
+ * `Y`/`N`; the handler sends the raw `--param` value as the backend `type`.
  */
 export const VALID_SWITCH_PARAMS = [
-  'globalSettingEnabled',
-  'authEnabled',
-  'recordEnabled',
-  'playbackEnabled',
-  'danmuEnabled',
+  'isClosePreview',
+  'mobileWatch',
+  'mobileAudio',
+  'autoPlay',
+  'booking',
+  'redPack',
+  'shareBtnEnabled',
+  'chat',
+  'chatPlayBack',
+  'closeChaterList',
+  'consultingMenu',
+  'closeDanmu',
+  'praise',
+  'welcome',
+  'viewerSendImgEnabled',
+  'sendFlowersEnabled',
+  'pushSharingEnabled',
+  'qaMenuEnabled',
+  'filterManagerMsgEnabled',
+  'showCustomMessageEnabled',
+  'chatOnlineNumberEnable',
+  'pvShowEnabled',
+  'rtsEnabled',
 ] as const;
 
 /**
@@ -84,6 +105,8 @@ export interface PlatformCallbackGetOptions {
 export interface PlatformCallbackUpdateOptions {
   /** Callback URL */
   url?: string;
+  /** Clear the configured callback URL (sets it to empty) */
+  clearUrl?: boolean;
   /** Enable status (Y or N) */
   enabled?: EnabledValue;
   /** Output format (table or json) */

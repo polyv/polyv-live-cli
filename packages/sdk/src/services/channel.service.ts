@@ -2780,7 +2780,9 @@ export class ChannelService {
    * @example
    * ```typescript
    * const result = await channelService.recordConvert('ch123456', {
-   *   fileId: 'file123',
+   *   userId: 'user123',
+   *   fileName: 'my-vod',
+   *   sessionId: 'fvlyin8qz3',
    * });
    * ```
    */
@@ -2791,65 +2793,101 @@ export class ChannelService {
     if (!channelId || channelId.trim() === '') {
       throw PolyVValidationError.required('channelId');
     }
-    if (!options.fileId || options.fileId.trim() === '') {
-      throw PolyVValidationError.required('fileId');
+    if (!options.userId || options.userId.trim() === '') {
+      throw PolyVValidationError.required('userId');
+    }
+    if (!options.fileName || options.fileName.trim() === '') {
+      throw PolyVValidationError.required('fileName');
+    }
+    const hasSessionId = options.sessionId && options.sessionId.trim() !== '';
+    const hasFileUrl = options.fileUrl && options.fileUrl.trim() !== '';
+    if (!hasSessionId && !hasFileUrl) {
+      throw PolyVValidationError.required('sessionId or fileUrl');
     }
 
-    const params: Record<string, unknown> = { channelId, fileId: options.fileId };
-    if (options.fileName !== undefined) {
-      params.fileName = options.fileName;
+    // Synchronous v2 endpoint accepts a sessionId (or fileUrl) directly.
+    const params: Record<string, unknown> = {
+      userId: options.userId,
+      fileName: options.fileName,
+    };
+    if (options.sessionId) {
+      params.sessionId = options.sessionId;
     }
-    if (options.callbackUrl !== undefined) {
-      params.callbackUrl = options.callbackUrl;
+    if (options.fileUrl) {
+      params.fileUrl = options.fileUrl;
+    }
+    if (options.cataid !== undefined) {
+      params.cataid = options.cataid;
+    }
+    if (options.cataname !== undefined) {
+      params.cataname = options.cataname;
+    }
+    if (options.toPlayList !== undefined) {
+      params.toPlayList = options.toPlayList;
+    }
+    if (options.setAsDefault !== undefined) {
+      params.setAsDefault = options.setAsDefault;
     }
 
-    const response = await this.client.httpClient.post<import('../types/channel.js').RecordConvertResponse>(
-      '/live/v3/channel/record/convert',
+    const response = (await this.client.httpClient.post<unknown>(
+      `/live/v2/channel/recordFile/${channelId}/convert`,
       null,
       { params }
-    );
+    )) as unknown;
 
-    return response as unknown as import('../types/channel.js').RecordConvertResponse;
+    // The response interceptor unwraps the envelope; on success `data` is the
+    // converted VOD video id (vid) as a string.
+    const obj = (typeof response === 'object' && response !== null
+      ? response
+      : undefined) as Record<string, unknown> | undefined;
+    const vid =
+      typeof response === 'string'
+        ? response
+        : String(obj?.['vid'] ?? obj?.['fileId'] ?? '');
+    return { vid };
   }
 
   /**
    * Record convert async
    *
-   * Converts a recording file to VOD asynchronously.
+   * Converts recording files to VOD asynchronously.
    *
    * @param channelId - The channel ID
-   * @param options - Convert options
+   * @param options - Convert options (requires comma-separated fileIds)
    * @returns true if submitted successfully
    * @throws PolyVValidationError if required parameters are empty
    *
    * @example
    * ```typescript
    * const result = await channelService.recordConvertAsync('ch123456', {
-   *   fileId: 'file123',
+   *   fileIds: 'file1,file2',
    * });
    * ```
    */
   async recordConvertAsync(
     channelId: string,
-    options: import('../types/channel.js').RecordConvertRequest
+    options: import('../types/channel.js').RecordConvertAsyncRequest
   ): Promise<boolean> {
     if (!channelId || channelId.trim() === '') {
       throw PolyVValidationError.required('channelId');
     }
-    if (!options.fileId || options.fileId.trim() === '') {
-      throw PolyVValidationError.required('fileId');
+    if (!options.fileIds || options.fileIds.trim() === '') {
+      throw PolyVValidationError.required('fileIds');
     }
 
-    const params: Record<string, unknown> = { channelId, fileId: options.fileId };
+    const params: Record<string, unknown> = { channelId, fileIds: options.fileIds };
     if (options.fileName !== undefined) {
       params.fileName = options.fileName;
     }
     if (options.callbackUrl !== undefined) {
       params.callbackUrl = options.callbackUrl;
     }
+    if (options.canRepeat !== undefined) {
+      params.canRepeat = options.canRepeat;
+    }
 
     await this.client.httpClient.post<string>(
-      '/live/v3/channel/record/convert-async',
+      '/live/v3/channel/record/convert',
       null,
       { params }
     );

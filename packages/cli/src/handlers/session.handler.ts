@@ -136,7 +136,23 @@ export class SessionHandler extends BaseHandler {
       // Display the session details
       this.displaySessionDetail(session, options.channelId, options.output);
     } catch (error) {
-      console.error(error instanceof Error ? error.message : String(error));
+      const rawMessage = error instanceof Error ? error.message : String(error);
+      // session get queries the new-version (v4) session detail API, which only
+      // covers sessions created via the new session system. Historical/legacy
+      // sessions (returned by `session legacy-list` / `session data-list`) are a
+      // different dataset and are reported as "场次不存在" here — point users at the
+      // legacy commands so they are not misled into thinking the ID is invalid.
+      const message =
+        /场次不存在|not exist/i.test(rawMessage)
+          ? `${rawMessage}\n` +
+            `提示：\`session get\` 仅支持新版场次（v4 场次详情）。该 sessionId 可能是历史场次，` +
+            `请使用 \`session legacy-list -c ${options.channelId}\` 或 \`session data-list -c ${options.channelId}\` 查询历史场次的详情。`
+          : rawMessage;
+      if (options.output === 'json') {
+        console.error(JSON.stringify({ error: message }));
+      } else {
+        console.error(message);
+      }
     }
   }
 

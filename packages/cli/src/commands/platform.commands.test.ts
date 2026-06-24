@@ -208,7 +208,7 @@ describe('Platform Commands', () => {
 
       const helpText = updateCmd?.helpInformation() || '';
       // Should list available params
-      expect(helpText).toMatch(/authEnabled|recordEnabled|playbackEnabled|danmuEnabled|globalSettingEnabled/);
+      expect(helpText).toMatch(/chat|autoPlay|closeDanmu|mobileWatch|isClosePreview/);
     });
   });
 
@@ -494,6 +494,17 @@ describe('Platform Commands', () => {
 
       const enabledOption = options.find(opt => opt.long === '--enabled');
       expect(enabledOption).toBeDefined();
+    });
+
+    it('[P1] should register --clear-url option for streamCallbackUrl clearing', () => {
+      const platformCmd = program.commands.find(cmd => cmd.name() === 'platform');
+      const callbackCmd = platformCmd?.commands.find(cmd => cmd.name() === 'callback');
+      const updateCmd = callbackCmd?.commands.find(cmd => cmd.name() === 'update');
+      const options = updateCmd?.options || [];
+
+      const clearUrlOption = options.find(opt => opt.long === '--clear-url');
+      expect(clearUrlOption).toBeDefined();
+      expect(clearUrlOption?.description).toMatch(/streamCallbackUrl|live status/i);
     });
 
     it('[P1] should have short option -o for --output on platform callback get', () => {
@@ -814,14 +825,14 @@ describe('action execution', () => {
       registerPlatformCommands(program);
       await program.parseAsync([
         'node', 'test', 'platform', 'switch', 'update',
-        '--param', 'authEnabled',
+        '--param', 'chat',
         '--enabled', 'Y',
         '--force',
       ]);
 
       expect(MockPlatformHandler).toHaveBeenCalled();
       expect(mockHandler.updateSwitchConfig).toHaveBeenCalledWith({
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'Y',
         output: 'table',
       });
@@ -836,7 +847,7 @@ describe('action execution', () => {
       registerPlatformCommands(program);
       await expect(program.parseAsync([
         'node', 'test', 'platform', 'switch', 'update',
-        '--param', 'authEnabled',
+        '--param', 'chat',
         '--enabled', 'N',
         '--force',
       ])).rejects.toThrow('process.exit:1');
@@ -891,6 +902,27 @@ describe('action execution', () => {
       expect(mockHandler.updateCallbackSettings).toHaveBeenCalledWith({
         url: 'https://example.com/callback',
         enabled: 'Y',
+        clearUrl: undefined,
+        output: 'table',
+      });
+    });
+
+    it('[P1] should pass clearUrl to callback update handler', async () => {
+      const mockHandler = { updateCallbackSettings: jest.fn().mockResolvedValue(undefined) };
+      MockPlatformHandler.mockImplementation(() => mockHandler);
+
+      const program = createTestProgram();
+      registerPlatformCommands(program);
+      await program.parseAsync([
+        'node', 'test', 'platform', 'callback', 'update',
+        '--clear-url',
+        '--force',
+      ]);
+
+      expect(mockHandler.updateCallbackSettings).toHaveBeenCalledWith({
+        url: undefined,
+        clearUrl: true,
+        enabled: undefined,
         output: 'table',
       });
     });

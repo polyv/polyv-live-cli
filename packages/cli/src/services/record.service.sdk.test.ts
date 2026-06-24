@@ -235,9 +235,9 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
   // ============================================
 
   describe('recordConvert - Sync mode (AC3)', () => {
-    it('should call SDK client.channel.recordConvert', async () => {
+    it('should call SDK client.channel.recordConvert with userId + sessionId', async () => {
       mockSdkClient.channel.recordConvert.mockResolvedValueOnce({
-        fileId: 'vid123456',
+        vid: 'vid123456',
       });
 
       const options = {
@@ -250,7 +250,8 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
       expect(mockSdkClient.channel.recordConvert).toHaveBeenCalledWith(
         '2588188',
         expect.objectContaining({
-          fileId: 'session-123',
+          userId: 'test-user-id',
+          sessionId: 'session-123',
           fileName: 'test.mp4',
         })
       );
@@ -258,11 +259,12 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
 
     it('should return result with async=false and vid', async () => {
       mockSdkClient.channel.recordConvert.mockResolvedValueOnce({
-        fileId: 'vid123456',
+        vid: 'vid123456',
       });
 
       const result = await service.recordConvert('2588188', {
         sessionId: 'session-123',
+        fileName: 'test.mp4',
       });
 
       expect(result).toHaveProperty('async', false);
@@ -271,7 +273,7 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
 
     it('should pass all options correctly', async () => {
       mockSdkClient.channel.recordConvert.mockResolvedValueOnce({
-        fileId: 'vid123456',
+        vid: 'vid123456',
       });
 
       const options = {
@@ -281,7 +283,6 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
         cataName: '测试分类',
         toPlayList: 'Y' as const,
         setAsDefault: 'Y' as const,
-        callbackUrl: 'https://example.com/callback',
       };
 
       await service.recordConvert('2588188', options);
@@ -289,9 +290,13 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
       expect(mockSdkClient.channel.recordConvert).toHaveBeenCalledWith(
         '2588188',
         expect.objectContaining({
-          fileId: 'session-123',
+          userId: 'test-user-id',
+          sessionId: 'session-123',
           fileName: 'test.mp4',
-          callbackUrl: 'https://example.com/callback',
+          cataid: 'cata123',
+          cataname: '测试分类',
+          toPlayList: 'Y',
+          setAsDefault: 'Y',
         })
       );
     });
@@ -301,7 +306,7 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
       mockSdkClient.channel.recordConvert.mockRejectedValueOnce(error);
 
       await expect(
-        service.recordConvert('2588188', { sessionId: 'session-123' })
+        service.recordConvert('2588188', { sessionId: 'session-123', fileName: 'test.mp4' })
       ).rejects.toThrow('API Error');
     });
   });
@@ -311,21 +316,21 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
   // ============================================
 
   describe('recordConvertAsync - Async mode (AC4)', () => {
-    it('should call SDK client.channel.recordConvert', async () => {
-      mockSdkClient.channel.recordConvert.mockResolvedValueOnce({});
+    it('should call SDK client.channel.recordConvertAsync with fileIds', async () => {
+      mockSdkClient.channel.recordConvertAsync.mockResolvedValueOnce({});
 
       const options = {
-        sessionId: 'session-123',
+        fileIds: 'file1,file2',
         fileName: 'test.mp4',
         callbackUrl: 'https://example.com/callback',
       };
 
       await service.recordConvertAsync('2588188', options);
 
-      expect(mockSdkClient.channel.recordConvert).toHaveBeenCalledWith(
+      expect(mockSdkClient.channel.recordConvertAsync).toHaveBeenCalledWith(
         '2588188',
         expect.objectContaining({
-          fileId: 'session-123',
+          fileIds: 'file1,file2',
           fileName: 'test.mp4',
           callbackUrl: 'https://example.com/callback',
         })
@@ -333,21 +338,27 @@ describe('RecordServiceSdk - Story 9.7: Record Settings Commands', () => {
     });
 
     it('should return result with async=true', async () => {
-      mockSdkClient.channel.recordConvert.mockResolvedValueOnce({});
+      mockSdkClient.channel.recordConvertAsync.mockResolvedValueOnce({});
 
       const result = await service.recordConvertAsync('2588188', {
-        sessionId: 'session-123',
+        fileIds: 'file1',
       });
 
       expect(result).toHaveProperty('async', true);
     });
 
+    it('should require fileIds', async () => {
+      await expect(
+        service.recordConvertAsync('2588188', { fileName: 'test.mp4' })
+      ).rejects.toThrow(/--file-ids/);
+    });
+
     it('should propagate SDK errors', async () => {
       const error = new Error('API Error');
-      mockSdkClient.channel.recordConvert.mockRejectedValueOnce(error);
+      mockSdkClient.channel.recordConvertAsync.mockRejectedValueOnce(error);
 
       await expect(
-        service.recordConvertAsync('2588188', { sessionId: 'session-123' })
+        service.recordConvertAsync('2588188', { fileIds: 'file1' })
       ).rejects.toThrow('API Error');
     });
   });

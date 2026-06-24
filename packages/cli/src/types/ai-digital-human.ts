@@ -77,7 +77,8 @@ export interface AIDigitalHumanListOrgOptions {
  * set-org 命令选项
  */
 export interface AIDigitalHumanSetOrgOptions {
-  config?: string;
+  /** JSON array config (named --config-json on the CLI to avoid the global --config clash) */
+  configJson?: string;
   aiDigitalHumanId?: string;
   organizationIds?: string;
   includeChildren?: boolean;

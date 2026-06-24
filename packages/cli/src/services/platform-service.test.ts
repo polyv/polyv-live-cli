@@ -151,7 +151,7 @@ describe('PlatformServiceSdk', () => {
 
   describe('updateSwitchConfig', () => {
     const validParams = {
-      param: 'authEnabled',
+      param: 'chat',
       enabled: 'Y' as const,
     };
 
@@ -163,7 +163,7 @@ describe('PlatformServiceSdk', () => {
 
       expect(result).toEqual(mockResponse);
       expect(mockSdkClient.account.switchUpdate).toHaveBeenCalledWith({
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'Y',
       });
     });
@@ -173,13 +173,13 @@ describe('PlatformServiceSdk', () => {
       mockSdkClient.account.switchUpdate.mockResolvedValueOnce(mockResponse);
 
       const result = await service.updateSwitchConfig({
-        param: 'recordEnabled',
+        param: 'autoPlay',
         enabled: 'N',
       });
 
       expect(result).toEqual(mockResponse);
       expect(mockSdkClient.account.switchUpdate).toHaveBeenCalledWith({
-        param: 'recordEnabled',
+        param: 'autoPlay',
         enabled: 'N',
       });
     });
@@ -196,7 +196,7 @@ describe('PlatformServiceSdk', () => {
 
     it('[P1][SVC-006] should throw PolyVValidationError for invalid enabled value', async () => {
       const invalidParams = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: 'YES' as any,
       };
 
@@ -215,7 +215,7 @@ describe('PlatformServiceSdk', () => {
 
     it('[P1] should throw PolyVValidationError for missing enabled', async () => {
       const invalidParams = {
-        param: 'authEnabled',
+        param: 'chat',
         enabled: '' as any,
       };
 
@@ -227,11 +227,29 @@ describe('PlatformServiceSdk', () => {
       mockSdkClient.account.switchUpdate.mockResolvedValue(mockResponse);
 
       const validParams = [
-        'globalSettingEnabled',
-        'authEnabled',
-        'recordEnabled',
-        'playbackEnabled',
-        'danmuEnabled',
+        'isClosePreview',
+        'mobileWatch',
+        'mobileAudio',
+        'autoPlay',
+        'booking',
+        'redPack',
+        'shareBtnEnabled',
+        'chat',
+        'chatPlayBack',
+        'closeChaterList',
+        'consultingMenu',
+        'closeDanmu',
+        'praise',
+        'welcome',
+        'viewerSendImgEnabled',
+        'sendFlowersEnabled',
+        'pushSharingEnabled',
+        'qaMenuEnabled',
+        'filterManagerMsgEnabled',
+        'showCustomMessageEnabled',
+        'chatOnlineNumberEnable',
+        'pvShowEnabled',
+        'rtsEnabled',
       ];
 
       for (const param of validParams) {
@@ -356,6 +374,14 @@ describe('PlatformServiceSdk', () => {
 
       expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
         streamCallbackUrl: 'https://example.com/new-callback',
+      });
+    });
+
+    it('[P0] should clear streamCallbackUrl with an empty URL', async () => {
+      await service.updateCallbackSettings({ url: '' });
+
+      expect(mockSdkClient.v4User.updateCallback).toHaveBeenCalledWith({
+        streamCallbackUrl: '',
       });
     });
 

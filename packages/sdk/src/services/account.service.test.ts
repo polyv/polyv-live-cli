@@ -209,13 +209,13 @@ describe('AccountService', () => {
 
         const result = await accountService.updateCategoryRank({
           categoryId: 12345,
-          rank: 5,
+          afterCategoryId: 5,
         })
 
         expect(mockAxiosInstance.post).toHaveBeenCalledWith(
           '/live/v3/user/category/update-rank',
           null,
-          { params: { categoryId: 12345, rank: 5 } }
+          { params: { categoryId: 12345, afterCategoryId: 5 } }
         )
         expect(result.success).toBe(true)
       })
@@ -223,14 +223,14 @@ describe('AccountService', () => {
       it('should throw PolyVValidationError when categoryId is invalid', async () => {
         await expect(accountService.updateCategoryRank({
           categoryId: 0,
-          rank: 1,
+          afterCategoryId: 1,
         })).rejects.toThrow(PolyVValidationError)
       })
 
-      it('should throw PolyVValidationError when rank is undefined', async () => {
+      it('should throw PolyVValidationError when afterCategoryId is undefined', async () => {
         await expect(accountService.updateCategoryRank({
           categoryId: 12345,
-          rank: undefined as any,
+          afterCategoryId: undefined as any,
         })).rejects.toThrow(PolyVValidationError)
       })
     })

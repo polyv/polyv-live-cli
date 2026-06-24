@@ -62,7 +62,24 @@ export class CardPushHandler extends BaseHandler {
     this.validateListOptions(options);
 
     // Call service to get card-pushes
-    const cardPushes = await this.cardPushService.listCardPushes(options.channelId);
+    let cardPushes: any[];
+    try {
+      cardPushes = await this.cardPushService.listCardPushes(options.channelId);
+    } catch (error) {
+      // The card-push list endpoint enforces a strict channel-ownership check
+      // (backend error 30005 "存在非法频道ID"). For channels that are readable via
+      // `channel get` but rejected here, surface an actionable message instead of
+      // the bare backend string, which otherwise reads like a malformed ID.
+      const msg = error instanceof Error ? error.message : String(error);
+      if (/存在非法频道ID|illegal channelId/i.test(msg)) {
+        throw new Error(
+          `频道 ${options.channelId} 在卡片推送接口中被判定为不可访问（后端：${msg}）。\n` +
+            `可能原因：该频道/账号不在卡片推送的归属校验范围内（与 \`channel get\` 的可见范围不同）。\n` +
+            `建议：确认当前账号（appId/userId）拥有该频道的卡片推送权限，或换用支持该频道的账号。`
+        );
+      }
+      throw error;
+    }
 
     // Display results
     if (format === 'json') {

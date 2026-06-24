@@ -188,8 +188,10 @@ export function registerAiCommands(program: Command): void {
   // set-org subcommand
   digitalHumanCmd
     .command('set-org')
-    .description('Set organization associations for AI Digital Humans (设置AI数字人关联的组织)')
-    .option('--config <json>', 'JSON array config (JSON数组配置)')
+    .description(`Set organization associations for AI Digital Humans (设置AI数字人关联的组织)
+
+Tip: discover organization IDs with \`user org list\`, and digital-human IDs with \`ai digital-human list\`.`)
+    .option('--config-json <json>', 'JSON array config, e.g. \'[{"aiDigitalHumanId":1,"organizationIds":[2,3],"includeChildren":true}]\'')
     .option('--aiDigitalHumanId <id>', 'AI Digital Human ID (数字人ID)')
     .option('--organizationIds <ids>', 'Organization IDs, comma-separated (组织ID，逗号分隔)')
     .option('--includeChildren', 'Include child organizations (包含子组织)', true)
@@ -198,7 +200,7 @@ export function registerAiCommands(program: Command): void {
       try {
         const handler = await createDigitalHumanHandler(program, options);
         await handler.setOrganizations({
-          config: options.config,
+          configJson: options.configJson,
           aiDigitalHumanId: options.aiDigitalHumanId,
           organizationIds: options.organizationIds,
           includeChildren: options.includeChildren,

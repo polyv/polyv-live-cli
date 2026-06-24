@@ -477,7 +477,6 @@ describe('WhitelistHandler', () => {
       mockWhitelistService.getWhiteList.mockRejectedValue(new Error('API Error: Invalid appId'));
 
       await expect(whitelistHandler.listWhitelist(options)).rejects.toThrow();
-      expect(mockConsoleError).toHaveBeenCalled();
     });
 
     it('12.4-UNIT-013: should validate rank parameter in all methods', async () => {

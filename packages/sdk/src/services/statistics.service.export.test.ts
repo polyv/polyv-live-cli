@@ -423,6 +423,36 @@ describe('StatisticsService Export Methods (Story 10.4 - ATDD RED Phase)', () =>
       expect(result.downloadUrl).toBe('https://liveimages.videocc.net/xx/xxx/xx.xlsx');
     });
 
+    it('should map a bare URL string (production interceptor-unwrap) to downloadUrl', async () => {
+      // In production the response interceptor unwraps the { code, data } envelope,
+      // so httpClient.get resolves directly to the bare download URL string.
+      mockAxiosInstance.get.mockResolvedValueOnce(
+        'https://liveimages.videocc.net/xx/xxx/xx.xlsx'
+      );
+
+      const params: ExportSessionStatsParams = {
+        channelId: '3151318',
+        sessionId: 'fv3ma84e63',
+      };
+
+      const result = await statisticsService.exportSessionStats(params);
+
+      expect(result.downloadUrl).toBe('https://liveimages.videocc.net/xx/xxx/xx.xlsx');
+    });
+
+    it('should throw when the report is not ready (empty URL string)', async () => {
+      mockAxiosInstance.get.mockResolvedValueOnce('');
+
+      const params: ExportSessionStatsParams = {
+        channelId: '3151318',
+        sessionId: 'fv3ma84e63',
+      };
+
+      await expect(statisticsService.exportSessionStats(params)).rejects.toThrow(
+        '报表尚未生成'
+      );
+    });
+
     it('should reject missing sessionId', async () => {
       // THIS TEST WILL FAIL - Method not implemented yet
       const params = {

@@ -291,8 +291,8 @@ export interface ViewerLabelCreateOptions {
  * Options for account label update command
  */
 export interface ViewerLabelUpdateOptions {
-  /** Account label ID */
-  labelId: number;
+  /** Account label ID (string, e.g. "23e71q5gdp5ggr6d" from `viewer label list`) */
+  labelId: string;
   /** Account label name */
   labelName: string;
   /** Skip confirmation */
@@ -305,8 +305,8 @@ export interface ViewerLabelUpdateOptions {
  * Options for account label delete command
  */
 export interface ViewerLabelDeleteOptions {
-  /** Account label ID */
-  labelId: number;
+  /** Account label ID (string, e.g. "23e71q5gdp5ggr6d" from `viewer label list`) */
+  labelId: string;
   /** Skip confirmation */
   force?: boolean;
   /** Output format: table or json */

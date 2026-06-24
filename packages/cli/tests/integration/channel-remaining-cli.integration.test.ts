@@ -257,6 +257,9 @@ describe('remaining channel CLI integration', () => {
       ]);
       const setting = parseJsonObject(settingOutput);
       expect(Object.keys(setting).length).toBeGreaterThan(0);
+      // The pptRecord update-setting API requires `type` (video layout). Echo
+      // the current type from the get response so the update is accepted.
+      const currentType = (setting as Record<string, unknown>).type ?? (setting as Record<string, unknown>).pptRecordType ?? '0';
 
       const updateSettingOutput = runCliSuccess([
         'channel',
@@ -267,6 +270,8 @@ describe('remaining channel CLI integration', () => {
         channelId,
         '--global-setting-enabled',
         'N',
+        '--type',
+        String(currentType),
         '--force',
         '--output',
         'json',

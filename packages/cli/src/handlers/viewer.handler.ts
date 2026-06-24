@@ -42,7 +42,9 @@ import type {
 
 /** Viewer label type from API */
 interface ViewerLabel {
-  labelId: number;
+  // Viewer-label IDs are usually numeric, but the API may return strings; keep
+  // both to avoid coercing a non-numeric id into NaN.
+  labelId: number | string;
   labelName: string;
 }
 
@@ -508,7 +510,8 @@ export class ViewerHandler extends BaseHandler {
    */
   async updateLabel(options: ViewerLabelUpdateOptions): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      this.validatePositiveNumber(options.labelId, '标签ID');
+      // Account-label IDs are strings (e.g. "23e71q5gdp5ggr6d" from `viewer label list`).
+      this.validateRequiredStringOptions({ labelId: options.labelId }, ['labelId']);
       this.validateRequiredStringOptions(options, ['labelName']);
       this.validateOutputOption(options.output);
       await confirmWrite(options.force, `Update account label ${options.labelId}?`);
@@ -526,7 +529,8 @@ export class ViewerHandler extends BaseHandler {
    */
   async deleteLabel(options: ViewerLabelDeleteOptions): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      this.validatePositiveNumber(options.labelId, '标签ID');
+      // Account-label IDs are strings (e.g. "23e71q5gdp5ggr6d" from `viewer label list`).
+      this.validateRequiredStringOptions({ labelId: options.labelId }, ['labelId']);
       this.validateOutputOption(options.output);
       await confirmWrite(options.force, `Delete account label ${options.labelId}?`);
 
@@ -1126,8 +1130,12 @@ export class ViewerHandler extends BaseHandler {
   // ===== Private Helper Methods =====
 
   private normalizeViewerLabel(label: SdkViewerLabel): ViewerLabel {
+    // Keep numeric ids as numbers, but pass string ids through verbatim instead
+    // of coercing them to NaN via Number().
+    const id = label.id;
+    const labelId = typeof id === 'number' ? id : String(id);
     return {
-      labelId: Number(label.id),
+      labelId,
       labelName: label.label,
     };
   }

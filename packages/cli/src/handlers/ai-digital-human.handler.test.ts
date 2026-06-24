@@ -251,7 +251,7 @@ describe('AIDigitalHumanHandler', () => {
   describe('setOrganizations', () => {
     test('[AC3, AC4] should set organizations with JSON config and display success', async () => {
       const options = {
-        config: JSON.stringify([
+        configJson: JSON.stringify([
           {
             aiDigitalHumanId: 1,
             organizationIds: [1, 2, 3],
@@ -275,7 +275,7 @@ describe('AIDigitalHumanHandler', () => {
 
     test('[AC3, AC4] should output JSON format when specified', async () => {
       const options = {
-        config: JSON.stringify([
+        configJson: JSON.stringify([
           {
             aiDigitalHumanId: 1,
             organizationIds: [1, 2, 3],
@@ -325,7 +325,7 @@ describe('AIDigitalHumanHandler', () => {
 
     test('[AC5] should throw error for invalid JSON config', async () => {
       const options = {
-        config: 'not valid json',
+        configJson: 'not valid json',
         output: 'table' as const,
       };
 
@@ -334,7 +334,7 @@ describe('AIDigitalHumanHandler', () => {
 
     test('[AC5] should throw error when config is empty', async () => {
       const options = {
-        config: '[]',
+        configJson: '[]',
         output: 'table' as const,
       };
 

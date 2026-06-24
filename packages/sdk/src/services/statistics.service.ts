@@ -656,52 +656,55 @@ export class StatisticsService {
     // Validate parameters
     this.validateExportSessionStatsParams(params);
 
-    // Call V3 API
-    const response = await this.client.httpClient.get<ExportSessionStatsResponse>(
+    // Call V3 API. The endpoint is synchronous: on success the response `data`
+    // field is the bare download URL string (not an object).
+    // Note: the response interceptor unwraps the { code, data } envelope, so at
+    // runtime the resolved value is the bare data (string), even though axios
+    // types it as AxiosResponse. Cast to unknown to model the real runtime value.
+    const response = (await this.client.httpClient.get<unknown>(
       '/live/v3/channel/session/stats/export',
       { params }
-    );
+    )) as unknown;
 
-    // Handle response - if it has a 'data' property, check its structure
-    // The test mocks wrap the response in { data: ... }
-    if (response && typeof response === 'object' && 'data' in response) {
-      const responseData = response as { data: unknown };
+    // Production: the response interceptor already unwrapped the { code, data }
+    // envelope, so `response` is the bare download URL string.
+    if (typeof response === 'string') {
+      if (response.trim() === '') {
+        throw new Error('场次报表导出失败：报表尚未生成，请稍后重试');
+      }
+      return { downloadUrl: response };
+    }
 
-      // Check if data contains error response
-      if (responseData.data && typeof responseData.data === 'object') {
-        const innerData = responseData.data as { code?: number; message?: string; status?: string; data?: unknown };
-
-        // Check for API error response (code !== 200)
-        if (innerData.code && innerData.code !== 200) {
-          throw new Error(innerData.message || 'API Error');
+    // Defensive fallbacks for callers that bypass the interceptor (e.g. tests
+    // or endpoints returning an object shape).
+    if (response && typeof response === 'object') {
+      const obj = response as Record<string, unknown>;
+      if (typeof obj['downloadUrl'] === 'string' && obj['downloadUrl']) {
+        return { downloadUrl: obj['downloadUrl'] };
+      }
+      // Envelope not yet unwrapped: { code, data }
+      if (obj['code'] !== undefined && obj['code'] !== 200) {
+        throw new Error(String(obj['message'] || '场次报表导出失败'));
+      }
+      if (typeof obj['data'] === 'string' && obj['data']) {
+        return { downloadUrl: obj['data'] };
+      }
+      // Wrapped as { data: { code, data } } (test mock shape)
+      const inner = obj['data'] as Record<string, unknown> | undefined;
+      if (inner && typeof inner === 'object') {
+        if (inner['code'] !== undefined && inner['code'] !== 200) {
+          throw new Error(String(inner['message'] || '场次报表导出失败'));
         }
-
-        // If inner data is the expected response format
-        if ('downloadUrl' in innerData) {
-          return innerData as ExportSessionStatsResponse;
+        if (typeof inner['downloadUrl'] === 'string' && inner['downloadUrl']) {
+          return { downloadUrl: inner['downloadUrl'] };
         }
-
-        // If data is a string (URL in the 'data' field of API response)
-        if (typeof innerData.data === 'string' && innerData.data) {
-          return { downloadUrl: innerData.data };
+        if (typeof inner['data'] === 'string' && inner['data']) {
+          return { downloadUrl: inner['data'] };
         }
       }
     }
 
-    // Check for direct error response (without 'data' wrapper)
-    if (response && typeof response === 'object' && 'code' in response) {
-      const apiResponse = response as Record<string, unknown>;
-      if (apiResponse.code && apiResponse.code !== 200) {
-        throw new Error(String(apiResponse.message || 'API Error'));
-      }
-      // If data is a string (URL), wrap it in response format
-      if (typeof apiResponse.data === 'string' && apiResponse.data) {
-        return { downloadUrl: apiResponse.data };
-      }
-    }
-
-    // Return the response directly
-    return response as unknown as ExportSessionStatsResponse;
+    throw new Error('场次报表导出失败：接口未返回下载链接，报表可能尚未生成，请稍后重试');
   }
 
   /**

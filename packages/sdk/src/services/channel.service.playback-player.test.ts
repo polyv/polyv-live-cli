@@ -907,23 +907,41 @@ describe('ChannelService Playback + Player APIs', () => {
   // AC17: recordConvert
   // ============================================
   describe('AC17: recordConvert - Convert Record (Sync)', () => {
-    it('should convert record synchronously', async () => {
-      mockAxiosInstance.post.mockResolvedValueOnce({ fileId: 'converted123' })
+    it('should convert record synchronously via v2 endpoint with sessionId', async () => {
+      // Interceptor unwraps the envelope; on success `data` is the vid string.
+      mockAxiosInstance.post.mockResolvedValueOnce('converted123')
 
       const result = await channelService.recordConvert('ch123456', {
-        fileId: 'file123',
+        userId: 'user123',
+        fileName: 'my-vod',
+        sessionId: 'fvlyin8qz3',
       })
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/live/v3/channel/record/convert',
+        '/live/v2/channel/recordFile/ch123456/convert',
         null,
-        { params: { channelId: 'ch123456', fileId: 'file123' } }
+        { params: { userId: 'user123', fileName: 'my-vod', sessionId: 'fvlyin8qz3' } }
       )
-      expect(result.fileId).toBe('converted123')
+      expect(result.vid).toBe('converted123')
     })
 
     it('should validate channelId is required', async () => {
-      await expect(channelService.recordConvert('', { fileId: 'file123' })).rejects.toThrow(PolyVValidationError)
+      await expect(
+        channelService.recordConvert('', {
+          userId: 'user123',
+          fileName: 'my-vod',
+          sessionId: 'fvlyin8qz3',
+        })
+      ).rejects.toThrow(PolyVValidationError)
+    })
+
+    it('should require sessionId or fileUrl', async () => {
+      await expect(
+        channelService.recordConvert('ch123456', {
+          userId: 'user123',
+          fileName: 'my-vod',
+        })
+      ).rejects.toThrow(PolyVValidationError)
     })
   })
 
@@ -931,23 +949,31 @@ describe('ChannelService Playback + Player APIs', () => {
   // AC18: recordConvertAsync
   // ============================================
   describe('AC18: recordConvertAsync - Convert Record (Async)', () => {
-    it('should convert record asynchronously', async () => {
+    it('should convert record asynchronously via v3 endpoint with fileIds', async () => {
       mockAxiosInstance.post.mockResolvedValueOnce(true)
 
       const result = await channelService.recordConvertAsync('ch123456', {
-        fileId: 'file123',
+        fileIds: 'file1,file2',
       })
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/live/v3/channel/record/convert-async',
+        '/live/v3/channel/record/convert',
         null,
-        { params: { channelId: 'ch123456', fileId: 'file123' } }
+        { params: { channelId: 'ch123456', fileIds: 'file1,file2' } }
       )
       expect(result).toBe(true)
     })
 
     it('should validate channelId is required', async () => {
-      await expect(channelService.recordConvertAsync('', { fileId: 'file123' })).rejects.toThrow(PolyVValidationError)
+      await expect(
+        channelService.recordConvertAsync('', { fileIds: 'file1' })
+      ).rejects.toThrow(PolyVValidationError)
+    })
+
+    it('should require fileIds', async () => {
+      await expect(
+        channelService.recordConvertAsync('ch123456', { fileIds: '' })
+      ).rejects.toThrow(PolyVValidationError)
     })
   })
 

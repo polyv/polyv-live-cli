@@ -981,19 +981,54 @@ export interface ClipRecordFileResponse {
 }
 
 /**
- * Record Convert Request
+ * Record Convert Request (synchronous)
+ *
+ * Backed by `POST /live/v2/channel/recordFile/{channelId}/convert`. Either
+ * `sessionId` or `fileUrl` must be provided; when only `sessionId` is given the
+ * backend converts that session's recording to VOD.
  */
 export interface RecordConvertRequest {
-  fileId: string;
+  /** Account user ID (required, included in signature) */
+  userId: string;
+  /** Converted VOD video name (required) */
+  fileName: string;
+  /** Live session ID (one of sessionId/fileUrl is required) */
+  sessionId?: string;
+  /** Recording file URL (one of sessionId/fileUrl is required) */
+  fileUrl?: string;
+  /** Catalog ID */
+  cataid?: string;
+  /** Catalog name */
+  cataname?: string;
+  /** Add to playback list (Y/N) */
+  toPlayList?: 'Y' | 'N';
+  /** Set as default playback video (Y/N) */
+  setAsDefault?: 'Y' | 'N';
+}
+
+/**
+ * Record Convert Async Request
+ *
+ * Backed by `POST /live/v3/channel/record/convert`. Requires `fileIds`
+ * (comma-separated), obtained from the "查询频道录制视频信息" endpoint.
+ */
+export interface RecordConvertAsyncRequest {
+  /** Recording file IDs, comma-separated (required) */
+  fileIds: string;
+  /** Converted file name */
   fileName?: string;
+  /** Callback URL invoked on completion */
   callbackUrl?: string;
+  /** Whether to return success when the VOD already exists (1=yes, 0=no) */
+  canRepeat?: number;
 }
 
 /**
  * Record Convert Response
  */
 export interface RecordConvertResponse {
-  fileId: string;
+  /** Converted VOD video ID (vid) */
+  vid: string;
 }
 
 /**

@@ -970,9 +970,9 @@ Scope:
   roleCmd.command('get')
     .description('Get one role account')
     .requiredOption('--channel-id <id>', 'channel ID')
-    .requiredOption('--account <account>', 'role account ID')
+    .requiredOption('--account-id <account>', 'role account ID')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action((options) => runChannelViewerCommand((handler) => handler.getRoleAccount(options)));
+    .action((options) => runChannelViewerCommand((handler) => handler.getRoleAccount({ ...options, account: options.accountId })));
   roleCmd.command('list')
     .description('List role accounts')
     .requiredOption('--channel-id <id>', 'channel ID')
@@ -991,10 +991,10 @@ Scope:
   roleCmd.command('delete')
     .description('Delete one role account')
     .requiredOption('--channel-id <id>', 'channel ID')
-    .requiredOption('--account <account>', 'role account ID')
+    .requiredOption('--account-id <account>', 'role account ID')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action((options) => runChannelViewerCommand((handler) => handler.deleteRoleAccount(options)));
+    .action((options) => runChannelViewerCommand((handler) => handler.deleteRoleAccount({ ...options, account: options.accountId })));
   roleCmd.command('account-create')
     .description('Create a V4 assistant or guest role account')
     .requiredOption('--channel-id <id>', 'channel ID')
@@ -1018,7 +1018,7 @@ Scope:
   roleCmd.command('account-update')
     .description('Update a V4 role account')
     .requiredOption('--channel-id <id>', 'channel ID')
-    .requiredOption('--account <account>', 'role account')
+    .requiredOption('--account-id <account>', 'role account')
     .option('--actor <actor>', 'actor label')
     .option('--nick-name <name>', 'nickname')
     .option('--avatar <url>', 'avatar URL')
@@ -1027,10 +1027,11 @@ Scope:
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => runChannelApiWriteCommand(
-      options,
-      `Update role account ${options.account} in channel ${options.channelId}?`,
+      { ...options, account: options.accountId },
+      `Update role account ${options.accountId} in channel ${options.channelId}?`,
       (service) => service.updateAccountInfo(apiParams({
         ...options,
+        account: options.accountId,
         purviewList: options.purviewListJson,
         purviewListJson: undefined,
       }))

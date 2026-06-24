@@ -504,7 +504,7 @@ Examples:
   labelCmd
     .command('update')
     .description('Update an account label')
-    .requiredOption('--label-id <id>', 'account label ID', parsePositiveInteger)
+    .requiredOption('--label-id <id>', 'account label ID (string, from `viewer label list`)')
     .requiredOption('--label-name <name>', 'account label name')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
@@ -520,7 +520,7 @@ Examples:
   labelCmd
     .command('delete')
     .description('Delete an account label')
-    .requiredOption('--label-id <id>', 'account label ID', parsePositiveInteger)
+    .requiredOption('--label-id <id>', 'account label ID (string, from `viewer label list`)')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {

@@ -703,10 +703,17 @@ export class ChatHandler extends BaseHandler {
   }
 
   private displaySendResult(result: SendAdminMsgResponse, format?: OutputFormat): void {
+    // The send-admin-msg envelope does not always carry a top-level `success`
+    // field; derive it from the API code/status so callers can rely on it.
+    const anyResult = result as unknown as Record<string, unknown>;
+    const success =
+      typeof anyResult['success'] === 'boolean'
+        ? (anyResult['success'] as boolean)
+        : anyResult['code'] === 200 || anyResult['status'] === 'success';
     const data = {
-      success: result.success,
-      message: result.message,
-      data: result.data,
+      success,
+      message: (anyResult['message'] as string | undefined) ?? result.message ?? '',
+      data: anyResult['data'] ?? result.data,
     };
 
     if (format === 'json') {

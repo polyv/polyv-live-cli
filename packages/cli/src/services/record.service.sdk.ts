@@ -110,6 +110,8 @@ export class RecordServiceSdk {
 
   /**
    * Convert recording to VOD (sync mode)
+   *
+   * Uses the v2 endpoint which accepts a sessionId (or fileUrl) directly.
    * @param channelId Channel ID
    * @param options Convert options
    * @returns Promise resolving to convert result
@@ -121,26 +123,52 @@ export class RecordServiceSdk {
     // Create SDK client
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
 
-    // Build SDK params - use sessionId or fileId as the source
-    const params: { fileId: string; fileName: string; callbackUrl?: string } = {
-      fileId: options['sessionId'] ?? options['fileId'] ?? '',
-      fileName: options['fileName'],
-    };
-    if (options['callbackUrl'] !== undefined) {
-      params.callbackUrl = options['callbackUrl'];
+    // The v2 sync endpoint requires the account userId (included in signature).
+    const userId = options.userId ?? this.authConfig.userId;
+    if (!userId) {
+      throw new Error(
+        'record convert (sync) 需要 userId：请通过 --user-id 传入，或确认当前账号已配置 userId'
+      );
     }
+    if (!options.fileName || options.fileName.trim() === '') {
+      throw new Error('record convert (sync) 需要 --file-name');
+    }
+
+    // Build SDK params - sync mode is sessionId/fileUrl based
+    const params: {
+      userId: string;
+      fileName: string;
+      sessionId?: string;
+      fileUrl?: string;
+      cataid?: string;
+      cataname?: string;
+      toPlayList?: 'Y' | 'N';
+      setAsDefault?: 'Y' | 'N';
+    } = {
+      userId,
+      fileName: options.fileName,
+    };
+    if (options.sessionId) params.sessionId = options.sessionId;
+    if (options.fileUrl) params.fileUrl = options.fileUrl;
+    if (options.cataId !== undefined) params.cataid = options.cataId;
+    if (options.cataName !== undefined) params.cataname = options.cataName;
+    if (options.toPlayList !== undefined) params.toPlayList = options.toPlayList;
+    if (options.setAsDefault !== undefined) params.setAsDefault = options.setAsDefault;
 
     // Call SDK - sync mode
     const result = await client.channel.recordConvert(channelId, params);
 
     return {
       async: false,
-      vid: result['fileId'],
+      vid: result.vid,
     };
   }
 
   /**
    * Convert recording to VOD (async mode)
+   *
+   * Uses the v3 endpoint which requires comma-separated fileIds (obtain them via
+   * `record file list -c <channelId> --user-id <userId> --session-ids <id>`).
    * @param channelId Channel ID
    * @param options Convert options
    * @returns Promise resolving to convert result
@@ -152,21 +180,32 @@ export class RecordServiceSdk {
     // Create SDK client
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
 
-    // Build SDK params - use sessionId or fileId as the source
-    const params: { fileId: string; fileName: string; callbackUrl?: string } = {
-      fileId: options['sessionId'] ?? options['fileId'] ?? '',
-      fileName: options['fileName'],
-    };
-    if (options['callbackUrl'] !== undefined) {
-      params.callbackUrl = options['callbackUrl'];
+    if (!options.fileIds || options.fileIds.trim() === '') {
+      throw new Error(
+        'record convert --async 需要 --file-ids（逗号分隔）。请先用 ' +
+          '`record file list -c <channelId> --user-id <userId> --session-ids <id>` 获取 fileId'
+      );
     }
 
-    // The latest inventory keeps this API at /record/convert.
-    const result = await client.channel.recordConvert(channelId, params);
+    // Build SDK params - async mode is fileIds based
+    const params: {
+      fileIds: string;
+      fileName?: string;
+      callbackUrl?: string;
+    } = {
+      fileIds: options.fileIds,
+    };
+    if (options.fileName !== undefined) {
+      params.fileName = options.fileName;
+    }
+    if (options.callbackUrl !== undefined) {
+      params.callbackUrl = options.callbackUrl;
+    }
+
+    await client.channel.recordConvertAsync(channelId, params);
 
     return {
       async: true,
-      vid: result?.['fileId'],
     };
   }
 
@@ -202,13 +241,24 @@ export class RecordServiceSdk {
 
   async listRecordFiles(params: {
     channelId: string;
-    userId: string;
+    userId?: string;
     startDate?: string;
     endDate?: string;
     sessionIds?: string;
   }): Promise<any> {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
-    return client.channel.listRecordFiles(params);
+    // The record-file list API requires userId (included in signature). When the
+    // caller omits it, fall back to the active account's userId so users do not
+    // have to pass --user-id explicitly.
+    const userId = params.userId && params.userId.trim() !== ''
+      ? params.userId
+      : this.authConfig.userId;
+    if (!userId) {
+      throw new Error(
+        'record file list 需要 userId：请通过 --user-id 传入，或确认当前账号已配置 userId'
+      );
+    }
+    return client.channel.listRecordFiles({ ...params, userId });
   }
 
   async listMaterialRecordFiles(params: {

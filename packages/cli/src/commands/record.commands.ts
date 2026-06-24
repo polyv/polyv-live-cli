@@ -327,13 +327,16 @@ Options:
 Examples:
   $ polyv-live-cli record convert -c "2588188" --session-id "fvlyin8qz3" --file-name "测试转存"
   $ polyv-live-cli record convert -c "2588188" --session-id "fvlyin8qz3" --file-name "测试转存" --to-play-list Y --set-as-default Y
-  $ polyv-live-cli record convert -c "2588188" --session-id "fvlyin8qz3" --file-name "测试转存" --async`)
+  $ polyv-live-cli record convert -c "2588188" --file-ids "fileId1,fileId2" --async`)
     .requiredOption('-c, --channel-id <channelId>', '频道ID')
-    .requiredOption('--file-name <fileName>', '转存后的点播视频名称')
-    .option('--session-id <sessionId>', '直播场次ID')
+    .option('--file-name <fileName>', '转存后的点播视频名称（同步模式必填，异步模式可选）')
+    .option('--session-id <sessionId>', '直播场次ID（同步模式：转存该场次的录制）')
+    .option('--file-url <fileUrl>', '录制文件地址（同步模式：与 --session-id 二选一）')
+    .option('--file-ids <fileIds>', '录制文件ID，逗号分隔（异步模式必填，可通过 `record file list` 获取）')
+    .option('--user-id <userId>', '账号userId（同步模式；默认使用当前账号userId）')
     .option('--to-play-list <value>', '是否存放到回放列表 (Y|N)', validateYN)
     .option('--set-as-default <value>', '是否设为默认回放视频 (Y|N)', validateYN)
-    .option('--async', '使用异步转存模式', false)
+    .option('--async', '使用异步转存模式（需 --file-ids）', false)
     .option('--callback-url <url>', '转存完成后的回调URL（异步模式）')
     .option('-f, --force', '跳过确认提示')
     .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
@@ -360,6 +363,9 @@ Examples:
 
         // Add optional fields if provided
         if (options.sessionId !== undefined) convertOptions.sessionId = options.sessionId;
+        if (options.fileUrl !== undefined) convertOptions.fileUrl = options.fileUrl;
+        if (options.fileIds !== undefined) convertOptions.fileIds = options.fileIds;
+        if (options.userId !== undefined) convertOptions.userId = options.userId;
         if (options.toPlayList !== undefined) convertOptions.toPlayList = options.toPlayList;
         if (options.setAsDefault !== undefined) convertOptions.setAsDefault = options.setAsDefault;
         if (options.callbackUrl !== undefined) convertOptions.callbackUrl = options.callbackUrl;
@@ -376,29 +382,33 @@ Examples:
   // Add help text for record convert command
   convertCmd.addHelpText('after', `
 Examples:
-  # 同步转存录制文件到点播
+  # 同步转存：通过场次ID转存该场次的录制到点播
   $ polyv-live-cli record convert -c "2588188" --session-id "fvlyin8qz3" --file-name "测试转存"
 
   # 转存并添加到回放列表、设为默认回放
   $ polyv-live-cli record convert -c "2588188" --session-id "fvlyin8qz3" --file-name "测试转存" --to-play-list Y --set-as-default Y
 
-  # 异步转存模式
-  $ polyv-live-cli record convert -c "2588188" --session-id "fvlyin8qz3" --file-name "测试转存" --async
+  # 异步转存：通过录制文件ID（fileIds）转存，可一次转存多个文件
+  $ polyv-live-cli record convert -c "2588188" --file-ids "fileId1,fileId2" --async
 
 Options:
   -c, --channel-id      频道ID (必填)
-  --file-name           转存后的点播视频名称 (必填)
-  --session-id          直播场次ID
+  --file-name           转存后的点播视频名称（同步模式必填，异步模式可选）
+  --session-id          直播场次ID（同步模式）
+  --file-url            录制文件地址（同步模式，与 --session-id 二选一）
+  --file-ids            录制文件ID，逗号分隔（异步模式必填）
+  --user-id             账号userId（同步模式；默认使用当前账号userId）
   --to-play-list        是否存放到回放列表: Y 或 N
   --set-as-default      是否设为默认回放视频: Y 或 N
-  --async               使用异步转存模式
+  --async               使用异步转存模式（需 --file-ids）
   --callback-url        转存完成后的回调URL（异步模式）
   -o, --output          输出格式: table 或 json，默认为table
 
 Notes:
   - 同一个POLYV账号，调用该接口的间隔至少5分钟
-  - 同步模式会等待转存完成后返回视频ID
-  - 异步模式会立即返回，转存完成后可在点播后台查看
+  - 同步模式基于场次ID转存，会等待转存完成后返回视频ID(vid)
+  - 异步模式基于录制文件ID(fileIds)转存，立即返回，转存完成后可在点播后台查看
+  - fileIds 可通过 \`record file list -c <channelId> --user-id <userId> --session-ids <id>\` 获取
 `);
 
   // record set-default command
@@ -518,9 +528,9 @@ Options:
 
   fileCmd
     .command('list')
-    .description('查询频道直播暂存列表')
+    .description(`查询频道直播暂存列表（返回的 fileId 可用于 \`playback merge --file-ids\` / \`record convert --async --file-ids\`）`)
     .requiredOption('-c, --channel-id <channelId>', '频道ID')
-    .requiredOption('--user-id <userId>', '用户ID')
+    .option('--user-id <userId>', '用户ID（默认使用当前账号userId）')
     .option('--start-date <date>', '开始日期 (YYYY-MM-DD)')
     .option('--end-date <date>', '结束日期 (YYYY-MM-DD)')
     .option('--session-ids <ids>', '场次ID，逗号分隔')

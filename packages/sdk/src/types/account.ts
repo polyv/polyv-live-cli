@@ -50,7 +50,8 @@ export interface UpdateCategoryNameResponse {
 
 export interface UpdateCategoryRankParams {
   categoryId: number;
-  rank: number;
+  /** Move the category to AFTER this category ID (PolyV update-rank contract). */
+  afterCategoryId: number;
 }
 
 export interface UpdateCategoryRankResponse {

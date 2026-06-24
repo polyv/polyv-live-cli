@@ -179,8 +179,8 @@ export class RecordHandler extends BaseHandler {
         throw new Error('channelId is required');
       }
 
-      // Validate required fileName
-      if (!options.fileName || options.fileName.trim() === '') {
+      // The sync v2 endpoint requires a VOD file name; async v3 only requires fileIds.
+      if (!options.async && (!options.fileName || options.fileName.trim() === '')) {
         throw new Error('fileName is required');
       }
 
@@ -499,7 +499,7 @@ export class RecordHandler extends BaseHandler {
 
       const resultData: Record<string, any> = {
         channelId: options.channelId,
-        sessionId: options.sessionId,
+        fileIds: options.fileIds,
         fileName: options.fileName,
         status: 'processing',
       };
@@ -508,8 +508,8 @@ export class RecordHandler extends BaseHandler {
         this.displayData(resultData, 'json');
       } else {
         const tableData: Record<string, string>[] = [];
-        tableData.push({ '属性': '源场次ID', '值': options.sessionId ?? '-' });
-        tableData.push({ '属性': '文件名', '值': options.fileName });
+        tableData.push({ '属性': '录制文件ID', '值': options.fileIds ?? '-' });
+        tableData.push({ '属性': '文件名', '值': options.fileName ?? '-' });
         tableData.push({ '属性': '状态', '值': '处理中' });
         tableData.push({ '属性': '说明', '值': '异步转存不立即返回视频ID，请在点播后台查看' });
         this.displayAsTable(tableData);
@@ -532,7 +532,7 @@ export class RecordHandler extends BaseHandler {
       } else {
         const tableData: Record<string, string>[] = [];
         tableData.push({ '属性': '源场次ID', '值': options.sessionId ?? '-' });
-        tableData.push({ '属性': '文件名', '值': options.fileName });
+        tableData.push({ '属性': '文件名', '值': options.fileName ?? '-' });
         tableData.push({ '属性': '存入回放列表', '值': Y_N_MAP[options.toPlayList ?? ''] ?? options.toPlayList ?? '-' });
         tableData.push({ '属性': '设为默认回放', '值': Y_N_MAP[options.setAsDefault ?? ''] ?? options.setAsDefault ?? '-' });
         tableData.push({ '属性': '点播视频ID', '值': result.vid ?? '-' });

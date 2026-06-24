@@ -179,13 +179,13 @@ describe('AI Commands', () => {
       expect(setOrgCmd?.description()).toMatch(/设置|set|关联|组织/i);
     });
 
-    it('[AC3] should register --config option for set-org command', () => {
+    it('[AC3] should register --config-json option for set-org command', () => {
       const aiCmd = program.commands.find(cmd => cmd.name() === 'ai');
       const digitalHumanCmd = aiCmd?.commands.find(cmd => cmd.name() === 'digital-human');
       const setOrgCmd = digitalHumanCmd?.commands.find(cmd => cmd.name() === 'set-org');
       const options = setOrgCmd?.options || [];
 
-      const configOption = options.find(opt => opt.long === '--config');
+      const configOption = options.find(opt => opt.long === '--config-json');
       expect(configOption).toBeDefined();
     });
 
@@ -548,7 +548,7 @@ describe('action execution', () => {
 
       expect(MockAIDigitalHumanHandler).toHaveBeenCalled();
       expect(mockHandler.setOrganizations).toHaveBeenCalledWith({
-        config: undefined,
+        configJson: undefined,
         aiDigitalHumanId: 'dh123',
         organizationIds: 'org1,org2',
         includeChildren: true,
@@ -556,7 +556,7 @@ describe('action execution', () => {
       });
     });
 
-    it('[P1] should call setOrganizations with config option', async () => {
+    it('[P1] should call setOrganizations with config-json option', async () => {
       const mockHandler = { setOrganizations: jest.fn().mockResolvedValue(undefined) };
       MockAIDigitalHumanHandler.mockImplementation(() => mockHandler);
 
@@ -564,12 +564,12 @@ describe('action execution', () => {
       registerAiCommands(program);
       await program.parseAsync([
         'node', 'test', 'ai', 'digital-human', 'set-org',
-        '--config', '[{"aiDigitalHumanId":"dh1","organizationIds":["org1"]}]',
+        '--config-json', '[{"aiDigitalHumanId":"dh1","organizationIds":["org1"]}]',
         '-o', 'json',
       ]);
 
       expect(mockHandler.setOrganizations).toHaveBeenCalledWith({
-        config: '[{"aiDigitalHumanId":"dh1","organizationIds":["org1"]}]',
+        configJson: '[{"aiDigitalHumanId":"dh1","organizationIds":["org1"]}]',
         aiDigitalHumanId: undefined,
         organizationIds: undefined,
         includeChildren: true,

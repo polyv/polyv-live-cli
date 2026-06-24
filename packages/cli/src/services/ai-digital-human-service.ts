@@ -100,7 +100,10 @@ export class AIDigitalHumanServiceSdk {
       throw new Error(`config count (${params.length}) exceeds maximum of 100`);
     }
 
-    await this.v4Ai.setOrganizations({ items: params });
+    await this.client.httpClient.post(
+      '/live/v4/ai/digital-human/set-organizations',
+      params
+    );
 
     return true;
   }

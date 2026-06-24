@@ -71,12 +71,16 @@ export interface RecordSettingSetOptions {
 export interface RecordConvertOptions {
   /** Channel ID (required) */
   channelId: string;
-  /** File ID (optional, use sessionId instead) */
-  fileId?: string;
-  /** Session ID (optional) */
+  /** Session ID (sync mode; the session's recording is converted to VOD) */
   sessionId?: string;
-  /** File name (required) */
-  fileName: string;
+  /** Recording file URL (sync mode; alternative to sessionId) */
+  fileUrl?: string;
+  /** Recording file IDs, comma-separated (async mode required) */
+  fileIds?: string;
+  /** Account user ID (sync mode required; auto-filled from the active account if omitted) */
+  userId?: string;
+  /** File name (sync mode required; async mode optional) */
+  fileName?: string;
   /** Catalog ID */
   cataId?: string;
   /** Catalog name */

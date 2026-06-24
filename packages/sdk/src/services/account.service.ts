@@ -264,10 +264,10 @@ export class AccountService {
    *
    * @example
    * ```typescript
-   * const result = await client.account.updateCategoryRank({
-   *   categoryId: 12345,
-   *   rank: 1,
-   * });
+ * const result = await client.account.updateCategoryRank({
+ *   categoryId: 12345,
+ *   afterCategoryId: 67890,
+ * });
    * console.log(result.success);
    * ```
    */
@@ -275,8 +275,8 @@ export class AccountService {
     if (!params.categoryId || params.categoryId <= 0) {
       throw new PolyVValidationError('categoryId must be a positive number');
     }
-    if (params.rank === undefined || params.rank === null) {
-      throw new PolyVValidationError('rank is required');
+    if (params.afterCategoryId === undefined || params.afterCategoryId === null) {
+      throw new PolyVValidationError('afterCategoryId is required');
     }
 
     const response = await this.client.httpClient.post<UpdateCategoryRankResponse>(
