@@ -1,37 +1,13 @@
 import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  parseJsonObject,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
-
-function parseJsonObject(output: string): Record<string, unknown> {
-  const parsed = parseJsonValue(output);
-  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    throw new Error(`No JSON object found in CLI output:\n${output}`);
-  }
-
-  return parsed as Record<string, unknown>;
-}
-
-function parseJsonValue(output: string): unknown {
-  const objectStart = output.indexOf('{');
-  const arrayStart = output.indexOf('[');
-  const starts = [objectStart, arrayStart].filter((index) => index !== -1);
-  const start = Math.min(...starts);
-  const end = Math.max(output.lastIndexOf('}'), output.lastIndexOf(']'));
-  if (start === -1 || end === -1 || end < start) {
-    throw new Error(`No JSON found in CLI output:\n${output}`);
-  }
-
-  return JSON.parse(output.slice(start, end + 1));
-}
-
-function runCliSuccess(args: string[], timeout = 60000): string {
-  const result = runCli(args, { timeout });
-  if (result.exitCode !== 0) {
-    throw new Error(`CLI command failed: ${args.join(' ')}\n${result.output}`);
-  }
-  return result.output;
-}
 
 function runCliSuccessOrExpectedFailure(args: string[], expectedFailureText: string, timeout = 60000): string {
   const result = runCli(args, { timeout });
@@ -40,38 +16,6 @@ function runCliSuccessOrExpectedFailure(args: string[], expectedFailureText: str
   }
 
   throw new Error(`CLI command failed: ${args.join(' ')}\n${result.output}`);
-}
-
-function createTemporaryChannel(label: string): string {
-  const output = runCliSuccess([
-    'channel',
-    'create',
-    '--name',
-    `CLI V4 Core ${label} ${Date.now()}`,
-    '--scene',
-    'topclass',
-    '--template',
-    'ppt',
-    '--output',
-    'json',
-  ]);
-
-  const created = parseJsonObject(output);
-  const channelId = String(created.channelId || '');
-  expect(channelId).toMatch(/^\d+$/);
-  return channelId;
-}
-
-function deleteTemporaryChannel(channelId: string): void {
-  runCliSuccess([
-    'channel',
-    'delete',
-    '--channelId',
-    channelId,
-    '--force',
-    '--output',
-    'json',
-  ]);
 }
 
 describe('v4 channel core CLI integration', () => {
@@ -122,14 +66,14 @@ describe('v4 channel core CLI integration', () => {
     let channelId: string | undefined;
 
     try {
-      channelId = createTemporaryChannel('Read Smoke');
+      channelId = createTemporaryChannel('V4 Core Read Smoke');
       const id = channelId;
       const endTime = String(Date.now());
       const startTime = String(Date.now() - 24 * 60 * 60 * 1000);
 
       const readCommands = [
         ['channel', 'basic-list', '--channel-ids', id, '--output', 'json'],
-        ['channel', 'simple-list', '--keyword', 'CLI V4 Core', '--output', 'json'],
+        ['channel', 'simple-list', '--keyword', 'V4 Core', '--output', 'json'],
         ['channel', 'live-status-list', '--channel-ids', id, '--output', 'json'],
         ['channel', 'role', 'teacher-list', '--channel-ids', id, '--output', 'json'],
         ['channel', 'role', 'viewer-get', '--channel-id', id, '--output', 'json'],
@@ -161,7 +105,7 @@ describe('v4 channel core CLI integration', () => {
     let channelId: string | undefined;
 
     try {
-      channelId = createTemporaryChannel('Write Smoke');
+      channelId = createTemporaryChannel('V4 Core Write Smoke');
       const id = channelId;
 
       const writeCommands = [
@@ -179,6 +123,17 @@ describe('v4 channel core CLI integration', () => {
           'Student',
           '--question-student-title-enabled',
           'Y',
+          '--force',
+          '--output',
+          'json',
+        ],
+        [
+          'channel',
+          'template-update',
+          '--channel-id',
+          id,
+          '--template',
+          'ppt',
           '--force',
           '--output',
           'json',
@@ -226,6 +181,38 @@ describe('v4 channel core CLI integration', () => {
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('copies a temporary real channel through the local CLI and deletes the copy', () => {
+    let sourceChannelId: string | undefined;
+    let copiedChannelId: string | undefined;
+
+    try {
+      sourceChannelId = createTemporaryChannel('V4 Core Copy Source');
+      const copyOutput = runCliSuccess([
+        'channel',
+        'copy',
+        '--channel-id',
+        sourceChannelId,
+        '--name',
+        `CLI Copy ${Date.now()}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+
+      const copied = parseJsonObject(copyOutput);
+      copiedChannelId = String(copied.channelId || '');
+      expect(copiedChannelId).toMatch(/^\d+$/);
+      expect(copiedChannelId).not.toBe(sourceChannelId);
+    } finally {
+      if (copiedChannelId) {
+        deleteTemporaryChannel(copiedChannelId);
+      }
+      if (sourceChannelId) {
+        deleteTemporaryChannel(sourceChannelId);
       }
     }
   }, 240000);

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T07:28:18.738Z
+Generated at: 2026-06-24T07:32:12.776Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 200 |
-| Missing real-execution leaf subcommands | 367 |
-| Real-execution coverage | 35.27% |
-| Leaf subcommands referenced including help | 339 |
-| Missing including help | 228 |
+| Real-executed leaf subcommands | 202 |
+| Missing real-execution leaf subcommands | 365 |
+| Real-execution coverage | 35.63% |
+| Leaf subcommands referenced including help | 340 |
+| Missing including help | 227 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 6 | 2 | 75.00% | 6 | 2 |
-| `channel` | 78 | 31 | 47 | 39.74% | 60 | 18 |
+| `channel` | 78 | 33 | 45 | 42.31% | 61 | 17 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -79,12 +79,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel batch-create` | `packages/cli/src/commands/channel.commands.ts:851` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1459` |
 | `channel children-list` | `packages/cli/src/commands/channel.commands.ts:1290` |
-| `channel copy` | `packages/cli/src/commands/channel.commands.ts:1279` |
 | `channel create-init` | `packages/cli/src/commands/channel.commands.ts:904` |
 | `channel mr-create` | `packages/cli/src/commands/channel.commands.ts:928` |
 | `channel questionnaire-stop` | `packages/cli/src/commands/channel.commands.ts:1401` |
 | `channel submeeting-batch-add` | `packages/cli/src/commands/channel.commands.ts:1390` |
-| `channel template-update` | `packages/cli/src/commands/channel.commands.ts:957` |
 | `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1134` |
 | `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1164` |
 | `channel distribute master-switch` | `packages/cli/src/commands/channel.commands.ts:1183` |
