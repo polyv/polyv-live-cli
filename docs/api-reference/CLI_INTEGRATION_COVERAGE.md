@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T08:03:34.438Z
+Generated at: 2026-06-24T08:07:49.510Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 59 |
+| Integration files scanned | 60 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 218 |
-| Missing real-execution leaf subcommands | 349 |
-| Real-execution coverage | 38.45% |
-| Leaf subcommands referenced including help | 347 |
-| Missing including help | 220 |
+| Real-executed leaf subcommands | 223 |
+| Missing real-execution leaf subcommands | 344 |
+| Real-execution coverage | 39.33% |
+| Leaf subcommands referenced including help | 351 |
+| Missing including help | 216 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 45 | 33 | 57.69% | 64 | 14 |
+| `channel` | 78 | 50 | 28 | 64.10% | 68 | 10 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -87,11 +87,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
-| `channel token api` | `packages/cli/src/commands/channel.commands.ts:1311` |
-| `channel token chat` | `packages/cli/src/commands/channel.commands.ts:1327` |
-| `channel token login-url` | `packages/cli/src/commands/channel.commands.ts:1321` |
-| `channel token set-account` | `packages/cli/src/commands/channel.commands.ts:1342` |
-| `channel token watch-api` | `packages/cli/src/commands/channel.commands.ts:1301` |
 | `channel viewer add` | `packages/cli/src/commands/channel.commands.ts:744` |
 | `channel viewer delete` | `packages/cli/src/commands/channel.commands.ts:757` |
 | `channel viewer export` | `packages/cli/src/commands/channel.commands.ts:736` |
