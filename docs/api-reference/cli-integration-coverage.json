@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T17:26:52.618Z",
+  "generatedAt": "2026-06-24T17:34:29.212Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 67,
+    "integrationFiles": 68,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 438,
-    "referencedCommandPathsExcludingHelp": 302,
-    "coveredLeafTargetsIncludingHelp": 400,
-    "missingLeafTargetsIncludingHelp": 167,
-    "coveredRealExecutionLeafTargets": 296,
-    "missingRealExecutionLeafTargets": 271,
-    "realExecutionCoveragePercent": 52.2,
-    "includingHelpCoveragePercent": 70.55,
-    "integrationReferences": 683,
-    "realExecutionReferences": 388,
-    "helpReferences": 295
+    "referencedCommandPathsIncludingHelp": 441,
+    "referencedCommandPathsExcludingHelp": 306,
+    "coveredLeafTargetsIncludingHelp": 402,
+    "missingLeafTargetsIncludingHelp": 165,
+    "coveredRealExecutionLeafTargets": 300,
+    "missingRealExecutionLeafTargets": 267,
+    "realExecutionCoveragePercent": 52.91,
+    "includingHelpCoveragePercent": 70.9,
+    "integrationReferences": 689,
+    "realExecutionReferences": 393,
+    "helpReferences": 296
   },
   "byTopLevel": [
     {
@@ -96,12 +96,12 @@
     {
       "command": "coupon",
       "targetLeafCommands": 8,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 6,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 50,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 8,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "custom-field",
@@ -786,48 +786,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 38
-    },
-    {
-      "command": "coupon add",
-      "path": [
-        "coupon",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 196
-    },
-    {
-      "command": "coupon delete",
-      "path": [
-        "coupon",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 339
-    },
-    {
-      "command": "coupon channel add",
-      "path": [
-        "coupon",
-        "channel",
-        "add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 464
-    },
-    {
-      "command": "coupon channel delete",
-      "path": [
-        "coupon",
-        "channel",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 489
     },
     {
       "command": "custom-field add",
@@ -3592,26 +3550,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 38
-    },
-    {
-      "command": "coupon add",
-      "path": [
-        "coupon",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 196
-    },
-    {
-      "command": "coupon delete",
-      "path": [
-        "coupon",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/coupon.commands.ts",
-      "line": 339
     },
     {
       "command": "document delete",
@@ -6588,6 +6526,26 @@
       "line": 228
     },
     {
+      "command": "coupon add",
+      "path": [
+        "coupon",
+        "add"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 196
+    },
+    {
+      "command": "coupon delete",
+      "path": [
+        "coupon",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 339
+    },
+    {
       "command": "coupon list",
       "path": [
         "coupon",
@@ -6596,6 +6554,28 @@
       "depth": 2,
       "file": "packages/cli/src/commands/coupon.commands.ts",
       "line": 281
+    },
+    {
+      "command": "coupon channel add",
+      "path": [
+        "coupon",
+        "channel",
+        "add"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 464
+    },
+    {
+      "command": "coupon channel delete",
+      "path": [
+        "coupon",
+        "channel",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/coupon.commands.ts",
+      "line": 489
     },
     {
       "command": "coupon channel enabled",
@@ -10253,10 +10233,36 @@
       "firstHelpReference": null
     },
     {
-      "command": "coupon channel add",
+      "command": "coupon",
       "realExecutionReferences": 0,
       "helpReferences": 1,
       "firstRealExecutionReference": null,
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 14,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "coupon add",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 40,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "coupon channel add",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 77,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-marketing-content-cli.integration.test.ts",
         "line": 76,
@@ -10265,9 +10271,13 @@
     },
     {
       "command": "coupon channel delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 96,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-marketing-content-cli.integration.test.ts",
         "line": 77,
@@ -10318,6 +10328,17 @@
         "line": 74,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "coupon delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 113,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "coupon list",

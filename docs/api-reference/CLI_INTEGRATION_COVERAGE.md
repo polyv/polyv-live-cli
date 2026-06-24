@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T17:26:52.618Z
+Generated at: 2026-06-24T17:34:29.212Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 67 |
+| Integration files scanned | 68 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 296 |
-| Missing real-execution leaf subcommands | 271 |
-| Real-execution coverage | 52.20% |
-| Leaf subcommands referenced including help | 400 |
-| Missing including help | 167 |
+| Real-executed leaf subcommands | 300 |
+| Missing real-execution leaf subcommands | 267 |
+| Real-execution coverage | 52.91% |
+| Leaf subcommands referenced including help | 402 |
+| Missing including help | 165 |
 
 ## By Top-Level Command
 
@@ -28,7 +28,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
 | `chat` | 44 | 33 | 11 | 75.00% | 37 | 7 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
-| `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
+| `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
 | `document` | 11 | 3 | 8 | 27.27% | 4 | 7 |
 | `donate` | 4 | 2 | 2 | 50.00% | 3 | 1 |
@@ -99,10 +99,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `checkin start` | `packages/cli/src/commands/checkin.commands.ts:38` |
-| `coupon add` | `packages/cli/src/commands/coupon.commands.ts:196` |
-| `coupon delete` | `packages/cli/src/commands/coupon.commands.ts:339` |
-| `coupon channel add` | `packages/cli/src/commands/coupon.commands.ts:464` |
-| `coupon channel delete` | `packages/cli/src/commands/coupon.commands.ts:489` |
 | `custom-field add` | `packages/cli/src/commands/custom-field.commands.ts:30` |
 | `custom-field value save` | `packages/cli/src/commands/custom-field.commands.ts:41` |
 | `document delete` | `packages/cli/src/commands/document.commands.ts:342` |
