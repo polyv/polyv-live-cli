@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T20:03:28.766Z
+Generated at: 2026-06-24T20:10:22.347Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 80 |
+| Integration files scanned | 81 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 367 |
-| Missing real-execution leaf subcommands | 200 |
-| Real-execution coverage | 64.73% |
-| Leaf subcommands referenced including help | 439 |
-| Missing including help | 128 |
+| Real-executed leaf subcommands | 370 |
+| Missing real-execution leaf subcommands | 197 |
+| Real-execution coverage | 65.26% |
+| Leaf subcommands referenced including help | 441 |
+| Missing including help | 126 |
 
 ## By Top-Level Command
 
@@ -47,7 +47,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
-| `questionnaire` | 6 | 3 | 3 | 50.00% | 4 | 2 |
+| `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `record` | 17 | 4 | 13 | 23.53% | 6 | 11 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
@@ -197,9 +197,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
-| `questionnaire batch-create` | `packages/cli/src/commands/questionnaire.commands.ts:296` |
-| `questionnaire create` | `packages/cli/src/commands/questionnaire.commands.ts:54` |
-| `questionnaire detail` | `packages/cli/src/commands/questionnaire.commands.ts:218` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:480` |
 | `record convert` | `packages/cli/src/commands/record.commands.ts:323` |
 | `record merge-mp4` | `packages/cli/src/commands/record.commands.ts:493` |

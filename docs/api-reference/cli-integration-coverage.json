@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T20:03:28.766Z",
+  "generatedAt": "2026-06-24T20:10:22.347Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 80,
+    "integrationFiles": 81,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 478,
-    "referencedCommandPathsExcludingHelp": 373,
-    "coveredLeafTargetsIncludingHelp": 439,
-    "missingLeafTargetsIncludingHelp": 128,
-    "coveredRealExecutionLeafTargets": 367,
-    "missingRealExecutionLeafTargets": 200,
-    "realExecutionCoveragePercent": 64.73,
-    "includingHelpCoveragePercent": 77.43,
-    "integrationReferences": 841,
-    "realExecutionReferences": 498,
-    "helpReferences": 343
+    "referencedCommandPathsIncludingHelp": 480,
+    "referencedCommandPathsExcludingHelp": 376,
+    "coveredLeafTargetsIncludingHelp": 441,
+    "missingLeafTargetsIncludingHelp": 126,
+    "coveredRealExecutionLeafTargets": 370,
+    "missingRealExecutionLeafTargets": 197,
+    "realExecutionCoveragePercent": 65.26,
+    "includingHelpCoveragePercent": 77.78,
+    "integrationReferences": 847,
+    "realExecutionReferences": 501,
+    "helpReferences": 346
   },
   "byTopLevel": [
     {
@@ -286,12 +286,12 @@
     {
       "command": "questionnaire",
       "targetLeafCommands": 6,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 4,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 50,
-      "includingHelpCoveragePercent": 66.67
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 6,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "record",
@@ -1827,36 +1827,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/qa.commands.ts",
       "line": 322
-    },
-    {
-      "command": "questionnaire batch-create",
-      "path": [
-        "questionnaire",
-        "batch-create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 296
-    },
-    {
-      "command": "questionnaire create",
-      "path": [
-        "questionnaire",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "questionnaire detail",
-      "path": [
-        "questionnaire",
-        "detail"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 218
     },
     {
       "command": "record clip",
@@ -3476,26 +3446,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 964
-    },
-    {
-      "command": "questionnaire create",
-      "path": [
-        "questionnaire",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "questionnaire detail",
-      "path": [
-        "questionnaire",
-        "detail"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/questionnaire.commands.ts",
-      "line": 218
     },
     {
       "command": "record clip",
@@ -6641,6 +6591,36 @@
       "depth": 2,
       "file": "packages/cli/src/commands/qa.commands.ts",
       "line": 137
+    },
+    {
+      "command": "questionnaire batch-create",
+      "path": [
+        "questionnaire",
+        "batch-create"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 296
+    },
+    {
+      "command": "questionnaire create",
+      "path": [
+        "questionnaire",
+        "create"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 54
+    },
+    {
+      "command": "questionnaire detail",
+      "path": [
+        "questionnaire",
+        "detail"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/questionnaire.commands.ts",
+      "line": 218
     },
     {
       "command": "questionnaire list",
@@ -11956,12 +11936,46 @@
     },
     {
       "command": "questionnaire batch-create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
+        "line": 110,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 35,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "questionnaire create",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
+        "line": 55,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
+        "line": 140,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "questionnaire detail",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
+        "line": 81,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/questionnaire-cli.integration.test.ts",
+        "line": 141,
         "source": "array-literal"
       }
     },
