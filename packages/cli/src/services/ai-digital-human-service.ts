@@ -102,7 +102,7 @@ export class AIDigitalHumanServiceSdk {
 
     await this.client.httpClient.post(
       '/live/v4/ai/digital-human/set-organizations',
-      params
+      { setOrganizations: params }
     );
 
     return true;

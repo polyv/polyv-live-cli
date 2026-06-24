@@ -191,12 +191,16 @@ export class RecordServiceSdk {
     const params: {
       fileIds: string;
       fileName?: string;
+      cataId?: string;
       callbackUrl?: string;
     } = {
       fileIds: options.fileIds,
     };
     if (options.fileName !== undefined) {
       params.fileName = options.fileName;
+    }
+    if (options.cataId !== undefined) {
+      params.cataId = options.cataId;
     }
     if (options.callbackUrl !== undefined) {
       params.callbackUrl = options.callbackUrl;

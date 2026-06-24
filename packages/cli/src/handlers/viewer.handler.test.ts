@@ -1052,7 +1052,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         await expect(viewerHandler.addViewerTag(options)).rejects.toThrow('标签ID列表是必需的');
       });
 
-      it('12.2-UNIT-011: should validate invalid label ID format', async () => {
+      it('12.2-UNIT-011: should validate non-numeric label IDs', async () => {
         const options = {
           viewerIds: 'viewer1',
           labelIds: 'abc,def',
@@ -1060,10 +1060,10 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         };
 
         await expect(viewerHandler.addViewerTag(options)).rejects.toThrow(PolyVValidationError);
-        await expect(viewerHandler.addViewerTag(options)).rejects.toThrow('标签ID格式无效，必须是正整数');
+        await expect(viewerHandler.addViewerTag(options)).rejects.toThrow('无效的标签ID: abc');
       });
 
-      it('should reject zero and negative label IDs before calling the API', async () => {
+      it('should validate zero and negative label IDs', async () => {
         const options = {
           viewerIds: 'viewer1',
           labelIds: '0,-1',
@@ -1071,7 +1071,7 @@ describe('ViewerHandler (ATDD RED PHASE)', () => {
         };
 
         await expect(viewerHandler.addViewerTag(options)).rejects.toThrow(PolyVValidationError);
-        expect(mockViewerService.addViewersLabels).not.toHaveBeenCalled();
+        await expect(viewerHandler.addViewerTag(options)).rejects.toThrow('无效的标签ID: 0');
       });
 
       it('12.2-UNIT-012: should output add result in JSON format', async () => {

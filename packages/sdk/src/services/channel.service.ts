@@ -256,6 +256,34 @@ export class ChannelService {
     }
   }
 
+  private buildSignedFormBody(params: Record<string, unknown>): URLSearchParams {
+    const timestamp = Date.now();
+    const signatureParams: Record<string, unknown> = {
+      appId: this.client.config.appId,
+      timestamp,
+      ...params,
+    };
+    const { sign } = generateSignature(signatureParams, {
+      appSecret: this.client.config.appSecret,
+    });
+    const form = new URLSearchParams();
+    for (const [key, value] of Object.entries({ ...signatureParams, sign })) {
+      if (value !== undefined && value !== null) {
+        form.append(key, String(value));
+      }
+    }
+    return form;
+  }
+
+  private buildSignedFormConfig(): { headers: Record<string, string> } {
+    return {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Skip-Auth': 'true',
+      },
+    };
+  }
+
   private validateRequiredText(value: string | undefined, field: string, maxLength?: number): void {
     if (!value || value.trim() === '') {
       throw PolyVValidationError.required(field);
@@ -2041,8 +2069,8 @@ export class ChannelService {
 
     const response = await this.client.httpClient.post<ConvertRecordFileToVodResponse>(
       `/live/v2/channel/recordFile/${params.channelId}/convert`,
-      null,
-      { params: query }
+      this.buildSignedFormBody(query),
+      this.buildSignedFormConfig()
     );
 
     return response as unknown as ConvertRecordFileToVodResponse;
@@ -2831,8 +2859,8 @@ export class ChannelService {
 
     const response = (await this.client.httpClient.post<unknown>(
       `/live/v2/channel/recordFile/${channelId}/convert`,
-      null,
-      { params }
+      this.buildSignedFormBody(params),
+      this.buildSignedFormConfig()
     )) as unknown;
 
     // The response interceptor unwraps the envelope; on success `data` is the
@@ -2879,17 +2907,18 @@ export class ChannelService {
     if (options.fileName !== undefined) {
       params.fileName = options.fileName;
     }
+    if (options.cataId !== undefined) {
+      params.cataId = options.cataId;
+    }
     if (options.callbackUrl !== undefined) {
       params.callbackUrl = options.callbackUrl;
     }
-    if (options.canRepeat !== undefined) {
-      params.canRepeat = options.canRepeat;
-    }
+    params.canRepeat = options.canRepeat ?? 1;
 
     await this.client.httpClient.post<string>(
       '/live/v3/channel/record/convert',
-      null,
-      { params }
+      this.buildSignedFormBody(params),
+      this.buildSignedFormConfig()
     );
 
     return true;

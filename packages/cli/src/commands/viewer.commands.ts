@@ -386,7 +386,7 @@ Examples:
     .command('add')
     .description('Add tags to viewers')
     .requiredOption('-V, --viewer-ids <ids>', 'comma-separated viewer IDs')
-    .requiredOption('-l, --label-ids <ids>', 'comma-separated label IDs')
+    .requiredOption('-l, --label-ids <ids>', 'comma-separated numeric tag IDs from viewer tag list')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -411,16 +411,16 @@ Examples:
   tagAddCmd.addHelpText('after', `
 Examples:
   # Add single tag to single viewer
-  $ polyv-live-cli viewer tag add -V "viewer1" -l 1
+  $ polyv-live-cli viewer tag add -V "viewer1" -l "1"
 
   # Add multiple tags to single viewer
-  $ polyv-live-cli viewer tag add -V "viewer1" -l 1,2,3
+  $ polyv-live-cli viewer tag add -V "viewer1" -l "1,2"
 
   # Add tags to multiple viewers
-  $ polyv-live-cli viewer tag add -V "viewer1,viewer2,viewer3" -l 1,2
+  $ polyv-live-cli viewer tag add -V "viewer1,viewer2,viewer3" -l "1"
 
   # JSON output
-  $ polyv-live-cli viewer tag add -V "viewer1" -l 1 -o json
+  $ polyv-live-cli viewer tag add -V "viewer1" -l "1" -o json
 `);
 
   // ========================================
@@ -430,7 +430,7 @@ Examples:
     .command('remove')
     .description('Remove tags from viewers')
     .requiredOption('-V, --viewer-ids <ids>', 'comma-separated viewer IDs')
-    .requiredOption('-l, --label-ids <ids>', 'comma-separated label IDs')
+    .requiredOption('-l, --label-ids <ids>', 'comma-separated numeric tag IDs from viewer tag list')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -455,16 +455,16 @@ Examples:
   tagRemoveCmd.addHelpText('after', `
 Examples:
   # Remove single tag from single viewer
-  $ polyv-live-cli viewer tag remove -V "viewer1" -l 1
+  $ polyv-live-cli viewer tag remove -V "viewer1" -l "1"
 
   # Remove multiple tags from single viewer
-  $ polyv-live-cli viewer tag remove -V "viewer1" -l 1,2,3
+  $ polyv-live-cli viewer tag remove -V "viewer1" -l "1,2"
 
   # Remove tags from multiple viewers
-  $ polyv-live-cli viewer tag remove -V "viewer1,viewer2" -l 1,2
+  $ polyv-live-cli viewer tag remove -V "viewer1,viewer2" -l "1"
 
   # JSON output
-  $ polyv-live-cli viewer tag remove -V "viewer1" -l 1 -o json
+  $ polyv-live-cli viewer tag remove -V "viewer1" -l "1" -o json
 `);
 
   // ========================================

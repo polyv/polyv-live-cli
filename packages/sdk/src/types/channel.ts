@@ -1017,6 +1017,8 @@ export interface RecordConvertAsyncRequest {
   fileIds: string;
   /** Converted file name */
   fileName?: string;
+  /** VOD catalog ID */
+  cataId?: string;
   /** Callback URL invoked on completion */
   callbackUrl?: string;
   /** Whether to return success when the VOD already exists (1=yes, 0=no) */

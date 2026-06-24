@@ -658,6 +658,23 @@ describe('StatisticsServiceSdk', () => {
       });
     });
 
+    it('should map a bare URL string from the SDK', async () => {
+      mockSdkClient.statistics.exportSessionStats.mockResolvedValueOnce(
+        'https://example.com/download/session-abc-123.xlsx'
+      );
+
+      const result = await service.exportSessionStats(validSessionOptions);
+
+      expect(result.downloadUrl).toBe('https://example.com/download/session-abc-123.xlsx');
+    });
+
+    it('should reject successful responses without a download URL', async () => {
+      mockSdkClient.statistics.exportSessionStats.mockResolvedValueOnce({});
+
+      await expect(service.exportSessionStats(validSessionOptions))
+        .rejects.toThrow('接口未返回下载链接');
+    });
+
     it('should call SDK with correct params', async () => {
       await service.exportSessionStats(validSessionOptions);
 

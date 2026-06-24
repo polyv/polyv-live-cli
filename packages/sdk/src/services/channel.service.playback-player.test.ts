@@ -345,17 +345,22 @@ describe('ChannelService Playback + Player APIs', () => {
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v2/channel/recordFile/ch123456/convert',
-        null,
-        {
-          params: {
-            userId: 'user123',
-            fileName: 'converted',
-            sessionId: 'session123',
-            toPlayList: 'Y',
-            setAsDefault: 'N',
-          },
-        }
+        expect.any(URLSearchParams),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Skip-Auth': 'true',
+          }),
+        })
       )
+      const body = mockAxiosInstance.post.mock.calls[0][1] as URLSearchParams
+      expect(body.get('userId')).toBe('user123')
+      expect(body.get('fileName')).toBe('converted')
+      expect(body.get('sessionId')).toBe('session123')
+      expect(body.get('toPlayList')).toBe('Y')
+      expect(body.get('setAsDefault')).toBe('N')
+      expect(body.get('appId')).toBe('test-app-id')
+      expect(body.get('sign')).toBeTruthy()
       expect(result).toBe('vod123')
     })
 
@@ -919,9 +924,20 @@ describe('ChannelService Playback + Player APIs', () => {
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v2/channel/recordFile/ch123456/convert',
-        null,
-        { params: { userId: 'user123', fileName: 'my-vod', sessionId: 'fvlyin8qz3' } }
+        expect.any(URLSearchParams),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Skip-Auth': 'true',
+          }),
+        })
       )
+      const body = mockAxiosInstance.post.mock.calls[0][1] as URLSearchParams
+      expect(body.get('userId')).toBe('user123')
+      expect(body.get('fileName')).toBe('my-vod')
+      expect(body.get('sessionId')).toBe('fvlyin8qz3')
+      expect(body.get('appId')).toBe('test-app-id')
+      expect(body.get('sign')).toBeTruthy()
       expect(result.vid).toBe('converted123')
     })
 
@@ -958,9 +974,20 @@ describe('ChannelService Playback + Player APIs', () => {
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v3/channel/record/convert',
-        null,
-        { params: { channelId: 'ch123456', fileIds: 'file1,file2' } }
+        expect.any(URLSearchParams),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Skip-Auth': 'true',
+          }),
+        })
       )
+      const body = mockAxiosInstance.post.mock.calls[0][1] as URLSearchParams
+      expect(body.get('channelId')).toBe('ch123456')
+      expect(body.get('fileIds')).toBe('file1,file2')
+      expect(body.get('canRepeat')).toBe('1')
+      expect(body.get('appId')).toBe('test-app-id')
+      expect(body.get('sign')).toBeTruthy()
       expect(result).toBe(true)
     })
 

@@ -1,6 +1,6 @@
 {
   "name": "polyv-live-cli",
-  "version": "1.2.41",
+  "version": "1.2.42",
   "description": "CLI tool for managing PolyV live streaming services.",
   "main": "dist/index.js",
   "bin": {

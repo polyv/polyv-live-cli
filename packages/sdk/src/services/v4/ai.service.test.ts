@@ -104,7 +104,7 @@ describe('V4AiService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/ai/digital-human/set-organizations',
-        [{ aiDigitalHumanId: 1001, organizationIds: [1, 2, 3], includeChildren: true }]
+        { setOrganizations: [{ aiDigitalHumanId: 1001, organizationIds: [1, 2, 3], includeChildren: true }] }
       );
     });
 

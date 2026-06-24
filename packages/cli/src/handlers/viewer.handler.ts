@@ -42,8 +42,8 @@ import type {
 
 /** Viewer label type from API */
 interface ViewerLabel {
-  // Viewer-label IDs are usually numeric, but the API may return strings; keep
-  // both to avoid coercing a non-numeric id into NaN.
+  // List output preserves the API value for display; add/remove still require
+  // numeric IDs parsed from `viewer tag list`.
   labelId: number | string;
   labelName: string;
 }
@@ -873,27 +873,24 @@ export class ViewerHandler extends BaseHandler {
     // Parse and validate label IDs
     let labelIds: number[] = [];
     if (options.labelIds && options.labelIds.trim() !== '') {
-      const rawIds = options.labelIds
+      const rawLabelIds = Array.from(new Set(options.labelIds
         .split(',')
         .map(id => id.trim())
-        .filter(id => id.length > 0);
-      const parsedIds = rawIds.map(id => {
-        if (!/^[1-9]\d*$/.test(id)) return NaN;
-        return parseInt(id, 10);
-      });
-
-      // Check for invalid formats
-      const invalidIds = parsedIds.filter(id => isNaN(id));
-      if (invalidIds.length > 0) {
-        errors.push('标签ID格式无效，必须是正整数');
-      }
-
-      labelIds = Array.from(new Set(parsedIds.filter(id => !isNaN(id))));
+        .filter(id => id.length > 0)));
 
       // MEDIUM-3: Validate empty array after parsing
-      if (labelIds.length === 0 && invalidIds.length === 0) {
+      if (rawLabelIds.length === 0) {
         errors.push('标签ID列表不能为空');
       }
+
+      rawLabelIds.forEach(id => {
+        const numericId = Number(id);
+        if (!Number.isInteger(numericId) || numericId <= 0) {
+          errors.push(`无效的标签ID: ${id}，请使用 viewer tag list 返回的数字标签ID`);
+        } else {
+          labelIds.push(numericId);
+        }
+      });
     }
 
     if (options.output && !['table', 'json'].includes(options.output)) {
@@ -1130,8 +1127,6 @@ export class ViewerHandler extends BaseHandler {
   // ===== Private Helper Methods =====
 
   private normalizeViewerLabel(label: SdkViewerLabel): ViewerLabel {
-    // Keep numeric ids as numbers, but pass string ids through verbatim instead
-    // of coercing them to NaN via Number().
     const id = label.id;
     const labelId = typeof id === 'number' ? id : String(id);
     return {

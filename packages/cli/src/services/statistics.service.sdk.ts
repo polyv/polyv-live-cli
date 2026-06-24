@@ -690,13 +690,20 @@ export class StatisticsServiceSdk {
     const result = await client.statistics.exportSessionStats({
       channelId: options.channelId,
       sessionId: options.sessionId,
-    });
+    }) as unknown;
+    const downloadUrl =
+      typeof result === 'string'
+        ? result
+        : (result as { downloadUrl?: unknown } | undefined)?.downloadUrl;
+    if (typeof downloadUrl !== 'string' || downloadUrl.trim() === '') {
+      throw new Error('场次报表导出失败：接口未返回下载链接，报表可能尚未生成，请稍后重试');
+    }
 
     // Transform to display item
     return {
       channelId: options.channelId,
       sessionId: options.sessionId,
-      downloadUrl: result.downloadUrl,
+      downloadUrl,
       expiresIn: '60天',
     };
   }
