@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T23:16:53.695Z",
+  "generatedAt": "2026-06-24T23:22:48.024Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 513,
-    "referencedCommandPathsExcludingHelp": 435,
-    "coveredLeafTargetsIncludingHelp": 474,
-    "missingLeafTargetsIncludingHelp": 93,
-    "coveredRealExecutionLeafTargets": 429,
-    "missingRealExecutionLeafTargets": 138,
-    "realExecutionCoveragePercent": 75.66,
-    "includingHelpCoveragePercent": 83.6,
-    "integrationReferences": 1017,
-    "realExecutionReferences": 628,
+    "referencedCommandPathsIncludingHelp": 517,
+    "referencedCommandPathsExcludingHelp": 439,
+    "coveredLeafTargetsIncludingHelp": 478,
+    "missingLeafTargetsIncludingHelp": 89,
+    "coveredRealExecutionLeafTargets": 433,
+    "missingRealExecutionLeafTargets": 134,
+    "realExecutionCoveragePercent": 76.37,
+    "includingHelpCoveragePercent": 84.3,
+    "integrationReferences": 1021,
+    "realExecutionReferences": 632,
     "helpReferences": 389
   },
   "byTopLevel": [
@@ -326,12 +326,12 @@
     {
       "command": "statistics",
       "targetLeafCommands": 27,
-      "coveredRealExecutionLeafTargets": 21,
-      "missingRealExecutionLeafTargets": 6,
-      "coveredLeafTargetsIncludingHelp": 21,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 77.78,
-      "includingHelpCoveragePercent": 77.78
+      "coveredRealExecutionLeafTargets": 25,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 25,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 92.59,
+      "includingHelpCoveragePercent": 92.59
     },
     {
       "command": "stream",
@@ -1587,38 +1587,6 @@
       "line": 205
     },
     {
-      "command": "statistics view",
-      "path": [
-        "statistics",
-        "view"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 445
-    },
-    {
-      "command": "statistics audience device",
-      "path": [
-        "statistics",
-        "audience",
-        "device"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 758
-    },
-    {
-      "command": "statistics audience region",
-      "path": [
-        "statistics",
-        "audience",
-        "region"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 675
-    },
-    {
       "command": "statistics export session",
       "path": [
         "statistics",
@@ -1628,17 +1596,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/statistics.commands.export.ts",
       "line": 273
-    },
-    {
-      "command": "statistics export viewlog",
-      "path": [
-        "statistics",
-        "export",
-        "viewlog"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.export.ts",
-      "line": 178
     },
     {
       "command": "stream capture",
@@ -2689,38 +2646,6 @@
       "line": 205
     },
     {
-      "command": "statistics view",
-      "path": [
-        "statistics",
-        "view"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 445
-    },
-    {
-      "command": "statistics audience device",
-      "path": [
-        "statistics",
-        "audience",
-        "device"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 758
-    },
-    {
-      "command": "statistics audience region",
-      "path": [
-        "statistics",
-        "audience",
-        "region"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 675
-    },
-    {
       "command": "statistics export session",
       "path": [
         "statistics",
@@ -2730,17 +2655,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/statistics.commands.export.ts",
       "line": 273
-    },
-    {
-      "command": "statistics export viewlog",
-      "path": [
-        "statistics",
-        "export",
-        "viewlog"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.export.ts",
-      "line": 178
     },
     {
       "command": "stream capture",
@@ -6430,6 +6344,16 @@
       "line": 185
     },
     {
+      "command": "statistics view",
+      "path": [
+        "statistics",
+        "view"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 445
+    },
+    {
       "command": "statistics viewlog-v1",
       "path": [
         "statistics",
@@ -6458,6 +6382,39 @@
       "depth": 2,
       "file": "packages/cli/src/commands/statistics.commands.ts",
       "line": 260
+    },
+    {
+      "command": "statistics audience device",
+      "path": [
+        "statistics",
+        "audience",
+        "device"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 758
+    },
+    {
+      "command": "statistics audience region",
+      "path": [
+        "statistics",
+        "audience",
+        "region"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 675
+    },
+    {
+      "command": "statistics export viewlog",
+      "path": [
+        "statistics",
+        "export",
+        "viewlog"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/statistics.commands.export.ts",
+      "line": 178
     },
     {
       "command": "stream ban-push",
@@ -12334,6 +12291,28 @@
       "firstHelpReference": null
     },
     {
+      "command": "statistics audience device",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 177,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "statistics audience region",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 161,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "statistics channel-play-summary",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -12399,7 +12378,18 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
-        "line": 37,
+        "line": 46,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "statistics export viewlog",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 198,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12455,7 +12445,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
-        "line": 91,
+        "line": 100,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12485,7 +12475,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
-        "line": 56,
+        "line": 65,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12594,6 +12584,17 @@
         "line": 58,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "statistics view",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 142,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "statistics viewlog-v1",

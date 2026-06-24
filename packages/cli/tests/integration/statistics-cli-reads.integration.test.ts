@@ -12,6 +12,7 @@ import {
   parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
+import { runCli } from '../helpers/cli-runner';
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
@@ -19,6 +20,14 @@ const shouldRunRealChannelTests = hasRealCredentials();
 /** Format a Date as yyyy-MM-dd in UTC (matches the CLI date validator). */
 function toDay(date: Date): string {
   return date.toISOString().split('T')[0];
+}
+
+/**
+ * Format a Date as "yyyy-MM-dd HH:mm:ss" in UTC (matches the CLI datetime
+ * validator used by `statistics export viewlog`).
+ */
+function toDateTime(date: Date): string {
+  return date.toISOString().replace('T', ' ').substring(0, 19);
 }
 
 describe('statistics read CLI integration', () => {
@@ -106,6 +115,101 @@ describe('statistics read CLI integration', () => {
       const payload = parseJsonValue(output) as { contents?: unknown; totalItems?: unknown };
       expect(Array.isArray(payload.contents)).toBe(true);
       expect(typeof payload.totalItems).toBe('number');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  // statistics view / audience region / audience device / export viewlog all use
+  // displayInfo to print a non-JSON "No ... data found" line and exit 0 when a
+  // brand-new channel has no viewing data (the same shape as `lottery winners`
+  // and `donate list`). They are real CLI executions; the empty-data info line
+  // is the meaningful observable, so they are asserted via runCli + exitCode/0
+  // and output-contains rather than a JSON parser.
+  (shouldRunRealChannelTests ? it : it.skip)('runs empty-data statistics reads (view / audience region / audience device / export viewlog) via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Statistics Empty Reads');
+
+      const now = Date.now();
+      const startDay = toDay(new Date(now - 3 * 24 * 60 * 60 * 1000));
+      const endDay = toDay(new Date(now));
+
+      // statistics view — yyyy-MM-dd window (max 60 days).
+      const viewResult = runCli([
+        'statistics',
+        'view',
+        '-c',
+        channelId,
+        '--start-day',
+        startDay,
+        '--end-day',
+        endDay,
+        '--output',
+        'json',
+      ]);
+      expect(viewResult.exitCode).toBe(0);
+      expect(viewResult.output).toContain('No statistics data found');
+
+      // audience region / device — 13-digit millisecond window (max 90 days).
+      const startTime = String(now - 7 * 24 * 60 * 60 * 1000);
+      const endTime = String(now);
+
+      const regionResult = runCli([
+        'statistics',
+        'audience',
+        'region',
+        '-c',
+        channelId,
+        '--start-time',
+        startTime,
+        '--end-time',
+        endTime,
+        '--output',
+        'json',
+      ]);
+      expect(regionResult.exitCode).toBe(0);
+      expect(regionResult.output).toContain('No region distribution data found');
+
+      const deviceResult = runCli([
+        'statistics',
+        'audience',
+        'device',
+        '-c',
+        channelId,
+        '--start-time',
+        startTime,
+        '--end-time',
+        endTime,
+        '--output',
+        'json',
+      ]);
+      expect(deviceResult.exitCode).toBe(0);
+      expect(deviceResult.output).toContain('No device distribution data found');
+
+      // export viewlog — "yyyy-MM-dd HH:mm:ss" window; the validator requires
+      // start and end to fall in the same month, so pin both to today (UTC).
+      const viewlogStart = toDateTime(new Date(now));
+      const viewlogEnd = toDateTime(new Date(now));
+
+      const viewlogResult = runCli([
+        'statistics',
+        'export',
+        'viewlog',
+        '-c',
+        channelId,
+        '--start-time',
+        viewlogStart,
+        '--end-time',
+        viewlogEnd,
+        '--output',
+        'json',
+      ]);
+      expect(viewlogResult.exitCode).toBe(0);
+      expect(viewlogResult.output).toContain('No viewlog data found');
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);
