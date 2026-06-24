@@ -2,7 +2,9 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  extractId,
   parseJsonObject,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -147,4 +149,126 @@ describe('channel viewer CLI integration', () => {
       }
     }
   });
+
+  (shouldRunRealChannelTests ? it : it.skip)('manages viewer groups and group settings against a temporary real channel', () => {
+    let channelId: string | undefined;
+    let groupId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Channel Viewer Group CLI');
+      const id = channelId;
+
+      const settingOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'group-setting',
+        'get',
+        '--channel-id',
+        id,
+        '--output',
+        'json',
+      ]);
+      const settingPayload = parseJsonObject(settingOutput);
+      expect(settingPayload).toEqual(expect.any(Object));
+
+      const updateSettingOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'group-setting',
+        'update',
+        '--channel-id',
+        id,
+        '--channel-viewer-group-enabled',
+        'Y',
+        '--not-in-group-watch-enabled',
+        'Y',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(parseJsonObject(updateSettingOutput).success).toBe(true);
+
+      const initialListOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'group',
+        'list',
+        '--channel-id',
+        id,
+        '--output',
+        'json',
+      ]);
+      expect(Array.isArray(parseJsonValue(initialListOutput))).toBe(true);
+
+      const createOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'group',
+        'create',
+        '--channel-id',
+        id,
+        '--name',
+        `CLI Viewer Group ${Date.now()}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const createPayload = parseJsonObject(createOutput);
+      groupId = extractId(createPayload);
+      expect(groupId).toMatch(/^\d+$/);
+
+      const updateOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'group',
+        'update',
+        '--channel-id',
+        id,
+        '--id',
+        groupId,
+        '--name',
+        `CLI Viewer Group Updated ${Date.now()}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(parseJsonObject(updateOutput).success).toBe(true);
+
+      const deleteOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'group',
+        'delete',
+        '--channel-id',
+        id,
+        '--id',
+        groupId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(parseJsonObject(deleteOutput).success).toBe(true);
+      groupId = undefined;
+    } finally {
+      if (groupId && channelId) {
+        runCliSuccess([
+          'channel',
+          'viewer',
+          'group',
+          'delete',
+          '--channel-id',
+          channelId,
+          '--id',
+          groupId,
+          '--force',
+          '--output',
+          'json',
+        ]);
+      }
+
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 180000);
 });

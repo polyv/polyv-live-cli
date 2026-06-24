@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T08:12:10.894Z",
+  "generatedAt": "2026-06-24T08:15:14.795Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 388,
-    "referencedCommandPathsExcludingHelp": 234,
-    "coveredLeafTargetsIncludingHelp": 351,
-    "missingLeafTargetsIncludingHelp": 216,
-    "coveredRealExecutionLeafTargets": 228,
-    "missingRealExecutionLeafTargets": 339,
-    "realExecutionCoveragePercent": 40.21,
-    "includingHelpCoveragePercent": 61.9,
-    "integrationReferences": 585,
-    "realExecutionReferences": 317,
+    "referencedCommandPathsIncludingHelp": 390,
+    "referencedCommandPathsExcludingHelp": 240,
+    "coveredLeafTargetsIncludingHelp": 353,
+    "missingLeafTargetsIncludingHelp": 214,
+    "coveredRealExecutionLeafTargets": 234,
+    "missingRealExecutionLeafTargets": 333,
+    "realExecutionCoveragePercent": 41.27,
+    "includingHelpCoveragePercent": 62.26,
+    "integrationReferences": 592,
+    "realExecutionReferences": 324,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 55,
-      "missingRealExecutionLeafTargets": 23,
-      "coveredLeafTargetsIncludingHelp": 68,
-      "missingLeafTargetsIncludingHelp": 10,
-      "realExecutionCoveragePercent": 70.51,
-      "includingHelpCoveragePercent": 87.18
+      "coveredRealExecutionLeafTargets": 61,
+      "missingRealExecutionLeafTargets": 17,
+      "coveredLeafTargetsIncludingHelp": 70,
+      "missingLeafTargetsIncludingHelp": 8,
+      "realExecutionCoveragePercent": 78.21,
+      "includingHelpCoveragePercent": 89.74
     },
     {
       "command": "chat",
@@ -703,78 +703,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1242
-    },
-    {
-      "command": "channel viewer group create",
-      "path": [
-        "channel",
-        "viewer",
-        "group",
-        "create"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 664
-    },
-    {
-      "command": "channel viewer group delete",
-      "path": [
-        "channel",
-        "viewer",
-        "group",
-        "delete"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 689
-    },
-    {
-      "command": "channel viewer group list",
-      "path": [
-        "channel",
-        "viewer",
-        "group",
-        "list"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 656
-    },
-    {
-      "command": "channel viewer group update",
-      "path": [
-        "channel",
-        "viewer",
-        "group",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 676
-    },
-    {
-      "command": "channel viewer group-setting get",
-      "path": [
-        "channel",
-        "viewer",
-        "group-setting",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 705
-    },
-    {
-      "command": "channel viewer group-setting update",
-      "path": [
-        "channel",
-        "viewer",
-        "group-setting",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 713
     },
     {
       "command": "chat ban",
@@ -4265,30 +4193,6 @@
       "line": 1242
     },
     {
-      "command": "channel viewer group list",
-      "path": [
-        "channel",
-        "viewer",
-        "group",
-        "list"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 656
-    },
-    {
-      "command": "channel viewer group-setting get",
-      "path": [
-        "channel",
-        "viewer",
-        "group-setting",
-        "get"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 705
-    },
-    {
       "command": "chat ban",
       "path": [
         "chat",
@@ -7349,6 +7253,78 @@
       "line": 795
     },
     {
+      "command": "channel viewer group create",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "create"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 664
+    },
+    {
+      "command": "channel viewer group delete",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "delete"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 689
+    },
+    {
+      "command": "channel viewer group list",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "list"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 656
+    },
+    {
+      "command": "channel viewer group update",
+      "path": [
+        "channel",
+        "viewer",
+        "group",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 676
+    },
+    {
+      "command": "channel viewer group-setting get",
+      "path": [
+        "channel",
+        "viewer",
+        "group-setting",
+        "get"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 705
+    },
+    {
+      "command": "channel viewer group-setting update",
+      "path": [
+        "channel",
+        "viewer",
+        "group-setting",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 713
+    },
+    {
       "command": "chat list",
       "path": [
         "chat",
@@ -10018,7 +9994,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 23,
+        "line": 25,
         "source": "array-literal"
       }
     },
@@ -10028,12 +10004,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 80,
+        "line": 82,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 43,
+        "line": 45,
         "source": "array-literal"
       }
     },
@@ -10043,12 +10019,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 129,
+        "line": 131,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 44,
+        "line": 46,
         "source": "array-literal"
       }
     },
@@ -10059,26 +10035,19 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 24,
+        "line": 26,
         "source": "array-literal"
       }
     },
     {
       "command": "channel viewer group create",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
-      "firstHelpReference": {
+      "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 39,
+        "line": 203,
         "source": "array-literal"
-      }
-    },
-    {
-      "command": "channel viewer group delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
         "line": 41,
@@ -10086,13 +10055,43 @@
       }
     },
     {
-      "command": "channel viewer group update",
-      "realExecutionReferences": 0,
+      "command": "channel viewer group delete",
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
+        "line": 237,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 40,
+        "line": 43,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "channel viewer group list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
+        "line": 191,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "channel viewer group update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
+        "line": 220,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
+        "line": 42,
         "source": "array-literal"
       }
     },
@@ -10103,18 +10102,33 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 25,
+        "line": 27,
         "source": "array-literal"
       }
     },
     {
+      "command": "channel viewer group-setting get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
+        "line": 161,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "channel viewer group-setting update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
+        "line": 174,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 42,
+        "line": 44,
         "source": "array-literal"
       }
     },
@@ -10125,7 +10139,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 46,
+        "line": 48,
         "source": "array-literal"
       }
     },
@@ -10135,12 +10149,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 65,
+        "line": 67,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 26,
+        "line": 28,
         "source": "array-literal"
       }
     },
@@ -10150,12 +10164,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 96,
+        "line": 98,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 45,
+        "line": 47,
         "source": "array-literal"
       }
     },
@@ -10165,12 +10179,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 112,
+        "line": 114,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 27,
+        "line": 29,
         "source": "array-literal"
       }
     },

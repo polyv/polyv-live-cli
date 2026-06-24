@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T08:12:10.894Z
+Generated at: 2026-06-24T08:15:14.795Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 60 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 228 |
-| Missing real-execution leaf subcommands | 339 |
-| Real-execution coverage | 40.21% |
-| Leaf subcommands referenced including help | 351 |
-| Missing including help | 216 |
+| Real-executed leaf subcommands | 234 |
+| Missing real-execution leaf subcommands | 333 |
+| Real-execution coverage | 41.27% |
+| Leaf subcommands referenced including help | 353 |
+| Missing including help | 214 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 55 | 23 | 70.51% | 68 | 10 |
+| `channel` | 78 | 61 | 17 | 78.21% | 70 | 8 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -91,12 +91,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel viewer import` | `packages/cli/src/commands/channel.commands.ts:782` |
 | `channel ppt-record setting get` | `packages/cli/src/commands/channel.commands.ts:1237` |
 | `channel ppt-record setting update` | `packages/cli/src/commands/channel.commands.ts:1242` |
-| `channel viewer group create` | `packages/cli/src/commands/channel.commands.ts:664` |
-| `channel viewer group delete` | `packages/cli/src/commands/channel.commands.ts:689` |
-| `channel viewer group list` | `packages/cli/src/commands/channel.commands.ts:656` |
-| `channel viewer group update` | `packages/cli/src/commands/channel.commands.ts:676` |
-| `channel viewer group-setting get` | `packages/cli/src/commands/channel.commands.ts:705` |
-| `channel viewer group-setting update` | `packages/cli/src/commands/channel.commands.ts:713` |
 | `chat ban` | `packages/cli/src/commands/chat.commands.ts:289` |
 | `chat delete` | `packages/cli/src/commands/chat.commands.ts:226` |
 | `chat group-login-times` | `packages/cli/src/commands/chat.commands.ts:270` |
