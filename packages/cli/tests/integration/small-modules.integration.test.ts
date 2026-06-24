@@ -2,6 +2,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
@@ -100,6 +101,40 @@ describe('small module CLI integration', () => {
       }
     }
   }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs material list through the real CLI and asserts pagination structure',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Material List Smoke');
+
+        const output = runCliSuccess([
+          'material',
+          'list',
+          '--type',
+          'image',
+          '--page-number',
+          '1',
+          '--page-size',
+          '5',
+          '--output',
+          'json',
+        ]);
+
+        const parsed = parseJsonObject(output);
+        expect(parsed.pageNumber).toBe(1);
+        expect(parsed.pageSize).toBe(5);
+        expect(Array.isArray(parsed.contents)).toBe(true);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
 
   it('runs monitor layouts through the real CLI and cleans up a disposable channel when available', () => {
     let channelId: string | undefined;

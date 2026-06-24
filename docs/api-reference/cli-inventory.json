@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T03:01:01.641Z",
+  "generatedAt": "2026-06-24T04:14:07.960Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -16,8 +16,8 @@
     "cliUsedLatestApis": 578,
     "cliMissingLatestApis": 0,
     "cliCoverage": 100,
-    "cliUsageReferences": 582,
-    "cliSdkServiceUsages": 582,
+    "cliUsageReferences": 584,
+    "cliSdkServiceUsages": 584,
     "cliDirectHttpUsages": 0,
     "cliUnresolvedSdkUsages": 0,
     "cliUnmatchedEndpointUsages": 0,
@@ -4332,7 +4332,7 @@
       "depth": 1,
       "signature": "monitor",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 43
+      "line": 57
     },
     {
       "command": "monitor config",
@@ -4343,7 +4343,7 @@
       "depth": 2,
       "signature": "config",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 102
+      "line": 116
     },
     {
       "command": "monitor export",
@@ -4354,7 +4354,7 @@
       "depth": 2,
       "signature": "export <filepath>",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 138
+      "line": 152
     },
     {
       "command": "monitor import",
@@ -4365,7 +4365,7 @@
       "depth": 2,
       "signature": "import <filepath>",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 146
+      "line": 160
     },
     {
       "command": "monitor layouts",
@@ -4376,7 +4376,7 @@
       "depth": 2,
       "signature": "layouts",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 111
+      "line": 125
     },
     {
       "command": "monitor status",
@@ -4387,7 +4387,7 @@
       "depth": 2,
       "signature": "status",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 93
+      "line": 107
     },
     {
       "command": "monitor stream-info-list",
@@ -4398,7 +4398,7 @@
       "depth": 2,
       "signature": "stream-info-list",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 75
+      "line": 89
     },
     {
       "command": "monitor tencent-stream-info-list",
@@ -4409,7 +4409,7 @@
       "depth": 2,
       "signature": "tencent-stream-info-list",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 59
+      "line": 73
     },
     {
       "command": "monitor test",
@@ -4420,7 +4420,7 @@
       "depth": 2,
       "signature": "test",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 129
+      "line": 143
     },
     {
       "command": "monitor themes",
@@ -4431,7 +4431,7 @@
       "depth": 2,
       "signature": "themes",
       "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 120
+      "line": 134
     },
     {
       "command": "partner",
@@ -11739,6 +11739,14 @@
             "file": "packages/cli/src/services/player.service.sdk.ts",
             "line": 50,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#getChannelDecorate",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 127,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
       }
@@ -15966,7 +15974,7 @@
             "reference": "V4ChannelService#updateSkinBatch",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 179,
+            "line": 197,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18048,7 +18056,7 @@
             "reference": "PlayerService#updateHeadAdvert",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 154,
+            "line": 172,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -18083,7 +18091,7 @@
             "reference": "PlayerService#updateStopAdvert",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 159,
+            "line": 177,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -18160,7 +18168,7 @@
             "reference": "ChannelService#updatePlayerLogo",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 169,
+            "line": 187,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -19046,7 +19054,15 @@
             "reference": "ChannelService#updateWarmupSwitch",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 174,
+            "line": 140,
+            "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "ChannelService#updateWarmupSwitch",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 192,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -19083,7 +19099,7 @@
             "reference": "ChannelService#updatePlayerLogo",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 169,
+            "line": 187,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -19128,7 +19144,7 @@
             "reference": "ChannelService#updatePlayerLogo",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 169,
+            "line": 187,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -19987,7 +20003,7 @@
             "reference": "PlayerService#updateChannelDecorate",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 129,
+            "line": 135,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25067,7 +25083,7 @@
             "reference": "PlayerService#getAntiRecordSettings",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 139,
+            "line": 157,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25102,7 +25118,7 @@
             "reference": "PlayerService#getWatchFeedbackList",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 164,
+            "line": 182,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25137,7 +25153,7 @@
             "reference": "PlayerService#setMarqueeUrl",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 149,
+            "line": 167,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25178,7 +25194,7 @@
             "reference": "PlayerService#setAntiRecordSettings",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 144,
+            "line": 162,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25213,7 +25229,7 @@
             "reference": "PlayerService#updateHeadAdvert",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 154,
+            "line": 172,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25248,7 +25264,7 @@
             "reference": "PlayerService#updateStopAdvert",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 159,
+            "line": 177,
             "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
@@ -25283,7 +25299,7 @@
             "reference": "ChannelService#updatePlayerLogo",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 169,
+            "line": 187,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
@@ -29542,7 +29558,7 @@
             "reference": "ChannelService#updatePlayerLogo",
             "cliModule": "player",
             "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 169,
+            "line": 187,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           },
           {
