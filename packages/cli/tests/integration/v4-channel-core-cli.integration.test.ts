@@ -100,6 +100,36 @@ function extractRoleAccountId(payload: unknown): string {
   return accountId;
 }
 
+function collectObjectValuesByKey(payload: unknown, key: string): Record<string, unknown>[] {
+  if (Array.isArray(payload)) {
+    return payload.flatMap((item) => collectObjectValuesByKey(item, key));
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return [];
+  }
+
+  const record = payload as Record<string, unknown>;
+  const value = record[key];
+  const direct = value && typeof value === 'object' && !Array.isArray(value)
+    ? [value as Record<string, unknown>]
+    : [];
+
+  return [
+    ...direct,
+    ...Object.values(record).flatMap((item) => collectObjectValuesByKey(item, key)),
+  ];
+}
+
+function extractRoleConfig(payload: unknown): Record<string, unknown> {
+  const config = collectObjectValuesByKey(payload, 'config')[0];
+  if (!config) {
+    throw new Error(`Cannot extract role config from CLI output: ${JSON.stringify(payload)}`);
+  }
+
+  return config;
+}
+
 describe('v4 channel core CLI integration', () => {
   it('shows command help for V4 channel core gaps', () => {
     const checks = [
@@ -356,6 +386,125 @@ describe('v4 channel core CLI integration', () => {
         ]);
         if (cleanup.exitCode !== 0) {
           process.stderr.write(`Failed to delete temporary role account ${roleAccount}: ${cleanup.output}\n`);
+        }
+      }
+
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('creates, updates, batch deletes, and configures a V4 role account through the local CLI', () => {
+    let channelId: string | undefined;
+    let roleAccount: string | undefined;
+    let roleAccountDeleted = false;
+
+    try {
+      channelId = createTemporaryChannel('V4 Role Account API');
+      const id = channelId;
+      const timestamp = Date.now();
+
+      const createOutput = runCliSuccess([
+        'channel',
+        'role',
+        'account-create',
+        '--channel-id',
+        id,
+        '--role',
+        'Assistant',
+        '--nick-name',
+        `CLI Assistant ${timestamp}`,
+        '--passwd',
+        'Passw0rd123',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const createPayload = parseJsonObject(createOutput);
+      expect(createPayload.success).toBe(true);
+      roleAccount = extractRoleAccountId(createPayload);
+
+      const updateOutput = runCliSuccess([
+        'channel',
+        'role',
+        'account-update',
+        '--channel-id',
+        id,
+        '--account',
+        roleAccount,
+        '--nick-name',
+        `CLI Assistant Updated ${timestamp}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const updatePayload = parseJsonObject(updateOutput);
+      expect(updatePayload.success).toBe(true);
+      expect(extractRoleAccountId(updatePayload)).toBe(roleAccount);
+
+      const configGetOutput = runCliSuccess([
+        'channel',
+        'role',
+        'config-get',
+        '--channel-id',
+        id,
+        '--role',
+        'Teacher',
+        '--output',
+        'json',
+      ]);
+      const roleConfig = extractRoleConfig(parseJsonValue(configGetOutput));
+      expect(roleConfig).toEqual(expect.any(Object));
+
+      const configUpdateOutput = runCliSuccess([
+        'channel',
+        'role',
+        'config-update',
+        '--channel-id',
+        id,
+        '--role',
+        'Teacher',
+        '--config-json',
+        JSON.stringify(roleConfig),
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const configUpdatePayload = parseJsonObject(configUpdateOutput);
+      expect(configUpdatePayload.success).toBe(true);
+
+      const deleteOutput = runCliSuccess([
+        'channel',
+        'role',
+        'accounts-delete',
+        '--channel-id',
+        id,
+        '--accounts',
+        roleAccount,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const deletePayload = parseJsonObject(deleteOutput);
+      expect(deletePayload.success).toBe(true);
+      roleAccountDeleted = true;
+    } finally {
+      if (channelId && roleAccount && !roleAccountDeleted) {
+        const cleanup = runCli([
+          'channel',
+          'role',
+          'accounts-delete',
+          '--channel-id',
+          channelId,
+          '--accounts',
+          roleAccount,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        if (cleanup.exitCode !== 0) {
+          process.stderr.write(`Failed to batch delete temporary role account ${roleAccount}: ${cleanup.output}\n`);
         }
       }
 

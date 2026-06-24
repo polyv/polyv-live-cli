@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T07:59:22.967Z",
+  "generatedAt": "2026-06-24T08:03:34.438Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 384,
-    "referencedCommandPathsExcludingHelp": 219,
+    "referencedCommandPathsExcludingHelp": 224,
     "coveredLeafTargetsIncludingHelp": 347,
     "missingLeafTargetsIncludingHelp": 220,
-    "coveredRealExecutionLeafTargets": 213,
-    "missingRealExecutionLeafTargets": 354,
-    "realExecutionCoveragePercent": 37.57,
+    "coveredRealExecutionLeafTargets": 218,
+    "missingRealExecutionLeafTargets": 349,
+    "realExecutionCoveragePercent": 38.45,
     "includingHelpCoveragePercent": 61.2,
-    "integrationReferences": 566,
-    "realExecutionReferences": 298,
+    "integrationReferences": 572,
+    "realExecutionReferences": 304,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -66,11 +66,11 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 40,
-      "missingRealExecutionLeafTargets": 38,
+      "coveredRealExecutionLeafTargets": 45,
+      "missingRealExecutionLeafTargets": 33,
       "coveredLeafTargetsIncludingHelp": 64,
       "missingLeafTargetsIncludingHelp": 14,
-      "realExecutionCoveragePercent": 51.28,
+      "realExecutionCoveragePercent": 57.69,
       "includingHelpCoveragePercent": 82.05
     },
     {
@@ -657,61 +657,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1271
-    },
-    {
-      "command": "channel role account-create",
-      "path": [
-        "channel",
-        "role",
-        "account-create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 998
-    },
-    {
-      "command": "channel role account-update",
-      "path": [
-        "channel",
-        "role",
-        "account-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1018
-    },
-    {
-      "command": "channel role accounts-delete",
-      "path": [
-        "channel",
-        "role",
-        "accounts-delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1038
-    },
-    {
-      "command": "channel role config-get",
-      "path": [
-        "channel",
-        "role",
-        "config-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1073
-    },
-    {
-      "command": "channel role config-update",
-      "path": [
-        "channel",
-        "role",
-        "config-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1079
     },
     {
       "command": "channel token api",
@@ -7272,6 +7217,39 @@
       "line": 1253
     },
     {
+      "command": "channel role account-create",
+      "path": [
+        "channel",
+        "role",
+        "account-create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 998
+    },
+    {
+      "command": "channel role account-update",
+      "path": [
+        "channel",
+        "role",
+        "account-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1018
+    },
+    {
+      "command": "channel role accounts-delete",
+      "path": [
+        "channel",
+        "role",
+        "accounts-delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1038
+    },
+    {
       "command": "channel role batch-create",
       "path": [
         "channel",
@@ -7281,6 +7259,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 981
+    },
+    {
+      "command": "channel role config-get",
+      "path": [
+        "channel",
+        "role",
+        "config-get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1073
+    },
+    {
+      "command": "channel role config-update",
+      "path": [
+        "channel",
+        "role",
+        "config-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1079
     },
     {
       "command": "channel role delete",
@@ -9348,12 +9348,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 157,
+        "line": 187,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 106,
+        "line": 136,
         "source": "array-literal"
       }
     },
@@ -9363,7 +9363,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 385,
+        "line": 534,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9426,7 +9426,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 428,
+        "line": 577,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9452,12 +9452,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 396,
+        "line": 545,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 109,
+        "line": 139,
         "source": "array-literal"
       }
     },
@@ -9490,7 +9490,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 125,
+        "line": 155,
         "source": "array-literal"
       }
     },
@@ -9501,7 +9501,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 127,
+        "line": 157,
         "source": "array-literal"
       }
     },
@@ -9511,12 +9511,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 164,
+        "line": 194,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 124,
+        "line": 154,
         "source": "array-literal"
       }
     },
@@ -9527,7 +9527,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 129,
+        "line": 159,
         "source": "array-literal"
       }
     },
@@ -9538,7 +9538,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 128,
+        "line": 158,
         "source": "array-literal"
       }
     },
@@ -9549,7 +9549,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 130,
+        "line": 160,
         "source": "array-literal"
       }
     },
@@ -9560,7 +9560,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 126,
+        "line": 156,
         "source": "array-literal"
       }
     },
@@ -9603,12 +9603,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 159,
+        "line": 189,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 108,
+        "line": 138,
         "source": "array-literal"
       }
     },
@@ -9644,12 +9644,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 407,
+        "line": 556,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 110,
+        "line": 140,
         "source": "array-literal"
       }
     },
@@ -9692,45 +9692,57 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 223,
+        "line": 253,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 111,
+        "line": 141,
         "source": "array-literal"
       }
     },
     {
       "command": "channel role account-create",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
+        "line": 408,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 113,
+        "line": 143,
         "source": "array-literal"
       }
     },
     {
       "command": "channel role account-update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
+        "line": 428,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 114,
+        "line": 144,
         "source": "array-literal"
       }
     },
     {
       "command": "channel role accounts-delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
+        "line": 477,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 115,
+        "line": 145,
         "source": "array-literal"
       }
     },
@@ -9740,7 +9752,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 287,
+        "line": 317,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9751,23 +9763,31 @@
     },
     {
       "command": "channel role config-get",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
+        "line": 446,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 119,
+        "line": 149,
         "source": "array-literal"
       }
     },
     {
       "command": "channel role config-update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
+        "line": 460,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 120,
+        "line": 150,
         "source": "array-literal"
       }
     },
@@ -9777,7 +9797,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 328,
+        "line": 358,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9788,7 +9808,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 314,
+        "line": 344,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9799,7 +9819,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 302,
+        "line": 332,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9810,12 +9830,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 160,
+        "line": 190,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 116,
+        "line": 146,
         "source": "array-literal"
       }
     },
@@ -9825,12 +9845,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 161,
+        "line": 191,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 117,
+        "line": 147,
         "source": "array-literal"
       }
     },
@@ -9840,12 +9860,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 194,
+        "line": 224,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 118,
+        "line": 148,
         "source": "array-literal"
       }
     },
@@ -9855,12 +9875,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 158,
+        "line": 188,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 107,
+        "line": 137,
         "source": "array-literal"
       }
     },
@@ -9885,12 +9905,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 162,
+        "line": 192,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 121,
+        "line": 151,
         "source": "array-literal"
       }
     },
@@ -9900,12 +9920,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 234,
+        "line": 264,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 122,
+        "line": 152,
         "source": "array-literal"
       }
     },
@@ -9915,12 +9935,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 163,
+        "line": 193,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 123,
+        "line": 153,
         "source": "array-literal"
       }
     },
@@ -9930,12 +9950,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 212,
+        "line": 242,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 112,
+        "line": 142,
         "source": "array-literal"
       }
     },
@@ -11312,12 +11332,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 176,
+        "line": 206,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 131,
+        "line": 161,
         "source": "array-literal"
       }
     },
@@ -11560,12 +11580,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 246,
+        "line": 276,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 137,
+        "line": 167,
         "source": "array-literal"
       }
     },
@@ -12340,12 +12360,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 168,
+        "line": 198,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 136,
+        "line": 166,
         "source": "array-literal"
       }
     },
@@ -12370,12 +12390,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 165,
+        "line": 195,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 133,
+        "line": 163,
         "source": "array-literal"
       }
     },
@@ -12386,7 +12406,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 134,
+        "line": 164,
         "source": "array-literal"
       }
     },
@@ -12396,12 +12416,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 166,
+        "line": 196,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 132,
+        "line": 162,
         "source": "array-literal"
       }
     },
@@ -12546,12 +12566,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 167,
+        "line": 197,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 135,
+        "line": 165,
         "source": "array-literal"
       }
     },
