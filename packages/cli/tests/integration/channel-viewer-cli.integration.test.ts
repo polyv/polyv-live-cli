@@ -1,4 +1,7 @@
 import { runCli } from '../helpers/cli-runner';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -58,7 +61,10 @@ describe('channel viewer CLI integration', () => {
 
   (shouldRunRealChannelTests ? it : it.skip)('runs viewer list mutations against a temporary real channel', () => {
     let channelId: string | undefined;
+    let tempDir: string | undefined;
     const viewerId = `cli-viewer-${Date.now()}`;
+    const importedViewerId = `${viewerId}-imported`;
+    const viewerIdsForDelete = `${viewerId},${importedViewerId}`;
 
     try {
       channelId = createTemporaryChannel('Channel Viewer CLI');
@@ -79,6 +85,17 @@ describe('channel viewer CLI integration', () => {
       ]);
       expectPagedPayload(parseJsonObject(listOutput));
 
+      const exportOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'export',
+        '--channel-id',
+        id,
+        '--output',
+        'json',
+      ]);
+      expect(typeof parseJsonObject(exportOutput).exportUrl).toBe('string');
+
       const addOutput = runCliSuccess([
         'channel',
         'viewer',
@@ -94,6 +111,27 @@ describe('channel viewer CLI integration', () => {
       const addPayload = parseJsonObject(addOutput);
       expect(addPayload.success).toBe(true);
       expect(addPayload.viewerIds).toContain(viewerId);
+
+      tempDir = mkdtempSync(join(tmpdir(), 'polyv-channel-viewer-import-'));
+      const importFile = join(tempDir, 'viewers.csv');
+      writeFileSync(importFile, `viewerId\n${importedViewerId}\n`);
+      const importOutput = runCliSuccess([
+        'channel',
+        'viewer',
+        'import',
+        '--channel-id',
+        id,
+        '--file',
+        importFile,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const importPayload = parseJsonObject(importOutput);
+      expect(typeof importPayload.successCount).toBe('number');
+      expect(typeof importPayload.failCount).toBe('number');
+      expect(importPayload.filePath).toBe(importFile);
+      expect(importPayload.fileSize).toBeGreaterThan(0);
 
       const transferOutput = runCliSuccess([
         'channel',
@@ -135,7 +173,7 @@ describe('channel viewer CLI integration', () => {
         '--channel-id',
         id,
         '--viewer-ids',
-        viewerId,
+        viewerIdsForDelete,
         '--force',
         '--output',
         'json',
@@ -143,7 +181,12 @@ describe('channel viewer CLI integration', () => {
       const deletePayload = parseJsonObject(deleteOutput);
       expect(deletePayload.success).toBe(true);
       expect(deletePayload.viewerIds).toContain(viewerId);
+      expect(deletePayload.viewerIds).toContain(importedViewerId);
     } finally {
+      if (tempDir) {
+        rmSync(tempDir, { recursive: true, force: true });
+      }
+
       if (channelId) {
         deleteTemporaryChannel(channelId);
       }

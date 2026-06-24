@@ -240,11 +240,40 @@ describe('remaining channel CLI integration', () => {
     }
   }, 300000);
 
-  (shouldRunRealChannelTests ? it : it.skip)('lists ppt-record tasks for a temporary channel via real CLI and cleans it up', () => {
+  (shouldRunRealChannelTests ? it : it.skip)('manages ppt-record settings and lists tasks for a temporary channel via real CLI', () => {
     let channelId: string | undefined;
 
     try {
       channelId = createTemporaryChannel('Ppt Record List');
+      const settingOutput = runCliSuccess([
+        'channel',
+        'ppt-record',
+        'setting',
+        'get',
+        '--channel-id',
+        channelId,
+        '--output',
+        'json',
+      ]);
+      const setting = parseJsonObject(settingOutput);
+      expect(Object.keys(setting).length).toBeGreaterThan(0);
+
+      const updateSettingOutput = runCliSuccess([
+        'channel',
+        'ppt-record',
+        'setting',
+        'update',
+        '--channel-id',
+        channelId,
+        '--global-setting-enabled',
+        'N',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const updateSetting = parseJsonObject(updateSettingOutput);
+      expect(Object.keys(updateSetting).length).toBeGreaterThan(0);
+
       const output = runCliSuccess([
         'channel',
         'ppt-record',

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T08:15:14.795Z
+Generated at: 2026-06-24T08:20:01.162Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 60 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 234 |
-| Missing real-execution leaf subcommands | 333 |
-| Real-execution coverage | 41.27% |
-| Leaf subcommands referenced including help | 353 |
-| Missing including help | 214 |
+| Real-executed leaf subcommands | 238 |
+| Missing real-execution leaf subcommands | 329 |
+| Real-execution coverage | 41.98% |
+| Leaf subcommands referenced including help | 356 |
+| Missing including help | 211 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 61 | 17 | 78.21% | 70 | 8 |
+| `channel` | 78 | 65 | 13 | 83.33% | 73 | 5 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -87,10 +87,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
-| `channel viewer export` | `packages/cli/src/commands/channel.commands.ts:736` |
-| `channel viewer import` | `packages/cli/src/commands/channel.commands.ts:782` |
-| `channel ppt-record setting get` | `packages/cli/src/commands/channel.commands.ts:1237` |
-| `channel ppt-record setting update` | `packages/cli/src/commands/channel.commands.ts:1242` |
 | `chat ban` | `packages/cli/src/commands/chat.commands.ts:289` |
 | `chat delete` | `packages/cli/src/commands/chat.commands.ts:226` |
 | `chat group-login-times` | `packages/cli/src/commands/chat.commands.ts:270` |
