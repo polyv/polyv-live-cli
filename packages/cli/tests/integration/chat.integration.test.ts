@@ -6,13 +6,20 @@
 
 import { ChatServiceSdk } from '../../src/services/chat.service.sdk';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  parseJsonObject,
+  parseJsonValue,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
 
 const testConfig = getTestConfig();
 const shouldRunTests = hasRealCredentials();
 
 (shouldRunTests ? describe : describe.skip)('Chat Integration Tests', () => {
   let chatService: ChatServiceSdk;
-  let testChannelId: string;
+  let testChannelId = '';
 
   beforeAll(() => {
     chatService = new ChatServiceSdk(testConfig.authConfig, {
@@ -20,7 +27,13 @@ const shouldRunTests = hasRealCredentials();
       timeout: 30000,
       debug: false
     });
-    testChannelId = testConfig.testChannelId;
+    testChannelId = createTemporaryChannel('Chat CLI');
+  });
+
+  afterAll(() => {
+    if (testChannelId) {
+      deleteTemporaryChannel(testChannelId);
+    }
   });
 
   // ========================================
@@ -273,5 +286,69 @@ const shouldRunTests = hasRealCredentials();
 
       expect(listResult.contents.length).toBeGreaterThanOrEqual(0);
     }, 20000);
+  });
+
+  describe('real CLI command coverage', () => {
+    it('should send and clear chat messages through the local CLI', () => {
+      const message = `CLI chat message ${Date.now()}`;
+      const sendOutput = runCliSuccess([
+        'chat',
+        'send',
+        '-c',
+        testChannelId,
+        '-m',
+        message,
+        '-n',
+        'CLIIntegrationBot',
+        '-o',
+        'json',
+      ]);
+      const sendPayload = parseJsonObject(sendOutput);
+      expect(sendPayload.success).toEqual(expect.any(Boolean));
+      expect(typeof sendPayload.message).toBe('string');
+
+      const deleteOutput = runCliSuccess([
+        'chat',
+        'delete',
+        '-c',
+        testChannelId,
+        '--clear',
+        '--force',
+        '-o',
+        'json',
+      ]);
+      const deletePayload = parseJsonObject(deleteOutput);
+      expect(deletePayload).toMatchObject({
+        channelId: testChannelId,
+        deleted: true,
+        cleared: 'all messages',
+      });
+    }, 60000);
+
+    it('should read group login times through the local CLI', () => {
+      const output = runCliSuccess([
+        'chat',
+        'group-login-times',
+        '-c',
+        testChannelId,
+        '-o',
+        'json',
+      ]);
+      const payload = parseJsonValue(output);
+      expect(Array.isArray(payload)).toBe(true);
+    }, 60000);
+
+    it('should log out watch viewers through the local CLI', () => {
+      const output = runCliSuccess([
+        'chat',
+        'viewer-logout',
+        '-c',
+        testChannelId,
+        '--force',
+        '-o',
+        'json',
+      ]);
+      expect(parseJsonObject(output).success).toBe(true);
+    }, 60000);
   });
 });

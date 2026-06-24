@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T08:20:01.162Z",
+  "generatedAt": "2026-06-24T08:25:50.527Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 393,
-    "referencedCommandPathsExcludingHelp": 244,
-    "coveredLeafTargetsIncludingHelp": 356,
-    "missingLeafTargetsIncludingHelp": 211,
-    "coveredRealExecutionLeafTargets": 238,
-    "missingRealExecutionLeafTargets": 329,
-    "realExecutionCoveragePercent": 41.98,
-    "includingHelpCoveragePercent": 62.79,
-    "integrationReferences": 596,
-    "realExecutionReferences": 328,
+    "referencedCommandPathsIncludingHelp": 395,
+    "referencedCommandPathsExcludingHelp": 248,
+    "coveredLeafTargetsIncludingHelp": 358,
+    "missingLeafTargetsIncludingHelp": 209,
+    "coveredRealExecutionLeafTargets": 242,
+    "missingRealExecutionLeafTargets": 325,
+    "realExecutionCoveragePercent": 42.68,
+    "includingHelpCoveragePercent": 63.14,
+    "integrationReferences": 600,
+    "realExecutionReferences": 332,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -76,12 +76,12 @@
     {
       "command": "chat",
       "targetLeafCommands": 44,
-      "coveredRealExecutionLeafTargets": 13,
-      "missingRealExecutionLeafTargets": 31,
-      "coveredLeafTargetsIncludingHelp": 26,
-      "missingLeafTargetsIncludingHelp": 18,
-      "realExecutionCoveragePercent": 29.55,
-      "includingHelpCoveragePercent": 59.09
+      "coveredRealExecutionLeafTargets": 17,
+      "missingRealExecutionLeafTargets": 27,
+      "coveredLeafTargetsIncludingHelp": 28,
+      "missingLeafTargetsIncludingHelp": 16,
+      "realExecutionCoveragePercent": 38.64,
+      "includingHelpCoveragePercent": 63.64
     },
     {
       "command": "checkin",
@@ -669,26 +669,6 @@
       "line": 289
     },
     {
-      "command": "chat delete",
-      "path": [
-        "chat",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 226
-    },
-    {
-      "command": "chat group-login-times",
-      "path": [
-        "chat",
-        "group-login-times"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 270
-    },
-    {
       "command": "chat kick",
       "path": [
         "chat",
@@ -697,16 +677,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 349
-    },
-    {
-      "command": "chat send",
-      "path": [
-        "chat",
-        "send"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 111
     },
     {
       "command": "chat unban",
@@ -727,16 +697,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 382
-    },
-    {
-      "command": "chat viewer-logout",
-      "path": [
-        "chat",
-        "viewer-logout"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 822
     },
     {
       "command": "chat badword add",
@@ -4122,16 +4082,6 @@
       "line": 289
     },
     {
-      "command": "chat delete",
-      "path": [
-        "chat",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 226
-    },
-    {
       "command": "chat kick",
       "path": [
         "chat",
@@ -4140,16 +4090,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 349
-    },
-    {
-      "command": "chat send",
-      "path": [
-        "chat",
-        "send"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 111
     },
     {
       "command": "chat unban",
@@ -7290,6 +7230,26 @@
       "line": 713
     },
     {
+      "command": "chat delete",
+      "path": [
+        "chat",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 226
+    },
+    {
+      "command": "chat group-login-times",
+      "path": [
+        "chat",
+        "group-login-times"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 270
+    },
+    {
       "command": "chat list",
       "path": [
         "chat",
@@ -7298,6 +7258,26 @@
       "depth": 2,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 165
+    },
+    {
+      "command": "chat send",
+      "path": [
+        "chat",
+        "send"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 111
+    },
+    {
+      "command": "chat viewer-logout",
+      "path": [
+        "chat",
+        "viewer-logout"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 822
     },
     {
       "command": "chat badword list",
@@ -10298,6 +10278,17 @@
       }
     },
     {
+      "command": "chat delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 310,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "chat enabled update",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -10314,9 +10305,13 @@
     },
     {
       "command": "chat group-login-times",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 329,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 60,
@@ -10513,10 +10508,25 @@
       }
     },
     {
+      "command": "chat send",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 294,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "chat viewer-logout",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat.integration.test.ts",
+        "line": 342,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-marketing-content-cli.integration.test.ts",
         "line": 88,
