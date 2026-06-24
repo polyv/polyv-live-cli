@@ -16,6 +16,7 @@ import {
 
 const testConfig = getTestConfig();
 const shouldRunTests = hasRealCredentials();
+const shouldRunUserIdTests = shouldRunTests && !!testConfig.authConfig.userId;
 
 (shouldRunTests ? describe : describe.skip)('Chat Integration Tests', () => {
   let chatService: ChatServiceSdk;
@@ -470,6 +471,125 @@ const shouldRunTests = hasRealCredentials();
         data: expect.objectContaining({
           contents: expect.any(Array),
         }),
+      }));
+    }, 60000);
+
+    it('should kick and unkick channel chat viewers through the local CLI', () => {
+      const viewerId = `cli-viewer-${Date.now()}`;
+      const nickName = `CLIViewer${Date.now()}`;
+      let kickSucceeded = false;
+      let unkickPayload: Record<string, unknown> | undefined;
+
+      try {
+        const kickOutput = runCliSuccess([
+          'chat',
+          'kick',
+          '-c',
+          testChannelId,
+          '--viewer-ids',
+          viewerId,
+          '--nick-names',
+          nickName,
+          '-o',
+          'json',
+        ]);
+        const kickPayload = parseJsonObject(kickOutput);
+        expect(kickPayload).toMatchObject({
+          channelId: testChannelId,
+          viewerIds: [viewerId],
+          nickNames: [nickName],
+          global: false,
+        });
+        expect(kickPayload.result).toBeDefined();
+        kickSucceeded = true;
+      } finally {
+        if (kickSucceeded) {
+          const unkickOutput = runCliSuccess([
+            'chat',
+            'unkick',
+            '-c',
+            testChannelId,
+            '--viewer-ids',
+            viewerId,
+            '--nick-names',
+            nickName,
+            '-o',
+            'json',
+          ]);
+          unkickPayload = parseJsonObject(unkickOutput);
+        }
+      }
+
+      expect(unkickPayload).toMatchObject({
+        channelId: testChannelId,
+        viewerIds: [viewerId],
+        nickNames: [nickName],
+        global: false,
+      });
+      expect(unkickPayload?.result).toBeDefined();
+    }, 60000);
+
+    it('should update chat censor settings through the local CLI', () => {
+      const output = runCliSuccess([
+        'chat',
+        'censor',
+        'update',
+        '-c',
+        testChannelId,
+        '--enabled',
+        'Y',
+        '--force',
+        '-o',
+        'json',
+      ]);
+      const payload = parseJsonObject(output);
+      expect(payload).toEqual(expect.objectContaining({
+        data: expect.any(Boolean),
+      }));
+    }, 60000);
+
+    (shouldRunUserIdTests ? it : it.skip)('should add and delete account badwords through the local CLI', () => {
+      const userId = testConfig.authConfig.userId as string;
+      const word = `clibadword${Date.now()}`;
+      let wordAdded = false;
+      let deletePayload: Record<string, unknown> | undefined;
+
+      try {
+        const addOutput = runCliSuccess([
+          'chat',
+          'badword',
+          'add',
+          '--user-id',
+          userId,
+          '--words',
+          word,
+          '--force',
+          '-o',
+          'json',
+        ]);
+        const addPayload = parseJsonObject(addOutput);
+        expect(addPayload).toEqual(expect.objectContaining({
+          data: expect.anything(),
+        }));
+        wordAdded = true;
+      } finally {
+        if (wordAdded) {
+          const deleteOutput = runCliSuccess([
+            'chat',
+            'badword',
+            'delete',
+            '--words',
+            word,
+            '--force',
+            '-o',
+            'json',
+          ]);
+          deletePayload = parseJsonObject(deleteOutput);
+        }
+      }
+
+      expect(deletePayload).toEqual(expect.objectContaining({
+        data: expect.anything(),
       }));
     }, 60000);
   });
