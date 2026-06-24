@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T23:04:21.834Z
+Generated at: 2026-06-24T23:16:53.695Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 86 |
+| Integration files scanned | 87 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 426 |
-| Missing real-execution leaf subcommands | 141 |
-| Real-execution coverage | 75.13% |
-| Leaf subcommands referenced including help | 473 |
-| Missing including help | 94 |
+| Real-executed leaf subcommands | 429 |
+| Missing real-execution leaf subcommands | 138 |
+| Real-execution coverage | 75.66% |
+| Leaf subcommands referenced including help | 474 |
+| Missing including help | 93 |
 
 ## By Top-Level Command
 
@@ -25,11 +25,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
 | `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 70 | 8 | 89.74% | 76 | 2 |
+| `channel` | 78 | 71 | 7 | 91.03% | 77 | 1 |
 | `chat` | 44 | 40 | 4 | 90.91% | 42 | 2 |
 | `checkin` | 5 | 3 | 2 | 60.00% | 3 | 2 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
+| `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `document` | 11 | 6 | 5 | 54.55% | 7 | 4 |
 | `donate` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
@@ -70,7 +70,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:310` |
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1459` |
-| `channel submeeting-batch-add` | `packages/cli/src/commands/channel.commands.ts:1390` |
 | `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1134` |
 | `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1164` |
 | `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1194` |
@@ -83,8 +82,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:744` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
-| `custom-field add` | `packages/cli/src/commands/custom-field.commands.ts:30` |
-| `custom-field value save` | `packages/cli/src/commands/custom-field.commands.ts:41` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
 | `document media unlink` | `packages/cli/src/commands/document.commands.ts:543` |
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |

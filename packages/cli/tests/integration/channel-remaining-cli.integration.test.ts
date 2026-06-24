@@ -134,6 +134,7 @@ describe('remaining channel CLI integration', () => {
       { args: ['channel', 'v4-update', '--help'], text: '--force' },
       { args: ['stream', 'hls-pull-url', '--help'], text: '--channel-id' },
       { args: ['player', 'warmup', 'switch-update', '--help'], text: '--force' },
+      { args: ['channel', 'submeeting-batch-add', '--help'], text: '--sub-channels-json' },
     ];
 
     for (const check of checks) {
@@ -423,6 +424,45 @@ describe('remaining channel CLI integration', () => {
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'batch-associates a temporary submeeting channel via real CLI and cleans both channels up',
+    () => {
+      let mainChannelId: string | undefined;
+      let subChannelId: string | undefined;
+
+      try {
+        mainChannelId = createTemporaryChannel('Submeeting Main');
+        subChannelId = createTemporaryChannel('Submeeting Sub');
+
+        // Build the sub-channels JSON in a variable so the args array literal
+        // stays free of nested brackets (coverage-report array matcher quirk).
+        // Each sub channel requires channelId + name (server enforces name).
+        const subChannelsJson = JSON.stringify([
+          { channelId: subChannelId, name: 'sub-it' },
+        ]);
+
+        const output = runCliSuccess([
+          'channel', 'submeeting-batch-add',
+          '--channel-id', mainChannelId,
+          '--sub-channels-json', subChannelsJson,
+          '--force',
+          '--output', 'json',
+        ]);
+        const parsed = parseJsonValue(output);
+        expect(Array.isArray(parsed)).toBe(true);
+        expect((parsed as unknown[]).map(String)).toContain(subChannelId);
+      } finally {
+        if (subChannelId) {
+          deleteTemporaryChannel(subChannelId);
+        }
+        if (mainChannelId) {
+          deleteTemporaryChannel(mainChannelId);
         }
       }
     },
