@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T18:54:43.687Z
+Generated at: 2026-06-24T19:05:29.930Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 73 |
+| Integration files scanned | 74 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 338 |
-| Missing real-execution leaf subcommands | 229 |
-| Real-execution coverage | 59.61% |
-| Leaf subcommands referenced including help | 425 |
-| Missing including help | 142 |
+| Real-executed leaf subcommands | 344 |
+| Missing real-execution leaf subcommands | 223 |
+| Real-execution coverage | 60.67% |
+| Leaf subcommands referenced including help | 428 |
+| Missing including help | 139 |
 
 ## By Top-Level Command
 
@@ -44,7 +44,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform` | 22 | 10 | 12 | 45.45% | 12 | 10 |
 | `playback` | 13 | 4 | 9 | 30.77% | 5 | 8 |
 | `player` | 11 | 4 | 7 | 36.36% | 5 | 6 |
-| `product` | 36 | 18 | 18 | 50.00% | 27 | 9 |
+| `product` | 36 | 24 | 12 | 66.67% | 30 | 6 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 4 | 5 | 44.44% | 7 | 2 |
 | `questionnaire` | 6 | 3 | 3 | 50.00% | 4 | 2 |
@@ -191,22 +191,16 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player anti-record get` | `packages/cli/src/commands/player.commands.ts:413` |
 | `player anti-record update` | `packages/cli/src/commands/player.commands.ts:427` |
 | `player config update` | `packages/cli/src/commands/player.commands.ts:271` |
-| `product add` | `packages/cli/src/commands/product.commands.ts:418` |
 | `product batch-add` | `packages/cli/src/commands/product.commands.ts:663` |
 | `product batch-shelf` | `packages/cli/src/commands/product.commands.ts:682` |
 | `product cancel-push` | `packages/cli/src/commands/product.commands.ts:719` |
-| `product delete` | `packages/cli/src/commands/product.commands.ts:608` |
 | `product push` | `packages/cli/src/commands/product.commands.ts:710` |
 | `product rank` | `packages/cli/src/commands/product.commands.ts:839` |
 | `product reference` | `packages/cli/src/commands/product.commands.ts:727` |
 | `product sort` | `packages/cli/src/commands/product.commands.ts:700` |
 | `product topping` | `packages/cli/src/commands/product.commands.ts:848` |
 | `product untopping` | `packages/cli/src/commands/product.commands.ts:856` |
-| `product update` | `packages/cli/src/commands/product.commands.ts:523` |
 | `product update-enabled` | `packages/cli/src/commands/product.commands.ts:655` |
-| `product library create` | `packages/cli/src/commands/product.commands.ts:880` |
-| `product library delete` | `packages/cli/src/commands/product.commands.ts:890` |
-| `product library update` | `packages/cli/src/commands/product.commands.ts:885` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa add-edit` | `packages/cli/src/commands/qa.commands.ts:256` |

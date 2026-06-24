@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T18:54:43.687Z",
+  "generatedAt": "2026-06-24T19:05:29.930Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 73,
+    "integrationFiles": 74,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 464,
-    "referencedCommandPathsExcludingHelp": 344,
-    "coveredLeafTargetsIncludingHelp": 425,
-    "missingLeafTargetsIncludingHelp": 142,
-    "coveredRealExecutionLeafTargets": 338,
-    "missingRealExecutionLeafTargets": 229,
-    "realExecutionCoveragePercent": 59.61,
-    "includingHelpCoveragePercent": 74.96,
-    "integrationReferences": 766,
-    "realExecutionReferences": 448,
-    "helpReferences": 318
+    "referencedCommandPathsIncludingHelp": 467,
+    "referencedCommandPathsExcludingHelp": 350,
+    "coveredLeafTargetsIncludingHelp": 428,
+    "missingLeafTargetsIncludingHelp": 139,
+    "coveredRealExecutionLeafTargets": 344,
+    "missingRealExecutionLeafTargets": 223,
+    "realExecutionCoveragePercent": 60.67,
+    "includingHelpCoveragePercent": 75.49,
+    "integrationReferences": 780,
+    "realExecutionReferences": 456,
+    "helpReferences": 324
   },
   "byTopLevel": [
     {
@@ -256,12 +256,12 @@
     {
       "command": "product",
       "targetLeafCommands": 36,
-      "coveredRealExecutionLeafTargets": 18,
-      "missingRealExecutionLeafTargets": 18,
-      "coveredLeafTargetsIncludingHelp": 27,
-      "missingLeafTargetsIncludingHelp": 9,
-      "realExecutionCoveragePercent": 50,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 24,
+      "missingRealExecutionLeafTargets": 12,
+      "coveredLeafTargetsIncludingHelp": 30,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 66.67,
+      "includingHelpCoveragePercent": 83.33
     },
     {
       "command": "promotion",
@@ -1774,16 +1774,6 @@
       "line": 271
     },
     {
-      "command": "product add",
-      "path": [
-        "product",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 418
-    },
-    {
       "command": "product batch-add",
       "path": [
         "product",
@@ -1812,16 +1802,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 719
-    },
-    {
-      "command": "product delete",
-      "path": [
-        "product",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 608
     },
     {
       "command": "product push",
@@ -1884,16 +1864,6 @@
       "line": 856
     },
     {
-      "command": "product update",
-      "path": [
-        "product",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 523
-    },
-    {
       "command": "product update-enabled",
       "path": [
         "product",
@@ -1902,39 +1872,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 655
-    },
-    {
-      "command": "product library create",
-      "path": [
-        "product",
-        "library",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 880
-    },
-    {
-      "command": "product library delete",
-      "path": [
-        "product",
-        "library",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 890
-    },
-    {
-      "command": "product library update",
-      "path": [
-        "product",
-        "library",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 885
     },
     {
       "command": "product order batch-status",
@@ -3767,16 +3704,6 @@
       "line": 271
     },
     {
-      "command": "product add",
-      "path": [
-        "product",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 418
-    },
-    {
       "command": "product batch-shelf",
       "path": [
         "product",
@@ -3797,16 +3724,6 @@
       "line": 719
     },
     {
-      "command": "product delete",
-      "path": [
-        "product",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 608
-    },
-    {
       "command": "product reference",
       "path": [
         "product",
@@ -3825,16 +3742,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 700
-    },
-    {
-      "command": "product update",
-      "path": [
-        "product",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 523
     },
     {
       "command": "product update-enabled",
@@ -6659,6 +6566,16 @@
       "line": 378
     },
     {
+      "command": "product add",
+      "path": [
+        "product",
+        "add"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 418
+    },
+    {
       "command": "product batch-delete",
       "path": [
         "product",
@@ -6667,6 +6584,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 674
+    },
+    {
+      "command": "product delete",
+      "path": [
+        "product",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 608
     },
     {
       "command": "product enabled",
@@ -6697,6 +6624,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 691
+    },
+    {
+      "command": "product update",
+      "path": [
+        "product",
+        "update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 523
     },
     {
       "command": "product channel-tag create",
@@ -6743,6 +6680,28 @@
       "line": 787
     },
     {
+      "command": "product library create",
+      "path": [
+        "product",
+        "library",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 880
+    },
+    {
+      "command": "product library delete",
+      "path": [
+        "product",
+        "library",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 890
+    },
+    {
       "command": "product library list",
       "path": [
         "product",
@@ -6752,6 +6711,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 869
+    },
+    {
+      "command": "product library update",
+      "path": [
+        "product",
+        "library",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 885
     },
     {
       "command": "product order list",
@@ -11441,6 +11411,21 @@
       }
     },
     {
+      "command": "product add",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 58,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 282,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "product batch-add",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -11523,6 +11508,21 @@
       }
     },
     {
+      "command": "product delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 126,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 284,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "product enabled",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -11546,23 +11546,31 @@
     },
     {
       "command": "product library create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 188,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 44,
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 285,
         "source": "array-literal"
       }
     },
     {
       "command": "product library delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 236,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 46,
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 287,
         "source": "array-literal"
       }
     },
@@ -11579,12 +11587,16 @@
     },
     {
       "command": "product library update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 212,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/user-business-cli.integration.test.ts",
-        "line": 45,
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 286,
         "source": "array-literal"
       }
     },
@@ -11815,6 +11827,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-marketing-content-cli.integration.test.ts",
         "line": 86,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "product update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 91,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 283,
         "source": "array-literal"
       }
     },
