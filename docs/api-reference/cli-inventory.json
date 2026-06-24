@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T11:21:02.118Z",
+  "generatedAt": "2026-06-24T03:01:01.641Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -21674,7 +21674,7 @@
             "reference": "V4ChatService#batchCheckin",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 72,
+            "line": 71,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -23320,7 +23320,7 @@
             "reference": "LiveInteractionService#getCheckinBySessionId",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 123,
+            "line": 122,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -23357,7 +23357,7 @@
             "reference": "LiveInteractionService#getCheckinList",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 86,
+            "line": 85,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -23543,7 +23543,7 @@
             "reference": "LiveInteractionService#getCheckinByTime",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 140,
+            "line": 139,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]
@@ -23846,7 +23846,7 @@
             "reference": "LiveInteractionService#getCheckinByCheckinId",
             "cliModule": "checkin",
             "file": "packages/cli/src/services/checkin-service.ts",
-            "line": 106,
+            "line": 105,
             "sdkFile": "packages/sdk/src/services/live-interaction.service.ts"
           }
         ]

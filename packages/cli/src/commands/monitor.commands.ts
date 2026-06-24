@@ -39,6 +39,20 @@ function displayApiResult(data: any, output = 'table'): void {
   console.log(formatTable({ headers, data: rows }));
 }
 
+function resolveOutputOption(options: { output?: string }, command?: Command): string {
+  const parentOutputSource = command?.parent?.getOptionValueSource('output');
+  const commandOutputSource = command?.getOptionValueSource('output');
+  if (
+    parentOutputSource &&
+    parentOutputSource !== 'default' &&
+    (!commandOutputSource || commandOutputSource === 'default')
+  ) {
+    return String(command?.parent?.getOptionValue('output') ?? options.output ?? 'table');
+  }
+
+  return String(options.output ?? 'table');
+}
+
 export function registerMonitorCommands(program: Command): void {
   const monitorCommand = program
     .command('monitor')
@@ -61,11 +75,11 @@ export function registerMonitorCommands(program: Command): void {
     .description('List Tencent stream monitoring info')
     .requiredOption('--channel-id <id>', 'channel ID')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action(async (options) => {
+    .action(async (options, command: Command) => {
       try {
         const { authConfig, serviceConfig } = await loadApiCommandConfig(commandParentOptions(program));
         const service = new MonitorServiceSdk(authConfig, serviceConfig);
-        displayApiResult(await service.listTencentStreamInfo(apiParams(options)), options.output);
+        displayApiResult(await service.listTencentStreamInfo(apiParams(options)), resolveOutputOption(options, command));
       } catch (error) {
         logError(error instanceof Error ? error : new Error(String(error)));
         process.exit(1);
@@ -79,11 +93,11 @@ export function registerMonitorCommands(program: Command): void {
     .option('--start-time <timestamp>', 'start timestamp')
     .option('--end-time <timestamp>', 'end timestamp')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action(async (options) => {
+    .action(async (options, command: Command) => {
       try {
         const { authConfig, serviceConfig } = await loadApiCommandConfig(commandParentOptions(program));
         const service = new MonitorServiceSdk(authConfig, serviceConfig);
-        displayApiResult(await service.listMonitorStreamInfo(apiParams(options)), options.output);
+        displayApiResult(await service.listMonitorStreamInfo(apiParams(options)), resolveOutputOption(options, command));
       } catch (error) {
         logError(error instanceof Error ? error : new Error(String(error)));
         process.exit(1);
@@ -94,45 +108,45 @@ export function registerMonitorCommands(program: Command): void {
     .command('status')
     .description('Show monitoring dashboard status')
     .option('-o, --output <format>', 'Output format (table, json)', 'table')
-    .action(async (options: Pick<MonitorOptions, 'output'>) => {
+    .action(async (options: Pick<MonitorOptions, 'output'>, command: Command) => {
       const handler = new MonitorHandler();
-      await handler.showStatus(options);
+      await handler.showStatus({ ...options, output: resolveOutputOption(options, command) });
     });
 
   monitorCommand
     .command('config')
     .description('Manage monitoring configuration')
     .option('-o, --output <format>', 'Output format (table, json)', 'table')
-    .action(async (options: Pick<MonitorOptions, 'output'>) => {
+    .action(async (options: Pick<MonitorOptions, 'output'>, command: Command) => {
       const handler = new MonitorHandler();
-      await handler.showConfig(options);
+      await handler.showConfig({ ...options, output: resolveOutputOption(options, command) });
     });
 
   monitorCommand
     .command('layouts')
     .description('List available dashboard layouts')
     .option('-o, --output <format>', 'Output format (table, json)', 'table')
-    .action(async (options: Pick<MonitorOptions, 'output'>) => {
+    .action(async (options: Pick<MonitorOptions, 'output'>, command: Command) => {
       const handler = new MonitorHandler();
-      await handler.listLayouts(options);
+      await handler.listLayouts({ ...options, output: resolveOutputOption(options, command) });
     });
 
   monitorCommand
     .command('themes')
     .description('List available themes')
     .option('-o, --output <format>', 'Output format (table, json)', 'table')
-    .action(async (options: Pick<MonitorOptions, 'output'>) => {
+    .action(async (options: Pick<MonitorOptions, 'output'>, command: Command) => {
       const handler = new MonitorHandler();
-      await handler.listThemes(options);
+      await handler.listThemes({ ...options, output: resolveOutputOption(options, command) });
     });
 
   monitorCommand
     .command('test')
     .description('Test monitoring dashboard compatibility')
     .option('-o, --output <format>', 'Output format (table, json)', 'table')
-    .action(async (options: Pick<MonitorOptions, 'output'>) => {
+    .action(async (options: Pick<MonitorOptions, 'output'>, command: Command) => {
       const handler = new MonitorHandler();
-      await handler.testCompatibility(options);
+      await handler.testCompatibility({ ...options, output: resolveOutputOption(options, command) });
     });
 
   monitorCommand

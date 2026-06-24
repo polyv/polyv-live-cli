@@ -166,10 +166,8 @@ describe('Monitor Commands', () => {
       
       expect(MonitorHandler).toHaveBeenCalled();
       expect(mockHandler.showStatus).toHaveBeenCalled();
-      // For now, accept that the default table output is passed - the key point is that
-      // we're testing the actual command execution and MonitorHandler instantiation
       const actualArgs = mockHandler.showStatus.mock.calls[0]?.[0];
-      expect(actualArgs).toEqual({ output: 'table' });
+      expect(actualArgs).toEqual({ output: 'json' });
     });
 
     it('should execute config subcommand', async () => {
@@ -183,7 +181,7 @@ describe('Monitor Commands', () => {
       await program.parseAsync(['node', 'test', 'monitor', 'layouts', '--output', 'json'], { from: 'node' });
       
       expect(MonitorHandler).toHaveBeenCalled();
-      expect(mockHandler.listLayouts).toHaveBeenCalledWith({ output: 'table' });
+      expect(mockHandler.listLayouts).toHaveBeenCalledWith({ output: 'json' });
     });
 
     it('should execute themes subcommand', async () => {
@@ -197,7 +195,7 @@ describe('Monitor Commands', () => {
       await program.parseAsync(['node', 'test', 'monitor', 'test', '--output', 'json'], { from: 'node' });
       
       expect(MonitorHandler).toHaveBeenCalled();
-      expect(mockHandler.testCompatibility).toHaveBeenCalledWith({ output: 'table' });
+      expect(mockHandler.testCompatibility).toHaveBeenCalledWith({ output: 'json' });
     });
 
     it('should execute export subcommand', async () => {

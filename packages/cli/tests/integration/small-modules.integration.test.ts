@@ -2,6 +2,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -99,6 +100,44 @@ describe('small module CLI integration', () => {
       }
     }
   }, 240000);
+
+  it('runs monitor layouts through the real CLI and cleans up a disposable channel when available', () => {
+    let channelId: string | undefined;
+
+    try {
+      if (shouldRunRealChannelTests) {
+        channelId = createTemporaryChannel('Monitor Layouts Smoke');
+      }
+
+      const output = runCliSuccess(['monitor', 'layouts', '--output', 'json']);
+      const layouts = parseJsonValue(output);
+      if (!Array.isArray(layouts)) {
+        throw new Error(`Expected monitor layouts to return a JSON array:\n${output}`);
+      }
+
+      expect(layouts).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          name: 'default',
+          minSize: '120x30',
+          components: 4,
+        }),
+        expect.objectContaining({
+          name: 'compact',
+          minSize: '80x24',
+          components: 2,
+        }),
+        expect.objectContaining({
+          name: 'single',
+          minSize: '60x20',
+          components: 1,
+        }),
+      ]));
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 
   it('requires confirmation or force for partner write commands in non-TTY mode', () => {
     const commands = [
