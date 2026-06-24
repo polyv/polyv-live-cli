@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T16:01:54.547Z",
+  "generatedAt": "2026-06-24T16:16:28.359Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 63,
+    "integrationFiles": 64,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 405,
-    "referencedCommandPathsExcludingHelp": 265,
-    "coveredLeafTargetsIncludingHelp": 367,
-    "missingLeafTargetsIncludingHelp": 200,
-    "coveredRealExecutionLeafTargets": 259,
-    "missingRealExecutionLeafTargets": 308,
-    "realExecutionCoveragePercent": 45.68,
-    "includingHelpCoveragePercent": 64.73,
-    "integrationReferences": 621,
-    "realExecutionReferences": 351,
-    "helpReferences": 270
+    "referencedCommandPathsIncludingHelp": 409,
+    "referencedCommandPathsExcludingHelp": 269,
+    "coveredLeafTargetsIncludingHelp": 371,
+    "missingLeafTargetsIncludingHelp": 196,
+    "coveredRealExecutionLeafTargets": 263,
+    "missingRealExecutionLeafTargets": 304,
+    "realExecutionCoveragePercent": 46.38,
+    "includingHelpCoveragePercent": 65.43,
+    "integrationReferences": 629,
+    "realExecutionReferences": 355,
+    "helpReferences": 274
   },
   "byTopLevel": [
     {
@@ -76,12 +76,12 @@
     {
       "command": "chat",
       "targetLeafCommands": 44,
-      "coveredRealExecutionLeafTargets": 27,
-      "missingRealExecutionLeafTargets": 17,
-      "coveredLeafTargetsIncludingHelp": 33,
-      "missingLeafTargetsIncludingHelp": 11,
-      "realExecutionCoveragePercent": 61.36,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 28,
+      "missingRealExecutionLeafTargets": 16,
+      "coveredLeafTargetsIncludingHelp": 34,
+      "missingLeafTargetsIncludingHelp": 10,
+      "realExecutionCoveragePercent": 63.64,
+      "includingHelpCoveragePercent": 77.27
     },
     {
       "command": "checkin",
@@ -166,22 +166,22 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 19,
-      "coveredLeafTargetsIncludingHelp": 14,
-      "missingLeafTargetsIncludingHelp": 8,
-      "realExecutionCoveragePercent": 13.64,
-      "includingHelpCoveragePercent": 63.64
+      "coveredRealExecutionLeafTargets": 4,
+      "missingRealExecutionLeafTargets": 18,
+      "coveredLeafTargetsIncludingHelp": 15,
+      "missingLeafTargetsIncludingHelp": 7,
+      "realExecutionCoveragePercent": 18.18,
+      "includingHelpCoveragePercent": 68.18
     },
     {
       "command": "invite-sales",
       "targetLeafCommands": 5,
-      "coveredRealExecutionLeafTargets": 1,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 4,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 20,
-      "includingHelpCoveragePercent": 80
+      "coveredRealExecutionLeafTargets": 2,
+      "missingRealExecutionLeafTargets": 3,
+      "coveredLeafTargetsIncludingHelp": 5,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 40,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "lottery",
@@ -196,12 +196,12 @@
     {
       "command": "material",
       "targetLeafCommands": 7,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 5,
-      "coveredLeafTargetsIncludingHelp": 3,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 28.57,
-      "includingHelpCoveragePercent": 42.86
+      "coveredRealExecutionLeafTargets": 3,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 4,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 42.86,
+      "includingHelpCoveragePercent": 57.14
     },
     {
       "command": "monitor",
@@ -778,17 +778,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 771
-    },
-    {
-      "command": "chat role admin-get",
-      "path": [
-        "chat",
-        "role",
-        "admin-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 707
     },
     {
       "command": "chat role admin-update",
@@ -1458,17 +1447,6 @@
       "line": 125
     },
     {
-      "command": "interaction webhook get",
-      "path": [
-        "interaction",
-        "webhook",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 101
-    },
-    {
       "command": "interaction webhook set",
       "path": [
         "interaction",
@@ -1488,16 +1466,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/invite-sales.commands.ts",
       "line": 40
-    },
-    {
-      "command": "invite-sales list",
-      "path": [
-        "invite-sales",
-        "list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/invite-sales.commands.ts",
-      "line": 33
     },
     {
       "command": "invite-sales remove",
@@ -1666,17 +1634,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/material.commands.ts",
       "line": 40
-    },
-    {
-      "command": "material category list",
-      "path": [
-        "material",
-        "category",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 50
     },
     {
       "command": "material label create",
@@ -3981,17 +3938,6 @@
       "line": 783
     },
     {
-      "command": "chat role admin-get",
-      "path": [
-        "chat",
-        "role",
-        "admin-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 707
-    },
-    {
       "command": "chat role teacher-update",
       "path": [
         "chat",
@@ -4432,27 +4378,6 @@
       "line": 397
     },
     {
-      "command": "interaction webhook get",
-      "path": [
-        "interaction",
-        "webhook",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 101
-    },
-    {
-      "command": "invite-sales list",
-      "path": [
-        "invite-sales",
-        "list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/invite-sales.commands.ts",
-      "line": 33
-    },
-    {
       "command": "lottery channel-records",
       "path": [
         "lottery",
@@ -4525,17 +4450,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 648
-    },
-    {
-      "command": "material category list",
-      "path": [
-        "material",
-        "category",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 50
     },
     {
       "command": "material label create",
@@ -7258,6 +7172,17 @@
       "line": 764
     },
     {
+      "command": "chat role admin-get",
+      "path": [
+        "chat",
+        "role",
+        "admin-get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 707
+    },
+    {
       "command": "chat role teacher-get",
       "path": [
         "chat",
@@ -7470,6 +7395,27 @@
       "line": 365
     },
     {
+      "command": "interaction webhook get",
+      "path": [
+        "interaction",
+        "webhook",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 101
+    },
+    {
+      "command": "invite-sales list",
+      "path": [
+        "invite-sales",
+        "list"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/invite-sales.commands.ts",
+      "line": 33
+    },
+    {
       "command": "invite-sales follow-viewer list",
       "path": [
         "invite-sales",
@@ -7604,6 +7550,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/material.commands.ts",
       "line": 27
+    },
+    {
+      "command": "material category list",
+      "path": [
+        "material",
+        "category",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 50
     },
     {
       "command": "material label list",
@@ -10451,6 +10408,21 @@
       }
     },
     {
+      "command": "chat role admin-get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 86,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 138,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "chat role admin-update",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -11033,6 +11005,21 @@
       }
     },
     {
+      "command": "interaction webhook get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 114,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 139,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "interaction webhook set",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -11086,6 +11073,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "invite-sales list",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 33,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 136,
+        "source": "array-literal"
+      }
     },
     {
       "command": "invite-sales remove",
@@ -11320,6 +11322,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 100,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "material category list",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 55,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/misc-reads-cli.integration.test.ts",
+        "line": 137,
         "source": "array-literal"
       }
     },

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T16:01:54.547Z
+Generated at: 2026-06-24T16:16:28.359Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 63 |
+| Integration files scanned | 64 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 259 |
-| Missing real-execution leaf subcommands | 308 |
-| Real-execution coverage | 45.68% |
-| Leaf subcommands referenced including help | 367 |
-| Missing including help | 200 |
+| Real-executed leaf subcommands | 263 |
+| Missing real-execution leaf subcommands | 304 |
+| Real-execution coverage | 46.38% |
+| Leaf subcommands referenced including help | 371 |
+| Missing including help | 196 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
-| `chat` | 44 | 27 | 17 | 61.36% | 33 | 11 |
+| `chat` | 44 | 28 | 16 | 63.64% | 34 | 10 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
@@ -35,10 +35,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 3 | 19 | 13.64% | 14 | 8 |
-| `invite-sales` | 5 | 1 | 4 | 20.00% | 4 | 1 |
+| `interaction` | 22 | 4 | 18 | 18.18% | 15 | 7 |
+| `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
 | `lottery` | 24 | 11 | 13 | 45.83% | 17 | 7 |
-| `material` | 7 | 2 | 5 | 28.57% | 3 | 4 |
+| `material` | 7 | 3 | 4 | 42.86% | 4 | 3 |
 | `monitor` | 9 | 2 | 7 | 22.22% | 3 | 6 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 7 | 15 | 31.82% | 9 | 13 |
@@ -98,7 +98,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `chat robot list-update` | `packages/cli/src/commands/chat.commands.ts:783` |
 | `chat robot pause` | `packages/cli/src/commands/chat.commands.ts:797` |
 | `chat robot setting-update` | `packages/cli/src/commands/chat.commands.ts:771` |
-| `chat role admin-get` | `packages/cli/src/commands/chat.commands.ts:707` |
 | `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:714` |
 | `chat role teacher-update` | `packages/cli/src/commands/chat.commands.ts:732` |
 | `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:744` |
@@ -161,10 +160,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction task-reward viewer-detail` | `packages/cli/src/commands/interaction.commands.ts:379` |
 | `interaction task-reward viewer-list` | `packages/cli/src/commands/interaction.commands.ts:397` |
 | `interaction webhook delete` | `packages/cli/src/commands/interaction.commands.ts:125` |
-| `interaction webhook get` | `packages/cli/src/commands/interaction.commands.ts:101` |
 | `interaction webhook set` | `packages/cli/src/commands/interaction.commands.ts:111` |
 | `invite-sales add` | `packages/cli/src/commands/invite-sales.commands.ts:40` |
-| `invite-sales list` | `packages/cli/src/commands/invite-sales.commands.ts:33` |
 | `invite-sales remove` | `packages/cli/src/commands/invite-sales.commands.ts:56` |
 | `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
 | `lottery channel-records` | `packages/cli/src/commands/lottery.commands.ts:450` |
@@ -181,7 +178,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
 | `lottery wait create` | `packages/cli/src/commands/lottery.commands.ts:566` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
-| `material category list` | `packages/cli/src/commands/material.commands.ts:50` |
 | `material label create` | `packages/cli/src/commands/material.commands.ts:66` |
 | `material label delete` | `packages/cli/src/commands/material.commands.ts:81` |
 | `material label update` | `packages/cli/src/commands/material.commands.ts:73` |
