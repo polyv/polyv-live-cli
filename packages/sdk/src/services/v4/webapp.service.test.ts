@@ -224,7 +224,9 @@ describe('V4WebAppService', () => {
       await service.deleteRole(123);
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/live/v4/user/webapp-role/delete?id=123'
+        '/live/v4/user/webapp-role/delete',
+        undefined,
+        { params: { id: 123 } }
       );
     });
 

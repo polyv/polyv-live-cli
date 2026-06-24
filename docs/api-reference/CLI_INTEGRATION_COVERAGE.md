@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T18:16:36.118Z
+Generated at: 2026-06-24T18:25:24.797Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 71 |
+| Integration files scanned | 72 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 319 |
-| Missing real-execution leaf subcommands | 248 |
-| Real-execution coverage | 56.26% |
-| Leaf subcommands referenced including help | 413 |
-| Missing including help | 154 |
+| Real-executed leaf subcommands | 323 |
+| Missing real-execution leaf subcommands | 244 |
+| Real-execution coverage | 56.97% |
+| Leaf subcommands referenced including help | 416 |
+| Missing including help | 151 |
 
 ## By Top-Level Command
 
@@ -58,7 +58,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `viewer` | 19 | 9 | 10 | 47.37% | 17 | 2 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
 | `web` | 34 | 15 | 19 | 44.12% | 21 | 13 |
-| `webapp` | 6 | 2 | 4 | 33.33% | 3 | 3 |
+| `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 1 | 3 | 25.00% | 1 | 3 |
 
 ## Missing Real-Execution Targets
@@ -306,10 +306,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `web setting image-upload` | `packages/cli/src/commands/web.commands.ts:204` |
 | `web share update` | `packages/cli/src/commands/web.commands.ts:191` |
 | `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:251` |
-| `webapp role create` | `packages/cli/src/commands/webapp.commands.ts:54` |
-| `webapp role delete` | `packages/cli/src/commands/webapp.commands.ts:75` |
-| `webapp role get` | `packages/cli/src/commands/webapp.commands.ts:48` |
-| `webapp role update` | `packages/cli/src/commands/webapp.commands.ts:64` |
 | `whitelist add` | `packages/cli/src/commands/whitelist.commands.ts:91` |
 | `whitelist remove` | `packages/cli/src/commands/whitelist.commands.ts:179` |
 | `whitelist update` | `packages/cli/src/commands/whitelist.commands.ts:134` |

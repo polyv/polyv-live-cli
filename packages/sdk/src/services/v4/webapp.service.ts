@@ -234,9 +234,14 @@ export class V4WebAppService {
       throw new PolyVValidationError('roleId is required', 'roleId');
     }
 
-    // Note: This API uses POST with query param, not DELETE method
+    // Note: This API uses POST with a signed `id` query param, not a DELETE
+    // method. The `id` must travel in config.params so the request-signing
+    // interceptor includes it in the signature (embedding it in the URL path
+    // as `?id=` leaves it out of the signature and yields 签名错误).
     await this.client.httpClient.post(
-      `/live/v4/user/webapp-role/delete?id=${roleId}`
+      '/live/v4/user/webapp-role/delete',
+      undefined,
+      { params: { id: roleId } }
     );
   }
 }

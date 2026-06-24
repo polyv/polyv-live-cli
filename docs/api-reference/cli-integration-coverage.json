@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T18:16:36.118Z",
+  "generatedAt": "2026-06-24T18:25:24.797Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 71,
+    "integrationFiles": 72,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 452,
-    "referencedCommandPathsExcludingHelp": 325,
-    "coveredLeafTargetsIncludingHelp": 413,
-    "missingLeafTargetsIncludingHelp": 154,
-    "coveredRealExecutionLeafTargets": 319,
-    "missingRealExecutionLeafTargets": 248,
-    "realExecutionCoveragePercent": 56.26,
-    "includingHelpCoveragePercent": 72.84,
-    "integrationReferences": 728,
-    "realExecutionReferences": 420,
-    "helpReferences": 308
+    "referencedCommandPathsIncludingHelp": 455,
+    "referencedCommandPathsExcludingHelp": 329,
+    "coveredLeafTargetsIncludingHelp": 416,
+    "missingLeafTargetsIncludingHelp": 151,
+    "coveredRealExecutionLeafTargets": 323,
+    "missingRealExecutionLeafTargets": 244,
+    "realExecutionCoveragePercent": 56.97,
+    "includingHelpCoveragePercent": 73.37,
+    "integrationReferences": 738,
+    "realExecutionReferences": 426,
+    "helpReferences": 312
   },
   "byTopLevel": [
     {
@@ -396,12 +396,12 @@
     {
       "command": "webapp",
       "targetLeafCommands": 6,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 3,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 33.33,
-      "includingHelpCoveragePercent": 50
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 6,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "whitelist",
@@ -3003,50 +3003,6 @@
       "line": 251
     },
     {
-      "command": "webapp role create",
-      "path": [
-        "webapp",
-        "role",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "webapp role delete",
-      "path": [
-        "webapp",
-        "role",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 75
-    },
-    {
-      "command": "webapp role get",
-      "path": [
-        "webapp",
-        "role",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 48
-    },
-    {
-      "command": "webapp role update",
-      "path": [
-        "webapp",
-        "role",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 64
-    },
-    {
       "command": "whitelist add",
       "path": [
         "whitelist",
@@ -4658,39 +4614,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 204
-    },
-    {
-      "command": "webapp role create",
-      "path": [
-        "webapp",
-        "role",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "webapp role get",
-      "path": [
-        "webapp",
-        "role",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 48
-    },
-    {
-      "command": "webapp role update",
-      "path": [
-        "webapp",
-        "role",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/webapp.commands.ts",
-      "line": 64
     },
     {
       "command": "whitelist add",
@@ -8108,6 +8031,39 @@
       "line": 34
     },
     {
+      "command": "webapp role create",
+      "path": [
+        "webapp",
+        "role",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 54
+    },
+    {
+      "command": "webapp role delete",
+      "path": [
+        "webapp",
+        "role",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 75
+    },
+    {
+      "command": "webapp role get",
+      "path": [
+        "webapp",
+        "role",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 48
+    },
+    {
       "command": "webapp role list",
       "path": [
         "webapp",
@@ -8117,6 +8073,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/webapp.commands.ts",
       "line": 41
+    },
+    {
+      "command": "webapp role update",
+      "path": [
+        "webapp",
+        "role",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/webapp.commands.ts",
+      "line": 64
     },
     {
       "command": "whitelist list",
@@ -13750,10 +13717,29 @@
       "firstHelpReference": null
     },
     {
-      "command": "webapp role delete",
-      "realExecutionReferences": 0,
+      "command": "webapp role create",
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 70,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 183,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "webapp role delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 137,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 41,
@@ -13761,8 +13747,23 @@
       }
     },
     {
-      "command": "webapp role list",
+      "command": "webapp role get",
       "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 93,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 184,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "webapp role list",
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
@@ -13770,6 +13771,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "webapp role update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 111,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/webapp-role-cli.integration.test.ts",
+        "line": 185,
+        "source": "array-literal"
+      }
     },
     {
       "command": "whitelist list",
