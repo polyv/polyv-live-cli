@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T21:21:49.669Z",
+  "generatedAt": "2026-06-24T21:35:45.912Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 496,
-    "referencedCommandPathsExcludingHelp": 401,
-    "coveredLeafTargetsIncludingHelp": 457,
-    "missingLeafTargetsIncludingHelp": 110,
-    "coveredRealExecutionLeafTargets": 395,
-    "missingRealExecutionLeafTargets": 172,
-    "realExecutionCoveragePercent": 69.66,
-    "includingHelpCoveragePercent": 80.6,
-    "integrationReferences": 931,
-    "realExecutionReferences": 563,
+    "referencedCommandPathsIncludingHelp": 501,
+    "referencedCommandPathsExcludingHelp": 406,
+    "coveredLeafTargetsIncludingHelp": 462,
+    "missingLeafTargetsIncludingHelp": 105,
+    "coveredRealExecutionLeafTargets": 400,
+    "missingRealExecutionLeafTargets": 167,
+    "realExecutionCoveragePercent": 70.55,
+    "includingHelpCoveragePercent": 81.48,
+    "integrationReferences": 938,
+    "realExecutionReferences": 570,
     "helpReferences": 368
   },
   "byTopLevel": [
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 67,
-      "missingRealExecutionLeafTargets": 11,
-      "coveredLeafTargetsIncludingHelp": 73,
-      "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 85.9,
-      "includingHelpCoveragePercent": 93.59
+      "coveredRealExecutionLeafTargets": 68,
+      "missingRealExecutionLeafTargets": 10,
+      "coveredLeafTargetsIncludingHelp": 74,
+      "missingLeafTargetsIncludingHelp": 4,
+      "realExecutionCoveragePercent": 87.18,
+      "includingHelpCoveragePercent": 94.87
     },
     {
       "command": "chat",
@@ -226,12 +226,12 @@
     {
       "command": "platform",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 14,
-      "missingRealExecutionLeafTargets": 8,
-      "coveredLeafTargetsIncludingHelp": 16,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 63.64,
-      "includingHelpCoveragePercent": 72.73
+      "coveredRealExecutionLeafTargets": 18,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 20,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 81.82,
+      "includingHelpCoveragePercent": 90.91
     },
     {
       "command": "playback",
@@ -481,16 +481,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1459
-    },
-    {
-      "command": "channel children-list",
-      "path": [
-        "channel",
-        "children-list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1290
     },
     {
       "command": "channel questionnaire-stop",
@@ -1362,39 +1352,6 @@
       "line": 663
     },
     {
-      "command": "platform anchor get",
-      "path": [
-        "platform",
-        "anchor",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 642
-    },
-    {
-      "command": "platform anchor relation-list",
-      "path": [
-        "platform",
-        "anchor",
-        "relation-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 754
-    },
-    {
-      "command": "platform anchor unrelation-list",
-      "path": [
-        "platform",
-        "anchor",
-        "unrelation-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 779
-    },
-    {
       "command": "platform anchor update",
       "path": [
         "platform",
@@ -1426,17 +1383,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 862
-    },
-    {
-      "command": "platform coupon viewer-list",
-      "path": [
-        "platform",
-        "coupon",
-        "viewer-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 833
     },
     {
       "command": "playback add-vod",
@@ -2324,16 +2270,6 @@
       "line": 394
     },
     {
-      "command": "channel children-list",
-      "path": [
-        "channel",
-        "children-list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1290
-    },
-    {
       "command": "channel questionnaire-stop",
       "path": [
         "channel",
@@ -2828,39 +2764,6 @@
       "line": 648
     },
     {
-      "command": "platform anchor get",
-      "path": [
-        "platform",
-        "anchor",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 642
-    },
-    {
-      "command": "platform anchor relation-list",
-      "path": [
-        "platform",
-        "anchor",
-        "relation-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 754
-    },
-    {
-      "command": "platform anchor unrelation-list",
-      "path": [
-        "platform",
-        "anchor",
-        "unrelation-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 779
-    },
-    {
       "command": "platform anchor update",
       "path": [
         "platform",
@@ -2881,17 +2784,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 729
-    },
-    {
-      "command": "platform coupon viewer-list",
-      "path": [
-        "platform",
-        "coupon",
-        "viewer-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 833
     },
     {
       "command": "playback add-vod",
@@ -3902,6 +3794,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 560
+    },
+    {
+      "command": "channel children-list",
+      "path": [
+        "channel",
+        "children-list"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1290
     },
     {
       "command": "channel copy",
@@ -5658,6 +5560,17 @@
       "line": 225
     },
     {
+      "command": "platform anchor get",
+      "path": [
+        "platform",
+        "anchor",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 642
+    },
+    {
       "command": "platform anchor list",
       "path": [
         "platform",
@@ -5667,6 +5580,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 609
+    },
+    {
+      "command": "platform anchor relation-list",
+      "path": [
+        "platform",
+        "anchor",
+        "relation-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 754
+    },
+    {
+      "command": "platform anchor unrelation-list",
+      "path": [
+        "platform",
+        "anchor",
+        "unrelation-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 779
     },
     {
       "command": "platform callback get",
@@ -5711,6 +5646,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 887
+    },
+    {
+      "command": "platform coupon viewer-list",
+      "path": [
+        "platform",
+        "coupon",
+        "viewer-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 833
     },
     {
       "command": "platform label create",
@@ -8291,6 +8237,17 @@
       }
     },
     {
+      "command": "channel children-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
+        "line": 358,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "channel copy",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9770,7 +9727,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 77,
+        "line": 92,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9785,7 +9742,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 96,
+        "line": 111,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9845,7 +9802,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 113,
+        "line": 128,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10916,8 +10873,19 @@
       }
     },
     {
-      "command": "platform anchor list",
+      "command": "platform anchor get",
       "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 518,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "platform anchor list",
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -10929,6 +10897,28 @@
         "line": 73,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "platform anchor relation-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 523,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "platform anchor unrelation-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 528,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "platform callback get",
@@ -10981,12 +10971,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 196,
+        "line": 211,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 242,
+        "line": 257,
         "source": "array-literal"
       }
     },
@@ -11000,6 +10990,17 @@
         "line": 62,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "platform coupon viewer-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 78,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "platform get",
@@ -12880,11 +12881,11 @@
     },
     {
       "command": "user child list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 55,
+        "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
+        "line": 349,
         "source": "array-literal"
       },
       "firstHelpReference": null

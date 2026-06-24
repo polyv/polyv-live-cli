@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T21:21:49.669Z
+Generated at: 2026-06-24T21:35:45.912Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 83 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 395 |
-| Missing real-execution leaf subcommands | 172 |
-| Real-execution coverage | 69.66% |
-| Leaf subcommands referenced including help | 457 |
-| Missing including help | 110 |
+| Real-executed leaf subcommands | 400 |
+| Missing real-execution leaf subcommands | 167 |
+| Real-execution coverage | 70.55% |
+| Leaf subcommands referenced including help | 462 |
+| Missing including help | 105 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
 | `ai` | 12 | 8 | 4 | 66.67% | 8 | 4 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
+| `channel` | 78 | 68 | 10 | 87.18% | 74 | 4 |
 | `chat` | 44 | 37 | 7 | 84.09% | 41 | 3 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
@@ -41,7 +41,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
-| `platform` | 22 | 14 | 8 | 63.64% | 16 | 6 |
+| `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
 | `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
 | `player` | 11 | 7 | 4 | 63.64% | 7 | 4 |
 | `product` | 36 | 33 | 3 | 91.67% | 34 | 2 |
@@ -71,7 +71,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:310` |
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1459` |
-| `channel children-list` | `packages/cli/src/commands/channel.commands.ts:1290` |
 | `channel questionnaire-stop` | `packages/cli/src/commands/channel.commands.ts:1401` |
 | `channel submeeting-batch-add` | `packages/cli/src/commands/channel.commands.ts:1390` |
 | `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1134` |
@@ -153,13 +152,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:663` |
-| `platform anchor get` | `packages/cli/src/commands/platform.commands.ts:642` |
-| `platform anchor relation-list` | `packages/cli/src/commands/platform.commands.ts:754` |
-| `platform anchor unrelation-list` | `packages/cli/src/commands/platform.commands.ts:779` |
 | `platform anchor update` | `packages/cli/src/commands/platform.commands.ts:694` |
 | `platform anchor update-status` | `packages/cli/src/commands/platform.commands.ts:729` |
 | `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
-| `platform coupon viewer-list` | `packages/cli/src/commands/platform.commands.ts:833` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
 | `playback delete` | `packages/cli/src/commands/playback.commands.ts:319` |
 | `playback get` | `packages/cli/src/commands/playback.commands.ts:241` |

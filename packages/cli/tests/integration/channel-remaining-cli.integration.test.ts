@@ -334,4 +334,38 @@ describe('remaining channel CLI integration', () => {
       }
     }
   }, 120000);
+
+  // `channel children-list` lists channels owned by a child account; it only needs a real
+  // child-user-id, discovered here via the (already covered) `user child list`.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'lists channels owned by a child account via the real CLI and cleans it up',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Children List');
+
+        // Discover a real child-user-id via the already-covered user child list.
+        const childListOutput = runCliSuccess([
+          'user', 'child', 'list', '--output', 'json',
+        ]);
+        const childList = parseJsonObject(childListOutput);
+        const childContents = Array.isArray(childList.contents) ? childList.contents : [];
+        const firstChild = childContents[0] as Record<string, unknown> | undefined;
+        const childUserId = String(firstChild?.childUserId ?? '');
+        expect(childUserId).not.toBe('');
+
+        const output = runCliSuccess([
+          'channel', 'children-list', '--child-user-id', childUserId, '--output', 'json',
+        ]);
+        const parsed = parseJsonObject(output);
+        expect(parsed).toEqual(expect.objectContaining({ contents: expect.any(Array) }));
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
 });

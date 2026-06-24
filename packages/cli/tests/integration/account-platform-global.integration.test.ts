@@ -494,4 +494,47 @@ describe('Account, platform, and global CLI integration', () => {
     },
     180000,
   );
+
+  // `platform anchor get/relation-list/unrelation-list` are account-level reads that only
+  // need an existing anchor-id, discovered here via the (already covered) anchor list.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform anchor get/relation-list/unrelation-list through the real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Platform Anchor Reads');
+
+        // Discover an existing anchor id via the already-covered anchor list.
+        const listOutput = runCliSuccess([
+          'platform', 'anchor', 'list', '--page', '1', '--page-size', '5', '--output', 'json',
+        ]);
+        const list = parseJsonObject(listOutput);
+        const contents = Array.isArray(list.contents) ? list.contents : [];
+        const firstAnchor = contents[0] as Record<string, unknown> | undefined;
+        const anchorId = String(firstAnchor?.anchorId ?? '');
+        expect(anchorId).toMatch(/^\d+$/);
+
+        const detail = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'get', '--anchor-id', anchorId, '--output', 'json',
+        ]));
+        expect(String(detail.anchorId ?? '')).toBe(anchorId);
+
+        const relations = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'relation-list', '--anchor-id', anchorId, '--output', 'json',
+        ]));
+        expect(relations).toEqual(expect.objectContaining({ contents: expect.any(Array) }));
+
+        const unrelations = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'unrelation-list', '--anchor-id', anchorId, '--output', 'json',
+        ]));
+        expect(unrelations).toEqual(expect.objectContaining({ contents: expect.any(Array) }));
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
 });

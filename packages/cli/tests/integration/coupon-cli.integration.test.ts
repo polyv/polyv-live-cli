@@ -72,6 +72,21 @@ describe('coupon CLI integration', () => {
         expect(String(addOut.couponId).length).toBeGreaterThan(0);
         couponId = String(addOut.couponId);
 
+        // platform coupon viewer-list -> paged viewers that received the coupon. A freshly
+        // created coupon has no recipients yet, so this returns an empty paging.
+        const viewers = parseJsonObject(
+          runCliSuccess([
+            'platform',
+            'coupon',
+            'viewer-list',
+            '--coupon-id',
+            couponId,
+            '--output',
+            'json',
+          ])
+        );
+        expect(viewers).toEqual(expect.objectContaining({ contents: expect.any(Array) }));
+
         // coupon channel add -> { success: true, data: { channelId, couponIds, result } }
         const channelAdd = parseJsonObject(
           runCliSuccess([
