@@ -82,7 +82,14 @@ describe('ChatService', () => {
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v1/channelSetting/123456/send-chat',
-        { userId: 'user123', content: 'Hello World', imgUrl: undefined }
+        null,
+        {
+          params: {
+            userId: 'user123',
+            content: Buffer.from('Hello World', 'utf8').toString('base64url'),
+            imgUrl: undefined,
+          },
+        }
       );
       expect(result).toEqual({ success: true });
     });

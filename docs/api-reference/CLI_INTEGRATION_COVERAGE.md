@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T17:34:29.212Z
+Generated at: 2026-06-24T17:44:38.190Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 68 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 300 |
-| Missing real-execution leaf subcommands | 267 |
-| Real-execution coverage | 52.91% |
-| Leaf subcommands referenced including help | 402 |
-| Missing including help | 165 |
+| Real-executed leaf subcommands | 304 |
+| Missing real-execution leaf subcommands | 263 |
+| Real-execution coverage | 53.62% |
+| Leaf subcommands referenced including help | 406 |
+| Missing including help | 161 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 67 | 11 | 85.90% | 73 | 5 |
-| `chat` | 44 | 33 | 11 | 75.00% | 37 | 7 |
+| `chat` | 44 | 37 | 7 | 84.09% | 41 | 3 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
@@ -86,10 +86,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
-| `chat message custom-send` | `packages/cli/src/commands/chat.commands.ts:549` |
-| `chat message custom-send-encode` | `packages/cli/src/commands/chat.commands.ts:562` |
-| `chat message emit-by-user-id` | `packages/cli/src/commands/chat.commands.ts:574` |
-| `chat message hidden-send` | `packages/cli/src/commands/chat.commands.ts:473` |
 | `chat message remove-contents` | `packages/cli/src/commands/chat.commands.ts:505` |
 | `chat robot list-update` | `packages/cli/src/commands/chat.commands.ts:783` |
 | `chat robot pause` | `packages/cli/src/commands/chat.commands.ts:797` |

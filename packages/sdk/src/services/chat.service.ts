@@ -195,11 +195,26 @@ export class ChatService {
    * ```
    */
   async sendChat(params: sendChatParams): Promise<SendChatResponse> {
-    // Note: The API expects content to be base64 encoded
-    // For now, we pass the content as-is and let the caller handle encoding
+    // The send-chat API requires `content` to be URL-safe base64 encoded
+    // (see docs/live/api/chat/message/send_hidden_message.md). Encode it here
+    // so callers can pass plain text.
+    const encodedContent =
+      typeof params.content === 'string'
+        ? Buffer.from(params.content, 'utf8').toString('base64url')
+        : params.content;
+    // Send all business params as signed query params (3-arg post form, like
+    // sendHiddenByAdmin) so userId/content/imgUrl are part of the signature.
+    // Putting them in the unsigned body causes "invalid signature" / API Error.
     const response = await this.client.httpClient.post<SendChatResponse>(
       `/live/v1/channelSetting/${params.channelId}/send-chat`,
-      { userId: params.userId, content: params.content, imgUrl: params.imgUrl }
+      null,
+      {
+        params: {
+          userId: params.userId,
+          content: encodedContent,
+          imgUrl: params.imgUrl,
+        },
+      }
     );
     return response as unknown as SendChatResponse;
   }

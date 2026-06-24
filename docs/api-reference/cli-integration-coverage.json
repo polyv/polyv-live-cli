@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T17:34:29.212Z",
+  "generatedAt": "2026-06-24T17:44:38.190Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 441,
-    "referencedCommandPathsExcludingHelp": 306,
-    "coveredLeafTargetsIncludingHelp": 402,
-    "missingLeafTargetsIncludingHelp": 165,
-    "coveredRealExecutionLeafTargets": 300,
-    "missingRealExecutionLeafTargets": 267,
-    "realExecutionCoveragePercent": 52.91,
-    "includingHelpCoveragePercent": 70.9,
-    "integrationReferences": 689,
-    "realExecutionReferences": 393,
+    "referencedCommandPathsIncludingHelp": 445,
+    "referencedCommandPathsExcludingHelp": 310,
+    "coveredLeafTargetsIncludingHelp": 406,
+    "missingLeafTargetsIncludingHelp": 161,
+    "coveredRealExecutionLeafTargets": 304,
+    "missingRealExecutionLeafTargets": 263,
+    "realExecutionCoveragePercent": 53.62,
+    "includingHelpCoveragePercent": 71.6,
+    "integrationReferences": 693,
+    "realExecutionReferences": 397,
     "helpReferences": 296
   },
   "byTopLevel": [
@@ -76,12 +76,12 @@
     {
       "command": "chat",
       "targetLeafCommands": 44,
-      "coveredRealExecutionLeafTargets": 33,
-      "missingRealExecutionLeafTargets": 11,
-      "coveredLeafTargetsIncludingHelp": 37,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 75,
-      "includingHelpCoveragePercent": 84.09
+      "coveredRealExecutionLeafTargets": 37,
+      "missingRealExecutionLeafTargets": 7,
+      "coveredLeafTargetsIncludingHelp": 41,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 84.09,
+      "includingHelpCoveragePercent": 93.18
     },
     {
       "command": "checkin",
@@ -646,50 +646,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 534
-    },
-    {
-      "command": "chat message custom-send",
-      "path": [
-        "chat",
-        "message",
-        "custom-send"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 549
-    },
-    {
-      "command": "chat message custom-send-encode",
-      "path": [
-        "chat",
-        "message",
-        "custom-send-encode"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 562
-    },
-    {
-      "command": "chat message emit-by-user-id",
-      "path": [
-        "chat",
-        "message",
-        "emit-by-user-id"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 574
-    },
-    {
-      "command": "chat message hidden-send",
-      "path": [
-        "chat",
-        "message",
-        "hidden-send"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 473
     },
     {
       "command": "chat message remove-contents",
@@ -3454,50 +3410,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 534
-    },
-    {
-      "command": "chat message custom-send",
-      "path": [
-        "chat",
-        "message",
-        "custom-send"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 549
-    },
-    {
-      "command": "chat message custom-send-encode",
-      "path": [
-        "chat",
-        "message",
-        "custom-send-encode"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 562
-    },
-    {
-      "command": "chat message emit-by-user-id",
-      "path": [
-        "chat",
-        "message",
-        "emit-by-user-id"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 574
-    },
-    {
-      "command": "chat message hidden-send",
-      "path": [
-        "chat",
-        "message",
-        "hidden-send"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 473
     },
     {
       "command": "chat robot list-update",
@@ -6383,6 +6295,50 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 524
+    },
+    {
+      "command": "chat message custom-send",
+      "path": [
+        "chat",
+        "message",
+        "custom-send"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 549
+    },
+    {
+      "command": "chat message custom-send-encode",
+      "path": [
+        "chat",
+        "message",
+        "custom-send-encode"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 562
+    },
+    {
+      "command": "chat message emit-by-user-id",
+      "path": [
+        "chat",
+        "message",
+        "emit-by-user-id"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 574
+    },
+    {
+      "command": "chat message hidden-send",
+      "path": [
+        "chat",
+        "message",
+        "hidden-send"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 473
     },
     {
       "command": "chat message online-count",
@@ -9953,6 +9909,50 @@
         "line": 25,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "chat message custom-send",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 193,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "chat message custom-send-encode",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 204,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "chat message emit-by-user-id",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 214,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "chat message hidden-send",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 183,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "chat message online-count",
