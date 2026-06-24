@@ -5,7 +5,7 @@ import {
   parseJsonObject,
   runCliSuccess,
 } from '../helpers/channel-fixture';
-import { hasRealCredentials } from '../helpers/integration-config';
+import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
 
@@ -109,4 +109,53 @@ describe('web CLI integration', () => {
       }
     }
   }, 180000);
+
+  // Exercises the self-contained web info write subcommands against a throwaway
+  // channel. Each write takes only the channel id (plus trivial values such as a
+  // splash toggle, a new name, or like/viewer counts) and reports { success: true };
+  // the channel is deleted in `finally`, so the writes have no lasting side effect.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web info writes against a temporary real channel', () => {
+    const credentials = getAccountCredentials();
+    const userId = credentials?.userId;
+    if (!userId) {
+      throw new Error('POLYV_USER_ID is required for web info publisher-set');
+    }
+
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Info Writes');
+      const id = channelId;
+
+      const splashPayload = parseJsonObject(
+        runCliSuccess(['web', 'info', 'splash-set', '--channel-id', id, '--splash-enabled', 'Y', '--force', '--output', 'json']),
+      );
+      expect(splashPayload.success).toBe(true);
+
+      const namePayload = parseJsonObject(
+        runCliSuccess(['web', 'info', 'channel-name-update', '--channel-id', id, '--name', `Web Info Renamed ${id}`, '--force', '--output', 'json']),
+      );
+      expect(namePayload.success).toBe(true);
+      expect(String(namePayload.channelId)).toBe(id);
+
+      const likesPayload = parseJsonObject(
+        runCliSuccess(['web', 'info', 'likes-update', '--channel-id', id, '--likes', '42', '--viewers', '7', '--force', '--output', 'json']),
+      );
+      expect(likesPayload.success).toBe(true);
+
+      const countdownPayload = parseJsonObject(
+        runCliSuccess(['web', 'info', 'countdown-set', '--channel-id', id, '--booking-enabled', 'Y', '--start-time', '2026-07-01 10:00:00', '--force', '--output', 'json']),
+      );
+      expect(countdownPayload.success).toBe(true);
+
+      const publisherPayload = parseJsonObject(
+        runCliSuccess(['web', 'info', 'publisher-set', '--channel-id', id, '--user-id', userId, '--publisher', 'Web Info Host', '--force', '--output', 'json']),
+      );
+      expect(publisherPayload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

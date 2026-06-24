@@ -104,6 +104,35 @@ describe('stream channel-scoped read CLI integration', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('returns push stream credentials for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream GetKey');
+
+      // get-key returns the RTMP push address and stream key for a channel. Even a
+      // brand-new, never-live channel yields a well-formed payload, so the read path
+      // is verifiable. We assert only on the non-sensitive structural fields.
+      const output = runCliSuccess([
+        'stream',
+        'get-key',
+        '-c',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as { channelId?: unknown; rtmpUrl?: unknown; streamKey?: unknown };
+      expect(String(payload.channelId)).toBe(channelId);
+      expect(typeof payload.rtmpUrl).toBe('string');
+      expect(typeof payload.streamKey).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the disk-video, streams and live-status subcommands through the real CLI entry', () => {
     const diskVideo = runCli(['stream', 'disk-video', '--help'], {
@@ -123,5 +152,11 @@ describe('stream channel-scoped read CLI integration', () => {
       rejectOnError: true,
     });
     expect(liveStatus.stdout).toContain('stream');
+
+    const getKey = runCli(['stream', 'get-key', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(getKey.stdout).toContain('channelId');
   });
 });

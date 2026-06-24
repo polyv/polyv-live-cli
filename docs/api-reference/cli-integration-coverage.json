@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T17:03:20.165Z",
+  "generatedAt": "2026-06-24T17:13:10.560Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 430,
-    "referencedCommandPathsExcludingHelp": 291,
-    "coveredLeafTargetsIncludingHelp": 392,
-    "missingLeafTargetsIncludingHelp": 175,
-    "coveredRealExecutionLeafTargets": 285,
-    "missingRealExecutionLeafTargets": 282,
-    "realExecutionCoveragePercent": 50.26,
-    "includingHelpCoveragePercent": 69.14,
-    "integrationReferences": 671,
-    "realExecutionReferences": 377,
-    "helpReferences": 294
+    "referencedCommandPathsIncludingHelp": 435,
+    "referencedCommandPathsExcludingHelp": 297,
+    "coveredLeafTargetsIncludingHelp": 397,
+    "missingLeafTargetsIncludingHelp": 170,
+    "coveredRealExecutionLeafTargets": 291,
+    "missingRealExecutionLeafTargets": 276,
+    "realExecutionCoveragePercent": 51.32,
+    "includingHelpCoveragePercent": 70.02,
+    "integrationReferences": 678,
+    "realExecutionReferences": 383,
+    "helpReferences": 295
   },
   "byTopLevel": [
     {
@@ -336,12 +336,12 @@
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 11,
-      "missingRealExecutionLeafTargets": 8,
-      "coveredLeafTargetsIncludingHelp": 12,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 57.89,
-      "includingHelpCoveragePercent": 63.16
+      "coveredRealExecutionLeafTargets": 12,
+      "missingRealExecutionLeafTargets": 7,
+      "coveredLeafTargetsIncludingHelp": 13,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 63.16,
+      "includingHelpCoveragePercent": 68.42
     },
     {
       "command": "transmit",
@@ -386,12 +386,12 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 24,
-      "coveredLeafTargetsIncludingHelp": 17,
-      "missingLeafTargetsIncludingHelp": 17,
-      "realExecutionCoveragePercent": 29.41,
-      "includingHelpCoveragePercent": 50
+      "coveredRealExecutionLeafTargets": 15,
+      "missingRealExecutionLeafTargets": 19,
+      "coveredLeafTargetsIncludingHelp": 21,
+      "missingLeafTargetsIncludingHelp": 13,
+      "realExecutionCoveragePercent": 44.12,
+      "includingHelpCoveragePercent": 61.76
     },
     {
       "command": "webapp",
@@ -2662,16 +2662,6 @@
       "line": 475
     },
     {
-      "command": "stream get-key",
-      "path": [
-        "stream",
-        "get-key"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 117
-    },
-    {
       "command": "stream monitor",
       "path": [
         "stream",
@@ -3207,61 +3197,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 90
-    },
-    {
-      "command": "web info channel-name-update",
-      "path": [
-        "web",
-        "info",
-        "channel-name-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 85
-    },
-    {
-      "command": "web info countdown-set",
-      "path": [
-        "web",
-        "info",
-        "countdown-set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 109
-    },
-    {
-      "command": "web info likes-update",
-      "path": [
-        "web",
-        "info",
-        "likes-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 99
-    },
-    {
-      "command": "web info publisher-set",
-      "path": [
-        "web",
-        "info",
-        "publisher-set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 79
-    },
-    {
-      "command": "web info splash-set",
-      "path": [
-        "web",
-        "info",
-        "splash-set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 74
     },
     {
       "command": "web menu add",
@@ -4949,16 +4884,6 @@
       "line": 475
     },
     {
-      "command": "stream get-key",
-      "path": [
-        "stream",
-        "get-key"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 117
-    },
-    {
       "command": "stream monitor",
       "path": [
         "stream",
@@ -5149,50 +5074,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 90
-    },
-    {
-      "command": "web info channel-name-update",
-      "path": [
-        "web",
-        "info",
-        "channel-name-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 85
-    },
-    {
-      "command": "web info countdown-set",
-      "path": [
-        "web",
-        "info",
-        "countdown-set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 109
-    },
-    {
-      "command": "web info likes-update",
-      "path": [
-        "web",
-        "info",
-        "likes-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 99
-    },
-    {
-      "command": "web info publisher-set",
-      "path": [
-        "web",
-        "info",
-        "publisher-set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 79
     },
     {
       "command": "web menu consulting-update",
@@ -7880,6 +7761,16 @@
       "line": 514
     },
     {
+      "command": "stream get-key",
+      "path": [
+        "stream",
+        "get-key"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 117
+    },
+    {
       "command": "stream hls-pull-url",
       "path": [
         "stream",
@@ -8249,6 +8140,17 @@
       "line": 169
     },
     {
+      "command": "web info channel-name-update",
+      "path": [
+        "web",
+        "info",
+        "channel-name-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 85
+    },
+    {
       "command": "web info countdown-get",
       "path": [
         "web",
@@ -8258,6 +8160,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 105
+    },
+    {
+      "command": "web info countdown-set",
+      "path": [
+        "web",
+        "info",
+        "countdown-set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 109
     },
     {
       "command": "web info likes-get",
@@ -8271,6 +8184,28 @@
       "line": 95
     },
     {
+      "command": "web info likes-update",
+      "path": [
+        "web",
+        "info",
+        "likes-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 99
+    },
+    {
+      "command": "web info publisher-set",
+      "path": [
+        "web",
+        "info",
+        "publisher-set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 79
+    },
+    {
       "command": "web info splash-get",
       "path": [
         "web",
@@ -8280,6 +8215,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 70
+    },
+    {
+      "command": "web info splash-set",
+      "path": [
+        "web",
+        "info",
+        "splash-set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 74
     },
     {
       "command": "web menu list",
@@ -12555,7 +12501,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 109,
+        "line": 138,
         "source": "array-literal"
       }
     },
@@ -12580,6 +12526,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "stream get-key",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 116,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 156,
+        "source": "array-literal"
+      }
     },
     {
       "command": "stream hls-pull-url",
@@ -12607,7 +12568,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 121,
+        "line": 150,
         "source": "array-literal"
       }
     },
@@ -12685,7 +12646,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 115,
+        "line": 144,
         "source": "array-literal"
       }
     },
@@ -13528,6 +13489,17 @@
       }
     },
     {
+      "command": "web info channel-name-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 136,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "web info countdown-get",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -13539,12 +13511,45 @@
       "firstHelpReference": null
     },
     {
+      "command": "web info countdown-set",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 147,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "web info likes-get",
       "realExecutionReferences": 1,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
         "line": 66,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "web info likes-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 142,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "web info publisher-set",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 152,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13566,9 +13571,13 @@
     },
     {
       "command": "web info splash-set",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 131,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
         "line": 24,
