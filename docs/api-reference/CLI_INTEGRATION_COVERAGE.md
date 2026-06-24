@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T22:05:24.510Z
+Generated at: 2026-06-24T22:16:21.428Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 84 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 412 |
-| Missing real-execution leaf subcommands | 155 |
-| Real-execution coverage | 72.66% |
+| Real-executed leaf subcommands | 416 |
+| Missing real-execution leaf subcommands | 151 |
+| Real-execution coverage | 73.37% |
 | Leaf subcommands referenced including help | 469 |
 | Missing including help | 98 |
 
@@ -55,7 +55,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 19 | 12 | 61.29% | 28 | 3 |
-| `viewer` | 19 | 13 | 6 | 68.42% | 18 | 1 |
+| `viewer` | 19 | 17 | 2 | 89.47% | 18 | 1 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -204,12 +204,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
-| `viewer import-external` | `packages/cli/src/commands/viewer.commands.ts:217` |
 | `viewer lottery-wins` | `packages/cli/src/commands/viewer.commands.ts:269` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
-| `viewer tag add` | `packages/cli/src/commands/viewer.commands.ts:385` |
-| `viewer tag remove` | `packages/cli/src/commands/viewer.commands.ts:429` |
-| `viewer label channel-ref add` | `packages/cli/src/commands/viewer.commands.ts:536` |
 | `web auth authorized-address-set` | `packages/cli/src/commands/web.commands.ts:221` |
 | `web auth external-set` | `packages/cli/src/commands/web.commands.ts:215` |
 | `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
