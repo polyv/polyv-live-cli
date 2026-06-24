@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T21:45:19.841Z",
+  "generatedAt": "2026-06-24T21:57:04.365Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 83,
+    "integrationFiles": 84,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 502,
-    "referencedCommandPathsExcludingHelp": 410,
-    "coveredLeafTargetsIncludingHelp": 463,
-    "missingLeafTargetsIncludingHelp": 104,
-    "coveredRealExecutionLeafTargets": 404,
-    "missingRealExecutionLeafTargets": 163,
-    "realExecutionCoveragePercent": 71.25,
-    "includingHelpCoveragePercent": 81.66,
-    "integrationReferences": 942,
-    "realExecutionReferences": 574,
-    "helpReferences": 368
+    "referencedCommandPathsIncludingHelp": 507,
+    "referencedCommandPathsExcludingHelp": 415,
+    "coveredLeafTargetsIncludingHelp": 468,
+    "missingLeafTargetsIncludingHelp": 99,
+    "coveredRealExecutionLeafTargets": 409,
+    "missingRealExecutionLeafTargets": 158,
+    "realExecutionCoveragePercent": 72.13,
+    "includingHelpCoveragePercent": 82.54,
+    "integrationReferences": 952,
+    "realExecutionReferences": 580,
+    "helpReferences": 372
   },
   "byTopLevel": [
     {
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 69,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 75,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 88.46,
-      "includingHelpCoveragePercent": 96.15
+      "coveredRealExecutionLeafTargets": 70,
+      "missingRealExecutionLeafTargets": 8,
+      "coveredLeafTargetsIncludingHelp": 76,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 89.74,
+      "includingHelpCoveragePercent": 97.44
     },
     {
       "command": "chat",
@@ -116,12 +116,12 @@
     {
       "command": "document",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 8,
-      "coveredLeafTargetsIncludingHelp": 4,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 27.27,
-      "includingHelpCoveragePercent": 36.36
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 5,
+      "coveredLeafTargetsIncludingHelp": 7,
+      "missingLeafTargetsIncludingHelp": 4,
+      "realExecutionCoveragePercent": 54.55,
+      "includingHelpCoveragePercent": 63.64
     },
     {
       "command": "donate",
@@ -246,12 +246,12 @@
     {
       "command": "player",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 7,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 63.64,
-      "includingHelpCoveragePercent": 63.64
+      "coveredRealExecutionLeafTargets": 8,
+      "missingRealExecutionLeafTargets": 3,
+      "coveredLeafTargetsIncludingHelp": 8,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 72.73,
+      "includingHelpCoveragePercent": 72.73
     },
     {
       "command": "product",
@@ -537,17 +537,6 @@
       "line": 1149
     },
     {
-      "command": "channel follow update",
-      "path": [
-        "channel",
-        "follow",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1377
-    },
-    {
       "command": "channel ppt-record add-task",
       "path": [
         "channel",
@@ -696,36 +685,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/custom-field.commands.ts",
       "line": 41
-    },
-    {
-      "command": "document delete",
-      "path": [
-        "document",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 342
-    },
-    {
-      "command": "document status",
-      "path": [
-        "document",
-        "status"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 424
-    },
-    {
-      "command": "document upload",
-      "path": [
-        "document",
-        "upload"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 253
     },
     {
       "command": "document media link",
@@ -1426,16 +1385,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 558
-    },
-    {
-      "command": "player logo-update",
-      "path": [
-        "player",
-        "logo-update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 510
     },
     {
       "command": "player marquee-url",
@@ -2239,17 +2188,6 @@
       "line": 1390
     },
     {
-      "command": "channel follow update",
-      "path": [
-        "channel",
-        "follow",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1377
-    },
-    {
       "command": "channel ppt-record delete",
       "path": [
         "channel",
@@ -2322,36 +2260,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 38
-    },
-    {
-      "command": "document delete",
-      "path": [
-        "document",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 342
-    },
-    {
-      "command": "document status",
-      "path": [
-        "document",
-        "status"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 424
-    },
-    {
-      "command": "document upload",
-      "path": [
-        "document",
-        "upload"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 253
     },
     {
       "command": "document media unlink",
@@ -2806,16 +2714,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 558
-    },
-    {
-      "command": "player logo-update",
-      "path": [
-        "player",
-        "logo-update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 510
     },
     {
       "command": "player marquee-url",
@@ -4033,6 +3931,17 @@
       "line": 1372
     },
     {
+      "command": "channel follow update",
+      "path": [
+        "channel",
+        "follow",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1377
+    },
+    {
       "command": "channel ppt-record list",
       "path": [
         "channel",
@@ -4961,6 +4870,16 @@
       "line": 25
     },
     {
+      "command": "document delete",
+      "path": [
+        "document",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 342
+    },
+    {
       "command": "document list",
       "path": [
         "document",
@@ -4969,6 +4888,26 @@
       "depth": 2,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 169
+    },
+    {
+      "command": "document status",
+      "path": [
+        "document",
+        "status"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 424
+    },
+    {
+      "command": "document upload",
+      "path": [
+        "document",
+        "upload"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 253
     },
     {
       "command": "document media details",
@@ -5787,6 +5726,16 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 533
+    },
+    {
+      "command": "player logo-update",
+      "path": [
+        "player",
+        "logo-update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 510
     },
     {
       "command": "player watch-feedback-list",
@@ -8232,7 +8181,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 358,
+        "line": 418,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -8391,11 +8340,22 @@
     },
     {
       "command": "channel follow list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
         "line": 314,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "channel follow update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
+        "line": 350,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9879,6 +9839,21 @@
       }
     },
     {
+      "command": "document delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 90,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 122,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "document list",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9921,6 +9896,36 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "document status",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 71,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 121,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "document upload",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 48,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 120,
+        "source": "array-literal"
+      }
     },
     {
       "command": "donate config get",
@@ -11223,7 +11228,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 147,
+        "line": 185,
         "source": "array-literal"
       }
     },
@@ -11238,7 +11243,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 146,
+        "line": 184,
         "source": "array-literal"
       }
     },
@@ -11268,7 +11273,22 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 148,
+        "line": 186,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "player logo-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 154,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 187,
         "source": "array-literal"
       }
     },
@@ -12898,7 +12918,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 349,
+        "line": 409,
         "source": "array-literal"
       },
       "firstHelpReference": null

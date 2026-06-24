@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T21:45:19.841Z
+Generated at: 2026-06-24T21:57:04.365Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 83 |
+| Integration files scanned | 84 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 404 |
-| Missing real-execution leaf subcommands | 163 |
-| Real-execution coverage | 71.25% |
-| Leaf subcommands referenced including help | 463 |
-| Missing including help | 104 |
+| Real-executed leaf subcommands | 409 |
+| Missing real-execution leaf subcommands | 158 |
+| Real-execution coverage | 72.13% |
+| Leaf subcommands referenced including help | 468 |
+| Missing including help | 99 |
 
 ## By Top-Level Command
 
@@ -25,12 +25,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
 | `ai` | 12 | 8 | 4 | 66.67% | 8 | 4 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 69 | 9 | 88.46% | 75 | 3 |
+| `channel` | 78 | 70 | 8 | 89.74% | 76 | 2 |
 | `chat` | 44 | 37 | 7 | 84.09% | 41 | 3 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
-| `document` | 11 | 3 | 8 | 27.27% | 4 | 7 |
+| `document` | 11 | 6 | 5 | 54.55% | 7 | 4 |
 | `donate` | 4 | 2 | 2 | 50.00% | 3 | 1 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
@@ -43,7 +43,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
 | `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
-| `player` | 11 | 7 | 4 | 63.64% | 7 | 4 |
+| `player` | 11 | 8 | 3 | 72.73% | 8 | 3 |
 | `product` | 36 | 33 | 3 | 91.67% | 34 | 2 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
@@ -76,7 +76,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1164` |
 | `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1194` |
 | `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1149` |
-| `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
@@ -91,9 +90,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `checkin start` | `packages/cli/src/commands/checkin.commands.ts:38` |
 | `custom-field add` | `packages/cli/src/commands/custom-field.commands.ts:30` |
 | `custom-field value save` | `packages/cli/src/commands/custom-field.commands.ts:41` |
-| `document delete` | `packages/cli/src/commands/document.commands.ts:342` |
-| `document status` | `packages/cli/src/commands/document.commands.ts:424` |
-| `document upload` | `packages/cli/src/commands/document.commands.ts:253` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
 | `document media unlink` | `packages/cli/src/commands/document.commands.ts:543` |
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
@@ -159,7 +155,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
 | `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
-| `player logo-update` | `packages/cli/src/commands/player.commands.ts:510` |
 | `player marquee-url` | `packages/cli/src/commands/player.commands.ts:451` |
 | `player advert head-update` | `packages/cli/src/commands/player.commands.ts:469` |
 | `player anti-record get` | `packages/cli/src/commands/player.commands.ts:413` |

@@ -335,6 +335,66 @@ describe('remaining channel CLI integration', () => {
     }
   }, 120000);
 
+  // `channel follow update` is a channel-scoped write. `--qr-code-url` must be a
+  // server-fetchable image (example.com is rejected with an img-url error); the
+  // PolyV CDN cover image works. `--entrance-text` is capped at 8 chars. The
+  // write returns the bare JSON string "SUCCESS"; persistence is verified via
+  // `channel follow list` (enabled flipped to Y, qrCodeUrl/entranceText echoed).
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'updates follow-public-account settings for a temporary channel via real CLI and verifies via list',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Follow Update');
+        const updateOutput = runCliSuccess([
+          'channel',
+          'follow',
+          'update',
+          '--channel-ids',
+          channelId,
+          '--qr-code-url',
+          'https://s2.videocc.net/watch-theme/spring/v2/assets/common/player-cover.png',
+          '--enabled',
+          'Y',
+          '--entrance-text',
+          'it',
+          '--tips',
+          'it-tips',
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        // update returns the bare JSON string "SUCCESS".
+        expect(JSON.parse(updateOutput.trim())).toBe('SUCCESS');
+
+        // list verifies the write persisted (enabled flipped to Y, qrCodeUrl set).
+        const listOutput = runCliSuccess([
+          'channel',
+          'follow',
+          'list',
+          '--channel-ids',
+          channelId,
+          '--output',
+          'json',
+        ]);
+        const parsed = parseJsonObject(listOutput) as { list?: unknown };
+        const matching = (parsed.list as Array<Record<string, unknown>>).find(
+          (item) => String(item?.channelId) === channelId
+        );
+        expect(matching?.enabled).toBe('Y');
+        expect(String(matching?.qrCodeUrl)).toContain('player-cover.png');
+        expect(String(matching?.entranceText)).toBe('it');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // `channel children-list` lists channels owned by a child account; it only needs a real
   // child-user-id, discovered here via the (already covered) `user child list`.
   (shouldRunRealChannelTests ? it : it.skip)(

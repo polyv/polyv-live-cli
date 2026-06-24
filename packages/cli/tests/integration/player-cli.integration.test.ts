@@ -140,12 +140,51 @@ describe('player CLI channel-scoped writes integration', () => {
     120000,
   );
 
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs player logo-update via real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Player Logo');
+
+        // logo-update: --logo-image must be a server-fetchable URL (the PolyV
+        // CDN cover image works; example.com/local files are rejected). Channel-
+        // scoped write returns { success: true, channelId }.
+        const output = runCliSuccess([
+          'player',
+          'logo-update',
+          '-c',
+          channelId,
+          '--logo-image',
+          'https://s2.videocc.net/watch-theme/spring/v2/assets/common/player-cover.png',
+          '--logo-opacity',
+          '80',
+          '--logo-position',
+          'tl',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const result = parseJsonObject(output);
+        expect(result.success).toBe(true);
+        expect(String(result.channelId)).toBe(channelId);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Command-surface checks (no credentials required, always run).
-  it('exposes player anti-record update, advert stop-update, and config update commands', () => {
+  it('exposes player anti-record update, advert stop-update, config update, and logo-update commands', () => {
     const commands = [
       ['player', 'anti-record', 'update', '--help'],
       ['player', 'advert', 'stop-update', '--help'],
       ['player', 'config', 'update', '--help'],
+      ['player', 'logo-update', '--help'],
     ];
     for (const args of commands) {
       const result = runCli(args, { timeout: 15000 });
