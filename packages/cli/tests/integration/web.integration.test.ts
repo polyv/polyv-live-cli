@@ -28,6 +28,7 @@ describe('web CLI integration', () => {
       ['web', 'share', 'update', '--help'],
       ['web', 'setting', 'global-enabled-update', '--help'],
       ['web', 'auth', 'external-set', '--help'],
+      ['web', 'auth', 'authorized-address-set', '--help'],
       ['web', 'auth', 'whitelist', 'upload', '--help'],
     ];
 
@@ -280,6 +281,52 @@ describe('web CLI integration', () => {
       );
       expect(authTypePayload.success).toBe(true);
       expect(typeof authTypePayload.result).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // Exercises two channel-scoped authorization writes against a throwaway
+  // channel: web auth external-set (registers an external authorization URL)
+  // and web auth authorized-address-set (registers a custom authorized
+  // address). Because --channel-id is supplied, each applies only to the
+  // throwaway channel — the server echoes the channelId back — and the channel
+  // is deleted in `finally`, so the writes have no lasting side effect. Both
+  // endpoints return a top-level JSON array of { channelId, secretKey };
+  // secretKey is a sensitive auth secret, so we assert only its shape (non-empty
+  // string) and never log its value.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web auth external-set and authorized-address-set against a temporary real channel', () => {
+    const credentials = getAccountCredentials();
+    const userId = credentials?.userId;
+    if (!userId) {
+      throw new Error('POLYV_USER_ID is required for web auth external-set');
+    }
+
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Auth External Writes');
+      const id = channelId;
+
+      const external = parseJsonValue(
+        runCliSuccess(['web', 'auth', 'external-set', '--user-id', userId, '--channel-id', id, '--external-uri', 'https://example.com/auth-callback', '--force', '--output', 'json']),
+      ) as Array<{ channelId: unknown; secretKey: unknown }>;
+      expect(Array.isArray(external)).toBe(true);
+      expect(external.length).toBeGreaterThan(0);
+      expect(String(external[0].channelId)).toBe(id);
+      expect(typeof external[0].secretKey).toBe('string');
+      expect((external[0].secretKey as string).length).toBeGreaterThan(0);
+
+      const custom = parseJsonValue(
+        runCliSuccess(['web', 'auth', 'authorized-address-set', '--user-id', userId, '--channel-id', id, '--custom-uri', 'https://example.com/custom-auth', '--force', '--output', 'json']),
+      ) as Array<{ channelId: unknown; secretKey: unknown }>;
+      expect(Array.isArray(custom)).toBe(true);
+      expect(custom.length).toBeGreaterThan(0);
+      expect(String(custom[0].channelId)).toBe(id);
+      expect(typeof custom[0].secretKey).toBe('string');
+      expect((custom[0].secretKey as string).length).toBeGreaterThan(0);
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);

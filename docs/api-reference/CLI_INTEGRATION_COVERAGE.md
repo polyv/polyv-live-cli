@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T22:33:14.344Z
+Generated at: 2026-06-24T22:45:10.281Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 84 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 421 |
-| Missing real-execution leaf subcommands | 146 |
-| Real-execution coverage | 74.25% |
-| Leaf subcommands referenced including help | 469 |
-| Missing including help | 98 |
+| Real-executed leaf subcommands | 423 |
+| Missing real-execution leaf subcommands | 144 |
+| Real-execution coverage | 74.60% |
+| Leaf subcommands referenced including help | 470 |
+| Missing including help | 97 |
 
 ## By Top-Level Command
 
@@ -57,7 +57,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 24 | 7 | 77.42% | 28 | 3 |
 | `viewer` | 19 | 17 | 2 | 89.47% | 18 | 1 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
+| `web` | 34 | 26 | 8 | 76.47% | 29 | 5 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -201,8 +201,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
 | `viewer lottery-wins` | `packages/cli/src/commands/viewer.commands.ts:269` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
-| `web auth authorized-address-set` | `packages/cli/src/commands/web.commands.ts:221` |
-| `web auth external-set` | `packages/cli/src/commands/web.commands.ts:215` |
 | `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
 | `web auth record-info-download` | `packages/cli/src/commands/web.commands.ts:245` |
 | `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
