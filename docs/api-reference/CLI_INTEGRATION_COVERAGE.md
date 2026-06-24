@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T15:41:49.337Z
+Generated at: 2026-06-24T16:01:54.547Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 61 |
+| Integration files scanned | 63 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 254 |
-| Missing real-execution leaf subcommands | 313 |
-| Real-execution coverage | 44.80% |
-| Leaf subcommands referenced including help | 363 |
-| Missing including help | 204 |
+| Real-executed leaf subcommands | 259 |
+| Missing real-execution leaf subcommands | 308 |
+| Real-execution coverage | 45.68% |
+| Leaf subcommands referenced including help | 367 |
+| Missing including help | 200 |
 
 ## By Top-Level Command
 
@@ -51,8 +51,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record` | 17 | 4 | 13 | 23.53% | 6 | 11 |
 | `robot` | 3 | 1 | 2 | 33.33% | 2 | 1 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
-| `statistics` | 27 | 18 | 9 | 66.67% | 19 | 8 |
-| `stream` | 19 | 8 | 11 | 42.11% | 9 | 10 |
+| `statistics` | 27 | 21 | 6 | 77.78% | 21 | 6 |
+| `stream` | 19 | 10 | 9 | 52.63% | 11 | 8 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 2 | 29 | 6.45% | 16 | 15 |
 | `viewer` | 19 | 3 | 16 | 15.79% | 17 | 2 |
@@ -279,10 +279,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
 | `session external relevance` | `packages/cli/src/commands/session.commands.ts:375` |
 | `session external session-list` | `packages/cli/src/commands/session.commands.ts:359` |
-| `statistics concurrency` | `packages/cli/src/commands/statistics.commands.ts:526` |
 | `statistics inviter-poster-list` | `packages/cli/src/commands/statistics.commands.ts:205` |
-| `statistics live-session-list` | `packages/cli/src/commands/statistics.commands.ts:248` |
-| `statistics max-concurrent` | `packages/cli/src/commands/statistics.commands.ts:595` |
 | `statistics view` | `packages/cli/src/commands/statistics.commands.ts:445` |
 | `statistics audience device` | `packages/cli/src/commands/statistics.commands.ts:758` |
 | `statistics audience region` | `packages/cli/src/commands/statistics.commands.ts:675` |
@@ -292,12 +289,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream get-key` | `packages/cli/src/commands/stream.commands.ts:117` |
 | `stream monitor` | `packages/cli/src/commands/stream.commands.ts:713` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
-| `stream streams` | `packages/cli/src/commands/stream.commands.ts:469` |
 | `stream verify` | `packages/cli/src/commands/stream.commands.ts:622` |
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
-| `stream disk-video list` | `packages/cli/src/commands/stream.commands.ts:482` |
 | `stream live-status get` | `packages/cli/src/commands/stream.commands.ts:458` |
 | `user mic-duration` | `packages/cli/src/commands/user.commands.ts:130` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

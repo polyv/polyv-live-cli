@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T15:41:49.337Z",
+  "generatedAt": "2026-06-24T16:01:54.547Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 61,
+    "integrationFiles": 63,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 400,
-    "referencedCommandPathsExcludingHelp": 260,
-    "coveredLeafTargetsIncludingHelp": 363,
-    "missingLeafTargetsIncludingHelp": 204,
-    "coveredRealExecutionLeafTargets": 254,
-    "missingRealExecutionLeafTargets": 313,
-    "realExecutionCoveragePercent": 44.8,
-    "includingHelpCoveragePercent": 64.02,
-    "integrationReferences": 614,
-    "realExecutionReferences": 346,
-    "helpReferences": 268
+    "referencedCommandPathsIncludingHelp": 405,
+    "referencedCommandPathsExcludingHelp": 265,
+    "coveredLeafTargetsIncludingHelp": 367,
+    "missingLeafTargetsIncludingHelp": 200,
+    "coveredRealExecutionLeafTargets": 259,
+    "missingRealExecutionLeafTargets": 308,
+    "realExecutionCoveragePercent": 45.68,
+    "includingHelpCoveragePercent": 64.73,
+    "integrationReferences": 621,
+    "realExecutionReferences": 351,
+    "helpReferences": 270
   },
   "byTopLevel": [
     {
@@ -326,22 +326,22 @@
     {
       "command": "statistics",
       "targetLeafCommands": 27,
-      "coveredRealExecutionLeafTargets": 18,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 19,
-      "missingLeafTargetsIncludingHelp": 8,
-      "realExecutionCoveragePercent": 66.67,
-      "includingHelpCoveragePercent": 70.37
+      "coveredRealExecutionLeafTargets": 21,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 21,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 77.78,
+      "includingHelpCoveragePercent": 77.78
     },
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 8,
-      "missingRealExecutionLeafTargets": 11,
-      "coveredLeafTargetsIncludingHelp": 9,
-      "missingLeafTargetsIncludingHelp": 10,
-      "realExecutionCoveragePercent": 42.11,
-      "includingHelpCoveragePercent": 47.37
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 9,
+      "coveredLeafTargetsIncludingHelp": 11,
+      "missingLeafTargetsIncludingHelp": 8,
+      "realExecutionCoveragePercent": 52.63,
+      "includingHelpCoveragePercent": 57.89
     },
     {
       "command": "transmit",
@@ -2701,16 +2701,6 @@
       "line": 359
     },
     {
-      "command": "statistics concurrency",
-      "path": [
-        "statistics",
-        "concurrency"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 526
-    },
-    {
       "command": "statistics inviter-poster-list",
       "path": [
         "statistics",
@@ -2719,26 +2709,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/statistics.commands.ts",
       "line": 205
-    },
-    {
-      "command": "statistics live-session-list",
-      "path": [
-        "statistics",
-        "live-session-list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 248
-    },
-    {
-      "command": "statistics max-concurrent",
-      "path": [
-        "statistics",
-        "max-concurrent"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 595
     },
     {
       "command": "statistics view",
@@ -2835,16 +2805,6 @@
       "line": 543
     },
     {
-      "command": "stream streams",
-      "path": [
-        "stream",
-        "streams"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 469
-    },
-    {
       "command": "stream verify",
       "path": [
         "stream",
@@ -2886,17 +2846,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 506
-    },
-    {
-      "command": "stream disk-video list",
-      "path": [
-        "stream",
-        "disk-video",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 482
     },
     {
       "command": "stream live-status get",
@@ -5325,16 +5274,6 @@
       "line": 359
     },
     {
-      "command": "statistics concurrency",
-      "path": [
-        "statistics",
-        "concurrency"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 526
-    },
-    {
       "command": "statistics inviter-poster-list",
       "path": [
         "statistics",
@@ -5343,16 +5282,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/statistics.commands.ts",
       "line": 205
-    },
-    {
-      "command": "statistics max-concurrent",
-      "path": [
-        "statistics",
-        "max-concurrent"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 595
     },
     {
       "command": "statistics view",
@@ -5449,16 +5378,6 @@
       "line": 543
     },
     {
-      "command": "stream streams",
-      "path": [
-        "stream",
-        "streams"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 469
-    },
-    {
       "command": "stream verify",
       "path": [
         "stream",
@@ -5489,17 +5408,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 506
-    },
-    {
-      "command": "stream disk-video list",
-      "path": [
-        "stream",
-        "disk-video",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 482
     },
     {
       "command": "stream live-status get",
@@ -8239,6 +8147,16 @@
       "line": 357
     },
     {
+      "command": "statistics concurrency",
+      "path": [
+        "statistics",
+        "concurrency"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 526
+    },
+    {
       "command": "statistics invite-list",
       "path": [
         "statistics",
@@ -8269,6 +8187,16 @@
       "line": 237
     },
     {
+      "command": "statistics live-session-list",
+      "path": [
+        "statistics",
+        "live-session-list"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 248
+    },
+    {
       "command": "statistics lottery-list",
       "path": [
         "statistics",
@@ -8277,6 +8205,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/statistics.commands.ts",
       "line": 222
+    },
+    {
+      "command": "statistics max-concurrent",
+      "path": [
+        "statistics",
+        "max-concurrent"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 595
     },
     {
       "command": "statistics mic-list",
@@ -8439,6 +8377,16 @@
       "line": 267
     },
     {
+      "command": "stream streams",
+      "path": [
+        "stream",
+        "streams"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 469
+    },
+    {
       "command": "stream type-update",
       "path": [
         "stream",
@@ -8447,6 +8395,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 532
+    },
+    {
+      "command": "stream disk-video list",
+      "path": [
+        "stream",
+        "disk-video",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 482
     },
     {
       "command": "stream live-status list",
@@ -12437,6 +12396,17 @@
       }
     },
     {
+      "command": "statistics concurrency",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 37,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "statistics invite-list",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -12483,9 +12453,13 @@
     },
     {
       "command": "statistics live-session-list",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 91,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 169,
@@ -12506,6 +12480,17 @@
         "line": 167,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "statistics max-concurrent",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 56,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "statistics mic-list",
@@ -12673,6 +12658,17 @@
       }
     },
     {
+      "command": "stream disk-video",
+      "realExecutionReferences": 0,
+      "helpReferences": 1,
+      "firstRealExecutionReference": null,
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 80,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "stream disk-video delete",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -12682,6 +12678,17 @@
         "line": 85,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "stream disk-video list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 29,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "stream hls-pull-url",
@@ -12760,6 +12767,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "stream streams",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 57,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 86,
+        "source": "array-literal"
+      }
     },
     {
       "command": "stream type-update",

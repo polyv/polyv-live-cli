@@ -1,0 +1,92 @@
+/**
+ * @fileoverview Real-CLI integration tests for channel-scoped stream read commands.
+ *
+ * These commands are exercised through the local CLI entry (dist/index.js) against
+ * a freshly-created temporary channel, which is deleted in `finally`. They are
+ * read-only and return well-formed JSON even when the channel has never been live.
+ */
+
+import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+  parseJsonValue,
+  runCliSuccess,
+} from '../helpers/channel-fixture';
+import { hasRealCredentials } from '../helpers/integration-config';
+
+const shouldRunRealChannelTests = hasRealCredentials();
+
+describe('stream channel-scoped read CLI integration', () => {
+  (shouldRunRealChannelTests ? it : it.skip)('lists pseudo-live disk videos for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream DiskVideo List');
+
+      // A brand-new channel has no configured disk videos, so the command returns
+      // an empty, well-formed paginated payload — proving the read path works.
+      const output = runCliSuccess([
+        'stream',
+        'disk-video',
+        'list',
+        '-c',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as { contents?: unknown; totalItems?: unknown };
+      expect(Array.isArray(payload.contents)).toBe(true);
+      expect(typeof payload.totalItems).toBe('number');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('returns stream monitor info for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream Streams');
+
+      // The monitor endpoint reports per-channel live state. For a non-live
+      // channel it returns `live: false` with a null streamInfo, never an error.
+      const output = runCliSuccess([
+        'stream',
+        'streams',
+        '--channel-ids',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as Array<{ channelId?: unknown; live?: unknown }>;
+      expect(Array.isArray(payload)).toBe(true);
+      const entry = payload.find((item) => String(item.channelId) === channelId);
+      expect(entry).toBeDefined();
+      expect(typeof entry!.live).toBe('boolean');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  // Sanity check that the CLI surface exists even without real credentials.
+  it('exposes the disk-video and streams subcommands through the real CLI entry', () => {
+    const diskVideo = runCli(['stream', 'disk-video', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(diskVideo.stdout).toContain('list');
+
+    const streams = runCli(['stream', 'streams', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(streams.stdout).toContain('channel-ids');
+  });
+});
