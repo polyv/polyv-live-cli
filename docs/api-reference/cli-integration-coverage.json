@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T19:05:29.930Z",
+  "generatedAt": "2026-06-24T19:12:03.844Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 74,
+    "integrationFiles": 76,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 467,
-    "referencedCommandPathsExcludingHelp": 350,
-    "coveredLeafTargetsIncludingHelp": 428,
-    "missingLeafTargetsIncludingHelp": 139,
-    "coveredRealExecutionLeafTargets": 344,
-    "missingRealExecutionLeafTargets": 223,
-    "realExecutionCoveragePercent": 60.67,
-    "includingHelpCoveragePercent": 75.49,
-    "integrationReferences": 780,
-    "realExecutionReferences": 456,
-    "helpReferences": 324
+    "referencedCommandPathsIncludingHelp": 471,
+    "referencedCommandPathsExcludingHelp": 357,
+    "coveredLeafTargetsIncludingHelp": 432,
+    "missingLeafTargetsIncludingHelp": 135,
+    "coveredRealExecutionLeafTargets": 351,
+    "missingRealExecutionLeafTargets": 216,
+    "realExecutionCoveragePercent": 61.9,
+    "includingHelpCoveragePercent": 76.19,
+    "integrationReferences": 798,
+    "realExecutionReferences": 467,
+    "helpReferences": 331
   },
   "byTopLevel": [
     {
@@ -366,12 +366,12 @@
     {
       "command": "viewer",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 9,
-      "missingRealExecutionLeafTargets": 10,
-      "coveredLeafTargetsIncludingHelp": 17,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 47.37,
-      "includingHelpCoveragePercent": 89.47
+      "coveredRealExecutionLeafTargets": 13,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 18,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 68.42,
+      "includingHelpCoveragePercent": 94.74
     },
     {
       "command": "watch-condition",
@@ -406,12 +406,12 @@
     {
       "command": "whitelist",
       "targetLeafCommands": 4,
-      "coveredRealExecutionLeafTargets": 1,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 1,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 25,
-      "includingHelpCoveragePercent": 25
+      "coveredRealExecutionLeafTargets": 4,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 4,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     }
   ],
   "missingRealExecutionTargets": [
@@ -2549,36 +2549,6 @@
       "line": 207
     },
     {
-      "command": "viewer create",
-      "path": [
-        "viewer",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 143
-    },
-    {
-      "command": "viewer delete",
-      "path": [
-        "viewer",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 203
-    },
-    {
-      "command": "viewer get",
-      "path": [
-        "viewer",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 40
-    },
-    {
       "command": "viewer import-external",
       "path": [
         "viewer",
@@ -2597,16 +2567,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 269
-    },
-    {
-      "command": "viewer update",
-      "path": [
-        "viewer",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 173
     },
     {
       "command": "viewer config update",
@@ -2773,36 +2733,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 251
-    },
-    {
-      "command": "whitelist add",
-      "path": [
-        "whitelist",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/whitelist.commands.ts",
-      "line": 91
-    },
-    {
-      "command": "whitelist remove",
-      "path": [
-        "whitelist",
-        "remove"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/whitelist.commands.ts",
-      "line": 179
-    },
-    {
-      "command": "whitelist update",
-      "path": [
-        "whitelist",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/whitelist.commands.ts",
-      "line": 134
     }
   ],
   "missingIncludingHelpTargets": [
@@ -4163,16 +4093,6 @@
       "line": 150
     },
     {
-      "command": "viewer get",
-      "path": [
-        "viewer",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 40
-    },
-    {
       "command": "viewer lottery-wins",
       "path": [
         "viewer",
@@ -4257,36 +4177,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 204
-    },
-    {
-      "command": "whitelist add",
-      "path": [
-        "whitelist",
-        "add"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/whitelist.commands.ts",
-      "line": 91
-    },
-    {
-      "command": "whitelist remove",
-      "path": [
-        "whitelist",
-        "remove"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/whitelist.commands.ts",
-      "line": 179
-    },
-    {
-      "command": "whitelist update",
-      "path": [
-        "whitelist",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/whitelist.commands.ts",
-      "line": 134
     }
   ],
   "coveredRealExecutionTargets": [
@@ -7519,6 +7409,36 @@
       "line": 205
     },
     {
+      "command": "viewer create",
+      "path": [
+        "viewer",
+        "create"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 143
+    },
+    {
+      "command": "viewer delete",
+      "path": [
+        "viewer",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 203
+    },
+    {
+      "command": "viewer get",
+      "path": [
+        "viewer",
+        "get"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 40
+    },
+    {
       "command": "viewer list",
       "path": [
         "viewer",
@@ -7527,6 +7447,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 78
+    },
+    {
+      "command": "viewer update",
+      "path": [
+        "viewer",
+        "update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 173
     },
     {
       "command": "viewer label create",
@@ -7957,6 +7887,16 @@
       "line": 64
     },
     {
+      "command": "whitelist add",
+      "path": [
+        "whitelist",
+        "add"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/whitelist.commands.ts",
+      "line": 91
+    },
+    {
       "command": "whitelist list",
       "path": [
         "whitelist",
@@ -7965,6 +7905,26 @@
       "depth": 2,
       "file": "packages/cli/src/commands/whitelist.commands.ts",
       "line": 39
+    },
+    {
+      "command": "whitelist remove",
+      "path": [
+        "whitelist",
+        "remove"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/whitelist.commands.ts",
+      "line": 179
+    },
+    {
+      "command": "whitelist update",
+      "path": [
+        "whitelist",
+        "update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/whitelist.commands.ts",
+      "line": 134
     }
   ],
   "referenceSummaryByCommand": [
@@ -13178,23 +13138,46 @@
     },
     {
       "command": "viewer create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 49,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 26,
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 142,
         "source": "array-literal"
       }
     },
     {
       "command": "viewer delete",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 100,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 28,
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 145,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "viewer get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 69,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 143,
         "source": "array-literal"
       }
     },
@@ -13389,12 +13372,16 @@
     },
     {
       "command": "viewer update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 82,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
-        "line": 27,
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 144,
         "source": "array-literal"
       }
     },
@@ -13847,8 +13834,23 @@
       }
     },
     {
-      "command": "whitelist list",
+      "command": "whitelist add",
       "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/whitelist-cli.integration.test.ts",
+        "line": 46,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/whitelist-cli.integration.test.ts",
+        "line": 170,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "whitelist list",
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/legacy-read-cli.integration.test.ts",
@@ -13858,6 +13860,36 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/legacy-read-cli.integration.test.ts",
         "line": 20,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "whitelist remove",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/whitelist-cli.integration.test.ts",
+        "line": 127,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/whitelist-cli.integration.test.ts",
+        "line": 172,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "whitelist update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/whitelist-cli.integration.test.ts",
+        "line": 86,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/whitelist-cli.integration.test.ts",
+        "line": 171,
         "source": "array-literal"
       }
     }

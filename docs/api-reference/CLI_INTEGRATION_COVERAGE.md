@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T19:05:29.930Z
+Generated at: 2026-06-24T19:12:03.844Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 74 |
+| Integration files scanned | 76 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 344 |
-| Missing real-execution leaf subcommands | 223 |
-| Real-execution coverage | 60.67% |
-| Leaf subcommands referenced including help | 428 |
-| Missing including help | 139 |
+| Real-executed leaf subcommands | 351 |
+| Missing real-execution leaf subcommands | 216 |
+| Real-execution coverage | 61.90% |
+| Leaf subcommands referenced including help | 432 |
+| Missing including help | 135 |
 
 ## By Top-Level Command
 
@@ -55,11 +55,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 14 | 17 | 45.16% | 28 | 3 |
-| `viewer` | 19 | 9 | 10 | 47.37% | 17 | 2 |
+| `viewer` | 19 | 13 | 6 | 68.42% | 18 | 1 |
 | `watch-condition` | 2 | 1 | 1 | 50.00% | 1 | 1 |
 | `web` | 34 | 24 | 10 | 70.59% | 28 | 6 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
-| `whitelist` | 4 | 1 | 3 | 25.00% | 1 | 3 |
+| `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
 ## Missing Real-Execution Targets
 
@@ -264,12 +264,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
 | `user template video-moderation update` | `packages/cli/src/commands/user.commands.ts:207` |
-| `viewer create` | `packages/cli/src/commands/viewer.commands.ts:143` |
-| `viewer delete` | `packages/cli/src/commands/viewer.commands.ts:203` |
-| `viewer get` | `packages/cli/src/commands/viewer.commands.ts:40` |
 | `viewer import-external` | `packages/cli/src/commands/viewer.commands.ts:217` |
 | `viewer lottery-wins` | `packages/cli/src/commands/viewer.commands.ts:269` |
-| `viewer update` | `packages/cli/src/commands/viewer.commands.ts:173` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
 | `viewer tag add` | `packages/cli/src/commands/viewer.commands.ts:385` |
 | `viewer tag remove` | `packages/cli/src/commands/viewer.commands.ts:429` |
@@ -285,6 +281,3 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
 | `web setting image-upload` | `packages/cli/src/commands/web.commands.ts:204` |
 | `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:251` |
-| `whitelist add` | `packages/cli/src/commands/whitelist.commands.ts:91` |
-| `whitelist remove` | `packages/cli/src/commands/whitelist.commands.ts:179` |
-| `whitelist update` | `packages/cli/src/commands/whitelist.commands.ts:134` |
