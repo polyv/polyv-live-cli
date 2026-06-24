@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T23:30:51.297Z
+Generated at: 2026-06-24T23:44:20.947Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 87 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 439 |
-| Missing real-execution leaf subcommands | 128 |
-| Real-execution coverage | 77.43% |
-| Leaf subcommands referenced including help | 482 |
-| Missing including help | 85 |
+| Real-executed leaf subcommands | 440 |
+| Missing real-execution leaf subcommands | 127 |
+| Real-execution coverage | 77.60% |
+| Leaf subcommands referenced including help | 483 |
+| Missing including help | 84 |
 
 ## By Top-Level Command
 
@@ -44,7 +44,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
 | `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
 | `player` | 11 | 8 | 3 | 72.73% | 8 | 3 |
-| `product` | 36 | 33 | 3 | 91.67% | 34 | 2 |
+| `product` | 36 | 34 | 2 | 94.44% | 35 | 1 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -143,7 +143,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player marquee-url` | `packages/cli/src/commands/player.commands.ts:451` |
 | `player advert head-update` | `packages/cli/src/commands/player.commands.ts:469` |
 | `player anti-record get` | `packages/cli/src/commands/player.commands.ts:413` |
-| `product reference` | `packages/cli/src/commands/product.commands.ts:727` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |

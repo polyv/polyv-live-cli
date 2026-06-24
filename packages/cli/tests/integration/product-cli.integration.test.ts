@@ -31,6 +31,14 @@
  *    directly. `batch-shelf` takes those ids plus `--shelf 1|2` and returns
  *    `{ success, data: 'SUCCESS' }`; toggling off (2) then on (1) is reversible.
  *    The loop is closed by `product batch-delete`.
+ *  - `product reference` (channel-scoped): references a user-level library
+ *    product into a channel. The `--origin-id` is the platform library
+ *    `productId` (string) produced by `product library create`; `reference`
+ *    posts to `/live/v3/channel/product/reference` (channelId signed in params)
+ *    and returns `{ success, data: { productId (numeric channel id), channelId,
+ *    name, originId, status, ... } }`. The account-scoped library product must
+ *    be deleted explicitly (it survives channel deletion); the referenced
+ *    channel product is cleared by `product delete` and/or channel deletion.
  *
  * Each test runs a create -> update -> delete loop through the real CLI entry
  * and cleans up the created product (plus the temporary channel) in `finally`.
@@ -281,6 +289,138 @@ describe('product CLI write lifecycle integration', () => {
             ]);
           } catch {
             // Best-effort; the product may already be gone.
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'references a platform library product into a channel via real CLI',
+    () => {
+      let channelId: string | undefined;
+      // Account-scoped platform library product id; must be deleted explicitly
+      // (it is NOT cleared by deleting the temporary channel).
+      let originId: string | undefined;
+      // Channel-scoped referenced product id; cleared by deleting the channel
+      // but deleted explicitly for a deterministic cleanup.
+      let channelProductId: number | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Product Reference');
+        const ts = Date.now();
+        const name = `polyv-it-ref-${ts}`;
+
+        // 1. Create a platform library product; its productId is the origin-id.
+        const createOutput = runCliSuccess([
+          'product',
+          'library',
+          'create',
+          '--name',
+          name,
+          '--link-type',
+          '10',
+          '--link',
+          `https://example.com/ref-${ts}`,
+          '--cover',
+          REAL_COVER_URL,
+          '--real-price',
+          '12.3',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const created = parseJsonObject(createOutput) as {
+          success?: boolean;
+          data?: { productId?: string };
+        };
+        expect(created.success).toBe(true);
+        originId = String(created.data?.productId ?? '');
+        expect(originId.length).toBeGreaterThan(0);
+
+        // 2. Reference the platform product into the channel (on-shelf, status 1).
+        //    `reference` echoes the new channel-scoped product object directly in
+        //    data, including a numeric productId and the originId it was built from.
+        const referenceOutput = runCliSuccess([
+          'product',
+          'reference',
+          '--channel-id',
+          channelId,
+          '--origin-id',
+          originId,
+          '--status',
+          '1',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const referenced = parseJsonObject(referenceOutput) as {
+          success?: boolean;
+          data?: {
+            productId?: number;
+            channelId?: string | number;
+            name?: string;
+            originId?: string;
+            status?: number;
+          };
+        };
+        expect(referenced.success).toBe(true);
+        channelProductId = Number(referenced.data?.productId);
+        expect(Number.isInteger(channelProductId) && channelProductId > 0).toBe(true);
+        expect(String(referenced.data?.channelId)).toBe(channelId);
+        expect(referenced.data?.name).toBe(name);
+        expect(String(referenced.data?.originId)).toBe(originId);
+        expect(referenced.data?.status).toBe(1);
+
+        // 3. The referenced product now appears in the channel product list.
+        const listOutput = runCliSuccess([
+          'product',
+          'list',
+          '--channel-id',
+          channelId,
+          '--output',
+          'json',
+        ]);
+        expect(listOutput).toContain(String(channelProductId));
+      } finally {
+        // Delete the referenced channel product first (best-effort).
+        if (channelId && channelProductId !== undefined) {
+          try {
+            runCliSuccess([
+              'product',
+              'delete',
+              '--channel-id',
+              channelId,
+              '--product-id',
+              String(channelProductId),
+              '--force',
+              '--output',
+              'json',
+            ]);
+          } catch {
+            // Best-effort; deleting the channel below also clears it.
+          }
+        }
+        // The platform library product is account-scoped and must be removed
+        // explicitly — it survives channel deletion.
+        if (originId) {
+          try {
+            runCliSuccess([
+              'product',
+              'library',
+              'delete',
+              '--product-id',
+              originId,
+              '--force',
+              '--output',
+              'json',
+            ]);
+          } catch {
+            // Best-effort cleanup.
           }
         }
         if (channelId) {
@@ -687,6 +827,7 @@ describe('product CLI write lifecycle integration', () => {
       [['product', 'update-enabled', '--help'], '--enabled'],
       [['product', 'batch-add', '--help'], '--products-json'],
       [['product', 'batch-shelf', '--help'], '--shelf'],
+      [['product', 'reference', '--help'], '--origin-id'],
     ];
 
     for (const [args, marker] of checks) {

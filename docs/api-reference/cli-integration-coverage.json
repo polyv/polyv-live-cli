@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T23:30:51.297Z",
+  "generatedAt": "2026-06-24T23:44:20.947Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 521,
-    "referencedCommandPathsExcludingHelp": 445,
-    "coveredLeafTargetsIncludingHelp": 482,
-    "missingLeafTargetsIncludingHelp": 85,
-    "coveredRealExecutionLeafTargets": 439,
-    "missingRealExecutionLeafTargets": 128,
-    "realExecutionCoveragePercent": 77.43,
-    "includingHelpCoveragePercent": 85.01,
-    "integrationReferences": 1029,
-    "realExecutionReferences": 640,
-    "helpReferences": 389
+    "referencedCommandPathsIncludingHelp": 522,
+    "referencedCommandPathsExcludingHelp": 446,
+    "coveredLeafTargetsIncludingHelp": 483,
+    "missingLeafTargetsIncludingHelp": 84,
+    "coveredRealExecutionLeafTargets": 440,
+    "missingRealExecutionLeafTargets": 127,
+    "realExecutionCoveragePercent": 77.6,
+    "includingHelpCoveragePercent": 85.19,
+    "integrationReferences": 1035,
+    "realExecutionReferences": 645,
+    "helpReferences": 390
   },
   "byTopLevel": [
     {
@@ -256,12 +256,12 @@
     {
       "command": "product",
       "targetLeafCommands": 36,
-      "coveredRealExecutionLeafTargets": 33,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 34,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 91.67,
-      "includingHelpCoveragePercent": 94.44
+      "coveredRealExecutionLeafTargets": 34,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 35,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 94.44,
+      "includingHelpCoveragePercent": 97.22
     },
     {
       "command": "promotion",
@@ -1256,16 +1256,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/player.commands.ts",
       "line": 413
-    },
-    {
-      "command": "product reference",
-      "path": [
-        "product",
-        "reference"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 727
     },
     {
       "command": "product order batch-status",
@@ -2325,16 +2315,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/player.commands.ts",
       "line": 413
-    },
-    {
-      "command": "product reference",
-      "path": [
-        "product",
-        "reference"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/product.commands.ts",
-      "line": 727
     },
     {
       "command": "product order get",
@@ -5598,6 +5578,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/product.commands.ts",
       "line": 839
+    },
+    {
+      "command": "product reference",
+      "path": [
+        "product",
+        "reference"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/product.commands.ts",
+      "line": 727
     },
     {
       "command": "product shelf",
@@ -11351,12 +11341,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 73,
+        "line": 81,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 675,
+        "line": 815,
         "source": "array-literal"
       }
     },
@@ -11366,7 +11356,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 557,
+        "line": 697,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -11392,12 +11382,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 586,
+        "line": 726,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 689,
+        "line": 829,
         "source": "array-literal"
       }
     },
@@ -11407,12 +11397,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 432,
+        "line": 572,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 686,
+        "line": 826,
         "source": "array-literal"
       }
     },
@@ -11478,16 +11468,16 @@
     },
     {
       "command": "product delete",
-      "realExecutionReferences": 4,
+      "realExecutionReferences": 5,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 141,
+        "line": 149,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 677,
+        "line": 817,
         "source": "array-literal"
       }
     },
@@ -11515,31 +11505,31 @@
     },
     {
       "command": "product library create",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 203,
+        "line": 211,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 678,
+        "line": 818,
         "source": "array-literal"
       }
     },
     {
       "command": "product library delete",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 251,
+        "line": 259,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 680,
+        "line": 820,
         "source": "array-literal"
       }
     },
@@ -11560,18 +11550,18 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 227,
+        "line": 235,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 679,
+        "line": 819,
         "source": "array-literal"
       }
     },
     {
       "command": "product list",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/legacy-read-cli.integration.test.ts",
@@ -11623,7 +11613,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 416,
+        "line": 556,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -11668,12 +11658,27 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 373,
+        "line": 513,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 683,
+        "line": 823,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "product reference",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 348,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
+        "line": 830,
         "source": "array-literal"
       }
     },
@@ -11694,12 +11699,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 394,
+        "line": 534,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 684,
+        "line": 824,
         "source": "array-literal"
       }
     },
@@ -11806,12 +11811,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 337,
+        "line": 477,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 681,
+        "line": 821,
         "source": "array-literal"
       }
     },
@@ -11821,12 +11826,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 355,
+        "line": 495,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 682,
+        "line": 822,
         "source": "array-literal"
       }
     },
@@ -11836,12 +11841,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 106,
+        "line": 114,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 676,
+        "line": 816,
         "source": "array-literal"
       }
     },
@@ -11851,12 +11856,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 446,
+        "line": 586,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/product-cli.integration.test.ts",
-        "line": 687,
+        "line": 827,
         "source": "array-literal"
       }
     },
