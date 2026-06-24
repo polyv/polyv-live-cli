@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T08:34:38.846Z",
+  "generatedAt": "2026-06-24T15:12:59.208Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -28,8 +28,8 @@
     "missingRealExecutionLeafTargets": 315,
     "realExecutionCoveragePercent": 44.44,
     "includingHelpCoveragePercent": 64.02,
-    "integrationReferences": 610,
-    "realExecutionReferences": 342,
+    "integrationReferences": 611,
+    "realExecutionReferences": 343,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -8717,11 +8717,11 @@
     },
     {
       "command": "account api category create",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 181,
+        "line": 198,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -8732,7 +8732,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 227,
+        "line": 185,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -8754,7 +8754,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 197,
+        "line": 216,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -8765,7 +8765,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 212,
+        "line": 224,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9174,12 +9174,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 187,
+        "line": 192,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 136,
+        "line": 141,
         "source": "array-literal"
       }
     },
@@ -9189,7 +9189,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 534,
+        "line": 539,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9252,7 +9252,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 577,
+        "line": 593,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9278,12 +9278,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 545,
+        "line": 550,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 139,
+        "line": 144,
         "source": "array-literal"
       }
     },
@@ -9316,7 +9316,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 155,
+        "line": 160,
         "source": "array-literal"
       }
     },
@@ -9327,7 +9327,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 157,
+        "line": 162,
         "source": "array-literal"
       }
     },
@@ -9337,12 +9337,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 194,
+        "line": 199,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 154,
+        "line": 159,
         "source": "array-literal"
       }
     },
@@ -9353,7 +9353,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 159,
+        "line": 164,
         "source": "array-literal"
       }
     },
@@ -9364,7 +9364,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 158,
+        "line": 163,
         "source": "array-literal"
       }
     },
@@ -9375,7 +9375,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 160,
+        "line": 165,
         "source": "array-literal"
       }
     },
@@ -9386,7 +9386,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 156,
+        "line": 161,
         "source": "array-literal"
       }
     },
@@ -9396,7 +9396,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 309,
+        "line": 314,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9429,12 +9429,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 189,
+        "line": 194,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 138,
+        "line": 143,
         "source": "array-literal"
       }
     },
@@ -9470,12 +9470,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 556,
+        "line": 566,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 140,
+        "line": 145,
         "source": "array-literal"
       }
     },
@@ -9507,7 +9507,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 277,
+        "line": 282,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9529,7 +9529,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 261,
+        "line": 264,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9540,12 +9540,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 253,
+        "line": 258,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 141,
+        "line": 146,
         "source": "array-literal"
       }
     },
@@ -9560,7 +9560,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 143,
+        "line": 148,
         "source": "array-literal"
       }
     },
@@ -9570,12 +9570,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 428,
+        "line": 433,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 144,
+        "line": 149,
         "source": "array-literal"
       }
     },
@@ -9585,12 +9585,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-token-cli.integration.test.ts",
-        "line": 214,
+        "line": 223,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 145,
+        "line": 150,
         "source": "array-literal"
       }
     },
@@ -9600,7 +9600,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 317,
+        "line": 322,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9615,12 +9615,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 446,
+        "line": 451,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 149,
+        "line": 154,
         "source": "array-literal"
       }
     },
@@ -9630,12 +9630,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 460,
+        "line": 465,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 150,
+        "line": 155,
         "source": "array-literal"
       }
     },
@@ -9645,7 +9645,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 358,
+        "line": 363,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9656,7 +9656,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 344,
+        "line": 349,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9667,7 +9667,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 332,
+        "line": 337,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9678,12 +9678,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 190,
+        "line": 195,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 146,
+        "line": 151,
         "source": "array-literal"
       }
     },
@@ -9693,12 +9693,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 191,
+        "line": 196,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 147,
+        "line": 152,
         "source": "array-literal"
       }
     },
@@ -9708,12 +9708,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 224,
+        "line": 229,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 148,
+        "line": 153,
         "source": "array-literal"
       }
     },
@@ -9723,12 +9723,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 188,
+        "line": 193,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 137,
+        "line": 142,
         "source": "array-literal"
       }
     },
@@ -9753,12 +9753,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 192,
+        "line": 197,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 151,
+        "line": 156,
         "source": "array-literal"
       }
     },
@@ -9768,12 +9768,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 264,
+        "line": 269,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 152,
+        "line": 157,
         "source": "array-literal"
       }
     },
@@ -9783,12 +9783,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 193,
+        "line": 198,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 153,
+        "line": 158,
         "source": "array-literal"
       }
     },
@@ -9798,12 +9798,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 242,
+        "line": 247,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 142,
+        "line": 147,
         "source": "array-literal"
       }
     },
@@ -9861,7 +9861,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-token-cli.integration.test.ts",
-        "line": 200,
+        "line": 203,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9972,7 +9972,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 246,
+        "line": 254,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9987,7 +9987,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 280,
+        "line": 288,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10002,7 +10002,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 234,
+        "line": 242,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10013,7 +10013,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 263,
+        "line": 271,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10039,7 +10039,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 204,
+        "line": 212,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10050,7 +10050,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-viewer-cli.integration.test.ts",
-        "line": 217,
+        "line": 225,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10136,7 +10136,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 558,
+        "line": 513,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10151,7 +10151,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 577,
+        "line": 532,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10181,7 +10181,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 361,
+        "line": 375,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10192,7 +10192,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 430,
+        "line": 432,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10222,7 +10222,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 409,
+        "line": 423,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10248,7 +10248,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 456,
+        "line": 442,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10259,7 +10259,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 533,
+        "line": 499,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10300,7 +10300,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 330,
+        "line": 334,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10315,7 +10315,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 484,
+        "line": 467,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10526,7 +10526,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 381,
+        "line": 395,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10537,7 +10537,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 507,
+        "line": 483,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10548,7 +10548,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat.integration.test.ts",
-        "line": 343,
+        "line": 355,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -11406,12 +11406,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 206,
+        "line": 211,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 161,
+        "line": 166,
         "source": "array-literal"
       }
     },
@@ -11654,12 +11654,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 276,
+        "line": 281,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 167,
+        "line": 172,
         "source": "array-literal"
       }
     },
@@ -12434,12 +12434,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 198,
+        "line": 203,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 166,
+        "line": 171,
         "source": "array-literal"
       }
     },
@@ -12464,12 +12464,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 195,
+        "line": 200,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 163,
+        "line": 168,
         "source": "array-literal"
       }
     },
@@ -12480,7 +12480,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 164,
+        "line": 169,
         "source": "array-literal"
       }
     },
@@ -12490,12 +12490,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 196,
+        "line": 201,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 162,
+        "line": 167,
         "source": "array-literal"
       }
     },
@@ -12640,12 +12640,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 197,
+        "line": 202,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
-        "line": 165,
+        "line": 170,
         "source": "array-literal"
       }
     },
