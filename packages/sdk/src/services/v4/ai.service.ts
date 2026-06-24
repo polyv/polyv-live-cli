@@ -135,9 +135,11 @@ export class V4AiService {
       throw new PolyVValidationError('items is required and cannot be empty');
     }
 
+    // Request body is a bare JSON array (per set-organizations.md), NOT wrapped
+    // in an object — wrapping it causes the server to silently ignore the body.
     await this.client.httpClient.post(
       '/live/v4/ai/digital-human/set-organizations',
-      { setOrganizations: params.items }
+      params.items
     );
   }
 

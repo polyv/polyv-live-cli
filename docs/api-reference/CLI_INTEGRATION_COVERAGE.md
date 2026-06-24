@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T22:54:09.584Z
+Generated at: 2026-06-24T23:04:21.834Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,21 +9,21 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 85 |
+| Integration files scanned | 86 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 425 |
-| Missing real-execution leaf subcommands | 142 |
-| Real-execution coverage | 74.96% |
-| Leaf subcommands referenced including help | 472 |
-| Missing including help | 95 |
+| Real-executed leaf subcommands | 426 |
+| Missing real-execution leaf subcommands | 141 |
+| Real-execution coverage | 75.13% |
+| Leaf subcommands referenced including help | 473 |
+| Missing including help | 94 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
-| `ai` | 12 | 8 | 4 | 66.67% | 8 | 4 |
+| `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 70 | 8 | 89.74% | 76 | 2 |
 | `chat` | 44 | 40 | 4 | 90.91% | 42 | 2 |
@@ -66,7 +66,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Command | Source |
 |---------|--------|
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
-| `ai digital-human list-org` | `packages/cli/src/commands/ai.commands.ts:170` |
 | `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:310` |
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |

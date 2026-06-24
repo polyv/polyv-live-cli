@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T22:54:09.584Z",
+  "generatedAt": "2026-06-24T23:04:21.834Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 85,
+    "integrationFiles": 86,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 511,
-    "referencedCommandPathsExcludingHelp": 431,
-    "coveredLeafTargetsIncludingHelp": 472,
-    "missingLeafTargetsIncludingHelp": 95,
-    "coveredRealExecutionLeafTargets": 425,
-    "missingRealExecutionLeafTargets": 142,
-    "realExecutionCoveragePercent": 74.96,
-    "includingHelpCoveragePercent": 83.25,
-    "integrationReferences": 999,
-    "realExecutionReferences": 616,
-    "helpReferences": 383
+    "referencedCommandPathsIncludingHelp": 512,
+    "referencedCommandPathsExcludingHelp": 432,
+    "coveredLeafTargetsIncludingHelp": 473,
+    "missingLeafTargetsIncludingHelp": 94,
+    "coveredRealExecutionLeafTargets": 426,
+    "missingRealExecutionLeafTargets": 141,
+    "realExecutionCoveragePercent": 75.13,
+    "includingHelpCoveragePercent": 83.42,
+    "integrationReferences": 1003,
+    "realExecutionReferences": 618,
+    "helpReferences": 385
   },
   "byTopLevel": [
     {
@@ -46,12 +46,12 @@
     {
       "command": "ai",
       "targetLeafCommands": 12,
-      "coveredRealExecutionLeafTargets": 8,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 8,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 66.67,
-      "includingHelpCoveragePercent": 66.67
+      "coveredRealExecutionLeafTargets": 9,
+      "missingRealExecutionLeafTargets": 3,
+      "coveredLeafTargetsIncludingHelp": 9,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 75,
+      "includingHelpCoveragePercent": 75
     },
     {
       "command": "card-push",
@@ -426,17 +426,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 844
-    },
-    {
-      "command": "ai digital-human list-org",
-      "path": [
-        "ai",
-        "digital-human",
-        "list-org"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 170
     },
     {
       "command": "ai digital-human set-org",
@@ -1959,17 +1948,6 @@
       "line": 844
     },
     {
-      "command": "ai digital-human list-org",
-      "path": [
-        "ai",
-        "digital-human",
-        "list-org"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 170
-    },
-    {
       "command": "ai digital-human set-org",
       "path": [
         "ai",
@@ -3222,6 +3200,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 149
+    },
+    {
+      "command": "ai digital-human list-org",
+      "path": [
+        "ai",
+        "digital-human",
+        "list-org"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 170
     },
     {
       "command": "ai video-produce create",
@@ -7790,14 +7779,33 @@
     },
     {
       "command": "ai digital-human list",
-      "realExecutionReferences": 1,
-      "helpReferences": 0,
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/ai-video-produce.integration.test.ts",
-        "line": 49,
+        "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
+        "line": 55,
         "source": "array-literal"
       },
-      "firstHelpReference": null
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
+        "line": 102,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "ai digital-human list-org",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
+        "line": 77,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
+        "line": 103,
+        "source": "array-literal"
+      }
     },
     {
       "command": "ai video-produce",
