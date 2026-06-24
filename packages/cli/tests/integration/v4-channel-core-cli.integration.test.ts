@@ -18,6 +18,56 @@ function runCliSuccessOrExpectedFailure(args: string[], expectedFailureText: str
   throw new Error(`CLI command failed: ${args.join(' ')}\n${result.output}`);
 }
 
+function extractChannelIdFromOutput(output: string): string {
+  const parsed = parseJsonObject(output);
+  const result = parsed.result as Record<string, unknown> | undefined;
+  const data = parsed.data as Record<string, unknown> | undefined;
+  const channelId = String(parsed.channelId || result?.channelId || data?.channelId || '');
+
+  expect(channelId).toMatch(/^\d+$/);
+  return channelId;
+}
+
+function collectBatchCreatedChannelIds(output: string): string[] {
+  const parsed = parseJsonObject(output);
+  const result = parsed.result as Record<string, unknown> | undefined;
+  const data = parsed.data as Record<string, unknown> | undefined;
+  const channels = parsed.channels || result?.channels || data?.channels || parsed.result || parsed.data;
+
+  if (!Array.isArray(channels)) {
+    throw new Error(`Cannot extract batch-created channel IDs from CLI output:\n${output}`);
+  }
+
+  const channelIds = channels
+    .map((channel) => {
+      if (!channel || typeof channel !== 'object') return '';
+      return String((channel as Record<string, unknown>).channelId || '');
+    })
+    .filter((channelId) => /^\d+$/.test(channelId));
+
+  if (channelIds.length === 0) {
+    throw new Error(`Cannot extract batch-created channel IDs from CLI output:\n${output}`);
+  }
+
+  return channelIds;
+}
+
+function deleteCreatedChannels(channelIds: string[]): void {
+  const errors: string[] = [];
+
+  for (const channelId of [...new Set(channelIds)].reverse()) {
+    try {
+      deleteTemporaryChannel(channelId);
+    } catch (error) {
+      errors.push(`${channelId}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(`Failed to delete temporary channel(s):\n${errors.join('\n')}`);
+  }
+}
+
 describe('v4 channel core CLI integration', () => {
   it('shows command help for V4 channel core gaps', () => {
     const checks = [
@@ -182,6 +232,60 @@ describe('v4 channel core CLI integration', () => {
       if (channelId) {
         deleteTemporaryChannel(channelId);
       }
+    }
+  }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('creates temporary V4 channels through creation commands and cleans them up', () => {
+    const createdChannelIds: string[] = [];
+    const timestamp = Date.now();
+    const batchChannelsJson = JSON.stringify([
+      {
+        name: `CLI V4 Batch ${timestamp}`,
+        newScene: 'topclass',
+        template: 'ppt',
+      },
+    ]);
+    const basicSettingJson = JSON.stringify({
+      name: `CLI V4 Create Init ${timestamp}`,
+      newScene: 'topclass',
+      template: 'ppt',
+    });
+
+    try {
+      const batchOutput = runCliSuccess([
+        'channel',
+        'batch-create',
+        '--channels-json',
+        batchChannelsJson,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      createdChannelIds.push(...collectBatchCreatedChannelIds(batchOutput));
+
+      const initOutput = runCliSuccess([
+        'channel',
+        'create-init',
+        '--basic-setting-json',
+        basicSettingJson,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      createdChannelIds.push(extractChannelIdFromOutput(initOutput));
+
+      const mrOutput = runCliSuccess([
+        'channel',
+        'mr-create',
+        '--name',
+        `CLI V4 MR ${timestamp}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      createdChannelIds.push(extractChannelIdFromOutput(mrOutput));
+    } finally {
+      deleteCreatedChannels(createdChannelIds);
     }
   }, 240000);
 
