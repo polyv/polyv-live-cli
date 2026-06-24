@@ -24,6 +24,13 @@
  *    return `{ success, data: null }`, and `update-enabled` returns
  *    `{ success, data: { channelId, enabled } }`. The fixture is closed by a
  *    single `product delete` at the end.
+ *  - `product batch-add` / `batch-shelf` (channel-scoped): `batch-add` takes a
+ *    `--products-json` array (each item is an `AddChannelProductParams` minus
+ *    `channelId`, so a fetchable `cover` + `realPrice` are required) and returns
+ *    `{ success, data: [{ productId, ... }] }` with the created ids echoed
+ *    directly. `batch-shelf` takes those ids plus `--shelf 1|2` and returns
+ *    `{ success, data: 'SUCCESS' }`; toggling off (2) then on (1) is reversible.
+ *    The loop is closed by `product batch-delete`.
  *
  * Each test runs a create -> update -> delete loop through the real CLI entry
  * and cleans up the created product (plus the temporary channel) in `finally`.
@@ -507,6 +514,161 @@ describe('product CLI write lifecycle integration', () => {
     180000,
   );
 
+  // Real-CLI lifecycle: product batch-add -> batch-shelf (off -> on reversible)
+  // -> batch-delete cleanup. batch-add returns the created productIds directly
+  // in data[], so no list-by-keyword lookup is needed. The created products are
+  // removed via product batch-delete in the same test; any leftover plus the
+  // temporary channel are cleaned up in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs the channel product batch-add -> batch-shelf lifecycle via real CLI',
+    () => {
+      let channelId: string | undefined;
+      let productIds: number[] = [];
+
+      try {
+        channelId = createTemporaryChannel('Product Batch Lifecycle');
+        const ts = Date.now();
+
+        // Build the products payload as a JSON string in a variable so the
+        // runCliSuccess argument array stays free of nested [] (the coverage
+        // report's array matcher skips argument arrays containing nested
+        // brackets).
+        const products = [
+          {
+            name: `polyv-it-batch-a-${ts}`,
+            status: 1,
+            linkType: 10,
+            link: `https://example.com/ba-${ts}`,
+            cover: REAL_COVER_URL,
+            realPrice: '11.1',
+          },
+          {
+            name: `polyv-it-batch-b-${ts}`,
+            status: 1,
+            linkType: 10,
+            link: `https://example.com/bb-${ts}`,
+            cover: REAL_COVER_URL,
+            realPrice: '22.2',
+          },
+        ];
+        const productsJson = JSON.stringify(products);
+
+        // batch-add -> { success: true, data: [{ productId, ... }] }
+        const addOutput = runCliSuccess([
+          'product',
+          'batch-add',
+          '--channel-id',
+          channelId,
+          '--products-json',
+          productsJson,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const added = parseJsonObject(addOutput) as {
+          success?: boolean;
+          data?: Array<{ productId?: number; channelId?: string | number }>;
+        };
+        expect(added.success).toBe(true);
+        expect(Array.isArray(added.data)).toBe(true);
+        expect(added.data?.length).toBeGreaterThanOrEqual(2);
+        productIds = (added.data || [])
+          .map((item) => Number(item.productId))
+          .filter((id) => Number.isInteger(id) && id > 0);
+        expect(productIds.length).toBeGreaterThanOrEqual(2);
+        for (const item of added.data || []) {
+          expect(String(item.channelId)).toBe(channelId);
+        }
+
+        const idsArg = productIds.join(',');
+
+        // batch-shelf off (2) -> { success: true, data: "SUCCESS" }
+        const offOutput = runCliSuccess([
+          'product',
+          'batch-shelf',
+          '--channel-id',
+          channelId,
+          '--product-ids',
+          idsArg,
+          '--shelf',
+          '2',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const offShelf = parseJsonObject(offOutput) as {
+          success?: boolean;
+          data?: unknown;
+        };
+        expect(offShelf.success).toBe(true);
+        expect(offShelf.data).toBe('SUCCESS');
+
+        // batch-shelf on (1) — reversible toggle -> { success: true, data: "SUCCESS" }
+        const onOutput = runCliSuccess([
+          'product',
+          'batch-shelf',
+          '--channel-id',
+          channelId,
+          '--product-ids',
+          idsArg,
+          '--shelf',
+          '1',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const onShelf = parseJsonObject(onOutput) as {
+          success?: boolean;
+          data?: unknown;
+        };
+        expect(onShelf.success).toBe(true);
+        expect(onShelf.data).toBe('SUCCESS');
+
+        // batch-delete closes the create -> shelf -> delete loop.
+        const deleteOutput = runCliSuccess([
+          'product',
+          'batch-delete',
+          '--channel-id',
+          channelId,
+          '--product-ids',
+          idsArg,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const deleted = parseJsonObject(deleteOutput) as {
+          success?: boolean;
+          data?: unknown;
+        };
+        expect(deleted.success).toBe(true);
+        expect(deleted.data).toBe('SUCCESS');
+        productIds = [];
+      } finally {
+        if (channelId && productIds.length > 0) {
+          try {
+            runCliSuccess([
+              'product',
+              'batch-delete',
+              '--channel-id',
+              channelId,
+              '--product-ids',
+              productIds.join(','),
+              '--force',
+              '--output',
+              'json',
+            ]);
+          } catch {
+            // Best-effort; the products may already be gone.
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the product write subcommands through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -523,6 +685,8 @@ describe('product CLI write lifecycle integration', () => {
       [['product', 'push', '--help'], '--product-id'],
       [['product', 'cancel-push', '--help'], '--product-id'],
       [['product', 'update-enabled', '--help'], '--enabled'],
+      [['product', 'batch-add', '--help'], '--products-json'],
+      [['product', 'batch-shelf', '--help'], '--shelf'],
     ];
 
     for (const [args, marker] of checks) {

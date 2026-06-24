@@ -86,11 +86,66 @@ describe('player CLI channel-scoped writes integration', () => {
     120000,
   );
 
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs player config update via real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Player Config Update');
+
+        // config update: toggle watermark off and set a distinct base PV.
+        // Returns { success: true, updatedFields: [...] } listing the fields
+        // actually persisted server-side.
+        const updateOutput = runCliSuccess([
+          'player',
+          'config',
+          'update',
+          '-c',
+          channelId,
+          '--watermark-enabled',
+          'N',
+          '--base-pv',
+          '123',
+          '--output',
+          'json',
+        ]);
+        const updated = parseJsonObject(updateOutput) as {
+          success?: boolean;
+          updatedFields?: string[];
+        };
+        expect(updated.success).toBe(true);
+        expect(Array.isArray(updated.updatedFields)).toBe(true);
+        expect(updated.updatedFields).toContain('watermarkEnabled');
+        expect(updated.updatedFields).toContain('basePv');
+
+        // config get verifies the persisted state: basePv reflects the write.
+        const getOutput = runCliSuccess([
+          'player',
+          'config',
+          'get',
+          '-c',
+          channelId,
+          '--output',
+          'json',
+        ]);
+        const config = parseJsonObject(getOutput) as { basePv?: number | string };
+        expect(Number(config.basePv)).toBe(123);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Command-surface checks (no credentials required, always run).
-  it('exposes player anti-record update and advert stop-update commands', () => {
+  it('exposes player anti-record update, advert stop-update, and config update commands', () => {
     const commands = [
       ['player', 'anti-record', 'update', '--help'],
       ['player', 'advert', 'stop-update', '--help'],
+      ['player', 'config', 'update', '--help'],
     ];
     for (const args of commands) {
       const result = runCli(args, { timeout: 15000 });

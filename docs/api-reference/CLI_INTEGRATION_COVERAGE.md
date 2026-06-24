@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T21:09:13.978Z
+Generated at: 2026-06-24T21:21:49.669Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 83 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 391 |
-| Missing real-execution leaf subcommands | 176 |
-| Real-execution coverage | 68.96% |
-| Leaf subcommands referenced including help | 454 |
-| Missing including help | 113 |
+| Real-executed leaf subcommands | 395 |
+| Missing real-execution leaf subcommands | 172 |
+| Real-execution coverage | 69.66% |
+| Leaf subcommands referenced including help | 457 |
+| Missing including help | 110 |
 
 ## By Top-Level Command
 
@@ -41,10 +41,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
-| `platform` | 22 | 13 | 9 | 59.09% | 15 | 7 |
+| `platform` | 22 | 14 | 8 | 63.64% | 16 | 6 |
 | `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
-| `player` | 11 | 6 | 5 | 54.55% | 6 | 5 |
-| `product` | 36 | 31 | 5 | 86.11% | 33 | 3 |
+| `player` | 11 | 7 | 4 | 63.64% | 7 | 4 |
+| `product` | 36 | 33 | 3 | 91.67% | 34 | 2 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -158,7 +158,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform anchor unrelation-list` | `packages/cli/src/commands/platform.commands.ts:779` |
 | `platform anchor update` | `packages/cli/src/commands/platform.commands.ts:694` |
 | `platform anchor update-status` | `packages/cli/src/commands/platform.commands.ts:729` |
-| `platform coupon status-batch` | `packages/cli/src/commands/platform.commands.ts:887` |
 | `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
 | `platform coupon viewer-list` | `packages/cli/src/commands/platform.commands.ts:833` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
@@ -173,9 +172,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player marquee-url` | `packages/cli/src/commands/player.commands.ts:451` |
 | `player advert head-update` | `packages/cli/src/commands/player.commands.ts:469` |
 | `player anti-record get` | `packages/cli/src/commands/player.commands.ts:413` |
-| `player config update` | `packages/cli/src/commands/player.commands.ts:271` |
-| `product batch-add` | `packages/cli/src/commands/product.commands.ts:663` |
-| `product batch-shelf` | `packages/cli/src/commands/product.commands.ts:682` |
 | `product reference` | `packages/cli/src/commands/product.commands.ts:727` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |

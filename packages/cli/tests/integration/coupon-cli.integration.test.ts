@@ -138,4 +138,111 @@ describe('coupon CLI integration', () => {
     },
     240000
   );
+
+  // Real-CLI lifecycle: coupon add -> platform coupon status-batch (invalidate)
+  // -> coupon delete. status-batch stops/invalidates coupons in one call
+  // (`/live/v4/user/coupon/update-status-batch`); because the coupon is created
+  // and deleted within the same test, the invalidation is self-contained. A
+  // temporary channel is created as the real test asset per the convention.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs the platform coupon status-batch lifecycle against real CLI',
+    () => {
+      let channelId: string | undefined;
+      let couponId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Coupon Status Batch');
+        const now = Date.now();
+        const day = 24 * 60 * 60 * 1000;
+
+        // coupon add -> { couponId, name, created }
+        const addOut = parseJsonObject(
+          runCliSuccess([
+            'coupon',
+            'add',
+            '--name',
+            `gnhf-coupon-sb-${now}`,
+            '--type',
+            'MAX_OUT',
+            '--availableAmount',
+            '5',
+            '--receiveStart',
+            String(now),
+            '--receiveEnd',
+            String(now + day * 7),
+            '--useTimeType',
+            'RANGE',
+            '--useStart',
+            String(now),
+            '--useEnd',
+            String(now + day * 30),
+            '--condition',
+            'FULL_REDUCE',
+            '--full',
+            '100',
+            '--reduce',
+            '20',
+            '--limitPerPerson',
+            '1',
+            '--output',
+            'json',
+          ])
+        );
+        expect(typeof addOut.couponId).toBe('string');
+        couponId = String(addOut.couponId);
+
+        // platform coupon status-batch -> { success: true, couponIds: [...] }
+        const batchOut = parseJsonObject(
+          runCliSuccess([
+            'platform',
+            'coupon',
+            'status-batch',
+            '--coupon-ids',
+            couponId,
+            '--force',
+            '--output',
+            'json',
+          ])
+        );
+        expect(batchOut.success).toBe(true);
+        expect(Array.isArray(batchOut.couponIds)).toBe(true);
+        expect(batchOut.couponIds).toContain(couponId);
+
+        // coupon delete closes the create -> invalidate -> delete loop.
+        const couponDelete = parseJsonObject(
+          runCliSuccess([
+            'coupon',
+            'delete',
+            '--couponIds',
+            couponId,
+            '--output',
+            'json',
+          ])
+        );
+        expect(Number(couponDelete.deleted)).toBeGreaterThanOrEqual(1);
+        couponId = undefined;
+      } finally {
+        if (couponId) {
+          try {
+            runCliSuccess(['coupon', 'delete', '--couponIds', couponId, '--output', 'json']);
+          } catch {
+            // Coupon may already be deleted or invalid; ignore cleanup errors.
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    240000
+  );
+
+  // Command-surface check for platform coupon status-batch (no credentials).
+  it('exposes the platform coupon status-batch command', () => {
+    const result = runCli(['platform', 'coupon', 'status-batch', '--help'], {
+      includeTestEnv: false,
+    });
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toContain('--coupon-ids');
+  });
 });
