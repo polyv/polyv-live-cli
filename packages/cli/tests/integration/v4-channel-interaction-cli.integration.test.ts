@@ -241,6 +241,125 @@ describe('v4 channel interaction CLI integration', () => {
     }
   }, 240000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('reads lottery details/winners and schedules a wait draw through the real CLI', () => {
+    let channelId: string | undefined;
+    let lotteryId: string | undefined;
+    let lotteryDeleted = false;
+
+    try {
+      channelId = createTemporaryChannel('Lottery Reads');
+      const id = channelId;
+      const name = `LotRead${Date.now() % 100000}`;
+      // A duration condition lottery supports both the generic reads (get/winners)
+      // and the wait-create draw schedule below, so one fixture covers all three.
+      const createdOutput = runCliSuccess([
+        'lottery',
+        'create',
+        '--channel-id',
+        id,
+        '--name',
+        name,
+        '--type',
+        'duration',
+        '--amount',
+        '1',
+        '--prize-name',
+        'CLI Reads Prize',
+        '--duration',
+        '10',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      lotteryId = extractId(parseJsonValue(createdOutput));
+      expect(lotteryId).toMatch(/^\d+$/);
+
+      // lottery get: real CLI returns the persisted activity detail.
+      const got = parseJsonObject(runCliSuccess([
+        'lottery',
+        'get',
+        '--channel-id',
+        id,
+        '--id',
+        lotteryId,
+        '--output',
+        'json',
+      ]));
+      const gotData = got.data as Record<string, unknown> | undefined;
+      expect(String(gotData?.id ?? '')).toBe(lotteryId);
+      expect(String(gotData?.lotteryCondition ?? '')).toBe('duration');
+
+      // lottery winners: a freshly created lottery has no winners, so the handler
+      // emits an info message (non-JSON) and exits 0. Assert the real CLI ran.
+      const winnersResult = runCli([
+        'lottery',
+        'winners',
+        '--channel-id',
+        id,
+        '--lottery-id',
+        lotteryId,
+        '--output',
+        'json',
+      ], { timeout: 60000 });
+      expect(winnersResult.exitCode).toBe(0);
+      expect(winnersResult.output).toContain('No winners found');
+
+      // lottery wait create: schedule a future draw for the condition lottery.
+      const futureTime = String(Date.now() + 10 * 60 * 1000);
+      const waitOutput = runCliSuccess([
+        'lottery',
+        'wait',
+        'create',
+        '--channel-id',
+        id,
+        '--id',
+        lotteryId,
+        '--lottery-time',
+        futureTime,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(waitOutput).toContain('success');
+
+      const deleteOutput = runCliSuccess([
+        'lottery',
+        'delete',
+        '--channel-id',
+        id,
+        '--id',
+        lotteryId,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(deleteOutput).toContain('Lottery deleted successfully');
+      lotteryDeleted = true;
+    } finally {
+      if (channelId && lotteryId && !lotteryDeleted) {
+        try {
+          runCliSuccess([
+            'lottery',
+            'delete',
+            '--channel-id',
+            channelId,
+            '--id',
+            lotteryId,
+            '--force',
+            '--output',
+            'json',
+          ]);
+        } catch {
+          // Channel cleanup below removes the disposable test channel even if lottery cleanup already failed.
+        }
+      }
+
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
   (shouldRunRealChannelTests ? it : it.skip)('uses a temporary real channel for lottery viewer group writes and cleans it up', () => {
     let channelId: string | undefined;
 

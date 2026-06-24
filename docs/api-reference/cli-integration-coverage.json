@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T20:21:33.145Z",
+  "generatedAt": "2026-06-24T20:31:22.075Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 483,
-    "referencedCommandPathsExcludingHelp": 379,
-    "coveredLeafTargetsIncludingHelp": 444,
-    "missingLeafTargetsIncludingHelp": 123,
-    "coveredRealExecutionLeafTargets": 373,
-    "missingRealExecutionLeafTargets": 194,
-    "realExecutionCoveragePercent": 65.78,
-    "includingHelpCoveragePercent": 78.31,
-    "integrationReferences": 856,
-    "realExecutionReferences": 507,
+    "referencedCommandPathsIncludingHelp": 484,
+    "referencedCommandPathsExcludingHelp": 382,
+    "coveredLeafTargetsIncludingHelp": 445,
+    "missingLeafTargetsIncludingHelp": 122,
+    "coveredRealExecutionLeafTargets": 376,
+    "missingRealExecutionLeafTargets": 191,
+    "realExecutionCoveragePercent": 66.31,
+    "includingHelpCoveragePercent": 78.48,
+    "integrationReferences": 862,
+    "realExecutionReferences": 513,
     "helpReferences": 349
   },
   "byTopLevel": [
@@ -186,12 +186,12 @@
     {
       "command": "lottery",
       "targetLeafCommands": 24,
-      "coveredRealExecutionLeafTargets": 12,
-      "missingRealExecutionLeafTargets": 12,
-      "coveredLeafTargetsIncludingHelp": 18,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 50,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 15,
+      "missingRealExecutionLeafTargets": 9,
+      "coveredLeafTargetsIncludingHelp": 19,
+      "missingLeafTargetsIncludingHelp": 5,
+      "realExecutionCoveragePercent": 62.5,
+      "includingHelpCoveragePercent": 79.17
     },
     {
       "command": "material",
@@ -1268,16 +1268,6 @@
       "line": 491
     },
     {
-      "command": "lottery get",
-      "path": [
-        "lottery",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 182
-    },
-    {
       "command": "lottery receive-info",
       "path": [
         "lottery",
@@ -1286,16 +1276,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 524
-    },
-    {
-      "command": "lottery winners",
-      "path": [
-        "lottery",
-        "winners"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 309
     },
     {
       "command": "lottery blacklist add",
@@ -1373,17 +1353,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 762
-    },
-    {
-      "command": "lottery wait create",
-      "path": [
-        "lottery",
-        "wait",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 566
     },
     {
       "command": "material delete",
@@ -3052,16 +3021,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 491
-    },
-    {
-      "command": "lottery get",
-      "path": [
-        "lottery",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 182
     },
     {
       "command": "lottery blacklist delete",
@@ -5707,6 +5666,16 @@
       "line": 270
     },
     {
+      "command": "lottery get",
+      "path": [
+        "lottery",
+        "get"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 182
+    },
+    {
       "command": "lottery legacy-records",
       "path": [
         "lottery",
@@ -5745,6 +5714,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 222
+    },
+    {
+      "command": "lottery winners",
+      "path": [
+        "lottery",
+        "winners"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 309
     },
     {
       "command": "lottery blacklist list",
@@ -5800,6 +5779,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 614
+    },
+    {
+      "command": "lottery wait create",
+      "path": [
+        "lottery",
+        "wait",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 566
     },
     {
       "command": "material list",
@@ -10559,7 +10549,7 @@
     },
     {
       "command": "lottery create",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
@@ -10570,11 +10560,22 @@
     },
     {
       "command": "lottery delete",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 4,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 206,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "lottery get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 278,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10585,7 +10586,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
-        "line": 251,
+        "line": 370,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10600,7 +10601,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
-        "line": 280,
+        "line": 399,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10626,7 +10627,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
-        "line": 265,
+        "line": 384,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10718,9 +10719,13 @@
     },
     {
       "command": "lottery wait create",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 309,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 103,
@@ -10729,9 +10734,13 @@
     },
     {
       "command": "lottery winners",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 294,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 100,

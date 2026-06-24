@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T20:21:33.145Z
+Generated at: 2026-06-24T20:31:22.075Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 82 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 373 |
-| Missing real-execution leaf subcommands | 194 |
-| Real-execution coverage | 65.78% |
-| Leaf subcommands referenced including help | 444 |
-| Missing including help | 123 |
+| Real-executed leaf subcommands | 376 |
+| Missing real-execution leaf subcommands | 191 |
+| Real-execution coverage | 66.31% |
+| Leaf subcommands referenced including help | 445 |
+| Missing including help | 122 |
 
 ## By Top-Level Command
 
@@ -37,7 +37,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 11 | 11 | 50.00% | 18 | 4 |
 | `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
-| `lottery` | 24 | 12 | 12 | 50.00% | 18 | 6 |
+| `lottery` | 24 | 15 | 9 | 62.50% | 19 | 5 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
@@ -144,9 +144,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `invite-sales remove` | `packages/cli/src/commands/invite-sales.commands.ts:56` |
 | `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
-| `lottery get` | `packages/cli/src/commands/lottery.commands.ts:182` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
-| `lottery winners` | `packages/cli/src/commands/lottery.commands.ts:309` |
 | `lottery blacklist add` | `packages/cli/src/commands/lottery.commands.ts:730` |
 | `lottery blacklist delete` | `packages/cli/src/commands/lottery.commands.ts:744` |
 | `lottery group-viewer add` | `packages/cli/src/commands/lottery.commands.ts:664` |
@@ -154,7 +152,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `lottery group-viewer delete` | `packages/cli/src/commands/lottery.commands.ts:696` |
 | `lottery group-viewer list` | `packages/cli/src/commands/lottery.commands.ts:648` |
 | `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
-| `lottery wait create` | `packages/cli/src/commands/lottery.commands.ts:566` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
