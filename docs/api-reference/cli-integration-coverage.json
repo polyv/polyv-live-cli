@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T05:33:04.828Z",
+  "generatedAt": "2026-06-24T05:51:02.303Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 365,
-    "referencedCommandPathsExcludingHelp": 195,
-    "coveredLeafTargetsIncludingHelp": 328,
-    "missingLeafTargetsIncludingHelp": 239,
-    "coveredRealExecutionLeafTargets": 189,
-    "missingRealExecutionLeafTargets": 378,
-    "realExecutionCoveragePercent": 33.33,
-    "includingHelpCoveragePercent": 57.85,
-    "integrationReferences": 537,
-    "realExecutionReferences": 269,
+    "referencedCommandPathsIncludingHelp": 366,
+    "referencedCommandPathsExcludingHelp": 196,
+    "coveredLeafTargetsIncludingHelp": 329,
+    "missingLeafTargetsIncludingHelp": 238,
+    "coveredRealExecutionLeafTargets": 190,
+    "missingRealExecutionLeafTargets": 377,
+    "realExecutionCoveragePercent": 33.51,
+    "includingHelpCoveragePercent": 58.02,
+    "integrationReferences": 538,
+    "realExecutionReferences": 270,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 30,
-      "missingRealExecutionLeafTargets": 48,
-      "coveredLeafTargetsIncludingHelp": 59,
-      "missingLeafTargetsIncludingHelp": 19,
-      "realExecutionCoveragePercent": 38.46,
-      "includingHelpCoveragePercent": 75.64
+      "coveredRealExecutionLeafTargets": 31,
+      "missingRealExecutionLeafTargets": 47,
+      "coveredLeafTargetsIncludingHelp": 60,
+      "missingLeafTargetsIncludingHelp": 18,
+      "realExecutionCoveragePercent": 39.74,
+      "includingHelpCoveragePercent": 76.92
     },
     {
       "command": "chat",
@@ -836,17 +836,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1271
-    },
-    {
-      "command": "channel ppt-record list",
-      "path": [
-        "channel",
-        "ppt-record",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1253
     },
     {
       "command": "channel role account-create",
@@ -4788,17 +4777,6 @@
       "line": 1271
     },
     {
-      "command": "channel ppt-record list",
-      "path": [
-        "channel",
-        "ppt-record",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1253
-    },
-    {
       "command": "channel role delete",
       "path": [
         "channel",
@@ -7539,6 +7517,17 @@
       "line": 1372
     },
     {
+      "command": "channel ppt-record list",
+      "path": [
+        "channel",
+        "ppt-record",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1253
+    },
+    {
       "command": "channel role teacher-list",
       "path": [
         "channel",
@@ -9622,7 +9611,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 248,
+        "line": 280,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9722,6 +9711,17 @@
         "line": 81,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "channel ppt-record list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
+        "line": 248,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "channel pull-bitrate-set",

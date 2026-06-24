@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T05:33:04.828Z
+Generated at: 2026-06-24T05:51:02.303Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 189 |
-| Missing real-execution leaf subcommands | 378 |
-| Real-execution coverage | 33.33% |
-| Leaf subcommands referenced including help | 328 |
-| Missing including help | 239 |
+| Real-executed leaf subcommands | 190 |
+| Missing real-execution leaf subcommands | 377 |
+| Real-execution coverage | 33.51% |
+| Leaf subcommands referenced including help | 329 |
+| Missing including help | 238 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 14 | 9 | 60.87% | 14 | 9 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 3 | 5 | 37.50% | 3 | 5 |
-| `channel` | 78 | 30 | 48 | 38.46% | 59 | 19 |
+| `channel` | 78 | 31 | 47 | 39.74% | 60 | 18 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -104,7 +104,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel follow update` | `packages/cli/src/commands/channel.commands.ts:1377` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
-| `channel ppt-record list` | `packages/cli/src/commands/channel.commands.ts:1253` |
 | `channel role account-create` | `packages/cli/src/commands/channel.commands.ts:998` |
 | `channel role account-update` | `packages/cli/src/commands/channel.commands.ts:1018` |
 | `channel role accounts-delete` | `packages/cli/src/commands/channel.commands.ts:1038` |

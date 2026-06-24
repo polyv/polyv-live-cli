@@ -240,6 +240,38 @@ describe('remaining channel CLI integration', () => {
     }
   }, 300000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('lists ppt-record tasks for a temporary channel via real CLI and cleans it up', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Ppt Record List');
+      const output = runCliSuccess([
+        'channel',
+        'ppt-record',
+        'list',
+        '--channel-id',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const parsed = parseJsonObject(output) as {
+        pageNumber?: unknown;
+        totalPages?: unknown;
+        pageSize?: unknown;
+        contents?: unknown;
+      };
+      expect(typeof parsed.pageNumber).toBe('number');
+      expect(typeof parsed.totalPages).toBe('number');
+      expect(typeof parsed.pageSize).toBe('number');
+      expect(Array.isArray(parsed.contents)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('lists follow-public-account settings for a temporary channel via real CLI and cleans it up', () => {
     let channelId: string | undefined;
 
