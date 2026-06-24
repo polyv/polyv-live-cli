@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T22:45:10.281Z",
+  "generatedAt": "2026-06-24T22:54:09.584Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 84,
+    "integrationFiles": 85,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 509,
-    "referencedCommandPathsExcludingHelp": 429,
-    "coveredLeafTargetsIncludingHelp": 470,
-    "missingLeafTargetsIncludingHelp": 97,
-    "coveredRealExecutionLeafTargets": 423,
-    "missingRealExecutionLeafTargets": 144,
-    "realExecutionCoveragePercent": 74.6,
-    "includingHelpCoveragePercent": 82.89,
-    "integrationReferences": 996,
-    "realExecutionReferences": 614,
-    "helpReferences": 382
+    "referencedCommandPathsIncludingHelp": 511,
+    "referencedCommandPathsExcludingHelp": 431,
+    "coveredLeafTargetsIncludingHelp": 472,
+    "missingLeafTargetsIncludingHelp": 95,
+    "coveredRealExecutionLeafTargets": 425,
+    "missingRealExecutionLeafTargets": 142,
+    "realExecutionCoveragePercent": 74.96,
+    "includingHelpCoveragePercent": 83.25,
+    "integrationReferences": 999,
+    "realExecutionReferences": 616,
+    "helpReferences": 383
   },
   "byTopLevel": [
     {
@@ -86,12 +86,12 @@
     {
       "command": "checkin",
       "targetLeafCommands": 5,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 2,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 40,
-      "includingHelpCoveragePercent": 40
+      "coveredRealExecutionLeafTargets": 3,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 3,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 60,
+      "includingHelpCoveragePercent": 60
     },
     {
       "command": "coupon",
@@ -126,12 +126,12 @@
     {
       "command": "donate",
       "targetLeafCommands": 4,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 3,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 50,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 3,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 4,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 75,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "finance",
@@ -623,16 +623,6 @@
       "line": 188
     },
     {
-      "command": "checkin start",
-      "path": [
-        "checkin",
-        "start"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 38
-    },
-    {
       "command": "custom-field add",
       "path": [
         "custom-field",
@@ -707,16 +697,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "donate list",
-      "path": [
-        "donate",
-        "list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/donate.commands.ts",
-      "line": 132
     },
     {
       "command": "donate config update",
@@ -2087,16 +2067,6 @@
       "line": 188
     },
     {
-      "command": "checkin start",
-      "path": [
-        "checkin",
-        "start"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 38
-    },
-    {
       "command": "document media unlink",
       "path": [
         "document",
@@ -2139,16 +2109,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "donate list",
-      "path": [
-        "donate",
-        "list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/donate.commands.ts",
-      "line": 132
     },
     {
       "command": "finance audio-moderation get",
@@ -4632,6 +4592,16 @@
       "line": 228
     },
     {
+      "command": "checkin start",
+      "path": [
+        "checkin",
+        "start"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/checkin.commands.ts",
+      "line": 38
+    },
+    {
       "command": "coupon add",
       "path": [
         "coupon",
@@ -4797,6 +4767,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/donate.commands.ts",
       "line": 184
+    },
+    {
+      "command": "donate list",
+      "path": [
+        "donate",
+        "list"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/donate.commands.ts",
+      "line": 132
     },
     {
       "command": "donate config get",
@@ -9658,6 +9638,21 @@
       "firstHelpReference": null
     },
     {
+      "command": "checkin start",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
+        "line": 46,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
+        "line": 80,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "coupon",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -9930,7 +9925,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/donate.integration.test.ts",
-        "line": 397,
+        "line": 398,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9960,6 +9955,17 @@
         "line": 110,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "donate list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/donate.integration.test.ts",
+        "line": 448,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "finance audio-moderation update",

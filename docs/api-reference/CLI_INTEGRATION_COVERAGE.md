@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T22:45:10.281Z
+Generated at: 2026-06-24T22:54:09.584Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 84 |
+| Integration files scanned | 85 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 423 |
-| Missing real-execution leaf subcommands | 144 |
-| Real-execution coverage | 74.60% |
-| Leaf subcommands referenced including help | 470 |
-| Missing including help | 97 |
+| Real-executed leaf subcommands | 425 |
+| Missing real-execution leaf subcommands | 142 |
+| Real-execution coverage | 74.96% |
+| Leaf subcommands referenced including help | 472 |
+| Missing including help | 95 |
 
 ## By Top-Level Command
 
@@ -27,11 +27,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 70 | 8 | 89.74% | 76 | 2 |
 | `chat` | 44 | 40 | 4 | 90.91% | 42 | 2 |
-| `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
+| `checkin` | 5 | 3 | 2 | 60.00% | 3 | 2 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 1 | 2 | 33.33% | 3 | 0 |
 | `document` | 11 | 6 | 5 | 54.55% | 7 | 4 |
-| `donate` | 4 | 2 | 2 | 50.00% | 3 | 1 |
+| `donate` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
@@ -84,7 +84,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:744` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
-| `checkin start` | `packages/cli/src/commands/checkin.commands.ts:38` |
 | `custom-field add` | `packages/cli/src/commands/custom-field.commands.ts:30` |
 | `custom-field value save` | `packages/cli/src/commands/custom-field.commands.ts:41` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
@@ -92,7 +91,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
 | `document media user-detail` | `packages/cli/src/commands/document.commands.ts:552` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
-| `donate list` | `packages/cli/src/commands/donate.commands.ts:132` |
 | `donate config update` | `packages/cli/src/commands/donate.commands.ts:83` |
 | `finance audio-moderation get` | `packages/cli/src/commands/finance.commands.ts:42` |
 | `finance audio-moderation list` | `packages/cli/src/commands/finance.commands.ts:48` |

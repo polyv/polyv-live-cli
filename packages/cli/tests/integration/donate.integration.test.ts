@@ -6,6 +6,7 @@
 
 import { DonateServiceSdk } from '../../src/services/donate-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -415,6 +416,52 @@ function getTimestamp(daysOffset: number = 0): number {
       // cashDonate must carry the amount list
       const cashDonate = parsed.cashDonate as Record<string, unknown>;
       expect(Array.isArray(cashDonate.cashs)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+});
+
+// ========================================
+// Real-CLI coverage for `donate list`.
+//
+// `donate list` is a channel-scoped read requiring `-c`, `--start` and `--end`
+// (13-digit ms timestamps). On a fresh temporary channel there are no donate
+// records, so the handler prints a non-JSON info line
+// (`ℹ️ No donate records found for channel <id>`) and exits 0 — the same
+// empty-data shape as `lottery winners` / `donate list`. Coverage of this leaf
+// command therefore asserts exit 0 plus the deterministic info message rather
+// than a JSON payload (runCli is used instead of parseJsonObject).
+// ========================================
+(shouldRunTests ? describe : describe.skip)('donate list CLI real execution', () => {
+  it('runs donate list via real CLI against a temporary channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Donate List CLI');
+
+      const end = Date.now();
+      const start = end - 23 * 60 * 60 * 1000;
+
+      const result = runCli([
+        'donate',
+        'list',
+        '-c',
+        channelId,
+        '--start',
+        String(start),
+        '--end',
+        String(end),
+        '-o',
+        'json',
+      ]);
+
+      // Exits 0 and prints the deterministic empty-data info message on a fresh
+      // channel (no donate records).
+      expect(result.exitCode).toBe(0);
+      expect(result.output).toContain('No donate records found');
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);
