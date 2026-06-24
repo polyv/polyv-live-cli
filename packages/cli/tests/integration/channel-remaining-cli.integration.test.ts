@@ -239,4 +239,33 @@ describe('remaining channel CLI integration', () => {
       }
     }
   }, 300000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('lists follow-public-account settings for a temporary channel via real CLI and cleans it up', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Follow List');
+      const output = runCliSuccess([
+        'channel',
+        'follow',
+        'list',
+        '--channel-ids',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const parsed = parseJsonObject(output) as { list?: unknown };
+      expect(Array.isArray(parsed.list)).toBe(true);
+      const matching = (parsed.list as Array<Record<string, unknown>>).find(
+        (item) => String(item?.channelId) === channelId
+      );
+      expect(matching).toBeDefined();
+      expect(typeof matching?.enabled).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });

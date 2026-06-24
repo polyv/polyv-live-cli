@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T04:59:29.688Z",
+  "generatedAt": "2026-06-24T05:22:02.773Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 363,
-    "referencedCommandPathsExcludingHelp": 193,
-    "coveredLeafTargetsIncludingHelp": 326,
-    "missingLeafTargetsIncludingHelp": 241,
-    "coveredRealExecutionLeafTargets": 187,
-    "missingRealExecutionLeafTargets": 380,
-    "realExecutionCoveragePercent": 32.98,
-    "includingHelpCoveragePercent": 57.5,
-    "integrationReferences": 535,
-    "realExecutionReferences": 267,
+    "referencedCommandPathsIncludingHelp": 364,
+    "referencedCommandPathsExcludingHelp": 194,
+    "coveredLeafTargetsIncludingHelp": 327,
+    "missingLeafTargetsIncludingHelp": 240,
+    "coveredRealExecutionLeafTargets": 188,
+    "missingRealExecutionLeafTargets": 379,
+    "realExecutionCoveragePercent": 33.16,
+    "includingHelpCoveragePercent": 57.67,
+    "integrationReferences": 536,
+    "realExecutionReferences": 268,
     "helpReferences": 268
   },
   "byTopLevel": [
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 29,
-      "missingRealExecutionLeafTargets": 49,
-      "coveredLeafTargetsIncludingHelp": 58,
-      "missingLeafTargetsIncludingHelp": 20,
-      "realExecutionCoveragePercent": 37.18,
-      "includingHelpCoveragePercent": 74.36
+      "coveredRealExecutionLeafTargets": 30,
+      "missingRealExecutionLeafTargets": 48,
+      "coveredLeafTargetsIncludingHelp": 59,
+      "missingLeafTargetsIncludingHelp": 19,
+      "realExecutionCoveragePercent": 38.46,
+      "includingHelpCoveragePercent": 75.64
     },
     {
       "command": "chat",
@@ -803,17 +803,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1149
-    },
-    {
-      "command": "channel follow list",
-      "path": [
-        "channel",
-        "follow",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1372
     },
     {
       "command": "channel follow update",
@@ -4788,17 +4777,6 @@
       "line": 1390
     },
     {
-      "command": "channel follow list",
-      "path": [
-        "channel",
-        "follow",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1372
-    },
-    {
       "command": "channel follow update",
       "path": [
         "channel",
@@ -7572,6 +7550,17 @@
       "line": 1128
     },
     {
+      "command": "channel follow list",
+      "path": [
+        "channel",
+        "follow",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1372
+    },
+    {
       "command": "channel role teacher-list",
       "path": [
         "channel",
@@ -9637,6 +9626,17 @@
         "line": 100,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "channel follow list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
+        "line": 248,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "channel get",
