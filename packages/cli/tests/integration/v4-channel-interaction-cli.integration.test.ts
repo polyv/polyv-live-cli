@@ -414,4 +414,173 @@ describe('v4 channel interaction CLI integration', () => {
       }
     }
   }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('adds, lists, and deletes lottery blacklist viewers through the real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Blacklist');
+      const id = channelId;
+      // The lottery-viewer-list endpoints accept arbitrary viewer-ids (no pre-registration
+      // needed; the API doc example uses literal "16"/"17"/"18"), so two synthetic ids suffice.
+      const viewerIdsParam = `${1700000 + (Date.now() % 100000)},${1800000 + (Date.now() % 100000)}`;
+
+      // lottery blacklist add: returns an array of {id, groupId, viewerId} relation records.
+      const added = parseJsonValue(runCliSuccess([
+        'lottery',
+        'blacklist',
+        'add',
+        '--channel-id',
+        id,
+        '--viewer-ids',
+        viewerIdsParam,
+        '--force',
+        '--output',
+        'json',
+      ])) as Array<Record<string, unknown>>;
+      expect(Array.isArray(added)).toBe(true);
+      expect(added.length).toBe(2);
+      const recordIds = added.map((item) => Number(item.id));
+      expect(recordIds.every((value) => Number.isInteger(value))).toBe(true);
+
+      // lottery blacklist list: confirms the records persisted on the channel.
+      const listed = parseJsonObject(runCliSuccess([
+        'lottery',
+        'blacklist',
+        'list',
+        '--channel-id',
+        id,
+        '--output',
+        'json',
+      ]));
+      const contents = listed.contents as Array<Record<string, unknown>>;
+      expect(Array.isArray(contents)).toBe(true);
+      expect(contents.some((item) => recordIds.includes(Number(item.id)))).toBe(true);
+
+      // lottery blacklist delete: removes both records by their relation ids.
+      const deleted = parseJsonObject(runCliSuccess([
+        'lottery',
+        'blacklist',
+        'delete',
+        '--channel-id',
+        id,
+        '--ids',
+        recordIds.join(','),
+        '--force',
+        '--output',
+        'json',
+      ]));
+      expect(String(deleted.status || '')).toBe('success');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('adds, lists, names, and deletes lottery group-viewer members through the real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('GroupViewer');
+      const id = channelId;
+
+      // group-viewer is scoped to a group; create one first (lottery group create is already covered).
+      const groupCreated = parseJsonValue(runCliSuccess([
+        'lottery',
+        'group',
+        'create',
+        '--channel-id',
+        id,
+        '--title',
+        `GV ${Date.now() % 100000}`,
+        '--force',
+        '--output',
+        'json',
+      ])) as Record<string, unknown>;
+      const groupId = String(groupCreated.id);
+
+      // lottery group-viewer add: arbitrary viewer-ids accepted; returns {id, groupId, viewerId}[].
+      const viewerIdsParam = `${1700000 + (Date.now() % 100000)},${1800000 + (Date.now() % 100000)}`;
+      const added = parseJsonValue(runCliSuccess([
+        'lottery',
+        'group-viewer',
+        'add',
+        '--channel-id',
+        id,
+        '--group-id',
+        groupId,
+        '--viewer-ids',
+        viewerIdsParam,
+        '--force',
+        '--output',
+        'json',
+      ])) as Array<Record<string, unknown>>;
+      expect(Array.isArray(added)).toBe(true);
+      expect(added.length).toBe(2);
+      const firstId = Number(added[0].id);
+      expect(Number.isInteger(firstId)).toBe(true);
+
+      // lottery group-viewer list: confirms members persisted for the group.
+      const listed = parseJsonObject(runCliSuccess([
+        'lottery',
+        'group-viewer',
+        'list',
+        '--channel-id',
+        id,
+        '--group-id',
+        groupId,
+        '--output',
+        'json',
+      ]));
+      const contents = listed.contents as Array<Record<string, unknown>>;
+      expect(Array.isArray(contents)).toBe(true);
+      expect(contents.length).toBeGreaterThanOrEqual(2);
+
+      // lottery group-viewer add-names: accepts a {viewerId,viewerName} JSON array.
+      // Precompute the JSON into a variable so the runCliSuccess args array literal stays
+      // bracket-free (otherwise the coverage report's array matcher skips the whole call).
+      const viewerNamesJson = JSON.stringify([
+        { viewerId: `vn${Date.now() % 100000}`, viewerName: 'CLI Alice' },
+        { viewerId: `vn${(Date.now() + 7) % 100000}`, viewerName: 'CLI Bob' },
+      ]);
+      const named = parseJsonValue(runCliSuccess([
+        'lottery',
+        'group-viewer',
+        'add-names',
+        '--channel-id',
+        id,
+        '--group-id',
+        groupId,
+        '--viewer-names',
+        viewerNamesJson,
+        '--force',
+        '--output',
+        'json',
+      ])) as Array<Record<string, unknown>>;
+      expect(Array.isArray(named)).toBe(true);
+      expect(named.some((item) => typeof item.viewerName === 'string' && (item.viewerName as string).length > 0)).toBe(true);
+
+      // lottery group-viewer delete: removes a member by its relation id.
+      const deleted = parseJsonObject(runCliSuccess([
+        'lottery',
+        'group-viewer',
+        'delete',
+        '--channel-id',
+        id,
+        '--group-id',
+        groupId,
+        '--ids',
+        String(firstId),
+        '--force',
+        '--output',
+        'json',
+      ]));
+      expect(String(deleted.status || '')).toBe('success');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

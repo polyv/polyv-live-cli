@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T23:22:48.024Z",
+  "generatedAt": "2026-06-24T23:30:51.297Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 517,
-    "referencedCommandPathsExcludingHelp": 439,
-    "coveredLeafTargetsIncludingHelp": 478,
-    "missingLeafTargetsIncludingHelp": 89,
-    "coveredRealExecutionLeafTargets": 433,
-    "missingRealExecutionLeafTargets": 134,
-    "realExecutionCoveragePercent": 76.37,
-    "includingHelpCoveragePercent": 84.3,
-    "integrationReferences": 1021,
-    "realExecutionReferences": 632,
+    "referencedCommandPathsIncludingHelp": 521,
+    "referencedCommandPathsExcludingHelp": 445,
+    "coveredLeafTargetsIncludingHelp": 482,
+    "missingLeafTargetsIncludingHelp": 85,
+    "coveredRealExecutionLeafTargets": 439,
+    "missingRealExecutionLeafTargets": 128,
+    "realExecutionCoveragePercent": 77.43,
+    "includingHelpCoveragePercent": 85.01,
+    "integrationReferences": 1029,
+    "realExecutionReferences": 640,
     "helpReferences": 389
   },
   "byTopLevel": [
@@ -186,12 +186,12 @@
     {
       "command": "lottery",
       "targetLeafCommands": 24,
-      "coveredRealExecutionLeafTargets": 15,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 19,
-      "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 62.5,
-      "includingHelpCoveragePercent": 79.17
+      "coveredRealExecutionLeafTargets": 21,
+      "missingRealExecutionLeafTargets": 3,
+      "coveredLeafTargetsIncludingHelp": 23,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 87.5,
+      "includingHelpCoveragePercent": 95.83
     },
     {
       "command": "material",
@@ -1054,72 +1054,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 524
-    },
-    {
-      "command": "lottery blacklist add",
-      "path": [
-        "lottery",
-        "blacklist",
-        "add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 730
-    },
-    {
-      "command": "lottery blacklist delete",
-      "path": [
-        "lottery",
-        "blacklist",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 744
-    },
-    {
-      "command": "lottery group-viewer add",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 664
-    },
-    {
-      "command": "lottery group-viewer add-names",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "add-names"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 680
-    },
-    {
-      "command": "lottery group-viewer delete",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 696
-    },
-    {
-      "command": "lottery group-viewer list",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 648
     },
     {
       "command": "lottery lucky-bag winners",
@@ -2264,50 +2198,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 491
-    },
-    {
-      "command": "lottery blacklist delete",
-      "path": [
-        "lottery",
-        "blacklist",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 744
-    },
-    {
-      "command": "lottery group-viewer add",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 664
-    },
-    {
-      "command": "lottery group-viewer delete",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 696
-    },
-    {
-      "command": "lottery group-viewer list",
-      "path": [
-        "lottery",
-        "group-viewer",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 648
     },
     {
       "command": "platform anchor update",
@@ -4988,6 +4878,28 @@
       "line": 309
     },
     {
+      "command": "lottery blacklist add",
+      "path": [
+        "lottery",
+        "blacklist",
+        "add"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 730
+    },
+    {
+      "command": "lottery blacklist delete",
+      "path": [
+        "lottery",
+        "blacklist",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 744
+    },
+    {
       "command": "lottery blacklist list",
       "path": [
         "lottery",
@@ -5041,6 +4953,50 @@
       "depth": 3,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 614
+    },
+    {
+      "command": "lottery group-viewer add",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "add"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 664
+    },
+    {
+      "command": "lottery group-viewer add-names",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "add-names"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 680
+    },
+    {
+      "command": "lottery group-viewer delete",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 696
+    },
+    {
+      "command": "lottery group-viewer list",
+      "path": [
+        "lottery",
+        "group-viewer",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 648
     },
     {
       "command": "lottery wait create",
@@ -10387,9 +10343,13 @@
     },
     {
       "command": "lottery blacklist add",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 429,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 107,
@@ -10397,8 +10357,19 @@
       }
     },
     {
-      "command": "lottery blacklist list",
+      "command": "lottery blacklist delete",
       "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 461,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "lottery blacklist list",
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
@@ -10457,7 +10428,7 @@
     },
     {
       "command": "lottery group create",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
@@ -10508,15 +10479,52 @@
       "firstHelpReference": null
     },
     {
+      "command": "lottery group-viewer add",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 505,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "lottery group-viewer add-names",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 547,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 106,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "lottery group-viewer delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 565,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "lottery group-viewer list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 525,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "lottery legacy-records",

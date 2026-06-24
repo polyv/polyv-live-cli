@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T23:22:48.024Z
+Generated at: 2026-06-24T23:30:51.297Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 87 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 433 |
-| Missing real-execution leaf subcommands | 134 |
-| Real-execution coverage | 76.37% |
-| Leaf subcommands referenced including help | 478 |
-| Missing including help | 89 |
+| Real-executed leaf subcommands | 439 |
+| Missing real-execution leaf subcommands | 128 |
+| Real-execution coverage | 77.43% |
+| Leaf subcommands referenced including help | 482 |
+| Missing including help | 85 |
 
 ## By Top-Level Command
 
@@ -37,7 +37,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 14 | 8 | 63.64% | 18 | 4 |
 | `invite-sales` | 5 | 2 | 3 | 40.00% | 5 | 0 |
-| `lottery` | 24 | 15 | 9 | 62.50% | 19 | 5 |
+| `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
@@ -124,12 +124,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `invite-sales update` | `packages/cli/src/commands/invite-sales.commands.ts:48` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
-| `lottery blacklist add` | `packages/cli/src/commands/lottery.commands.ts:730` |
-| `lottery blacklist delete` | `packages/cli/src/commands/lottery.commands.ts:744` |
-| `lottery group-viewer add` | `packages/cli/src/commands/lottery.commands.ts:664` |
-| `lottery group-viewer add-names` | `packages/cli/src/commands/lottery.commands.ts:680` |
-| `lottery group-viewer delete` | `packages/cli/src/commands/lottery.commands.ts:696` |
-| `lottery group-viewer list` | `packages/cli/src/commands/lottery.commands.ts:648` |
 | `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
