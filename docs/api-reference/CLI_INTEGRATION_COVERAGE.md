@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T07:55:17.665Z
+Generated at: 2026-06-24T07:59:22.967Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 209 |
-| Missing real-execution leaf subcommands | 358 |
-| Real-execution coverage | 36.86% |
-| Leaf subcommands referenced including help | 344 |
-| Missing including help | 223 |
+| Real-executed leaf subcommands | 213 |
+| Missing real-execution leaf subcommands | 354 |
+| Real-execution coverage | 37.57% |
+| Leaf subcommands referenced including help | 347 |
+| Missing including help | 220 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 21 | 2 | 91.30% | 21 | 2 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 36 | 42 | 46.15% | 61 | 17 |
+| `channel` | 78 | 40 | 38 | 51.28% | 64 | 14 |
 | `chat` | 44 | 13 | 31 | 29.55% | 26 | 18 |
 | `checkin` | 5 | 2 | 3 | 40.00% | 2 | 3 |
 | `coupon` | 8 | 4 | 4 | 50.00% | 6 | 2 |
@@ -90,12 +90,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel role account-create` | `packages/cli/src/commands/channel.commands.ts:998` |
 | `channel role account-update` | `packages/cli/src/commands/channel.commands.ts:1018` |
 | `channel role accounts-delete` | `packages/cli/src/commands/channel.commands.ts:1038` |
-| `channel role batch-create` | `packages/cli/src/commands/channel.commands.ts:981` |
 | `channel role config-get` | `packages/cli/src/commands/channel.commands.ts:1073` |
 | `channel role config-update` | `packages/cli/src/commands/channel.commands.ts:1079` |
-| `channel role delete` | `packages/cli/src/commands/channel.commands.ts:991` |
-| `channel role get` | `packages/cli/src/commands/channel.commands.ts:970` |
-| `channel role list` | `packages/cli/src/commands/channel.commands.ts:976` |
 | `channel token api` | `packages/cli/src/commands/channel.commands.ts:1311` |
 | `channel token chat` | `packages/cli/src/commands/channel.commands.ts:1327` |
 | `channel token login-url` | `packages/cli/src/commands/channel.commands.ts:1321` |
