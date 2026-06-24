@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T05:51:02.303Z
+Generated at: 2026-06-24T07:19:34.273Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,17 +12,17 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 59 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 190 |
-| Missing real-execution leaf subcommands | 377 |
-| Real-execution coverage | 33.51% |
-| Leaf subcommands referenced including help | 329 |
-| Missing including help | 238 |
+| Real-executed leaf subcommands | 193 |
+| Missing real-execution leaf subcommands | 374 |
+| Real-execution coverage | 34.04% |
+| Leaf subcommands referenced including help | 332 |
+| Missing including help | 235 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
-| `account` | 23 | 14 | 9 | 60.87% | 14 | 9 |
+| `account` | 23 | 17 | 6 | 73.91% | 17 | 6 |
 | `ai` | 12 | 5 | 7 | 41.67% | 5 | 7 |
 | `card-push` | 8 | 3 | 5 | 37.50% | 3 | 5 |
 | `channel` | 78 | 31 | 47 | 39.74% | 60 | 18 |
@@ -65,9 +65,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| `account migrate` | `packages/cli/src/commands/account.commands.ts:606` |
-| `account unset-default` | `packages/cli/src/commands/account.commands.ts:621` |
-| `account api income-list` | `packages/cli/src/commands/account.commands.ts:740` |
 | `account api callback set` | `packages/cli/src/commands/account.commands.ts:862` |
 | `account api category create` | `packages/cli/src/commands/account.commands.ts:788` |
 | `account api category delete` | `packages/cli/src/commands/account.commands.ts:800` |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T05:51:02.303Z",
+  "generatedAt": "2026-06-24T07:19:34.273Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,28 +20,28 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 366,
-    "referencedCommandPathsExcludingHelp": 196,
-    "coveredLeafTargetsIncludingHelp": 329,
-    "missingLeafTargetsIncludingHelp": 238,
-    "coveredRealExecutionLeafTargets": 190,
-    "missingRealExecutionLeafTargets": 377,
-    "realExecutionCoveragePercent": 33.51,
-    "includingHelpCoveragePercent": 58.02,
-    "integrationReferences": 538,
-    "realExecutionReferences": 270,
+    "referencedCommandPathsIncludingHelp": 369,
+    "referencedCommandPathsExcludingHelp": 199,
+    "coveredLeafTargetsIncludingHelp": 332,
+    "missingLeafTargetsIncludingHelp": 235,
+    "coveredRealExecutionLeafTargets": 193,
+    "missingRealExecutionLeafTargets": 374,
+    "realExecutionCoveragePercent": 34.04,
+    "includingHelpCoveragePercent": 58.55,
+    "integrationReferences": 543,
+    "realExecutionReferences": 275,
     "helpReferences": 268
   },
   "byTopLevel": [
     {
       "command": "account",
       "targetLeafCommands": 23,
-      "coveredRealExecutionLeafTargets": 14,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 14,
-      "missingLeafTargetsIncludingHelp": 9,
-      "realExecutionCoveragePercent": 60.87,
-      "includingHelpCoveragePercent": 60.87
+      "coveredRealExecutionLeafTargets": 17,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 17,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 73.91,
+      "includingHelpCoveragePercent": 73.91
     },
     {
       "command": "ai",
@@ -415,37 +415,6 @@
     }
   ],
   "missingRealExecutionTargets": [
-    {
-      "command": "account migrate",
-      "path": [
-        "account",
-        "migrate"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 606
-    },
-    {
-      "command": "account unset-default",
-      "path": [
-        "account",
-        "unset-default"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 621
-    },
-    {
-      "command": "account api income-list",
-      "path": [
-        "account",
-        "api",
-        "income-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 740
-    },
     {
       "command": "account api callback set",
       "path": [
@@ -4482,37 +4451,6 @@
   ],
   "missingIncludingHelpTargets": [
     {
-      "command": "account migrate",
-      "path": [
-        "account",
-        "migrate"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 606
-    },
-    {
-      "command": "account unset-default",
-      "path": [
-        "account",
-        "unset-default"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 621
-    },
-    {
-      "command": "account api income-list",
-      "path": [
-        "account",
-        "api",
-        "income-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 740
-    },
-    {
       "command": "account api callback set",
       "path": [
         "account",
@@ -7068,6 +7006,16 @@
       "line": 593
     },
     {
+      "command": "account migrate",
+      "path": [
+        "account",
+        "migrate"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 606
+    },
+    {
       "command": "account remove",
       "path": [
         "account",
@@ -7086,6 +7034,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 615
+    },
+    {
+      "command": "account unset-default",
+      "path": [
+        "account",
+        "unset-default"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 621
     },
     {
       "command": "account api channels",
@@ -7108,6 +7066,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 724
+    },
+    {
+      "command": "account api income-list",
+      "path": [
+        "account",
+        "api",
+        "income-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 740
     },
     {
       "command": "account api mic-duration",
@@ -9046,18 +9015,18 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-management.test.ts",
-        "line": 275,
+        "line": 325,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-management.test.ts",
-        "line": 295,
+        "line": 345,
         "source": "array-literal"
       }
     },
     {
       "command": "account add",
-      "realExecutionReferences": 15,
+      "realExecutionReferences": 16,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-management.test.ts",
@@ -9066,7 +9035,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-management.test.ts",
-        "line": 306,
+        "line": 356,
         "source": "array-literal"
       }
     },
@@ -9077,7 +9046,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 17,
+        "line": 23,
         "source": "array-literal"
       }
     },
@@ -9087,7 +9056,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 80,
+        "line": 86,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9098,7 +9067,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 74,
+        "line": 80,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9109,7 +9078,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 76,
+        "line": 82,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9120,7 +9089,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 75,
+        "line": 81,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9131,7 +9100,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 72,
+        "line": 78,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9142,7 +9111,18 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 77,
+        "line": 83,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "account api income-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 118,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9153,7 +9133,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 78,
+        "line": 84,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9164,7 +9144,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 73,
+        "line": 79,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9175,7 +9155,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 79,
+        "line": 85,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9203,6 +9183,17 @@
       "firstHelpReference": null
     },
     {
+      "command": "account migrate",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-management.test.ts",
+        "line": 266,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "account remove",
       "realExecutionReferences": 4,
       "helpReferences": 0,
@@ -9215,11 +9206,22 @@
     },
     {
       "command": "account set-default",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-management.test.ts",
+        "line": 246,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "account unset-default",
       "realExecutionReferences": 1,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/cli-auth-source.integration.test.ts",
-        "line": 43,
+        "file": "packages/cli/tests/integration/account-management.test.ts",
+        "line": 248,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10738,7 +10740,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 89,
+        "line": 95,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10750,7 +10752,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 56,
+        "line": 62,
         "source": "array-literal"
       }
     },
@@ -10760,7 +10762,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 90,
+        "line": 96,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10772,7 +10774,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 57,
+        "line": 63,
         "source": "array-literal"
       }
     },
@@ -11357,7 +11359,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 32,
+        "line": 38,
         "source": "array-literal"
       }
     },
@@ -11367,12 +11369,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 86,
+        "line": 92,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 44,
+        "line": 50,
         "source": "array-literal"
       }
     },
@@ -11382,12 +11384,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 85,
+        "line": 91,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 43,
+        "line": 49,
         "source": "array-literal"
       }
     },
@@ -11397,12 +11399,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 87,
+        "line": 93,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 45,
+        "line": 51,
         "source": "array-literal"
       }
     },
@@ -11413,7 +11415,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 33,
+        "line": 39,
         "source": "array-literal"
       }
     },
@@ -11423,7 +11425,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 81,
+        "line": 87,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11434,12 +11436,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 84,
+        "line": 90,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 25,
+        "line": 31,
         "source": "array-literal"
       }
     },
@@ -11449,7 +11451,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 83,
+        "line": 89,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11460,7 +11462,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 82,
+        "line": 88,
         "source": "array-literal"
       },
       "firstHelpReference": null

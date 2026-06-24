@@ -6,11 +6,17 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
-import { hasRealCredentials } from '../helpers/integration-config';
+import { getDefaultCredentials, hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const accountCredentials = getDefaultCredentials();
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
 
 describe('Account, platform, and global CLI integration', () => {
   it('should show account api help', () => {
@@ -99,4 +105,44 @@ describe('Account, platform, and global CLI integration', () => {
       }
     }
   }, 240000);
+
+  (shouldRunRealChannelTests && accountCredentials?.userId ? it : it.skip)('runs account income list through the real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Account Income List Smoke');
+      const endDate = new Date();
+      const startDate = new Date(endDate);
+      startDate.setDate(endDate.getDate() - 1);
+
+      const output = runCliSuccess([
+        'account',
+        'api',
+        'income-list',
+        '--user-id',
+        accountCredentials!.userId!,
+        '--start-date',
+        formatDate(startDate),
+        '--end-date',
+        formatDate(endDate),
+        '--channel-id',
+        channelId,
+        '--page',
+        '1',
+        '--page-size',
+        '5',
+        '--output',
+        'json',
+      ]);
+
+      const parsed = parseJsonValue(output);
+      expect(parsed).toEqual(expect.objectContaining({
+        contents: expect.any(Array),
+      }));
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });

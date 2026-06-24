@@ -236,6 +236,56 @@ describe('Account Management Integration', () => {
     });
   });
 
+  describe('account default and migration commands', () => {
+    it('should unset the configured default account', () => {
+      runCLI([
+        'account', 'add', 'test-account',
+        '--app-id', 'testappid12345678',
+        '--app-secret', 'testsecret1234567890'
+      ]);
+      runCLI(['account', 'set-default', 'test-account']);
+
+      const result = runCLI(['account', 'unset-default']);
+
+      expect(result.exitCode).toBe(0);
+      expect(result.stdout).toContain('已取消');
+
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      expect(config.defaultAccount).toBeUndefined();
+    });
+
+    it('should migrate legacy configuration into an account', () => {
+      const legacyConfigPath = path.join(tempDir, '.polyv-live-cli', 'config.json');
+      fs.mkdirSync(path.dirname(legacyConfigPath), { recursive: true });
+      fs.writeFileSync(legacyConfigPath, JSON.stringify({
+        appId: 'legacyappid12345',
+        appSecret: 'legacysecret123456',
+        userId: 'legacy-user'
+      }, null, 2));
+
+      const result = runCLI([
+        'account', 'migrate',
+        '--name', 'migrated-account',
+        '--force',
+        '--keep-legacy'
+      ]);
+
+      expect(result.exitCode).toBe(0);
+      expect(result.stdout).toContain('Migration completed successfully');
+      expect(result.stdout).toContain('migrated-account');
+      expect(fs.existsSync(legacyConfigPath)).toBe(true);
+
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      expect(config.accounts['migrated-account']).toMatchObject({
+        name: 'migrated-account',
+        appId: 'legacyappid12345',
+        userId: 'legacy-user'
+      });
+      expect(config.accounts['migrated-account'].appSecret).toBeDefined();
+      expect(config.accounts['migrated-account'].appSecret).not.toBe('legacysecret123456');
+    });
+  });
+
   describe('config file security', () => {
     it('should create config file with secure permissions', () => {
       runCLI([
