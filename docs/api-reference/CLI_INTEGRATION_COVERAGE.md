@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T18:54:22.312Z
+Generated at: 2026-06-25T19:16:09.954Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 482 |
-| Missing real-execution leaf subcommands | 85 |
-| Real-execution coverage | 85.01% |
+| Real-executed leaf subcommands | 483 |
+| Missing real-execution leaf subcommands | 84 |
+| Real-execution coverage | 85.19% |
 | Leaf subcommands referenced including help | 509 |
 | Missing including help | 58 |
 
@@ -37,7 +37,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
-| `lottery` | 24 | 22 | 2 | 91.67% | 23 | 1 |
+| `lottery` | 24 | 23 | 1 | 95.83% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
@@ -106,7 +106,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
-| `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |

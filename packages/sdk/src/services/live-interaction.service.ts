@@ -577,10 +577,25 @@ export class LiveInteractionService {
     this.validateRequiredString(params.winnerCode, 'winnerCode');
     this.validateRequiredString(params.viewerId, 'viewerId');
 
+    // Per add_receive_info_v4.md Java example: only appId/timestamp/channelId
+    // participate in the signature (signed query); the business params
+    // (lotteryId/winnerCode/viewerId/receiveInfo) travel in the unsigned JSON
+    // body via postJsonBody. Signing the complex receiveInfo array as query
+    // params produces 签名错误, so it must live in the body instead.
+    const body: Record<string, unknown> = {
+      channelId: params.channelId,
+      lotteryId: params.lotteryId,
+      winnerCode: params.winnerCode,
+      viewerId: params.viewerId,
+    };
+    if (params.receiveInfo !== undefined) {
+      body.receiveInfo = JSON.stringify(params.receiveInfo);
+    }
+
     const response = await this.client.httpClient.post<AddReceiveInfoResponse>(
       '/live/v4/channel/lottery/add-receive-info',
-      null,
-      { params: this.compactParams(params as unknown as Params) }
+      body,
+      { params: this.compactParams({ channelId: params.channelId } as unknown as Params) }
     );
     return response as unknown as AddReceiveInfoResponse;
   }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:54:22.312Z",
+  "generatedAt": "2026-06-25T19:16:09.954Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,16 +21,16 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 548,
-    "referencedCommandPathsExcludingHelp": 488,
+    "referencedCommandPathsExcludingHelp": 489,
     "coveredLeafTargetsIncludingHelp": 509,
     "missingLeafTargetsIncludingHelp": 58,
-    "coveredRealExecutionLeafTargets": 482,
-    "missingRealExecutionLeafTargets": 85,
-    "realExecutionCoveragePercent": 85.01,
+    "coveredRealExecutionLeafTargets": 483,
+    "missingRealExecutionLeafTargets": 84,
+    "realExecutionCoveragePercent": 85.19,
     "includingHelpCoveragePercent": 89.77,
-    "integrationReferences": 1140,
-    "realExecutionReferences": 733,
-    "helpReferences": 407
+    "integrationReferences": 1143,
+    "realExecutionReferences": 735,
+    "helpReferences": 408
   },
   "byTopLevel": [
     {
@@ -186,11 +186,11 @@
     {
       "command": "lottery",
       "targetLeafCommands": 24,
-      "coveredRealExecutionLeafTargets": 22,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 23,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 23,
       "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 91.67,
+      "realExecutionCoveragePercent": 95.83,
       "includingHelpCoveragePercent": 95.83
     },
     {
@@ -861,16 +861,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 491
-    },
-    {
-      "command": "lottery receive-info",
-      "path": [
-        "lottery",
-        "receive-info"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 524
     },
     {
       "command": "material delete",
@@ -4271,6 +4261,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 137
+    },
+    {
+      "command": "lottery receive-info",
+      "path": [
+        "lottery",
+        "receive-info"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 524
     },
     {
       "command": "lottery records",
@@ -10225,22 +10225,22 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
-        "line": 39,
+        "line": 40,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
-        "line": 64,
+        "line": 65,
         "source": "array-literal"
       }
     },
     {
       "command": "lottery create",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
-        "line": 167,
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 139,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10399,20 +10399,24 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
-        "line": 85,
+        "line": 86,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
-        "line": 114,
+        "line": 115,
         "source": "array-literal"
       }
     },
     {
       "command": "lottery receive-info",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 164,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 36,

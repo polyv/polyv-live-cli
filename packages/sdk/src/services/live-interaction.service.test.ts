@@ -260,26 +260,6 @@ describe('LiveInteractionService', () => {
         config: { params: { channelId: 12345678, questionId: 'question1' } },
       },
       {
-        name: 'addReceiveInfoV4',
-        call: (svc) => svc.addReceiveInfoV4({
-          channelId: '12345678',
-          lotteryId: 'lottery1',
-          winnerCode: 'WIN1',
-          viewerId: 'viewer1',
-          receiveInfo: [{ field: 'name', value: 'Tester' }],
-        }),
-        path: '/live/v4/channel/lottery/add-receive-info',
-        config: {
-          params: {
-            channelId: '12345678',
-            lotteryId: 'lottery1',
-            winnerCode: 'WIN1',
-            viewerId: 'viewer1',
-            receiveInfo: [{ field: 'name', value: 'Tester' }],
-          },
-        },
-      },
-      {
         name: 'sendFavor',
         call: (svc) => svc.sendFavor({ channelId: '12345678', viewerId: 'viewer1', times: 2 }),
         path: '/live/v2/channels/12345678/like',
@@ -332,15 +312,13 @@ describe('LiveInteractionService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/channel/lottery/add-receive-info',
-        null,
         {
-          params: {
-            channelId: '12345678',
-            lotteryId: 'lottery1',
-            winnerCode: 'WIN1',
-            viewerId: 'viewer1',
-          },
-        }
+          channelId: '12345678',
+          lotteryId: 'lottery1',
+          winnerCode: 'WIN1',
+          viewerId: 'viewer1',
+        },
+        { params: { channelId: '12345678' } }
       );
       expect(result).toEqual(mockResponse);
     });
@@ -366,6 +344,32 @@ describe('LiveInteractionService', () => {
           privacyEnabled: 'Y',
         },
         { params: { channelId: 12345678 } }
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('adds receive info with channelId signed in query and business params in body', async () => {
+      const mockResponse = { code: 200, data: '保存成功' };
+      mockHttpClient.post.mockResolvedValueOnce(mockResponse);
+
+      const result = await service.addReceiveInfoV4({
+        channelId: '12345678',
+        lotteryId: 'lottery1',
+        winnerCode: 'WIN1',
+        viewerId: 'viewer1',
+        receiveInfo: [{ field: '姓名', value: '测试' }],
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/lottery/add-receive-info',
+        {
+          channelId: '12345678',
+          lotteryId: 'lottery1',
+          winnerCode: 'WIN1',
+          viewerId: 'viewer1',
+          receiveInfo: JSON.stringify([{ field: '姓名', value: '测试' }]),
+        },
+        { params: { channelId: '12345678' } }
       );
       expect(result).toEqual(mockResponse);
     });

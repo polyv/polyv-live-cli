@@ -15,6 +15,7 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
   parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
@@ -116,5 +117,83 @@ describe('lottery lucky-bag winners read CLI integration', () => {
       rejectOnError: true,
     });
     expect(result.stdout).toContain('activity-id');
+  });
+});
+
+describe('lottery receive-info write CLI integration', () => {
+  // `lottery receive-info` adds winner receive information. Per
+  // add_receive_info_v4.md, only appId/timestamp/channelId participate in the
+  // signature (signed query); the business params (lotteryId/winnerCode/
+  // viewerId/receiveInfo) travel in the unsigned JSON body. The server accepts
+  // the write for any lotteryId/winnerCode/viewerId as long as receiveInfo is
+  // supplied, returning {success:true} exit 0 — so a freshly-created lottery
+  // on a throwaway temporary channel yields a clean real-CLI write. The whole
+  // channel (and its lottery) is deleted in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)('adds receive info for a temporary lottery via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Lottery Receive Info');
+
+      // Create a real lottery to obtain a lotteryId (top-level `activityId`).
+      const lotteryOutput = runCliSuccess([
+        'lottery',
+        'create',
+        '--channel-id',
+        channelId,
+        '--name',
+        'ReceiveInfo Probe',
+        '--type',
+        'none',
+        '--amount',
+        '1',
+        '--prize-name',
+        'Gift',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const lottery = parseJsonObject(lotteryOutput);
+      const lotteryId = String(lottery.activityId ?? lottery.id ?? '');
+      expect(lotteryId).toMatch(/^\d+$/);
+
+      // Precompute the JSON argument in a variable so the runCli arg array
+      // stays bracket-free (avoids the coverage report's nested-bracket skip).
+      const receiveInfo = JSON.stringify([{ field: '姓名', value: '测试' }]);
+
+      const output = runCliSuccess([
+        'lottery',
+        'receive-info',
+        '--channel-id',
+        channelId,
+        '--lottery-id',
+        lotteryId,
+        '--winner-code',
+        'probe-winner',
+        '--viewer-id',
+        'probe-viewer',
+        '--receive-info',
+        receiveInfo,
+        '--force',
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonObject(output);
+      expect(payload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  // Sanity check that the CLI surface exists even without real credentials.
+  it('exposes the receive-info subcommand through the real CLI entry', () => {
+    const result = runCli(['lottery', 'receive-info', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(result.stdout).toContain('receive-info');
   });
 });
