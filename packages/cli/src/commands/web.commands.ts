@@ -230,7 +230,8 @@ export function registerWebCommands(program: Command): void {
     .action((options) => withWebHandler(program, handler => handler.updateAuthUrl(options)));
 
   addOutput(authCmd.command('record-field-get').description('Get registration watch fields')
-    .requiredOption('-c, --channel-id <id>', 'channel ID'))
+    .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--rank <rank>', 'condition rank (1|2)', parsePositiveInteger))
     .action((options) => withWebHandler(program, handler => handler.getRecordField(options)));
 
   addOutput(authCmd.command('record-info-list').description('List registration watch records')
@@ -244,6 +245,7 @@ export function registerWebCommands(program: Command): void {
 
   addOutput(authCmd.command('record-info-download').description('Download registration watch records')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
+    .requiredOption('--rank <rank>', 'condition rank (1|2)', parsePositiveInteger)
     .option('--output-file <path>', 'write downloaded file to path'))
     .action((options) => withWebHandler(program, handler => handler.downloadRecordInfo(options)));
 

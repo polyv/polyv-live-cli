@@ -869,6 +869,8 @@ export interface DirectAuthResponse {
 export interface GetRecordFieldParams {
   /** Channel ID (required) */
   channelId: string;
+  /** Condition rank: 1 for primary watch condition, 2 for secondary (required) */
+  rank: number;
 }
 
 /**
@@ -971,6 +973,8 @@ export interface EnrollListResponse {
 export interface DownloadRecordInfoParams {
   /** Channel ID (required) */
   channelId: string;
+  /** Condition rank: 1 for primary watch condition, 2 for secondary (required; affects export table header) */
+  rank: number;
 }
 
 /**

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T10:22:32.535Z
+Generated at: 2026-06-25T13:24:27.474Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 453 |
-| Missing real-execution leaf subcommands | 114 |
-| Real-execution coverage | 79.89% |
-| Leaf subcommands referenced including help | 494 |
-| Missing including help | 73 |
+| Real-executed leaf subcommands | 455 |
+| Missing real-execution leaf subcommands | 112 |
+| Real-execution coverage | 80.25% |
+| Leaf subcommands referenced including help | 496 |
+| Missing including help | 71 |
 
 ## By Top-Level Command
 
@@ -57,7 +57,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 26 | 5 | 83.87% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 26 | 8 | 76.47% | 29 | 5 |
+| `web` | 34 | 28 | 6 | 82.35% | 31 | 3 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -67,15 +67,15 @@ Help-only invocations are tracked separately and do not count as real execution 
 |---------|--------|
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |
-| `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:310` |
-| `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:394` |
-| `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1459` |
-| `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1134` |
-| `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1164` |
-| `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1194` |
-| `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1149` |
-| `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
-| `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
+| `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
+| `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:396` |
+| `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1460` |
+| `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1135` |
+| `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1165` |
+| `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1195` |
+| `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1150` |
+| `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
+| `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1272` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:714` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
@@ -121,10 +121,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
-| `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:663` |
-| `platform anchor update` | `packages/cli/src/commands/platform.commands.ts:694` |
-| `platform anchor update-status` | `packages/cli/src/commands/platform.commands.ts:729` |
-| `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
+| `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
+| `platform anchor update` | `packages/cli/src/commands/platform.commands.ts:707` |
+| `platform anchor update-status` | `packages/cli/src/commands/platform.commands.ts:742` |
+| `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:875` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
 | `playback delete` | `packages/cli/src/commands/playback.commands.ts:319` |
 | `playback merge` | `packages/cli/src/commands/playback.commands.ts:405` |
@@ -137,18 +137,18 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
-| `record clip` | `packages/cli/src/commands/record.commands.ts:480` |
+| `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
 | `record convert` | `packages/cli/src/commands/record.commands.ts:323` |
-| `record merge-mp4` | `packages/cli/src/commands/record.commands.ts:493` |
-| `record merge-mp4-start` | `packages/cli/src/commands/record.commands.ts:504` |
-| `record set-default` | `packages/cli/src/commands/record.commands.ts:405` |
-| `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:571` |
-| `record file convert` | `packages/cli/src/commands/record.commands.ts:551` |
-| `record file delete` | `packages/cli/src/commands/record.commands.ts:541` |
-| `record file merge` | `packages/cli/src/commands/record.commands.ts:530` |
-| `record outline create` | `packages/cli/src/commands/record.commands.ts:585` |
-| `record outline get` | `packages/cli/src/commands/record.commands.ts:596` |
-| `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:608` |
+| `record merge-mp4` | `packages/cli/src/commands/record.commands.ts:503` |
+| `record merge-mp4-start` | `packages/cli/src/commands/record.commands.ts:514` |
+| `record set-default` | `packages/cli/src/commands/record.commands.ts:415` |
+| `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:581` |
+| `record file convert` | `packages/cli/src/commands/record.commands.ts:561` |
+| `record file delete` | `packages/cli/src/commands/record.commands.ts:551` |
+| `record file merge` | `packages/cli/src/commands/record.commands.ts:540` |
+| `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
+| `record outline get` | `packages/cli/src/commands/record.commands.ts:606` |
+| `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
 | `session create` | `packages/cli/src/commands/session.commands.ts:313` |
 | `session delete` | `packages/cli/src/commands/session.commands.ts:338` |
 | `session get` | `packages/cli/src/commands/session.commands.ts:221` |
@@ -171,11 +171,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
 | `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
-| `web auth record-field-get` | `packages/cli/src/commands/web.commands.ts:232` |
-| `web auth record-info-download` | `packages/cli/src/commands/web.commands.ts:245` |
 | `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
 | `web donate good-update` | `packages/cli/src/commands/web.commands.ts:180` |
 | `web info channel-logo-update` | `packages/cli/src/commands/web.commands.ts:90` |
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
 | `web setting image-upload` | `packages/cli/src/commands/web.commands.ts:204` |
-| `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:251` |
+| `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:253` |

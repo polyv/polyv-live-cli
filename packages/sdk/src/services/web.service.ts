@@ -1578,16 +1578,19 @@ export class WebService {
    *
    * @example
    * ```typescript
-   * const result = await client.web.getRecordField({ channelId: '123456' });
+   * const result = await client.web.getRecordField({ channelId: '123456', rank: 1 });
    * console.log(result.infoFields);
    * ```
    */
   async getRecordField(params: GetRecordFieldParams): Promise<RecordFieldResponse> {
     this.validateChannelId(params.channelId);
+    if (params.rank !== 1 && params.rank !== 2) {
+      throw new PolyVValidationError('rank must be 1 (primary) or 2 (secondary)');
+    }
 
     const response = await this.client.httpClient.get<RecordFieldResponse>(
       '/live/v3/channel/auth/get-record-field',
-      { params: { channelId: params.channelId } }
+      { params: { channelId: params.channelId, rank: params.rank } }
     );
     return response as unknown as RecordFieldResponse;
   }
@@ -1666,10 +1669,13 @@ export class WebService {
    */
   async downloadRecordInfo(params: DownloadRecordInfoParams): Promise<ArrayBuffer> {
     this.validateChannelId(params.channelId);
+    if (params.rank !== 1 && params.rank !== 2) {
+      throw new PolyVValidationError('rank must be 1 (primary) or 2 (secondary)');
+    }
 
     const response = await this.client.httpClient.get<ArrayBuffer>(
       '/live/v3/channel/auth/download-record-info',
-      { params: { channelId: params.channelId }, responseType: 'arraybuffer' }
+      { params: { channelId: params.channelId, rank: params.rank }, responseType: 'arraybuffer' }
     );
     return response as unknown as ArrayBuffer;
   }

@@ -367,4 +367,38 @@ describe('web CLI integration', () => {
       }
     }
   }, 240000);
+
+  // Exercises two registration-watch read subcommands that previously failed
+  // under real execution: web auth record-field-get and record-info-download.
+  // Both GET endpoints require a `rank` (1|2) query param that the SDK was not
+  // sending ("param should not be empty: rank" / HTTP 400) — fixed by adding
+  // --rank to the CLI command and rank to the SDK call. Both run against a
+  // throwaway channel deleted in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)('runs web auth record-field-get and record-info-download against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Record Reads');
+      const id = channelId;
+
+      // record-field-get returns the registration watch info-fields for the
+      // given condition rank as a bare JSON array (empty for a fresh channel).
+      const fields = parseJsonValue(
+        runCliSuccess(['web', 'auth', 'record-field-get', '--channel-id', id, '--rank', '1', '--output', 'json']),
+      );
+      expect(Array.isArray(fields)).toBe(true);
+
+      // record-info-download streams the registration records export; with no
+      // --output-file it writes nothing to disk and reports the byte count.
+      const downloadPayload = parseJsonObject(
+        runCliSuccess(['web', 'auth', 'record-info-download', '--channel-id', id, '--rank', '1', '--output', 'json']),
+      );
+      expect(downloadPayload.success).toBe(true);
+      expect(typeof downloadPayload.bytes).toBe('number');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

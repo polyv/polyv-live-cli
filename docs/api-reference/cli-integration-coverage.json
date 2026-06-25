@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T10:22:32.535Z",
+  "generatedAt": "2026-06-25T13:24:27.474Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -15,21 +15,21 @@
     "staticAnalysis": "This report is static analysis of integration test source. Dynamic command construction may require manual review if it is not visible as string literals."
   },
   "summary": {
-    "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
+    "inventoryGeneratedAt": "2026-06-25T13:18:44.432Z",
     "integrationFiles": 88,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 533,
-    "referencedCommandPathsExcludingHelp": 459,
-    "coveredLeafTargetsIncludingHelp": 494,
-    "missingLeafTargetsIncludingHelp": 73,
-    "coveredRealExecutionLeafTargets": 453,
-    "missingRealExecutionLeafTargets": 114,
-    "realExecutionCoveragePercent": 79.89,
-    "includingHelpCoveragePercent": 87.13,
-    "integrationReferences": 1069,
-    "realExecutionReferences": 672,
+    "referencedCommandPathsIncludingHelp": 535,
+    "referencedCommandPathsExcludingHelp": 461,
+    "coveredLeafTargetsIncludingHelp": 496,
+    "missingLeafTargetsIncludingHelp": 71,
+    "coveredRealExecutionLeafTargets": 455,
+    "missingRealExecutionLeafTargets": 112,
+    "realExecutionCoveragePercent": 80.25,
+    "includingHelpCoveragePercent": 87.48,
+    "integrationReferences": 1071,
+    "realExecutionReferences": 674,
     "helpReferences": 397
   },
   "byTopLevel": [
@@ -386,12 +386,12 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 26,
-      "missingRealExecutionLeafTargets": 8,
-      "coveredLeafTargetsIncludingHelp": 29,
-      "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 76.47,
-      "includingHelpCoveragePercent": 85.29
+      "coveredRealExecutionLeafTargets": 28,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 31,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 82.35,
+      "includingHelpCoveragePercent": 91.18
     },
     {
       "command": "webapp",
@@ -447,7 +447,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 310
+      "line": 312
     },
     {
       "command": "ai video-produce ppt async-upload",
@@ -459,7 +459,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 394
+      "line": 396
     },
     {
       "command": "channel ccb-focus-reset",
@@ -469,7 +469,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1459
+      "line": 1460
     },
     {
       "command": "channel distribute create-batch",
@@ -480,7 +480,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1134
+      "line": 1135
     },
     {
       "command": "channel distribute delete-batch",
@@ -491,7 +491,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1164
+      "line": 1165
     },
     {
       "command": "channel distribute switch",
@@ -502,7 +502,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1194
+      "line": 1195
     },
     {
       "command": "channel distribute update-batch",
@@ -513,7 +513,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1149
+      "line": 1150
     },
     {
       "command": "channel ppt-record add-task",
@@ -524,7 +524,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1264
+      "line": 1265
     },
     {
       "command": "channel ppt-record delete",
@@ -535,7 +535,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1271
+      "line": 1272
     },
     {
       "command": "chat message audit",
@@ -1032,7 +1032,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 663
+      "line": 676
     },
     {
       "command": "platform anchor update",
@@ -1043,7 +1043,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 694
+      "line": 707
     },
     {
       "command": "platform anchor update-status",
@@ -1054,7 +1054,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 729
+      "line": 742
     },
     {
       "command": "platform coupon update",
@@ -1065,7 +1065,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 862
+      "line": 875
     },
     {
       "command": "playback add-vod",
@@ -1202,7 +1202,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 480
+      "line": 490
     },
     {
       "command": "record convert",
@@ -1222,7 +1222,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 493
+      "line": 503
     },
     {
       "command": "record merge-mp4-start",
@@ -1232,7 +1232,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 504
+      "line": 514
     },
     {
       "command": "record set-default",
@@ -1242,7 +1242,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 405
+      "line": 415
     },
     {
       "command": "record breakpoint add",
@@ -1253,7 +1253,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 571
+      "line": 581
     },
     {
       "command": "record file convert",
@@ -1264,7 +1264,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 551
+      "line": 561
     },
     {
       "command": "record file delete",
@@ -1275,7 +1275,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 541
+      "line": 551
     },
     {
       "command": "record file merge",
@@ -1286,7 +1286,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 530
+      "line": 540
     },
     {
       "command": "record outline create",
@@ -1297,7 +1297,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 585
+      "line": 595
     },
     {
       "command": "record outline get",
@@ -1308,7 +1308,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 596
+      "line": 606
     },
     {
       "command": "record subtitle publish",
@@ -1319,7 +1319,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 608
+      "line": 618
     },
     {
       "command": "session create",
@@ -1558,28 +1558,6 @@
       "line": 243
     },
     {
-      "command": "web auth record-field-get",
-      "path": [
-        "web",
-        "auth",
-        "record-field-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 232
-    },
-    {
-      "command": "web auth record-info-download",
-      "path": [
-        "web",
-        "auth",
-        "record-info-download"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 245
-    },
-    {
       "command": "web donate cash-update",
       "path": [
         "web",
@@ -1644,7 +1622,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 251
+      "line": 253
     }
   ],
   "missingIncludingHelpTargets": [
@@ -1680,7 +1658,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 310
+      "line": 312
     },
     {
       "command": "ai video-produce ppt async-upload",
@@ -1692,7 +1670,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 394
+      "line": 396
     },
     {
       "command": "channel ppt-record delete",
@@ -1703,7 +1681,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1271
+      "line": 1272
     },
     {
       "command": "chat message audit",
@@ -2028,7 +2006,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 694
+      "line": 707
     },
     {
       "command": "platform anchor update-status",
@@ -2039,7 +2017,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 729
+      "line": 742
     },
     {
       "command": "playback add-vod",
@@ -2123,7 +2101,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 480
+      "line": 490
     },
     {
       "command": "record convert",
@@ -2143,7 +2121,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 493
+      "line": 503
     },
     {
       "command": "record merge-mp4-start",
@@ -2153,7 +2131,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 504
+      "line": 514
     },
     {
       "command": "record set-default",
@@ -2163,7 +2141,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 405
+      "line": 415
     },
     {
       "command": "record breakpoint add",
@@ -2174,7 +2152,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 571
+      "line": 581
     },
     {
       "command": "record file delete",
@@ -2185,7 +2163,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 541
+      "line": 551
     },
     {
       "command": "record file merge",
@@ -2196,7 +2174,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 530
+      "line": 540
     },
     {
       "command": "record outline get",
@@ -2207,7 +2185,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 596
+      "line": 606
     },
     {
       "command": "record subtitle publish",
@@ -2218,7 +2196,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 608
+      "line": 618
     },
     {
       "command": "session create",
@@ -2376,28 +2354,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 136
-    },
-    {
-      "command": "web auth record-field-get",
-      "path": [
-        "web",
-        "auth",
-        "record-field-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 232
-    },
-    {
-      "command": "web auth record-info-download",
-      "path": [
-        "web",
-        "auth",
-        "record-info-download"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 245
     },
     {
       "command": "web donate good-update",
@@ -2710,7 +2666,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 290
+      "line": 292
     },
     {
       "command": "ai video-produce get",
@@ -2721,7 +2677,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 272
+      "line": 274
     },
     {
       "command": "ai video-produce list",
@@ -2732,7 +2688,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 242
+      "line": 244
     },
     {
       "command": "ai video-produce ppt get",
@@ -2744,7 +2700,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 354
+      "line": 356
     },
     {
       "command": "ai video-produce ppt list",
@@ -2756,7 +2712,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 334
+      "line": 336
     },
     {
       "command": "ai video-produce ppt upload",
@@ -2768,7 +2724,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 372
+      "line": 374
     },
     {
       "command": "ai video-produce tts-voice list",
@@ -2780,7 +2736,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 222
+      "line": 224
     },
     {
       "command": "card-push cancel",
@@ -2872,7 +2828,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1207
+      "line": 1208
     },
     {
       "command": "channel basic-list",
@@ -2912,7 +2868,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1290
+      "line": 1291
     },
     {
       "command": "channel copy",
@@ -2922,7 +2878,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1279
+      "line": 1280
     },
     {
       "command": "channel create",
@@ -2952,7 +2908,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1408
+      "line": 1409
     },
     {
       "command": "channel delete",
@@ -3002,7 +2958,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1435
+      "line": 1436
     },
     {
       "command": "channel max-viewer-set",
@@ -3012,7 +2968,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1417
+      "line": 1418
     },
     {
       "command": "channel mr-create",
@@ -3032,7 +2988,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1426
+      "line": 1427
     },
     {
       "command": "channel pull-bitrate-set",
@@ -3052,7 +3008,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1401
+      "line": 1402
     },
     {
       "command": "channel simple-list",
@@ -3072,7 +3028,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1444
+      "line": 1445
     },
     {
       "command": "channel submeeting-batch-add",
@@ -3082,7 +3038,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1390
+      "line": 1391
     },
     {
       "command": "channel template-update",
@@ -3123,7 +3079,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1351
+      "line": 1352
     },
     {
       "command": "channel auth test-mode-token",
@@ -3134,7 +3090,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1361
+      "line": 1362
     },
     {
       "command": "channel callback get",
@@ -3145,7 +3101,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1214
+      "line": 1215
     },
     {
       "command": "channel callback update",
@@ -3156,7 +3112,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1219
+      "line": 1220
     },
     {
       "command": "channel distribute list",
@@ -3167,7 +3123,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1128
+      "line": 1129
     },
     {
       "command": "channel distribute master-switch",
@@ -3178,7 +3134,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1183
+      "line": 1184
     },
     {
       "command": "channel distribute statistic",
@@ -3189,7 +3145,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1175
+      "line": 1176
     },
     {
       "command": "channel follow list",
@@ -3200,7 +3156,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1372
+      "line": 1373
     },
     {
       "command": "channel follow update",
@@ -3211,7 +3167,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1377
+      "line": 1378
     },
     {
       "command": "channel ppt-record list",
@@ -3222,7 +3178,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1253
+      "line": 1254
     },
     {
       "command": "channel role account-create",
@@ -3255,7 +3211,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1038
+      "line": 1039
     },
     {
       "command": "channel role batch-create",
@@ -3277,7 +3233,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1073
+      "line": 1074
     },
     {
       "command": "channel role config-update",
@@ -3288,7 +3244,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1079
+      "line": 1080
     },
     {
       "command": "channel role delete",
@@ -3332,7 +3288,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1049
+      "line": 1050
     },
     {
       "command": "channel role viewer-get",
@@ -3343,7 +3299,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1054
+      "line": 1055
     },
     {
       "command": "channel role viewer-update",
@@ -3354,7 +3310,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1059
+      "line": 1060
     },
     {
       "command": "channel subtitle config-get",
@@ -3365,7 +3321,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1097
+      "line": 1098
     },
     {
       "command": "channel subtitle config-update",
@@ -3376,7 +3332,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1106
+      "line": 1107
     },
     {
       "command": "channel subtitle languages",
@@ -3387,7 +3343,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1102
+      "line": 1103
     },
     {
       "command": "channel token api",
@@ -3398,7 +3354,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1311
+      "line": 1312
     },
     {
       "command": "channel token chat",
@@ -3409,7 +3365,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1327
+      "line": 1328
     },
     {
       "command": "channel token login-url",
@@ -3420,7 +3376,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1321
+      "line": 1322
     },
     {
       "command": "channel token set",
@@ -3431,7 +3387,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1335
+      "line": 1336
     },
     {
       "command": "channel token set-account",
@@ -3442,7 +3398,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1342
+      "line": 1343
     },
     {
       "command": "channel token watch-api",
@@ -3453,7 +3409,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1301
+      "line": 1302
     },
     {
       "command": "channel viewer add",
@@ -3542,7 +3498,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1237
+      "line": 1238
     },
     {
       "command": "channel ppt-record setting update",
@@ -3554,7 +3510,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1242
+      "line": 1243
     },
     {
       "command": "channel viewer group create",
@@ -4983,7 +4939,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 642
+      "line": 655
     },
     {
       "command": "platform anchor list",
@@ -4994,7 +4950,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 609
+      "line": 622
     },
     {
       "command": "platform anchor relation-list",
@@ -5005,7 +4961,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 754
+      "line": 767
     },
     {
       "command": "platform anchor unrelation-list",
@@ -5016,7 +4972,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 779
+      "line": 792
     },
     {
       "command": "platform callback get",
@@ -5027,7 +4983,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 377
+      "line": 376
     },
     {
       "command": "platform callback update",
@@ -5038,7 +4994,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 417
+      "line": 416
     },
     {
       "command": "platform content-group list",
@@ -5049,7 +5005,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 808
+      "line": 821
     },
     {
       "command": "platform coupon status-batch",
@@ -5060,7 +5016,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 887
+      "line": 900
     },
     {
       "command": "platform coupon viewer-list",
@@ -5071,7 +5027,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 833
+      "line": 846
     },
     {
       "command": "platform label create",
@@ -5126,7 +5082,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 490
+      "line": 496
     },
     {
       "command": "platform setting update",
@@ -5137,7 +5093,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 530
+      "line": 543
     },
     {
       "command": "platform switch get",
@@ -5845,7 +5801,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 471
+      "line": 481
     },
     {
       "command": "record temp-list",
@@ -5855,7 +5811,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 463
+      "line": 473
     },
     {
       "command": "record file list",
@@ -5866,7 +5822,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 519
+      "line": 529
     },
     {
       "command": "record setting get",
@@ -6907,7 +6863,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 240
+      "line": 241
     },
     {
       "command": "web auth external-set",
@@ -6921,6 +6877,28 @@
       "line": 215
     },
     {
+      "command": "web auth record-field-get",
+      "path": [
+        "web",
+        "auth",
+        "record-field-get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 232
+    },
+    {
+      "command": "web auth record-info-download",
+      "path": [
+        "web",
+        "auth",
+        "record-info-download"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 246
+    },
+    {
       "command": "web auth record-info-list",
       "path": [
         "web",
@@ -6929,7 +6907,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 236
+      "line": 237
     },
     {
       "command": "web auth type-set",
@@ -7161,7 +7139,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 257
+      "line": 259
     },
     {
       "command": "webapp permission-list",
@@ -13787,6 +13765,28 @@
         "line": 30,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "web auth record-field-get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 387,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "web auth record-info-download",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 394,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "web auth record-info-list",
