@@ -502,6 +502,8 @@ export type {
   GroupViewerListParams,
   GroupViewerInfo,
   InteractionEventSaveParams,
+  InteractionEventSaveTask,
+  InteractionEventSaveResponse,
   InteractionEventDeleteParams,
   InviterCreateParams,
   DiskVideoScriptUploadParams,

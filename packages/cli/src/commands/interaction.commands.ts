@@ -9,7 +9,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
-import { parseJsonArray, parseJsonObject, parseTimestamp } from '../utils/api-command';
+import { parseJsonArray, parseTimestamp } from '../utils/api-command';
 
 export function validateOutputFormat(value: string): 'table' | 'json' {
   if (!['table', 'json'].includes(value)) {
@@ -172,16 +172,20 @@ export function registerInteractionCommands(program: Command): void {
 
   eventCmd
     .command('save')
-    .description('Save an interaction listener event')
+    .description('Save an interaction listener event (create one or more listener tasks)')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
-    .requiredOption('--event-type <type>', 'event type')
-    .requiredOption('--event-data <json>', 'event data JSON object', parseJsonObject)
+    .requiredOption('--tasks <json>', 'task rule list JSON array (each item: type, startTime, endTime, ...)', parseJsonArray)
+    .requiredOption('--all-done <Y|N>', 'whether all tasks must complete to count the activity done (Y|N)', validateYn)
+    .option('--callback-url <url>', 'callback URL')
+    .option('--payload <payload>', 'payload string')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withInteractionHandler((handler) => handler.saveInteractionEvent({
       channelId: options.channelId,
-      eventType: options.eventType,
-      eventData: options.eventData,
+      tasks: options.tasks,
+      allDone: options.allDone,
+      callbackUrl: options.callbackUrl,
+      payload: options.payload,
       force: options.force,
       output: options.output,
     })));
@@ -190,12 +194,12 @@ export function registerInteractionCommands(program: Command): void {
     .command('delete')
     .description('Delete an interaction listener event')
     .requiredOption('-c, --channel-id <id>', 'channel ID')
-    .requiredOption('--event-id <id>', 'event ID')
+    .requiredOption('--task-ids <json>', 'task ID list JSON array (pass the activityId when allDone=Y)', parseJsonArray)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withInteractionHandler((handler) => handler.deleteInteractionEvent({
       channelId: options.channelId,
-      eventId: options.eventId,
+      taskIds: options.taskIds,
       force: options.force,
       output: options.output,
     })));

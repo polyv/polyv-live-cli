@@ -129,9 +129,9 @@ export class InteractionHandler extends BaseHandler {
 
   async saveInteractionEvent(options: Record<string, any>): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      this.validateRequiredOptions(options, ['channelId', 'eventType', 'eventData']);
+      this.validateRequiredOptions(options, ['channelId', 'tasks', 'allDone']);
 
-      await confirmWrite(options.force, `Save interaction event ${options.eventType} for channel ${options.channelId}?`);
+      await confirmWrite(options.force, `Save interaction event for channel ${options.channelId}?`);
       const result = await this.service.saveInteractionEvent(this.toV4Params(options));
 
       this.displayGenericResult(result, options.output, 'Interaction event saved successfully');
@@ -140,9 +140,9 @@ export class InteractionHandler extends BaseHandler {
 
   async deleteInteractionEvent(options: Record<string, any>): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      this.validateRequiredOptions(options, ['channelId', 'eventId']);
+      this.validateRequiredOptions(options, ['channelId', 'taskIds']);
 
-      await confirmWrite(options.force, `Delete interaction event ${options.eventId} for channel ${options.channelId}?`);
+      await confirmWrite(options.force, `Delete interaction event for channel ${options.channelId}?`);
       const result = await this.service.deleteInteractionEvent(this.toV4Params(options));
 
       this.displayGenericResult(result, options.output, 'Interaction event deleted successfully');

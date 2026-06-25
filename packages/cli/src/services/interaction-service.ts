@@ -120,8 +120,7 @@ export class InteractionServiceSdk {
 
   async saveInteractionEvent(params: Record<string, unknown>): Promise<any> {
     try {
-      await this.v4Channel.interactionEventSave(params as any);
-      return { success: true };
+      return await this.v4Channel.interactionEventSave(params as any);
     } catch (error) {
       throw this.wrapError(error, 'saveInteractionEvent');
     }
@@ -129,8 +128,7 @@ export class InteractionServiceSdk {
 
   async deleteInteractionEvent(params: Record<string, unknown>): Promise<any> {
     try {
-      await this.v4Channel.interactionEventDelete(params as any);
-      return { success: true };
+      return await this.v4Channel.interactionEventDelete(params as any);
     } catch (error) {
       throw this.wrapError(error, 'deleteInteractionEvent');
     }

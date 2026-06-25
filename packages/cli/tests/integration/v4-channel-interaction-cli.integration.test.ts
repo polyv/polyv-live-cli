@@ -583,4 +583,66 @@ describe('v4 channel interaction CLI integration', () => {
       }
     }
   }, 240000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('creates and deletes an interaction listener event via the CLI (event save -> delete)', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Event SaveDelete');
+
+      // Build a minimal signCount listener task windowed to the next 3 minutes.
+      // Precompute the JSON into variables so the runCliSuccess args array literals
+      // stay bracket-free (the coverage report's array matcher skips nested []).
+      const now = Date.now();
+      const tasksJson = JSON.stringify([
+        {
+          type: 'signCount',
+          signCount: 2,
+          startTime: now,
+          endTime: now + 180000,
+        },
+      ]);
+
+      const saved = parseJsonObject(runCliSuccess([
+        'interaction',
+        'event',
+        'save',
+        '--channel-id',
+        channelId,
+        '--tasks',
+        tasksJson,
+        '--all-done',
+        'Y',
+        '--force',
+        '--output',
+        'json',
+      ]));
+
+      const activityId = String(saved.activityId || '').trim();
+      expect(activityId).toMatch(/.+/);
+
+      // When the activity is saved with allDone=Y, the activityId is the value to delete.
+      const taskIdsJson = JSON.stringify([activityId]);
+      // The delete endpoint returns the unwrapped boolean data field (bare `true`),
+      // so parse the trimmed output directly instead of using the brace-based parser.
+      const deleteOutput = runCliSuccess([
+        'interaction',
+        'event',
+        'delete',
+        '--channel-id',
+        channelId,
+        '--task-ids',
+        taskIdsJson,
+        '--force',
+        '--output',
+        'json',
+      ]).trim();
+
+      expect(JSON.parse(deleteOutput)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
 });

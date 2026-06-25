@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T15:56:42.508Z",
+  "generatedAt": "2026-06-25T16:13:11.880Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 537,
-    "referencedCommandPathsExcludingHelp": 467,
-    "coveredLeafTargetsIncludingHelp": 498,
-    "missingLeafTargetsIncludingHelp": 69,
-    "coveredRealExecutionLeafTargets": 461,
-    "missingRealExecutionLeafTargets": 106,
-    "realExecutionCoveragePercent": 81.31,
-    "includingHelpCoveragePercent": 87.83,
-    "integrationReferences": 1079,
-    "realExecutionReferences": 682,
+    "referencedCommandPathsIncludingHelp": 538,
+    "referencedCommandPathsExcludingHelp": 469,
+    "coveredLeafTargetsIncludingHelp": 499,
+    "missingLeafTargetsIncludingHelp": 68,
+    "coveredRealExecutionLeafTargets": 463,
+    "missingRealExecutionLeafTargets": 104,
+    "realExecutionCoveragePercent": 81.66,
+    "includingHelpCoveragePercent": 88.01,
+    "integrationReferences": 1081,
+    "realExecutionReferences": 684,
     "helpReferences": 397
   },
   "byTopLevel": [
@@ -166,12 +166,12 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 16,
-      "missingRealExecutionLeafTargets": 6,
-      "coveredLeafTargetsIncludingHelp": 20,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 72.73,
-      "includingHelpCoveragePercent": 90.91
+      "coveredRealExecutionLeafTargets": 18,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 21,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 81.82,
+      "includingHelpCoveragePercent": 95.45
     },
     {
       "command": "invite-sales",
@@ -894,28 +894,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 67
-    },
-    {
-      "command": "interaction event delete",
-      "path": [
-        "interaction",
-        "event",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 189
-    },
-    {
-      "command": "interaction event save",
-      "path": [
-        "interaction",
-        "event",
-        "save"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 173
     },
     {
       "command": "interaction script delete",
@@ -1898,17 +1876,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 195
-    },
-    {
-      "command": "interaction event delete",
-      "path": [
-        "interaction",
-        "event",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 189
     },
     {
       "command": "interaction script delete",
@@ -4262,6 +4229,17 @@
       "line": 137
     },
     {
+      "command": "interaction event delete",
+      "path": [
+        "interaction",
+        "event",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 189
+    },
+    {
       "command": "interaction event list",
       "path": [
         "interaction",
@@ -4271,6 +4249,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 163
+    },
+    {
+      "command": "interaction event save",
+      "path": [
+        "interaction",
+        "event",
+        "save"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 173
     },
     {
       "command": "interaction invite-poster create",
@@ -9868,6 +9857,17 @@
       }
     },
     {
+      "command": "interaction event delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 628,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "interaction event list",
       "realExecutionReferences": 2,
       "helpReferences": 1,
@@ -9884,9 +9884,13 @@
     },
     {
       "command": "interaction event save",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
+        "line": 606,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 112,

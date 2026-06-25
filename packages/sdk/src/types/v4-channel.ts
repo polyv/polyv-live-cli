@@ -1542,16 +1542,62 @@ export interface GroupViewerListResponse {
   contents: GroupViewerInfo[];
 }
 
+/** A single interaction listener task rule (see tasks params of interaction-event/save). */
+export interface InteractionEventSaveTask {
+  /** Task condition type: onlineTime|signCount|speakCount|customCount|loginList|taskEndTimeOnline */
+  type: string;
+  /** Start time (13-digit ms epoch) */
+  startTime: number;
+  /** End time (13-digit ms epoch) */
+  endTime: number;
+  /** Online duration in ms (type=onlineTime) */
+  onlineTime?: number;
+  /** Sign-in count (type=signCount) */
+  signCount?: number;
+  /** User tags */
+  userTags?: unknown[];
+  /** Comment count (type=speakCount) */
+  speakCount?: number;
+  /** Comment content (type=speakCount) */
+  speakContent?: string;
+  /** Custom count (type=customCount) */
+  customCount?: number;
+  /** Event type (type=customCount) */
+  eventType?: string;
+  /** Payload (<=500 chars) */
+  payload?: string;
+}
+
 /**
  * Parameters for saving interaction event
  */
 export interface InteractionEventSaveParams {
   /** Channel ID */
   channelId: string;
-  /** Event type */
-  eventType: string;
-  /** Event data */
-  eventData: Record<string, unknown>;
+  /** Task rule list */
+  tasks: InteractionEventSaveTask[];
+  /** Whether all tasks must complete to count the activity done: Y or N */
+  allDone: 'Y' | 'N';
+  /** Callback URL */
+  callbackUrl?: string;
+  /** Payload */
+  payload?: string;
+}
+
+/** Response data for saving interaction event (the unwrapped `data` field). */
+export interface InteractionEventSaveResponse {
+  /** Activity ID (pass to delete as a taskId when allDone=Y) */
+  activityId: string;
+  /** Per-task creation results */
+  list: Array<{
+    taskId: string;
+    result: {
+      status: string;
+      message: string;
+      code: number;
+      data: unknown;
+    };
+  }>;
 }
 
 /**
@@ -1560,8 +1606,11 @@ export interface InteractionEventSaveParams {
 export interface InteractionEventDeleteParams {
   /** Channel ID */
   channelId: string;
-  /** Event ID */
-  eventId: string;
+  /**
+   * Task ID collection. When the activity was saved with allDone=Y, pass the
+   * activityId; when allDone=N, pass the specific taskIds to delete.
+   */
+  taskIds: string[];
 }
 
 /**

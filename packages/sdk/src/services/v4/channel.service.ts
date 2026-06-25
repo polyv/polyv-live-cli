@@ -101,6 +101,7 @@ import type {
   GroupViewerListParams,
   GroupViewerInfo,
   InteractionEventSaveParams,
+  InteractionEventSaveResponse,
   InteractionEventDeleteParams,
   InviterCreateParams,
   DiskVideoScriptUploadParams,
@@ -1368,32 +1369,61 @@ export class V4ChannelService {
   }
 
   /**
-   * Save interaction event
+   * Save interaction event (create one or more interaction listener tasks).
+   *
+   * The body carries channelId/tasks/allDone (plus optional callbackUrl/payload);
+   * only appId/timestamp are signed (query), the JSON body is unsigned.
    *
    * @param params - Save parameters
    */
-  async interactionEventSave(params: InteractionEventSaveParams): Promise<void> {
+  async interactionEventSave(params: InteractionEventSaveParams): Promise<InteractionEventSaveResponse> {
     this.validateChannelId(params.channelId);
+    if (!Array.isArray(params.tasks) || params.tasks.length === 0) {
+      throw new PolyVValidationError('tasks must be a non-empty array', 'tasks');
+    }
+    if (params.allDone !== 'Y' && params.allDone !== 'N') {
+      throw new PolyVValidationError("allDone must be 'Y' or 'N'", 'allDone');
+    }
 
-    await this.client.httpClient.post(
+    const body: Record<string, unknown> = {
+      channelId: Number(params.channelId),
+      tasks: params.tasks,
+      allDone: params.allDone,
+    };
+    if (params.callbackUrl !== undefined) body.callbackUrl = params.callbackUrl;
+    if (params.payload !== undefined) body.payload = params.payload;
+
+    const response = await this.client.httpClient.post<InteractionEventSaveResponse>(
       '/live/v4/channel/interaction-event/save',
-      params
+      body
     );
+    return response as unknown as InteractionEventSaveResponse;
   }
 
   /**
-   * Delete interaction event
+   * Delete interaction event.
+   *
+   * The body carries channelId + taskIds (pass the activityId when the activity
+   * was saved with allDone=Y); only appId/timestamp are signed (query).
    *
    * @param params - Delete parameters
    */
-  async interactionEventDelete(params: InteractionEventDeleteParams): Promise<void> {
+  async interactionEventDelete(params: InteractionEventDeleteParams): Promise<boolean> {
     this.validateChannelId(params.channelId);
+    if (!Array.isArray(params.taskIds) || params.taskIds.length === 0) {
+      throw new PolyVValidationError('taskIds must be a non-empty array', 'taskIds');
+    }
 
-    await this.client.httpClient.post(
+    const body = {
+      channelId: Number(params.channelId),
+      taskIds: params.taskIds,
+    };
+
+    const response = await this.client.httpClient.post<boolean>(
       '/live/v4/channel/interaction-event/delete',
-      null,
-      { params }
+      body
     );
+    return response as unknown as boolean;
   }
 
   /**

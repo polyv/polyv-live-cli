@@ -165,16 +165,16 @@ describe('live_interaction CLI service wrappers', () => {
     const service = new InteractionServiceSdk(authConfig);
 
     await service.listInteractionEvents({ roomId: 'room-1' });
-    await service.saveInteractionEvent({ channelId: '3151318', eventType: 'custom', eventData: { key: 'value' } });
-    await service.deleteInteractionEvent({ channelId: '3151318', eventId: 'event-1' });
+    await service.saveInteractionEvent({ channelId: '3151318', tasks: [{ type: 'signCount', signCount: 1, startTime: 1000, endTime: 2000 }], allDone: 'Y' });
+    await service.deleteInteractionEvent({ channelId: '3151318', taskIds: ['event-1'] });
     await service.createInvitePoster({ channelId: '3151318', openId: 'open-1', nickname: 'Nick' });
     await service.queryDiskVideoCustomScript({ channelId: '3151318', diskVideoId: 'video-1' });
     await service.uploadDiskVideoCustomScript({ channelId: '3151318', diskVideoId: 'video-1', filePath: __filename });
     await service.deleteInteractionScript({ channelId: '3151318', id: 1 });
 
     expect(v4Channel.listInteractionEvents).toHaveBeenCalledWith({ roomId: 'room-1' });
-    expect(v4Channel.interactionEventSave).toHaveBeenCalledWith({ channelId: '3151318', eventType: 'custom', eventData: { key: 'value' } });
-    expect(v4Channel.interactionEventDelete).toHaveBeenCalledWith({ channelId: '3151318', eventId: 'event-1' });
+    expect(v4Channel.interactionEventSave).toHaveBeenCalledWith({ channelId: '3151318', tasks: [{ type: 'signCount', signCount: 1, startTime: 1000, endTime: 2000 }], allDone: 'Y' });
+    expect(v4Channel.interactionEventDelete).toHaveBeenCalledWith({ channelId: '3151318', taskIds: ['event-1'] });
     expect(v4Channel.createInvitePoster).toHaveBeenCalledWith({ channelId: '3151318', openId: 'open-1', nickname: 'Nick' });
     expect(v4Channel.queryDiskVideoCustomScript).toHaveBeenCalledWith({ channelId: '3151318', diskVideoId: 'video-1' });
     expect(v4Channel.uploadDiskVideoCustomScript).toHaveBeenCalledWith(expect.objectContaining({

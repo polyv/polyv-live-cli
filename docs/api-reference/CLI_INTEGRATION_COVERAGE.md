@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T15:56:42.508Z
+Generated at: 2026-06-25T16:13:11.880Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 461 |
-| Missing real-execution leaf subcommands | 106 |
-| Real-execution coverage | 81.31% |
-| Leaf subcommands referenced including help | 498 |
-| Missing including help | 69 |
+| Real-executed leaf subcommands | 463 |
+| Missing real-execution leaf subcommands | 104 |
+| Real-execution coverage | 81.66% |
+| Leaf subcommands referenced including help | 499 |
+| Missing including help | 68 |
 
 ## By Top-Level Command
 
@@ -35,7 +35,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 16 | 6 | 72.73% | 20 | 2 |
+| `interaction` | 22 | 18 | 4 | 81.82% | 21 | 1 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
@@ -109,8 +109,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group user package-validity-update` | `packages/cli/src/commands/group.commands.ts:171` |
 | `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
 | `interaction reward` | `packages/cli/src/commands/interaction.commands.ts:67` |
-| `interaction event delete` | `packages/cli/src/commands/interaction.commands.ts:189` |
-| `interaction event save` | `packages/cli/src/commands/interaction.commands.ts:173` |
 | `interaction script delete` | `packages/cli/src/commands/interaction.commands.ts:263` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
