@@ -101,8 +101,11 @@ describe('live interaction CLI integration', () => {
           rewardSetting: { type: 'cash', amount: 1, limit: 10 },
         },
       ]);
-      // startTime slightly in the future so update runs while "未开始"; endTime well ahead.
-      const startTime = Date.now() + 8000;
+      // startTime comfortably in the future so create → viewer-detail → update all
+      // run while the activity is still "未开始" (editable). The earlier 8s window
+      // lapsed on slow/loaded machines before update reached the server, producing
+      // 任务奖励活动状态，不允许编辑. endTime stays well ahead.
+      const startTime = Date.now() + 25000;
       const endTime = Date.now() + 7200000;
 
       // create returns the activityId as a bare number payload.
@@ -171,8 +174,14 @@ describe('live interaction CLI integration', () => {
       ]);
       expect(parseJsonObject(updateOutput).success).toBe(true);
 
-      // Wait until the activity has "started" (now > startTime) so stop is allowed.
-      await new Promise((resolve) => setTimeout(resolve, 6000));
+      // stop requires the activity to be "进行中" (now > startTime). Wait until we
+      // are past startTime (plus a buffer for server-side status propagation) so
+      // stop is accepted regardless of how quickly update completed.
+      const stopReadyAt = startTime + 2000;
+      const stopWaitMs = Math.max(0, stopReadyAt - Date.now());
+      if (stopWaitMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, stopWaitMs));
+      }
 
       const stopOutput = runCliSuccess([
         'interaction',

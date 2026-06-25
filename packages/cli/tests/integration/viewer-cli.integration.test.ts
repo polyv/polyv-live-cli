@@ -31,7 +31,7 @@
  * NOT count toward real-CLI coverage — this file is the real-CLI counterpart.
  */
 
-import { runCli } from '../helpers/cli-runner';
+import { runCli, sleep } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -76,15 +76,25 @@ describe('viewer CLI CRUD lifecycle integration', () => {
         expect(String(createdData.nickname)).toBe(nickname);
         expect(String(createdData.mobile)).toBe(mobile);
 
-        // get: returns the raw viewer object directly.
-        const getOutput = runCliSuccess([
-          'viewer',
-          'get',
-          '--viewer-id',
-          viewerUnionId,
-          '--output',
-          'json',
-        ]);
+        // get: returns the raw viewer object directly. The imported viewer
+        // record is eventually consistent — for a second or two after create
+        // the get returns 未知用户信息 (unknown user) until it replicates, so
+        // retry until it resolves (bounded, not a real-error mask).
+        const getArgs = ['viewer', 'get', '--viewer-id', viewerUnionId, '--output', 'json'];
+        let getOutput: string | undefined;
+        let lastGetOutput = '';
+        for (let attempt = 0; attempt < 5 && getOutput === undefined; attempt++) {
+          const result = runCli(getArgs, {});
+          lastGetOutput = result.output;
+          if (result.exitCode === 0) {
+            getOutput = result.output;
+          } else {
+            sleep(1000);
+          }
+        }
+        if (getOutput === undefined) {
+          throw new Error(`viewer get did not succeed after retries:\n${lastGetOutput}`);
+        }
         const fetched = parseJsonObject(getOutput);
         expect(String(fetched.viewerUnionId)).toBe(viewerUnionId);
         expect(String(fetched.nickname)).toBe(nickname);

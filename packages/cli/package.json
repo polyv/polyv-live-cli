@@ -19,7 +19,7 @@
     "test:coverage": "jest --coverage --ci",
     "test:debug": "JEST_VERBOSE=true jest",
     "test:coverage:debug": "JEST_VERBOSE=true jest --coverage",
-    "test:integration": "npm run build && RUN_INTEGRATION_TESTS=true POLYV_INTEGRATION_TESTS=true jest --config=jest.integration.config.js; status=$?; npm run cleanup:test-channels; exit $status",
+    "test:integration": "pnpm --filter polyv-live-api-sdk build && npm run build && RUN_INTEGRATION_TESTS=true POLYV_INTEGRATION_TESTS=true jest --config=jest.integration.config.js; status=$?; npm run cleanup:test-channels; exit $status",
     "test:performance": "jest --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/dist/ --testPathPattern=performance",
     "test:auth": "jest --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/dist/ --testPathPattern=auth",
     "test:cli": "jest --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/dist/ --testPathPattern=cli-setup",

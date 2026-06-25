@@ -43,7 +43,7 @@ const transientFailurePatterns = [
   /socket hang up/i,
 ];
 
-function sleep(ms: number): void {
+export function sleep(ms: number): void {
   const buffer = new SharedArrayBuffer(4);
   Atomics.wait(new Int32Array(buffer), 0, 0, ms);
 }
