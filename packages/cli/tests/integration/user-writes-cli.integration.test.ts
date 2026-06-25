@@ -2,7 +2,8 @@
  * @fileoverview Real-CLI integration tests for the account-scoped `user` write
  * subcommands (`user setting footer update`, `user template donate update`,
  * `user template marquee update`, `user template audio-moderation update`,
- * `user template video-moderation update`, `user org create`,
+ * `user template video-moderation update`, `user template role-config update`,
+ * `user template playback update`, `user org create`,
  * `user org delete`, `user child create`, `user child update`,
  * `user child delete`).
  *
@@ -29,7 +30,7 @@
  * account-scoped writes do not take a channel-id argument.
  */
 
-import { runCli } from '../helpers/cli-runner';
+import { runCli, sleep } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -332,6 +333,114 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
     expect(String(afterRestore.imageFrequency)).toBe(original!.freq);
   }, 120000);
 
+  // `user template role-config update` takes the new template as a JSON object
+  // via --config-json (renamed from --config to avoid collision with the
+  // program-level global `--config <path>` option). It is an account-scoped
+  // reversible write: read the current teacherConfig flag → flip → update →
+  // verify → restore. The server merges the supplied fields, so we only touch a
+  // single harmless boolean.
+  (shouldRunRealChannelTests ? it : it.skip)('updates and restores the role-config template via real CLI', () => {
+    let channelId: string | undefined;
+    let original: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Template Role Config Update');
+
+      const before = parseJsonObject(
+        runCliSuccess(['user', 'template', 'role-config', 'get', '--output', 'json']),
+      );
+      const teacherConfig = (before.teacherConfig ?? {}) as Record<string, string>;
+      original = String(teacherConfig.webStartCheckInDisplayEnabled ?? 'Y');
+      const toggled = original === 'Y' ? 'N' : 'Y';
+
+      const updated = parseJsonObject(
+        runCliSuccess([
+          'user', 'template', 'role-config', 'update',
+          '--config-json', JSON.stringify({ teacherConfig: { webStartCheckInDisplayEnabled: toggled } }),
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(updated.success).toBe(true);
+
+      // Allow for read-replica propagation before verifying persistence.
+      sleep(2000);
+      const afterUpdate = parseJsonObject(
+        runCliSuccess(['user', 'template', 'role-config', 'get', '--output', 'json']),
+      );
+      const afterTeacherConfig = (afterUpdate.teacherConfig ?? {}) as Record<string, string>;
+      expect(String(afterTeacherConfig.webStartCheckInDisplayEnabled)).toBe(toggled);
+    } finally {
+      if (original !== undefined) {
+        runCliSuccess([
+          'user', 'template', 'role-config', 'update',
+          '--config-json', JSON.stringify({ teacherConfig: { webStartCheckInDisplayEnabled: original } }),
+          '--force', '--output', 'json',
+        ]);
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+
+    sleep(2000);
+    const afterRestore = parseJsonObject(
+      runCliSuccess(['user', 'template', 'role-config', 'get', '--output', 'json']),
+    );
+    const restoredTeacherConfig = (afterRestore.teacherConfig ?? {}) as Record<string, string>;
+    expect(String(restoredTeacherConfig.webStartCheckInDisplayEnabled)).toBe(original);
+  }, 120000);
+
+  // `user template playback update` takes the new template as a JSON object via
+  // --config-json (same --config-collision rename). Account-scoped reversible
+  // write: read current productPlaybackEnabled → flip → update → verify →
+  // restore.
+  (shouldRunRealChannelTests ? it : it.skip)('updates and restores the playback template via real CLI', () => {
+    let channelId: string | undefined;
+    let original: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Template Playback Update');
+
+      const before = parseJsonObject(
+        runCliSuccess(['user', 'template', 'playback', 'get', '--output', 'json']),
+      );
+      original = String(before.productPlaybackEnabled ?? 'N');
+      const toggled = original === 'Y' ? 'N' : 'Y';
+
+      const updated = parseJsonObject(
+        runCliSuccess([
+          'user', 'template', 'playback', 'update',
+          '--config-json', JSON.stringify({ productPlaybackEnabled: toggled }),
+          '--force', '--output', 'json',
+        ]),
+      );
+      expect(updated.success).toBe(true);
+
+      sleep(2000);
+      const afterUpdate = parseJsonObject(
+        runCliSuccess(['user', 'template', 'playback', 'get', '--output', 'json']),
+      );
+      expect(String(afterUpdate.productPlaybackEnabled)).toBe(toggled);
+    } finally {
+      if (original !== undefined) {
+        runCliSuccess([
+          'user', 'template', 'playback', 'update',
+          '--config-json', JSON.stringify({ productPlaybackEnabled: original }),
+          '--force', '--output', 'json',
+        ]);
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+
+    sleep(2000);
+    const afterRestore = parseJsonObject(
+      runCliSuccess(['user', 'template', 'playback', 'get', '--output', 'json']),
+    );
+    expect(String(afterRestore.productPlaybackEnabled)).toBe(original);
+  }, 120000);
+
   // `user org create` → `user org delete` is an account-scoped CRUD lifecycle.
   // The parent organization is discovered from the existing org tree (the root
   // org has parentId 0), the created org id is captured from the create result,
@@ -507,6 +616,8 @@ describe('user account-scoped CLI writes (reversible read-update-verify-restore)
       [['user', 'template', 'marquee', 'update', '--help'], 'marquee'],
       [['user', 'template', 'audio-moderation', 'update', '--help'], 'audio-moderation'],
       [['user', 'template', 'video-moderation', 'update', '--help'], 'video-moderation'],
+      [['user', 'template', 'role-config', 'update', '--help'], 'role-config'],
+      [['user', 'template', 'playback', 'update', '--help'], 'playback'],
       [['user', 'org', 'create', '--help'], 'organization'],
       [['user', 'org', 'delete', '--help'], 'organization'],
       [['user', 'child', 'create', '--help'], 'child'],

@@ -183,11 +183,17 @@ describe('V4GlobalService', () => {
       await service.updatePageSetting(params);
 
       expect(mockHttpClient.post).toHaveBeenCalled();
-      const callUrl = mockHttpClient.post.mock.calls[0][0];
-      expect(callUrl).toContain('/live/v4/user/template/page-setting/update?');
-      expect(callUrl).toContain('autoPlayEnabled=Y');
-      expect(callUrl).toContain('barrageEnabled=Y');
-      expect(callUrl).toContain('barrageSpeed=270');
+      const [callUrl, body, config] = mockHttpClient.post.mock.calls[0];
+      // Business params must be passed via config.params (signed by the request
+      // interceptor) rather than embedded in the URL string (which bypasses
+      // signing and yields 签名错误). Body is empty per the API doc.
+      expect(callUrl).toBe('/live/v4/user/template/page-setting/update');
+      expect(body).toBeUndefined();
+      expect(config.params).toEqual({
+        autoPlayEnabled: 'Y',
+        barrageEnabled: 'Y',
+        barrageSpeed: '270',
+      });
     });
 
     it('[P0] should update single setting parameter', async () => {
@@ -196,8 +202,8 @@ describe('V4GlobalService', () => {
       await service.updatePageSetting({ autoPlayEnabled: 'Y' });
 
       expect(mockHttpClient.post).toHaveBeenCalled();
-      const callUrl = mockHttpClient.post.mock.calls[0][0];
-      expect(callUrl).toContain('autoPlayEnabled=Y');
+      const config = mockHttpClient.post.mock.calls[0][2];
+      expect(config.params).toEqual({ autoPlayEnabled: 'Y' });
     });
 
     it('[P1] should filter out undefined values', async () => {
@@ -210,9 +216,9 @@ describe('V4GlobalService', () => {
 
       await service.updatePageSetting(params);
 
-      const callUrl = mockHttpClient.post.mock.calls[0][0];
-      expect(callUrl).toContain('autoPlayEnabled=Y');
-      expect(callUrl).not.toContain('barrageEnabled');
+      const config = mockHttpClient.post.mock.calls[0][2];
+      expect(config.params).toEqual({ autoPlayEnabled: 'Y' });
+      expect(config.params).not.toHaveProperty('barrageEnabled');
     });
 
     it('[P1] should handle API errors', async () => {

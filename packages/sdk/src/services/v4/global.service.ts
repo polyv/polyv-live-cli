@@ -123,16 +123,23 @@ export class V4GlobalService {
    * ```
    */
   async updatePageSetting(params: UpdatePageSettingParams): Promise<void> {
-    // Build query string from params
-    const queryParams = new URLSearchParams();
+    // Business params must flow through config.params so the request signing
+    // interceptor includes them in the signature. The API signs appId/timestamp
+    // together with all business params, then appends them to the URL with an
+    // empty body (see page_setting_update.md Java example: requestMap is signed
+    // then appendUrl'd, postFormBody(url, null)). Embedding params in the URL
+    // string bypasses signing and yields 签名错误.
+    const queryParams: Record<string, string> = {};
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined) {
-        queryParams.append(key, String(value));
+        queryParams[key] = String(value);
       }
     }
 
     await this.client.httpClient.post(
-      `/live/v4/user/template/page-setting/update?${queryParams.toString()}`
+      '/live/v4/user/template/page-setting/update',
+      undefined,
+      { params: queryParams }
     );
   }
 }

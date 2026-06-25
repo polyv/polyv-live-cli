@@ -2,7 +2,7 @@
  * Lightweight integration checks for account/platform/global CLI command surfaces.
  */
 
-import { runCli } from '../helpers/cli-runner';
+import { runCli, sleep } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -558,6 +558,69 @@ describe('Account, platform, and global CLI integration', () => {
         const afterRestore = readAuthSettings();
         expect(String(afterRestore[1].authEnabled ?? '')).toBe(originalSecondaryEnabled);
       }
+    },
+    180000,
+  );
+
+  // `global page-setting update` is an account-scoped reversible write. It
+  // takes the new settings as a JSON object via --config-json (renamed from
+  // --config to avoid collision with the program-level global `--config <path>`
+  // option). Read the current closePreviewEnabled → flip → update → verify →
+  // restore. The SDK signs the business params (page_setting_update.md: all
+  // params go into the signed requestMap), exercised for real here.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs global page-setting update (toggle then restore) through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      let original: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Global Page Setting Update');
+
+        const before = parseJsonObject(
+          runCliSuccess(['global', 'page-setting', 'get', '--output', 'json']),
+        );
+        original = String(before.closePreviewEnabled ?? 'N');
+        const toggled = original === 'Y' ? 'N' : 'Y';
+
+        const updated = parseJsonObject(
+          runCliSuccess([
+            'global', 'page-setting', 'update',
+            '--config-json', JSON.stringify({ closePreviewEnabled: toggled }),
+            '--force', '--output', 'json',
+          ]),
+        );
+        expect(updated.success).toBe(true);
+        expect(updated.closePreviewEnabled).toBe(toggled);
+
+        // Allow for read-replica propagation before verifying persistence.
+        sleep(2000);
+        const afterUpdate = parseJsonObject(
+          runCliSuccess(['global', 'page-setting', 'get', '--output', 'json']),
+        );
+        expect(String(afterUpdate.closePreviewEnabled)).toBe(toggled);
+      } finally {
+        if (original !== undefined) {
+          try {
+            runCliSuccess([
+              'global', 'page-setting', 'update',
+              '--config-json', JSON.stringify({ closePreviewEnabled: original }),
+              '--force', '--output', 'json',
+            ]);
+          } catch {
+            // best-effort restore of the account-wide page setting
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+
+      sleep(2000);
+      const afterRestore = parseJsonObject(
+        runCliSuccess(['global', 'page-setting', 'get', '--output', 'json']),
+      );
+      expect(String(afterRestore.closePreviewEnabled)).toBe(original);
     },
     180000,
   );

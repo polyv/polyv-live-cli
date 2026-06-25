@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T13:18:44.432Z",
+  "generatedAt": "2026-06-25T18:20:39.964Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -13,15 +13,15 @@
   },
   "summary": {
     "latestApis": 578,
-    "cliUsedLatestApis": 577,
-    "cliMissingLatestApis": 1,
-    "cliCoverage": 99.8,
+    "cliUsedLatestApis": 576,
+    "cliMissingLatestApis": 2,
+    "cliCoverage": 99.7,
     "cliUsageReferences": 584,
     "cliSdkServiceUsages": 582,
     "cliDirectHttpUsages": 1,
     "cliUnresolvedSdkUsages": 1,
     "cliUnmatchedEndpointUsages": 1,
-    "matchedApiIds": 564,
+    "matchedApiIds": 563,
     "sdkEndpointReferences": 692,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40
@@ -36,6 +36,16 @@
       "directHttpUsed": 0,
       "sdkServiceUsed": 44,
       "cliCoverage": 97.8
+    },
+    {
+      "module": "player",
+      "label": "播放器",
+      "total": 7,
+      "cliUsed": 6,
+      "cliMissing": 1,
+      "directHttpUsed": 0,
+      "sdkServiceUsed": 6,
+      "cliCoverage": 85.7
     },
     {
       "module": "account",
@@ -125,16 +135,6 @@
       "cliMissing": 0,
       "directHttpUsed": 0,
       "sdkServiceUsed": 14,
-      "cliCoverage": 100
-    },
-    {
-      "module": "player",
-      "label": "播放器",
-      "total": 7,
-      "cliUsed": 7,
-      "cliMissing": 0,
-      "directHttpUsed": 0,
-      "sdkServiceUsed": 7,
       "cliCoverage": 100
     },
     {
@@ -3506,7 +3506,7 @@
       "depth": 2,
       "signature": "invite-poster",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 203
+      "line": 207
     },
     {
       "command": "interaction reward",
@@ -3528,7 +3528,7 @@
       "depth": 2,
       "signature": "script",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 229
+      "line": 233
     },
     {
       "command": "interaction task-reward",
@@ -3539,7 +3539,7 @@
       "depth": 2,
       "signature": "task-reward",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 277
+      "line": 281
     },
     {
       "command": "interaction teacher-answer",
@@ -3573,7 +3573,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 189
+      "line": 193
     },
     {
       "command": "interaction event list",
@@ -3609,7 +3609,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 207
+      "line": 211
     },
     {
       "command": "interaction script delete",
@@ -3621,7 +3621,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 263
+      "line": 267
     },
     {
       "command": "interaction script query",
@@ -3633,7 +3633,7 @@
       "depth": 3,
       "signature": "query",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 233
+      "line": 237
     },
     {
       "command": "interaction script upload",
@@ -3645,7 +3645,7 @@
       "depth": 3,
       "signature": "upload",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 245
+      "line": 249
     },
     {
       "command": "interaction task-reward create",
@@ -3657,7 +3657,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 295
+      "line": 299
     },
     {
       "command": "interaction task-reward delete",
@@ -3669,7 +3669,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 341
+      "line": 345
     },
     {
       "command": "interaction task-reward list",
@@ -3681,7 +3681,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 281
+      "line": 285
     },
     {
       "command": "interaction task-reward stats",
@@ -3693,7 +3693,7 @@
       "depth": 3,
       "signature": "stats",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 365
+      "line": 369
     },
     {
       "command": "interaction task-reward stop",
@@ -3705,7 +3705,7 @@
       "depth": 3,
       "signature": "stop",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 353
+      "line": 357
     },
     {
       "command": "interaction task-reward submit-accept-info",
@@ -3717,7 +3717,7 @@
       "depth": 3,
       "signature": "submit-accept-info",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 411
+      "line": 415
     },
     {
       "command": "interaction task-reward update",
@@ -3729,7 +3729,7 @@
       "depth": 3,
       "signature": "update",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 317
+      "line": 321
     },
     {
       "command": "interaction task-reward viewer-detail",
@@ -3741,7 +3741,7 @@
       "depth": 3,
       "signature": "viewer-detail",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 379
+      "line": 383
     },
     {
       "command": "interaction task-reward viewer-list",
@@ -3753,7 +3753,7 @@
       "depth": 3,
       "signature": "viewer-list",
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 397
+      "line": 401
     },
     {
       "command": "interaction webhook delete",
@@ -5082,7 +5082,7 @@
       "depth": 2,
       "signature": "logo-update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 510
+      "line": 509
     },
     {
       "command": "player marquee-url",
@@ -5126,7 +5126,7 @@
       "depth": 2,
       "signature": "watch-feedback-list",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 529
+      "line": 528
     },
     {
       "command": "player advert head-update",
@@ -5150,7 +5150,7 @@
       "depth": 3,
       "signature": "stop-update",
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 492
+      "line": 491
     },
     {
       "command": "player anti-record get",
@@ -7301,7 +7301,7 @@
       "depth": 3,
       "signature": "audio-moderation",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 194
+      "line": 198
     },
     {
       "command": "user template donate",
@@ -7337,7 +7337,7 @@
       "depth": 3,
       "signature": "playback",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 187
+      "line": 191
     },
     {
       "command": "user template role-config",
@@ -7361,7 +7361,7 @@
       "depth": 3,
       "signature": "video-moderation",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 204
+      "line": 208
     },
     {
       "command": "user viewlog detail",
@@ -7450,7 +7450,7 @@
       "depth": 4,
       "signature": "get",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 195
+      "line": 199
     },
     {
       "command": "user template audio-moderation update",
@@ -7463,7 +7463,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 197
+      "line": 201
     },
     {
       "command": "user template donate get",
@@ -7528,7 +7528,7 @@
       "depth": 4,
       "signature": "get",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 188
+      "line": 192
     },
     {
       "command": "user template playback update",
@@ -7541,7 +7541,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 190
+      "line": 194
     },
     {
       "command": "user template role-config get",
@@ -7567,7 +7567,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 183
+      "line": 187
     },
     {
       "command": "user template video-moderation get",
@@ -7580,7 +7580,7 @@
       "depth": 4,
       "signature": "get",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 205
+      "line": 209
     },
     {
       "command": "user template video-moderation update",
@@ -7593,7 +7593,7 @@
       "depth": 4,
       "signature": "update",
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 207
+      "line": 211
     },
     {
       "command": "viewer",
@@ -8591,7 +8591,7 @@
       "serviceProp": "chat",
       "methodName": "getUserList",
       "file": "packages/cli/src/services/chat.service.sdk.ts",
-      "line": 495,
+      "line": 498,
       "cliModule": "chat",
       "reason": "SDK service usage could not be resolved to an HTTP endpoint"
     }
@@ -12302,7 +12302,7 @@
             "reference": "V4ChannelService#listTaskRewardActivities",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 190,
+            "line": 188,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -12340,7 +12340,7 @@
             "reference": "V4ChannelService#listTaskRewardViewerDetails",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 206,
+            "line": 204,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -12377,7 +12377,7 @@
             "reference": "V4ChannelService#listTaskRewardStats",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 198,
+            "line": 196,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -12738,7 +12738,7 @@
             "reference": "V4ChannelService#queryDiskVideoCustomScript",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 149,
+            "line": 147,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -13360,7 +13360,7 @@
             "reference": "V4ChannelService#createTaskRewardActivity",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 182,
+            "line": 180,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -13437,7 +13437,7 @@
             "reference": "V4ChannelService#createInvitePoster",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 141,
+            "line": 139,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14271,7 +14271,7 @@
             "reference": "V4ChannelService#listViewerTaskRewardDetails",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 241,
+            "line": 239,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14310,7 +14310,7 @@
             "reference": "V4ChannelService#submitViewerTaskRewardAcceptInfo",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 249,
+            "line": 247,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14732,7 +14732,7 @@
             "reference": "ChatService#countOnlineUser",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 273,
+            "line": 276,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           },
           {
@@ -14740,7 +14740,7 @@
             "reference": "ChannelService#getChatOnlineCount",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 278,
+            "line": 281,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -14777,7 +14777,7 @@
             "reference": "ChannelService#getChatOnlineCount",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 278,
+            "line": 281,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -15754,7 +15754,7 @@
             "reference": "ChannelService#removeChatContents",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 283,
+            "line": 286,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -16168,7 +16168,7 @@
             "reference": "V4ChannelService#logoutWatchViewer",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 566,
+            "line": 569,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -17450,7 +17450,7 @@
             "reference": "V4ChannelService#interactionEventDelete",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 132,
+            "line": 131,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -17488,7 +17488,7 @@
             "reference": "V4ChannelService#deleteInteractionScript",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 173,
+            "line": 171,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -17722,7 +17722,7 @@
             "reference": "V4ChannelService#deleteTaskRewardActivity",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 223,
+            "line": 221,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18020,7 +18020,7 @@
             "reference": "V4ChannelService#uploadDiskVideoCustomScript",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 160,
+            "line": 158,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -18167,6 +18167,14 @@
             "file": "packages/cli/src/services/channel.service.sdk.ts",
             "line": 613,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
+          },
+          {
+            "usageType": "sdk-service",
+            "reference": "PlayerService#setMarqueeUrl",
+            "cliModule": "player",
+            "file": "packages/cli/src/services/player.service.sdk.ts",
+            "line": 167,
+            "sdkFile": "packages/sdk/src/services/player.service.ts"
           }
         ]
       }
@@ -18212,7 +18220,7 @@
             "reference": "WebService#updateChannelName",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 30,
+            "line": 31,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -18558,7 +18566,7 @@
             "reference": "V4ChannelService#stopTaskRewardActivity",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 232,
+            "line": 230,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -19151,7 +19159,7 @@
             "reference": "WebService#updateChannelName",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 30,
+            "line": 31,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -19196,7 +19204,7 @@
             "reference": "WebService#updateChannelName",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 30,
+            "line": 31,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -19574,7 +19582,7 @@
             "reference": "V4ChannelService#batchUpdateChatEnabled",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 558,
+            "line": 561,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -20265,7 +20273,7 @@
             "reference": "V4ChannelService#updateTaskRewardActivity",
             "cliModule": "interaction",
             "file": "packages/cli/src/services/interaction-service.ts",
-            "line": 214,
+            "line": 212,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -20676,7 +20684,7 @@
             "reference": "ChatService#sendChat",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 254,
+            "line": 257,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -20715,7 +20723,7 @@
             "reference": "ChatService#sendHiddenByAdmin",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 264,
+            "line": 267,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -20750,7 +20758,7 @@
             "reference": "ChatService#getAdminInfo",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 458,
+            "line": 461,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -20787,7 +20795,7 @@
             "reference": "ChatService#countOnlineUser",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 273,
+            "line": 276,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           },
           {
@@ -20795,7 +20803,7 @@
             "reference": "ChannelService#getChatOnlineCount",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 278,
+            "line": 281,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -20834,7 +20842,7 @@
             "reference": "V4ChatService#listBulletins",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 416,
+            "line": 419,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -20872,7 +20880,7 @@
             "reference": "ChatService#getChannelBannedUserList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 211,
+            "line": 214,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -20911,7 +20919,7 @@
             "reference": "ChatService#getHistoryPage",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 98,
+            "line": 101,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -20948,7 +20956,7 @@
             "reference": "ChatService#getChannelKickedUserList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 240,
+            "line": 243,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -20987,7 +20995,7 @@
             "reference": "V4ChatService#listQa",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 441,
+            "line": 444,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -21024,7 +21032,7 @@
             "reference": "V4ChatService#getRobotSetting",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 505,
+            "line": 508,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -21061,7 +21069,7 @@
             "reference": "V4RobotService#getRobotStats",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 510,
+            "line": 513,
             "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
           }
         ]
@@ -21098,7 +21106,7 @@
             "reference": "ChatService#getChannelBannedList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 230,
+            "line": 233,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21133,7 +21141,7 @@
             "reference": "ChatService#getSpeakList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 288,
+            "line": 291,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21168,7 +21176,7 @@
             "reference": "ChatService#getUserBannedList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 384,
+            "line": 387,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21203,7 +21211,7 @@
             "reference": "ChatService#getUserBadwordList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 360,
+            "line": 363,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21241,7 +21249,7 @@
             "reference": "V4ChatService#addBulletin",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 426,
+            "line": 429,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -21280,7 +21288,7 @@
             "reference": "ChatService#alertToSpecial",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 298,
+            "line": 301,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21321,7 +21329,7 @@
             "reference": "ChatService#messageAudit",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 307,
+            "line": 310,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21358,7 +21366,7 @@
             "reference": "V4ChatService#sendCustomMessage",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 322,
+            "line": 325,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -21395,7 +21403,7 @@
             "reference": "V4ChatService#sendCustomMessageEncode",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 340,
+            "line": 343,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -21434,7 +21442,7 @@
             "reference": "OtherService#emitByUserId",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 351,
+            "line": 354,
             "sdkFile": "packages/sdk/src/services/other.service.ts"
           }
         ]
@@ -21471,7 +21479,7 @@
             "reference": "ChatService#updateCensorEnabled",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 450,
+            "line": 453,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21511,7 +21519,7 @@
             "reference": "ChatService#sendAdminMsg",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 72,
+            "line": 75,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21548,7 +21556,7 @@
             "reference": "ChatService#getTeacherInfo",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 473,
+            "line": 476,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21614,7 +21622,7 @@
             "reference": "ChatService#updateBannedUser",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 132,
+            "line": 135,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21651,7 +21659,7 @@
             "reference": "ChatService#addBannedIp",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 379,
+            "line": 382,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21688,7 +21696,7 @@
             "reference": "ChatService#addBadwords",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 365,
+            "line": 368,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21764,7 +21772,7 @@
             "reference": "ChatService#forbidChannelUnkickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 185,
+            "line": 188,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21803,7 +21811,7 @@
             "reference": "ChatService#forbidChannelKickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 159,
+            "line": 162,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21840,7 +21848,7 @@
             "reference": "V4ChatService#cleanNotices",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 436,
+            "line": 439,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -21875,7 +21883,7 @@
             "reference": "ChatService#cleanChat",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 114,
+            "line": 117,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21910,7 +21918,7 @@
             "reference": "ChatService#getForbidUserList",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 397,
+            "line": 400,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21948,7 +21956,7 @@
             "reference": "ChatService#forbidUnkickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 198,
+            "line": 201,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -21986,7 +21994,7 @@
             "reference": "ChatService#forbidKickUsers",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 172,
+            "line": 175,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -22023,7 +22031,7 @@
             "reference": "ChatService#delChat",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 118,
+            "line": 121,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -22061,7 +22069,7 @@
             "reference": "ChatService#deleteChannelBanned",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 407,
+            "line": 410,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -22098,7 +22106,7 @@
             "reference": "ChatService#deleteUserBadword",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 374,
+            "line": 377,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -22137,7 +22145,7 @@
             "reference": "V4RobotService#updateRobotSetting",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 521,
+            "line": 524,
             "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
           }
         ]
@@ -22176,7 +22184,7 @@
             "reference": "V4ChatService#updateRobotListSetting",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 540,
+            "line": 543,
             "sdkFile": "packages/sdk/src/services/v4/chat.service.ts"
           }
         ]
@@ -22213,7 +22221,7 @@
             "reference": "V4RobotService#pauseRobot",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 553,
+            "line": 556,
             "sdkFile": "packages/sdk/src/services/v4/robot.service.ts"
           }
         ]
@@ -22252,7 +22260,7 @@
             "reference": "ChatService#updateAdminInfo",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 463,
+            "line": 466,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -22289,7 +22297,7 @@
             "reference": "ChatService#updateTeacherInfo",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 484,
+            "line": 487,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -22327,7 +22335,7 @@
             "reference": "ChatService#updateBannedViewer",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 146,
+            "line": 149,
             "sdkFile": "packages/sdk/src/services/chat.service.ts"
           }
         ]
@@ -25181,17 +25189,8 @@
         "file": "packages/sdk/src/services/player.service.ts"
       },
       "cli": {
-        "used": true,
-        "usages": [
-          {
-            "usageType": "sdk-service",
-            "reference": "PlayerService#setMarqueeUrl",
-            "cliModule": "player",
-            "file": "packages/cli/src/services/player.service.sdk.ts",
-            "line": 167,
-            "sdkFile": "packages/sdk/src/services/player.service.ts"
-          }
-        ]
+        "used": false,
+        "usages": []
       }
     },
     {
@@ -25342,7 +25341,7 @@
             "reference": "WebService#updateChannelName",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 30,
+            "line": 31,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -25822,7 +25821,7 @@
             "reference": "OtherService#getGroupLoginTimes",
             "cliModule": "chat",
             "file": "packages/cli/src/services/chat.service.sdk.ts",
-            "line": 247,
+            "line": 250,
             "sdkFile": "packages/sdk/src/services/other.service.ts"
           }
         ]
@@ -28661,7 +28660,7 @@
             "reference": "WebService#enrollList",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 184,
+            "line": 185,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28733,7 +28732,7 @@
             "reference": "WebService#getDonate",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 103,
+            "line": 104,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28770,7 +28769,7 @@
             "reference": "WebService#getRecordInfo",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 179,
+            "line": 180,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28807,7 +28806,7 @@
             "reference": "WebService#getRecordField",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 174,
+            "line": 175,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28844,7 +28843,7 @@
             "reference": "WebService#liveLikes",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 43,
+            "line": 44,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28916,7 +28915,7 @@
             "reference": "WebService#getTuwenList",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 98,
+            "line": 99,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28953,7 +28952,7 @@
             "reference": "WebService#getWeixinShare",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 118,
+            "line": 119,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -28990,7 +28989,7 @@
             "reference": "WebService#getMenuList",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 63,
+            "line": 64,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29025,7 +29024,7 @@
             "reference": "WebService#getCountdown",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 53,
+            "line": 54,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29060,7 +29059,7 @@
             "reference": "WebService#getSplash",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 15,
+            "line": 16,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29098,7 +29097,7 @@
             "reference": "WebService#uploadWhiteList",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 141,
+            "line": 142,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29173,7 +29172,7 @@
             "reference": "WebService#deleteMenu",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 73,
+            "line": 74,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29211,7 +29210,7 @@
             "reference": "WebService#uploadImage",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 133,
+            "line": 134,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29248,7 +29247,7 @@
             "reference": "WebService#updateGood",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 113,
+            "line": 114,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29287,7 +29286,7 @@
             "reference": "WebService#updateGlobalEnabled",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 128,
+            "line": 129,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29325,7 +29324,7 @@
             "reference": "WebService#updateCash",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 108,
+            "line": 109,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29362,7 +29361,7 @@
             "reference": "WebService#downloadWhiteList",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 149,
+            "line": 150,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29400,7 +29399,7 @@
             "reference": "WebService#downloadRecordInfo",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 189,
+            "line": 190,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29437,7 +29436,7 @@
             "reference": "WebService#setAuthType",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 154,
+            "line": 155,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29511,7 +29510,7 @@
             "reference": "WebService#updateLikes",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 48,
+            "line": 49,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29601,7 +29600,7 @@
             "reference": "WebService#updateChannelName",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 30,
+            "line": 31,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29638,7 +29637,7 @@
             "reference": "WebService#updateChannelLogo",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 35,
+            "line": 36,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29675,7 +29674,7 @@
             "reference": "WebService#setExternalAuth",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 159,
+            "line": 160,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29712,7 +29711,7 @@
             "reference": "WebService#updateWeixinShare",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 123,
+            "line": 124,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29749,7 +29748,7 @@
             "reference": "WebService#setPublisher",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 25,
+            "line": 26,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29786,7 +29785,7 @@
             "reference": "WebService#setAuthorizedAddress",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 164,
+            "line": 165,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29821,7 +29820,7 @@
             "reference": "WebService#updateAuthUrl",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 169,
+            "line": 170,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29858,7 +29857,7 @@
             "reference": "WebService#updateConsultingEnabled",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 93,
+            "line": 94,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29896,7 +29895,7 @@
             "reference": "WebService#updateRank",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 88,
+            "line": 89,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29934,7 +29933,7 @@
             "reference": "WebService#updateMenu",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 78,
+            "line": 79,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -29971,7 +29970,7 @@
             "reference": "WebService#setSplash",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 20,
+            "line": 21,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -30006,7 +30005,7 @@
             "reference": "WebService#setCountdown",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 58,
+            "line": 59,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -30044,7 +30043,7 @@
             "reference": "WebService#setMenu",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 83,
+            "line": 84,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]
@@ -30121,7 +30120,7 @@
             "reference": "WebService#addMenu",
             "cliModule": "web",
             "file": "packages/cli/src/services/web-service.ts",
-            "line": 68,
+            "line": 69,
             "sdkFile": "packages/sdk/src/services/web.service.ts"
           }
         ]

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T17:57:07.049Z",
+  "generatedAt": "2026-06-25T18:20:49.824Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -15,22 +15,22 @@
     "staticAnalysis": "This report is static analysis of integration test source. Dynamic command construction may require manual review if it is not visible as string literals."
   },
   "summary": {
-    "inventoryGeneratedAt": "2026-06-25T13:18:44.432Z",
+    "inventoryGeneratedAt": "2026-06-25T18:20:39.964Z",
     "integrationFiles": 89,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 545,
-    "referencedCommandPathsExcludingHelp": 481,
+    "referencedCommandPathsExcludingHelp": 484,
     "coveredLeafTargetsIncludingHelp": 506,
     "missingLeafTargetsIncludingHelp": 61,
-    "coveredRealExecutionLeafTargets": 475,
-    "missingRealExecutionLeafTargets": 92,
-    "realExecutionCoveragePercent": 83.77,
+    "coveredRealExecutionLeafTargets": 478,
+    "missingRealExecutionLeafTargets": 89,
+    "realExecutionCoveragePercent": 84.3,
     "includingHelpCoveragePercent": 89.24,
-    "integrationReferences": 1106,
-    "realExecutionReferences": 702,
-    "helpReferences": 404
+    "integrationReferences": 1123,
+    "realExecutionReferences": 717,
+    "helpReferences": 406
   },
   "byTopLevel": [
     {
@@ -146,11 +146,11 @@
     {
       "command": "global",
       "targetLeafCommands": 4,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 4,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 4,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 75,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 26,
-      "missingRealExecutionLeafTargets": 5,
+      "coveredRealExecutionLeafTargets": 28,
+      "missingRealExecutionLeafTargets": 3,
       "coveredLeafTargetsIncludingHelp": 30,
       "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 83.87,
+      "realExecutionCoveragePercent": 90.32,
       "includingHelpCoveragePercent": 96.77
     },
     {
@@ -658,17 +658,6 @@
       "line": 79
     },
     {
-      "command": "global page-setting update",
-      "path": [
-        "global",
-        "page-setting",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/global.commands.ts",
-      "line": 126
-    },
-    {
       "command": "group allocate-log",
       "path": [
         "group",
@@ -850,7 +839,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 245
+      "line": 249
     },
     {
       "command": "interaction task-reward submit-accept-info",
@@ -861,7 +850,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 411
+      "line": 415
     },
     {
       "command": "lottery download-winners",
@@ -1336,30 +1325,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 120
-    },
-    {
-      "command": "user template playback update",
-      "path": [
-        "user",
-        "template",
-        "playback",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 190
-    },
-    {
-      "command": "user template role-config update",
-      "path": [
-        "user",
-        "template",
-        "role-config",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 183
     },
     {
       "command": "viewer config update",
@@ -4046,6 +4011,17 @@
       "line": 118
     },
     {
+      "command": "global page-setting update",
+      "path": [
+        "global",
+        "page-setting",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 126
+    },
+    {
       "command": "group health-check",
       "path": [
         "group",
@@ -4084,7 +4060,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 189
+      "line": 193
     },
     {
       "command": "interaction event list",
@@ -4117,7 +4093,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 207
+      "line": 211
     },
     {
       "command": "interaction script delete",
@@ -4128,7 +4104,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 263
+      "line": 267
     },
     {
       "command": "interaction script query",
@@ -4139,7 +4115,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 233
+      "line": 237
     },
     {
       "command": "interaction task-reward create",
@@ -4150,7 +4126,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 295
+      "line": 299
     },
     {
       "command": "interaction task-reward delete",
@@ -4161,7 +4137,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 341
+      "line": 345
     },
     {
       "command": "interaction task-reward list",
@@ -4172,7 +4148,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 281
+      "line": 285
     },
     {
       "command": "interaction task-reward stats",
@@ -4183,7 +4159,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 365
+      "line": 369
     },
     {
       "command": "interaction task-reward stop",
@@ -4194,7 +4170,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 353
+      "line": 357
     },
     {
       "command": "interaction task-reward update",
@@ -4205,7 +4181,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 317
+      "line": 321
     },
     {
       "command": "interaction task-reward viewer-detail",
@@ -4216,7 +4192,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 379
+      "line": 383
     },
     {
       "command": "interaction task-reward viewer-list",
@@ -4227,7 +4203,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 397
+      "line": 401
     },
     {
       "command": "interaction webhook delete",
@@ -4968,7 +4944,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 510
+      "line": 509
     },
     {
       "command": "player marquee-url",
@@ -4988,7 +4964,7 @@
       ],
       "depth": 2,
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 529
+      "line": 528
     },
     {
       "command": "player advert head-update",
@@ -5010,7 +4986,7 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 492
+      "line": 491
     },
     {
       "command": "player anti-record get",
@@ -6367,7 +6343,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 195
+      "line": 199
     },
     {
       "command": "user template audio-moderation update",
@@ -6379,7 +6355,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 197
+      "line": 201
     },
     {
       "command": "user template donate get",
@@ -6439,7 +6415,19 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 188
+      "line": 192
+    },
+    {
+      "command": "user template playback update",
+      "path": [
+        "user",
+        "template",
+        "playback",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 194
     },
     {
       "command": "user template role-config get",
@@ -6454,6 +6442,18 @@
       "line": 181
     },
     {
+      "command": "user template role-config update",
+      "path": [
+        "user",
+        "template",
+        "role-config",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 187
+    },
+    {
       "command": "user template video-moderation get",
       "path": [
         "user",
@@ -6463,7 +6463,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 205
+      "line": 209
     },
     {
       "command": "user template video-moderation update",
@@ -6475,7 +6475,7 @@
       ],
       "depth": 4,
       "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 207
+      "line": 211
     },
     {
       "command": "viewer create",
@@ -7186,7 +7186,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 572,
+        "line": 635,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9761,7 +9761,7 @@
     },
     {
       "command": "global page-setting get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -9772,9 +9772,13 @@
     },
     {
       "command": "global page-setting update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 587,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 86,
@@ -10763,7 +10767,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 633,
+        "line": 696,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10789,7 +10793,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 638,
+        "line": 701,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10800,7 +10804,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 643,
+        "line": 706,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12954,7 +12958,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 431,
+        "line": 540,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12969,7 +12973,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 469,
+        "line": 578,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13025,7 +13029,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 450,
+        "line": 559,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13077,7 +13081,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 357,
+        "line": 466,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13092,7 +13096,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 371,
+        "line": 480,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13144,7 +13148,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 64,
+        "line": 65,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13222,7 +13226,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 233,
+        "line": 234,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13252,7 +13256,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 123,
+        "line": 124,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13282,7 +13286,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 166,
+        "line": 167,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13293,7 +13297,7 @@
     },
     {
       "command": "user template playback get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -13308,9 +13312,13 @@
     },
     {
       "command": "user template playback update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 411,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 37,
@@ -13319,7 +13327,7 @@
     },
     {
       "command": "user template role-config get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -13334,9 +13342,13 @@
     },
     {
       "command": "user template role-config update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 2,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
+        "line": 357,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 36,
@@ -13364,7 +13376,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-writes-cli.integration.test.ts",
-        "line": 296,
+        "line": 297,
         "source": "array-literal"
       },
       "firstHelpReference": {

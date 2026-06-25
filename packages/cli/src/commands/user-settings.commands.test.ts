@@ -126,7 +126,7 @@ describe('user settings commands', () => {
       'template',
       'role-config',
       'update',
-      '--config',
+      '--config-json',
       '{"teacherConfig":{"webStartCheckInDisplayEnabled":"N"}}',
       '--force',
     ]);

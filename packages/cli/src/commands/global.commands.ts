@@ -126,11 +126,15 @@ export function registerGlobalCommands(program: Command): void {
   pageSettingCmd
     .command('update')
     .description('Update global page settings')
-    .requiredOption('--config <json>', 'page setting JSON object', parseJsonObject)
+    // NOTE: --config-json (not --config) to avoid collision with the program-level
+    // global `--config <path>` option, which Commander parses greedily across the
+    // whole argv and would otherwise swallow the value before it reaches this
+    // subcommand (leaving the required option unset).
+    .requiredOption('--config-json <json>', 'page setting JSON object', parseJsonObject)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action((options) => withGlobalHandler(program, handler => handler.updatePageSetting({
-      config: options.config,
+      config: options.configJson,
       force: options.force,
       output: options.output,
     })));

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T17:57:07.049Z
+Generated at: 2026-06-25T18:20:49.824Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 475 |
-| Missing real-execution leaf subcommands | 92 |
-| Real-execution coverage | 83.77% |
+| Real-executed leaf subcommands | 478 |
+| Missing real-execution leaf subcommands | 89 |
+| Real-execution coverage | 84.30% |
 | Leaf subcommands referenced including help | 506 |
 | Missing including help | 61 |
 
@@ -33,7 +33,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document` | 11 | 7 | 4 | 63.64% | 8 | 3 |
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
-| `global` | 4 | 3 | 1 | 75.00% | 4 | 0 |
+| `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
 | `stream` | 19 | 14 | 5 | 73.68% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 26 | 5 | 83.87% | 30 | 1 |
+| `user` | 31 | 28 | 3 | 90.32% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 31 | 3 | 91.18% | 33 | 1 |
@@ -87,7 +87,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance video-moderation get` | `packages/cli/src/commands/finance.commands.ts:68` |
 | `finance video-moderation result-list` | `packages/cli/src/commands/finance.commands.ts:74` |
 | `finance video-moderation update` | `packages/cli/src/commands/finance.commands.ts:79` |
-| `global page-setting update` | `packages/cli/src/commands/global.commands.ts:126` |
 | `group allocate-log` | `packages/cli/src/commands/group.commands.ts:36` |
 | `group billing-daily` | `packages/cli/src/commands/group.commands.ts:131` |
 | `group resource set-concurrences` | `packages/cli/src/commands/group.commands.ts:45` |
@@ -104,8 +103,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group user package-validity-update` | `packages/cli/src/commands/group.commands.ts:171` |
 | `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
 | `interaction reward` | `packages/cli/src/commands/interaction.commands.ts:67` |
-| `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
-| `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
+| `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
+| `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
@@ -151,8 +150,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
-| `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |
-| `user template role-config update` | `packages/cli/src/commands/user.commands.ts:183` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
 | `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
 | `web donate good-update` | `packages/cli/src/commands/web.commands.ts:180` |

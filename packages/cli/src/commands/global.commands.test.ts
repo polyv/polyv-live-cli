@@ -48,7 +48,7 @@ describe('Global Commands', () => {
     expect(getCmd).toBeDefined();
     expect(getCmd?.options.some(opt => opt.long === '--output')).toBe(true);
     expect(updateCmd).toBeDefined();
-    expect(updateCmd?.options.some(opt => opt.long === '--config' && opt.required)).toBe(true);
+    expect(updateCmd?.options.some(opt => opt.long === '--config-json' && opt.required)).toBe(true);
     expect(updateCmd?.options.some(opt => opt.long === '--force')).toBe(true);
   });
 });
@@ -90,8 +90,8 @@ describe('Global Commands actions', () => {
     expect(mockHandler.updateAuth).toHaveBeenCalled();
   });
 
-  it('coerces --config via parseJsonObject and runs updatePageSetting', async () => {
-    await program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config', '{"x":1}', '--force']);
+  it('coerces --config-json via parseJsonObject and runs updatePageSetting', async () => {
+    await program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config-json', '{"x":1}', '--force']);
     expect(mockHandler.updatePageSetting).toHaveBeenCalled();
   });
 
@@ -101,9 +101,9 @@ describe('Global Commands actions', () => {
     ).rejects.toThrow();
   });
 
-  it('rejects non-object --config', async () => {
+  it('rejects non-object --config-json', async () => {
     await expect(
-      program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config', '[1,2]', '--force'])
+      program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config-json', '[1,2]', '--force'])
     ).rejects.toThrow();
   });
 
