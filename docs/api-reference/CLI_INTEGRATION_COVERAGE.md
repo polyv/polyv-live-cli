@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T17:08:10.209Z
+Generated at: 2026-06-25T17:16:56.696Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 470 |
-| Missing real-execution leaf subcommands | 97 |
-| Real-execution coverage | 82.89% |
-| Leaf subcommands referenced including help | 504 |
-| Missing including help | 63 |
+| Real-executed leaf subcommands | 471 |
+| Missing real-execution leaf subcommands | 96 |
+| Real-execution coverage | 83.07% |
+| Leaf subcommands referenced including help | 505 |
+| Missing including help | 62 |
 
 ## By Top-Level Command
 
@@ -44,7 +44,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
 | `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
 | `player` | 11 | 11 | 0 | 100.00% | 11 | 0 |
-| `product` | 36 | 34 | 2 | 94.44% | 35 | 1 |
+| `product` | 36 | 35 | 1 | 97.22% | 36 | 0 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -126,7 +126,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
 | `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
-| `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
 | `record convert` | `packages/cli/src/commands/record.commands.ts:323` |

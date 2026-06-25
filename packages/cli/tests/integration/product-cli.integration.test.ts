@@ -809,6 +809,73 @@ describe('product CLI write lifecycle integration', () => {
     180000,
   );
 
+  // `product order get` is a user-level read that needs a real order-no (fake
+  // order numbers are rejected with "订单不存在"). A real order is discovered
+  // dynamically via the already-covered `product order list` and fed to `get`.
+  // The test skips gracefully when the account has no orders at all. Per the
+  // integration-test convention a temporary channel is created as the real
+  // test asset even though this account-scoped read does not consume it.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'reads a real user-level product order via real CLI (order discovered via list)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Product Order Get');
+
+        // Discover a real order-no on the account.
+        const listOutput = runCliSuccess([
+          'product',
+          'order',
+          'list',
+          '--page',
+          '1',
+          '--size',
+          '5',
+          '--output',
+          'json',
+        ]);
+        const listPayload = parseJsonObject(listOutput) as {
+          totalItems?: number;
+          contents?: Array<{ orderNo?: string }>;
+        };
+        expect(Array.isArray(listPayload.contents)).toBe(true);
+        if ((listPayload.contents ?? []).length === 0) {
+          // No orders on the account — nothing to read; still a valid exit-0 run.
+          return;
+        }
+        const orderNo = String(listPayload.contents![0].orderNo);
+        expect(orderNo).not.toBe('');
+
+        // Read the discovered order.
+        const getOutput = runCliSuccess([
+          'product',
+          'order',
+          'get',
+          '--order-no',
+          orderNo,
+          '--output',
+          'json',
+        ]);
+        const order = parseJsonObject(getOutput) as {
+          orderNo?: string;
+          channelId?: number | string;
+          status?: string;
+          amount?: number;
+        };
+        expect(String(order.orderNo)).toBe(orderNo);
+        // Minimum structural assertions beyond the echo'd orderNo.
+        expect(typeof order.status).toBe('string');
+        expect(order.status).not.toBe('');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the product write subcommands through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
@@ -828,6 +895,8 @@ describe('product CLI write lifecycle integration', () => {
       [['product', 'batch-add', '--help'], '--products-json'],
       [['product', 'batch-shelf', '--help'], '--shelf'],
       [['product', 'reference', '--help'], '--origin-id'],
+      [['product', 'order', 'list', '--help'], '--page'],
+      [['product', 'order', 'get', '--help'], '--order-no'],
     ];
 
     for (const [args, marker] of checks) {
