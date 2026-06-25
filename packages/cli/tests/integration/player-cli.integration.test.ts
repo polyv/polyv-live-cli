@@ -78,9 +78,9 @@ describe('player CLI channel-scoped writes integration', () => {
         expect(antiRecordSettings.modelType).toBe('fixed');
         expect(antiRecordSettings.content).toBe('cli-integration');
 
-        // `player marquee-url` is covered in its own test below (now that the SDK
-        // signs marqueeRestrict/url as query params). `player advert head-update`
-        // (NONE) is rejected by the server and stays excluded.
+        // `player marquee-url` and `player advert head-update` are covered in
+        // their own tests below (the SDK now signs marqueeRestrict/url and the
+        // head-advert business params as query params).
 
         // advert stop-update: disables the stop advert (only -c required).
         const stopAdvertOutput = runCliSuccess([
@@ -243,6 +243,44 @@ describe('player CLI channel-scoped writes integration', () => {
         const disabled = parseJsonObject(disableOutput);
         expect(disabled.success).toBe(true);
         expect(String(disabled.result)).toBe('设置成功');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs player advert head-update disable via real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Player Head Advert');
+
+        // head-update with --head-advert-type NONE disables the head advert and
+        // returns { success: true, result: true }. The SDK signs the
+        // headAdvert* business params as query params (the PHP example in
+        // update_head.md signs all params and POSTs them) and lowercases
+        // headAdvertType to none — the server rejects uppercase NONE with
+        // "invalid advert type".
+        const output = runCliSuccess([
+          'player',
+          'advert',
+          'head-update',
+          '-c',
+          channelId,
+          '--head-advert-type',
+          'NONE',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const result = parseJsonObject(output);
+        expect(result.success).toBe(true);
+        expect(result.result).toBe(true);
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);

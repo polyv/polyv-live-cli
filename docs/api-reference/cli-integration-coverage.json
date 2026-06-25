@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T15:34:11.976Z",
+  "generatedAt": "2026-06-25T15:56:42.508Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 537,
-    "referencedCommandPathsExcludingHelp": 466,
+    "referencedCommandPathsExcludingHelp": 467,
     "coveredLeafTargetsIncludingHelp": 498,
     "missingLeafTargetsIncludingHelp": 69,
-    "coveredRealExecutionLeafTargets": 460,
-    "missingRealExecutionLeafTargets": 107,
-    "realExecutionCoveragePercent": 81.13,
+    "coveredRealExecutionLeafTargets": 461,
+    "missingRealExecutionLeafTargets": 106,
+    "realExecutionCoveragePercent": 81.31,
     "includingHelpCoveragePercent": 87.83,
-    "integrationReferences": 1078,
-    "realExecutionReferences": 681,
+    "integrationReferences": 1079,
+    "realExecutionReferences": 682,
     "helpReferences": 397
   },
   "byTopLevel": [
@@ -246,11 +246,11 @@
     {
       "command": "player",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 11,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 90.91,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -1129,17 +1129,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 558
-    },
-    {
-      "command": "player advert head-update",
-      "path": [
-        "player",
-        "advert",
-        "head-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 469
     },
     {
       "command": "product order batch-status",
@@ -5142,6 +5131,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/player.commands.ts",
       "line": 529
+    },
+    {
+      "command": "player advert head-update",
+      "path": [
+        "player",
+        "advert",
+        "head-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 469
     },
     {
       "command": "player advert stop-update",
@@ -11113,12 +11113,16 @@
     },
     {
       "command": "player advert head-update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 269,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 261,
+        "line": 299,
         "source": "array-literal"
       }
     },
@@ -11133,7 +11137,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 262,
+        "line": 300,
         "source": "array-literal"
       }
     },
@@ -11148,7 +11152,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 258,
+        "line": 296,
         "source": "array-literal"
       }
     },
@@ -11163,7 +11167,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 259,
+        "line": 297,
         "source": "array-literal"
       }
     },
@@ -11193,7 +11197,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 263,
+        "line": 301,
         "source": "array-literal"
       }
     },
@@ -11208,7 +11212,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 264,
+        "line": 302,
         "source": "array-literal"
       }
     },
@@ -11223,7 +11227,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 260,
+        "line": 298,
         "source": "array-literal"
       }
     },

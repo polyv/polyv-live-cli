@@ -236,7 +236,7 @@ export class PlayerService {
    * ```typescript
    * await client.player.updateHeadAdvert(123456, {
    *   headAdvertType: 'IMAGE',
-   *   headAdvertImage: 'https://example.com/ad.jpg',
+   *   headAdvertMediaUrl: 'https://example.com/ad.jpg',
    * });
    * ```
    */
@@ -252,35 +252,40 @@ export class PlayerService {
       this.validateYNValue(params.enabled, 'enabled');
     }
 
-    const body: Record<string, unknown> = {
-      headAdvertType: params.headAdvertType,
+    // The PHP example in update_head.md signs ALL business params and POSTs
+    // them, so they must travel as signed query params (the signing interceptor
+    // only signs config.params, not the body). Sent as an unsigned JSON body the
+    // server never reads headAdvertType and rejects with "invalid advert type".
+    // headAdvertType is also case-sensitive: the server expects lowercase
+    // none/image/flv (per the PHP example), even though the doc table shows
+    // uppercase NONE/IMAGE/FLV.
+    const requestParams: Record<string, unknown> = {
+      headAdvertType: String(params.headAdvertType).toLowerCase(),
     };
 
-    if (params.headAdvertImage !== undefined) {
-      body.headAdvertImage = params.headAdvertImage;
-    }
-    if (params.headAdvertFlv !== undefined) {
-      body.headAdvertFlv = params.headAdvertFlv;
+    if (params.headAdvertMediaUrl !== undefined) {
+      requestParams.headAdvertMediaUrl = params.headAdvertMediaUrl;
     }
     if (params.headAdvertHref !== undefined) {
-      body.headAdvertHref = params.headAdvertHref;
+      requestParams.headAdvertHref = params.headAdvertHref;
     }
     if (params.headAdvertDuration !== undefined) {
-      body.headAdvertDuration = params.headAdvertDuration;
+      requestParams.headAdvertDuration = params.headAdvertDuration;
     }
     if (params.headAdvertWidth !== undefined) {
-      body.headAdvertWidth = params.headAdvertWidth;
+      requestParams.headAdvertWidth = params.headAdvertWidth;
     }
     if (params.headAdvertHeight !== undefined) {
-      body.headAdvertHeight = params.headAdvertHeight;
+      requestParams.headAdvertHeight = params.headAdvertHeight;
     }
     if (params.enabled !== undefined) {
-      body.enabled = params.enabled;
+      requestParams.enabled = params.enabled;
     }
 
     const response = await this.client.httpClient.post<boolean>(
       `/live/v2/channelAdvert/${channelId}/updateHead`,
-      body
+      null,
+      { params: requestParams }
     );
     return response as unknown as boolean;
   }

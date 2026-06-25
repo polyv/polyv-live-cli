@@ -383,7 +383,8 @@ describe('PlayerService', () => {
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v2/channelAdvert/123456/updateHead',
-        { headAdvertType: 'NONE' }
+        null,
+        { params: { headAdvertType: 'none' } }
       );
       expect(result).toBe(true);
     });
@@ -393,18 +394,21 @@ describe('PlayerService', () => {
 
       const result = await service.updateHeadAdvert(123456, {
         headAdvertType: 'IMAGE',
-        headAdvertImage: 'https://example.com/ad.jpg',
+        headAdvertMediaUrl: 'https://example.com/ad.jpg',
         headAdvertHref: 'https://example.com',
         headAdvertDuration: 5,
       });
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v2/channelAdvert/123456/updateHead',
+        null,
         {
-          headAdvertType: 'IMAGE',
-          headAdvertImage: 'https://example.com/ad.jpg',
-          headAdvertHref: 'https://example.com',
-          headAdvertDuration: 5,
+          params: {
+            headAdvertType: 'image',
+            headAdvertMediaUrl: 'https://example.com/ad.jpg',
+            headAdvertHref: 'https://example.com',
+            headAdvertDuration: 5,
+          },
         }
       );
       expect(result).toBe(true);
@@ -415,18 +419,21 @@ describe('PlayerService', () => {
 
       const result = await service.updateHeadAdvert(123456, {
         headAdvertType: 'FLV',
-        headAdvertFlv: 'https://example.com/ad.flv',
+        headAdvertMediaUrl: 'https://example.com/ad.flv',
         headAdvertWidth: 640,
         headAdvertHeight: 480,
       });
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v2/channelAdvert/123456/updateHead',
+        null,
         {
-          headAdvertType: 'FLV',
-          headAdvertFlv: 'https://example.com/ad.flv',
-          headAdvertWidth: 640,
-          headAdvertHeight: 480,
+          params: {
+            headAdvertType: 'flv',
+            headAdvertMediaUrl: 'https://example.com/ad.flv',
+            headAdvertWidth: 640,
+            headAdvertHeight: 480,
+          },
         }
       );
       expect(result).toBe(true);
@@ -437,16 +444,19 @@ describe('PlayerService', () => {
 
       await service.updateHeadAdvert(123456, {
         headAdvertType: 'IMAGE',
-        headAdvertImage: 'https://example.com/ad.jpg',
+        headAdvertMediaUrl: 'https://example.com/ad.jpg',
         enabled: 'Y',
       });
 
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v2/channelAdvert/123456/updateHead',
+        null,
         {
-          headAdvertType: 'IMAGE',
-          headAdvertImage: 'https://example.com/ad.jpg',
-          enabled: 'Y',
+          params: {
+            headAdvertType: 'image',
+            headAdvertMediaUrl: 'https://example.com/ad.jpg',
+            enabled: 'Y',
+          },
         }
       );
     });

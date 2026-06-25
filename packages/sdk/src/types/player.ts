@@ -107,10 +107,8 @@ export type HeadAdvertType = 'NONE' | 'IMAGE' | 'FLV';
 export interface HeadAdvertParams {
   /** Head advert type: "NONE", "IMAGE", or "FLV" */
   headAdvertType: HeadAdvertType;
-  /** Head advert image URL (for IMAGE type) */
-  headAdvertImage?: string;
-  /** Head advert FLV URL (for FLV type) */
-  headAdvertFlv?: string;
+  /** Head advert media URL (广告地址, for IMAGE/FLV type) */
+  headAdvertMediaUrl?: string;
   /** Head advert href (click URL) */
   headAdvertHref?: string;
   /** Head advert duration in seconds */
