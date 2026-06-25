@@ -360,4 +360,70 @@ describe('live interaction CLI integration', () => {
       }
     }
   }, 180000);
+
+  // task-reward viewer-list takes only a viewer-id (it lists every task reward
+  // a viewer has ever interacted with); a freshly imported viewer returns a
+  // well-formed empty page rather than an error.
+  (shouldRunRealChannelTests ? it : it.skip)('lists interaction task-reward details for a viewer via real CLI', () => {
+    let channelId: string | undefined;
+    let viewerUnionId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Interaction Task Reward Viewer List');
+      const ts = Date.now();
+      const mobile = `138${String(ts).slice(-8)}`;
+
+      const createOutput = runCliSuccess([
+        'viewer',
+        'create',
+        '--nickname',
+        `tr-it-${ts}`,
+        '--mobile',
+        mobile,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      viewerUnionId = String(
+        (parseJsonObject(createOutput).data as Record<string, unknown>).viewerUnionId,
+      );
+      expect(viewerUnionId.length).toBeGreaterThan(0);
+
+      const payload = parseJsonObject(
+        runCliSuccess([
+          'interaction',
+          'task-reward',
+          'viewer-list',
+          '--viewer-id',
+          viewerUnionId,
+          '--output',
+          'json',
+        ]),
+      );
+
+      expect(typeof payload.pageNumber).toBe('number');
+      expect(typeof payload.pageSize).toBe('number');
+      expect(payload.totalItems).toBe(0);
+      expect(Array.isArray(payload.contents)).toBe(true);
+    } finally {
+      if (viewerUnionId) {
+        try {
+          runCliSuccess([
+            'viewer',
+            'delete',
+            '--viewer-union-id',
+            viewerUnionId,
+            '--force',
+            '--output',
+            'json',
+          ]);
+        } catch {
+          // best-effort viewer cleanup
+        }
+      }
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });

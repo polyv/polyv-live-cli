@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T23:55:04.677Z",
+  "generatedAt": "2026-06-25T00:08:40.298Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-24T04:14:07.960Z",
-    "integrationFiles": 87,
+    "integrationFiles": 88,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 524,
-    "referencedCommandPathsExcludingHelp": 451,
-    "coveredLeafTargetsIncludingHelp": 485,
-    "missingLeafTargetsIncludingHelp": 82,
-    "coveredRealExecutionLeafTargets": 445,
-    "missingRealExecutionLeafTargets": 122,
-    "realExecutionCoveragePercent": 78.48,
-    "includingHelpCoveragePercent": 85.54,
-    "integrationReferences": 1050,
-    "realExecutionReferences": 660,
-    "helpReferences": 390
+    "referencedCommandPathsIncludingHelp": 527,
+    "referencedCommandPathsExcludingHelp": 454,
+    "coveredLeafTargetsIncludingHelp": 488,
+    "missingLeafTargetsIncludingHelp": 79,
+    "coveredRealExecutionLeafTargets": 448,
+    "missingRealExecutionLeafTargets": 119,
+    "realExecutionCoveragePercent": 79.01,
+    "includingHelpCoveragePercent": 86.07,
+    "integrationReferences": 1057,
+    "realExecutionReferences": 665,
+    "helpReferences": 392
   },
   "byTopLevel": [
     {
@@ -166,12 +166,12 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 14,
-      "missingRealExecutionLeafTargets": 8,
-      "coveredLeafTargetsIncludingHelp": 18,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 63.64,
-      "includingHelpCoveragePercent": 81.82
+      "coveredRealExecutionLeafTargets": 15,
+      "missingRealExecutionLeafTargets": 7,
+      "coveredLeafTargetsIncludingHelp": 19,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 68.18,
+      "includingHelpCoveragePercent": 86.36
     },
     {
       "command": "invite-sales",
@@ -236,12 +236,12 @@
     {
       "command": "playback",
       "targetLeafCommands": 13,
-      "coveredRealExecutionLeafTargets": 5,
-      "missingRealExecutionLeafTargets": 8,
-      "coveredLeafTargetsIncludingHelp": 6,
-      "missingLeafTargetsIncludingHelp": 7,
-      "realExecutionCoveragePercent": 38.46,
-      "includingHelpCoveragePercent": 46.15
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 7,
+      "coveredLeafTargetsIncludingHelp": 7,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 46.15,
+      "includingHelpCoveragePercent": 53.85
     },
     {
       "command": "player",
@@ -356,12 +356,12 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 25,
-      "missingRealExecutionLeafTargets": 6,
-      "coveredLeafTargetsIncludingHelp": 29,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 80.65,
-      "includingHelpCoveragePercent": 93.55
+      "coveredRealExecutionLeafTargets": 26,
+      "missingRealExecutionLeafTargets": 5,
+      "coveredLeafTargetsIncludingHelp": 30,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 83.87,
+      "includingHelpCoveragePercent": 96.77
     },
     {
       "command": "viewer",
@@ -995,17 +995,6 @@
       "line": 411
     },
     {
-      "command": "interaction task-reward viewer-list",
-      "path": [
-        "interaction",
-        "task-reward",
-        "viewer-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 397
-    },
-    {
       "command": "lottery download-winners",
       "path": [
         "lottery",
@@ -1130,16 +1119,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 319
-    },
-    {
-      "command": "playback get",
-      "path": [
-        "playback",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 241
     },
     {
       "command": "playback merge",
@@ -1573,17 +1552,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 124
-    },
-    {
-      "command": "user child sale-get",
-      "path": [
-        "user",
-        "child",
-        "sale-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 82
     },
     {
       "command": "user mr-concurrency detail",
@@ -2118,17 +2086,6 @@
       "line": 233
     },
     {
-      "command": "interaction task-reward viewer-list",
-      "path": [
-        "interaction",
-        "task-reward",
-        "viewer-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 397
-    },
-    {
       "command": "lottery download-winners",
       "path": [
         "lottery",
@@ -2179,16 +2136,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 319
-    },
-    {
-      "command": "playback get",
-      "path": [
-        "playback",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 241
     },
     {
       "command": "playback merge",
@@ -2536,17 +2483,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 506
-    },
-    {
-      "command": "user child sale-get",
-      "path": [
-        "user",
-        "child",
-        "sale-get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 82
     },
     {
       "command": "user mr-concurrency detail",
@@ -4642,6 +4578,17 @@
       "line": 379
     },
     {
+      "command": "interaction task-reward viewer-list",
+      "path": [
+        "interaction",
+        "task-reward",
+        "viewer-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 397
+    },
+    {
       "command": "interaction webhook delete",
       "path": [
         "interaction",
@@ -5298,6 +5245,16 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 311
+    },
+    {
+      "command": "playback get",
+      "path": [
+        "playback",
+        "get"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 241
     },
     {
       "command": "playback list",
@@ -6537,6 +6494,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 55
+    },
+    {
+      "command": "user child sale-get",
+      "path": [
+        "user",
+        "child",
+        "sale-get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 82
     },
     {
       "command": "user child update",
@@ -10159,6 +10127,17 @@
       "firstHelpReference": null
     },
     {
+      "command": "interaction task-reward viewer-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 393,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "interaction teacher-answer",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -11140,6 +11119,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-config-writes-cli.integration.test.ts",
         "line": 197,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "playback get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 35,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 57,
         "source": "array-literal"
       }
     },
@@ -12903,12 +12897,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 285,
+        "line": 313,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 345,
+        "line": 373,
         "source": "array-literal"
       }
     },
@@ -12970,12 +12964,27 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 316,
+        "line": 344,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 346,
+        "line": 374,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user child sale-get",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 283,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 375,
         "source": "array-literal"
       }
     },
@@ -13005,7 +13014,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 343,
+        "line": 371,
         "source": "array-literal"
       }
     },
@@ -13094,7 +13103,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 341,
+        "line": 369,
         "source": "array-literal"
       }
     },
@@ -13124,7 +13133,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 342,
+        "line": 370,
         "source": "array-literal"
       }
     },
@@ -13172,7 +13181,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 339,
+        "line": 367,
         "source": "array-literal"
       }
     },
@@ -13202,7 +13211,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 335,
+        "line": 363,
         "source": "array-literal"
       }
     },
@@ -13232,7 +13241,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 336,
+        "line": 364,
         "source": "array-literal"
       }
     },
@@ -13262,7 +13271,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 338,
+        "line": 366,
         "source": "array-literal"
       }
     },
@@ -13288,7 +13297,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 337,
+        "line": 365,
         "source": "array-literal"
       }
     },
@@ -13314,7 +13323,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 340,
+        "line": 368,
         "source": "array-literal"
       }
     },
@@ -13366,7 +13375,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 344,
+        "line": 372,
         "source": "array-literal"
       }
     },
@@ -13394,7 +13403,7 @@
     },
     {
       "command": "viewer create",
-      "realExecutionReferences": 6,
+      "realExecutionReferences": 7,
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/custom-field-cli.integration.test.ts",
@@ -13409,7 +13418,7 @@
     },
     {
       "command": "viewer delete",
-      "realExecutionReferences": 10,
+      "realExecutionReferences": 11,
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/custom-field-cli.integration.test.ts",

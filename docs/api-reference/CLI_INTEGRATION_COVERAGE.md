@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-24T23:55:04.677Z
+Generated at: 2026-06-25T00:08:40.298Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 87 |
+| Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 445 |
-| Missing real-execution leaf subcommands | 122 |
-| Real-execution coverage | 78.48% |
-| Leaf subcommands referenced including help | 485 |
-| Missing including help | 82 |
+| Real-executed leaf subcommands | 448 |
+| Missing real-execution leaf subcommands | 119 |
+| Real-execution coverage | 79.01% |
+| Leaf subcommands referenced including help | 488 |
+| Missing including help | 79 |
 
 ## By Top-Level Command
 
@@ -35,14 +35,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 14 | 8 | 63.64% | 18 | 4 |
+| `interaction` | 22 | 15 | 7 | 68.18% | 19 | 3 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
-| `playback` | 13 | 5 | 8 | 38.46% | 6 | 7 |
+| `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
 | `player` | 11 | 8 | 3 | 72.73% | 8 | 3 |
 | `product` | 36 | 34 | 2 | 94.44% | 35 | 1 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
 | `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 25 | 6 | 80.65% | 29 | 2 |
+| `user` | 31 | 26 | 5 | 83.87% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 26 | 8 | 76.47% | 29 | 5 |
@@ -118,7 +118,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction script query` | `packages/cli/src/commands/interaction.commands.ts:233` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
-| `interaction task-reward viewer-list` | `packages/cli/src/commands/interaction.commands.ts:397` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
 | `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
@@ -131,7 +130,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:862` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
 | `playback delete` | `packages/cli/src/commands/playback.commands.ts:319` |
-| `playback get` | `packages/cli/src/commands/playback.commands.ts:241` |
 | `playback merge` | `packages/cli/src/commands/playback.commands.ts:405` |
 | `playback sort move` | `packages/cli/src/commands/playback.commands.ts:572` |
 | `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
@@ -173,7 +171,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
-| `user child sale-get` | `packages/cli/src/commands/user.commands.ts:82` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `user template playback update` | `packages/cli/src/commands/user.commands.ts:190` |

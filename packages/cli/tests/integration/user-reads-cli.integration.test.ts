@@ -272,6 +272,34 @@ describe('user template CLI integration (account-scoped reads)', () => {
     }
   }, 120000);
 
+  // child sale-get is account-scoped: querying a non-existent sale-id resolves
+  // to a clean JSON `null` (not-found) with exit 0 rather than an error.
+  (shouldRunRealChannelTests ? it : it.skip)('looks up a child account by invite sale via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User Child Sale Get');
+
+      const result = runCli([
+        'user',
+        'child',
+        'sale-get',
+        '--sale-id',
+        'it-nonexistent-sale-id',
+        '--output',
+        'json',
+      ]);
+
+      expect(result.exitCode).toBe(0);
+      // A non-existent sale resolves to JSON `null`, which parses to null.
+      expect(JSON.parse(result.output.trim())).toBeNull();
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('lists user bill use details via real CLI', () => {
     let channelId: string | undefined;
 
@@ -344,6 +372,7 @@ describe('user template CLI integration (account-scoped reads)', () => {
       [['user', 'viewlog', 'list', '--help'], 'viewlog'],
       [['user', 'bill', 'use-detail', '--help'], 'use-detail'],
       [['user', 'child', 'roles', '--help'], 'roles'],
+      [['user', 'child', 'sale-get', '--help'], 'sale'],
     ];
 
     for (const [args, marker] of checks) {
