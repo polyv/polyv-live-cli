@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T16:43:18.508Z",
+  "generatedAt": "2026-06-25T16:55:57.760Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 540,
-    "referencedCommandPathsExcludingHelp": 473,
-    "coveredLeafTargetsIncludingHelp": 501,
-    "missingLeafTargetsIncludingHelp": 66,
-    "coveredRealExecutionLeafTargets": 467,
-    "missingRealExecutionLeafTargets": 100,
-    "realExecutionCoveragePercent": 82.36,
-    "includingHelpCoveragePercent": 88.36,
-    "integrationReferences": 1091,
-    "realExecutionReferences": 691,
-    "helpReferences": 400
+    "referencedCommandPathsIncludingHelp": 541,
+    "referencedCommandPathsExcludingHelp": 474,
+    "coveredLeafTargetsIncludingHelp": 502,
+    "missingLeafTargetsIncludingHelp": 65,
+    "coveredRealExecutionLeafTargets": 468,
+    "missingRealExecutionLeafTargets": 99,
+    "realExecutionCoveragePercent": 82.54,
+    "includingHelpCoveragePercent": 88.54,
+    "integrationReferences": 1093,
+    "realExecutionReferences": 692,
+    "helpReferences": 401
   },
   "byTopLevel": [
     {
@@ -86,12 +86,12 @@
     {
       "command": "checkin",
       "targetLeafCommands": 5,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 3,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 60,
-      "includingHelpCoveragePercent": 60
+      "coveredRealExecutionLeafTargets": 4,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 4,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 80,
+      "includingHelpCoveragePercent": 80
     },
     {
       "command": "coupon",
@@ -547,16 +547,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 534
-    },
-    {
-      "command": "checkin result",
-      "path": [
-        "checkin",
-        "result"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 148
     },
     {
       "command": "checkin session-result",
@@ -1561,16 +1551,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 534
-    },
-    {
-      "command": "checkin result",
-      "path": [
-        "checkin",
-        "result"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 148
     },
     {
       "command": "checkin session-result",
@@ -3870,6 +3850,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 93
+    },
+    {
+      "command": "checkin result",
+      "path": [
+        "checkin",
+        "result"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/checkin.commands.ts",
+      "line": 148
     },
     {
       "command": "checkin sessions",
@@ -9372,6 +9362,21 @@
       "firstHelpReference": null
     },
     {
+      "command": "checkin result",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
+        "line": 103,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
+        "line": 130,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "checkin sessions",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9388,12 +9393,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
-        "line": 46,
+        "line": 48,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
-        "line": 80,
+        "line": 82,
         "source": "array-literal"
       }
     },

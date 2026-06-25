@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T16:43:18.508Z
+Generated at: 2026-06-25T16:55:57.760Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 467 |
-| Missing real-execution leaf subcommands | 100 |
-| Real-execution coverage | 82.36% |
-| Leaf subcommands referenced including help | 501 |
-| Missing including help | 66 |
+| Real-executed leaf subcommands | 468 |
+| Missing real-execution leaf subcommands | 99 |
+| Real-execution coverage | 82.54% |
+| Leaf subcommands referenced including help | 502 |
+| Missing including help | 65 |
 
 ## By Top-Level Command
 
@@ -27,7 +27,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 71 | 7 | 91.03% | 77 | 1 |
 | `chat` | 44 | 43 | 1 | 97.73% | 43 | 1 |
-| `checkin` | 5 | 3 | 2 | 60.00% | 3 | 2 |
+| `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `document` | 11 | 6 | 5 | 54.55% | 7 | 4 |
@@ -77,7 +77,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1272` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
-| `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
 | `document media unlink` | `packages/cli/src/commands/document.commands.ts:543` |
