@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T13:51:52.138Z",
+  "generatedAt": "2026-06-25T14:33:49.702Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 535,
-    "referencedCommandPathsExcludingHelp": 462,
-    "coveredLeafTargetsIncludingHelp": 496,
-    "missingLeafTargetsIncludingHelp": 71,
-    "coveredRealExecutionLeafTargets": 456,
-    "missingRealExecutionLeafTargets": 111,
-    "realExecutionCoveragePercent": 80.42,
-    "includingHelpCoveragePercent": 87.48,
-    "integrationReferences": 1073,
-    "realExecutionReferences": 676,
+    "referencedCommandPathsIncludingHelp": 537,
+    "referencedCommandPathsExcludingHelp": 464,
+    "coveredLeafTargetsIncludingHelp": 498,
+    "missingLeafTargetsIncludingHelp": 69,
+    "coveredRealExecutionLeafTargets": 458,
+    "missingRealExecutionLeafTargets": 109,
+    "realExecutionCoveragePercent": 80.78,
+    "includingHelpCoveragePercent": 87.83,
+    "integrationReferences": 1075,
+    "realExecutionReferences": 678,
     "helpReferences": 397
   },
   "byTopLevel": [
@@ -386,12 +386,12 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 28,
-      "missingRealExecutionLeafTargets": 6,
-      "coveredLeafTargetsIncludingHelp": 31,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 82.35,
-      "includingHelpCoveragePercent": 91.18
+      "coveredRealExecutionLeafTargets": 30,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 33,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 88.24,
+      "includingHelpCoveragePercent": 97.06
     },
     {
       "command": "webapp",
@@ -1569,17 +1569,6 @@
       "line": 180
     },
     {
-      "command": "web info channel-logo-update",
-      "path": [
-        "web",
-        "info",
-        "channel-logo-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 90
-    },
-    {
       "command": "web setting global-enabled-update",
       "path": [
         "web",
@@ -1589,17 +1578,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 198
-    },
-    {
-      "command": "web setting image-upload",
-      "path": [
-        "web",
-        "setting",
-        "image-upload"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 204
     },
     {
       "command": "web auth whitelist upload",
@@ -2354,28 +2332,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 180
-    },
-    {
-      "command": "web info channel-logo-update",
-      "path": [
-        "web",
-        "info",
-        "channel-logo-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 90
-    },
-    {
-      "command": "web setting image-upload",
-      "path": [
-        "web",
-        "setting",
-        "image-upload"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 204
     }
   ],
   "coveredRealExecutionTargets": [
@@ -6932,6 +6888,17 @@
       "line": 169
     },
     {
+      "command": "web info channel-logo-update",
+      "path": [
+        "web",
+        "info",
+        "channel-logo-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 90
+    },
+    {
       "command": "web info channel-name-update",
       "path": [
         "web",
@@ -7106,6 +7073,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 131
+    },
+    {
+      "command": "web setting image-upload",
+      "path": [
+        "web",
+        "setting",
+        "image-upload"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 204
     },
     {
       "command": "web share get",
@@ -13714,7 +13692,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 15,
+        "line": 33,
         "source": "array-literal"
       }
     },
@@ -13724,7 +13702,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 233,
+        "line": 251,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13735,12 +13713,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 323,
+        "line": 341,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 31,
+        "line": 49,
         "source": "array-literal"
       }
     },
@@ -13750,7 +13728,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 96,
+        "line": 114,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13761,12 +13739,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 314,
+        "line": 332,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 30,
+        "line": 48,
         "source": "array-literal"
       }
     },
@@ -13776,7 +13754,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 387,
+        "line": 405,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13787,7 +13765,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 394,
+        "line": 412,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13798,12 +13776,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 74,
+        "line": 92,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 48,
+        "line": 66,
         "source": "array-literal"
       }
     },
@@ -13813,7 +13791,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 280,
+        "line": 298,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13824,12 +13802,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 104,
+        "line": 122,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 49,
+        "line": 67,
         "source": "array-literal"
       }
     },
@@ -13840,7 +13818,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 32,
+        "line": 50,
         "source": "array-literal"
       }
     },
@@ -13851,7 +13829,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 27,
+        "line": 45,
         "source": "array-literal"
       }
     },
@@ -13861,14 +13839,25 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 72,
+        "line": 90,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 47,
+        "line": 65,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "web info channel-logo-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 477,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "web info channel-name-update",
@@ -13876,7 +13865,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 138,
+        "line": 156,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13887,7 +13876,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 69,
+        "line": 87,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13898,7 +13887,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 149,
+        "line": 167,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13909,7 +13898,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 68,
+        "line": 86,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13920,7 +13909,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 144,
+        "line": 162,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13931,7 +13920,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 154,
+        "line": 172,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13942,12 +13931,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 67,
+        "line": 85,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 45,
+        "line": 63,
         "source": "array-literal"
       }
     },
@@ -13957,12 +13946,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 133,
+        "line": 151,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 25,
+        "line": 43,
         "source": "array-literal"
       }
     },
@@ -13972,12 +13961,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 176,
+        "line": 194,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 26,
+        "line": 44,
         "source": "array-literal"
       }
     },
@@ -13987,7 +13976,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 269,
+        "line": 287,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13998,7 +13987,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 198,
+        "line": 216,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14009,7 +13998,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 274,
+        "line": 292,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14020,12 +14009,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 70,
+        "line": 88,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 46,
+        "line": 64,
         "source": "array-literal"
       }
     },
@@ -14035,7 +14024,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 361,
+        "line": 379,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14046,7 +14035,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 71,
+        "line": 89,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14057,7 +14046,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 185,
+        "line": 203,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14069,9 +14058,20 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 29,
+        "line": 47,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "web setting image-upload",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 435,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "web share get",
@@ -14079,7 +14079,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 73,
+        "line": 91,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14090,12 +14090,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 221,
+        "line": 239,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 28,
+        "line": 46,
         "source": "array-literal"
       }
     },

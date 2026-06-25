@@ -70,6 +70,7 @@ import type {
   PolyvUrlResponse
 } from '../types/web.js';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
+import { generateSignature } from '../auth/signature.js';
 
 /**
  * WebService
@@ -249,11 +250,36 @@ export class WebService {
       throw new PolyVValidationError('imgfile is required');
     }
 
-    // Note: This is a multipart upload API
+    // Multipart upload API. Only appId and timestamp participate in the signature
+    // (the image file is submitted as a binary stream and is not signed).
+    const timestamp = Date.now();
+    const { sign } = generateSignature(
+      { appId: this.client.config.appId, timestamp },
+      { appSecret: this.client.config.appSecret }
+    );
+
+    const formData = new FormData();
+    formData.append('appId', this.client.config.appId);
+    formData.append('timestamp', String(timestamp));
+    formData.append('sign', sign);
+    // A filename is required by the multipart upload endpoint; fall back to a
+    // default when the caller passes a nameless Blob instead of a File.
+    if (params.imgfile instanceof Blob) {
+      formData.append('imgfile', params.imgfile, (params.imgfile as File).name || 'logo.png');
+    } else {
+      formData.append('imgfile', params.imgfile);
+    }
+
+    // Make request without the default auth interceptor (sign is handled manually for FormData).
     const response = await this.client.httpClient.post<string>(
       `/live/v2/channelSetting/${params.channelId}/setCoverImg`,
-      null,
-      { params: { imgfile: params.imgfile } }
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-Skip-Auth': 'true',
+        },
+      }
     );
     return response as unknown as string;
   }
@@ -1013,17 +1039,41 @@ export class WebService {
       throw new PolyVValidationError('files must contain 1-6 files');
     }
 
-    // Build FormData
+    // Multipart upload API. type, timestamp and appId participate in the signature
+    // (the image files are submitted as binary streams and are not signed).
+    const timestamp = Date.now();
+    const { sign } = generateSignature(
+      { appId: this.client.config.appId, timestamp, type: params.type },
+      { appSecret: this.client.config.appSecret }
+    );
+
+    // Build FormData with all signed fields plus the file stream(s).
+    // The API documents the file field name as `file` (multiple files share the key).
     const formData = new FormData();
+    formData.append('appId', this.client.config.appId);
+    formData.append('timestamp', String(timestamp));
+    formData.append('sign', sign);
     formData.append('type', params.type);
     for (const file of params.files) {
-      formData.append('files', file);
+      // A filename is required by the multipart upload endpoint; fall back to a
+      // default when the caller passes a nameless Blob instead of a File.
+      if (file instanceof Blob) {
+        formData.append('file', file, (file as File).name || 'image.png');
+      } else {
+        formData.append('file', file);
+      }
     }
 
+    // Make request without the default auth interceptor (sign is handled manually for FormData).
     const response = await this.client.httpClient.post<UploadImageResponse>(
       '/live/v3/common/upload-image',
       formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } }
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-Skip-Auth': 'true',
+        },
+      }
     );
     return response as unknown as UploadImageResponse;
   }

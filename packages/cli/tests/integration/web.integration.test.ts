@@ -7,8 +7,26 @@ import {
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
+import { mkdtempSync, writeFileSync, rmSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+
+// 1x1 transparent PNG used as a real upload fixture for image-upload endpoints.
+const FIXTURE_PNG_BASE64 =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+
+/**
+ * Create a temporary directory containing a small PNG fixture and return its
+ * path. The caller is responsible for removing the returned directory.
+ */
+function createTemporaryImageFile(): string {
+  const dir = mkdtempSync(join(tmpdir(), 'polyv-web-upload-'));
+  const filePath = join(dir, 'logo.png');
+  writeFileSync(filePath, Buffer.from(FIXTURE_PNG_BASE64, 'base64'));
+  return filePath;
+}
 
 describe('web CLI integration', () => {
   it('shows web command group help', () => {
@@ -401,4 +419,85 @@ describe('web CLI integration', () => {
       }
     }
   }, 240000);
+
+  // Exercises the image asset upload endpoint. The SDK previously sent `type` in
+  // the unsigned multipart body (→ "invalid signature") and used the wrong file
+  // field name; both are fixed, and uploads must carry a filename or PolyV
+  // rejects the part with a generic "undefined error". Account-scoped: no
+  // channel needed, it only returns the uploaded image URL(s).
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs web setting image-upload and returns uploaded image URLs',
+    () => {
+      const logoPath = createTemporaryImageFile();
+
+      try {
+        const urls = parseJsonValue(
+          runCliSuccess([
+            'web',
+            'setting',
+            'image-upload',
+            '--type',
+            'logoImage',
+            '--files',
+            logoPath,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+
+        // The endpoint returns an array of uploaded image URLs.
+        expect(Array.isArray(urls)).toBe(true);
+        expect(urls.length).toBeGreaterThan(0);
+        expect(typeof urls[0]).toBe('string');
+        expect(urls[0]).toMatch(/\/\//);
+      } finally {
+        rmSync(join(logoPath, '..'), { recursive: true, force: true });
+      }
+    },
+    120000,
+  );
+
+  // Exercises the channel cover-logo upload endpoint against a throwaway
+  // channel. The SDK previously passed the image Blob as a query param (body
+  // was null) so nothing was uploaded; it now builds a signed multipart body
+  // with the file (carrying a filename). Channel-scoped; the channel is
+  // deleted in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs web info channel-logo-update against a temporary real channel',
+    () => {
+      let channelId: string | undefined;
+      const logoPath = createTemporaryImageFile();
+
+      try {
+        channelId = createTemporaryChannel('Web Logo Upload');
+        const id = channelId;
+
+        const payload = parseJsonObject(
+          runCliSuccess([
+            'web',
+            'info',
+            'channel-logo-update',
+            '--channel-id',
+            id,
+            '--imgfile',
+            logoPath,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+
+        expect(payload.success).toBe(true);
+        expect(typeof payload.result).toBe('string');
+        expect(payload.result).toMatch(/\/\//);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+        rmSync(join(logoPath, '..'), { recursive: true, force: true });
+      }
+    },
+    240000,
+  );
 });

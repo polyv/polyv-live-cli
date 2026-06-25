@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import { basename } from 'path';
 import { Blob } from 'buffer';
 import type { AuthConfig } from '../types/auth';
 import type { ApiServiceConfig } from '../utils/api-command';
@@ -189,7 +190,15 @@ export class WebServiceSdk {
     return client.web.downloadRecordInfo(params);
   }
 
+  // Read a local file into a File-like value that carries its basename.
+  // The filename is required by PolyV's multipart upload endpoints (a part with
+  // no filename is rejected with a generic "undefined error"), so preserve it.
   private readFile(filePath: string) {
-    return new Blob([readFileSync(filePath)]) as any;
+    const data = readFileSync(filePath);
+    // Prefer the global File (Node 20+) which exposes `.name`; fall back to Blob.
+    if (typeof File !== 'undefined') {
+      return new File([data], basename(filePath)) as any;
+    }
+    return new Blob([data]) as any;
   }
 }

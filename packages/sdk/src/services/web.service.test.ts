@@ -5,7 +5,7 @@ import { PolyVValidationError } from '../errors/polyv-validation-error.js';
 
 describe('WebService', () => {
   let service: WebService;
-  let mockClient: { httpClient: { get: Mock; post: Mock } };
+  let mockClient: { httpClient: { get: Mock; post: Mock }; config: { appId: string; appSecret: string } };
 
   beforeEach(() => {
     mockClient = {
@@ -13,6 +13,7 @@ describe('WebService', () => {
         get: vi.fn(),
         post: vi.fn(),
       },
+      config: { appId: 'test-app-id', appSecret: 'test-secret' },
     };
     service = new WebService(mockClient as unknown as PolyVClient);
   });
@@ -183,6 +184,29 @@ describe('WebService', () => {
         channelId: '123456',
         imgfile: undefined as unknown as File,
       })).rejects.toThrow('imgfile is required');
+    });
+
+    it('should upload the logo as a signed multipart body with X-Skip-Auth', async () => {
+      const uploadedUrl = 'https://liveimages.videocc.net/uploaded/images/logo.png';
+      mockClient.httpClient.post.mockResolvedValue(uploadedUrl);
+      const imgfile = new Blob(['png-bytes'], { type: 'image/png' });
+
+      const result = await service.updateChannelLogo({ channelId: '1965681', imgfile });
+
+      expect(mockClient.httpClient.post).toHaveBeenCalledTimes(1);
+      const [url, formData, config] = mockClient.httpClient.post.mock.calls[0];
+      expect(url).toBe('/live/v2/channelSetting/1965681/setCoverImg');
+      // Auth is handled manually for FormData (default signature interceptor skipped).
+      expect(config.headers['X-Skip-Auth']).toBe('true');
+      expect(config.headers['Content-Type']).toBe('multipart/form-data');
+      // The signed form fields plus the image file are present.
+      expect(formData.get('appId')).toBe('test-app-id');
+      expect(formData.get('timestamp')).toBeTruthy();
+      expect(formData.get('sign')).toBeTruthy();
+      const uploadedImg = formData.get('imgfile');
+      expect(uploadedImg).toBeInstanceOf(Blob);
+      expect((uploadedImg as File).name).toBe('logo.png');
+      expect(result).toBe(uploadedUrl);
     });
   });
 
@@ -873,6 +897,32 @@ describe('WebService', () => {
         type: 'coverImage',
         files: [1, 2, 3, 4, 5, 6, 7] as unknown as File[],
       })).rejects.toThrow('files must contain 1-6 files');
+    });
+
+    it('should upload images as a signed multipart body (type signed, X-Skip-Auth, file field)', async () => {
+      const urls = ['https://liveimages.videocc.net/uploaded/images/a.png'];
+      mockClient.httpClient.post.mockResolvedValue(urls);
+      const file = new Blob(['png-bytes'], { type: 'image/png' });
+
+      const result = await service.uploadImage({ type: 'logoImage', files: [file] });
+
+      expect(mockClient.httpClient.post).toHaveBeenCalledTimes(1);
+      const [url, formData, config] = mockClient.httpClient.post.mock.calls[0];
+      expect(url).toBe('/live/v3/common/upload-image');
+      // Auth is handled manually for FormData (default signature interceptor skipped).
+      expect(config.headers['X-Skip-Auth']).toBe('true');
+      expect(config.headers['Content-Type']).toBe('multipart/form-data');
+      // `type` participates in the signature and is included as a form field.
+      expect(formData.get('type')).toBe('logoImage');
+      expect(formData.get('appId')).toBe('test-app-id');
+      expect(formData.get('timestamp')).toBeTruthy();
+      expect(formData.get('sign')).toBeTruthy();
+      // The API documents the file field name as `file`; appending a nameless
+      // Blob with a filename stores it as a File carrying that name.
+      const uploadedFile = formData.get('file');
+      expect(uploadedFile).toBeInstanceOf(Blob);
+      expect((uploadedFile as File).name).toBe('image.png');
+      expect(result).toBe(urls);
     });
   });
 
