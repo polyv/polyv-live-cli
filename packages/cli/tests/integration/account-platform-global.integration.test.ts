@@ -715,4 +715,146 @@ describe('Account, platform, and global CLI integration', () => {
     },
     180000,
   );
+
+  // `platform anchor update-status` is a reversible write on an EXISTING anchor
+  // (unlike create, which would orphan — there is no anchor delete endpoint). The
+  // API forbids disabling an anchor that is bound to a channel or is a default
+  // template, so the safe cycle is to pick an already-disabled anchor (status=0)
+  // and toggle 0->1->0: enabling is always allowed, and restoring it to its
+  // original disabled state is definitionally permitted. The temp channel is only
+  // an API-context asset (update-status is account-scoped, no channel-id consumed).
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform anchor update-status as a reversible real write',
+    () => {
+      let channelId: string | undefined;
+      try {
+        channelId = createTemporaryChannel('Platform Anchor Status Toggle');
+
+        // Discover a toggleable anchor: prefer an already-disabled one (status=0,
+        // safest 0->1->0 cycle); fall back to any anchor not bound to a channel.
+        const listOutput = runCliSuccess([
+          'platform', 'anchor', 'list', '--page', '1', '--page-size', '20', '--output', 'json',
+        ]);
+        const list = parseJsonObject(listOutput);
+        const contents = (Array.isArray(list.contents) ? list.contents : []) as Array<Record<string, unknown>>;
+        const candidate =
+          contents.find(item => Number(item.status) === 0) ??
+          contents.find(item => Number(item.channelCount) === 0);
+        const anchorId = String(candidate?.anchorId ?? '');
+        expect(anchorId).toMatch(/^\d+$/);
+
+        const readStatus = () =>
+          Number(parseJsonObject(runCliSuccess([
+            'platform', 'anchor', 'get', '--anchor-id', anchorId, '--output', 'json',
+          ])).status);
+
+        // PolyV has a read replica with eventual consistency, so poll for the
+        // expected status before asserting (sync helpers + sync Atomics sleep).
+        const waitForStatus = (expected: number, attempts = 6): void => {
+          let last = readStatus();
+          for (let i = 0; i < attempts && last !== expected; i += 1) {
+            sleep(1000);
+            last = readStatus();
+          }
+          if (last !== expected) {
+            throw new Error(`anchor ${anchorId} status did not reach ${expected} (last=${last})`);
+          }
+        };
+
+        const originalStatus = readStatus();
+        const toggledStatus = originalStatus === 0 ? 1 : 0;
+
+        // Toggle to the opposite status.
+        const toggleOut = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'update-status', '--anchor-id', anchorId,
+          '--status', String(toggledStatus), '--force', '--output', 'json',
+        ]));
+        expect(toggleOut.success).toBe(true);
+        expect(Number(toggleOut.anchorId)).toBe(Number(anchorId));
+        expect(Number(toggleOut.status)).toBe(toggledStatus);
+        waitForStatus(toggledStatus);
+
+        // Restore the original status.
+        const restoreOut = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'update-status', '--anchor-id', anchorId,
+          '--status', String(originalStatus), '--force', '--output', 'json',
+        ]));
+        expect(restoreOut.success).toBe(true);
+        waitForStatus(originalStatus);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
+  // `platform anchor update` is a reversible write on an EXISTING anchor (only
+  // `create` orphans, since there is no anchor delete endpoint). The `description`
+  // field is freely reversible (no disable-style constraint), so we read it,
+  // rewrite it, verify persistence, then restore the original value. The anchor is
+  // chosen among already-disabled test anchors (status=0) to avoid touching any
+  // anchor in active use.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform anchor update as a reversible real write',
+    () => {
+      let channelId: string | undefined;
+      try {
+        channelId = createTemporaryChannel('Platform Anchor Update');
+
+        // Discover a disabled test anchor (status=0) — not in active use.
+        const listOutput = runCliSuccess([
+          'platform', 'anchor', 'list', '--page', '1', '--page-size', '20', '--output', 'json',
+        ]);
+        const list = parseJsonObject(listOutput);
+        const contents = (Array.isArray(list.contents) ? list.contents : []) as Array<Record<string, unknown>>;
+        const candidate = contents.find(item => Number(item.status) === 0);
+        const anchorId = String(candidate?.anchorId ?? '');
+        expect(anchorId).toMatch(/^\d+$/);
+
+        const readDescription = () =>
+          String(parseJsonObject(runCliSuccess([
+            'platform', 'anchor', 'get', '--anchor-id', anchorId, '--output', 'json',
+          ])).description ?? '');
+
+        // Poll for the expected description to absorb read-replica lag.
+        const waitForDescription = (expected: string, attempts = 6): void => {
+          let last = readDescription();
+          for (let i = 0; i < attempts && last !== expected; i += 1) {
+            sleep(1000);
+            last = readDescription();
+          }
+          if (last !== expected) {
+            throw new Error(`anchor ${anchorId} description did not reach "${expected}" (last="${last}")`);
+          }
+        };
+
+        const originalDescription = readDescription();
+        const probeDescription = 'gnhf-anchor-update-probe';
+
+        // Rewrite the description.
+        const updateOut = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'update', '--anchor-id', anchorId,
+          '--description', probeDescription, '--force', '--output', 'json',
+        ]));
+        expect(updateOut.success).toBe(true);
+        expect(Number(updateOut.anchorId)).toBe(Number(anchorId));
+        waitForDescription(probeDescription);
+
+        // Restore the original description.
+        const restoreOut = parseJsonObject(runCliSuccess([
+          'platform', 'anchor', 'update', '--anchor-id', anchorId,
+          '--description', originalDescription, '--force', '--output', 'json',
+        ]));
+        expect(restoreOut.success).toBe(true);
+        waitForDescription(originalDescription);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
 });

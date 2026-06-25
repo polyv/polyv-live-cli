@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:44:46.380Z",
+  "generatedAt": "2026-06-25T18:54:22.312Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 546,
-    "referencedCommandPathsExcludingHelp": 486,
-    "coveredLeafTargetsIncludingHelp": 507,
-    "missingLeafTargetsIncludingHelp": 60,
-    "coveredRealExecutionLeafTargets": 480,
-    "missingRealExecutionLeafTargets": 87,
-    "realExecutionCoveragePercent": 84.66,
-    "includingHelpCoveragePercent": 89.42,
-    "integrationReferences": 1132,
-    "realExecutionReferences": 725,
+    "referencedCommandPathsIncludingHelp": 548,
+    "referencedCommandPathsExcludingHelp": 488,
+    "coveredLeafTargetsIncludingHelp": 509,
+    "missingLeafTargetsIncludingHelp": 58,
+    "coveredRealExecutionLeafTargets": 482,
+    "missingRealExecutionLeafTargets": 85,
+    "realExecutionCoveragePercent": 85.01,
+    "includingHelpCoveragePercent": 89.77,
+    "integrationReferences": 1140,
+    "realExecutionReferences": 733,
     "helpReferences": 407
   },
   "byTopLevel": [
@@ -226,12 +226,12 @@
     {
       "command": "platform",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 19,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 20,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 86.36,
-      "includingHelpCoveragePercent": 90.91
+      "coveredRealExecutionLeafTargets": 21,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 22,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 95.45,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "playback",
@@ -913,28 +913,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 676
-    },
-    {
-      "command": "platform anchor update",
-      "path": [
-        "platform",
-        "anchor",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 707
-    },
-    {
-      "command": "platform anchor update-status",
-      "path": [
-        "platform",
-        "anchor",
-        "update-status"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 742
     },
     {
       "command": "playback add-vod",
@@ -1666,28 +1644,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 491
-    },
-    {
-      "command": "platform anchor update",
-      "path": [
-        "platform",
-        "anchor",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 707
-    },
-    {
-      "command": "platform anchor update-status",
-      "path": [
-        "platform",
-        "anchor",
-        "update-status"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 742
     },
     {
       "command": "playback add-vod",
@@ -4697,6 +4653,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 792
+    },
+    {
+      "command": "platform anchor update",
+      "path": [
+        "platform",
+        "anchor",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 707
+    },
+    {
+      "command": "platform anchor update-status",
+      "path": [
+        "platform",
+        "anchor",
+        "update-status"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 742
     },
     {
       "command": "platform callback get",
@@ -10752,7 +10730,7 @@
     },
     {
       "command": "platform anchor get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -10763,7 +10741,7 @@
     },
     {
       "command": "platform anchor list",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 4,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -10794,6 +10772,28 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 706,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "platform anchor update",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 837,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "platform anchor update-status",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 768,
         "source": "array-literal"
       },
       "firstHelpReference": null
