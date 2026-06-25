@@ -1,8 +1,9 @@
-import { runCli } from '../helpers/cli-runner';
+import { runCli, sleep } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
   parseJsonObject,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
@@ -260,4 +261,132 @@ describe('coupon CLI integration', () => {
     expect(result.exitCode).toBe(0);
     expect(result.output).toContain('--coupon-ids');
   });
+
+  // Command-surface check for platform coupon update (no credentials).
+  // The option is --config-json (not --config) to avoid collision with the
+  // program-level global --config <path> option.
+  it('exposes the platform coupon update command with --config-json', () => {
+    const result = runCli(['platform', 'coupon', 'update', '--help'], {
+      includeTestEnv: false,
+    });
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toContain('--config-json');
+    expect(result.output).toContain('--coupon-id');
+  });
+
+  // Real-CLI reversible write: platform coupon update. Builds on the coupon
+  // create lifecycle (coupon add returns couponId) to exercise the update
+  // endpoint /live/v4/user/coupon/update with a real coupon, then verifies the
+  // change persisted by reading the coupon back via `coupon list`, and finally
+  // deletes the coupon (and the temporary channel) in `finally`. A freshly
+  // created coupon is in NOT_START status, so availableAmount can be freely
+  // modified (the API forbids shrinking availableAmount only for GOING coupons).
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform coupon update against real CLI',
+    () => {
+      let channelId: string | undefined;
+      let couponId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Coupon Update');
+        const now = Date.now();
+        const day = 24 * 60 * 60 * 1000;
+
+        // coupon add (availableAmount = 5) -> { couponId, ... }
+        const addOut = parseJsonObject(
+          runCliSuccess([
+            'coupon',
+            'add',
+            '--name',
+            `gnhf-coupon-upd-${now}`,
+            '--type',
+            'MAX_OUT',
+            '--availableAmount',
+            '5',
+            '--receiveStart',
+            String(now),
+            '--receiveEnd',
+            String(now + day * 7),
+            '--useTimeType',
+            'RANGE',
+            '--useStart',
+            String(now),
+            '--useEnd',
+            String(now + day * 30),
+            '--condition',
+            'FULL_REDUCE',
+            '--full',
+            '100',
+            '--reduce',
+            '20',
+            '--limitPerPerson',
+            '1',
+            '--output',
+            'json',
+          ])
+        );
+        couponId = String(addOut.couponId);
+
+        // platform coupon update -> { success: true, couponId }
+        const updateOut = parseJsonObject(
+          runCliSuccess([
+            'platform',
+            'coupon',
+            'update',
+            '--coupon-id',
+            couponId,
+            '--config-json',
+            JSON.stringify({ availableAmount: 10 }),
+            '--force',
+            '--output',
+            'json',
+          ])
+        );
+        expect(updateOut.success).toBe(true);
+        expect(String(updateOut.couponId)).toBe(couponId);
+
+        // Verify persistence by reading the coupon back. PolyV has a read-replica
+        // propagation delay, so poll `coupon list` until the coupon reflects the
+        // new availableAmount (bounded retries, not an unbounded block).
+        const findCouponAmount = (): number | undefined => {
+          const list = parseJsonValue(
+            runCliSuccess(['coupon', 'list', '--size', '100', '--output', 'json'])
+          ) as Array<Record<string, unknown>>;
+          const found = (Array.isArray(list) ? list : []).find(
+            (c) => String(c.couponId) === couponId
+          );
+          return found ? Number(found.availableAmount) : undefined;
+        };
+
+        let observed: number | undefined;
+        for (let attempt = 0; attempt < 6; attempt += 1) {
+          observed = findCouponAmount();
+          if (observed === 10) {
+            break;
+          }
+          sleep(1000);
+        }
+        expect(observed).toBe(10);
+
+        // coupon delete closes the create -> update -> delete loop.
+        const couponDelete = parseJsonObject(
+          runCliSuccess(['coupon', 'delete', '--couponIds', couponId, '--output', 'json'])
+        );
+        expect(Number(couponDelete.deleted)).toBeGreaterThanOrEqual(1);
+        couponId = undefined;
+      } finally {
+        if (couponId) {
+          try {
+            runCliSuccess(['coupon', 'delete', '--couponIds', couponId, '--output', 'json']);
+          } catch {
+            // Coupon may already be deleted or invalid; ignore cleanup errors.
+          }
+        }
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    240000
+  );
 });

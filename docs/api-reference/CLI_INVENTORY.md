@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-25T18:20:39.964Z
+生成时间：2026-06-25T18:31:00.932Z
 
 ## 来源与规则
 
@@ -447,7 +447,7 @@
 | `platform callback get` | `packages/cli/src/commands/platform.commands.ts:376` |
 | `platform callback update` | `packages/cli/src/commands/platform.commands.ts:416` |
 | `platform content-group list` | `packages/cli/src/commands/platform.commands.ts:821` |
-| `platform coupon status-batch` | `packages/cli/src/commands/platform.commands.ts:900` |
+| `platform coupon status-batch` | `packages/cli/src/commands/platform.commands.ts:903` |
 | `platform coupon update` | `packages/cli/src/commands/platform.commands.ts:875` |
 | `platform coupon viewer-list` | `packages/cli/src/commands/platform.commands.ts:846` |
 | `platform label create` | `packages/cli/src/commands/platform-label.commands.ts:143` |

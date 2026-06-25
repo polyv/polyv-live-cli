@@ -876,7 +876,10 @@ Note:
     .command('update')
     .description('Update coupon fields from a JSON object')
     .requiredOption('--coupon-id <id>', 'coupon ID')
-    .requiredOption('--config <json>', 'coupon update JSON object', parseJsonObject)
+    // NOTE: --config-json (not --config) to avoid collision with the program-level
+    // global --config <path> option, which greedily consumes any --config value
+    // before the subcommand can read it.
+    .requiredOption('--config-json <json>', 'coupon update JSON object', parseJsonObject)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -886,7 +889,7 @@ Note:
         const platformHandler = new PlatformHandler(authConfig, serviceConfig);
         const updateOptions: PlatformCouponUpdateOptions = {
           couponId: options.couponId,
-          config: options.config,
+          config: options.configJson,
           force: options.force,
           output: options.output,
         };

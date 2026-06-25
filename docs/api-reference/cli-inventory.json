@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:20:39.964Z",
+  "generatedAt": "2026-06-25T18:31:00.932Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -4705,7 +4705,7 @@
       "depth": 3,
       "signature": "status-batch",
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 900
+      "line": 903
     },
     {
       "command": "platform coupon update",

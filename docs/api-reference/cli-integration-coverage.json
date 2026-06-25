@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:20:49.824Z",
+  "generatedAt": "2026-06-25T18:31:01.154Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -15,22 +15,22 @@
     "staticAnalysis": "This report is static analysis of integration test source. Dynamic command construction may require manual review if it is not visible as string literals."
   },
   "summary": {
-    "inventoryGeneratedAt": "2026-06-25T18:20:39.964Z",
+    "inventoryGeneratedAt": "2026-06-25T18:31:00.932Z",
     "integrationFiles": 89,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 545,
-    "referencedCommandPathsExcludingHelp": 484,
+    "referencedCommandPathsExcludingHelp": 485,
     "coveredLeafTargetsIncludingHelp": 506,
     "missingLeafTargetsIncludingHelp": 61,
-    "coveredRealExecutionLeafTargets": 478,
-    "missingRealExecutionLeafTargets": 89,
-    "realExecutionCoveragePercent": 84.3,
+    "coveredRealExecutionLeafTargets": 479,
+    "missingRealExecutionLeafTargets": 88,
+    "realExecutionCoveragePercent": 84.48,
     "includingHelpCoveragePercent": 89.24,
-    "integrationReferences": 1123,
-    "realExecutionReferences": 717,
-    "helpReferences": 406
+    "integrationReferences": 1129,
+    "realExecutionReferences": 722,
+    "helpReferences": 407
   },
   "byTopLevel": [
     {
@@ -226,11 +226,11 @@
     {
       "command": "platform",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 18,
-      "missingRealExecutionLeafTargets": 4,
+      "coveredRealExecutionLeafTargets": 19,
+      "missingRealExecutionLeafTargets": 3,
       "coveredLeafTargetsIncludingHelp": 20,
       "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 81.82,
+      "realExecutionCoveragePercent": 86.36,
       "includingHelpCoveragePercent": 90.91
     },
     {
@@ -935,17 +935,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 742
-    },
-    {
-      "command": "platform coupon update",
-      "path": [
-        "platform",
-        "coupon",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 875
     },
     {
       "command": "playback add-vod",
@@ -4773,7 +4762,18 @@
       ],
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 900
+      "line": 903
+    },
+    {
+      "command": "platform coupon update",
+      "path": [
+        "platform",
+        "coupon",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 875
     },
     {
       "command": "platform coupon viewer-list",
@@ -9376,17 +9376,17 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 14,
+        "line": 15,
         "source": "array-literal"
       }
     },
     {
       "command": "coupon add",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 40,
+        "line": 41,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9397,7 +9397,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 92,
+        "line": 93,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9412,7 +9412,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 111,
+        "line": 112,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9468,22 +9468,22 @@
     },
     {
       "command": "coupon delete",
-      "realExecutionReferences": 4,
+      "realExecutionReferences": 6,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 128,
+        "line": 129,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
       "command": "coupon list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/legacy-read-cli.integration.test.ts",
-        "line": 41,
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 353,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -10860,20 +10860,24 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 211,
+        "line": 212,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 257,
+        "line": 258,
         "source": "array-literal"
       }
     },
     {
       "command": "platform coupon update",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
+        "line": 332,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 62,
@@ -10886,7 +10890,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/coupon-cli.integration.test.ts",
-        "line": 78,
+        "line": 79,
         "source": "array-literal"
       },
       "firstHelpReference": null
