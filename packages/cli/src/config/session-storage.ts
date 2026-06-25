@@ -28,9 +28,14 @@ export class SessionStorage {
    * @returns Session directory path
    */
   private getSessionDirectory(): string {
-    // Respect HOME environment variable for testing isolation
-    const homeDir = process.env['HOME'] || os.homedir();
-    return path.join(homeDir, this.config.sessionDir);
+    // Respect HOME environment variable for testing isolation.
+    // Fall back through os.homedir() / os.tmpdir() and the default session dir
+    // so a missing HOME or a stale config object never crashes the CLI at
+    // startup — session persistence is best-effort and must not block any
+    // command (including --help).
+    const homeDir = process.env['HOME'] || os.homedir() || os.tmpdir();
+    const sessionDir = this.config.sessionDir || DEFAULT_SESSION_CONFIG.sessionDir || '.polyv/sessions';
+    return path.join(homeDir, sessionDir);
   }
 
   /**

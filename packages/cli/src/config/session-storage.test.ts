@@ -75,6 +75,27 @@ describe('SessionStorage', () => {
       expect(customStorage.getSessionDir()).toBe(path.join(mockHomeDir, '.custom/sessions'));
       expect(customStorage.getEnvVarName()).toBe('CUSTOM_SESSION_ACCOUNT');
     });
+
+    it('should not throw when HOME is unset and os.homedir() is unavailable (falls back to os.tmpdir())', () => {
+      // Regression: a missing HOME must never crash the CLI at startup —
+      // session persistence is best-effort. See auth-provider module-load path.
+      delete process.env['HOME'];
+      mockOs.homedir.mockReturnValue(undefined as unknown as string);
+      mockOs.tmpdir.mockReturnValue('/mock/tmp');
+
+      const storage = new SessionStorage();
+
+      expect(storage.getSessionDir()).toBe(path.join('/mock/tmp', DEFAULT_SESSION_CONFIG.sessionDir));
+    });
+
+    it('should not throw and fall back to the default session dir when config lacks sessionDir', () => {
+      // Regression: an explicit undefined sessionDir (e.g. from a stale build
+      // where DEFAULT_SESSION_CONFIG.sessionDir is missing) must fall back
+      // rather than crash path.join at construction time.
+      const storage = new SessionStorage({ sessionDir: undefined } as Partial<SessionStorageConfig>);
+
+      expect(storage.getSessionDir()).toBe(path.join(mockHomeDir, DEFAULT_SESSION_CONFIG.sessionDir));
+    });
   });
 
   describe('setSessionAccount', () => {
