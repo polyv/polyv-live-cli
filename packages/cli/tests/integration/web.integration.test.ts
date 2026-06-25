@@ -1,4 +1,4 @@
-import { runCli } from '../helpers/cli-runner';
+import { runCli, sleep } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -565,5 +565,102 @@ describe('web CLI integration', () => {
       }
     },
     180000,
+  );
+
+  // Exercises the channel gift-donate (good) update endpoint. The SDK
+  // previously put channelId inside the unsigned JSON body; per update_good.md
+  // channelId is a *signed URL query* parameter, so the server did not see it
+  // and silently applied the update to the account-wide "通用" settings instead
+  // of the channel. The fix routes channelId through config.params (signed),
+  // leaving only {goods, enabled} in the body. This test verifies the update
+  // now persists on the channel: read → update with a real uploaded image →
+  // poll donate get (read-replica aware) → assert the good landed on the
+  // channel. The good is channel-scoped and is removed with the channel in
+  // `finally`; a real image URL is obtained via the account-level image-upload.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs web donate good-update against a temporary real channel',
+    () => {
+      let channelId: string | undefined;
+      const logoPath = createTemporaryImageFile();
+
+      try {
+        channelId = createTemporaryChannel('Web Donate Good Update');
+        const id = channelId;
+
+        // A fresh channel starts with gift-donate disabled and no goods.
+        const readChannelGoods = () => {
+          const donate = parseJsonValue(
+            runCliSuccess(['web', 'donate', 'get', '--channel-id', id, '--output', 'json']),
+          ) as { donateGoodEnabled?: string; goods?: Array<{ goodName?: string }> };
+          return donate;
+        };
+
+        const before = readChannelGoods();
+        expect(before.goods ?? []).toEqual([]);
+
+        // Obtain a real, fetchable PolyV CDN image URL (fake URLs are rejected
+        // by the server with "upload goods image failure").
+        const imgUrl = String(
+          (parseJsonValue(
+            runCliSuccess([
+              'web',
+              'setting',
+              'image-upload',
+              '--type',
+              'logoImage',
+              '--files',
+              logoPath,
+              '--force',
+              '--output',
+              'json',
+            ]),
+          ) as string[])[0],
+        );
+        expect(imgUrl).toMatch(/\/\//);
+
+        const goods = JSON.stringify([
+          { goodName: '玫瑰', goodImg: imgUrl, goodPrice: 10, goodEnabled: 'Y' },
+        ]);
+
+        const payload = parseJsonObject(
+          runCliSuccess([
+            'web',
+            'donate',
+            'good-update',
+            '--channel-id',
+            id,
+            '--goods',
+            goods,
+            '--enabled',
+            'Y',
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(payload.success).toBe(true);
+        expect(payload.result).toBe(true);
+
+        // PolyV has an eventually-consistent read replica: poll until the
+        // newly-configured good is readable on the channel.
+        let persisted = false;
+        for (let attempt = 0; attempt < 8; attempt += 1) {
+          const after = readChannelGoods();
+          const names = (after.goods ?? []).map((g) => g.goodName);
+          if (after.donateGoodEnabled === 'Y' && names.includes('玫瑰')) {
+            persisted = true;
+            break;
+          }
+          sleep(1500);
+        }
+        expect(persisted).toBe(true);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+        rmSync(join(logoPath, '..'), { recursive: true, force: true });
+      }
+    },
+    240000,
   );
 });

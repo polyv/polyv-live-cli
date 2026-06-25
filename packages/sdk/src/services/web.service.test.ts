@@ -734,15 +734,17 @@ describe('WebService', () => {
         enabled: 'Y',
       });
 
+      // channelId travels via the signed URL query (per update_good.md); the
+      // body holds only the unsigned goods + enabled payload.
       expect(mockClient.httpClient.post).toHaveBeenCalledWith(
         '/live/v3/channel/donate/update-good',
         {
-          channelId: '123456',
           goods: [
             { goodName: 'Rose', goodImg: 'http://example.com/rose.png', goodPrice: 10, goodEnabled: 'Y' },
           ],
           enabled: 'Y',
-        }
+        },
+        { params: { channelId: '123456' } }
       );
       expect(result).toBe('success');
     });

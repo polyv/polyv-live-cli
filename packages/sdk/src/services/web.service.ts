@@ -883,20 +883,29 @@ export class WebService {
       throw new PolyVValidationError('enabled must be Y or N');
     }
 
-    // Build request body
+    // Per update_good.md the signed parameters (channelId, timestamp, appId)
+    // travel via the URL query; the request body (goods, enabled) is NOT signed.
+    // channelId MUST therefore go into config.params (which the signing
+    // interceptor signs) rather than the body — otherwise the server does not
+    // see a channelId in the query and silently treats the call as an account-
+    // wide ("通用") update, mutating global settings instead of the channel's.
+    const apiParams: Record<string, unknown> = {};
+    if (params.channelId) {
+      apiParams.channelId = params.channelId;
+    }
+
+    // Build request body (unsigned, application/json)
     const body: Record<string, unknown> = {
       goods: params.goods,
     };
-    if (params.channelId) {
-      body.channelId = params.channelId;
-    }
     if (params.enabled) {
       body.enabled = params.enabled;
     }
 
     const response = await this.client.httpClient.post<string>(
       '/live/v3/channel/donate/update-good',
-      body
+      body,
+      { params: apiParams }
     );
     return response as unknown as string;
   }

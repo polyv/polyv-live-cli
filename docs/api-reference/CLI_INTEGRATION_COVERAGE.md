@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T18:31:01.154Z
+Generated at: 2026-06-25T18:44:46.380Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 479 |
-| Missing real-execution leaf subcommands | 88 |
-| Real-execution coverage | 84.48% |
-| Leaf subcommands referenced including help | 506 |
-| Missing including help | 61 |
+| Real-executed leaf subcommands | 480 |
+| Missing real-execution leaf subcommands | 87 |
+| Real-execution coverage | 84.66% |
+| Leaf subcommands referenced including help | 507 |
+| Missing including help | 60 |
 
 ## By Top-Level Command
 
@@ -57,7 +57,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 28 | 3 | 90.32% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 31 | 3 | 91.18% | 33 | 1 |
+| `web` | 34 | 32 | 2 | 94.12% | 34 | 0 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -151,5 +151,4 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
 | `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
-| `web donate good-update` | `packages/cli/src/commands/web.commands.ts:180` |
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |

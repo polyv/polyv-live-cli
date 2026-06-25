@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:31:01.154Z",
+  "generatedAt": "2026-06-25T18:44:46.380Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 545,
-    "referencedCommandPathsExcludingHelp": 485,
-    "coveredLeafTargetsIncludingHelp": 506,
-    "missingLeafTargetsIncludingHelp": 61,
-    "coveredRealExecutionLeafTargets": 479,
-    "missingRealExecutionLeafTargets": 88,
-    "realExecutionCoveragePercent": 84.48,
-    "includingHelpCoveragePercent": 89.24,
-    "integrationReferences": 1129,
-    "realExecutionReferences": 722,
+    "referencedCommandPathsIncludingHelp": 546,
+    "referencedCommandPathsExcludingHelp": 486,
+    "coveredLeafTargetsIncludingHelp": 507,
+    "missingLeafTargetsIncludingHelp": 60,
+    "coveredRealExecutionLeafTargets": 480,
+    "missingRealExecutionLeafTargets": 87,
+    "realExecutionCoveragePercent": 84.66,
+    "includingHelpCoveragePercent": 89.42,
+    "integrationReferences": 1132,
+    "realExecutionReferences": 725,
     "helpReferences": 407
   },
   "byTopLevel": [
@@ -386,12 +386,12 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 31,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 33,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 91.18,
-      "includingHelpCoveragePercent": 97.06
+      "coveredRealExecutionLeafTargets": 32,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 34,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 94.12,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "webapp",
@@ -1338,17 +1338,6 @@
       "line": 173
     },
     {
-      "command": "web donate good-update",
-      "path": [
-        "web",
-        "donate",
-        "good-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 180
-    },
-    {
       "command": "web setting global-enabled-update",
       "path": [
         "web",
@@ -2002,17 +1991,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 136
-    },
-    {
-      "command": "web donate good-update",
-      "path": [
-        "web",
-        "donate",
-        "good-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 180
     }
   ],
   "coveredRealExecutionTargets": [
@@ -6787,6 +6765,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 169
+    },
+    {
+      "command": "web donate good-update",
+      "path": [
+        "web",
+        "donate",
+        "good-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 180
     },
     {
       "command": "web info channel-logo-update",
@@ -13908,7 +13897,7 @@
     },
     {
       "command": "web donate get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
@@ -13920,6 +13909,17 @@
         "line": 84,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "web donate good-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 626,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "web info channel-logo-update",
@@ -14137,7 +14137,7 @@
     },
     {
       "command": "web setting image-upload",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
