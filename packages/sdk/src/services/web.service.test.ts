@@ -1222,6 +1222,32 @@ describe('WebService', () => {
         file: undefined as unknown as File,
       })).rejects.toThrow('file is required');
     });
+
+    it('should upload the whitelist as a signed multipart body (rank+channelId signed, X-Skip-Auth, file field)', async () => {
+      mockClient.httpClient.post.mockResolvedValue('true');
+      const file = new Blob(['xls-bytes'], { type: 'application/vnd.ms-excel' });
+
+      const result = await service.uploadWhiteList({ rank: 1, channelId: '123456', file });
+
+      expect(mockClient.httpClient.post).toHaveBeenCalledTimes(1);
+      const [url, formData, config] = mockClient.httpClient.post.mock.calls[0];
+      expect(url).toBe('/live/v3/channel/auth/upload-white-list');
+      // Auth is handled manually for FormData (default signature interceptor skipped).
+      expect(config.headers['X-Skip-Auth']).toBe('true');
+      expect(config.headers['Content-Type']).toBe('multipart/form-data');
+      // Per the upload-white-list doc, channelId, rank, timestamp and appId
+      // participate in the signature and are sent as form fields alongside sign.
+      expect(formData.get('appId')).toBe('test-app-id');
+      expect(formData.get('timestamp')).toBeTruthy();
+      expect(formData.get('sign')).toBeTruthy();
+      expect(formData.get('rank')).toBe('1');
+      expect(formData.get('channelId')).toBe('123456');
+      // The file part carries a filename (required by the multipart endpoint).
+      const uploadedFile = formData.get('file');
+      expect(uploadedFile).toBeInstanceOf(Blob);
+      expect((uploadedFile as File).name).toBe('whitelist.xls');
+      expect(result).toBe('true');
+    });
   });
 
   describe('downloadWhiteList', () => {

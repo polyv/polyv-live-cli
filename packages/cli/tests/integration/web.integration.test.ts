@@ -7,7 +7,7 @@ import {
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
-import { mkdtempSync, writeFileSync, rmSync } from 'fs';
+import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 
@@ -25,6 +25,25 @@ function createTemporaryImageFile(): string {
   const dir = mkdtempSync(join(tmpdir(), 'polyv-web-upload-'));
   const filePath = join(dir, 'logo.png');
   writeFileSync(filePath, Buffer.from(FIXTURE_PNG_BASE64, 'base64'));
+  return filePath;
+}
+
+// A minimal .xls (BIFF/OLE2 — NOT .xlsx) watch-condition whitelist fixture,
+// committed at tests/fixtures/whitelist-template.xls. The upload-white-list
+// server parser (POI HSSF) reads sheet "白名单", skips the first two rows
+// (title + header) and imports column 0 as 会员码, column 1 as 昵称 from row
+// index 2 onward. .xlsx uploads are rejected with "whitelist excel no data", so
+// the fixture must be the legacy .xls binary format. Generated once offline.
+const FIXTURE_WHITELIST_XLS_PATH = join(__dirname, '..', 'fixtures', 'whitelist-template.xls');
+
+/**
+ * Copy the committed whitelist .xls fixture into a temp file and return that
+ * path. The caller is responsible for removing the returned file.
+ */
+function createTemporaryWhitelistFile(): string {
+  const dir = mkdtempSync(join(tmpdir(), 'polyv-web-wl-'));
+  const filePath = join(dir, 'whitelist.xls');
+  writeFileSync(filePath, readFileSync(FIXTURE_WHITELIST_XLS_PATH));
   return filePath;
 }
 
@@ -499,5 +518,52 @@ describe('web CLI integration', () => {
       }
     },
     240000,
+  );
+
+  // Exercises the channel watch-condition whitelist batch import. The SDK
+  // previously posted an unsigned multipart body (server returned "invalid
+  // signature"); it now signs (channelId, rank, timestamp, appId) and posts the
+  // file as a binary stream with X-Skip-Auth. The server parser only accepts the
+  // legacy .xls (HSSF) format and skips the first two rows, so the fixture is a
+  // committed .xls with data starting at row index 2. Channel-scoped: the imported
+  // whitelist entries are removed with the channel in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs web auth whitelist upload against a temporary real channel',
+    () => {
+      let channelId: string | undefined;
+      const whitelistPath = createTemporaryWhitelistFile();
+
+      try {
+        channelId = createTemporaryChannel('Web Whitelist Upload');
+        const id = channelId;
+
+        const payload = parseJsonObject(
+          runCliSuccess([
+            'web',
+            'auth',
+            'whitelist',
+            'upload',
+            '--rank',
+            '1',
+            '--channel-id',
+            id,
+            '--file',
+            whitelistPath,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+
+        expect(payload.success).toBe(true);
+        expect(payload.result).toBe(true);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+        rmSync(join(whitelistPath, '..'), { recursive: true, force: true });
+      }
+    },
+    180000,
   );
 });

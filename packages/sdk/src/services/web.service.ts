@@ -1444,18 +1444,48 @@ export class WebService {
       throw new PolyVValidationError('file is required');
     }
 
-    // Build FormData
+    // Multipart upload API. Per the upload-white-list doc, channelId, rank,
+    // timestamp and appId participate in the signature (the file itself is
+    // submitted as a binary stream and is not signed), and sign plus those
+    // fields are posted as form fields alongside the file.
+    const timestamp = Date.now();
+    const signParams: Record<string, unknown> = {
+      appId: this.client.config.appId,
+      timestamp,
+      rank: params.rank,
+    };
+    if (params.channelId) {
+      signParams.channelId = params.channelId;
+    }
+    const { sign } = generateSignature(signParams, { appSecret: this.client.config.appSecret });
+
+    // Build FormData with all signed fields plus the file stream. A filename is
+    // required by the multipart upload endpoint; fall back to a default when the
+    // caller passes a nameless Blob instead of a File.
     const formData = new FormData();
+    formData.append('appId', this.client.config.appId);
+    formData.append('timestamp', String(timestamp));
+    formData.append('sign', sign);
     formData.append('rank', params.rank.toString());
-    formData.append('file', params.file);
     if (params.channelId) {
       formData.append('channelId', params.channelId);
     }
+    if (params.file instanceof Blob) {
+      formData.append('file', params.file, (params.file as File).name || 'whitelist.xls');
+    } else {
+      formData.append('file', params.file);
+    }
 
+    // Make request without the default auth interceptor (sign is handled manually for FormData).
     const response = await this.client.httpClient.post<string>(
       '/live/v3/channel/auth/upload-white-list',
       formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } }
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-Skip-Auth': 'true',
+        },
+      }
     );
     return response as unknown as string;
   }

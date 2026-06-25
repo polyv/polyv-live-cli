@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T14:33:49.702Z
+Generated at: 2026-06-25T15:12:47.917Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 458 |
-| Missing real-execution leaf subcommands | 109 |
-| Real-execution coverage | 80.78% |
+| Real-executed leaf subcommands | 459 |
+| Missing real-execution leaf subcommands | 108 |
+| Real-execution coverage | 80.95% |
 | Leaf subcommands referenced including help | 498 |
 | Missing including help | 69 |
 
@@ -57,7 +57,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 26 | 5 | 83.87% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 30 | 4 | 88.24% | 33 | 1 |
+| `web` | 34 | 31 | 3 | 91.18% | 33 | 1 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -173,4 +173,3 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
 | `web donate good-update` | `packages/cli/src/commands/web.commands.ts:180` |
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
-| `web auth whitelist upload` | `packages/cli/src/commands/web.commands.ts:253` |
