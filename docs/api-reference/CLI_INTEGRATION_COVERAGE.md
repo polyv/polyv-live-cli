@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T17:16:56.696Z
+Generated at: 2026-06-25T17:26:26.170Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 471 |
-| Missing real-execution leaf subcommands | 96 |
-| Real-execution coverage | 83.07% |
+| Real-executed leaf subcommands | 472 |
+| Missing real-execution leaf subcommands | 95 |
+| Real-execution coverage | 83.25% |
 | Leaf subcommands referenced including help | 505 |
 | Missing including help | 62 |
 
@@ -37,7 +37,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
-| `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
+| `lottery` | 24 | 22 | 2 | 91.67% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
@@ -110,7 +110,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `lottery receive-info` | `packages/cli/src/commands/lottery.commands.ts:524` |
-| `lottery lucky-bag winners` | `packages/cli/src/commands/lottery.commands.ts:762` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T17:16:56.696Z",
+  "generatedAt": "2026-06-25T17:26:26.170Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,16 +21,16 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 544,
-    "referencedCommandPathsExcludingHelp": 477,
+    "referencedCommandPathsExcludingHelp": 478,
     "coveredLeafTargetsIncludingHelp": 505,
     "missingLeafTargetsIncludingHelp": 62,
-    "coveredRealExecutionLeafTargets": 471,
-    "missingRealExecutionLeafTargets": 96,
-    "realExecutionCoveragePercent": 83.07,
+    "coveredRealExecutionLeafTargets": 472,
+    "missingRealExecutionLeafTargets": 95,
+    "realExecutionCoveragePercent": 83.25,
     "includingHelpCoveragePercent": 89.07,
-    "integrationReferences": 1099,
-    "realExecutionReferences": 696,
-    "helpReferences": 403
+    "integrationReferences": 1101,
+    "realExecutionReferences": 697,
+    "helpReferences": 404
   },
   "byTopLevel": [
     {
@@ -186,11 +186,11 @@
     {
       "command": "lottery",
       "targetLeafCommands": 24,
-      "coveredRealExecutionLeafTargets": 21,
-      "missingRealExecutionLeafTargets": 3,
+      "coveredRealExecutionLeafTargets": 22,
+      "missingRealExecutionLeafTargets": 2,
       "coveredLeafTargetsIncludingHelp": 23,
       "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 87.5,
+      "realExecutionCoveragePercent": 91.67,
       "includingHelpCoveragePercent": 95.83
     },
     {
@@ -904,17 +904,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 524
-    },
-    {
-      "command": "lottery lucky-bag winners",
-      "path": [
-        "lottery",
-        "lucky-bag",
-        "winners"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 762
     },
     {
       "command": "material delete",
@@ -4556,6 +4545,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 648
+    },
+    {
+      "command": "lottery lucky-bag winners",
+      "path": [
+        "lottery",
+        "lucky-bag",
+        "winners"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 762
     },
     {
       "command": "lottery wait create",
@@ -10420,12 +10420,16 @@
     },
     {
       "command": "lottery lucky-bag winners",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 85,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
-        "line": 108,
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 114,
         "source": "array-literal"
       }
     },

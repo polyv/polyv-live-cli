@@ -68,3 +68,53 @@ describe('lottery channel-scoped read CLI integration', () => {
     expect(result.stdout).toContain('channel-ids');
   });
 });
+
+describe('lottery lucky-bag winners read CLI integration', () => {
+  // `lottery lucky-bag winners` is an account-scoped read keyed by a numeric
+  // lucky-bag activityId. A fabricated numeric activityId that never held a
+  // lucky-bag draw returns a well-formed empty paginated payload (totalItems 0,
+  // contents []) and exit 0 — the same empty-read pattern as channel-records.
+  // It still needs a real API context, so a temporary channel is created as the
+  // test asset and deleted in `finally`.
+  (shouldRunRealChannelTests ? it : it.skip)('lists lucky-bag winners for a fabricated activity id via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Lottery Lucky Bag Winners');
+
+      const output = runCliSuccess([
+        'lottery',
+        'lucky-bag',
+        'winners',
+        // activityId must be numeric — the server binds it to java.lang.Long,
+        // so a non-numeric value is rejected with a NumberFormatException.
+        '--activity-id',
+        '999999999',
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as {
+        contents?: unknown;
+        totalItems?: unknown;
+        totalPages?: unknown;
+      };
+      expect(Array.isArray(payload.contents)).toBe(true);
+      expect(payload.totalItems).toBe(0);
+      expect(payload.totalPages).toBe(0);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  // Sanity check that the CLI surface exists even without real credentials.
+  it('exposes the lucky-bag winners subcommand through the real CLI entry', () => {
+    const result = runCli(['lottery', 'lucky-bag', 'winners', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(result.stdout).toContain('activity-id');
+  });
+});
