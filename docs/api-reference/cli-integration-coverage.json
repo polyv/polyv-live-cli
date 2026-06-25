@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T13:24:27.474Z",
+  "generatedAt": "2026-06-25T13:51:52.138Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 535,
-    "referencedCommandPathsExcludingHelp": 461,
+    "referencedCommandPathsExcludingHelp": 462,
     "coveredLeafTargetsIncludingHelp": 496,
     "missingLeafTargetsIncludingHelp": 71,
-    "coveredRealExecutionLeafTargets": 455,
-    "missingRealExecutionLeafTargets": 112,
-    "realExecutionCoveragePercent": 80.25,
+    "coveredRealExecutionLeafTargets": 456,
+    "missingRealExecutionLeafTargets": 111,
+    "realExecutionCoveragePercent": 80.42,
     "includingHelpCoveragePercent": 87.48,
-    "integrationReferences": 1071,
-    "realExecutionReferences": 674,
+    "integrationReferences": 1073,
+    "realExecutionReferences": 676,
     "helpReferences": 397
   },
   "byTopLevel": [
@@ -146,11 +146,11 @@
     {
       "command": "global",
       "targetLeafCommands": 4,
-      "coveredRealExecutionLeafTargets": 2,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 3,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 4,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 50,
+      "realExecutionCoveragePercent": 75,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -710,17 +710,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/finance.commands.ts",
       "line": 79
-    },
-    {
-      "command": "global auth update",
-      "path": [
-        "global",
-        "auth",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/global.commands.ts",
-      "line": 102
     },
     {
       "command": "global page-setting update",
@@ -4298,6 +4287,17 @@
       "line": 94
     },
     {
+      "command": "global auth update",
+      "path": [
+        "global",
+        "auth",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/global.commands.ts",
+      "line": 102
+    },
+    {
       "command": "global page-setting get",
       "path": [
         "global",
@@ -7295,7 +7295,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 457,
+        "line": 572,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9799,7 +9799,7 @@
     },
     {
       "command": "global auth get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
@@ -9810,9 +9810,13 @@
     },
     {
       "command": "global auth update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 510,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 85,
@@ -10793,7 +10797,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 518,
+        "line": 633,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10819,7 +10823,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 523,
+        "line": 638,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10830,7 +10834,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 528,
+        "line": 643,
         "source": "array-literal"
       },
       "firstHelpReference": null

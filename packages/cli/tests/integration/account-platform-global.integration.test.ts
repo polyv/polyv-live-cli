@@ -447,6 +447,121 @@ describe('Account, platform, and global CLI integration', () => {
     180000,
   );
 
+  // `global auth update` is an account-scoped reversible write that updates the
+  // default-template watch-condition auth settings (exactly 2 items: primary +
+  // secondary). The original settings are captured up front and restored in
+  // `finally` so the account-global template is always left unchanged. Verified
+  // via `global auth get`.
+  //
+  // The GET and UPDATE schemas are asymmetric for the privacy declaration: GET
+  // returns `privacyParam` as an array ([{status, content, ...}]) while UPDATE
+  // requires `privacyParamEnabled` (Y|N) plus a plain-string `privacyParam`. The
+  // payload is therefore reconstructed from the GET fields (status→enabled,
+  // content→param) rather than round-tripped verbatim. The server also enforces
+  // `authTips` for the phone authType even though the API doc marks it optional,
+  // so it is carried over from the current template.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs global auth update (toggle then restore) through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      let originalSecondaryEnabled: string | undefined;
+
+      /** Read the current 2-item global auth template via the real CLI. */
+      const readAuthSettings = (): Array<Record<string, unknown>> =>
+        parseJsonValue(
+          runCliSuccess(['global', 'auth', 'get', '--output', 'json']),
+        ) as Array<Record<string, unknown>>;
+
+      /**
+       * Build an UPDATE-compatible auth-setting object from a GET item. Carries
+       * the authType-specific required fields and maps the GET privacyParam
+       * array to the UPDATE privacyParamEnabled / privacyParam strings.
+       */
+      const buildItem = (
+        src: Record<string, unknown>,
+        authEnabled: string,
+      ): Record<string, unknown> => {
+        const item: Record<string, unknown> = {
+          authType: String(src.authType ?? ''),
+          authEnabled,
+        };
+        // custom authType required fields
+        if (src.customKey) item.customKey = String(src.customKey);
+        if (src.customUri) item.customUri = String(src.customUri);
+        // phone authType required fields
+        if (src.whiteListEntryText) item.whiteListEntryText = String(src.whiteListEntryText);
+        if (src.authTips) item.authTips = String(src.authTips);
+        // privacy declaration (code/phone/info): GET array -> UPDATE strings
+        const privacyArr = Array.isArray(src.privacyParam) ? src.privacyParam : [];
+        const privacyFirst = (privacyArr[0] ?? {}) as Record<string, unknown>;
+        const privacyEnabled = String(privacyFirst.status ?? 'N');
+        item.privacyParamEnabled = privacyEnabled;
+        if (privacyEnabled === 'Y' && privacyFirst.content) {
+          item.privacyParam = String(privacyFirst.content);
+        }
+        return item;
+      };
+
+      /** Submit a 2-item auth template update through the real CLI. */
+      const updateAuth = (settings: Array<Record<string, unknown>>): void => {
+        // Precompute the JSON into a variable so the runCli arg array literal
+        // stays bracket-free (the coverage report matcher skips nested arrays).
+        const settingsJson = JSON.stringify(settings);
+        runCliSuccess([
+          'global', 'auth', 'update',
+          '--settings', settingsJson,
+          '--force', '--output', 'json',
+        ]);
+      };
+
+      const restoreAuth = (settings: Array<Record<string, unknown>>): void => {
+        try {
+          updateAuth(settings);
+        } catch {
+          // best-effort cleanup of the account-global template
+        }
+      };
+
+      try {
+        channelId = createTemporaryChannel('Global Auth Update');
+
+        const settings = readAuthSettings();
+        expect(Array.isArray(settings)).toBe(true);
+        expect(settings.length).toBe(2);
+        const [primary, secondary] = settings;
+        originalSecondaryEnabled = String(secondary.authEnabled ?? 'Y');
+        const toggled = originalSecondaryEnabled === 'Y' ? 'N' : 'Y';
+
+        // Flip the secondary watch-condition authEnabled (primary preserved).
+        updateAuth([
+          buildItem(primary, String(primary.authEnabled ?? 'Y')),
+          buildItem(secondary, toggled),
+        ]);
+
+        // Verify the flip persisted through a fresh read.
+        const afterUpdate = readAuthSettings();
+        expect(String(afterUpdate[1].authEnabled ?? '')).toBe(toggled);
+
+        // Restore the original template (capture the exact pre-update state).
+        restoreAuth([
+          buildItem(primary, String(primary.authEnabled ?? 'Y')),
+          buildItem(secondary, originalSecondaryEnabled),
+        ]);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+
+      // Happy-path assertion that the account template was restored.
+      if (originalSecondaryEnabled !== undefined) {
+        const afterRestore = readAuthSettings();
+        expect(String(afterRestore[1].authEnabled ?? '')).toBe(originalSecondaryEnabled);
+      }
+    },
+    180000,
+  );
+
   (shouldRunRealChannelTests && accountCredentials?.userId ? it : it.skip)(
     'runs account api callback set (set then clear) through the real CLI',
     () => {

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T13:24:27.474Z
+Generated at: 2026-06-25T13:51:52.138Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 455 |
-| Missing real-execution leaf subcommands | 112 |
-| Real-execution coverage | 80.25% |
+| Real-executed leaf subcommands | 456 |
+| Missing real-execution leaf subcommands | 111 |
+| Real-execution coverage | 80.42% |
 | Leaf subcommands referenced including help | 496 |
 | Missing including help | 71 |
 
@@ -33,7 +33,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document` | 11 | 6 | 5 | 54.55% | 7 | 4 |
 | `donate` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
-| `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
+| `global` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 16 | 6 | 72.73% | 20 | 2 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
@@ -92,7 +92,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance video-moderation get` | `packages/cli/src/commands/finance.commands.ts:68` |
 | `finance video-moderation result-list` | `packages/cli/src/commands/finance.commands.ts:74` |
 | `finance video-moderation update` | `packages/cli/src/commands/finance.commands.ts:79` |
-| `global auth update` | `packages/cli/src/commands/global.commands.ts:102` |
 | `global page-setting update` | `packages/cli/src/commands/global.commands.ts:126` |
 | `group allocate-log` | `packages/cli/src/commands/group.commands.ts:36` |
 | `group billing-daily` | `packages/cli/src/commands/group.commands.ts:131` |
