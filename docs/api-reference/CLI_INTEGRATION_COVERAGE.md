@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T16:55:57.760Z
+Generated at: 2026-06-25T17:08:10.209Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 468 |
-| Missing real-execution leaf subcommands | 99 |
-| Real-execution coverage | 82.54% |
-| Leaf subcommands referenced including help | 502 |
-| Missing including help | 65 |
+| Real-executed leaf subcommands | 470 |
+| Missing real-execution leaf subcommands | 97 |
+| Real-execution coverage | 82.89% |
+| Leaf subcommands referenced including help | 504 |
+| Missing including help | 63 |
 
 ## By Top-Level Command
 
@@ -30,12 +30,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `document` | 11 | 6 | 5 | 54.55% | 7 | 4 |
+| `document` | 11 | 7 | 4 | 63.64% | 8 | 3 |
 | `donate` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 18 | 4 | 81.82% | 21 | 1 |
+| `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
@@ -79,7 +79,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
-| `document media unlink` | `packages/cli/src/commands/document.commands.ts:543` |
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
 | `document media user-detail` | `packages/cli/src/commands/document.commands.ts:552` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
@@ -107,7 +106,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group user package-validity-update` | `packages/cli/src/commands/group.commands.ts:171` |
 | `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
 | `interaction reward` | `packages/cli/src/commands/interaction.commands.ts:67` |
-| `interaction script delete` | `packages/cli/src/commands/interaction.commands.ts:263` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |

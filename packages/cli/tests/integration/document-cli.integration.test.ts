@@ -114,6 +114,50 @@ describe('document CLI channel-scoped lifecycle integration', () => {
     120000,
   );
 
+  // `document media unlink` (/live/v4/channel/multimedia/resource/delete-batch) is an
+  // idempotent batch-delete: unlinking vid ids that were never linked to the channel
+  // resolves with { channelId, vids, success } (real server response, exit 0). The link
+  // counterpart needs a real fetchable vid ("找不到视频信息"), so it stays uncovered, but
+  // unlink processes gracefully on a probe vid — analogous to the interaction script
+  // delete probe. Nothing is linked, so nothing needs cleanup.
+  (shouldRunRealDocTests ? it : it.skip)(
+    'runs document media unlink via real CLI on a temporary channel (idempotent on a probe vid)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Doc Media Unlink');
+        const probeVid = 'cli-it-media-unlink-probe-0001';
+
+        const output = parseJsonObject(
+          runCliSuccess([
+            'document',
+            'media',
+            'unlink',
+            '-c',
+            channelId,
+            '--vids',
+            probeVid,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        ) as { channelId?: string; vids?: string; success?: unknown };
+
+        // The server echoes back the requested channel + vids (delete-batch of a
+        // non-existent vid is a no-op returning null data), proving the real endpoint
+        // was reached beyond the exit code.
+        expect(String(output.channelId)).toBe(channelId);
+        expect(String(output.vids)).toBe(probeVid);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Command-surface checks (no credentials required, always run).
   it('exposes document upload, status, and delete commands', () => {
     const commands = [

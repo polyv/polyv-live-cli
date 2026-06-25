@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T16:55:57.760Z",
+  "generatedAt": "2026-06-25T17:08:10.209Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 541,
-    "referencedCommandPathsExcludingHelp": 474,
-    "coveredLeafTargetsIncludingHelp": 502,
-    "missingLeafTargetsIncludingHelp": 65,
-    "coveredRealExecutionLeafTargets": 468,
-    "missingRealExecutionLeafTargets": 99,
-    "realExecutionCoveragePercent": 82.54,
-    "includingHelpCoveragePercent": 88.54,
-    "integrationReferences": 1093,
-    "realExecutionReferences": 692,
+    "referencedCommandPathsIncludingHelp": 543,
+    "referencedCommandPathsExcludingHelp": 476,
+    "coveredLeafTargetsIncludingHelp": 504,
+    "missingLeafTargetsIncludingHelp": 63,
+    "coveredRealExecutionLeafTargets": 470,
+    "missingRealExecutionLeafTargets": 97,
+    "realExecutionCoveragePercent": 82.89,
+    "includingHelpCoveragePercent": 88.89,
+    "integrationReferences": 1095,
+    "realExecutionReferences": 694,
     "helpReferences": 401
   },
   "byTopLevel": [
@@ -116,12 +116,12 @@
     {
       "command": "document",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 5,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 54.55,
-      "includingHelpCoveragePercent": 63.64
+      "coveredRealExecutionLeafTargets": 7,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 8,
+      "missingLeafTargetsIncludingHelp": 3,
+      "realExecutionCoveragePercent": 63.64,
+      "includingHelpCoveragePercent": 72.73
     },
     {
       "command": "donate",
@@ -166,12 +166,12 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 18,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 21,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 81.82,
-      "includingHelpCoveragePercent": 95.45
+      "coveredRealExecutionLeafTargets": 19,
+      "missingRealExecutionLeafTargets": 3,
+      "coveredLeafTargetsIncludingHelp": 22,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 86.36,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "invite-sales",
@@ -570,17 +570,6 @@
       "line": 534
     },
     {
-      "command": "document media unlink",
-      "path": [
-        "document",
-        "media",
-        "unlink"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 543
-    },
-    {
       "command": "document media user-delete",
       "path": [
         "document",
@@ -873,17 +862,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 67
-    },
-    {
-      "command": "interaction script delete",
-      "path": [
-        "interaction",
-        "script",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 263
     },
     {
       "command": "interaction script upload",
@@ -1563,17 +1541,6 @@
       "line": 188
     },
     {
-      "command": "document media unlink",
-      "path": [
-        "document",
-        "media",
-        "unlink"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 543
-    },
-    {
       "command": "document media user-delete",
       "path": [
         "document",
@@ -1812,17 +1779,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 195
-    },
-    {
-      "command": "interaction script delete",
-      "path": [
-        "interaction",
-        "script",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 263
     },
     {
       "command": "lottery download-winners",
@@ -4049,6 +4005,17 @@
       "line": 525
     },
     {
+      "command": "document media unlink",
+      "path": [
+        "document",
+        "media",
+        "unlink"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 543
+    },
+    {
       "command": "document media vids",
       "path": [
         "document",
@@ -4206,6 +4173,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 207
+    },
+    {
+      "command": "interaction script delete",
+      "path": [
+        "interaction",
+        "script",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 263
     },
     {
       "command": "interaction script query",
@@ -9603,7 +9581,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 122,
+        "line": 166,
         "source": "array-literal"
       }
     },
@@ -9641,6 +9619,17 @@
       }
     },
     {
+      "command": "document media unlink",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 133,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "document media vids",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9662,7 +9651,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 121,
+        "line": 165,
         "source": "array-literal"
       }
     },
@@ -9677,7 +9666,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 120,
+        "line": 164,
         "source": "array-literal"
       }
     },
@@ -9924,6 +9913,17 @@
         "line": 38,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "interaction script delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 487,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "interaction script query",

@@ -469,4 +469,40 @@ describe('live interaction CLI integration', () => {
       }
     }
   }, 120000);
+
+  // `interaction script delete` (/live/v4/channel/interaction-script/delete) is an
+  // idempotent delete: removing a script id that was never created still resolves
+  // with { success: true } (real server response, exit 0) — same pattern as the
+  // script query probe above. The server coerces `id` to an Integer, so a numeric
+  // probe id is used. Custom scripts only exist after a real pseudo-live VOD push, so
+  // nothing is created and nothing needs cleanup.
+  (shouldRunRealChannelTests ? it : it.skip)('deletes an interaction script via real CLI (idempotent on a probe id)', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Interaction Script Delete');
+      const id = channelId;
+
+      const payload = parseJsonObject(
+        runCliSuccess([
+          'interaction',
+          'script',
+          'delete',
+          '--channel-id',
+          id,
+          '--id',
+          '999999999',
+          '--force',
+          '--output',
+          'json',
+        ]),
+      );
+
+      expect(payload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });
