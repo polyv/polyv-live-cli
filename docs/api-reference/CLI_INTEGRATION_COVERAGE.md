@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T00:24:11.192Z
+Generated at: 2026-06-25T00:38:57.820Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 449 |
-| Missing real-execution leaf subcommands | 118 |
-| Real-execution coverage | 79.19% |
-| Leaf subcommands referenced including help | 489 |
-| Missing including help | 78 |
+| Real-executed leaf subcommands | 450 |
+| Missing real-execution leaf subcommands | 117 |
+| Real-execution coverage | 79.37% |
+| Leaf subcommands referenced including help | 490 |
+| Missing including help | 77 |
 
 ## By Top-Level Command
 
@@ -35,7 +35,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 2 | 2 | 50.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 15 | 7 | 68.18% | 19 | 3 |
+| `interaction` | 22 | 16 | 6 | 72.73% | 20 | 2 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 21 | 3 | 87.50% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
@@ -114,7 +114,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction event delete` | `packages/cli/src/commands/interaction.commands.ts:189` |
 | `interaction event save` | `packages/cli/src/commands/interaction.commands.ts:173` |
 | `interaction script delete` | `packages/cli/src/commands/interaction.commands.ts:263` |
-| `interaction script query` | `packages/cli/src/commands/interaction.commands.ts:233` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:245` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:411` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |

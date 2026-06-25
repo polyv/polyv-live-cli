@@ -426,4 +426,38 @@ describe('live interaction CLI integration', () => {
       }
     }
   }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('queries a disk video custom interaction script via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Interaction Script Query');
+      const id = channelId;
+
+      // The query endpoint (/live/v4/channel/interaction-script/query-disk-video-custom-script)
+      // accepts any disk-video-id and returns { success: true } when no custom script is
+      // configured for it (real server response, exit 0) — analogous to playback get / sale-get
+      // gracefully handling a non-existent referenced id. disk-video records only come from real
+      // pseudo-live VOD pushes (no discovery path on a fresh channel), so a stable probe id is used.
+      const payload = parseJsonObject(
+        runCliSuccess([
+          'interaction',
+          'script',
+          'query',
+          '--channel-id',
+          id,
+          '--disk-video-id',
+          'cli-it-script-probe-0001',
+          '--output',
+          'json',
+        ]),
+      );
+
+      expect(payload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });

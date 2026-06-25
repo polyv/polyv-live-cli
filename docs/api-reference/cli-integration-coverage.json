@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T00:24:11.192Z",
+  "generatedAt": "2026-06-25T00:38:57.820Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 528,
-    "referencedCommandPathsExcludingHelp": 455,
-    "coveredLeafTargetsIncludingHelp": 489,
-    "missingLeafTargetsIncludingHelp": 78,
-    "coveredRealExecutionLeafTargets": 449,
-    "missingRealExecutionLeafTargets": 118,
-    "realExecutionCoveragePercent": 79.19,
-    "includingHelpCoveragePercent": 86.24,
-    "integrationReferences": 1059,
-    "realExecutionReferences": 666,
+    "referencedCommandPathsIncludingHelp": 529,
+    "referencedCommandPathsExcludingHelp": 456,
+    "coveredLeafTargetsIncludingHelp": 490,
+    "missingLeafTargetsIncludingHelp": 77,
+    "coveredRealExecutionLeafTargets": 450,
+    "missingRealExecutionLeafTargets": 117,
+    "realExecutionCoveragePercent": 79.37,
+    "includingHelpCoveragePercent": 86.42,
+    "integrationReferences": 1060,
+    "realExecutionReferences": 667,
     "helpReferences": 393
   },
   "byTopLevel": [
@@ -166,12 +166,12 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 15,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 19,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 68.18,
-      "includingHelpCoveragePercent": 86.36
+      "coveredRealExecutionLeafTargets": 16,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 20,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 72.73,
+      "includingHelpCoveragePercent": 90.91
     },
     {
       "command": "invite-sales",
@@ -949,17 +949,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 263
-    },
-    {
-      "command": "interaction script query",
-      "path": [
-        "interaction",
-        "script",
-        "query"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 233
     },
     {
       "command": "interaction script upload",
@@ -2051,17 +2040,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 263
-    },
-    {
-      "command": "interaction script query",
-      "path": [
-        "interaction",
-        "script",
-        "query"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 233
     },
     {
       "command": "lottery download-winners",
@@ -4488,6 +4466,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 207
+    },
+    {
+      "command": "interaction script query",
+      "path": [
+        "interaction",
+        "script",
+        "query"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 233
     },
     {
       "command": "interaction task-reward create",
@@ -10022,6 +10011,17 @@
         "line": 38,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "interaction script query",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 443,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "interaction script upload",
