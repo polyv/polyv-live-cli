@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T17:39:18.686Z",
+  "generatedAt": "2026-06-25T17:57:07.049Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 545,
-    "referencedCommandPathsExcludingHelp": 480,
+    "referencedCommandPathsExcludingHelp": 481,
     "coveredLeafTargetsIncludingHelp": 506,
     "missingLeafTargetsIncludingHelp": 61,
-    "coveredRealExecutionLeafTargets": 474,
-    "missingRealExecutionLeafTargets": 93,
-    "realExecutionCoveragePercent": 83.6,
+    "coveredRealExecutionLeafTargets": 475,
+    "missingRealExecutionLeafTargets": 92,
+    "realExecutionCoveragePercent": 83.77,
     "includingHelpCoveragePercent": 89.24,
-    "integrationReferences": 1103,
-    "realExecutionReferences": 699,
+    "integrationReferences": 1106,
+    "realExecutionReferences": 702,
     "helpReferences": 404
   },
   "byTopLevel": [
@@ -126,11 +126,11 @@
     {
       "command": "donate",
       "targetLeafCommands": 4,
-      "coveredRealExecutionLeafTargets": 3,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 4,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 4,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 75,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -590,17 +590,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "donate config update",
-      "path": [
-        "donate",
-        "config",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/donate.commands.ts",
-      "line": 83
     },
     {
       "command": "finance audio-moderation get",
@@ -4001,6 +3990,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/donate.commands.ts",
       "line": 45
+    },
+    {
+      "command": "donate config update",
+      "path": [
+        "donate",
+        "config",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/donate.commands.ts",
+      "line": 83
     },
     {
       "command": "finance bill-detail-list",
@@ -9661,7 +9661,7 @@
     },
     {
       "command": "donate config get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/donate.integration.test.ts",
@@ -9672,9 +9672,13 @@
     },
     {
       "command": "donate config update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/donate.integration.test.ts",
+        "line": 518,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 109,

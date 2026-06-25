@@ -6,7 +6,7 @@
 
 import { DonateServiceSdk } from '../../src/services/donate-service';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
-import { runCli } from '../helpers/cli-runner';
+import { runCli, sleep } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
@@ -462,6 +462,92 @@ function getTimestamp(daysOffset: number = 0): number {
       // channel (no donate records).
       expect(result.exitCode).toBe(0);
       expect(result.output).toContain('No donate records found');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+});
+
+// ========================================
+// Real-CLI coverage for `donate config update`.
+//
+// `donate config update` is a channel-scoped reversible write. The
+// `--gift-enabled <Y|N>` toggle persists to the server (verified via a
+// get → update → get → restore round-trip), so it forms a genuine
+// update lifecycle rather than the no-op behavior seen on the sibling
+// `web donate cash-update` (which returns success but never persists).
+// Coverage asserts exit 0, the structured `{ channelId, giftEnabled }`
+// response, and that a follow-up `donate config get` reflects the new
+// value; the original value is restored in the test body and the
+// temporary channel is deleted in `finally`.
+// ========================================
+(shouldRunTests ? describe : describe.skip)('donate config update CLI real execution', () => {
+  // donateGiftEnabled read-back can lag behind the write by a second or two
+  // (PolyV eventually-consistent read replica). Poll a few times so the test
+  // is robust to that replication delay rather than flaking.
+  function readGiftEnabled(channelId: string): string {
+    return String(
+      parseJsonObject(
+        runCliSuccess(['donate', 'config', 'get', '-c', channelId, '-o', 'json']),
+      ).donateGiftEnabled,
+    );
+  }
+  function expectGiftEnabledBecomes(channelId: string, expected: string): void {
+    for (let attempt = 0; attempt < 5; attempt++) {
+      if (readGiftEnabled(channelId) === expected) {
+        return;
+      }
+      sleep(1000);
+    }
+    expect(readGiftEnabled(channelId)).toBe(expected);
+  }
+
+  it('flips donateGiftEnabled via real CLI and restores it on a temporary channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Donate Config Update CLI');
+
+      // 1. Read the current gift-enabled flag (default "N" on a fresh channel).
+      const original = readGiftEnabled(channelId);
+      const flipped = original === 'Y' ? 'N' : 'Y';
+
+      // 2. Flip the flag via real CLI and assert the structured response.
+      const updateOutput = runCliSuccess([
+        'donate',
+        'config',
+        'update',
+        '-c',
+        channelId,
+        '--gift-enabled',
+        flipped,
+        '--force',
+        '-o',
+        'json',
+      ]);
+      const updated = parseJsonObject(updateOutput);
+      expect(String(updated.channelId)).toBe(channelId);
+      expect(String(updated.giftEnabled)).toBe(flipped);
+
+      // 3. Verify the change persisted by reading config back (polls past lag).
+      expectGiftEnabledBecomes(channelId, flipped);
+
+      // 4. Restore the original value and confirm it settled back.
+      runCliSuccess([
+        'donate',
+        'config',
+        'update',
+        '-c',
+        channelId,
+        '--gift-enabled',
+        original,
+        '--force',
+        '-o',
+        'json',
+      ]);
+      expectGiftEnabledBecomes(channelId, original);
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);

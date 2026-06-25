@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T17:39:18.686Z
+Generated at: 2026-06-25T17:57:07.049Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 474 |
-| Missing real-execution leaf subcommands | 93 |
-| Real-execution coverage | 83.60% |
+| Real-executed leaf subcommands | 475 |
+| Missing real-execution leaf subcommands | 92 |
+| Real-execution coverage | 83.77% |
 | Leaf subcommands referenced including help | 506 |
 | Missing including help | 61 |
 
@@ -31,7 +31,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `document` | 11 | 7 | 4 | 63.64% | 8 | 3 |
-| `donate` | 4 | 3 | 1 | 75.00% | 4 | 0 |
+| `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
 | `global` | 4 | 3 | 1 | 75.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
@@ -81,7 +81,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
 | `document media user-detail` | `packages/cli/src/commands/document.commands.ts:552` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
-| `donate config update` | `packages/cli/src/commands/donate.commands.ts:83` |
 | `finance audio-moderation get` | `packages/cli/src/commands/finance.commands.ts:42` |
 | `finance audio-moderation list` | `packages/cli/src/commands/finance.commands.ts:48` |
 | `finance audio-moderation update` | `packages/cli/src/commands/finance.commands.ts:53` |
