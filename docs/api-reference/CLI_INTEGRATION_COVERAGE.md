@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T16:13:11.880Z
+Generated at: 2026-06-25T16:25:57.379Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 88 |
+| Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 463 |
-| Missing real-execution leaf subcommands | 104 |
-| Real-execution coverage | 81.66% |
-| Leaf subcommands referenced including help | 499 |
-| Missing including help | 68 |
+| Real-executed leaf subcommands | 466 |
+| Missing real-execution leaf subcommands | 101 |
+| Real-execution coverage | 82.19% |
+| Leaf subcommands referenced including help | 501 |
+| Missing including help | 66 |
 
 ## By Top-Level Command
 
@@ -50,7 +50,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `record` | 17 | 5 | 12 | 29.41% | 7 | 10 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
+| `session` | 11 | 6 | 5 | 54.55% | 6 | 5 |
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
 | `stream` | 19 | 13 | 6 | 68.42% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -148,10 +148,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `session delete` | `packages/cli/src/commands/session.commands.ts:338` |
 | `session get` | `packages/cli/src/commands/session.commands.ts:221` |
 | `session update` | `packages/cli/src/commands/session.commands.ts:325` |
-| `session external file-ids` | `packages/cli/src/commands/session.commands.ts:367` |
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
-| `session external relevance` | `packages/cli/src/commands/session.commands.ts:375` |
-| `session external session-list` | `packages/cli/src/commands/session.commands.ts:359` |
 | `statistics inviter-poster-list` | `packages/cli/src/commands/statistics.commands.ts:205` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
 | `stream capture` | `packages/cli/src/commands/stream.commands.ts:475` |
