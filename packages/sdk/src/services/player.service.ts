@@ -202,17 +202,20 @@ export class PlayerService {
       throw new PolyVValidationError('url is required when marqueeRestrict is "Y"');
     }
 
-    const body: Record<string, unknown> = {
+    // marqueeRestrict and url must be signed query params (not an unsigned body),
+    // otherwise the server reports "marqueeRestrict is wrong". See the PHP example in
+    // docs/live/api/channel/marquee/set_diyurl-marquee.md and ChannelService.setDiyUrlMarquee.
+    const queryParams: Record<string, unknown> = {
       marqueeRestrict: params.marqueeRestrict,
     };
 
     if (params.url !== undefined) {
-      body.url = params.url;
+      queryParams.url = params.url;
     }
 
-    const response = await this.client.httpClient.post<string>(
+    const response = await this.client.httpClient.get<string>(
       `/live/v2/channelRestrict/${channelId}/set-diyurl-marquee`,
-      body
+      { params: queryParams }
     );
     return response as unknown as string;
   }

@@ -78,9 +78,9 @@ describe('player CLI channel-scoped writes integration', () => {
         expect(antiRecordSettings.modelType).toBe('fixed');
         expect(antiRecordSettings.content).toBe('cli-integration');
 
-        // `player marquee-url` returns "marqueeRestrict is wrong" and `player advert
-        // head-update` (NONE) is rejected by the server — neither is real-coverable, so
-        // they are excluded from real execution coverage.
+        // `player marquee-url` is covered in its own test below (now that the SDK
+        // signs marqueeRestrict/url as query params). `player advert head-update`
+        // (NONE) is rejected by the server and stays excluded.
 
         // advert stop-update: disables the stop advert (only -c required).
         const stopAdvertOutput = runCliSuccess([
@@ -190,6 +190,59 @@ describe('player CLI channel-scoped writes integration', () => {
         const result = parseJsonObject(output);
         expect(result.success).toBe(true);
         expect(String(result.channelId)).toBe(channelId);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs player marquee-url enable/disable via real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Player Marquee URL');
+
+        // marquee-url with --marquee-restrict Y requires a --url and returns
+        // { success: true, result: "设置成功" }. The SDK now sends marqueeRestrict
+        // and url as signed query params (previously an unsigned body, which the
+        // server rejected with "marqueeRestrict is wrong").
+        const enableOutput = runCliSuccess([
+          'player',
+          'marquee-url',
+          '-c',
+          channelId,
+          '--marquee-restrict',
+          'Y',
+          '--url',
+          'https://example.com/user/{userId}',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const enabled = parseJsonObject(enableOutput);
+        expect(enabled.success).toBe(true);
+        expect(String(enabled.result)).toBe('设置成功');
+
+        // Disable: --marquee-restrict N needs no url.
+        const disableOutput = runCliSuccess([
+          'player',
+          'marquee-url',
+          '-c',
+          channelId,
+          '--marquee-restrict',
+          'N',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        const disabled = parseJsonObject(disableOutput);
+        expect(disabled.success).toBe(true);
+        expect(String(disabled.result)).toBe('设置成功');
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T15:12:47.917Z
+Generated at: 2026-06-25T15:34:11.976Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 459 |
-| Missing real-execution leaf subcommands | 108 |
-| Real-execution coverage | 80.95% |
+| Real-executed leaf subcommands | 460 |
+| Missing real-execution leaf subcommands | 107 |
+| Real-execution coverage | 81.13% |
 | Leaf subcommands referenced including help | 498 |
 | Missing including help | 69 |
 
@@ -43,7 +43,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
 | `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
-| `player` | 11 | 9 | 2 | 81.82% | 11 | 0 |
+| `player` | 11 | 10 | 1 | 90.91% | 11 | 0 |
 | `product` | 36 | 34 | 2 | 94.44% | 35 | 1 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
@@ -131,7 +131,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
 | `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
-| `player marquee-url` | `packages/cli/src/commands/player.commands.ts:451` |
 | `player advert head-update` | `packages/cli/src/commands/player.commands.ts:469` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |

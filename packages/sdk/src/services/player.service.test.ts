@@ -316,34 +316,36 @@ describe('PlayerService', () => {
   // Marquee URL API
   // ============================================
   describe('setMarqueeUrl', () => {
-    it('should set marquee URL with marqueeRestrict=Y', async () => {
-      mockClient.httpClient.post.mockResolvedValue('设置成功');
+    it('should set marquee URL with marqueeRestrict=Y as signed query params', async () => {
+      mockClient.httpClient.get.mockResolvedValue('设置成功');
 
       const result = await service.setMarqueeUrl(123456, {
         marqueeRestrict: 'Y',
         url: 'https://example.com/user/{userId}',
       });
 
-      expect(mockClient.httpClient.post).toHaveBeenCalledWith(
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
         '/live/v2/channelRestrict/123456/set-diyurl-marquee',
         {
-          marqueeRestrict: 'Y',
-          url: 'https://example.com/user/{userId}',
+          params: {
+            marqueeRestrict: 'Y',
+            url: 'https://example.com/user/{userId}',
+          },
         }
       );
       expect(result).toBe('设置成功');
     });
 
-    it('should set marquee URL with marqueeRestrict=N', async () => {
-      mockClient.httpClient.post.mockResolvedValue('设置成功');
+    it('should set marquee URL with marqueeRestrict=N as signed query params', async () => {
+      mockClient.httpClient.get.mockResolvedValue('设置成功');
 
       await service.setMarqueeUrl(123456, {
         marqueeRestrict: 'N',
       });
 
-      expect(mockClient.httpClient.post).toHaveBeenCalledWith(
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
         '/live/v2/channelRestrict/123456/set-diyurl-marquee',
-        { marqueeRestrict: 'N' }
+        { params: { marqueeRestrict: 'N' } }
       );
     });
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T15:12:47.917Z",
+  "generatedAt": "2026-06-25T15:34:11.976Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 537,
-    "referencedCommandPathsExcludingHelp": 465,
+    "referencedCommandPathsExcludingHelp": 466,
     "coveredLeafTargetsIncludingHelp": 498,
     "missingLeafTargetsIncludingHelp": 69,
-    "coveredRealExecutionLeafTargets": 459,
-    "missingRealExecutionLeafTargets": 108,
-    "realExecutionCoveragePercent": 80.95,
+    "coveredRealExecutionLeafTargets": 460,
+    "missingRealExecutionLeafTargets": 107,
+    "realExecutionCoveragePercent": 81.13,
     "includingHelpCoveragePercent": 87.83,
-    "integrationReferences": 1076,
-    "realExecutionReferences": 679,
+    "integrationReferences": 1078,
+    "realExecutionReferences": 681,
     "helpReferences": 397
   },
   "byTopLevel": [
@@ -246,11 +246,11 @@
     {
       "command": "player",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 9,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 11,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 81.82,
+      "realExecutionCoveragePercent": 90.91,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -1129,16 +1129,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 558
-    },
-    {
-      "command": "player marquee-url",
-      "path": [
-        "player",
-        "marquee-url"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/player.commands.ts",
-      "line": 451
     },
     {
       "command": "player advert head-update",
@@ -5132,6 +5122,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/player.commands.ts",
       "line": 510
+    },
+    {
+      "command": "player marquee-url",
+      "path": [
+        "player",
+        "marquee-url"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/player.commands.ts",
+      "line": 451
     },
     {
       "command": "player watch-feedback-list",
@@ -11118,7 +11118,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 208,
+        "line": 261,
         "source": "array-literal"
       }
     },
@@ -11133,7 +11133,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 209,
+        "line": 262,
         "source": "array-literal"
       }
     },
@@ -11148,7 +11148,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 205,
+        "line": 258,
         "source": "array-literal"
       }
     },
@@ -11163,7 +11163,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 206,
+        "line": 259,
         "source": "array-literal"
       }
     },
@@ -11193,7 +11193,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 210,
+        "line": 263,
         "source": "array-literal"
       }
     },
@@ -11208,18 +11208,22 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 211,
+        "line": 264,
         "source": "array-literal"
       }
     },
     {
       "command": "player marquee-url",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
+        "line": 214,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/player-cli.integration.test.ts",
-        "line": 207,
+        "line": 260,
         "source": "array-literal"
       }
     },
