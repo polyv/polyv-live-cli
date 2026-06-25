@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T17:26:26.170Z",
+  "generatedAt": "2026-06-25T17:39:18.686Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 544,
-    "referencedCommandPathsExcludingHelp": 478,
-    "coveredLeafTargetsIncludingHelp": 505,
-    "missingLeafTargetsIncludingHelp": 62,
-    "coveredRealExecutionLeafTargets": 472,
-    "missingRealExecutionLeafTargets": 95,
-    "realExecutionCoveragePercent": 83.25,
-    "includingHelpCoveragePercent": 89.07,
-    "integrationReferences": 1101,
-    "realExecutionReferences": 697,
+    "referencedCommandPathsIncludingHelp": 545,
+    "referencedCommandPathsExcludingHelp": 480,
+    "coveredLeafTargetsIncludingHelp": 506,
+    "missingLeafTargetsIncludingHelp": 61,
+    "coveredRealExecutionLeafTargets": 474,
+    "missingRealExecutionLeafTargets": 93,
+    "realExecutionCoveragePercent": 83.6,
+    "includingHelpCoveragePercent": 89.24,
+    "integrationReferences": 1103,
+    "realExecutionReferences": 699,
     "helpReferences": 404
   },
   "byTopLevel": [
@@ -66,12 +66,12 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 71,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 77,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 91.03,
-      "includingHelpCoveragePercent": 98.72
+      "coveredRealExecutionLeafTargets": 72,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 78,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 92.31,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "chat",
@@ -336,11 +336,11 @@
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 13,
-      "missingRealExecutionLeafTargets": 6,
+      "coveredRealExecutionLeafTargets": 14,
+      "missingRealExecutionLeafTargets": 5,
       "coveredLeafTargetsIncludingHelp": 14,
       "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 68.42,
+      "realExecutionCoveragePercent": 73.68,
       "includingHelpCoveragePercent": 73.68
     },
     {
@@ -525,17 +525,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1265
-    },
-    {
-      "command": "channel ppt-record delete",
-      "path": [
-        "channel",
-        "ppt-record",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1272
     },
     {
       "command": "chat message audit",
@@ -1316,17 +1305,6 @@
       "line": 489
     },
     {
-      "command": "stream disk-video delete",
-      "path": [
-        "stream",
-        "disk-video",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 498
-    },
-    {
       "command": "stream disk-video end",
       "path": [
         "stream",
@@ -1485,17 +1463,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 396
-    },
-    {
-      "command": "channel ppt-record delete",
-      "path": [
-        "channel",
-        "ppt-record",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1272
     },
     {
       "command": "chat message audit",
@@ -2884,6 +2851,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1378
+    },
+    {
+      "command": "channel ppt-record delete",
+      "path": [
+        "channel",
+        "ppt-record",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1272
     },
     {
       "command": "channel ppt-record list",
@@ -6128,6 +6106,17 @@
       "line": 622
     },
     {
+      "command": "stream disk-video delete",
+      "path": [
+        "stream",
+        "disk-video",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 498
+    },
+    {
       "command": "stream disk-video list",
       "path": [
         "stream",
@@ -7803,7 +7792,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 419,
+        "line": 438,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -7966,7 +7955,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 315,
+        "line": 334,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -7977,7 +7966,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 351,
+        "line": 370,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -8081,6 +8070,17 @@
         "line": 81,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "channel ppt-record delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
+        "line": 308,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "channel ppt-record list",
@@ -8345,7 +8345,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 450,
+        "line": 469,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12669,15 +12669,19 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 174,
+        "line": 206,
         "source": "array-literal"
       }
     },
     {
       "command": "stream disk-video delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 59,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-history-cli.integration.test.ts",
         "line": 85,
@@ -12701,12 +12705,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 116,
+        "line": 148,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 192,
+        "line": 224,
         "source": "array-literal"
       }
     },
@@ -12731,12 +12735,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 87,
+        "line": 119,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 186,
+        "line": 218,
         "source": "array-literal"
       }
     },
@@ -12809,12 +12813,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 57,
+        "line": 89,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 180,
+        "line": 212,
         "source": "array-literal"
       }
     },
@@ -12835,12 +12839,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 142,
+        "line": 174,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 198,
+        "line": 230,
         "source": "array-literal"
       }
     },
@@ -12976,7 +12980,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-remaining-cli.integration.test.ts",
-        "line": 410,
+        "line": 429,
         "source": "array-literal"
       },
       "firstHelpReference": null

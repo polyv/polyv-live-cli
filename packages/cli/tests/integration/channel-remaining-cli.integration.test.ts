@@ -241,7 +241,7 @@ describe('remaining channel CLI integration', () => {
     }
   }, 300000);
 
-  (shouldRunRealChannelTests ? it : it.skip)('manages ppt-record settings and lists tasks for a temporary channel via real CLI', () => {
+  (shouldRunRealChannelTests ? it : it.skip)('manages ppt-record settings, lists and deletes tasks for a temporary channel via real CLI', () => {
     let channelId: string | undefined;
 
     try {
@@ -300,6 +300,25 @@ describe('remaining channel CLI integration', () => {
       expect(typeof parsed.totalPages).toBe('number');
       expect(typeof parsed.pageSize).toBe('number');
       expect(Array.isArray(parsed.contents)).toBe(true);
+
+      // batch-delete is idempotent: deleting a never-created task id is a
+      // delete-of-nothing that the server acknowledges with {result:true}
+      // (same pattern as interaction script delete), so it is safe on a
+      // throwaway temp channel and needs no state restore.
+      const deleteOutput = runCliSuccess([
+        'channel',
+        'ppt-record',
+        'delete',
+        '--channel-id',
+        channelId,
+        '--task-ids',
+        '999999999',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const deleteResult = parseJsonObject(deleteOutput);
+      expect(deleteResult.result).toBe(true);
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);

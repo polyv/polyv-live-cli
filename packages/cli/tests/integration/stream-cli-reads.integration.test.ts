@@ -46,6 +46,38 @@ describe('stream channel-scoped read CLI integration', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('deletes pseudo-live disk videos idempotently for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream DiskVideo Delete');
+
+      // batch-delete is idempotent: removing a never-configured vid is a
+      // delete-of-nothing that the server acknowledges with {success:true}
+      // (same pattern as channel ppt-record delete / interaction script delete),
+      // so it is safe on a throwaway temp channel and needs no state restore.
+      const output = runCliSuccess([
+        'stream',
+        'disk-video',
+        'delete',
+        '-c',
+        channelId,
+        '--vids',
+        '999999999',
+        '--force',
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as { success?: unknown };
+      expect(payload.success).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('returns stream monitor info for a temporary channel via real CLI', () => {
     let channelId: string | undefined;
 

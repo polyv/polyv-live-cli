@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T17:26:26.170Z
+Generated at: 2026-06-25T17:39:18.686Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 472 |
-| Missing real-execution leaf subcommands | 95 |
-| Real-execution coverage | 83.25% |
-| Leaf subcommands referenced including help | 505 |
-| Missing including help | 62 |
+| Real-executed leaf subcommands | 474 |
+| Missing real-execution leaf subcommands | 93 |
+| Real-execution coverage | 83.60% |
+| Leaf subcommands referenced including help | 506 |
+| Missing including help | 61 |
 
 ## By Top-Level Command
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
 | `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 71 | 7 | 91.03% | 77 | 1 |
+| `channel` | 78 | 72 | 6 | 92.31% | 78 | 0 |
 | `chat` | 44 | 43 | 1 | 97.73% | 43 | 1 |
 | `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 6 | 5 | 54.55% | 6 | 5 |
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
-| `stream` | 19 | 13 | 6 | 68.42% | 14 | 5 |
+| `stream` | 19 | 14 | 5 | 73.68% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 26 | 5 | 83.87% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
@@ -75,7 +75,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1195` |
 | `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1150` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
-| `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1272` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
@@ -149,7 +148,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream monitor` | `packages/cli/src/commands/stream.commands.ts:713` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
-| `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
