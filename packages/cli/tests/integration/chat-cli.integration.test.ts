@@ -3,11 +3,65 @@ import {
   createTemporaryChannel,
   deleteTemporaryChannel,
   parseJsonObject,
+  parseJsonValue,
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+
+function sleep(ms: number): void {
+  const buffer = new SharedArrayBuffer(4);
+  Atomics.wait(new Int32Array(buffer), 0, 0, ms);
+}
+
+function findChatMessageId(channelId: string, content: string): string {
+  let lastOutput = '';
+
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    if (attempt > 0) {
+      sleep(2000);
+    }
+
+    lastOutput = runCliSuccess([
+      'chat',
+      'list',
+      '--channel-id',
+      channelId,
+      '--page',
+      '1',
+      '--size',
+      '50',
+      '--output',
+      'json',
+    ]);
+
+    try {
+      const messages = parseJsonValue(lastOutput);
+      if (!Array.isArray(messages)) {
+        continue;
+      }
+
+      const match = messages.find((message) => {
+        if (!message || typeof message !== 'object') {
+          return false;
+        }
+
+        const item = message as { id?: unknown; content?: unknown };
+        return String(item.content ?? '') === content && String(item.id ?? '').length > 0;
+      }) as { id?: unknown } | undefined;
+
+      if (match?.id !== undefined) {
+        return String(match.id);
+      }
+    } catch {
+      // chat list prints an informational message rather than JSON while the
+      // just-sent message is not visible yet; retry briefly.
+    }
+  }
+
+  throw new Error(`Could not find chat message "${content}" in CLI output:\n${lastOutput}`);
+}
 
 describe('chat CLI integration', () => {
   it('shows extended chat command groups', () => {
@@ -133,6 +187,10 @@ describe('chat CLI integration', () => {
       ]);
       expect(JSON.parse(teacherUpdate.trim())).toBe(true);
 
+      // `chat role admin-update` is excluded: the server requires a real avatar
+      // image upload (returns "file is not found" without it), so it is not
+      // real-coverable on the test account.
+
       // chat message admin-send requires the role enum value `ADMIN` and returns
       // a success message string.
       const adminSend = runCliSuccess([
@@ -143,6 +201,38 @@ describe('chat CLI integration', () => {
         '--output', 'json',
       ]);
       expect(JSON.parse(adminSend.trim())).toMatch(/success/i);
+
+      const removableContent = `gnhf-remove-contents-${Date.now()}`;
+      const removableSend = parseJsonObject(runCliSuccess([
+        'chat',
+        'send',
+        '--channel-id',
+        id,
+        '--msg',
+        removableContent,
+        '--nickname',
+        'GNHFRemoveBot',
+        '--output',
+        'json',
+      ]));
+      expect(removableSend.success).toEqual(expect.any(Boolean));
+      const removableMessageId = findChatMessageId(id, removableContent);
+
+      // chat message remove-contents batch-deletes the message id returned by
+      // chat history and returns the server success string as JSON.
+      const removeContents = JSON.parse(runCliSuccess([
+        'chat',
+        'message',
+        'remove-contents',
+        '--channel-id',
+        id,
+        '--ids',
+        removableMessageId,
+        '--force',
+        '--output',
+        'json',
+      ]).trim());
+      expect(typeof removeContents === 'string' || removeContents?.success === true).toBe(true);
 
       // chat message alert-special returns the JSON boolean `true`.
       const alert = runCliSuccess([

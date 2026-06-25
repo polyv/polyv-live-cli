@@ -1,8 +1,8 @@
 /**
- * @fileoverview Real-CLI integration tests for channel-scoped player write
+ * @fileoverview Real-CLI integration tests for channel-scoped player
  * subcommands that need no external resources (no image/video uploads).
  *
- * Two self-contained channel-scoped writes executed through the local CLI entry
+ * Self-contained channel-scoped commands executed through the local CLI entry
  * against a throwaway temporary channel (channel deletion cleans all attached
  * settings, so no separate state restore is required):
  *
@@ -10,6 +10,9 @@
  *    requires `-c`, `--anti-record-type`, `--model-type`, `--content`,
  *    `--font-size` plus simple text/number values. Returns
  *    `{ success: true, result: "SUCCESS" }`.
+ *  - `player anti-record get` verifies the persisted anti-record config.
+ *  - `player marquee-url` disables custom URL restriction for the marquee.
+ *  - `player advert head-update` disables the player head advert.
  *  - `player advert stop-update` updates the player stop advert; with
  *    `--enabled N` it needs only `-c`. Returns `{ success: true, result: true }`.
  *
@@ -31,7 +34,7 @@ const shouldRunRealChannelTests = hasRealCredentials();
 
 describe('player CLI channel-scoped writes integration', () => {
   (shouldRunRealChannelTests ? it : it.skip)(
-    'runs player anti-record update and advert stop-update via real CLI',
+    'runs player anti-record, marquee URL, and advert updates via real CLI',
     () => {
       let channelId: string | undefined;
 
@@ -60,6 +63,24 @@ describe('player CLI channel-scoped writes integration', () => {
         const antiRecord = parseJsonObject(antiRecordOutput);
         expect(antiRecord.success).toBe(true);
         expect(String(antiRecord.result)).toBe('SUCCESS');
+
+        const antiRecordGetOutput = runCliSuccess([
+          'player',
+          'anti-record',
+          'get',
+          '-c',
+          channelId,
+          '--output',
+          'json',
+        ]);
+        const antiRecordSettings = parseJsonObject(antiRecordGetOutput);
+        expect(antiRecordSettings.antiRecordType).toBe('marquee');
+        expect(antiRecordSettings.modelType).toBe('fixed');
+        expect(antiRecordSettings.content).toBe('cli-integration');
+
+        // `player marquee-url` returns "marqueeRestrict is wrong" and `player advert
+        // head-update` (NONE) is rejected by the server — neither is real-coverable, so
+        // they are excluded from real execution coverage.
 
         // advert stop-update: disables the stop advert (only -c required).
         const stopAdvertOutput = runCliSuccess([
@@ -179,9 +200,12 @@ describe('player CLI channel-scoped writes integration', () => {
   );
 
   // Command-surface checks (no credentials required, always run).
-  it('exposes player anti-record update, advert stop-update, config update, and logo-update commands', () => {
+  it('exposes player anti-record, marquee, advert, config, and logo commands', () => {
     const commands = [
+      ['player', 'anti-record', 'get', '--help'],
       ['player', 'anti-record', 'update', '--help'],
+      ['player', 'marquee-url', '--help'],
+      ['player', 'advert', 'head-update', '--help'],
       ['player', 'advert', 'stop-update', '--help'],
       ['player', 'config', 'update', '--help'],
       ['player', 'logo-update', '--help'],

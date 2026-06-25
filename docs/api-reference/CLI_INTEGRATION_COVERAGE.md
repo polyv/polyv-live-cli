@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T00:38:57.820Z
+Generated at: 2026-06-25T10:22:32.535Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 450 |
-| Missing real-execution leaf subcommands | 117 |
-| Real-execution coverage | 79.37% |
-| Leaf subcommands referenced including help | 490 |
-| Missing including help | 77 |
+| Real-executed leaf subcommands | 453 |
+| Missing real-execution leaf subcommands | 114 |
+| Real-execution coverage | 79.89% |
+| Leaf subcommands referenced including help | 494 |
+| Missing including help | 73 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 71 | 7 | 91.03% | 77 | 1 |
-| `chat` | 44 | 41 | 3 | 93.18% | 43 | 1 |
+| `chat` | 44 | 42 | 2 | 95.45% | 43 | 1 |
 | `checkin` | 5 | 3 | 2 | 60.00% | 3 | 2 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -43,7 +43,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 18 | 4 | 81.82% | 20 | 2 |
 | `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
-| `player` | 11 | 8 | 3 | 72.73% | 8 | 3 |
+| `player` | 11 | 9 | 2 | 81.82% | 11 | 0 |
 | `product` | 36 | 34 | 2 | 94.44% | 35 | 1 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 3 | 8 | 27.27% | 4 | 7 |
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
-| `stream` | 19 | 12 | 7 | 63.16% | 13 | 6 |
+| `stream` | 19 | 13 | 6 | 68.42% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 26 | 5 | 83.87% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
@@ -77,7 +77,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1264` |
 | `channel ppt-record delete` | `packages/cli/src/commands/channel.commands.ts:1271` |
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
-| `chat message remove-contents` | `packages/cli/src/commands/chat.commands.ts:505` |
 | `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:714` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
@@ -135,7 +134,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
 | `player marquee-url` | `packages/cli/src/commands/player.commands.ts:451` |
 | `player advert head-update` | `packages/cli/src/commands/player.commands.ts:469` |
-| `player anti-record get` | `packages/cli/src/commands/player.commands.ts:413` |
 | `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `product order get` | `packages/cli/src/commands/product.commands.ts:964` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
@@ -164,7 +162,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream capture` | `packages/cli/src/commands/stream.commands.ts:475` |
 | `stream monitor` | `packages/cli/src/commands/stream.commands.ts:713` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
-| `stream verify` | `packages/cli/src/commands/stream.commands.ts:622` |
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video delete` | `packages/cli/src/commands/stream.commands.ts:498` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |

@@ -133,8 +133,44 @@ describe('stream channel-scoped read CLI integration', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('verifies stream status for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream Verify');
+
+      const output = runCliSuccess([
+        'stream',
+        'verify',
+        '--channelId',
+        channelId,
+        '--duration',
+        '10',
+        '--interval',
+        '5',
+        '--output',
+        'json',
+      ], 120000);
+
+      const payload = parseJsonValue(output) as {
+        channelId?: unknown;
+        verificationId?: unknown;
+        totalChecks?: unknown;
+        summary?: unknown;
+      };
+      expect(String(payload.channelId)).toBe(channelId);
+      expect(typeof payload.verificationId).toBe('string');
+      expect(typeof payload.totalChecks).toBe('number');
+      expect(payload.summary).toEqual(expect.any(Object));
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 180000);
+
   // Sanity check that the CLI surface exists even without real credentials.
-  it('exposes the disk-video, streams and live-status subcommands through the real CLI entry', () => {
+  it('exposes the disk-video, streams, live-status and verify subcommands through the real CLI entry', () => {
     const diskVideo = runCli(['stream', 'disk-video', '--help'], {
       includeTestEnv: false,
       rejectOnError: true,
@@ -158,5 +194,11 @@ describe('stream channel-scoped read CLI integration', () => {
       rejectOnError: true,
     });
     expect(getKey.stdout).toContain('channelId');
+
+    const verify = runCli(['stream', 'verify', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(verify.stdout).toContain('duration');
   });
 });
