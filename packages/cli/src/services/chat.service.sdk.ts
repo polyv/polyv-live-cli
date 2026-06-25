@@ -17,6 +17,9 @@ import type {
 import { AuthConfig } from '../types/auth';
 import { PolyVValidationError } from '../utils/errors';
 import { createSdkClient } from '../sdk';
+import { readFileSync } from 'fs';
+import { basename } from 'path';
+import { Blob } from 'buffer';
 import {
   ChatServiceConfig,
   ChatSendOptions,
@@ -458,14 +461,14 @@ export class ChatServiceSdk {
     return await client.chat.getAdminInfo(options.channelId);
   }
 
-  async updateAdminInfo(options: { channelId: string; nickname: string; actor: string; avatar?: string }): Promise<any> {
+  async updateAdminInfo(options: { channelId: string; nickname: string; actor: string; avatar: string }): Promise<any> {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
-    return await client.chat.updateAdminInfo(compactParams({
+    return await client.chat.updateAdminInfo({
       channelId: options.channelId,
       nickname: options.nickname,
       actor: options.actor,
-      avatar: options.avatar,
-    }));
+      avatar: this.readFile(options.avatar),
+    });
   }
 
   async getTeacherInfo(options: { channelId: string }): Promise<any> {
@@ -640,5 +643,18 @@ export class ChatServiceSdk {
         'validation_failed'
       );
     }
+  }
+
+  /**
+   * Read a local file into a Blob/File suitable for SDK multipart uploads.
+   * Prefers the global File (Node 20+) so the filename is preserved on the
+   * multipart part (PolyV upload endpoints require a filename).
+   */
+  private readFile(filePath: string): Blob | File {
+    const data = readFileSync(filePath);
+    if (typeof File !== 'undefined') {
+      return new File([data], basename(filePath)) as File;
+    }
+    return new Blob([data]);
   }
 }

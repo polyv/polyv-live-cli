@@ -32,7 +32,7 @@ function encryptChatUserList(json: string, sign: string): string {
 
 describe('ChatService', () => {
   let service: ChatService;
-  let mockClient: { httpClient: { get: Mock; post: Mock } };
+  let mockClient: { httpClient: { get: Mock; post: Mock }; config: { appId: string; appSecret: string } };
 
   beforeEach(() => {
     mockClient = {
@@ -40,6 +40,7 @@ describe('ChatService', () => {
         get: vi.fn(),
         post: vi.fn(),
       },
+      config: { appId: 'test-app-id', appSecret: 'test-secret' },
     };
     service = new ChatService(mockClient as unknown as PolyVClient);
   });
@@ -418,20 +419,50 @@ describe('ChatService', () => {
   });
 
   describe('updateAdminInfo', () => {
-    it('should update admin info successfully', async () => {
-      mockClient.httpClient.post.mockResolvedValue({ data: true });
+    it('should upload the avatar as a signed multipart body with X-Skip-Auth', async () => {
+      mockClient.httpClient.post.mockResolvedValue({ data: '修改成功' });
+      const avatar = new Blob(['png-bytes'], { type: 'image/png' });
 
       const result = await service.updateAdminInfo({
         channelId: '123456',
         nickname: 'Admin',
         actor: 'Admin1',
+        avatar,
       });
 
-      expect(mockClient.httpClient.post).toHaveBeenCalledWith(
-        '/live/v2/channelSetting/123456/set-chat-admin',
-        { nickname: 'Admin', actor: 'Admin1' }
-      );
-      expect(result).toEqual({ data: true });
+      expect(mockClient.httpClient.post).toHaveBeenCalledTimes(1);
+      const [url, formData, config] = mockClient.httpClient.post.mock.calls[0];
+      expect(url).toBe('/live/v2/channelSetting/123456/set-chat-admin');
+      // Auth is handled manually for FormData (default signature interceptor skipped).
+      expect(config.headers['X-Skip-Auth']).toBe('true');
+      expect(config.headers['Content-Type']).toBe('multipart/form-data');
+      // appId, timestamp, nickname and actor participate in the signature; the
+      // avatar file is submitted as a binary stream and is not signed.
+      expect(formData.get('appId')).toBe('test-app-id');
+      expect(formData.get('timestamp')).toBeTruthy();
+      expect(formData.get('sign')).toBeTruthy();
+      expect(formData.get('nickname')).toBe('Admin');
+      expect(formData.get('actor')).toBe('Admin1');
+      const uploadedAvatar = formData.get('avatar');
+      expect(uploadedAvatar).toBeInstanceOf(Blob);
+      // A nameless Blob falls back to the default avatar.png filename.
+      expect((uploadedAvatar as File).name).toBe('avatar.png');
+      expect(result).toEqual({ data: '修改成功' });
+    });
+
+    it('should preserve the filename when the avatar is a File', async () => {
+      mockClient.httpClient.post.mockResolvedValue({ data: '修改成功' });
+      const avatar = new File(['png-bytes'], 'face.jpeg', { type: 'image/jpeg' });
+
+      await service.updateAdminInfo({
+        channelId: '123456',
+        nickname: 'Admin',
+        actor: 'Admin1',
+        avatar,
+      });
+
+      const [, formData] = mockClient.httpClient.post.mock.calls[0];
+      expect((formData.get('avatar') as File).name).toBe('face.jpeg');
     });
 
     it('should throw validation error for missing channelId', async () => {
@@ -439,6 +470,7 @@ describe('ChatService', () => {
         channelId: '',
         nickname: 'Admin',
         actor: 'Admin1',
+        avatar: new Blob(['x']),
       })).rejects.toThrow('channelId is required');
     });
 
@@ -447,6 +479,7 @@ describe('ChatService', () => {
         channelId: '123456',
         nickname: '',
         actor: 'Admin1',
+        avatar: new Blob(['x']),
       })).rejects.toThrow('nickname is required');
     });
 
@@ -455,7 +488,17 @@ describe('ChatService', () => {
         channelId: '123456',
         nickname: 'Admin',
         actor: '',
+        avatar: new Blob(['x']),
       })).rejects.toThrow('actor is required');
+    });
+
+    it('should throw validation error for missing avatar', async () => {
+      await expect(service.updateAdminInfo({
+        channelId: '123456',
+        nickname: 'Admin',
+        actor: 'Admin1',
+        avatar: undefined as unknown as Blob,
+      })).rejects.toThrow('avatar is required');
     });
   });
 

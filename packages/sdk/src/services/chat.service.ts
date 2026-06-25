@@ -78,6 +78,7 @@ import type {
 import axios from 'axios';
 import { createHash, createDecipheriv } from 'crypto';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
+import { generateSignature } from '../auth/signature.js';
 
 /**
  * Fixed signing secret used by the apichat userlistExternal endpoint. This is a
@@ -614,7 +615,7 @@ export class ChatService {
    *   channelId: '123456',
    *   nickname: '管理员',
    *   actor: '管理员1',
-   *   avatar: imageBuffer,
+   *   avatar: avatarFile,
    * });
    * console.log(result.data);
    * ```
@@ -629,19 +630,47 @@ export class ChatService {
     if (!params.actor) {
       throw new PolyVValidationError('actor is required');
     }
-
-    // Build request body
-    const requestBody: Record<string, string> = {
-      nickname: params.nickname,
-      actor: params.actor,
-    };
-    if (params.avatar) {
-      requestBody.avatar = params.avatar;
+    if (!params.avatar) {
+      throw new PolyVValidationError('avatar is required');
     }
 
+    // Multipart upload API. appId, timestamp, nickname and actor participate in
+    // the signature; the avatar file is submitted as a binary stream (not signed).
+    const timestamp = Date.now();
+    const { sign } = generateSignature(
+      {
+        appId: this.client.config.appId,
+        timestamp,
+        nickname: params.nickname,
+        actor: params.actor,
+      },
+      { appSecret: this.client.config.appSecret }
+    );
+
+    const formData = new FormData();
+    formData.append('appId', this.client.config.appId);
+    formData.append('timestamp', String(timestamp));
+    formData.append('sign', sign);
+    formData.append('nickname', params.nickname);
+    formData.append('actor', params.actor);
+    // A filename is required by the multipart upload endpoint; fall back to a
+    // default when the caller passes a nameless Blob/Buffer instead of a File.
+    if (params.avatar instanceof Blob) {
+      formData.append('avatar', params.avatar, (params.avatar as File).name || 'avatar.png');
+    } else {
+      formData.append('avatar', new Blob([params.avatar as Buffer]), 'avatar.png');
+    }
+
+    // Make request without the default auth interceptor (sign is handled manually for FormData).
     const response = await this.client.httpClient.post<UpdateAdminInfoResponse>(
       `/live/v2/channelSetting/${params.channelId}/set-chat-admin`,
-      requestBody
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-Skip-Auth': 'true',
+        },
+      }
     );
     return response as unknown as UpdateAdminInfoResponse;
   }

@@ -500,12 +500,12 @@ export class ChatHandler extends BaseHandler {
     channelId: string;
     nickname: string;
     actor: string;
-    avatar?: string;
+    avatar: string;
     force?: boolean;
     output?: OutputFormat;
   }): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      this.validateRequiredOptions(options, ['channelId', 'nickname', 'actor']);
+      this.validateRequiredOptions(options, ['channelId', 'nickname', 'actor', 'avatar']);
       if (!(await this.confirmIfNeeded(options.force, `Update admin info for channel ${options.channelId}?`))) return;
       const result = await this.chatService.updateAdminInfo(options);
       this.displayGenericResult(result, options.output, 'Admin info updated successfully');

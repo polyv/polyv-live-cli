@@ -65,7 +65,9 @@ export interface GetAdminInfoResponse {
 
 /**
  * Update admin info request parameters
- * Note: avatar requires file upload (multipart/form-data)
+ * Note: avatar is a required multipart file upload (jpg/jpeg/png, <=2Mb).
+ * Only appId, timestamp, nickname and actor participate in the signature;
+ * the avatar file is submitted as a binary stream and is not signed.
  */
 export interface UpdateAdminInfoParams {
   /** 频道号 */
@@ -74,8 +76,8 @@ export interface UpdateAdminInfoParams {
   nickname: string;
   /** 管理员头衔，长度不能超过4 */
   actor: string;
-  /** 管理员头像URL，支持jpg、jpeg、png三种格式，大小不能超过2Mb */
-  avatar?: string;
+  /** 管理员头像文件（File/Blob/Buffer），支持jpg、jpeg、png三种格式，大小不能超过2Mb */
+  avatar: Blob | File | Buffer;
 }
 
 /**

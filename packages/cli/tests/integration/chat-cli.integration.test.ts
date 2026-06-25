@@ -7,8 +7,27 @@ import {
   runCliSuccess,
 } from '../helpers/channel-fixture';
 import { getAccountCredentials, hasRealCredentials } from '../helpers/integration-config';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+
+// 1x1 transparent PNG used as a real avatar upload fixture for chat role
+// admin-update (the server requires an actual jpg/jpeg/png file upload).
+const FIXTURE_AVATAR_PNG_BASE64 =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+
+/**
+ * Create a temp directory with a small PNG avatar and return its path.
+ * The caller is responsible for removing the returned directory.
+ */
+function createTemporaryAvatarFile(): string {
+  const dir = mkdtempSync(join(tmpdir(), 'polyv-chat-avatar-'));
+  const filePath = join(dir, 'avatar.png');
+  writeFileSync(filePath, Buffer.from(FIXTURE_AVATAR_PNG_BASE64, 'base64'));
+  return filePath;
+}
 
 function sleep(ms: number): void {
   const buffer = new SharedArrayBuffer(4);
@@ -187,10 +206,6 @@ describe('chat CLI integration', () => {
       ]);
       expect(JSON.parse(teacherUpdate.trim())).toBe(true);
 
-      // `chat role admin-update` is excluded: the server requires a real avatar
-      // image upload (returns "file is not found" without it), so it is not
-      // real-coverable on the test account.
-
       // chat message admin-send requires the role enum value `ADMIN` and returns
       // a success message string.
       const adminSend = runCliSuccess([
@@ -249,6 +264,72 @@ describe('chat CLI integration', () => {
       }
     }
   }, 240000);
+
+  // Real CLI execution of `chat role admin-update`. The set-chat-admin endpoint
+  // requires an actual avatar image file (multipart upload); the default admin
+  // info on a fresh channel is 管理员/管理员/missing_face.png. We capture the
+  // originals, update nickname (<=8 chars) + actor (<=4 chars) + avatar, verify
+  // all three persisted via admin-get, then restore the originals. Isolated in
+  // its own block on a dedicated temp channel (deleted in `finally`) so it does
+  // not couple to the chat-send/remove-contents flow above.
+  (shouldRunRealChannelTests ? it : it.skip)('runs chat role admin-update with a real avatar upload against a temporary real channel', () => {
+    let channelId: string | undefined;
+    const avatarPath = createTemporaryAvatarFile();
+
+    try {
+      channelId = createTemporaryChannel('Chat Admin Update');
+      const id = channelId;
+
+      const before = parseJsonObject(runCliSuccess([
+        'chat', 'role', 'admin-get',
+        '--channel-id', id,
+        '--output', 'json',
+      ]));
+      const originalNickname = String(before.nickname ?? '');
+      const originalActor = String(before.actor ?? '');
+      const originalAvatar = String(before.avatar ?? '');
+
+      // chat role admin-update uploads the avatar (multipart) and returns the
+      // server success string "修改成功" as a bare JSON string.
+      const adminUpdate = runCliSuccess([
+        'chat', 'role', 'admin-update',
+        '--channel-id', id,
+        '--nickname', 'gnhf-adm',
+        '--actor', '主管',
+        '--avatar', avatarPath,
+        '--force', '--output', 'json',
+      ]);
+      expect(JSON.parse(adminUpdate.trim())).toBe('修改成功');
+
+      const after = parseJsonObject(runCliSuccess([
+        'chat', 'role', 'admin-get',
+        '--channel-id', id,
+        '--output', 'json',
+      ]));
+      expect(after.nickname).toBe('gnhf-adm');
+      expect(after.actor).toBe('主管');
+      // The avatar must have changed from the default missing_face placeholder
+      // to a real uploaded CDN image URL.
+      expect(String(after.avatar)).not.toBe(originalAvatar);
+      expect(String(after.avatar)).toMatch(/videocc\.net\//);
+
+      // Restore the original admin info (the endpoint always requires a file).
+      const restore = runCliSuccess([
+        'chat', 'role', 'admin-update',
+        '--channel-id', id,
+        '--nickname', originalNickname,
+        '--actor', originalActor,
+        '--avatar', avatarPath,
+        '--force', '--output', 'json',
+      ]);
+      expect(JSON.parse(restore.trim())).toBe('修改成功');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+      rmSync(join(avatarPath, '..'), { recursive: true, force: true });
+    }
+  }, 120000);
 
   // Real CLI execution of the advanced chat message write subcommands. Each
   // target takes only the channel id (hidden-send / custom-send /

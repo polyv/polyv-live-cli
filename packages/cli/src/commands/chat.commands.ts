@@ -717,7 +717,7 @@ Note:
     .requiredOption('-c, --channel-id <id>', 'channel ID')
     .requiredOption('--nickname <name>', 'admin nickname')
     .requiredOption('--actor <title>', 'admin actor/title')
-    .option('--avatar <url>', 'admin avatar URL')
+    .requiredOption('--avatar <path>', 'admin avatar image file path (jpg/jpeg/png)')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async options => withChatHandler(handler => handler.updateAdminInfo(options)));
