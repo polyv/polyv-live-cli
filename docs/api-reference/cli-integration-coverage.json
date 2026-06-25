@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T00:08:40.298Z",
+  "generatedAt": "2026-06-25T00:24:11.192Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 527,
-    "referencedCommandPathsExcludingHelp": 454,
-    "coveredLeafTargetsIncludingHelp": 488,
-    "missingLeafTargetsIncludingHelp": 79,
-    "coveredRealExecutionLeafTargets": 448,
-    "missingRealExecutionLeafTargets": 119,
-    "realExecutionCoveragePercent": 79.01,
-    "includingHelpCoveragePercent": 86.07,
-    "integrationReferences": 1057,
-    "realExecutionReferences": 665,
-    "helpReferences": 392
+    "referencedCommandPathsIncludingHelp": 528,
+    "referencedCommandPathsExcludingHelp": 455,
+    "coveredLeafTargetsIncludingHelp": 489,
+    "missingLeafTargetsIncludingHelp": 78,
+    "coveredRealExecutionLeafTargets": 449,
+    "missingRealExecutionLeafTargets": 118,
+    "realExecutionCoveragePercent": 79.19,
+    "includingHelpCoveragePercent": 86.24,
+    "integrationReferences": 1059,
+    "realExecutionReferences": 666,
+    "helpReferences": 393
   },
   "byTopLevel": [
     {
@@ -76,12 +76,12 @@
     {
       "command": "chat",
       "targetLeafCommands": 44,
-      "coveredRealExecutionLeafTargets": 40,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 42,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 90.91,
-      "includingHelpCoveragePercent": 95.45
+      "coveredRealExecutionLeafTargets": 41,
+      "missingRealExecutionLeafTargets": 3,
+      "coveredLeafTargetsIncludingHelp": 43,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 93.18,
+      "includingHelpCoveragePercent": 97.73
     },
     {
       "command": "checkin",
@@ -569,17 +569,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 714
-    },
-    {
-      "command": "chat role user-list",
-      "path": [
-        "chat",
-        "role",
-        "user-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 744
     },
     {
       "command": "checkin result",
@@ -1769,17 +1758,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 534
-    },
-    {
-      "command": "chat role user-list",
-      "path": [
-        "chat",
-        "role",
-        "user-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/chat.commands.ts",
-      "line": 744
     },
     {
       "command": "checkin result",
@@ -4176,6 +4154,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/chat.commands.ts",
       "line": 732
+    },
+    {
+      "command": "chat role user-list",
+      "path": [
+        "chat",
+        "role",
+        "user-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/chat.commands.ts",
+      "line": 744
     },
     {
       "command": "checkin list",
@@ -8957,7 +8946,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 77,
+        "line": 78,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -8998,7 +8987,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 78,
+        "line": 79,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9028,7 +9017,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 73,
+        "line": 74,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9117,7 +9106,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 74,
+        "line": 75,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9128,7 +9117,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 72,
+        "line": 73,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9139,7 +9128,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 137,
+        "line": 138,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9150,7 +9139,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 147,
+        "line": 148,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9165,7 +9154,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 193,
+        "line": 194,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9176,7 +9165,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 204,
+        "line": 205,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9187,7 +9176,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 214,
+        "line": 215,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9198,7 +9187,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 183,
+        "line": 184,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9235,7 +9224,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 76,
+        "line": 77,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9250,7 +9239,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 109,
+        "line": 110,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9261,7 +9250,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 118,
+        "line": 119,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9276,7 +9265,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 79,
+        "line": 80,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9291,7 +9280,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 80,
+        "line": 81,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9306,7 +9295,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 277,
+        "line": 278,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9317,7 +9306,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 262,
+        "line": 263,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9332,7 +9321,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 82,
+        "line": 83,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9343,7 +9332,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 244,
+        "line": 245,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9358,12 +9347,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 83,
+        "line": 84,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 54,
+        "line": 55,
         "source": "array-literal"
       }
     },
@@ -9399,7 +9388,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 81,
+        "line": 82,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9414,10 +9403,25 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
-        "line": 126,
+        "line": 127,
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "chat role user-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 312,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/chat-cli.integration.test.ts",
+        "line": 54,
+        "source": "array-literal"
+      }
     },
     {
       "command": "chat send",

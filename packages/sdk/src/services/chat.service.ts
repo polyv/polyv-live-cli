@@ -75,7 +75,47 @@ import type {
   UpdateBannedViewerParams,
   UpdateBannedViewerResponse,
 } from '../types/chat-banned.js';
+import axios from 'axios';
+import { createHash, createDecipheriv } from 'crypto';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
+
+/**
+ * Fixed signing secret used by the apichat userlistExternal endpoint. This is a
+ * PolyV-wide constant (not the account appSecret) — see
+ * docs/live/api/chat/role/get_user_list.md.
+ */
+const APICHAT_USERLIST_SIGN_SECRET = 'polyvChatSignForExternal';
+
+/**
+ * Build the apichat userlistExternal query-string sign. Unlike the standard
+ * PolyV signature, this uses a fixed secret and only the business params (no
+ * appId/timestamp): secret + sorted(key+value) + secret, MD5 uppercase.
+ */
+function buildChatUserListSign(params: Record<string, string>): string {
+  let content = APICHAT_USERLIST_SIGN_SECRET;
+  for (const key of Object.keys(params).sort()) {
+    content += key + params[key];
+  }
+  content += APICHAT_USERLIST_SIGN_SECRET;
+  return createHash('md5').update(content, 'utf8').digest('hex').toUpperCase();
+}
+
+/**
+ * Decrypt the apichat userlistExternal response body. The body is hex-encoded
+ * AES-128-CBC ciphertext; the key and IV are the first 16 UTF-8 bytes of the
+ * request sign. The decrypted plaintext is base64-encoded JSON
+ * ({ count, userlist }).
+ */
+function decryptChatUserList(encryptedHex: string, sign: string): GetUserListResponse {
+  const key = Buffer.from(sign.slice(0, 16), 'utf8');
+  const decipher = createDecipheriv('aes-128-cbc', key, key);
+  const decrypted = Buffer.concat([
+    decipher.update(Buffer.from(encryptedHex, 'hex')),
+    decipher.final(),
+  ]);
+  const json = Buffer.from(decrypted.toString('utf8'), 'base64').toString('utf8');
+  return JSON.parse(json) as GetUserListResponse;
+}
 
 /**
  * ChatService
@@ -530,12 +570,35 @@ export class ChatService {
       throw new PolyVValidationError('len must be between 1 and 1000');
     }
 
-    // Use a separate axios instance for this different base URL
-    const response = await this.client.httpClient.get<GetUserListResponse>(
+    // This endpoint lives on a different host (apichat.polyv.net) and uses a
+    // fixed signing secret plus an AES-encrypted response instead of the
+    // standard PolyV { code, data } envelope, so it must bypass the SDK's
+    // signing and response interceptors (a plain axios call keeps the raw hex
+    // body). See docs/live/api/chat/role/get_user_list.md.
+    const query: Record<string, string> = {
+      roomId: params.roomId,
+      page: String(params.page ?? 1),
+      len: String(params.len ?? 100),
+      hide: '0',
+      toGetSubRooms: String(params.toGetSubRooms ?? false),
+    };
+    const sign = buildChatUserListSign(query);
+
+    const response = await axios.get<string>(
       'https://apichat.polyv.net/front/userlistExternal',
-      { params }
+      {
+        params: { ...query, sign },
+        responseType: 'text',
+        transformResponse: [(data: unknown) => data],
+      }
     );
-    return response as unknown as GetUserListResponse;
+
+    const body = typeof response.data === 'string' ? response.data.trim() : '';
+    if (!body) {
+      // No users online → the endpoint may return an empty body.
+      return { count: 0, userlist: [] };
+    }
+    return decryptChatUserList(body, sign);
   }
 
   /**

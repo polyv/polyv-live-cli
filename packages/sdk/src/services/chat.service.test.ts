@@ -1,7 +1,34 @@
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
+import axios from 'axios';
+import { createHash, createCipheriv } from 'crypto';
 import { ChatService } from './chat.service.js';
 import { PolyVClient } from '../client.js';
 import { PolyVValidationError } from '../errors/polyv-validation-error.js';
+
+// getUserList calls the apichat endpoint via a plain axios.get (bypassing the
+// SDK httpClient), so the axios module must be mocked for that path.
+vi.mock('axios');
+
+/**
+ * Reproduce the apichat userlistExternal signing algorithm so the test can
+ * build a matching ciphertext/sign pair to feed the mocked axios call.
+ * Must stay in sync with chat.service.ts buildChatUserListSign.
+ */
+function buildChatUserListSign(params: Record<string, string>): string {
+  let content = 'polyvChatSignForExternal';
+  for (const key of Object.keys(params).sort()) {
+    content += key + params[key];
+  }
+  content += 'polyvChatSignForExternal';
+  return createHash('md5').update(content, 'utf8').digest('hex').toUpperCase();
+}
+
+function encryptChatUserList(json: string, sign: string): string {
+  const key = Buffer.from(sign.slice(0, 16), 'utf8');
+  const cipher = createCipheriv('aes-128-cbc', key, key);
+  const b64 = Buffer.from(json, 'utf8').toString('base64');
+  return Buffer.concat([cipher.update(b64, 'utf8'), cipher.final()]).toString('hex');
+}
 
 describe('ChatService', () => {
   let service: ChatService;
@@ -328,12 +355,26 @@ describe('ChatService', () => {
   });
 
   describe('getUserList', () => {
-    it('should get user list successfully', async () => {
-      const mockResponse = {
-        count: 10,
-        userlist: [{ userId: 'user1', nickname: 'User 1' }],
+    it('should sign, fetch, and decrypt the apichat userlist', async () => {
+      const expected = {
+        count: 2,
+        userlist: [
+          { userId: 'user1', nick: 'User 1' },
+          { userId: 'user2', nick: 'User 2' },
+        ],
       };
-      mockClient.httpClient.get.mockResolvedValue(mockResponse);
+      // Build the sign + ciphertext matching the params the service will send.
+      const query: Record<string, string> = {
+        roomId: '123456',
+        page: '1',
+        len: '100',
+        hide: '0',
+        toGetSubRooms: 'false',
+      };
+      const sign = buildChatUserListSign(query);
+      const ciphertext = encryptChatUserList(JSON.stringify(expected), sign);
+
+      vi.mocked(axios.get).mockResolvedValueOnce({ data: ciphertext } as never);
 
       const result = await service.getUserList({
         roomId: '123456',
@@ -341,11 +382,23 @@ describe('ChatService', () => {
         len: 100,
       });
 
-      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+      expect(axios.get).toHaveBeenCalledWith(
         'https://apichat.polyv.net/front/userlistExternal',
-        { params: { roomId: '123456', page: 1, len: 100 } }
+        {
+          params: { ...query, sign },
+          responseType: 'text',
+          transformResponse: [expect.any(Function)],
+        }
       );
-      expect(result).toEqual(mockResponse);
+      expect(result).toEqual(expected);
+    });
+
+    it('should return an empty list when the endpoint returns an empty body', async () => {
+      vi.mocked(axios.get).mockResolvedValueOnce({ data: '' } as never);
+
+      const result = await service.getUserList({ roomId: '123456' });
+
+      expect(result).toEqual({ count: 0, userlist: [] });
     });
 
     it('should throw validation error for missing roomId', async () => {

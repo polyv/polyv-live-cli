@@ -51,6 +51,7 @@ describe('chat CLI integration', () => {
       ['chat', 'notice', 'list', '--help'],
       ['chat', 'qa', 'list', '--help'],
       ['chat', 'role', 'teacher-get', '--help'],
+      ['chat', 'role', 'user-list', '--help'],
       ['chat', 'robot', 'stats', '--help'],
     ];
 
@@ -288,6 +289,35 @@ describe('chat CLI integration', () => {
         '--output', 'json',
       ]));
       expect(afterList.robotNumber).toBe(3);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 240000);
+
+  // Real CLI execution of chat role user-list. The apichat userlistExternal
+  // endpoint returns an AES-encrypted body that the SDK signs (with the fixed
+  // polyvChatSignForExternal secret) and decrypts; on a fresh non-live channel
+  // the decrypted payload is an empty online-user list. The PolyV chat room id
+  // equals the channel id, so the temp channel id is used as --room-id.
+  (shouldRunRealChannelTests ? it : it.skip)('lists online chat room users via the apichat endpoint', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Chat Role UserList');
+      const id = channelId;
+
+      // chat role user-list returns `{ count, userlist }` (decrypted by the SDK).
+      const result = parseJsonObject(runCliSuccess([
+        'chat', 'role', 'user-list',
+        '--room-id', id,
+        '--page', '1',
+        '--len', '10',
+        '--output', 'json',
+      ]));
+      expect(typeof result.count).toBe('number');
+      expect(Array.isArray(result.userlist)).toBe(true);
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);

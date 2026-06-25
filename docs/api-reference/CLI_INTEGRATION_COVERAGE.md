@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T00:08:40.298Z
+Generated at: 2026-06-25T00:24:11.192Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 88 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 448 |
-| Missing real-execution leaf subcommands | 119 |
-| Real-execution coverage | 79.01% |
-| Leaf subcommands referenced including help | 488 |
-| Missing including help | 79 |
+| Real-executed leaf subcommands | 449 |
+| Missing real-execution leaf subcommands | 118 |
+| Real-execution coverage | 79.19% |
+| Leaf subcommands referenced including help | 489 |
+| Missing including help | 78 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 71 | 7 | 91.03% | 77 | 1 |
-| `chat` | 44 | 40 | 4 | 90.91% | 42 | 2 |
+| `chat` | 44 | 41 | 3 | 93.18% | 43 | 1 |
 | `checkin` | 5 | 3 | 2 | 60.00% | 3 | 2 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -79,7 +79,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `chat message remove-contents` | `packages/cli/src/commands/chat.commands.ts:505` |
 | `chat role admin-update` | `packages/cli/src/commands/chat.commands.ts:714` |
-| `chat role user-list` | `packages/cli/src/commands/chat.commands.ts:744` |
 | `checkin result` | `packages/cli/src/commands/checkin.commands.ts:148` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
