@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:21:11.384Z
+Generated at: 2026-06-26T18:26:02.057Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 503 |
-| Missing real-execution leaf subcommands | 64 |
-| Real-execution coverage | 88.71% |
-| Leaf subcommands referenced including help | 520 |
-| Missing including help | 47 |
+| Real-executed leaf subcommands | 504 |
+| Missing real-execution leaf subcommands | 63 |
+| Real-execution coverage | 88.89% |
+| Leaf subcommands referenced including help | 521 |
+| Missing including help | 46 |
 
 ## By Top-Level Command
 
@@ -37,7 +37,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
-| `lottery` | 24 | 23 | 1 | 95.83% | 23 | 1 |
+| `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
 | `monitor` | 9 | 9 | 0 | 100.00% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
@@ -91,7 +91,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction reward` | `packages/cli/src/commands/interaction.commands.ts:67` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
-| `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |

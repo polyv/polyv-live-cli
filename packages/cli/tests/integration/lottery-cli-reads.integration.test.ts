@@ -197,3 +197,65 @@ describe('lottery receive-info write CLI integration', () => {
     expect(result.stdout).toContain('receive-info');
   });
 });
+
+describe('lottery download-winners read CLI integration', () => {
+  // Create a disposable lottery under a temporary channel, then call the real
+  // download-winners CLI path against that lottery id. A fresh lottery may have
+  // no winners yet, so the assertion only requires valid JSON output from the
+  // real endpoint; channel deletion cleans up the lottery fixture.
+  (shouldRunRealChannelTests ? it : it.skip)('downloads winners for a temporary lottery via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Lottery Download Winners');
+
+      const lotteryOutput = runCliSuccess([
+        'lottery',
+        'create',
+        '--channel-id',
+        channelId,
+        '--name',
+        'DownloadWinners Probe',
+        '--type',
+        'none',
+        '--amount',
+        '1',
+        '--prize-name',
+        'Gift',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const lottery = parseJsonObject(lotteryOutput);
+      const lotteryId = String(lottery.activityId ?? lottery.id ?? '');
+      expect(lotteryId).toMatch(/^\d+$/);
+
+      const output = runCliSuccess([
+        'lottery',
+        'download-winners',
+        '--channel-id',
+        channelId,
+        '--lottery-id',
+        lotteryId,
+        '--output',
+        'json',
+      ]);
+
+      const downloaded = JSON.parse(output.trim());
+      expect(downloaded).toEqual(expect.anything());
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  // Sanity check that the CLI surface exists even without real credentials.
+  it('exposes the download-winners subcommand through the real CLI entry', () => {
+    const result = runCli(['lottery', 'download-winners', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(result.stdout).toContain('lottery-id');
+  });
+});

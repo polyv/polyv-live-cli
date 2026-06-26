@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:21:11.384Z",
+  "generatedAt": "2026-06-26T18:26:02.057Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 559,
-    "referencedCommandPathsExcludingHelp": 509,
-    "coveredLeafTargetsIncludingHelp": 520,
-    "missingLeafTargetsIncludingHelp": 47,
-    "coveredRealExecutionLeafTargets": 503,
-    "missingRealExecutionLeafTargets": 64,
-    "realExecutionCoveragePercent": 88.71,
-    "includingHelpCoveragePercent": 91.71,
-    "integrationReferences": 1174,
-    "realExecutionReferences": 765,
-    "helpReferences": 409
+    "referencedCommandPathsIncludingHelp": 560,
+    "referencedCommandPathsExcludingHelp": 510,
+    "coveredLeafTargetsIncludingHelp": 521,
+    "missingLeafTargetsIncludingHelp": 46,
+    "coveredRealExecutionLeafTargets": 504,
+    "missingRealExecutionLeafTargets": 63,
+    "realExecutionCoveragePercent": 88.89,
+    "includingHelpCoveragePercent": 91.89,
+    "integrationReferences": 1177,
+    "realExecutionReferences": 767,
+    "helpReferences": 410
   },
   "byTopLevel": [
     {
@@ -186,12 +186,12 @@
     {
       "command": "lottery",
       "targetLeafCommands": 24,
-      "coveredRealExecutionLeafTargets": 23,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 23,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 95.83,
-      "includingHelpCoveragePercent": 95.83
+      "coveredRealExecutionLeafTargets": 24,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 24,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "material",
@@ -697,16 +697,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 415
-    },
-    {
-      "command": "lottery download-winners",
-      "path": [
-        "lottery",
-        "download-winners"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 491
     },
     {
       "command": "material delete",
@@ -1306,16 +1296,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 195
-    },
-    {
-      "command": "lottery download-winners",
-      "path": [
-        "lottery",
-        "download-winners"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/lottery.commands.ts",
-      "line": 491
     },
     {
       "command": "playback add-vod",
@@ -4046,6 +4026,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/lottery.commands.ts",
       "line": 270
+    },
+    {
+      "command": "lottery download-winners",
+      "path": [
+        "lottery",
+        "download-winners"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/lottery.commands.ts",
+      "line": 491
     },
     {
       "command": "lottery get",
@@ -10235,7 +10225,7 @@
     },
     {
       "command": "lottery create",
-      "realExecutionReferences": 3,
+      "realExecutionReferences": 4,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
@@ -10254,6 +10244,21 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "lottery download-winners",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 233,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/lottery-cli-reads.integration.test.ts",
+        "line": 255,
+        "source": "array-literal"
+      }
     },
     {
       "command": "lottery get",
