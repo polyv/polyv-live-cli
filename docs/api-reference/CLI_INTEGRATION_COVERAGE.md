@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T19:41:05.061Z
+Generated at: 2026-06-26T19:45:19.487Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,18 +12,18 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 518 |
-| Missing real-execution leaf subcommands | 49 |
-| Real-execution coverage | 91.36% |
-| Leaf subcommands referenced including help | 531 |
-| Missing including help | 36 |
+| Real-executed leaf subcommands | 519 |
+| Missing real-execution leaf subcommands | 48 |
+| Real-execution coverage | 91.53% |
+| Leaf subcommands referenced including help | 532 |
+| Missing including help | 35 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
-| `ai` | 12 | 10 | 2 | 83.33% | 10 | 2 |
+| `ai` | 12 | 11 | 1 | 91.67% | 11 | 1 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 77 | 1 | 98.72% | 78 | 0 |
 | `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
@@ -67,7 +67,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 |---------|--------|
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
-| `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:396` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |

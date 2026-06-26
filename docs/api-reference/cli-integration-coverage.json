@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T19:41:05.061Z",
+  "generatedAt": "2026-06-26T19:45:19.487Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 570,
-    "referencedCommandPathsExcludingHelp": 524,
-    "coveredLeafTargetsIncludingHelp": 531,
-    "missingLeafTargetsIncludingHelp": 36,
-    "coveredRealExecutionLeafTargets": 518,
-    "missingRealExecutionLeafTargets": 49,
-    "realExecutionCoveragePercent": 91.36,
-    "includingHelpCoveragePercent": 93.65,
-    "integrationReferences": 1195,
-    "realExecutionReferences": 783,
-    "helpReferences": 412
+    "referencedCommandPathsIncludingHelp": 571,
+    "referencedCommandPathsExcludingHelp": 525,
+    "coveredLeafTargetsIncludingHelp": 532,
+    "missingLeafTargetsIncludingHelp": 35,
+    "coveredRealExecutionLeafTargets": 519,
+    "missingRealExecutionLeafTargets": 48,
+    "realExecutionCoveragePercent": 91.53,
+    "includingHelpCoveragePercent": 93.83,
+    "integrationReferences": 1198,
+    "realExecutionReferences": 785,
+    "helpReferences": 413
   },
   "byTopLevel": [
     {
@@ -46,12 +46,12 @@
     {
       "command": "ai",
       "targetLeafCommands": 12,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 10,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 83.33,
-      "includingHelpCoveragePercent": 83.33
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 11,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 91.67,
+      "includingHelpCoveragePercent": 91.67
     },
     {
       "command": "card-push",
@@ -437,18 +437,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 312
-    },
-    {
-      "command": "ai video-produce ppt async-upload",
-      "path": [
-        "ai",
-        "video-produce",
-        "ppt",
-        "async-upload"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 396
     },
     {
       "command": "channel ppt-record add-task",
@@ -965,18 +953,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 312
-    },
-    {
-      "command": "ai video-produce ppt async-upload",
-      "path": [
-        "ai",
-        "video-produce",
-        "ppt",
-        "async-upload"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 396
     },
     {
       "command": "checkin session-result",
@@ -1640,6 +1616,18 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 244
+    },
+    {
+      "command": "ai video-produce ppt async-upload",
+      "path": [
+        "ai",
+        "video-produce",
+        "ppt",
+        "async-upload"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 396
     },
     {
       "command": "ai video-produce ppt get",
@@ -7223,12 +7211,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 75,
+        "line": 80,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 179,
+        "line": 244,
         "source": "array-literal"
       }
     },
@@ -7238,10 +7226,25 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 55,
+        "line": 60,
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "ai video-produce ppt async-upload",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 214,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
+        "line": 247,
+        "source": "array-literal"
+      }
     },
     {
       "command": "ai video-produce ppt get",
@@ -7249,22 +7252,22 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 134,
+        "line": 139,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 180,
+        "line": 245,
         "source": "array-literal"
       }
     },
     {
       "command": "ai video-produce ppt list",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 107,
+        "line": 112,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -7275,12 +7278,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 152,
+        "line": 157,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/ai-video-produce-cli.integration.test.ts",
-        "line": 181,
+        "line": 246,
         "source": "array-literal"
       }
     },

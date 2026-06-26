@@ -14,6 +14,9 @@
  * - `ai video-produce ppt upload` re-uploads an existing PPT's URL. PolyV
  *   dedupes identical PPT content (returns the same fileId, no new record), so
  *   this is an idempotent write with no orphan data and no cleanup needed.
+ * - `ai video-produce ppt async-upload` starts the async URL upload path against
+ *   an existing PPT URL. It is gated by POLYV_TEST_ALLOW_AI_PPT_ASYNC_UPLOAD
+ *   because the API has no PPT delete command if dedupe behavior changes.
  *
  * Per the integration-test convention, every real test still creates (and
  * deletes in `finally`) a temporary channel as the real test asset, even though
@@ -30,6 +33,8 @@ import {
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const shouldRunAsyncUploadTest =
+  shouldRunRealChannelTests && process.env.POLYV_TEST_ALLOW_AI_PPT_ASYNC_UPLOAD === 'true';
 
 interface VideoProduceTask {
   id: number;
@@ -173,12 +178,73 @@ describe('ai video-produce CLI integration (account-scoped)', () => {
     120000,
   );
 
+  (shouldRunAsyncUploadTest ? it : it.skip)(
+    'starts async ppt upload via real CLI against an existing PPT URL',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('AI Video Produce Ppt Async');
+
+        const listOutput = runCliSuccess([
+          'ai',
+          'video-produce',
+          'ppt',
+          'list',
+          '--page',
+          '1',
+          '--size',
+          '50',
+          '--output',
+          'json',
+        ]);
+        const listPayload = parseJsonObject(listOutput) as {
+          contents: VideoProducePpt[];
+        };
+        expect(Array.isArray(listPayload.contents)).toBe(true);
+        expect(listPayload.contents.length).toBeGreaterThan(0);
+        const ppt = listPayload.contents[0];
+        expect(typeof ppt.fileUrl).toBe('string');
+        expect(String(ppt.fileUrl).length).toBeGreaterThan(0);
+        const existingFileIds = new Set(
+          listPayload.contents.map((item) => item.fileId),
+        );
+
+        const asyncUploaded = parseJsonObject(
+          runCliSuccess([
+            'ai',
+            'video-produce',
+            'ppt',
+            'async-upload',
+            '--url',
+            String(ppt.fileUrl),
+            '--type',
+            'common',
+            '--force',
+            '--output',
+            'json',
+          ]),
+        ) as { fileId: string };
+
+        expect(typeof asyncUploaded.fileId).toBe('string');
+        expect(asyncUploaded.fileId.length).toBeGreaterThan(0);
+        expect(existingFileIds.has(asyncUploaded.fileId)).toBe(true);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted ai video-produce subcommands through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [
       [['ai', 'video-produce', 'get', '--help'], '查询AI视频制作任务'],
       [['ai', 'video-produce', 'ppt', 'get', '--help'], '查询视频制作PPT'],
       [['ai', 'video-produce', 'ppt', 'upload', '--help'], '上传视频制作PPT'],
+      [['ai', 'video-produce', 'ppt', 'async-upload', '--help'], '异步上传视频制作PPT'],
     ];
 
     for (const [args, marker] of checks) {
