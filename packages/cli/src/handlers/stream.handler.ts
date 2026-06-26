@@ -756,6 +756,14 @@ export class StreamHandler extends BaseHandler {
       this.validateMonitorStreamOptions(options);
 
       const refresh = options.refresh || DEFAULT_VERIFICATION_SETTINGS.MONITOR_REFRESH;
+
+      if (options.output === 'json') {
+        const statusInfo = await this.streamService.getStreamStatus({
+          channelId: options.channelId,
+        });
+        this.displayData(statusInfo, 'json');
+        return;
+      }
       
       console.log(`📊 Stream Monitor - Channel: ${options.channelId} (Refreshing every ${refresh}s)`);
       console.log('Press Ctrl+C to stop monitoring\n');

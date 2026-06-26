@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:45:04.147Z
+Generated at: 2026-06-26T18:49:16.314Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 512 |
-| Missing real-execution leaf subcommands | 55 |
-| Real-execution coverage | 90.30% |
-| Leaf subcommands referenced including help | 526 |
-| Missing including help | 41 |
+| Real-executed leaf subcommands | 514 |
+| Missing real-execution leaf subcommands | 53 |
+| Real-execution coverage | 90.65% |
+| Leaf subcommands referenced including help | 528 |
+| Missing including help | 39 |
 
 ## By Top-Level Command
 
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 7 | 4 | 63.64% | 7 | 4 |
 | `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
-| `stream` | 19 | 14 | 5 | 73.68% | 14 | 5 |
+| `stream` | 19 | 16 | 3 | 84.21% | 16 | 3 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
@@ -113,8 +113,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `session update` | `packages/cli/src/commands/session.commands.ts:325` |
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
-| `stream capture` | `packages/cli/src/commands/stream.commands.ts:475` |
-| `stream monitor` | `packages/cli/src/commands/stream.commands.ts:713` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |

@@ -107,6 +107,67 @@ describe('stream channel-scoped read CLI integration', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('gets the current capture image for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream Capture');
+
+      const output = runCliSuccess([
+        'stream',
+        'capture',
+        '-c',
+        channelId,
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as { channelId?: unknown; captureImage?: unknown };
+      expect(String(payload.channelId)).toBe(channelId);
+      expect(Object.prototype.hasOwnProperty.call(payload, 'captureImage')).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunRealChannelTests ? it : it.skip)('gets a one-shot stream monitor status for a temporary channel via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Stream Monitor');
+
+      const output = runCliSuccess([
+        'stream',
+        'monitor',
+        '--channelId',
+        channelId,
+        '--refresh',
+        '1',
+        '--output',
+        'json',
+      ]);
+
+      const payload = parseJsonValue(output) as {
+        channelId?: unknown;
+        status?: unknown;
+        statusText?: unknown;
+        isLive?: unknown;
+        lastUpdated?: unknown;
+      };
+      expect(String(payload.channelId)).toBe(channelId);
+      expect(typeof payload.status).toBe('string');
+      expect(typeof payload.statusText).toBe('string');
+      expect(typeof payload.isLive).toBe('boolean');
+      expect(typeof payload.lastUpdated).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('gets live status by stream name for a temporary channel via real CLI', () => {
     let channelId: string | undefined;
 
@@ -202,7 +263,7 @@ describe('stream channel-scoped read CLI integration', () => {
   }, 180000);
 
   // Sanity check that the CLI surface exists even without real credentials.
-  it('exposes the disk-video, streams, live-status and verify subcommands through the real CLI entry', () => {
+  it('exposes the disk-video, streams, capture, monitor, live-status and verify subcommands through the real CLI entry', () => {
     const diskVideo = runCli(['stream', 'disk-video', '--help'], {
       includeTestEnv: false,
       rejectOnError: true,
@@ -214,6 +275,18 @@ describe('stream channel-scoped read CLI integration', () => {
       rejectOnError: true,
     });
     expect(streams.stdout).toContain('channel-ids');
+
+    const capture = runCli(['stream', 'capture', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(capture.stdout).toContain('channel-id');
+
+    const monitor = runCli(['stream', 'monitor', '--help'], {
+      includeTestEnv: false,
+      rejectOnError: true,
+    });
+    expect(monitor.stdout).toContain('channelId');
 
     const liveStatus = runCli(['stream', 'live-status', 'get', '--help'], {
       includeTestEnv: false,

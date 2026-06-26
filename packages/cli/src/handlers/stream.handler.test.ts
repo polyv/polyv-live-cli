@@ -782,6 +782,26 @@ describe('StreamHandler', () => {
       mockRemoveListener.mockRestore();
     });
 
+    it('should output one JSON status snapshot without starting monitor interval', async () => {
+      mockStreamService.getStreamStatus.mockResolvedValue(mockStatusInfo);
+
+      await streamHandler.monitorStream({
+        ...validOptions,
+        output: 'json'
+      });
+
+      expect(mockStreamService.getStreamStatus).toHaveBeenCalledWith({
+        channelId: '3151318'
+      });
+      expect(mockSetInterval).not.toHaveBeenCalled();
+
+      const logged = consoleSpy.log.mock.calls[0]?.[0] as string;
+      const parsed = JSON.parse(logged) as StreamStatusInfo;
+      expect(parsed.channelId).toBe('3151318');
+      expect(parsed.status).toBe('live');
+      expect(parsed.isLive).toBe(true);
+    });
+
     it('should throw validation error for empty channelId', async () => {
       const invalidOptions: StreamMonitorOptions = {
         channelId: '',
