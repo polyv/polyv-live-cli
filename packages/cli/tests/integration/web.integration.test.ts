@@ -663,4 +663,68 @@ describe('web CLI integration', () => {
     },
     240000,
   );
+
+  // Exercises the channel cash-donate update endpoint through the real CLI.
+  // Unlike gift-donate (good-update) above, the cash-donate update is a server
+  // no-op on this account: the endpoint accepts the request and returns
+  // {success:true, result:true}, but a `donate get` read-back still shows the
+  // account default cash ladder (the submitted amounts never persist to the
+  // channel). The no-op makes the write *safe* — nothing to clean up beyond
+  // the throwaway channel — while still being a real API execution worth
+  // covering. We assert the structured {success,result} payload and confirm
+  // via a donate get that the channel cash ladder is unchanged.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs web donate cash-update against a temporary real channel (server no-op)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Web Donate Cash Update');
+        const id = channelId;
+
+        const readCashes = () => {
+          const donate = parseJsonValue(
+            runCliSuccess(['web', 'donate', 'get', '--channel-id', id, '--output', 'json']),
+          ) as { cashes?: number[] };
+          return donate.cashes ?? [];
+        };
+
+        const before = readCashes();
+        expect(before.length).toBe(6);
+
+        const payload = parseJsonObject(
+          runCliSuccess([
+            'web',
+            'donate',
+            'cash-update',
+            '--channel-id',
+            id,
+            '--cashes',
+            '1,5,10,50,100,200',
+            '--cash-min',
+            '1',
+            '--enabled',
+            'Y',
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(payload.success).toBe(true);
+        expect(payload.result).toBe(true);
+
+        // The submitted cash ladder does not persist (server no-op); the
+        // channel still reports its default ladder, proving no harmful state
+        // change leaked to the channel or the account-wide defaults.
+        const after = readCashes();
+        expect(after).toEqual(before);
+        expect(after).not.toContain(1);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
 });

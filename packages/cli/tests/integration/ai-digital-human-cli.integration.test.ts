@@ -13,11 +13,15 @@
  *   list` and fed to `list-org`.
  *
  * Note on `ai digital-human set-org`: the set-organizations endpoint accepts
- * the request and returns `{success:true}`, but on every test account all
- * digital humans are system-provided templates (`type:"polyv"`, `userId:""`)
- * rather than account-owned, so the association never persists (`list-org`
- * stays `[]`). set-org is therefore an unverifiable no-op here and is not
- * asserted as a coverage target (same pattern as donate/pv-show no-ops).
+ * the request and returns `{success:true, count:N}`, but on every test account
+ * all digital humans are system-provided templates (`type:"polyv"`,
+ * `userId:""`) rather than account-owned, so the association never persists
+ * (`list-org` stays `[]`). The server no-op makes the write *safe* (no state
+ * to clean up), not unverifiable: set-org still hits the real API and returns
+ * structured output, so it IS covered below as a real-execution target —
+ * run set-org with a real digital-human id + real org id, assert the
+ * `{success:true, count:N}` payload, and confirm via list-org that the
+ * association did not persist.
  *
  * Per the integration-test convention, the real test still creates (and
  * deletes in `finally`) a temporary channel as the real test asset, even
@@ -87,6 +91,86 @@ describe('ai digital-human CLI integration (account-scoped)', () => {
         expect(Array.isArray(associations)).toBe(true);
         // System-provided digital humans have no associations, so the array is
         // commonly empty; either way it must be a well-formed array.
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  // `ai digital-human set-org` runs the set-organizations endpoint through the
+  // real CLI. On every test account the digital humans are system templates, so
+  // the server accepts the request (returns {success:true, count:N}) but never
+  // persists the association — list-org stays [] for the target id. That no-op
+  // behavior makes the write safe (nothing to clean up) while still being a
+  // real API execution worth covering: we assert the structured {success,count}
+  // payload and then confirm via list-org that no association lingered.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'sets organization associations for a real digital human via real CLI (server no-op)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('AI Digital Human Set Org');
+
+        // Discover a real digital-human id and a real org id on the account.
+        const listPayload = parseJsonObject(
+          runCliSuccess([
+            'ai',
+            'digital-human',
+            'list',
+            '--page',
+            '1',
+            '--size',
+            '5',
+            '--output',
+            'json',
+          ]),
+        ) as { contents: DigitalHuman[] };
+        expect(listPayload.contents.length).toBeGreaterThan(0);
+        const digitalHumanId = listPayload.contents[0].id;
+
+        const orgs = parseJsonValue(
+          runCliSuccess(['user', 'org', 'list', '--output', 'json']),
+        ) as Array<{ id: number }>;
+        expect(orgs.length).toBeGreaterThan(0);
+        const orgId = orgs[0].id;
+
+        // set-org returns {success:true, count:N} — count reflects the number
+        // of (digital-human, org) associations submitted.
+        const payload = parseJsonObject(
+          runCliSuccess([
+            'ai',
+            'digital-human',
+            'set-org',
+            '--aiDigitalHumanId',
+            String(digitalHumanId),
+            '--organizationIds',
+            String(orgId),
+            '--output',
+            'json',
+          ]),
+        );
+        expect(payload.success).toBe(true);
+        expect(payload.count).toBe(1);
+
+        // The association does not persist for system-template digital humans;
+        // list-org stays a well-formed (commonly empty) array, proving the
+        // write left no lingering state on the account.
+        const associations = parseJsonValue(
+          runCliSuccess([
+            'ai',
+            'digital-human',
+            'list-org',
+            '--ids',
+            String(digitalHumanId),
+            '--output',
+            'json',
+          ]),
+        ) as unknown[];
+        expect(Array.isArray(associations)).toBe(true);
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);

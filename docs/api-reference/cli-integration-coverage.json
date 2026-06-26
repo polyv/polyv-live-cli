@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T04:03:31.974Z",
+  "generatedAt": "2026-06-26T04:46:35.098Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 549,
-    "referencedCommandPathsExcludingHelp": 491,
-    "coveredLeafTargetsIncludingHelp": 510,
-    "missingLeafTargetsIncludingHelp": 57,
-    "coveredRealExecutionLeafTargets": 485,
-    "missingRealExecutionLeafTargets": 82,
-    "realExecutionCoveragePercent": 85.54,
-    "includingHelpCoveragePercent": 89.95,
-    "integrationReferences": 1145,
-    "realExecutionReferences": 737,
+    "referencedCommandPathsIncludingHelp": 550,
+    "referencedCommandPathsExcludingHelp": 494,
+    "coveredLeafTargetsIncludingHelp": 511,
+    "missingLeafTargetsIncludingHelp": 56,
+    "coveredRealExecutionLeafTargets": 488,
+    "missingRealExecutionLeafTargets": 79,
+    "realExecutionCoveragePercent": 86.07,
+    "includingHelpCoveragePercent": 90.12,
+    "integrationReferences": 1154,
+    "realExecutionReferences": 746,
     "helpReferences": 408
   },
   "byTopLevel": [
@@ -46,12 +46,12 @@
     {
       "command": "ai",
       "targetLeafCommands": 12,
-      "coveredRealExecutionLeafTargets": 9,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 9,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 75,
-      "includingHelpCoveragePercent": 75
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 10,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 83.33,
+      "includingHelpCoveragePercent": 83.33
     },
     {
       "command": "card-push",
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 28,
-      "missingRealExecutionLeafTargets": 3,
+      "coveredRealExecutionLeafTargets": 29,
+      "missingRealExecutionLeafTargets": 2,
       "coveredLeafTargetsIncludingHelp": 30,
       "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 90.32,
+      "realExecutionCoveragePercent": 93.55,
       "includingHelpCoveragePercent": 96.77
     },
     {
@@ -386,11 +386,11 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 32,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 33,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 34,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 94.12,
+      "realExecutionCoveragePercent": 97.06,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -426,17 +426,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 844
-    },
-    {
-      "command": "ai digital-human set-org",
-      "path": [
-        "ai",
-        "digital-human",
-        "set-org"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 189
     },
     {
       "command": "ai video-produce delete",
@@ -1250,18 +1239,6 @@
       "line": 136
     },
     {
-      "command": "user setting pv-show update",
-      "path": [
-        "user",
-        "setting",
-        "pv-show",
-        "update"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 120
-    },
-    {
       "command": "viewer config update",
       "path": [
         "viewer",
@@ -1271,17 +1248,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 243
-    },
-    {
-      "command": "web donate cash-update",
-      "path": [
-        "web",
-        "donate",
-        "cash-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 173
     },
     {
       "command": "web setting global-enabled-update",
@@ -1307,17 +1273,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 844
-    },
-    {
-      "command": "ai digital-human set-org",
-      "path": [
-        "ai",
-        "digital-human",
-        "set-org"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/ai.commands.ts",
-      "line": 189
     },
     {
       "command": "ai video-produce delete",
@@ -2173,6 +2128,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 170
+    },
+    {
+      "command": "ai digital-human set-org",
+      "path": [
+        "ai",
+        "digital-human",
+        "set-org"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/ai.commands.ts",
+      "line": 189
     },
     {
       "command": "ai video-produce create",
@@ -6279,6 +6245,18 @@
       "line": 118
     },
     {
+      "command": "user setting pv-show update",
+      "path": [
+        "user",
+        "setting",
+        "pv-show",
+        "update"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 120
+    },
+    {
       "command": "user template audio-moderation get",
       "path": [
         "user",
@@ -6721,6 +6699,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 210
+    },
+    {
+      "command": "web donate cash-update",
+      "path": [
+        "web",
+        "donate",
+        "cash-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 173
     },
     {
       "command": "web donate get",
@@ -7380,33 +7369,44 @@
     },
     {
       "command": "ai digital-human list",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
-        "line": 55,
+        "line": 59,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
-        "line": 102,
+        "line": 186,
         "source": "array-literal"
       }
     },
     {
       "command": "ai digital-human list-org",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
-        "line": 77,
+        "line": 81,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
-        "line": 103,
+        "line": 187,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "ai digital-human set-org",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
+        "line": 144,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "ai video-produce",
@@ -12912,7 +12912,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 10,
+        "line": 15,
         "source": "array-literal"
       }
     },
@@ -12923,7 +12923,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 15,
+        "line": 20,
         "source": "array-literal"
       }
     },
@@ -12949,7 +12949,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 11,
+        "line": 16,
         "source": "array-literal"
       }
     },
@@ -12964,7 +12964,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 29,
+        "line": 34,
         "source": "array-literal"
       }
     },
@@ -12979,7 +12979,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 31,
+        "line": 36,
         "source": "array-literal"
       }
     },
@@ -13035,7 +13035,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 30,
+        "line": 35,
         "source": "array-literal"
       }
     },
@@ -13061,7 +13061,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 17,
+        "line": 22,
         "source": "array-literal"
       }
     },
@@ -13072,7 +13072,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 12,
+        "line": 17,
         "source": "array-literal"
       }
     },
@@ -13087,7 +13087,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 32,
+        "line": 37,
         "source": "array-literal"
       }
     },
@@ -13102,17 +13102,17 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 33,
+        "line": 38,
         "source": "array-literal"
       }
     },
     {
       "command": "user org list",
-      "realExecutionReferences": 3,
+      "realExecutionReferences": 4,
       "helpReferences": 0,
       "firstRealExecutionReference": {
-        "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 56,
+        "file": "packages/cli/tests/integration/ai-digital-human-cli.integration.test.ts",
+        "line": 136,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13124,7 +13124,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 14,
+        "line": 19,
         "source": "array-literal"
       }
     },
@@ -13154,13 +13154,13 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 40,
+        "line": 45,
         "source": "array-literal"
       }
     },
     {
       "command": "user setting pv-show get",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
@@ -13175,12 +13175,16 @@
     },
     {
       "command": "user setting pv-show update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
+        "line": 98,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 41,
+        "line": 46,
         "source": "array-literal"
       }
     },
@@ -13191,7 +13195,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 42,
+        "line": 47,
         "source": "array-literal"
       }
     },
@@ -13202,7 +13206,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 13,
+        "line": 18,
         "source": "array-literal"
       }
     },
@@ -13232,7 +13236,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 38,
+        "line": 43,
         "source": "array-literal"
       }
     },
@@ -13262,7 +13266,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 34,
+        "line": 39,
         "source": "array-literal"
       }
     },
@@ -13292,7 +13296,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 35,
+        "line": 40,
         "source": "array-literal"
       }
     },
@@ -13322,7 +13326,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 37,
+        "line": 42,
         "source": "array-literal"
       }
     },
@@ -13352,7 +13356,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 36,
+        "line": 41,
         "source": "array-literal"
       }
     },
@@ -13382,7 +13386,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 39,
+        "line": 44,
         "source": "array-literal"
       }
     },
@@ -13393,7 +13397,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
-        "line": 16,
+        "line": 21,
         "source": "array-literal"
       }
     },
@@ -13894,9 +13898,13 @@
     },
     {
       "command": "web donate cash-update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 696,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
         "line": 64,
@@ -13905,7 +13913,7 @@
     },
     {
       "command": "web donate get",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",

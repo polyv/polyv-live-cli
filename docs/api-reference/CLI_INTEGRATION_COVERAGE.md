@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T04:03:31.974Z
+Generated at: 2026-06-26T04:46:35.098Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,18 +12,18 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 485 |
-| Missing real-execution leaf subcommands | 82 |
-| Real-execution coverage | 85.54% |
-| Leaf subcommands referenced including help | 510 |
-| Missing including help | 57 |
+| Real-executed leaf subcommands | 488 |
+| Missing real-execution leaf subcommands | 79 |
+| Real-execution coverage | 86.07% |
+| Leaf subcommands referenced including help | 511 |
+| Missing including help | 56 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
-| `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
+| `ai` | 12 | 10 | 2 | 83.33% | 10 | 2 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 72 | 6 | 92.31% | 78 | 0 |
 | `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
@@ -54,10 +54,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
 | `stream` | 19 | 14 | 5 | 73.68% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 28 | 3 | 90.32% | 30 | 1 |
+| `user` | 31 | 29 | 2 | 93.55% | 30 | 1 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 32 | 2 | 94.12% | 34 | 0 |
+| `web` | 34 | 33 | 1 | 97.06% | 34 | 0 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -66,7 +66,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Command | Source |
 |---------|--------|
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
-| `ai digital-human set-org` | `packages/cli/src/commands/ai.commands.ts:189` |
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:396` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1460` |
@@ -143,7 +142,5 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
 | `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
-| `user setting pv-show update` | `packages/cli/src/commands/user.commands.ts:120` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
-| `web donate cash-update` | `packages/cli/src/commands/web.commands.ts:173` |
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
