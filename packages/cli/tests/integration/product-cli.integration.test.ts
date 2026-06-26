@@ -876,6 +876,63 @@ describe('product CLI write lifecycle integration', () => {
     120000,
   );
 
+  // `product order batch-status` is a user-level batch order-status update. The
+  // valid status value is the string `delivering`. Probe (non-existent) order
+  // numbers are not mutated: the server processes the whole batch and returns
+  // `{ success: true, data: { successOrderNos: [], failOrderList: [{ orderNo,
+  // errCode: 40244, errMsg: "订单不存在" }] } }` with every probe order in the fail
+  // list (successOrderNos stays empty, proving nothing was changed). There is
+  // therefore nothing to clean up beyond the temporary channel.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs product order batch-status against non-existent probe orders via real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Product Order Batch Status');
+        const ts = Date.now();
+        const probeA = `polyv-it-order-${ts}-a`;
+        const probeB = `polyv-it-order-${ts}-b`;
+        const probeOrders = `${probeA},${probeB}`;
+
+        const output = parseJsonObject(
+          runCliSuccess([
+            'product',
+            'order',
+            'batch-status',
+            '--order-nos',
+            probeOrders,
+            '--status',
+            'delivering',
+            '--force',
+            '--output',
+            'json',
+          ]),
+        ) as {
+          success?: boolean;
+          data?: {
+            successOrderNos?: unknown[];
+            failOrderList?: Array<{ orderNo?: string; errCode?: number; errMsg?: string }>;
+          };
+        };
+
+        expect(output.success).toBe(true);
+        expect(Array.isArray(output.data?.failOrderList)).toBe(true);
+        // No real order was updated: successOrderNos is empty.
+        expect(output.data?.successOrderNos ?? []).toHaveLength(0);
+        // Every submitted probe order is reported as not found in the fail list.
+        const failedNos = (output.data?.failOrderList ?? []).map((item) => String(item.orderNo));
+        expect(failedNos).toContain(probeA);
+        expect(failedNos).toContain(probeB);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the product write subcommands through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-25T19:16:09.954Z
+Generated at: 2026-06-26T04:03:31.974Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 483 |
-| Missing real-execution leaf subcommands | 84 |
-| Real-execution coverage | 85.19% |
-| Leaf subcommands referenced including help | 509 |
-| Missing including help | 58 |
+| Real-executed leaf subcommands | 485 |
+| Missing real-execution leaf subcommands | 82 |
+| Real-execution coverage | 85.54% |
+| Leaf subcommands referenced including help | 510 |
+| Missing including help | 57 |
 
 ## By Top-Level Command
 
@@ -26,7 +26,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai` | 12 | 9 | 3 | 75.00% | 9 | 3 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 72 | 6 | 92.31% | 78 | 0 |
-| `chat` | 44 | 43 | 1 | 97.73% | 43 | 1 |
+| `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
 | `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -44,7 +44,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform` | 22 | 21 | 1 | 95.45% | 22 | 0 |
 | `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
 | `player` | 11 | 11 | 0 | 100.00% | 11 | 0 |
-| `product` | 36 | 35 | 1 | 97.22% | 36 | 0 |
+| `product` | 36 | 36 | 0 | 100.00% | 36 | 0 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -75,7 +75,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1195` |
 | `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1150` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
-| `chat message audit` | `packages/cli/src/commands/chat.commands.ts:534` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
@@ -117,7 +116,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
 | `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
-| `product order batch-status` | `packages/cli/src/commands/product.commands.ts:973` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
 | `record convert` | `packages/cli/src/commands/record.commands.ts:323` |

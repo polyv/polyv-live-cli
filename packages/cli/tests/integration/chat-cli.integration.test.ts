@@ -495,4 +495,49 @@ describe('chat CLI integration', () => {
       }
     }
   }, 240000);
+
+  // Real CLI execution of `chat message audit`. The audit endpoint accepts a
+  // channel-scoped submitted (pre-approved) chat message — msgId/viewerId/
+  // nickName/content — on a non-live channel and returns an array of per-message
+  // results `[{ msgId, id, status: true, msg: "发送成功" }]` with a server-assigned
+  // message id. It is a transient audit-log entry on a temp channel deleted in
+  // `finally`, so there is no lasting side effect and no object id to clean up.
+  (shouldRunRealChannelTests ? it : it.skip)('runs chat message audit against a temporary real channel', () => {
+    const credentials = getAccountCredentials();
+    const userId = credentials?.userId;
+    if (!userId) {
+      throw new Error('POLYV_USER_ID is required for chat message audit');
+    }
+
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Chat Message Audit');
+      const id = channelId;
+      const msgId = `gnhf-audit-${Date.now()}`;
+
+      const audit = parseJsonValue(
+        runCliSuccess([
+          'chat', 'message', 'audit',
+          '--channel-id', id,
+          '--msg-id', msgId,
+          '--viewer-id', userId,
+          '--nick-name', 'gnhf-auditor',
+          '--content', 'gnhf-audit-probe',
+          '--force', '--output', 'json',
+        ]),
+      );
+
+      expect(Array.isArray(audit)).toBe(true);
+      const entry = (audit as Array<Record<string, unknown>>)[0];
+      expect(String(entry.msgId)).toBe(msgId);
+      expect(String(entry.id)).not.toBe('');
+      expect(entry.status).toBe(true);
+      expect(String(entry.msg)).toMatch(/成功/);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
 });
