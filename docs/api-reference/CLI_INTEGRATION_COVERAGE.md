@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:18:22.091Z
+Generated at: 2026-06-26T18:21:11.384Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 501 |
-| Missing real-execution leaf subcommands | 66 |
-| Real-execution coverage | 88.36% |
-| Leaf subcommands referenced including help | 518 |
-| Missing including help | 49 |
+| Real-executed leaf subcommands | 503 |
+| Missing real-execution leaf subcommands | 64 |
+| Real-execution coverage | 88.71% |
+| Leaf subcommands referenced including help | 520 |
+| Missing including help | 47 |
 
 ## By Top-Level Command
 
@@ -30,7 +30,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `document` | 11 | 7 | 4 | 63.64% | 8 | 3 |
+| `document` | 11 | 9 | 2 | 81.82% | 10 | 1 |
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
@@ -72,8 +72,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
-| `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
-| `document media user-detail` | `packages/cli/src/commands/document.commands.ts:552` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `group allocate-log` | `packages/cli/src/commands/group.commands.ts:36` |
 | `group billing-daily` | `packages/cli/src/commands/group.commands.ts:131` |

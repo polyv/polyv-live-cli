@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:18:22.091Z",
+  "generatedAt": "2026-06-26T18:21:11.384Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 557,
-    "referencedCommandPathsExcludingHelp": 507,
-    "coveredLeafTargetsIncludingHelp": 518,
-    "missingLeafTargetsIncludingHelp": 49,
-    "coveredRealExecutionLeafTargets": 501,
-    "missingRealExecutionLeafTargets": 66,
-    "realExecutionCoveragePercent": 88.36,
-    "includingHelpCoveragePercent": 91.36,
-    "integrationReferences": 1172,
-    "realExecutionReferences": 763,
+    "referencedCommandPathsIncludingHelp": 559,
+    "referencedCommandPathsExcludingHelp": 509,
+    "coveredLeafTargetsIncludingHelp": 520,
+    "missingLeafTargetsIncludingHelp": 47,
+    "coveredRealExecutionLeafTargets": 503,
+    "missingRealExecutionLeafTargets": 64,
+    "realExecutionCoveragePercent": 88.71,
+    "includingHelpCoveragePercent": 91.71,
+    "integrationReferences": 1174,
+    "realExecutionReferences": 765,
     "helpReferences": 409
   },
   "byTopLevel": [
@@ -116,12 +116,12 @@
     {
       "command": "document",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 7,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 8,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 63.64,
-      "includingHelpCoveragePercent": 72.73
+      "coveredRealExecutionLeafTargets": 9,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 10,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 81.82,
+      "includingHelpCoveragePercent": 90.91
     },
     {
       "command": "donate",
@@ -491,28 +491,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 534
-    },
-    {
-      "command": "document media user-delete",
-      "path": [
-        "document",
-        "media",
-        "user-delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 559
-    },
-    {
-      "command": "document media user-detail",
-      "path": [
-        "document",
-        "media",
-        "user-detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 552
     },
     {
       "command": "document teacher-doc relation",
@@ -1165,28 +1143,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 188
-    },
-    {
-      "command": "document media user-delete",
-      "path": [
-        "document",
-        "media",
-        "user-delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 559
-    },
-    {
-      "command": "document media user-detail",
-      "path": [
-        "document",
-        "media",
-        "user-detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 552
     },
     {
       "command": "document teacher-doc relation",
@@ -3597,6 +3553,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 543
+    },
+    {
+      "command": "document media user-delete",
+      "path": [
+        "document",
+        "media",
+        "user-delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 559
+    },
+    {
+      "command": "document media user-detail",
+      "path": [
+        "document",
+        "media",
+        "user-detail"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 552
     },
     {
       "command": "document media vids",
@@ -9477,7 +9455,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 166,
+        "line": 210,
         "source": "array-literal"
       }
     },
@@ -9526,6 +9504,28 @@
       "firstHelpReference": null
     },
     {
+      "command": "document media user-delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 183,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "document media user-detail",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 170,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "document media vids",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9547,7 +9547,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 165,
+        "line": 209,
         "source": "array-literal"
       }
     },
@@ -9562,7 +9562,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 164,
+        "line": 208,
         "source": "array-literal"
       }
     },

@@ -158,6 +158,50 @@ describe('document CLI channel-scoped lifecycle integration', () => {
     120000,
   );
 
+  (shouldRunRealDocTests ? it : it.skip)(
+    'runs document media user-detail and user-delete via real CLI with temporary channel context',
+    () => {
+      let channelId: string | undefined;
+      const probeVid = 'cli-it-media-user-probe-0001';
+
+      try {
+        channelId = createTemporaryChannel('Doc Media User');
+
+        const detailOutput = runCliSuccess([
+          'document',
+          'media',
+          'user-detail',
+          '--vids',
+          probeVid,
+          '--output',
+          'json',
+        ]);
+        const detail = parseJsonValue(detailOutput);
+        expect(Array.isArray(detail)).toBe(true);
+
+        const deleteOutput = parseJsonObject(
+          runCliSuccess([
+            'document',
+            'media',
+            'user-delete',
+            '--vids',
+            probeVid,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        ) as { vids?: string; success?: unknown };
+        expect(String(deleteOutput.vids)).toBe(probeVid);
+        expect(Object.prototype.hasOwnProperty.call(deleteOutput, 'success')).toBe(true);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Command-surface checks (no credentials required, always run).
   it('exposes document upload, status, and delete commands', () => {
     const commands = [
