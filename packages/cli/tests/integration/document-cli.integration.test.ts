@@ -29,6 +29,8 @@ import {
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealDocTests = hasRealCredentials();
+const documentMediaVid = process.env.POLYV_TEST_DOCUMENT_MEDIA_VID?.trim();
+const shouldRunDocumentMediaLinkTest = shouldRunRealDocTests && Boolean(documentMediaVid);
 
 // Server-fetchable image URL (PolyV CDN); reused from the player/product write
 // families. The document service accepts it as a courseware file.
@@ -152,6 +154,92 @@ describe('document CLI channel-scoped lifecycle integration', () => {
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunDocumentMediaLinkTest ? it : it.skip)(
+    'links and unlinks a document media vid via real CLI on a temporary channel',
+    () => {
+      let channelId: string | undefined;
+      let linked = false;
+      const cleanupErrors: string[] = [];
+
+      try {
+        channelId = createTemporaryChannel('Doc Media Link');
+        const vid = documentMediaVid as string;
+
+        const linkOutput = parseJsonObject(
+          runCliSuccess([
+            'document',
+            'media',
+            'link',
+            '-c',
+            channelId,
+            '--vids',
+            vid,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        ) as { channelId?: string; vids?: string; success?: unknown };
+        linked = true;
+
+        expect(String(linkOutput.channelId)).toBe(channelId);
+        expect(String(linkOutput.vids)).toBe(vid);
+        expect(Object.prototype.hasOwnProperty.call(linkOutput, 'success')).toBe(true);
+
+        const unlinkOutput = parseJsonObject(
+          runCliSuccess([
+            'document',
+            'media',
+            'unlink',
+            '-c',
+            channelId,
+            '--vids',
+            vid,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        ) as { channelId?: string; vids?: string; success?: unknown };
+        linked = false;
+
+        expect(String(unlinkOutput.channelId)).toBe(channelId);
+        expect(String(unlinkOutput.vids)).toBe(vid);
+        expect(Object.prototype.hasOwnProperty.call(unlinkOutput, 'success')).toBe(true);
+      } finally {
+        if (channelId && linked && documentMediaVid) {
+          try {
+            runCliSuccess([
+              'document',
+              'media',
+              'unlink',
+              '-c',
+              channelId,
+              '--vids',
+              documentMediaVid,
+              '--force',
+              '--output',
+              'json',
+            ]);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (channelId) {
+          try {
+            deleteTemporaryChannel(channelId);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (cleanupErrors.length > 0) {
+          throw new Error(`Document media link cleanup failed:\n${cleanupErrors.join('\n')}`);
         }
       }
     },

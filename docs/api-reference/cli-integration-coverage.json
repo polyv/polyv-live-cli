@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T20:07:08.745Z",
+  "generatedAt": "2026-06-26T20:10:31.600Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 582,
-    "referencedCommandPathsExcludingHelp": 538,
-    "coveredLeafTargetsIncludingHelp": 543,
-    "missingLeafTargetsIncludingHelp": 24,
-    "coveredRealExecutionLeafTargets": 532,
-    "missingRealExecutionLeafTargets": 35,
-    "realExecutionCoveragePercent": 93.83,
-    "includingHelpCoveragePercent": 95.77,
-    "integrationReferences": 1218,
-    "realExecutionReferences": 805,
+    "referencedCommandPathsIncludingHelp": 583,
+    "referencedCommandPathsExcludingHelp": 540,
+    "coveredLeafTargetsIncludingHelp": 544,
+    "missingLeafTargetsIncludingHelp": 23,
+    "coveredRealExecutionLeafTargets": 534,
+    "missingRealExecutionLeafTargets": 33,
+    "realExecutionCoveragePercent": 94.18,
+    "includingHelpCoveragePercent": 95.94,
+    "integrationReferences": 1222,
+    "realExecutionReferences": 809,
     "helpReferences": 413
   },
   "byTopLevel": [
@@ -116,11 +116,11 @@
     {
       "command": "document",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 9,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 10,
       "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 81.82,
+      "realExecutionCoveragePercent": 90.91,
       "includingHelpCoveragePercent": 90.91
     },
     {
@@ -316,12 +316,12 @@
     {
       "command": "session",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 10,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 90.91,
-      "includingHelpCoveragePercent": 90.91
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 11,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "statistics",
@@ -458,17 +458,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 188
-    },
-    {
-      "command": "document media link",
-      "path": [
-        "document",
-        "media",
-        "link"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 534
     },
     {
       "command": "document teacher-doc relation",
@@ -739,17 +728,6 @@
       "line": 618
     },
     {
-      "command": "session external get",
-      "path": [
-        "session",
-        "external",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 351
-    },
-    {
       "command": "statistics export session",
       "path": [
         "statistics",
@@ -1006,17 +984,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 618
-    },
-    {
-      "command": "session external get",
-      "path": [
-        "session",
-        "external",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 351
     },
     {
       "command": "statistics export session",
@@ -3015,6 +2982,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 525
+    },
+    {
+      "command": "document media link",
+      "path": [
+        "document",
+        "media",
+        "link"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 534
     },
     {
       "command": "document media unlink",
@@ -5201,6 +5179,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/session.commands.ts",
       "line": 367
+    },
+    {
+      "command": "session external get",
+      "path": [
+        "session",
+        "external",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 351
     },
     {
       "command": "session external relevance",
@@ -9226,12 +9215,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 90,
+        "line": 92,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 210,
+        "line": 298,
         "source": "array-literal"
       }
     },
@@ -9259,9 +9248,13 @@
     },
     {
       "command": "document media link",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 175,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
         "line": 24,
@@ -9270,11 +9263,11 @@
     },
     {
       "command": "document media unlink",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 3,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 133,
+        "line": 135,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9285,7 +9278,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 183,
+        "line": 271,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9296,7 +9289,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 170,
+        "line": 258,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9318,12 +9311,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 71,
+        "line": 73,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 209,
+        "line": 297,
         "source": "array-literal"
       }
     },
@@ -9333,12 +9326,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 48,
+        "line": 50,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 208,
+        "line": 296,
         "source": "array-literal"
       }
     },
@@ -12200,7 +12193,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 183,
+        "line": 198,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12211,14 +12204,25 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 285,
+        "line": 300,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 323,
+        "line": 338,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "session external get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
+        "line": 160,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "session external relevance",
@@ -12226,7 +12230,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 248,
+        "line": 263,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12241,12 +12245,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 268,
+        "line": 283,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 317,
+        "line": 332,
         "source": "array-literal"
       }
     },
@@ -12293,7 +12297,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 160,
+        "line": 175,
         "source": "array-literal"
       },
       "firstHelpReference": null

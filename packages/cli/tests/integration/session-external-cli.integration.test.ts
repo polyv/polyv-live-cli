@@ -21,9 +21,9 @@
  * only when POLYV_TEST_ALLOW_SESSION_WRITES=true because it requires an account
  * with the manual new-session entitlement.
  *
- * `session external get` is NOT covered here: it needs a real PolyV session-id
- * (queries "the custom ID bound to a channel session"), which cannot be created
- * on a temp channel and is rejected with 非法直播场次ID for any fabricated id.
+ * `session external get` is covered by the v4 manual session flow below because
+ * `session create` supplies the real PolyV session-id that the read endpoint
+ * requires.
  *
  * NOTE: packages/cli/tests/integration/session.integration.test.ts drives the
  * SDK service layer directly (SessionServiceSdk, 0 runCli calls) and so does
@@ -155,6 +155,21 @@ describe('session manual write CLI integration', () => {
           ], 60000),
         );
         sessionId = extractSessionId(createOutput);
+
+        const externalGetOutput = parseJsonObject(
+          runCliSuccess([
+            'session',
+            'external',
+            'get',
+            '-c',
+            channelId,
+            '--session-id',
+            sessionId,
+            '--output',
+            'json',
+          ], 60000),
+        );
+        expect(Object.keys(externalGetOutput).length).toBeGreaterThan(0);
 
         const updateOutput = parseJsonObject(
           runCliSuccess([
