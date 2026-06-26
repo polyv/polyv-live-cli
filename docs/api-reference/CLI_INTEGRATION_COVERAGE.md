@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T19:58:46.636Z
+Generated at: 2026-06-26T20:03:24.324Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 528 |
-| Missing real-execution leaf subcommands | 39 |
-| Real-execution coverage | 93.12% |
-| Leaf subcommands referenced including help | 539 |
-| Missing including help | 28 |
+| Real-executed leaf subcommands | 529 |
+| Missing real-execution leaf subcommands | 38 |
+| Real-execution coverage | 93.30% |
+| Leaf subcommands referenced including help | 540 |
+| Missing including help | 27 |
 
 ## By Top-Level Command
 
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 7 | 4 | 63.64% | 7 | 4 |
 | `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
-| `stream` | 19 | 16 | 3 | 84.21% | 16 | 3 |
+| `stream` | 19 | 17 | 2 | 89.47% | 17 | 2 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
 | `viewer` | 19 | 19 | 0 | 100.00% | 19 | 0 |
@@ -101,6 +101,5 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
-| `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

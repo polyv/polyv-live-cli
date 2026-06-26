@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T19:58:46.636Z",
+  "generatedAt": "2026-06-26T20:03:24.324Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 578,
-    "referencedCommandPathsExcludingHelp": 534,
-    "coveredLeafTargetsIncludingHelp": 539,
-    "missingLeafTargetsIncludingHelp": 28,
-    "coveredRealExecutionLeafTargets": 528,
-    "missingRealExecutionLeafTargets": 39,
-    "realExecutionCoveragePercent": 93.12,
-    "includingHelpCoveragePercent": 95.06,
-    "integrationReferences": 1211,
-    "realExecutionReferences": 798,
+    "referencedCommandPathsIncludingHelp": 579,
+    "referencedCommandPathsExcludingHelp": 535,
+    "coveredLeafTargetsIncludingHelp": 540,
+    "missingLeafTargetsIncludingHelp": 27,
+    "coveredRealExecutionLeafTargets": 529,
+    "missingRealExecutionLeafTargets": 38,
+    "realExecutionCoveragePercent": 93.3,
+    "includingHelpCoveragePercent": 95.24,
+    "integrationReferences": 1214,
+    "realExecutionReferences": 801,
     "helpReferences": 413
   },
   "byTopLevel": [
@@ -336,12 +336,12 @@
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 16,
-      "missingRealExecutionLeafTargets": 3,
-      "coveredLeafTargetsIncludingHelp": 16,
-      "missingLeafTargetsIncludingHelp": 3,
-      "realExecutionCoveragePercent": 84.21,
-      "includingHelpCoveragePercent": 84.21
+      "coveredRealExecutionLeafTargets": 17,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 17,
+      "missingLeafTargetsIncludingHelp": 2,
+      "realExecutionCoveragePercent": 89.47,
+      "includingHelpCoveragePercent": 89.47
     },
     {
       "command": "transmit",
@@ -801,17 +801,6 @@
       "line": 543
     },
     {
-      "command": "stream disk-video add",
-      "path": [
-        "stream",
-        "disk-video",
-        "add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 489
-    },
-    {
       "command": "stream disk-video end",
       "path": [
         "stream",
@@ -1109,17 +1098,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 543
-    },
-    {
-      "command": "stream disk-video add",
-      "path": [
-        "stream",
-        "disk-video",
-        "add"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 489
     },
     {
       "command": "stream disk-video end",
@@ -5658,6 +5636,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 622
+    },
+    {
+      "command": "stream disk-video add",
+      "path": [
+        "stream",
+        "disk-video",
+        "add"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 489
     },
     {
       "command": "stream disk-video delete",
@@ -12700,12 +12689,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 116,
+        "line": 213,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 279,
+        "line": 376,
         "source": "array-literal"
       }
     },
@@ -12716,17 +12705,28 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 267,
+        "line": 364,
         "source": "array-literal"
       }
     },
     {
-      "command": "stream disk-video delete",
+      "command": "stream disk-video add",
       "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
+        "line": 80,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "stream disk-video delete",
+      "realExecutionReferences": 2,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 59,
+        "line": 115,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12737,11 +12737,11 @@
     },
     {
       "command": "stream disk-video list",
-      "realExecutionReferences": 1,
+      "realExecutionReferences": 2,
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 29,
+        "line": 45,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12752,12 +12752,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 209,
+        "line": 306,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 297,
+        "line": 394,
         "source": "array-literal"
       }
     },
@@ -12782,12 +12782,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 180,
+        "line": 277,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 291,
+        "line": 388,
         "source": "array-literal"
       }
     },
@@ -12812,12 +12812,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 141,
+        "line": 238,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 285,
+        "line": 382,
         "source": "array-literal"
       }
     },
@@ -12875,12 +12875,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 89,
+        "line": 186,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 273,
+        "line": 370,
         "source": "array-literal"
       }
     },
@@ -12901,12 +12901,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 235,
+        "line": 332,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/stream-cli-reads.integration.test.ts",
-        "line": 303,
+        "line": 400,
         "source": "array-literal"
       }
     },

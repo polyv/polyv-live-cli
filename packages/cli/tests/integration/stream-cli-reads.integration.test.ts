@@ -1,9 +1,10 @@
 /**
- * @fileoverview Real-CLI integration tests for channel-scoped stream read commands.
+ * @fileoverview Real-CLI integration tests for channel-scoped stream commands.
  *
  * These commands are exercised through the local CLI entry (dist/index.js) against
- * a freshly-created temporary channel, which is deleted in `finally`. They are
- * read-only and return well-formed JSON even when the channel has never been live.
+ * a freshly-created temporary channel, which is deleted in `finally`. Most are
+ * read-only and return well-formed JSON even when the channel has never been live;
+ * fixture-gated write coverage also cleans up the temporary channel state it adds.
  */
 
 import { runCli } from '../helpers/cli-runner';
@@ -16,6 +17,21 @@ import {
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const streamDiskVideoVodIds = readStreamDiskVideoVodIds();
+const shouldRunDiskVideoAddTests = shouldRunRealChannelTests && streamDiskVideoVodIds.length > 0;
+
+function readStreamDiskVideoVodIds(): string[] {
+  const ids = [
+    ...(process.env['POLYV_TEST_STREAM_DISK_VIDEO_VOD_IDS'] || '').split(','),
+    process.env['POLYV_TEST_STREAM_DISK_VIDEO_VOD_ID'] || '',
+    ...(process.env['POLYV_TEST_PLAYBACK_VOD_IDS'] || '').split(','),
+    process.env['POLYV_TEST_PLAYBACK_VOD_ID'] || '',
+  ]
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return Array.from(new Set(ids));
+}
 
 describe('stream channel-scoped read CLI integration', () => {
   (shouldRunRealChannelTests ? it : it.skip)('lists pseudo-live disk videos for a temporary channel via real CLI', () => {
@@ -42,6 +58,87 @@ describe('stream channel-scoped read CLI integration', () => {
     } finally {
       if (channelId) {
         deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
+  (shouldRunDiskVideoAddTests ? it : it.skip)('adds a pseudo-live disk video to a temporary pure-video channel via real CLI', () => {
+    const fixtureVodId = streamDiskVideoVodIds[0];
+    if (!fixtureVodId) {
+      throw new Error('POLYV_TEST_STREAM_DISK_VIDEO_VOD_ID(S) or POLYV_TEST_PLAYBACK_VOD_ID(S) is required');
+    }
+
+    let channelId: string | undefined;
+    let addedDiskVideo = false;
+
+    try {
+      channelId = createTemporaryChannel('Stream DiskVideo Add', {
+        scene: 'alone',
+        template: 'alone',
+      });
+
+      const added = parseJsonValue(runCliSuccess([
+        'stream',
+        'disk-video',
+        'add',
+        '-c',
+        channelId,
+        '--vids',
+        fixtureVodId,
+        '--origin',
+        'vod',
+        '--force',
+        '--output',
+        'json',
+      ], 60000)) as { success?: unknown; data?: unknown };
+      addedDiskVideo = true;
+
+      expect(added.success).toBe(true);
+      expect(Object.prototype.hasOwnProperty.call(added, 'data')).toBe(true);
+
+      const listPayload = parseJsonValue(runCliSuccess([
+        'stream',
+        'disk-video',
+        'list',
+        '-c',
+        channelId,
+        '--output',
+        'json',
+      ])) as { contents?: unknown; totalItems?: unknown };
+      expect(Array.isArray(listPayload.contents)).toBe(true);
+      expect(typeof listPayload.totalItems).toBe('number');
+    } finally {
+      const cleanupErrors: unknown[] = [];
+
+      if (channelId && addedDiskVideo) {
+        try {
+          runCliSuccess([
+            'stream',
+            'disk-video',
+            'delete',
+            '-c',
+            channelId,
+            '--vids',
+            fixtureVodId,
+            '--force',
+            '--output',
+            'json',
+          ], 60000);
+        } catch (error) {
+          cleanupErrors.push(error);
+        }
+      }
+
+      if (channelId) {
+        try {
+          deleteTemporaryChannel(channelId);
+        } catch (error) {
+          cleanupErrors.push(error);
+        }
+      }
+
+      if (cleanupErrors.length > 0) {
+        throw cleanupErrors[0];
       }
     }
   }, 120000);
