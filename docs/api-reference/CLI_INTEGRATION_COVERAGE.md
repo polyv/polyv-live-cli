@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:26:02.057Z
+Generated at: 2026-06-26T18:30:55.140Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 504 |
-| Missing real-execution leaf subcommands | 63 |
-| Real-execution coverage | 88.89% |
+| Real-executed leaf subcommands | 505 |
+| Missing real-execution leaf subcommands | 62 |
+| Real-execution coverage | 89.07% |
 | Leaf subcommands referenced including help | 521 |
 | Missing including help | 46 |
 
@@ -35,7 +35,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
-| `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
+| `interaction` | 22 | 20 | 2 | 90.91% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
@@ -88,7 +88,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group user package-validity-list` | `packages/cli/src/commands/group.commands.ts:167` |
 | `group user package-validity-update` | `packages/cli/src/commands/group.commands.ts:171` |
 | `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
-| `interaction reward` | `packages/cli/src/commands/interaction.commands.ts:67` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |

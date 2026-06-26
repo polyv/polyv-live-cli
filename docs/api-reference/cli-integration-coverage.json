@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:26:02.057Z",
+  "generatedAt": "2026-06-26T18:30:55.140Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 560,
-    "referencedCommandPathsExcludingHelp": 510,
+    "referencedCommandPathsExcludingHelp": 511,
     "coveredLeafTargetsIncludingHelp": 521,
     "missingLeafTargetsIncludingHelp": 46,
-    "coveredRealExecutionLeafTargets": 504,
-    "missingRealExecutionLeafTargets": 63,
-    "realExecutionCoveragePercent": 88.89,
+    "coveredRealExecutionLeafTargets": 505,
+    "missingRealExecutionLeafTargets": 62,
+    "realExecutionCoveragePercent": 89.07,
     "includingHelpCoveragePercent": 91.89,
-    "integrationReferences": 1177,
-    "realExecutionReferences": 767,
+    "integrationReferences": 1178,
+    "realExecutionReferences": 768,
     "helpReferences": 410
   },
   "byTopLevel": [
@@ -166,11 +166,11 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 19,
-      "missingRealExecutionLeafTargets": 3,
+      "coveredRealExecutionLeafTargets": 20,
+      "missingRealExecutionLeafTargets": 2,
       "coveredLeafTargetsIncludingHelp": 22,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 86.36,
+      "realExecutionCoveragePercent": 90.91,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -665,16 +665,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 195
-    },
-    {
-      "command": "interaction reward",
-      "path": [
-        "interaction",
-        "reward"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 67
     },
     {
       "command": "interaction script upload",
@@ -3748,6 +3738,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 51
+    },
+    {
+      "command": "interaction reward",
+      "path": [
+        "interaction",
+        "reward"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 67
     },
     {
       "command": "interaction teacher-answer",
@@ -9847,7 +9847,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 344,
+        "line": 371,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9858,9 +9858,13 @@
     },
     {
       "command": "interaction reward",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 326,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
         "line": 38,
@@ -9873,7 +9877,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 487,
+        "line": 514,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9884,7 +9888,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 452,
+        "line": 479,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10002,7 +10006,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 402,
+        "line": 429,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10013,7 +10017,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 326,
+        "line": 353,
         "source": "array-literal"
       },
       "firstHelpReference": {

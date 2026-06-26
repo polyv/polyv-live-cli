@@ -286,12 +286,12 @@ describe('live interaction CLI integration', () => {
     }
   }, 240000);
 
-  // favor / teacher-answer / invite-poster create are self-contained
+  // favor / reward / teacher-answer / invite-poster create are self-contained
   // channel-scoped writes that work on a freshly created (non-live) channel.
   // The viewer id / viewer-user-id resolve to the account user id; the created
   // answer and invite poster are scoped to the temporary channel, so deleting
   // it in `finally` disposes of them.
-  (shouldRunRealChannelTests ? it : it.skip)('runs interaction favor, teacher-answer, and invite-poster create against a temporary real channel', () => {
+  (shouldRunRealChannelTests ? it : it.skip)('runs interaction favor, reward, teacher-answer, and invite-poster create against a temporary real channel', () => {
     const credentials = getAccountCredentials();
     if (!credentials?.userId) {
       // favor / teacher-answer need an account user id; skip cleanly if absent.
@@ -320,6 +320,33 @@ describe('live interaction CLI integration', () => {
         'json',
       ]);
       expect(Number.isInteger(JSON.parse(favorOutput.trim()))).toBe(true);
+
+      // reward broadcasts a cash reward message to the channel chat. The API
+      // returns an empty JSON string on success.
+      const rewardOutput = runCliSuccess([
+        'interaction',
+        'reward',
+        '-c',
+        id,
+        '--nickname',
+        'CLI Reward Viewer',
+        '--avatar',
+        'https://s2.videocc.net/watch-theme/spring/v2/assets/common/player-cover.png',
+        '--viewer-id',
+        viewerId,
+        '--donate-type',
+        'cash',
+        '--content',
+        '1',
+        '--good-num',
+        '1',
+        '--need-user-image',
+        'N',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(JSON.parse(rewardOutput.trim())).toBe('');
 
       // teacher-answer sends a teacher answer to a student question; room-id is
       // the channel id and viewer-user-id is the account user id. Returns {id}.
