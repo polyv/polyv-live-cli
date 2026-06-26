@@ -204,6 +204,27 @@ describe('user template CLI integration (account-scoped reads)', () => {
     }
   }, 120000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('gets MR concurrency detail via real CLI', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('User MR Concurrency Detail');
+
+      const payload = parseJsonObject(
+        runCliSuccess(['user', 'mr-concurrency', 'detail', '--output', 'json']),
+      );
+
+      expect(typeof payload.mrLiveConcurrency).toBe('number');
+      expect(typeof payload.usedCount).toBe('number');
+      expect(typeof payload.residualConcurrency).toBe('number');
+      expect(Array.isArray(payload.channelIds)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('lists user view logs via real CLI', () => {
     let channelId: string | undefined;
 
@@ -369,6 +390,7 @@ describe('user template CLI integration (account-scoped reads)', () => {
       [['user', 'setting', 'footer', 'get', '--help'], 'footer'],
       [['user', 'setting', 'pv-show', 'get', '--help'], 'pv-show'],
       [['user', 'mic-duration', '--help'], 'mic'],
+      [['user', 'mr-concurrency', 'detail', '--help'], 'concurrency'],
       [['user', 'viewlog', 'list', '--help'], 'viewlog'],
       [['user', 'bill', 'use-detail', '--help'], 'use-detail'],
       [['user', 'child', 'roles', '--help'], 'roles'],

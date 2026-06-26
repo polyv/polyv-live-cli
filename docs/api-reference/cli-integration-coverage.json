@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:10:29.456Z",
+  "generatedAt": "2026-06-26T18:15:35.991Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 550,
-    "referencedCommandPathsExcludingHelp": 498,
-    "coveredLeafTargetsIncludingHelp": 511,
-    "missingLeafTargetsIncludingHelp": 56,
-    "coveredRealExecutionLeafTargets": 492,
-    "missingRealExecutionLeafTargets": 75,
-    "realExecutionCoveragePercent": 86.77,
-    "includingHelpCoveragePercent": 90.12,
-    "integrationReferences": 1162,
-    "realExecutionReferences": 754,
-    "helpReferences": 408
+    "referencedCommandPathsIncludingHelp": 552,
+    "referencedCommandPathsExcludingHelp": 501,
+    "coveredLeafTargetsIncludingHelp": 513,
+    "missingLeafTargetsIncludingHelp": 54,
+    "coveredRealExecutionLeafTargets": 495,
+    "missingRealExecutionLeafTargets": 72,
+    "realExecutionCoveragePercent": 87.3,
+    "includingHelpCoveragePercent": 90.48,
+    "integrationReferences": 1166,
+    "realExecutionReferences": 757,
+    "helpReferences": 409
   },
   "byTopLevel": [
     {
@@ -206,11 +206,11 @@
     {
       "command": "monitor",
       "targetLeafCommands": 9,
-      "coveredRealExecutionLeafTargets": 8,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 9,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 9,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 88.89,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -326,12 +326,12 @@
     {
       "command": "statistics",
       "targetLeafCommands": 27,
-      "coveredRealExecutionLeafTargets": 25,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 25,
-      "missingLeafTargetsIncludingHelp": 2,
-      "realExecutionCoveragePercent": 92.59,
-      "includingHelpCoveragePercent": 92.59
+      "coveredRealExecutionLeafTargets": 26,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 26,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 96.3,
+      "includingHelpCoveragePercent": 96.3
     },
     {
       "command": "stream",
@@ -356,12 +356,12 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 29,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 30,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 93.55,
-      "includingHelpCoveragePercent": 96.77
+      "coveredRealExecutionLeafTargets": 30,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 31,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 96.77,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "viewer",
@@ -807,16 +807,6 @@
       "line": 40
     },
     {
-      "command": "monitor tencent-stream-info-list",
-      "path": [
-        "monitor",
-        "tencent-stream-info-list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/monitor.commands.ts",
-      "line": 73
-    },
-    {
       "command": "partner tencent-order create",
       "path": [
         "partner",
@@ -1101,16 +1091,6 @@
       "line": 351
     },
     {
-      "command": "statistics inviter-poster-list",
-      "path": [
-        "statistics",
-        "inviter-poster-list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 205
-    },
-    {
       "command": "statistics export session",
       "path": [
         "statistics",
@@ -1182,17 +1162,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 124
-    },
-    {
-      "command": "user mr-concurrency detail",
-      "path": [
-        "user",
-        "mr-concurrency",
-        "detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 136
     },
     {
       "command": "viewer config update",
@@ -1733,16 +1702,6 @@
       "line": 351
     },
     {
-      "command": "statistics inviter-poster-list",
-      "path": [
-        "statistics",
-        "inviter-poster-list"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/statistics.commands.ts",
-      "line": 205
-    },
-    {
       "command": "statistics export session",
       "path": [
         "statistics",
@@ -1804,17 +1763,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 506
-    },
-    {
-      "command": "user mr-concurrency detail",
-      "path": [
-        "user",
-        "mr-concurrency",
-        "detail"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 136
     }
   ],
   "coveredRealExecutionTargets": [
@@ -4515,6 +4463,16 @@
       "line": 89
     },
     {
+      "command": "monitor tencent-stream-info-list",
+      "path": [
+        "monitor",
+        "tencent-stream-info-list"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/monitor.commands.ts",
+      "line": 73
+    },
+    {
       "command": "monitor test",
       "path": [
         "monitor",
@@ -5700,6 +5658,16 @@
       "line": 273
     },
     {
+      "command": "statistics inviter-poster-list",
+      "path": [
+        "statistics",
+        "inviter-poster-list"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/statistics.commands.ts",
+      "line": 205
+    },
+    {
       "command": "statistics link-mic-list",
       "path": [
         "statistics",
@@ -6152,6 +6120,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 68
+    },
+    {
+      "command": "user mr-concurrency detail",
+      "path": [
+        "user",
+        "mr-concurrency",
+        "detail"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 136
     },
     {
       "command": "user org create",
@@ -10639,7 +10618,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 147,
+        "line": 193,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10676,9 +10655,13 @@
     },
     {
       "command": "monitor tencent-stream-info-list",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 148,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 59,
@@ -10732,7 +10715,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 179,
+        "line": 225,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11287,7 +11270,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 206,
+        "line": 252,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12441,6 +12424,17 @@
       }
     },
     {
+      "command": "statistics inviter-poster-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 160,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "statistics link-mic-list",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -12949,12 +12943,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 313,
+        "line": 334,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 373,
+        "line": 395,
         "source": "array-literal"
       }
     },
@@ -13016,12 +13010,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 344,
+        "line": 365,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 374,
+        "line": 396,
         "source": "array-literal"
       }
     },
@@ -13031,12 +13025,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 283,
+        "line": 304,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 375,
+        "line": 397,
         "source": "array-literal"
       }
     },
@@ -13066,7 +13060,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 371,
+        "line": 392,
         "source": "array-literal"
       }
     },
@@ -13078,6 +13072,21 @@
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 22,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "user mr-concurrency detail",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 214,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
+        "line": 393,
         "source": "array-literal"
       }
     },
@@ -13155,7 +13164,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 369,
+        "line": 390,
         "source": "array-literal"
       }
     },
@@ -13185,7 +13194,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 370,
+        "line": 391,
         "source": "array-literal"
       }
     },
@@ -13237,7 +13246,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 367,
+        "line": 388,
         "source": "array-literal"
       }
     },
@@ -13267,7 +13276,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 363,
+        "line": 384,
         "source": "array-literal"
       }
     },
@@ -13297,7 +13306,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 364,
+        "line": 385,
         "source": "array-literal"
       }
     },
@@ -13327,7 +13336,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 366,
+        "line": 387,
         "source": "array-literal"
       }
     },
@@ -13357,7 +13366,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 365,
+        "line": 386,
         "source": "array-literal"
       }
     },
@@ -13387,7 +13396,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 368,
+        "line": 389,
         "source": "array-literal"
       }
     },
@@ -13423,7 +13432,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 254,
+        "line": 275,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13434,12 +13443,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 216,
+        "line": 237,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-reads-cli.integration.test.ts",
-        "line": 372,
+        "line": 394,
         "source": "array-literal"
       }
     },

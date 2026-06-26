@@ -136,6 +136,52 @@ describe('small module CLI integration', () => {
     180000,
   );
 
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs uncovered channel-scoped monitor and statistics reads through the real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Small Module Read Gaps');
+
+        const tencentStreams = parseJsonValue(
+          runCliSuccess([
+            'monitor',
+            'tencent-stream-info-list',
+            '--channel-id',
+            channelId,
+            '--output',
+            'json',
+          ]),
+        );
+        expect(Array.isArray(tencentStreams)).toBe(true);
+
+        const inviterPoster = parseJsonObject(
+          runCliSuccess([
+            'statistics',
+            'inviter-poster-list',
+            '--channel-id',
+            channelId,
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(typeof inviterPoster.pageNumber).toBe('number');
+        expect(typeof inviterPoster.pageSize).toBe('number');
+        expect(Array.isArray(inviterPoster.contents)).toBe(true);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
+  );
+
   it('runs monitor layouts through the real CLI and cleans up a disposable channel when available', () => {
     let channelId: string | undefined;
 

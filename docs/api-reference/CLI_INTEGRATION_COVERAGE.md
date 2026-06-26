@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:10:29.456Z
+Generated at: 2026-06-26T18:15:35.991Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 492 |
-| Missing real-execution leaf subcommands | 75 |
-| Real-execution coverage | 86.77% |
-| Leaf subcommands referenced including help | 511 |
-| Missing including help | 56 |
+| Real-executed leaf subcommands | 495 |
+| Missing real-execution leaf subcommands | 72 |
+| Real-execution coverage | 87.30% |
+| Leaf subcommands referenced including help | 513 |
+| Missing including help | 54 |
 
 ## By Top-Level Command
 
@@ -39,7 +39,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 23 | 1 | 95.83% | 23 | 1 |
 | `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
-| `monitor` | 9 | 8 | 1 | 88.89% | 9 | 0 |
+| `monitor` | 9 | 9 | 0 | 100.00% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 21 | 1 | 95.45% | 22 | 0 |
 | `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
@@ -51,10 +51,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record` | 17 | 5 | 12 | 29.41% | 7 | 10 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 6 | 5 | 54.55% | 6 | 5 |
-| `statistics` | 27 | 25 | 2 | 92.59% | 25 | 2 |
+| `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
 | `stream` | 19 | 14 | 5 | 73.68% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 29 | 2 | 93.55% | 30 | 1 |
+| `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 33 | 1 | 97.06% | 34 | 0 |
@@ -101,7 +101,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `lottery download-winners` | `packages/cli/src/commands/lottery.commands.ts:491` |
 | `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
-| `monitor tencent-stream-info-list` | `packages/cli/src/commands/monitor.commands.ts:73` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
@@ -129,7 +128,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `session get` | `packages/cli/src/commands/session.commands.ts:221` |
 | `session update` | `packages/cli/src/commands/session.commands.ts:325` |
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
-| `statistics inviter-poster-list` | `packages/cli/src/commands/statistics.commands.ts:205` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
 | `stream capture` | `packages/cli/src/commands/stream.commands.ts:475` |
 | `stream monitor` | `packages/cli/src/commands/stream.commands.ts:713` |
@@ -137,6 +135,5 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
-| `user mr-concurrency detail` | `packages/cli/src/commands/user.commands.ts:136` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
 | `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |
