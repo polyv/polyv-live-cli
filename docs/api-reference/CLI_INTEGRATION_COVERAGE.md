@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:33:56.435Z
+Generated at: 2026-06-26T18:38:45.140Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 509 |
-| Missing real-execution leaf subcommands | 58 |
-| Real-execution coverage | 89.77% |
+| Real-executed leaf subcommands | 511 |
+| Missing real-execution leaf subcommands | 56 |
+| Real-execution coverage | 90.12% |
 | Leaf subcommands referenced including help | 525 |
 | Missing including help | 42 |
 
@@ -38,7 +38,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction` | 22 | 20 | 2 | 90.91% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
-| `material` | 7 | 6 | 1 | 85.71% | 7 | 0 |
+| `material` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `monitor` | 9 | 9 | 0 | 100.00% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 21 | 1 | 95.45% | 22 | 0 |
@@ -57,7 +57,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
 | `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 33 | 1 | 97.06% | 34 | 0 |
+| `web` | 34 | 34 | 0 | 100.00% | 34 | 0 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -86,7 +86,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
-| `material delete` | `packages/cli/src/commands/material.commands.ts:40` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
 | `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
@@ -122,4 +121,3 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
 | `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
-| `web setting global-enabled-update` | `packages/cli/src/commands/web.commands.ts:198` |

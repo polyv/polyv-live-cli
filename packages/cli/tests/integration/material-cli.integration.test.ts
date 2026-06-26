@@ -36,6 +36,38 @@ function findLabelIdByName(output: string, name: string): number {
 }
 
 describe('material label CLI write lifecycle integration', () => {
+  (shouldRunRealChannelTests ? it : it.skip)('runs material delete via real CLI with a non-existent material id', () => {
+    let channelId: string | undefined;
+
+    try {
+      // Account-scoped write; the temporary channel is the real test asset.
+      channelId = createTemporaryChannel('Material Delete Probe');
+      const materialId = `polyv-it-missing-material-${Date.now()}`;
+
+      const output = runCliSuccess([
+        'material',
+        'delete',
+        '--material-ids',
+        materialId,
+        '--delete-completely',
+        'N',
+        '--allow-partial-delete',
+        'Y',
+        '--force',
+        '--output',
+        'json',
+      ]);
+      const payload = parseJsonObject(output) as {
+        failedMaterialIds?: unknown;
+      };
+      expect(Array.isArray(payload.failedMaterialIds)).toBe(true);
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 120000);
+
   (shouldRunRealChannelTests ? it : it.skip)('runs the material label create -> update -> delete lifecycle via real CLI', () => {
     let channelId: string | undefined;
     let labelId: number | undefined;

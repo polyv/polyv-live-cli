@@ -149,6 +149,37 @@ describe('web CLI integration', () => {
     }
   }, 180000);
 
+  (shouldRunRealChannelTests ? it : it.skip)('runs web setting global-enabled-update against a temporary real channel', () => {
+    let channelId: string | undefined;
+
+    try {
+      channelId = createTemporaryChannel('Web Setting Global Enabled');
+
+      const payload = parseJsonObject(
+        runCliSuccess([
+          'web',
+          'setting',
+          'global-enabled-update',
+          '--channel-id',
+          channelId,
+          '--global-enabled-type',
+          'donate',
+          '--enabled',
+          'N',
+          '--force',
+          '--output',
+          'json',
+        ]),
+      );
+      expect(payload.success).toBe(true);
+      expect(typeof payload.result).toBe('string');
+    } finally {
+      if (channelId) {
+        deleteTemporaryChannel(channelId);
+      }
+    }
+  }, 180000);
+
   // Exercises the self-contained web info write subcommands against a throwaway
   // channel. Each write takes only the channel id (plus trivial values such as a
   // splash toggle, a new name, or like/viewer counts) and reports { success: true };

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:33:56.435Z",
+  "generatedAt": "2026-06-26T18:38:45.140Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 564,
-    "referencedCommandPathsExcludingHelp": 515,
+    "referencedCommandPathsExcludingHelp": 517,
     "coveredLeafTargetsIncludingHelp": 525,
     "missingLeafTargetsIncludingHelp": 42,
-    "coveredRealExecutionLeafTargets": 509,
-    "missingRealExecutionLeafTargets": 58,
-    "realExecutionCoveragePercent": 89.77,
+    "coveredRealExecutionLeafTargets": 511,
+    "missingRealExecutionLeafTargets": 56,
+    "realExecutionCoveragePercent": 90.12,
     "includingHelpCoveragePercent": 92.59,
-    "integrationReferences": 1182,
-    "realExecutionReferences": 772,
+    "integrationReferences": 1184,
+    "realExecutionReferences": 774,
     "helpReferences": 410
   },
   "byTopLevel": [
@@ -196,11 +196,11 @@
     {
       "command": "material",
       "targetLeafCommands": 7,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 7,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 7,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 85.71,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -386,11 +386,11 @@
     {
       "command": "web",
       "targetLeafCommands": 34,
-      "coveredRealExecutionLeafTargets": 33,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 34,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 34,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 97.06,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -644,16 +644,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/interaction.commands.ts",
       "line": 415
-    },
-    {
-      "command": "material delete",
-      "path": [
-        "material",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/material.commands.ts",
-      "line": 40
     },
     {
       "command": "partner tencent-order create",
@@ -1022,17 +1012,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 243
-    },
-    {
-      "command": "web setting global-enabled-update",
-      "path": [
-        "web",
-        "setting",
-        "global-enabled-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/web.commands.ts",
-      "line": 198
     }
   ],
   "missingIncludingHelpTargets": [
@@ -4208,6 +4187,16 @@
       "line": 566
     },
     {
+      "command": "material delete",
+      "path": [
+        "material",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/material.commands.ts",
+      "line": 40
+    },
+    {
       "command": "material list",
       "path": [
         "material",
@@ -6768,6 +6757,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/web.commands.ts",
       "line": 131
+    },
+    {
+      "command": "web setting global-enabled-update",
+      "path": [
+        "web",
+        "setting",
+        "global-enabled-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/web.commands.ts",
+      "line": 198
     },
     {
       "command": "web setting image-upload",
@@ -10505,9 +10505,13 @@
     },
     {
       "command": "material delete",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
+        "line": 47,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 60,
@@ -10520,12 +10524,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 50,
+        "line": 82,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 132,
+        "line": 164,
         "source": "array-literal"
       }
     },
@@ -10535,12 +10539,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 93,
+        "line": 125,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 134,
+        "line": 166,
         "source": "array-literal"
       }
     },
@@ -10550,7 +10554,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 62,
+        "line": 94,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10561,12 +10565,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 78,
+        "line": 110,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/material-cli.integration.test.ts",
-        "line": 133,
+        "line": 165,
         "source": "array-literal"
       }
     },
@@ -13811,7 +13815,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 270,
+        "line": 301,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13822,7 +13826,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 360,
+        "line": 391,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13848,7 +13852,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 351,
+        "line": 382,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13863,7 +13867,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 424,
+        "line": 455,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13874,7 +13878,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 431,
+        "line": 462,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13900,7 +13904,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 317,
+        "line": 348,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13926,7 +13930,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 541,
+        "line": 572,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13941,7 +13945,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 696,
+        "line": 727,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13971,7 +13975,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 626,
+        "line": 657,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13982,7 +13986,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 496,
+        "line": 527,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13993,7 +13997,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 175,
+        "line": 206,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14015,7 +14019,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 186,
+        "line": 217,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14037,7 +14041,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 181,
+        "line": 212,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14048,7 +14052,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 191,
+        "line": 222,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14074,7 +14078,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 170,
+        "line": 201,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -14089,7 +14093,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 213,
+        "line": 244,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -14104,7 +14108,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 306,
+        "line": 337,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14115,7 +14119,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 235,
+        "line": 266,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14126,7 +14130,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 311,
+        "line": 342,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14152,7 +14156,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 398,
+        "line": 429,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14174,16 +14178,20 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 222,
+        "line": 253,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
       "command": "web setting global-enabled-update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/web.integration.test.ts",
+        "line": 159,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
         "line": 66,
@@ -14196,7 +14204,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 454,
+        "line": 485,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14218,7 +14226,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/web.integration.test.ts",
-        "line": 258,
+        "line": 289,
         "source": "array-literal"
       },
       "firstHelpReference": {
