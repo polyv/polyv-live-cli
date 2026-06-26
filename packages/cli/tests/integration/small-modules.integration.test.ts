@@ -11,6 +11,26 @@ import { hasRealCredentials } from '../helpers/integration-config';
 const shouldRunRealChannelTests = hasRealCredentials();
 const expectedGroupCapabilityFailures = ['找不到集团账号', 'not found', 'forbidden', 'failed', 'illegal'];
 
+function formatBillingMonth(date = new Date()): string {
+  const previousMonth = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() - 1, 1));
+  const year = previousMonth.getUTCFullYear();
+  const month = String(previousMonth.getUTCMonth() + 1).padStart(2, '0');
+  return `${year}${month}`;
+}
+
+function expectPaginatedObject(output: string): void {
+  const parsed = parseJsonObject(output);
+  expect(Array.isArray(parsed.contents)).toBe(true);
+
+  if (parsed.pageNumber !== undefined) {
+    expect(typeof parsed.pageNumber).toBe('number');
+  }
+
+  if (parsed.pageSize !== undefined) {
+    expect(typeof parsed.pageSize).toBe('number');
+  }
+}
+
 describe('small module CLI integration', () => {
   function runCliWithDummyAuth(args: string[]) {
     return runCli(args, {
@@ -134,6 +154,80 @@ describe('small module CLI integration', () => {
       }
     },
     180000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs group read commands through the real CLI and asserts pagination structure',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        // Group reads are account-scoped; the temporary channel is the disposable
+        // real test asset required by the integration-test convention.
+        channelId = createTemporaryChannel('Group Read Smoke');
+        const billingMonth = formatBillingMonth();
+        const readCommands = [
+          [
+            'group',
+            'billing-daily',
+            '--billing-date',
+            billingMonth,
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ],
+          [
+            'group',
+            'user',
+            'billing-daily',
+            '--start-date',
+            billingMonth,
+            '--end-date',
+            billingMonth,
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ],
+          [
+            'group',
+            'user',
+            'package-list',
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ],
+          [
+            'group',
+            'user',
+            'package-validity-list',
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ],
+        ];
+
+        for (const args of readCommands) {
+          expectPaginatedObject(runCliSuccess(args, 60000));
+        }
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    240000,
   );
 
   (shouldRunRealChannelTests ? it : it.skip)(

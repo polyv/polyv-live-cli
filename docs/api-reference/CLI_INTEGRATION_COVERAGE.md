@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:30:55.140Z
+Generated at: 2026-06-26T18:33:56.435Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 505 |
-| Missing real-execution leaf subcommands | 62 |
-| Real-execution coverage | 89.07% |
-| Leaf subcommands referenced including help | 521 |
-| Missing including help | 46 |
+| Real-executed leaf subcommands | 509 |
+| Missing real-execution leaf subcommands | 58 |
+| Real-execution coverage | 89.77% |
+| Leaf subcommands referenced including help | 525 |
+| Missing including help | 42 |
 
 ## By Top-Level Command
 
@@ -34,7 +34,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
-| `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
+| `group` | 16 | 5 | 11 | 31.25% | 6 | 10 |
 | `interaction` | 22 | 20 | 2 | 90.91% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
@@ -74,18 +74,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `group allocate-log` | `packages/cli/src/commands/group.commands.ts:36` |
-| `group billing-daily` | `packages/cli/src/commands/group.commands.ts:131` |
 | `group resource set-concurrences` | `packages/cli/src/commands/group.commands.ts:45` |
 | `group resource set-flow` | `packages/cli/src/commands/group.commands.ts:54` |
 | `group resource set-live-durations` | `packages/cli/src/commands/group.commands.ts:66` |
 | `group resource set-space` | `packages/cli/src/commands/group.commands.ts:75` |
 | `group user allocation-log` | `packages/cli/src/commands/group.commands.ts:135` |
-| `group user billing-daily` | `packages/cli/src/commands/group.commands.ts:125` |
 | `group user create` | `packages/cli/src/commands/group.commands.ts:90` |
 | `group user isolation-create` | `packages/cli/src/commands/group.commands.ts:148` |
-| `group user package-list` | `packages/cli/src/commands/group.commands.ts:106` |
 | `group user package-update` | `packages/cli/src/commands/group.commands.ts:110` |
-| `group user package-validity-list` | `packages/cli/src/commands/group.commands.ts:167` |
 | `group user package-validity-update` | `packages/cli/src/commands/group.commands.ts:171` |
 | `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
