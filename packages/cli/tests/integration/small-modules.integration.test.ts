@@ -10,6 +10,12 @@ import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
 const expectedGroupCapabilityFailures = ['找不到集团账号', 'not found', 'forbidden', 'failed', 'illegal'];
+const groupAllocationEmails = (
+  process.env['POLYV_TEST_GROUP_EMAILS'] ||
+  process.env['POLYV_TEST_GROUP_EMAIL'] ||
+  ''
+).trim();
+const shouldRunGroupAllocationLogTests = shouldRunRealChannelTests && groupAllocationEmails.length > 0;
 
 function formatBillingMonth(date = new Date()): string {
   const previousMonth = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() - 1, 1));
@@ -228,6 +234,56 @@ describe('small module CLI integration', () => {
       }
     },
     240000,
+  );
+
+  (shouldRunGroupAllocationLogTests ? it : it.skip)(
+    'runs group allocation log reads through the real CLI with a fixture sub-account email',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        // Allocation-log reads are account-scoped and require a real group
+        // sub-account email fixture. The temporary channel keeps the integration
+        // run aligned with the disposable-test-asset convention.
+        channelId = createTemporaryChannel('Group Allocation Logs');
+
+        const legacyAllocation = runCliSuccess([
+          'group',
+          'allocate-log',
+          '--emails',
+          groupAllocationEmails,
+          '--type',
+          'all',
+          '--page',
+          '1',
+          '--page-size',
+          '5',
+          '--output',
+          'json',
+        ]);
+        expectPaginatedObject(legacyAllocation);
+
+        const v4Allocation = runCliSuccess([
+          'group',
+          'user',
+          'allocation-log',
+          '--emails',
+          groupAllocationEmails,
+          '--page-number',
+          '1',
+          '--page-size',
+          '5',
+          '--output',
+          'json',
+        ]);
+        expectPaginatedObject(v4Allocation);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    180000,
   );
 
   (shouldRunRealChannelTests ? it : it.skip)(
