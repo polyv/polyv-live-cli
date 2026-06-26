@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:49:16.314Z",
+  "generatedAt": "2026-06-26T19:31:59.139Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,20 +16,20 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-25T18:31:00.932Z",
-    "integrationFiles": 89,
+    "integrationFiles": 90,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 567,
-    "referencedCommandPathsExcludingHelp": 520,
-    "coveredLeafTargetsIncludingHelp": 528,
-    "missingLeafTargetsIncludingHelp": 39,
-    "coveredRealExecutionLeafTargets": 514,
-    "missingRealExecutionLeafTargets": 53,
-    "realExecutionCoveragePercent": 90.65,
-    "includingHelpCoveragePercent": 93.12,
-    "integrationReferences": 1189,
-    "realExecutionReferences": 777,
+    "referencedCommandPathsIncludingHelp": 568,
+    "referencedCommandPathsExcludingHelp": 521,
+    "coveredLeafTargetsIncludingHelp": 529,
+    "missingLeafTargetsIncludingHelp": 38,
+    "coveredRealExecutionLeafTargets": 515,
+    "missingRealExecutionLeafTargets": 52,
+    "realExecutionCoveragePercent": 90.83,
+    "includingHelpCoveragePercent": 93.3,
+    "integrationReferences": 1190,
+    "realExecutionReferences": 778,
     "helpReferences": 412
   },
   "byTopLevel": [
@@ -296,12 +296,12 @@
     {
       "command": "record",
       "targetLeafCommands": 17,
-      "coveredRealExecutionLeafTargets": 5,
-      "missingRealExecutionLeafTargets": 12,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 10,
-      "realExecutionCoveragePercent": 29.41,
-      "includingHelpCoveragePercent": 41.18
+      "coveredRealExecutionLeafTargets": 6,
+      "missingRealExecutionLeafTargets": 11,
+      "coveredLeafTargetsIncludingHelp": 8,
+      "missingLeafTargetsIncludingHelp": 9,
+      "realExecutionCoveragePercent": 35.29,
+      "includingHelpCoveragePercent": 47.06
     },
     {
       "command": "robot",
@@ -824,17 +824,6 @@
       "line": 561
     },
     {
-      "command": "record file delete",
-      "path": [
-        "record",
-        "file",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 551
-    },
-    {
       "command": "record file merge",
       "path": [
         "record",
@@ -1273,17 +1262,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 581
-    },
-    {
-      "command": "record file delete",
-      "path": [
-        "record",
-        "file",
-        "delete"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 551
     },
     {
       "command": "record file merge",
@@ -5269,6 +5247,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 473
+    },
+    {
+      "command": "record file delete",
+      "path": [
+        "record",
+        "file",
+        "delete"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 551
     },
     {
       "command": "record file list",
@@ -12071,6 +12060,17 @@
         "line": 30,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "record file delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
+        "line": 31,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "record file list",

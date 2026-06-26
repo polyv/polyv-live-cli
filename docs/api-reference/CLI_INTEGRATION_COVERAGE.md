@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:49:16.314Z
+Generated at: 2026-06-26T19:31:59.139Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 89 |
+| Integration files scanned | 90 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 514 |
-| Missing real-execution leaf subcommands | 53 |
-| Real-execution coverage | 90.65% |
-| Leaf subcommands referenced including help | 528 |
-| Missing including help | 39 |
+| Real-executed leaf subcommands | 515 |
+| Missing real-execution leaf subcommands | 52 |
+| Real-execution coverage | 90.83% |
+| Leaf subcommands referenced including help | 529 |
+| Missing including help | 38 |
 
 ## By Top-Level Command
 
@@ -48,7 +48,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
-| `record` | 17 | 5 | 12 | 29.41% | 7 | 10 |
+| `record` | 17 | 6 | 11 | 35.29% | 8 | 9 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 7 | 4 | 63.64% | 7 | 4 |
 | `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
@@ -103,7 +103,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record set-default` | `packages/cli/src/commands/record.commands.ts:415` |
 | `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:581` |
 | `record file convert` | `packages/cli/src/commands/record.commands.ts:561` |
-| `record file delete` | `packages/cli/src/commands/record.commands.ts:551` |
 | `record file merge` | `packages/cli/src/commands/record.commands.ts:540` |
 | `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
 | `record outline get` | `packages/cli/src/commands/record.commands.ts:606` |
