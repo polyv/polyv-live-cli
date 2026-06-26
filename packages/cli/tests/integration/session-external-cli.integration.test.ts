@@ -17,6 +17,10 @@
  * that external ID; on a channel with no broadcast sessions yet they surface
  * empty results (`session-list` -> `{ list: [] }`, `file-ids` -> `[]`).
  *
+ * The v4 manual session write flow (`create` -> `update` -> `delete`) is covered
+ * only when POLYV_TEST_ALLOW_SESSION_WRITES=true because it requires an account
+ * with the manual new-session entitlement.
+ *
  * `session external get` is NOT covered here: it needs a real PolyV session-id
  * (queries "the custom ID bound to a channel session"), which cannot be created
  * on a temp channel and is rejected with 非法直播场次ID for any fabricated id.
@@ -37,6 +41,8 @@ import {
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const shouldRunSessionWriteTests =
+  shouldRunRealChannelTests && process.env.POLYV_TEST_ALLOW_SESSION_WRITES === 'true';
 
 /**
  * Build a unique 32-char external session UUID (the relevance endpoint requires
@@ -49,6 +55,32 @@ function makeExternalSessionId(): string {
     .padStart(20, '0')
     .slice(0, 20); // 20 hex chars
   return (ts + rand).slice(0, 32);
+}
+
+function makeSessionWindow(): { start: string; end: string } {
+  const start = Date.now() + 7 * 24 * 60 * 60 * 1000;
+  const end = start + 60 * 60 * 1000;
+  return {
+    start: String(start),
+    end: String(end),
+  };
+}
+
+function extractSessionId(value: Record<string, unknown>): string {
+  const candidates = [
+    value.sessionId,
+    (value.data as Record<string, unknown> | undefined)?.sessionId,
+    (value.result as Record<string, unknown> | undefined)?.sessionId,
+  ];
+  const sessionId = candidates
+    .map((candidate) => String(candidate ?? '').trim())
+    .find((candidate) => candidate.length > 0);
+
+  if (!sessionId) {
+    throw new Error(`Cannot extract sessionId from value: ${JSON.stringify(value)}`);
+  }
+
+  return sessionId;
 }
 
 describe('session get CLI integration', () => {
@@ -86,6 +118,117 @@ describe('session get CLI integration', () => {
       }
     },
     120000,
+  );
+});
+
+describe('session manual write CLI integration', () => {
+  (shouldRunSessionWriteTests ? it : it.skip)(
+    'creates, updates, and deletes a manual v4 session via real CLI',
+    () => {
+      let channelId: string | undefined;
+      let sessionId: string | undefined;
+      const cleanupErrors: string[] = [];
+
+      try {
+        channelId = createTemporaryChannel('Session Manual Writes');
+        const createWindow = makeSessionWindow();
+        const updateWindow = {
+          start: String(Number(createWindow.start) + 2 * 60 * 60 * 1000),
+          end: String(Number(createWindow.end) + 2 * 60 * 60 * 1000),
+        };
+
+        const createOutput = parseJsonObject(
+          runCliSuccess([
+            'session',
+            'create',
+            '-c',
+            channelId,
+            '--name',
+            `GNHF Session Create ${Date.now()}`,
+            '--plan-start-time',
+            createWindow.start,
+            '--plan-end-time',
+            createWindow.end,
+            '--force',
+            '--output',
+            'json',
+          ], 60000),
+        );
+        sessionId = extractSessionId(createOutput);
+
+        const updateOutput = parseJsonObject(
+          runCliSuccess([
+            'session',
+            'update',
+            '-c',
+            channelId,
+            '--session-id',
+            sessionId,
+            '--name',
+            `GNHF Session Update ${Date.now()}`,
+            '--plan-start-time',
+            updateWindow.start,
+            '--plan-end-time',
+            updateWindow.end,
+            '--force',
+            '--output',
+            'json',
+          ], 60000),
+        );
+        expect(String(updateOutput.channelId)).toBe(channelId);
+        expect(String(updateOutput.sessionId)).toBe(sessionId);
+        expect(updateOutput.updated).toBe(true);
+
+        const deleteOutput = parseJsonObject(
+          runCliSuccess([
+            'session',
+            'delete',
+            '-c',
+            channelId,
+            '--session-id',
+            sessionId,
+            '--force',
+            '--output',
+            'json',
+          ], 60000),
+        );
+        expect(String(deleteOutput.channelId)).toBe(channelId);
+        expect(String(deleteOutput.sessionId)).toBe(sessionId);
+        expect(deleteOutput.deleted).toBe(true);
+        sessionId = undefined;
+      } finally {
+        if (channelId && sessionId) {
+          try {
+            runCliSuccess([
+              'session',
+              'delete',
+              '-c',
+              channelId,
+              '--session-id',
+              sessionId,
+              '--force',
+              '--output',
+              'json',
+            ], 60000);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (channelId) {
+          try {
+            deleteTemporaryChannel(channelId);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (cleanupErrors.length > 0) {
+          throw new Error(`Session manual write cleanup failed:\n${cleanupErrors.join('\n')}`);
+        }
+      }
+    },
+    180000,
   );
 });
 

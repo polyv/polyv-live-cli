@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T20:03:24.324Z
+Generated at: 2026-06-26T20:07:08.745Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 529 |
-| Missing real-execution leaf subcommands | 38 |
-| Real-execution coverage | 93.30% |
-| Leaf subcommands referenced including help | 540 |
-| Missing including help | 27 |
+| Real-executed leaf subcommands | 532 |
+| Missing real-execution leaf subcommands | 35 |
+| Real-execution coverage | 93.83% |
+| Leaf subcommands referenced including help | 543 |
+| Missing including help | 24 |
 
 ## By Top-Level Command
 
@@ -50,7 +50,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `record` | 17 | 6 | 11 | 35.29% | 8 | 9 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `session` | 11 | 7 | 4 | 63.64% | 7 | 4 |
+| `session` | 11 | 10 | 1 | 90.91% | 10 | 1 |
 | `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
 | `stream` | 19 | 17 | 2 | 89.47% | 17 | 2 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -95,9 +95,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
 | `record outline get` | `packages/cli/src/commands/record.commands.ts:606` |
 | `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
-| `session create` | `packages/cli/src/commands/session.commands.ts:313` |
-| `session delete` | `packages/cli/src/commands/session.commands.ts:338` |
-| `session update` | `packages/cli/src/commands/session.commands.ts:325` |
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T20:03:24.324Z",
+  "generatedAt": "2026-06-26T20:07:08.745Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 579,
-    "referencedCommandPathsExcludingHelp": 535,
-    "coveredLeafTargetsIncludingHelp": 540,
-    "missingLeafTargetsIncludingHelp": 27,
-    "coveredRealExecutionLeafTargets": 529,
-    "missingRealExecutionLeafTargets": 38,
-    "realExecutionCoveragePercent": 93.3,
-    "includingHelpCoveragePercent": 95.24,
-    "integrationReferences": 1214,
-    "realExecutionReferences": 801,
+    "referencedCommandPathsIncludingHelp": 582,
+    "referencedCommandPathsExcludingHelp": 538,
+    "coveredLeafTargetsIncludingHelp": 543,
+    "missingLeafTargetsIncludingHelp": 24,
+    "coveredRealExecutionLeafTargets": 532,
+    "missingRealExecutionLeafTargets": 35,
+    "realExecutionCoveragePercent": 93.83,
+    "includingHelpCoveragePercent": 95.77,
+    "integrationReferences": 1218,
+    "realExecutionReferences": 805,
     "helpReferences": 413
   },
   "byTopLevel": [
@@ -316,12 +316,12 @@
     {
       "command": "session",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 7,
-      "missingRealExecutionLeafTargets": 4,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 4,
-      "realExecutionCoveragePercent": 63.64,
-      "includingHelpCoveragePercent": 63.64
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 1,
+      "coveredLeafTargetsIncludingHelp": 10,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 90.91,
+      "includingHelpCoveragePercent": 90.91
     },
     {
       "command": "statistics",
@@ -739,36 +739,6 @@
       "line": 618
     },
     {
-      "command": "session create",
-      "path": [
-        "session",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 313
-    },
-    {
-      "command": "session delete",
-      "path": [
-        "session",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 338
-    },
-    {
-      "command": "session update",
-      "path": [
-        "session",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 325
-    },
-    {
       "command": "session external get",
       "path": [
         "session",
@@ -1036,36 +1006,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 618
-    },
-    {
-      "command": "session create",
-      "path": [
-        "session",
-        "create"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 313
-    },
-    {
-      "command": "session delete",
-      "path": [
-        "session",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 338
-    },
-    {
-      "command": "session update",
-      "path": [
-        "session",
-        "update"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 325
     },
     {
       "command": "session external get",
@@ -5182,6 +5122,16 @@
       "line": 28
     },
     {
+      "command": "session create",
+      "path": [
+        "session",
+        "create"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 313
+    },
+    {
       "command": "session data-list",
       "path": [
         "session",
@@ -5190,6 +5140,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/session.commands.ts",
       "line": 302
+    },
+    {
+      "command": "session delete",
+      "path": [
+        "session",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 338
     },
     {
       "command": "session get",
@@ -5220,6 +5180,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/session.commands.ts",
       "line": 128
+    },
+    {
+      "command": "session update",
+      "path": [
+        "session",
+        "update"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 325
     },
     {
       "command": "session external file-ids",
@@ -12199,6 +12169,17 @@
       }
     },
     {
+      "command": "session create",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
+        "line": 141,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "session data-list",
       "realExecutionReferences": 1,
       "helpReferences": 1,
@@ -12214,17 +12195,28 @@
       }
     },
     {
+      "command": "session delete",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
+        "line": 183,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "session external file-ids",
       "realExecutionReferences": 1,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 142,
+        "line": 285,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 180,
+        "line": 323,
         "source": "array-literal"
       }
     },
@@ -12234,7 +12226,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 105,
+        "line": 248,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12249,12 +12241,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 125,
+        "line": 268,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 174,
+        "line": 317,
         "source": "array-literal"
       }
     },
@@ -12264,7 +12256,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 67,
+        "line": 99,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12291,6 +12283,17 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
         "line": 59,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "session update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
+        "line": 160,
         "source": "array-literal"
       },
       "firstHelpReference": null
