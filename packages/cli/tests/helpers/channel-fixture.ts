@@ -32,16 +32,21 @@ export function runCliSuccess(args: string[], timeout = 60000): string {
   return result.output;
 }
 
-export function createTemporaryChannel(label: string): string {
+export interface TemporaryChannelOptions {
+  scene?: string;
+  template?: string;
+}
+
+export function createTemporaryChannel(label: string, options: TemporaryChannelOptions = {}): string {
   const output = runCliSuccess([
     'channel',
     'create',
     '--name',
     `CLI Integration ${label} ${Date.now()}`,
     '--scene',
-    'topclass',
+    options.scene || 'topclass',
     '--template',
-    'ppt',
+    options.template || 'ppt',
     '--output',
     'json',
   ]);

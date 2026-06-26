@@ -1028,7 +1028,7 @@ export class V4ChannelService {
     await this.client.httpClient.post(
       '/live/v4/channel/distribute/delete-batch',
       null,
-      { params: { channelId: params.channelId, ids: params.ids.join(',') } }
+      { params: { channelId: params.channelId, distributeIds: params.ids.join(',') } }
     );
   }
 
@@ -1055,11 +1055,12 @@ export class V4ChannelService {
    */
   async updateMasterSwitch(params: UpdateMasterSwitchParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    const { channelId, enabled } = params;
 
     await this.client.httpClient.post(
       '/live/v4/channel/distribute/update-master-switch',
       null,
-      { params }
+      { params: { channelId, distributeEnabled: enabled } }
     );
   }
 
@@ -1070,11 +1071,12 @@ export class V4ChannelService {
    */
   async updateSwitch(params: UpdateSwitchParams): Promise<void> {
     this.validateChannelId(params.channelId);
+    const { channelId, distributeId, enabled } = params;
 
     await this.client.httpClient.post(
       '/live/v4/channel/distribute/update-switch',
       null,
-      { params }
+      { params: { channelId, distributeIds: String(distributeId), distributeEnabled: enabled } }
     );
   }
 

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T04:46:35.098Z
+Generated at: 2026-06-26T18:10:29.456Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 488 |
-| Missing real-execution leaf subcommands | 79 |
-| Real-execution coverage | 86.07% |
+| Real-executed leaf subcommands | 492 |
+| Missing real-execution leaf subcommands | 75 |
+| Real-execution coverage | 86.77% |
 | Leaf subcommands referenced including help | 511 |
 | Missing including help | 56 |
 
@@ -25,7 +25,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
 | `ai` | 12 | 10 | 2 | 83.33% | 10 | 2 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 72 | 6 | 92.31% | 78 | 0 |
+| `channel` | 78 | 76 | 2 | 97.44% | 78 | 0 |
 | `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
 | `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
@@ -69,10 +69,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
 | `ai video-produce ppt async-upload` | `packages/cli/src/commands/ai.commands.ts:396` |
 | `channel ccb-focus-reset` | `packages/cli/src/commands/channel.commands.ts:1460` |
-| `channel distribute create-batch` | `packages/cli/src/commands/channel.commands.ts:1135` |
-| `channel distribute delete-batch` | `packages/cli/src/commands/channel.commands.ts:1165` |
-| `channel distribute switch` | `packages/cli/src/commands/channel.commands.ts:1195` |
-| `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1150` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |

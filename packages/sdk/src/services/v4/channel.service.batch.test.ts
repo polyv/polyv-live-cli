@@ -245,10 +245,14 @@ describe('V4ChannelService - Batch Operations', () => {
 
       await service.distributeDeleteBatch({
         channelId: '12345678',
-        ids: ['1', '2']
+        ids: [1, 2]
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/distribute/delete-batch',
+        null,
+        { params: { channelId: '12345678', distributeIds: '1,2' } }
+      );
     });
   });
 

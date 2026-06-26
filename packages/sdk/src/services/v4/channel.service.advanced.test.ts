@@ -342,7 +342,11 @@ describe('V4ChannelService - Advanced Configuration', () => {
         enabled: 'Y'
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/distribute/update-master-switch',
+        null,
+        { params: { channelId: '12345678', distributeEnabled: 'Y' } }
+      );
     });
   });
 
@@ -352,11 +356,15 @@ describe('V4ChannelService - Advanced Configuration', () => {
 
       await service.updateSwitch({
         channelId: '12345678',
-        switchType: 'chat',
+        distributeId: 1,
         enabled: 'Y'
       });
 
-      expect(mockHttpClient.post).toHaveBeenCalled();
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        '/live/v4/channel/distribute/update-switch',
+        null,
+        { params: { channelId: '12345678', distributeIds: '1', distributeEnabled: 'Y' } }
+      );
     });
   });
 

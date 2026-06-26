@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T04:46:35.098Z",
+  "generatedAt": "2026-06-26T18:10:29.456Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 550,
-    "referencedCommandPathsExcludingHelp": 494,
+    "referencedCommandPathsExcludingHelp": 498,
     "coveredLeafTargetsIncludingHelp": 511,
     "missingLeafTargetsIncludingHelp": 56,
-    "coveredRealExecutionLeafTargets": 488,
-    "missingRealExecutionLeafTargets": 79,
-    "realExecutionCoveragePercent": 86.07,
+    "coveredRealExecutionLeafTargets": 492,
+    "missingRealExecutionLeafTargets": 75,
+    "realExecutionCoveragePercent": 86.77,
     "includingHelpCoveragePercent": 90.12,
-    "integrationReferences": 1154,
-    "realExecutionReferences": 746,
+    "integrationReferences": 1162,
+    "realExecutionReferences": 754,
     "helpReferences": 408
   },
   "byTopLevel": [
@@ -66,11 +66,11 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 72,
-      "missingRealExecutionLeafTargets": 6,
+      "coveredRealExecutionLeafTargets": 76,
+      "missingRealExecutionLeafTargets": 2,
       "coveredLeafTargetsIncludingHelp": 78,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 92.31,
+      "realExecutionCoveragePercent": 97.44,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -459,50 +459,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1460
-    },
-    {
-      "command": "channel distribute create-batch",
-      "path": [
-        "channel",
-        "distribute",
-        "create-batch"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1135
-    },
-    {
-      "command": "channel distribute delete-batch",
-      "path": [
-        "channel",
-        "distribute",
-        "delete-batch"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1165
-    },
-    {
-      "command": "channel distribute switch",
-      "path": [
-        "channel",
-        "distribute",
-        "switch"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1195
-    },
-    {
-      "command": "channel distribute update-batch",
-      "path": [
-        "channel",
-        "distribute",
-        "update-batch"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1150
     },
     {
       "command": "channel ppt-record add-task",
@@ -2598,6 +2554,28 @@
       "line": 1220
     },
     {
+      "command": "channel distribute create-batch",
+      "path": [
+        "channel",
+        "distribute",
+        "create-batch"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1135
+    },
+    {
+      "command": "channel distribute delete-batch",
+      "path": [
+        "channel",
+        "distribute",
+        "delete-batch"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1165
+    },
+    {
       "command": "channel distribute list",
       "path": [
         "channel",
@@ -2629,6 +2607,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1176
+    },
+    {
+      "command": "channel distribute switch",
+      "path": [
+        "channel",
+        "distribute",
+        "switch"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1195
+    },
+    {
+      "command": "channel distribute update-batch",
+      "path": [
+        "channel",
+        "distribute",
+        "update-batch"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1150
     },
     {
       "command": "channel follow list",
@@ -7818,9 +7818,13 @@
     },
     {
       "command": "channel distribute create-batch",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 181,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 160,
@@ -7829,9 +7833,13 @@
     },
     {
       "command": "channel distribute delete-batch",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 223,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 162,
@@ -7840,11 +7848,11 @@
     },
     {
       "command": "channel distribute list",
-      "realExecutionReferences": 2,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
-        "line": 49,
+        "line": 58,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -7859,7 +7867,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
-        "line": 94,
+        "line": 142,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -7874,7 +7882,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
-        "line": 63,
+        "line": 111,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -7885,9 +7893,13 @@
     },
     {
       "command": "channel distribute switch",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 209,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 165,
@@ -7896,9 +7908,13 @@
     },
     {
       "command": "channel distribute update-batch",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-distribute-cli.integration.test.ts",
+        "line": 197,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-core-cli.integration.test.ts",
         "line": 161,
