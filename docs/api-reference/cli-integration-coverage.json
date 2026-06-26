@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T19:50:22.564Z",
+  "generatedAt": "2026-06-26T19:54:40.770Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 571,
-    "referencedCommandPathsExcludingHelp": 526,
-    "coveredLeafTargetsIncludingHelp": 532,
-    "missingLeafTargetsIncludingHelp": 35,
-    "coveredRealExecutionLeafTargets": 520,
-    "missingRealExecutionLeafTargets": 47,
-    "realExecutionCoveragePercent": 91.71,
-    "includingHelpCoveragePercent": 93.83,
-    "integrationReferences": 1199,
-    "realExecutionReferences": 786,
+    "referencedCommandPathsIncludingHelp": 573,
+    "referencedCommandPathsExcludingHelp": 529,
+    "coveredLeafTargetsIncludingHelp": 534,
+    "missingLeafTargetsIncludingHelp": 33,
+    "coveredRealExecutionLeafTargets": 523,
+    "missingRealExecutionLeafTargets": 44,
+    "realExecutionCoveragePercent": 92.24,
+    "includingHelpCoveragePercent": 94.18,
+    "integrationReferences": 1205,
+    "realExecutionReferences": 792,
     "helpReferences": 413
   },
   "byTopLevel": [
@@ -156,12 +156,12 @@
     {
       "command": "group",
       "targetLeafCommands": 16,
-      "coveredRealExecutionLeafTargets": 7,
-      "missingRealExecutionLeafTargets": 9,
-      "coveredLeafTargetsIncludingHelp": 8,
-      "missingLeafTargetsIncludingHelp": 8,
-      "realExecutionCoveragePercent": 43.75,
-      "includingHelpCoveragePercent": 50
+      "coveredRealExecutionLeafTargets": 10,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 10,
+      "missingLeafTargetsIncludingHelp": 6,
+      "realExecutionCoveragePercent": 62.5,
+      "includingHelpCoveragePercent": 62.5
     },
     {
       "command": "interaction",
@@ -482,17 +482,6 @@
       "line": 502
     },
     {
-      "command": "group resource set-concurrences",
-      "path": [
-        "group",
-        "resource",
-        "set-concurrences"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 45
-    },
-    {
       "command": "group resource set-flow",
       "path": [
         "group",
@@ -502,28 +491,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 54
-    },
-    {
-      "command": "group resource set-live-durations",
-      "path": [
-        "group",
-        "resource",
-        "set-live-durations"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 66
-    },
-    {
-      "command": "group resource set-space",
-      "path": [
-        "group",
-        "resource",
-        "set-space"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 75
     },
     {
       "command": "group user create",
@@ -965,17 +932,6 @@
       "line": 502
     },
     {
-      "command": "group resource set-concurrences",
-      "path": [
-        "group",
-        "resource",
-        "set-concurrences"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 45
-    },
-    {
       "command": "group resource set-flow",
       "path": [
         "group",
@@ -985,17 +941,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 54
-    },
-    {
-      "command": "group resource set-live-durations",
-      "path": [
-        "group",
-        "resource",
-        "set-live-durations"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 66
     },
     {
       "command": "group user create",
@@ -3494,6 +3439,39 @@
       "depth": 2,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 143
+    },
+    {
+      "command": "group resource set-concurrences",
+      "path": [
+        "group",
+        "resource",
+        "set-concurrences"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 45
+    },
+    {
+      "command": "group resource set-live-durations",
+      "path": [
+        "group",
+        "resource",
+        "set-live-durations"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 66
+    },
+    {
+      "command": "group resource set-space",
+      "path": [
+        "group",
+        "resource",
+        "set-space"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 75
     },
     {
       "command": "group user allocation-log",
@@ -7532,7 +7510,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 71,
+        "line": 92,
         "source": "array-literal"
       }
     },
@@ -8096,12 +8074,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 111,
+        "line": 132,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 87,
+        "line": 108,
         "source": "array-literal"
       }
     },
@@ -8678,7 +8656,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 86,
+        "line": 107,
         "source": "array-literal"
       }
     },
@@ -9516,7 +9494,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 367,
+        "line": 530,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9527,7 +9505,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 382,
+        "line": 545,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9538,12 +9516,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 344,
+        "line": 507,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 65,
+        "line": 86,
         "source": "array-literal"
       }
     },
@@ -9553,7 +9531,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 104,
+        "line": 125,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9564,7 +9542,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 424,
+        "line": 587,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9575,7 +9553,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 439,
+        "line": 602,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9586,7 +9564,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 401,
+        "line": 564,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9649,7 +9627,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 56,
+        "line": 77,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9660,7 +9638,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 250,
+        "line": 271,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9671,7 +9649,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 176,
+        "line": 197,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9682,19 +9660,45 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 118,
+        "line": 139,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "group resource set-concurrences",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 333,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "group resource set-live-durations",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 364,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
       "command": "group resource set-space",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 2,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 395,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 64,
+        "line": 85,
         "source": "array-literal"
       }
     },
@@ -9704,7 +9708,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 266,
+        "line": 287,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9715,7 +9719,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 188,
+        "line": 209,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9726,7 +9730,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 203,
+        "line": 224,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9737,7 +9741,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 214,
+        "line": 235,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10481,7 +10485,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 66,
+        "line": 87,
         "source": "array-literal"
       }
     },
@@ -10547,7 +10551,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 139,
+        "line": 160,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10603,7 +10607,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 473,
+        "line": 636,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10644,12 +10648,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 298,
+        "line": 461,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 85,
+        "line": 106,
         "source": "array-literal"
       }
     },
@@ -10690,7 +10694,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 69,
+        "line": 90,
         "source": "array-literal"
       }
     },
@@ -10700,7 +10704,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 505,
+        "line": 668,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11240,12 +11244,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 109,
+        "line": 130,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 83,
+        "line": 104,
         "source": "array-literal"
       }
     },
@@ -11255,7 +11259,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 532,
+        "line": 695,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12436,7 +12440,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 310,
+        "line": 473,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12608,12 +12612,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 110,
+        "line": 131,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 84,
+        "line": 105,
         "source": "array-literal"
       }
     },
@@ -14264,7 +14268,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 106,
+        "line": 127,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -14295,7 +14299,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 67,
+        "line": 88,
         "source": "array-literal"
       }
     },
@@ -14320,7 +14324,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 107,
+        "line": 128,
         "source": "array-literal"
       },
       "firstHelpReference": null

@@ -16,6 +16,21 @@ const groupAllocationEmails = (
   ''
 ).trim();
 const shouldRunGroupAllocationLogTests = shouldRunRealChannelTests && groupAllocationEmails.length > 0;
+const groupResourceEmail = (process.env['POLYV_TEST_GROUP_RESOURCE_EMAIL'] || '').trim();
+const groupResourceConcurrences = readPositiveIntegerEnv('POLYV_TEST_GROUP_RESOURCE_CONCURRENCES');
+const groupResourceLiveDuration = readPositiveIntegerEnv('POLYV_TEST_GROUP_RESOURCE_LIVE_DURATION');
+const groupResourceSpace = readPositiveIntegerEnv('POLYV_TEST_GROUP_RESOURCE_SPACE');
+const shouldRunGroupResourceWriteTests = shouldRunRealChannelTests &&
+  process.env['POLYV_TEST_ALLOW_GROUP_RESOURCE_WRITES'] === 'true' &&
+  groupResourceEmail.length > 0 &&
+  groupResourceConcurrences !== undefined &&
+  groupResourceLiveDuration !== undefined &&
+  groupResourceSpace !== undefined;
+
+function readPositiveIntegerEnv(name: string): string | undefined {
+  const value = (process.env[name] || '').trim();
+  return /^[1-9]\d*$/.test(value) ? value : undefined;
+}
 
 function formatBillingMonth(date = new Date()): string {
   const previousMonth = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() - 1, 1));
@@ -35,6 +50,12 @@ function expectPaginatedObject(output: string): void {
   if (parsed.pageSize !== undefined) {
     expect(typeof parsed.pageSize).toBe('number');
   }
+}
+
+function expectSuccessfulGroupResourceWrite(output: string): void {
+  const parsed = parseJsonObject(output);
+  expect(parsed.success).toBe(true);
+  expect(parsed).toHaveProperty('result');
 }
 
 describe('small module CLI integration', () => {
@@ -284,6 +305,148 @@ describe('small module CLI integration', () => {
       }
     },
     180000,
+  );
+
+  (shouldRunGroupResourceWriteTests ? it : it.skip)(
+    'runs reversible group resource write commands through the real CLI',
+    () => {
+      let channelId: string | undefined;
+      const pendingRecoveries: string[][] = [];
+
+      const runResourceWrite = (args: string[]): void => {
+        expectSuccessfulGroupResourceWrite(runCliSuccess(args, 60000));
+      };
+
+      const recover = (args: string[]): void => {
+        runResourceWrite(args);
+        const index = pendingRecoveries.findIndex((pending) => pending.join('\0') === args.join('\0'));
+        if (index !== -1) {
+          pendingRecoveries.splice(index, 1);
+        }
+      };
+
+      try {
+        // Group resource writes are account-scoped. The temporary channel keeps
+        // the suite aligned with the disposable-test-asset convention.
+        channelId = createTemporaryChannel('Group Resource Writes');
+
+        const recoverConcurrences = [
+          'group',
+          'resource',
+          'set-concurrences',
+          '--email',
+          groupResourceEmail,
+          '--concurrences',
+          groupResourceConcurrences!,
+          '--type',
+          'recover',
+          '--force',
+          '--output',
+          'json',
+        ];
+        runResourceWrite([
+          'group',
+          'resource',
+          'set-concurrences',
+          '--email',
+          groupResourceEmail,
+          '--concurrences',
+          groupResourceConcurrences!,
+          '--type',
+          'add',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        pendingRecoveries.push(recoverConcurrences);
+        recover(recoverConcurrences);
+
+        const recoverLiveDurations = [
+          'group',
+          'resource',
+          'set-live-durations',
+          '--email',
+          groupResourceEmail,
+          '--duration',
+          groupResourceLiveDuration!,
+          '--type',
+          'recover',
+          '--force',
+          '--output',
+          'json',
+        ];
+        runResourceWrite([
+          'group',
+          'resource',
+          'set-live-durations',
+          '--email',
+          groupResourceEmail,
+          '--duration',
+          groupResourceLiveDuration!,
+          '--type',
+          'add',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        pendingRecoveries.push(recoverLiveDurations);
+        recover(recoverLiveDurations);
+
+        const recoverSpace = [
+          'group',
+          'resource',
+          'set-space',
+          '--email',
+          groupResourceEmail,
+          '--space',
+          groupResourceSpace!,
+          '--type',
+          'recover',
+          '--force',
+          '--output',
+          'json',
+        ];
+        runResourceWrite([
+          'group',
+          'resource',
+          'set-space',
+          '--email',
+          groupResourceEmail,
+          '--space',
+          groupResourceSpace!,
+          '--type',
+          'add',
+          '--force',
+          '--output',
+          'json',
+        ]);
+        pendingRecoveries.push(recoverSpace);
+        recover(recoverSpace);
+      } finally {
+        const cleanupErrors: string[] = [];
+
+        for (const args of pendingRecoveries.reverse()) {
+          try {
+            runResourceWrite(args);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (channelId) {
+          try {
+            deleteTemporaryChannel(channelId);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (cleanupErrors.length > 0) {
+          throw new Error(`Group resource write cleanup failed:\n${cleanupErrors.join('\n')}`);
+        }
+      }
+    },
+    240000,
   );
 
   (shouldRunRealChannelTests ? it : it.skip)(

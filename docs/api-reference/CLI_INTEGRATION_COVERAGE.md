@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T19:50:22.564Z
+Generated at: 2026-06-26T19:54:40.770Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 520 |
-| Missing real-execution leaf subcommands | 47 |
-| Real-execution coverage | 91.71% |
-| Leaf subcommands referenced including help | 532 |
-| Missing including help | 35 |
+| Real-executed leaf subcommands | 523 |
+| Missing real-execution leaf subcommands | 44 |
+| Real-execution coverage | 92.24% |
+| Leaf subcommands referenced including help | 534 |
+| Missing including help | 33 |
 
 ## By Top-Level Command
 
@@ -34,7 +34,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
-| `group` | 16 | 7 | 9 | 43.75% | 8 | 8 |
+| `group` | 16 | 10 | 6 | 62.50% | 10 | 6 |
 | `interaction` | 22 | 20 | 2 | 90.91% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
@@ -71,10 +71,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document media link` | `packages/cli/src/commands/document.commands.ts:534` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
-| `group resource set-concurrences` | `packages/cli/src/commands/group.commands.ts:45` |
 | `group resource set-flow` | `packages/cli/src/commands/group.commands.ts:54` |
-| `group resource set-live-durations` | `packages/cli/src/commands/group.commands.ts:66` |
-| `group resource set-space` | `packages/cli/src/commands/group.commands.ts:75` |
 | `group user create` | `packages/cli/src/commands/group.commands.ts:90` |
 | `group user isolation-create` | `packages/cli/src/commands/group.commands.ts:148` |
 | `group user package-update` | `packages/cli/src/commands/group.commands.ts:110` |
