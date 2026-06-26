@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T19:54:40.770Z",
+  "generatedAt": "2026-06-26T19:58:46.636Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 573,
-    "referencedCommandPathsExcludingHelp": 529,
-    "coveredLeafTargetsIncludingHelp": 534,
-    "missingLeafTargetsIncludingHelp": 33,
-    "coveredRealExecutionLeafTargets": 523,
-    "missingRealExecutionLeafTargets": 44,
-    "realExecutionCoveragePercent": 92.24,
-    "includingHelpCoveragePercent": 94.18,
-    "integrationReferences": 1205,
-    "realExecutionReferences": 792,
+    "referencedCommandPathsIncludingHelp": 578,
+    "referencedCommandPathsExcludingHelp": 534,
+    "coveredLeafTargetsIncludingHelp": 539,
+    "missingLeafTargetsIncludingHelp": 28,
+    "coveredRealExecutionLeafTargets": 528,
+    "missingRealExecutionLeafTargets": 39,
+    "realExecutionCoveragePercent": 93.12,
+    "includingHelpCoveragePercent": 95.06,
+    "integrationReferences": 1211,
+    "realExecutionReferences": 798,
     "helpReferences": 413
   },
   "byTopLevel": [
@@ -236,12 +236,12 @@
     {
       "command": "playback",
       "targetLeafCommands": 13,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 7,
-      "coveredLeafTargetsIncludingHelp": 7,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 46.15,
-      "includingHelpCoveragePercent": 53.85
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 2,
+      "coveredLeafTargetsIncludingHelp": 12,
+      "missingLeafTargetsIncludingHelp": 1,
+      "realExecutionCoveragePercent": 84.62,
+      "includingHelpCoveragePercent": 92.31
     },
     {
       "command": "player",
@@ -592,26 +592,6 @@
       "line": 676
     },
     {
-      "command": "playback add-vod",
-      "path": [
-        "playback",
-        "add-vod"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 543
-    },
-    {
-      "command": "playback delete",
-      "path": [
-        "playback",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 319
-    },
-    {
       "command": "playback merge",
       "path": [
         "playback",
@@ -620,28 +600,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 405
-    },
-    {
-      "command": "playback sort move",
-      "path": [
-        "playback",
-        "sort",
-        "move"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 572
-    },
-    {
-      "command": "playback sort set",
-      "path": [
-        "playback",
-        "sort",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 583
     },
     {
       "command": "playback subtitle update-batch",
@@ -653,17 +611,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 597
-    },
-    {
-      "command": "playback title update",
-      "path": [
-        "playback",
-        "title",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 558
     },
     {
       "command": "qa send-result",
@@ -998,26 +945,6 @@
       "line": 195
     },
     {
-      "command": "playback add-vod",
-      "path": [
-        "playback",
-        "add-vod"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 543
-    },
-    {
-      "command": "playback delete",
-      "path": [
-        "playback",
-        "delete"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 319
-    },
-    {
       "command": "playback merge",
       "path": [
         "playback",
@@ -1026,39 +953,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 405
-    },
-    {
-      "command": "playback sort move",
-      "path": [
-        "playback",
-        "sort",
-        "move"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 572
-    },
-    {
-      "command": "playback sort set",
-      "path": [
-        "playback",
-        "sort",
-        "set"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 583
-    },
-    {
-      "command": "playback title update",
-      "path": [
-        "playback",
-        "title",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 558
     },
     {
       "command": "record clip",
@@ -4444,6 +4338,26 @@
       "line": 311
     },
     {
+      "command": "playback add-vod",
+      "path": [
+        "playback",
+        "add-vod"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 543
+    },
+    {
+      "command": "playback delete",
+      "path": [
+        "playback",
+        "delete"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 319
+    },
+    {
       "command": "playback get",
       "path": [
         "playback",
@@ -4504,6 +4418,39 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 533
+    },
+    {
+      "command": "playback sort move",
+      "path": [
+        "playback",
+        "sort",
+        "move"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 572
+    },
+    {
+      "command": "playback sort set",
+      "path": [
+        "playback",
+        "sort",
+        "set"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 583
+    },
+    {
+      "command": "playback title update",
+      "path": [
+        "playback",
+        "title",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 558
     },
     {
       "command": "player logo-update",
@@ -11000,6 +10947,28 @@
       }
     },
     {
+      "command": "playback add-vod",
+      "realExecutionReferences": 2,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 135,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "playback delete",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 113,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "playback enabled get",
       "realExecutionReferences": 2,
       "helpReferences": 0,
@@ -11031,12 +11000,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 35,
+        "line": 73,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 57,
+        "line": 95,
         "source": "array-literal"
       }
     },
@@ -11067,6 +11036,28 @@
       }
     },
     {
+      "command": "playback sort move",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 204,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "playback sort set",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 188,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "playback subtitle update-batch",
       "realExecutionReferences": 0,
       "helpReferences": 1,
@@ -11076,6 +11067,17 @@
         "line": 23,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "playback title update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 168,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "playback video-info",

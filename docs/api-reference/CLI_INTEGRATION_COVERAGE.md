@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T19:54:40.770Z
+Generated at: 2026-06-26T19:58:46.636Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 523 |
-| Missing real-execution leaf subcommands | 44 |
-| Real-execution coverage | 92.24% |
-| Leaf subcommands referenced including help | 534 |
-| Missing including help | 33 |
+| Real-executed leaf subcommands | 528 |
+| Missing real-execution leaf subcommands | 39 |
+| Real-execution coverage | 93.12% |
+| Leaf subcommands referenced including help | 539 |
+| Missing including help | 28 |
 
 ## By Top-Level Command
 
@@ -42,7 +42,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `monitor` | 9 | 9 | 0 | 100.00% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 21 | 1 | 95.45% | 22 | 0 |
-| `playback` | 13 | 6 | 7 | 46.15% | 7 | 6 |
+| `playback` | 13 | 11 | 2 | 84.62% | 12 | 1 |
 | `player` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `product` | 36 | 36 | 0 | 100.00% | 36 | 0 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
@@ -81,13 +81,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
-| `playback add-vod` | `packages/cli/src/commands/playback.commands.ts:543` |
-| `playback delete` | `packages/cli/src/commands/playback.commands.ts:319` |
 | `playback merge` | `packages/cli/src/commands/playback.commands.ts:405` |
-| `playback sort move` | `packages/cli/src/commands/playback.commands.ts:572` |
-| `playback sort set` | `packages/cli/src/commands/playback.commands.ts:583` |
 | `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
-| `playback title update` | `packages/cli/src/commands/playback.commands.ts:558` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
 | `record convert` | `packages/cli/src/commands/record.commands.ts:323` |

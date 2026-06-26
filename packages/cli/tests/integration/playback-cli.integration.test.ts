@@ -17,10 +17,48 @@ import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
   deleteTemporaryChannel,
+  parseJsonObject,
+  runCliSuccess,
 } from '../helpers/channel-fixture';
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const playbackVodIds = readPlaybackVodIds();
+const shouldRunPlaybackWriteTests = shouldRunRealChannelTests && playbackVodIds.length >= 2;
+
+function readPlaybackVodIds(): string[] {
+  const ids = [
+    ...(process.env['POLYV_TEST_PLAYBACK_VOD_IDS'] || '').split(','),
+    process.env['POLYV_TEST_PLAYBACK_VOD_ID'] || '',
+  ]
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return Array.from(new Set(ids));
+}
+
+function extractPlaybackVideoId(value: Record<string, unknown>): string {
+  const data = value.data && typeof value.data === 'object' ? value.data as Record<string, unknown> : {};
+  const result = value.result && typeof value.result === 'object' ? value.result as Record<string, unknown> : {};
+  const candidates = [
+    value.videoId,
+    value.vid,
+    value.id,
+    data.videoId,
+    data.vid,
+    data.id,
+    result.videoId,
+    result.vid,
+    result.id,
+  ];
+  const videoId = candidates.map((candidate) => String(candidate || '').trim()).find(Boolean);
+
+  if (!videoId) {
+    throw new Error(`Cannot extract playback videoId from CLI output: ${JSON.stringify(value)}`);
+  }
+
+  return videoId;
+}
 
 describe('playback CLI integration (channel-scoped reads)', () => {
   (shouldRunRealChannelTests ? it : it.skip)('gets a single playback video via real CLI (empty-data path)', () => {
@@ -58,4 +96,156 @@ describe('playback CLI integration (channel-scoped reads)', () => {
     expect(result.exitCode).toBe(0);
     expect(result.output).toContain('video-id');
   });
+
+  (shouldRunPlaybackWriteTests ? it : it.skip)(
+    'runs playback VOD write commands through the real CLI with fixture videos',
+    () => {
+      const firstFixtureVid = playbackVodIds[0];
+      const secondFixtureVid = playbackVodIds[1];
+      if (!firstFixtureVid || !secondFixtureVid) {
+        throw new Error('POLYV_TEST_PLAYBACK_VOD_IDS must contain at least two VOD IDs');
+      }
+
+      let channelId: string | undefined;
+      const pendingPlaybackDeletes: string[] = [];
+
+      const deleteLinkedPlayback = (targetChannelId: string, videoId: string): Record<string, unknown> => {
+        const deleted = parseJsonObject(runCliSuccess([
+          'playback',
+          'delete',
+          '--channel-id',
+          targetChannelId,
+          '--video-id',
+          videoId,
+          '--force',
+          '--output',
+          'json',
+        ], 60000));
+
+        expect(deleted.channelId).toBe(targetChannelId);
+        expect(deleted.videoId).toBe(videoId);
+        expect(deleted.status).toBe('已删除');
+        return deleted;
+      };
+
+      try {
+        channelId = createTemporaryChannel('Playback VOD Writes');
+        const targetChannelId = channelId;
+
+        const firstAdded = parseJsonObject(runCliSuccess([
+          'playback',
+          'add-vod',
+          '--channel-id',
+          targetChannelId,
+          '--vid',
+          firstFixtureVid,
+          '--set-as-default',
+          'N',
+          '--force',
+          '--output',
+          'json',
+        ], 60000));
+        const firstVideoId = extractPlaybackVideoId(firstAdded);
+        pendingPlaybackDeletes.push(firstVideoId);
+
+        const secondAdded = parseJsonObject(runCliSuccess([
+          'playback',
+          'add-vod',
+          '--channel-id',
+          targetChannelId,
+          '--vid',
+          secondFixtureVid,
+          '--set-as-default',
+          'N',
+          '--force',
+          '--output',
+          'json',
+        ], 60000));
+        const secondVideoId = extractPlaybackVideoId(secondAdded);
+        pendingPlaybackDeletes.push(secondVideoId);
+
+        const title = `CLI Integration Playback ${Date.now()}`;
+        const renamed = parseJsonObject(runCliSuccess([
+          'playback',
+          'title',
+          'update',
+          '--channel-id',
+          targetChannelId,
+          '--video-id',
+          firstVideoId,
+          '--title',
+          title,
+          '--force',
+          '--output',
+          'json',
+        ], 60000));
+        expect(renamed.updated).toBe(true);
+        expect(renamed.channelId).toBe(targetChannelId);
+        expect(renamed.videoId).toBe(firstVideoId);
+        expect(renamed.title).toBe(title);
+
+        const orderedVideoIds = `${secondVideoId},${firstVideoId}`;
+        const sorted = parseJsonObject(runCliSuccess([
+          'playback',
+          'sort',
+          'set',
+          '--channel-id',
+          targetChannelId,
+          '--video-ids',
+          orderedVideoIds,
+          '--force',
+          '--output',
+          'json',
+        ], 60000));
+        expect(sorted.sorted).toBe(true);
+        expect(sorted.channelId).toBe(targetChannelId);
+        expect(sorted.videoIds).toEqual([secondVideoId, firstVideoId]);
+
+        const moved = parseJsonObject(runCliSuccess([
+          'playback',
+          'sort',
+          'move',
+          '--channel-id',
+          targetChannelId,
+          '--video-id',
+          firstVideoId,
+          '--type',
+          'up',
+          '--force',
+          '--output',
+          'json',
+        ], 60000));
+        expect(moved.moved).toBe(true);
+        expect(moved.channelId).toBe(targetChannelId);
+        expect(moved.videoId).toBe(firstVideoId);
+        expect(moved.type).toBe('up');
+
+        deleteLinkedPlayback(targetChannelId, secondVideoId);
+        pendingPlaybackDeletes.splice(pendingPlaybackDeletes.indexOf(secondVideoId), 1);
+      } finally {
+        const cleanupErrors: string[] = [];
+
+        if (channelId) {
+          for (const videoId of [...pendingPlaybackDeletes].reverse()) {
+            try {
+              deleteLinkedPlayback(channelId, videoId);
+            } catch (error) {
+              cleanupErrors.push(error instanceof Error ? error.message : String(error));
+            }
+          }
+
+          try {
+            deleteTemporaryChannel(channelId);
+          } catch (error) {
+            cleanupErrors.push(error instanceof Error ? error.message : String(error));
+          }
+        }
+
+        if (cleanupErrors.length > 0) {
+          throw new Error(`Playback VOD write cleanup failed:\n${cleanupErrors.join('\n')}`);
+        }
+      }
+    },
+    240000,
+  );
 });
