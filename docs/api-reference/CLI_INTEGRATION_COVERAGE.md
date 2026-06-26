@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:15:35.991Z
+Generated at: 2026-06-26T18:18:22.091Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 495 |
-| Missing real-execution leaf subcommands | 72 |
-| Real-execution coverage | 87.30% |
-| Leaf subcommands referenced including help | 513 |
-| Missing including help | 54 |
+| Real-executed leaf subcommands | 501 |
+| Missing real-execution leaf subcommands | 66 |
+| Real-execution coverage | 88.36% |
+| Leaf subcommands referenced including help | 518 |
+| Missing including help | 49 |
 
 ## By Top-Level Command
 
@@ -32,7 +32,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `document` | 11 | 7 | 4 | 63.64% | 8 | 3 |
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
-| `finance` | 7 | 1 | 6 | 14.29% | 2 | 5 |
+| `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `group` | 16 | 1 | 15 | 6.25% | 2 | 14 |
 | `interaction` | 22 | 19 | 3 | 86.36% | 22 | 0 |
@@ -75,12 +75,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `document media user-delete` | `packages/cli/src/commands/document.commands.ts:559` |
 | `document media user-detail` | `packages/cli/src/commands/document.commands.ts:552` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
-| `finance audio-moderation get` | `packages/cli/src/commands/finance.commands.ts:42` |
-| `finance audio-moderation list` | `packages/cli/src/commands/finance.commands.ts:48` |
-| `finance audio-moderation update` | `packages/cli/src/commands/finance.commands.ts:53` |
-| `finance video-moderation get` | `packages/cli/src/commands/finance.commands.ts:68` |
-| `finance video-moderation result-list` | `packages/cli/src/commands/finance.commands.ts:74` |
-| `finance video-moderation update` | `packages/cli/src/commands/finance.commands.ts:79` |
 | `group allocate-log` | `packages/cli/src/commands/group.commands.ts:36` |
 | `group billing-daily` | `packages/cli/src/commands/group.commands.ts:131` |
 | `group resource set-concurrences` | `packages/cli/src/commands/group.commands.ts:45` |

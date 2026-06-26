@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:15:35.991Z",
+  "generatedAt": "2026-06-26T18:18:22.091Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 552,
-    "referencedCommandPathsExcludingHelp": 501,
-    "coveredLeafTargetsIncludingHelp": 513,
-    "missingLeafTargetsIncludingHelp": 54,
-    "coveredRealExecutionLeafTargets": 495,
-    "missingRealExecutionLeafTargets": 72,
-    "realExecutionCoveragePercent": 87.3,
-    "includingHelpCoveragePercent": 90.48,
-    "integrationReferences": 1166,
-    "realExecutionReferences": 757,
+    "referencedCommandPathsIncludingHelp": 557,
+    "referencedCommandPathsExcludingHelp": 507,
+    "coveredLeafTargetsIncludingHelp": 518,
+    "missingLeafTargetsIncludingHelp": 49,
+    "coveredRealExecutionLeafTargets": 501,
+    "missingRealExecutionLeafTargets": 66,
+    "realExecutionCoveragePercent": 88.36,
+    "includingHelpCoveragePercent": 91.36,
+    "integrationReferences": 1172,
+    "realExecutionReferences": 763,
     "helpReferences": 409
   },
   "byTopLevel": [
@@ -136,12 +136,12 @@
     {
       "command": "finance",
       "targetLeafCommands": 7,
-      "coveredRealExecutionLeafTargets": 1,
-      "missingRealExecutionLeafTargets": 6,
-      "coveredLeafTargetsIncludingHelp": 2,
-      "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 14.29,
-      "includingHelpCoveragePercent": 28.57
+      "coveredRealExecutionLeafTargets": 7,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 7,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "global",
@@ -524,72 +524,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "finance audio-moderation get",
-      "path": [
-        "finance",
-        "audio-moderation",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 42
-    },
-    {
-      "command": "finance audio-moderation list",
-      "path": [
-        "finance",
-        "audio-moderation",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 48
-    },
-    {
-      "command": "finance audio-moderation update",
-      "path": [
-        "finance",
-        "audio-moderation",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 53
-    },
-    {
-      "command": "finance video-moderation get",
-      "path": [
-        "finance",
-        "video-moderation",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 68
-    },
-    {
-      "command": "finance video-moderation result-list",
-      "path": [
-        "finance",
-        "video-moderation",
-        "result-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 74
-    },
-    {
-      "command": "finance video-moderation update",
-      "path": [
-        "finance",
-        "video-moderation",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 79
     },
     {
       "command": "group allocate-log",
@@ -1264,61 +1198,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "finance audio-moderation get",
-      "path": [
-        "finance",
-        "audio-moderation",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 42
-    },
-    {
-      "command": "finance audio-moderation list",
-      "path": [
-        "finance",
-        "audio-moderation",
-        "list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 48
-    },
-    {
-      "command": "finance video-moderation get",
-      "path": [
-        "finance",
-        "video-moderation",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 68
-    },
-    {
-      "command": "finance video-moderation result-list",
-      "path": [
-        "finance",
-        "video-moderation",
-        "result-list"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 74
-    },
-    {
-      "command": "finance video-moderation update",
-      "path": [
-        "finance",
-        "video-moderation",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/finance.commands.ts",
-      "line": 79
     },
     {
       "command": "group allocate-log",
@@ -3781,6 +3660,72 @@
       "depth": 2,
       "file": "packages/cli/src/commands/finance.commands.ts",
       "line": 93
+    },
+    {
+      "command": "finance audio-moderation get",
+      "path": [
+        "finance",
+        "audio-moderation",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 42
+    },
+    {
+      "command": "finance audio-moderation list",
+      "path": [
+        "finance",
+        "audio-moderation",
+        "list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 48
+    },
+    {
+      "command": "finance audio-moderation update",
+      "path": [
+        "finance",
+        "audio-moderation",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 53
+    },
+    {
+      "command": "finance video-moderation get",
+      "path": [
+        "finance",
+        "video-moderation",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 68
+    },
+    {
+      "command": "finance video-moderation result-list",
+      "path": [
+        "finance",
+        "video-moderation",
+        "result-list"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 74
+    },
+    {
+      "command": "finance video-moderation update",
+      "path": [
+        "finance",
+        "video-moderation",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/finance.commands.ts",
+      "line": 79
     },
     {
       "command": "global auth get",
@@ -9674,10 +9619,36 @@
       "firstHelpReference": null
     },
     {
+      "command": "finance audio-moderation get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 217,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "finance audio-moderation list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 232,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "finance audio-moderation update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 194,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 39,
@@ -9691,6 +9662,39 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 78,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "finance video-moderation get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 274,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "finance video-moderation result-list",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 289,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "finance video-moderation update",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
+        "line": 251,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10618,7 +10622,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 193,
+        "line": 323,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10715,7 +10719,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 225,
+        "line": 355,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11270,7 +11274,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 252,
+        "line": 382,
         "source": "array-literal"
       },
       "firstHelpReference": {

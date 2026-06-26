@@ -182,6 +182,136 @@ describe('small module CLI integration', () => {
     180000,
   );
 
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs finance moderation channel commands through the real CLI',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Finance Moderation Smoke');
+
+        const audioUpdate = parseJsonObject(
+          runCliSuccess([
+            'finance',
+            'audio-moderation',
+            'update',
+            '--channel-id',
+            channelId,
+            '--moderation-enabled',
+            'N',
+            '--moderation-strategy',
+            'normal',
+            '--badword-enabled',
+            'N',
+            '--illegal-notify',
+            '{"platformEnabled":"N"}',
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(audioUpdate.success).toBe(true);
+        expect(audioUpdate.channelId).toBe(channelId);
+
+        const audioSettings = parseJsonObject(
+          runCliSuccess([
+            'finance',
+            'audio-moderation',
+            'get',
+            '--channel-id',
+            channelId,
+            '--output',
+            'json',
+          ]),
+        );
+        expect(String(audioSettings.channelId)).toBe(channelId);
+        expect(typeof audioSettings.moderationEnabled).toBe('string');
+        expect(typeof audioSettings.moderationStrategy).toBe('string');
+
+        const audioRecords = parseJsonObject(
+          runCliSuccess([
+            'finance',
+            'audio-moderation',
+            'list',
+            '--channel-id',
+            channelId,
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(Array.isArray(audioRecords.contents)).toBe(true);
+        expect(typeof audioRecords.pageNumber).toBe('number');
+        expect(typeof audioRecords.pageSize).toBe('number');
+
+        const videoUpdate = parseJsonObject(
+          runCliSuccess([
+            'finance',
+            'video-moderation',
+            'update',
+            '--channel-id',
+            channelId,
+            '--moderation-enabled',
+            'N',
+            '--moderation-strategy',
+            'finance_easy',
+            '--image-frequency',
+            '60',
+            '--illegal-notify',
+            '{"platformEnabled":"N"}',
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(videoUpdate.success).toBe(true);
+        expect(videoUpdate.channelId).toBe(channelId);
+
+        const videoSettings = parseJsonObject(
+          runCliSuccess([
+            'finance',
+            'video-moderation',
+            'get',
+            '--channel-id',
+            channelId,
+            '--output',
+            'json',
+          ]),
+        );
+        expect(String(videoSettings.channelId)).toBe(channelId);
+        expect(typeof videoSettings.moderationEnabled).toBe('string');
+        expect(typeof videoSettings.moderationStrategy).toBe('string');
+
+        const videoResults = parseJsonObject(
+          runCliSuccess([
+            'finance',
+            'video-moderation',
+            'result-list',
+            '--channel-id',
+            channelId,
+            '--page-number',
+            '1',
+            '--page-size',
+            '5',
+            '--output',
+            'json',
+          ]),
+        );
+        expect(Array.isArray(videoResults.contents)).toBe(true);
+        expect(typeof videoResults.pageNumber).toBe('number');
+        expect(typeof videoResults.pageSize).toBe('number');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    240000,
+  );
+
   it('runs monitor layouts through the real CLI and cleans up a disposable channel when available', () => {
     let channelId: string | undefined;
 
