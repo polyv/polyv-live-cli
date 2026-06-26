@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T19:45:19.487Z",
+  "generatedAt": "2026-06-26T19:50:22.564Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 571,
-    "referencedCommandPathsExcludingHelp": 525,
+    "referencedCommandPathsExcludingHelp": 526,
     "coveredLeafTargetsIncludingHelp": 532,
     "missingLeafTargetsIncludingHelp": 35,
-    "coveredRealExecutionLeafTargets": 519,
-    "missingRealExecutionLeafTargets": 48,
-    "realExecutionCoveragePercent": 91.53,
+    "coveredRealExecutionLeafTargets": 520,
+    "missingRealExecutionLeafTargets": 47,
+    "realExecutionCoveragePercent": 91.71,
     "includingHelpCoveragePercent": 93.83,
-    "integrationReferences": 1198,
-    "realExecutionReferences": 785,
+    "integrationReferences": 1199,
+    "realExecutionReferences": 786,
     "helpReferences": 413
   },
   "byTopLevel": [
@@ -366,11 +366,11 @@
     {
       "command": "viewer",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 18,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 19,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 19,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 94.74,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -917,17 +917,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 124
-    },
-    {
-      "command": "viewer config update",
-      "path": [
-        "viewer",
-        "config",
-        "update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/viewer.commands.ts",
-      "line": 243
     }
   ],
   "missingIncludingHelpTargets": [
@@ -6233,6 +6222,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/viewer.commands.ts",
       "line": 173
+    },
+    {
+      "command": "viewer config update",
+      "path": [
+        "viewer",
+        "config",
+        "update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/viewer.commands.ts",
+      "line": 243
     },
     {
       "command": "viewer label create",
@@ -13502,9 +13502,13 @@
     },
     {
       "command": "viewer config update",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
+        "line": 533,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-user-cli.integration.test.ts",
         "line": 30,
@@ -13522,7 +13526,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 516,
+        "line": 563,
         "source": "array-literal"
       }
     },
@@ -13537,7 +13541,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 519,
+        "line": 566,
         "source": "array-literal"
       }
     },
@@ -13547,12 +13551,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 83,
+        "line": 90,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 517,
+        "line": 564,
         "source": "array-literal"
       }
     },
@@ -13562,12 +13566,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 172,
+        "line": 179,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 520,
+        "line": 567,
         "source": "array-literal"
       }
     },
@@ -13588,12 +13592,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 411,
+        "line": 418,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 523,
+        "line": 570,
         "source": "array-literal"
       }
     },
@@ -13603,7 +13607,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 393,
+        "line": 400,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13618,7 +13622,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 431,
+        "line": 438,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13670,7 +13674,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 491,
+        "line": 498,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -13692,12 +13696,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 279,
+        "line": 286,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 521,
+        "line": 568,
         "source": "array-literal"
       }
     },
@@ -13707,7 +13711,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 259,
+        "line": 266,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13722,7 +13726,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 321,
+        "line": 328,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -13748,12 +13752,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 301,
+        "line": 308,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 522,
+        "line": 569,
         "source": "array-literal"
       }
     },
@@ -13778,12 +13782,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 103,
+        "line": 110,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/viewer-cli.integration.test.ts",
-        "line": 518,
+        "line": 565,
         "source": "array-literal"
       }
     },

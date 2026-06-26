@@ -41,6 +41,13 @@ import {
 import { hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
+const viewerConfigMobileLoginEnabled = process.env.POLYV_TEST_VIEWER_CONFIG_MOBILE_LOGIN_ENABLED;
+const viewerConfigWxWorkLoginEnabled = process.env.POLYV_TEST_VIEWER_CONFIG_WX_WORK_LOGIN_ENABLED;
+const shouldRunViewerConfigUpdateTest =
+  shouldRunRealChannelTests &&
+  process.env.POLYV_TEST_ALLOW_VIEWER_CONFIG_UPDATE === 'true' &&
+  ['Y', 'N'].includes(viewerConfigMobileLoginEnabled || '') &&
+  ['Y', 'N'].includes(viewerConfigWxWorkLoginEnabled || '');
 
 describe('viewer CLI CRUD lifecycle integration', () => {
   (shouldRunRealChannelTests ? it : it.skip)(
@@ -508,6 +515,46 @@ describe('viewer CLI CRUD lifecycle integration', () => {
         }
       }
     },
+  );
+
+  // `viewer config update` is an account-level write with no paired CLI read
+  // command to snapshot and restore the previous values. Keep real execution
+  // behind an explicit opt-in and explicit target values; still create/delete a
+  // temporary channel so the test has an isolated real asset per convention.
+  (shouldRunViewerConfigUpdateTest ? it : it.skip)(
+    'updates viewer user-system config via real CLI when explicitly allowed',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Viewer Config Update');
+
+        const payload = parseJsonObject(
+          runCliSuccess([
+            'viewer',
+            'config',
+            'update',
+            '--mobile-login-enabled',
+            viewerConfigMobileLoginEnabled as string,
+            '--wx-work-login-enabled',
+            viewerConfigWxWorkLoginEnabled as string,
+            '--force',
+            '--output',
+            'json',
+          ]),
+        );
+
+        expect(payload.success).toBe(true);
+        const data = payload.data as Record<string, unknown>;
+        expect(data.mobileLoginEnabled).toBe(viewerConfigMobileLoginEnabled);
+        expect(data.wxWorkLoginEnabled).toBe(viewerConfigWxWorkLoginEnabled);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
   );
 
   // Command-surface checks run unconditionally (no real credentials needed).

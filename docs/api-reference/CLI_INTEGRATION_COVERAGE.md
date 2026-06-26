@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T19:45:19.487Z
+Generated at: 2026-06-26T19:50:22.564Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 519 |
-| Missing real-execution leaf subcommands | 48 |
-| Real-execution coverage | 91.53% |
+| Real-executed leaf subcommands | 520 |
+| Missing real-execution leaf subcommands | 47 |
+| Real-execution coverage | 91.71% |
 | Leaf subcommands referenced including help | 532 |
 | Missing including help | 35 |
 
@@ -55,7 +55,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream` | 19 | 16 | 3 | 84.21% | 16 | 3 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
-| `viewer` | 19 | 18 | 1 | 94.74% | 19 | 0 |
+| `viewer` | 19 | 19 | 0 | 100.00% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 34 | 0 | 100.00% | 34 | 0 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
@@ -112,4 +112,3 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `stream disk-video add` | `packages/cli/src/commands/stream.commands.ts:489` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
-| `viewer config update` | `packages/cli/src/commands/viewer.commands.ts:243` |
