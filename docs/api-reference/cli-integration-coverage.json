@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T19:36:34.045Z",
+  "generatedAt": "2026-06-26T19:41:05.061Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,20 +16,20 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-25T18:31:00.932Z",
-    "integrationFiles": 90,
+    "integrationFiles": 91,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 570,
-    "referencedCommandPathsExcludingHelp": 523,
+    "referencedCommandPathsExcludingHelp": 524,
     "coveredLeafTargetsIncludingHelp": 531,
     "missingLeafTargetsIncludingHelp": 36,
-    "coveredRealExecutionLeafTargets": 517,
-    "missingRealExecutionLeafTargets": 50,
-    "realExecutionCoveragePercent": 91.18,
+    "coveredRealExecutionLeafTargets": 518,
+    "missingRealExecutionLeafTargets": 49,
+    "realExecutionCoveragePercent": 91.36,
     "includingHelpCoveragePercent": 93.65,
-    "integrationReferences": 1192,
-    "realExecutionReferences": 780,
+    "integrationReferences": 1195,
+    "realExecutionReferences": 783,
     "helpReferences": 412
   },
   "byTopLevel": [
@@ -66,11 +66,11 @@
     {
       "command": "channel",
       "targetLeafCommands": 78,
-      "coveredRealExecutionLeafTargets": 76,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 77,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 78,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 97.44,
+      "realExecutionCoveragePercent": 98.72,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -449,16 +449,6 @@
       "depth": 4,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 396
-    },
-    {
-      "command": "channel ccb-focus-reset",
-      "path": [
-        "channel",
-        "ccb-focus-reset"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/channel.commands.ts",
-      "line": 1460
     },
     {
       "command": "channel ppt-record add-task",
@@ -1820,6 +1810,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 560
+    },
+    {
+      "command": "channel ccb-focus-reset",
+      "path": [
+        "channel",
+        "ccb-focus-reset"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/channel.commands.ts",
+      "line": 1460
     },
     {
       "command": "channel children-list",
@@ -7520,9 +7520,13 @@
     },
     {
       "command": "channel ccb-focus-reset",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 3,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/channel-ccb-focus-cli.integration.test.ts",
+        "line": 33,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 71,
