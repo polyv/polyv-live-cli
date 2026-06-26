@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T18:38:45.140Z",
+  "generatedAt": "2026-06-26T18:45:04.147Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 564,
-    "referencedCommandPathsExcludingHelp": 517,
-    "coveredLeafTargetsIncludingHelp": 525,
-    "missingLeafTargetsIncludingHelp": 42,
-    "coveredRealExecutionLeafTargets": 511,
-    "missingRealExecutionLeafTargets": 56,
-    "realExecutionCoveragePercent": 90.12,
-    "includingHelpCoveragePercent": 92.59,
-    "integrationReferences": 1184,
-    "realExecutionReferences": 774,
+    "referencedCommandPathsIncludingHelp": 565,
+    "referencedCommandPathsExcludingHelp": 518,
+    "coveredLeafTargetsIncludingHelp": 526,
+    "missingLeafTargetsIncludingHelp": 41,
+    "coveredRealExecutionLeafTargets": 512,
+    "missingRealExecutionLeafTargets": 55,
+    "realExecutionCoveragePercent": 90.3,
+    "includingHelpCoveragePercent": 92.77,
+    "integrationReferences": 1185,
+    "realExecutionReferences": 775,
     "helpReferences": 410
   },
   "byTopLevel": [
@@ -316,12 +316,12 @@
     {
       "command": "session",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 5,
-      "coveredLeafTargetsIncludingHelp": 6,
-      "missingLeafTargetsIncludingHelp": 5,
-      "realExecutionCoveragePercent": 54.55,
-      "includingHelpCoveragePercent": 54.55
+      "coveredRealExecutionLeafTargets": 7,
+      "missingRealExecutionLeafTargets": 4,
+      "coveredLeafTargetsIncludingHelp": 7,
+      "missingLeafTargetsIncludingHelp": 4,
+      "realExecutionCoveragePercent": 63.64,
+      "includingHelpCoveragePercent": 63.64
     },
     {
       "command": "statistics",
@@ -899,16 +899,6 @@
       "line": 338
     },
     {
-      "command": "session get",
-      "path": [
-        "session",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 221
-    },
-    {
       "command": "session update",
       "path": [
         "session",
@@ -1367,16 +1357,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/session.commands.ts",
       "line": 338
-    },
-    {
-      "command": "session get",
-      "path": [
-        "session",
-        "get"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/session.commands.ts",
-      "line": 221
     },
     {
       "command": "session update",
@@ -5402,6 +5382,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/session.commands.ts",
       "line": 302
+    },
+    {
+      "command": "session get",
+      "path": [
+        "session",
+        "get"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/session.commands.ts",
+      "line": 221
     },
     {
       "command": "session legacy-list",
@@ -12246,12 +12236,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 104,
+        "line": 142,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 142,
+        "line": 180,
         "source": "array-literal"
       }
     },
@@ -12261,7 +12251,7 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 67,
+        "line": 105,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -12276,14 +12266,25 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 87,
+        "line": 125,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
-        "line": 136,
+        "line": 174,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "session get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/session-external-cli.integration.test.ts",
+        "line": 67,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "session legacy-list",

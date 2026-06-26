@@ -1,6 +1,6 @@
 /**
- * @fileoverview Real-CLI integration tests for the `session external` subcommand
- * family (custom/external session-ID association).
+ * @fileoverview Real-CLI integration tests for session detail reads and the
+ * `session external` subcommand family (custom/external session-ID association).
  *
  * The `session external` group drives the v3 channel-session APIs under
  * /live/v3/channel/session/* through the local CLI entry against a throwaway
@@ -50,6 +50,44 @@ function makeExternalSessionId(): string {
     .slice(0, 20); // 20 hex chars
   return (ts + rand).slice(0, 32);
 }
+
+describe('session get CLI integration', () => {
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs session get via real CLI on a temporary channel (missing new-session path)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Session Get CLI');
+        const sessionId = `gnhf-missing-${Date.now().toString(36)}`;
+
+        // `session get` queries the v4 session-detail API. A freshly-created
+        // channel has no v4 sessions, so a unique probe id reaches the real API
+        // and the handler emits a structured JSON error with exit 0.
+        const result = runCli([
+          'session',
+          'get',
+          '-c',
+          channelId,
+          '--session-id',
+          sessionId,
+          '--output',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(0);
+        const payload = parseJsonObject(result.output) as { error?: unknown };
+        expect(typeof payload.error).toBe('string');
+        expect(String(payload.error).length).toBeGreaterThan(0);
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+});
 
 describe('session external CLI integration', () => {
   (shouldRunRealChannelTests ? it : it.skip)(

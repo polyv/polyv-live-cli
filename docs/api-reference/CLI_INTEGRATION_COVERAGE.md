@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T18:38:45.140Z
+Generated at: 2026-06-26T18:45:04.147Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 89 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 511 |
-| Missing real-execution leaf subcommands | 56 |
-| Real-execution coverage | 90.12% |
-| Leaf subcommands referenced including help | 525 |
-| Missing including help | 42 |
+| Real-executed leaf subcommands | 512 |
+| Missing real-execution leaf subcommands | 55 |
+| Real-execution coverage | 90.30% |
+| Leaf subcommands referenced including help | 526 |
+| Missing including help | 41 |
 
 ## By Top-Level Command
 
@@ -50,7 +50,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `record` | 17 | 5 | 12 | 29.41% | 7 | 10 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `session` | 11 | 6 | 5 | 54.55% | 6 | 5 |
+| `session` | 11 | 7 | 4 | 63.64% | 7 | 4 |
 | `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
 | `stream` | 19 | 14 | 5 | 73.68% | 14 | 5 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -110,7 +110,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
 | `session create` | `packages/cli/src/commands/session.commands.ts:313` |
 | `session delete` | `packages/cli/src/commands/session.commands.ts:338` |
-| `session get` | `packages/cli/src/commands/session.commands.ts:221` |
 | `session update` | `packages/cli/src/commands/session.commands.ts:325` |
 | `session external get` | `packages/cli/src/commands/session.commands.ts:351` |
 | `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
