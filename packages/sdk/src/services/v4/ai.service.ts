@@ -262,9 +262,11 @@ export class V4AiService {
       throw new PolyVValidationError('id is required');
     }
 
+    // The server expects the JSON body field `aiPPTVideoId` (not `id`); see
+    // video-produce-delete.md. Keep the public API on `id` and map it here.
     await this.client.httpClient.post(
       '/live/v4/ai/video-produce/delete',
-      params
+      { aiPPTVideoId: params.id }
     );
   }
 

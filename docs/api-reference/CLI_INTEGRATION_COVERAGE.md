@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T04:21:30.335Z
+Generated at: 2026-06-27T04:38:12.460Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,20 +12,20 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 555 |
-| Missing real-execution leaf subcommands | 12 |
-| Real-execution coverage | 97.88% |
-| Leaf subcommands referenced including help | 562 |
-| Missing including help | 5 |
+| Real-executed leaf subcommands | 558 |
+| Missing real-execution leaf subcommands | 9 |
+| Real-execution coverage | 98.41% |
+| Leaf subcommands referenced including help | 564 |
+| Missing including help | 3 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
-| `ai` | 12 | 11 | 1 | 91.67% | 11 | 1 |
+| `ai` | 12 | 12 | 0 | 100.00% | 12 | 0 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 77 | 1 | 98.72% | 78 | 0 |
+| `channel` | 78 | 78 | 0 | 100.00% | 78 | 0 |
 | `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
 | `checkin` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `statistics` | 27 | 27 | 0 | 100.00% | 27 | 0 |
-| `stream` | 19 | 17 | 2 | 89.47% | 17 | 2 |
+| `stream` | 19 | 18 | 1 | 94.74% | 18 | 1 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
 | `viewer` | 19 | 19 | 0 | 100.00% | 19 | 0 |
@@ -66,8 +66,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Command | Source |
 |---------|--------|
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
-| `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
-| `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
@@ -75,5 +73,4 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
-| `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

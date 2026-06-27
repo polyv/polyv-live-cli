@@ -238,6 +238,43 @@ describe('ai video-produce CLI integration (account-scoped)', () => {
     120000,
   );
 
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'deletes a video produce task via real CLI (missing-resource error on fake id)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('AI Video Produce Delete');
+
+        // The SDK previously sent the JSON body field as `id`, but the server
+        // expects `aiPPTVideoId` (see video-produce-delete.md); the SDK now maps
+        // `id` -> `aiPPTVideoId`. A non-existent id is deterministically
+        // rejected before any state changes — exit 1 with a fixed message — so
+        // only the temp channel needs cleanup.
+        const result = runCli([
+          'ai',
+          'video-produce',
+          'delete',
+          '--id',
+          '999999999',
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain(
+          '删除失败, 任务不存在或任务当前状态不支持被删除',
+        );
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // Sanity check that the CLI surface exists even without real credentials.
   it('exposes the targeted ai video-produce subcommands through the real CLI entry', () => {
     const checks: Array<[string[], string]> = [

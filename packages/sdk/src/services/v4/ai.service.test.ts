@@ -242,7 +242,7 @@ describe('V4AiService', () => {
 
       expect(mockHttpClient.post).toHaveBeenCalledWith(
         '/live/v4/ai/video-produce/delete',
-        { id: 2001 }
+        { aiPPTVideoId: 2001 }
       );
     });
 

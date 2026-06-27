@@ -306,6 +306,40 @@ describe('channel historical operate/state/marquee CLI integration', () => {
         expectCliSuccess(args);
       }
 
+      // Missing-resource-error coverage: these two writes pre-validate a real
+      // resource before mutating state, so a never-live temp channel has none
+      // and the write is deterministically rejected (exit 1) before any state
+      // is created — only the temp channel needs cleanup.
+      const addTaskResult = runCli([
+        'channel',
+        'ppt-record',
+        'add-task',
+        '--channel-id',
+        sourceChannelId,
+        '--video-id',
+        `fake-vid-${Date.now()}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(addTaskResult.exitCode).toBe(1);
+      expect(addTaskResult.output).toContain('record file not exist');
+
+      const endDiskResult = runCli([
+        'stream',
+        'disk-video',
+        'end',
+        '--channel-id',
+        sourceChannelId,
+        '--disk-video-id',
+        `fake-dvid-${Date.now()}`,
+        '--force',
+        '--output',
+        'json',
+      ]);
+      expect(endDiskResult.exitCode).toBe(1);
+      expect(endDiskResult.output).toContain('找不到该伪直播');
+
       const productOutput = runCliSuccess([
         'product',
         'batch-add',
