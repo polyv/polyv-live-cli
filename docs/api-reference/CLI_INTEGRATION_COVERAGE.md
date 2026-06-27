@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T05:20:46.406Z
+Generated at: 2026-06-27T05:45:44.796Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 562 |
-| Missing real-execution leaf subcommands | 5 |
-| Real-execution coverage | 99.12% |
-| Leaf subcommands referenced including help | 566 |
-| Missing including help | 1 |
+| Real-executed leaf subcommands | 564 |
+| Missing real-execution leaf subcommands | 3 |
+| Real-execution coverage | 99.47% |
+| Leaf subcommands referenced including help | 567 |
+| Missing including help | 0 |
 
 ## By Top-Level Command
 
@@ -35,7 +35,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `group` | 16 | 16 | 0 | 100.00% | 16 | 0 |
-| `interaction` | 22 | 21 | 1 | 95.45% | 22 | 0 |
+| `interaction` | 22 | 22 | 0 | 100.00% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
 | `material` | 7 | 7 | 0 | 100.00% | 7 | 0 |
@@ -52,7 +52,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `statistics` | 27 | 27 | 0 | 100.00% | 27 | 0 |
-| `stream` | 19 | 18 | 1 | 94.74% | 18 | 1 |
+| `stream` | 19 | 19 | 0 | 100.00% | 19 | 0 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
 | `viewer` | 19 | 19 | 0 | 100.00% | 19 | 0 |
@@ -65,8 +65,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
-| `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

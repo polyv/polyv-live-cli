@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T05:20:46.406Z",
+  "generatedAt": "2026-06-27T05:45:44.796Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 605,
-    "referencedCommandPathsExcludingHelp": 568,
-    "coveredLeafTargetsIncludingHelp": 566,
-    "missingLeafTargetsIncludingHelp": 1,
-    "coveredRealExecutionLeafTargets": 562,
-    "missingRealExecutionLeafTargets": 5,
-    "realExecutionCoveragePercent": 99.12,
-    "includingHelpCoveragePercent": 99.82,
-    "integrationReferences": 1259,
-    "realExecutionReferences": 838,
+    "referencedCommandPathsIncludingHelp": 606,
+    "referencedCommandPathsExcludingHelp": 570,
+    "coveredLeafTargetsIncludingHelp": 567,
+    "missingLeafTargetsIncludingHelp": 0,
+    "coveredRealExecutionLeafTargets": 564,
+    "missingRealExecutionLeafTargets": 3,
+    "realExecutionCoveragePercent": 99.47,
+    "includingHelpCoveragePercent": 100,
+    "integrationReferences": 1261,
+    "realExecutionReferences": 840,
     "helpReferences": 421
   },
   "byTopLevel": [
@@ -166,11 +166,11 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 21,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 22,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 22,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 95.45,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -336,12 +336,12 @@
     {
       "command": "stream",
       "targetLeafCommands": 19,
-      "coveredRealExecutionLeafTargets": 18,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 18,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 94.74,
-      "includingHelpCoveragePercent": 94.74
+      "coveredRealExecutionLeafTargets": 19,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 19,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "transmit",
@@ -416,17 +416,6 @@
   ],
   "missingRealExecutionTargets": [
     {
-      "command": "interaction task-reward submit-accept-info",
-      "path": [
-        "interaction",
-        "task-reward",
-        "submit-accept-info"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 415
-    },
-    {
       "command": "partner tencent-order create",
       "path": [
         "partner",
@@ -449,16 +438,6 @@
       "line": 676
     },
     {
-      "command": "stream push",
-      "path": [
-        "stream",
-        "push"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 543
-    },
-    {
       "command": "user sms-send",
       "path": [
         "user",
@@ -469,18 +448,7 @@
       "line": 124
     }
   ],
-  "missingIncludingHelpTargets": [
-    {
-      "command": "stream push",
-      "path": [
-        "stream",
-        "push"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/stream.commands.ts",
-      "line": 543
-    }
-  ],
+  "missingIncludingHelpTargets": [],
   "coveredRealExecutionTargets": [
     {
       "command": "account add",
@@ -3054,6 +3022,17 @@
       "line": 357
     },
     {
+      "command": "interaction task-reward submit-accept-info",
+      "path": [
+        "interaction",
+        "task-reward",
+        "submit-accept-info"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 415
+    },
+    {
       "command": "interaction task-reward update",
       "path": [
         "interaction",
@@ -5278,6 +5257,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/stream.commands.ts",
       "line": 713
+    },
+    {
+      "command": "stream push",
+      "path": [
+        "stream",
+        "push"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/stream.commands.ts",
+      "line": 543
     },
     {
       "command": "stream resume",
@@ -9754,9 +9743,13 @@
     },
     {
       "command": "interaction task-reward submit-accept-info",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 622,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 117,
@@ -12889,6 +12882,17 @@
         "line": 382,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "stream push",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/stream-push.integration.test.ts",
+        "line": 207,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "stream resume",

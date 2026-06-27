@@ -595,4 +595,55 @@ describe('live interaction CLI integration', () => {
     },
     120000,
   );
+
+  // `interaction task-reward submit-accept-info` submits an accept form for a
+  // viewer task-reward record. The server looks up the record by id; a
+  // non-existent record id deterministically returns the generalized server
+  // error "系统异常" (exit 1) BEFORE any accept info is written, so no state is
+  // created and only the temporary channel needs cleanup. The accept-info
+  // records only exist for completed task rewards on real viewer activity (no
+  // discovery path on a fresh channel), so this is a missing-resource-error
+  // coverage: the real V4 endpoint is exercised, the unknown record is
+  // rejected, and the error is stable/reproducible.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'submits task-reward accept info via real CLI (missing record gate)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Interaction Task Reward Submit Accept Info');
+
+        // Precompute the form-info JSON so the runCli arg array stays
+        // bracket-free (nested [] would confuse the coverage report matcher).
+        const formInfoJson = JSON.stringify([
+          { type: 'userName', field: 'name', value: 'cli-accept' },
+        ]);
+
+        const result = runCli([
+          'interaction',
+          'task-reward',
+          'submit-accept-info',
+          '--id',
+          '99999999',
+          '--viewer-id',
+          `gnhf-no-such-viewer-${Date.now().toString(36)}`,
+          '--form-info-json',
+          formInfoJson,
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        // exit 1 + "系统异常" proves the real endpoint was hit and the unknown
+        // record id was rejected before any accept info was stored.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('系统异常');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
 });

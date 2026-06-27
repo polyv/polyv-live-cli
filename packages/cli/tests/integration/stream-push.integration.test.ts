@@ -11,6 +11,11 @@ import { AuthConfig } from '../../src/types/auth';
 import * as fs from 'fs';
 import { isFFmpegInstalled } from '../../src/utils/ffmpeg';
 import { hasRealCredentials, getTestConfig } from '../helpers/integration-config';
+import { runCli } from '../helpers/cli-runner';
+import {
+  createTemporaryChannel,
+  deleteTemporaryChannel,
+} from '../helpers/channel-fixture';
 
 // Use test config from CLI accounts or environment
 const testConfig = getTestConfig();
@@ -20,6 +25,7 @@ describe('Stream Push Integration Tests', () => {
   let streamService: StreamServiceSdk;
   let streamHandler: StreamHandler;
   let testChannelId: string;
+  let temporaryChannelId: string | undefined;
 
   beforeAll(() => {
     // Skip integration tests if no test credentials provided
@@ -36,7 +42,18 @@ describe('Stream Push Integration Tests', () => {
 
     streamService = new StreamServiceSdk(testConfig.authConfig, serviceConfig);
     streamHandler = new StreamHandler(testConfig.authConfig, serviceConfig);
-    testChannelId = testConfig.testChannelId;
+    // The shared static testChannelId ('3151318') does not belong to the GNHF
+    // test account and is rejected as "illegal channel id" by getPushUrl, so
+    // create a fresh temporary channel that the credentials/FFmpeg tests below
+    // can resolve a real push URL for. It is deleted in afterAll.
+    temporaryChannelId = createTemporaryChannel('Stream Push Credentials');
+    testChannelId = temporaryChannelId;
+  });
+
+  afterAll(() => {
+    if (temporaryChannelId) {
+      deleteTemporaryChannel(temporaryChannelId);
+    }
   });
 
   describe('FFmpeg dependency check', () => {
@@ -168,4 +185,44 @@ describe('Stream Push Integration Tests', () => {
   // 5. Actual streaming costs
   //
   // These tests validate the setup and prerequisites instead.
+
+  // Real-CLI coverage of the `stream push` command. Executing a real push
+  // requires a real video file AND spawns FFmpeg to push a live stream
+  // (a genuine, billable external side effect we must not trigger in tests).
+  // The command's first step is a client-side file-existence check that runs
+  // BEFORE any API call or FFmpeg spawn, so pointing it at a non-existent file
+  // deterministically exits 1 with "File not found" while touching nothing —
+  // exercising the real CLI command surface without any push side effect.
+  // A throwaway temporary channel is created per the channel-fixture convention
+  // and disposed in finally (its id is accepted by the command but never
+  // validated server-side because the file check short-circuits first).
+  (hasRealCredentials() ? it : it.skip)(
+    'rejects a non-existent video file via the real stream push CLI (file gate, no push side effect)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Stream Push File Gate');
+
+        const result = runCli([
+          'stream',
+          'push',
+          '-c',
+          channelId,
+          '--file',
+          '/nonexistent/cli-integration-video.mp4',
+        ]);
+
+        // exit 1 + "File not found" proves the real `stream push` command ran
+        // and bailed at the input gate before any credentials lookup or push.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('File not found');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
 });
