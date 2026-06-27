@@ -11,6 +11,13 @@
  * (empty-data info-line pattern, same as statistics view / donate list /
  * lottery winners), so we assert on exit code + output content rather than
  * parsing JSON.
+ *
+ * The playback write subcommands (`merge`, `subtitle update-batch`) resolve a
+ * real staged record file before mutating state. A fresh channel has none, so
+ * referencing non-existent file-ids deterministically rejects the write up
+ * front (exit 1 + fixed business error: "record file not exist" / "找不到暂存
+ * 文件字幕") before any state is created — a genuine real-API execution of each
+ * write path with no cleanup beyond the throwaway channel.
  */
 
 import { runCli } from '../helpers/cli-runner';
@@ -96,6 +103,78 @@ describe('playback CLI integration (channel-scoped reads)', () => {
     expect(result.exitCode).toBe(0);
     expect(result.output).toContain('video-id');
   });
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs playback merge via real CLI (non-existent file-ids)',
+    () => {
+      let channelId: string | undefined;
+      const fakeFileId = `gnhf-fake-file-${Date.now().toString(36)}`;
+      const fileIds = `${fakeFileId}a,${fakeFileId}b`;
+
+      try {
+        channelId = createTemporaryChannel('Playback Merge CLI');
+
+        // playback merge resolves staged record files; a fresh channel has
+        // none, so non-existent file-ids deterministically surface
+        // "record file not exist" (exit 1) — proving the merge write path ran.
+        const result = runCli([
+          'playback',
+          'merge',
+          '-c',
+          channelId,
+          '--file-ids',
+          fileIds,
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('record file not exist');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs playback subtitle update-batch via real CLI (no draft subtitles)',
+    () => {
+      let channelId: string | undefined;
+      // Precompute the JSON body so the runCli array literal stays free of
+      // nested brackets (coverage report array matcher skips bracketed args).
+      const bodyJson = JSON.stringify([{ id: 1, status: 'publish' }]);
+
+      try {
+        channelId = createTemporaryChannel('Playback Subtitle UpdateBatch CLI');
+
+        // A fresh channel has no staged draft files, so the batch subtitle
+        // update deterministically surfaces "找不到暂存文件字幕" (exit 1).
+        const result = runCli([
+          'playback',
+          'subtitle',
+          'update-batch',
+          '-c',
+          channelId,
+          '--body-json',
+          bodyJson,
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('找不到暂存文件字幕');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
 
   (shouldRunPlaybackWriteTests ? it : it.skip)(
     'runs playback VOD write commands through the real CLI with fixture videos',

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T03:40:44.505Z",
+  "generatedAt": "2026-06-27T03:53:14.057Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,16 +20,16 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 592,
-    "referencedCommandPathsExcludingHelp": 549,
-    "coveredLeafTargetsIncludingHelp": 553,
-    "missingLeafTargetsIncludingHelp": 14,
-    "coveredRealExecutionLeafTargets": 543,
-    "missingRealExecutionLeafTargets": 24,
-    "realExecutionCoveragePercent": 95.77,
-    "includingHelpCoveragePercent": 97.53,
-    "integrationReferences": 1238,
-    "realExecutionReferences": 818,
+    "referencedCommandPathsIncludingHelp": 596,
+    "referencedCommandPathsExcludingHelp": 555,
+    "coveredLeafTargetsIncludingHelp": 557,
+    "missingLeafTargetsIncludingHelp": 10,
+    "coveredRealExecutionLeafTargets": 549,
+    "missingRealExecutionLeafTargets": 18,
+    "realExecutionCoveragePercent": 96.83,
+    "includingHelpCoveragePercent": 98.24,
+    "integrationReferences": 1244,
+    "realExecutionReferences": 824,
     "helpReferences": 420
   },
   "byTopLevel": [
@@ -236,12 +236,12 @@
     {
       "command": "playback",
       "targetLeafCommands": 13,
-      "coveredRealExecutionLeafTargets": 11,
-      "missingRealExecutionLeafTargets": 2,
-      "coveredLeafTargetsIncludingHelp": 12,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 84.62,
-      "includingHelpCoveragePercent": 92.31
+      "coveredRealExecutionLeafTargets": 13,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 13,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "player",
@@ -296,12 +296,12 @@
     {
       "command": "record",
       "targetLeafCommands": 17,
-      "coveredRealExecutionLeafTargets": 7,
-      "missingRealExecutionLeafTargets": 10,
-      "coveredLeafTargetsIncludingHelp": 9,
-      "missingLeafTargetsIncludingHelp": 8,
-      "realExecutionCoveragePercent": 41.18,
-      "includingHelpCoveragePercent": 52.94
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 6,
+      "coveredLeafTargetsIncludingHelp": 12,
+      "missingLeafTargetsIncludingHelp": 5,
+      "realExecutionCoveragePercent": 64.71,
+      "includingHelpCoveragePercent": 70.59
     },
     {
       "command": "robot",
@@ -505,27 +505,6 @@
       "line": 676
     },
     {
-      "command": "playback merge",
-      "path": [
-        "playback",
-        "merge"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 405
-    },
-    {
-      "command": "playback subtitle update-batch",
-      "path": [
-        "playback",
-        "subtitle",
-        "update-batch"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 597
-    },
-    {
       "command": "qa send-result",
       "path": [
         "qa",
@@ -544,16 +523,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 490
-    },
-    {
-      "command": "record convert",
-      "path": [
-        "record",
-        "convert"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 323
     },
     {
       "command": "record merge-mp4",
@@ -576,16 +545,6 @@
       "line": 514
     },
     {
-      "command": "record set-default",
-      "path": [
-        "record",
-        "set-default"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 415
-    },
-    {
       "command": "record breakpoint add",
       "path": [
         "record",
@@ -595,28 +554,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 581
-    },
-    {
-      "command": "record file convert",
-      "path": [
-        "record",
-        "file",
-        "convert"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 561
-    },
-    {
-      "command": "record file merge",
-      "path": [
-        "record",
-        "file",
-        "merge"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 540
     },
     {
       "command": "record outline create",
@@ -708,16 +645,6 @@
       "line": 502
     },
     {
-      "command": "playback merge",
-      "path": [
-        "playback",
-        "merge"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/playback.commands.ts",
-      "line": 405
-    },
-    {
       "command": "record clip",
       "path": [
         "record",
@@ -726,16 +653,6 @@
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 490
-    },
-    {
-      "command": "record convert",
-      "path": [
-        "record",
-        "convert"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 323
     },
     {
       "command": "record merge-mp4",
@@ -758,16 +675,6 @@
       "line": 514
     },
     {
-      "command": "record set-default",
-      "path": [
-        "record",
-        "set-default"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 415
-    },
-    {
       "command": "record breakpoint add",
       "path": [
         "record",
@@ -777,17 +684,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 581
-    },
-    {
-      "command": "record file merge",
-      "path": [
-        "record",
-        "file",
-        "merge"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 540
     },
     {
       "command": "record subtitle publish",
@@ -4154,6 +4050,16 @@
       "line": 156
     },
     {
+      "command": "playback merge",
+      "path": [
+        "playback",
+        "merge"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 405
+    },
+    {
       "command": "playback setting-list",
       "path": [
         "playback",
@@ -4216,6 +4122,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/playback.commands.ts",
       "line": 583
+    },
+    {
+      "command": "playback subtitle update-batch",
+      "path": [
+        "playback",
+        "subtitle",
+        "update-batch"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/playback.commands.ts",
+      "line": 597
     },
     {
       "command": "playback title update",
@@ -4886,6 +4803,16 @@
       "line": 254
     },
     {
+      "command": "record convert",
+      "path": [
+        "record",
+        "convert"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 323
+    },
+    {
       "command": "record material-list",
       "path": [
         "record",
@@ -4896,6 +4823,16 @@
       "line": 481
     },
     {
+      "command": "record set-default",
+      "path": [
+        "record",
+        "set-default"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 415
+    },
+    {
       "command": "record temp-list",
       "path": [
         "record",
@@ -4904,6 +4841,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 473
+    },
+    {
+      "command": "record file convert",
+      "path": [
+        "record",
+        "file",
+        "convert"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 561
     },
     {
       "command": "record file delete",
@@ -4926,6 +4874,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 529
+    },
+    {
+      "command": "record file merge",
+      "path": [
+        "record",
+        "file",
+        "merge"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 540
     },
     {
       "command": "record outline get",
@@ -10911,7 +10870,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 135,
+        "line": 214,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10922,7 +10881,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 113,
+        "line": 192,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10959,12 +10918,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 73,
+        "line": 80,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 95,
+        "line": 102,
         "source": "array-literal"
       }
     },
@@ -10975,6 +10934,17 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
         "line": 52,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "playback merge",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 120,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11000,7 +10970,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 204,
+        "line": 283,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11011,16 +10981,20 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 188,
+        "line": 267,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
       "command": "playback subtitle update-batch",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
+        "line": 155,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
         "line": 23,
@@ -11033,7 +11007,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/playback-cli.integration.test.ts",
-        "line": 168,
+        "line": 247,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12024,10 +11998,25 @@
       "firstHelpReference": null
     },
     {
+      "command": "record convert",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
+        "line": 172,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "record file convert",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
+        "line": 207,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
         "line": 30,
@@ -12040,7 +12029,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
-        "line": 44,
+        "line": 52,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12052,6 +12041,17 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/channel-completion-cli.integration.test.ts",
         "line": 67,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "record file merge",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
+        "line": 250,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12088,7 +12088,18 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
-        "line": 88,
+        "line": 96,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "record set-default",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
+        "line": 133,
         "source": "array-literal"
       },
       "firstHelpReference": null

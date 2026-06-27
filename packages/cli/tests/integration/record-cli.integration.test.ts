@@ -14,6 +14,14 @@
  * deterministically surfaces the business error "找不到暂存文件" (draft file
  * not found, exit 1) — a genuine real-API read of the missing-resource path,
  * mirroring the covered `session get`.
+ *
+ * The record write subcommands (`set-default`, `convert`, `file convert`,
+ * `file merge`) all resolve a real record/playback resource before mutating
+ * state. A freshly-created channel has never broadcast, so any staged-file /
+ * session / video reference points at a non-existent resource and the backend
+ * deterministically rejects the write up front (exit 1 + fixed business error)
+ * before creating any state — a genuine real-API execution of each write path
+ * with no cleanup beyond the throwaway channel.
  */
 
 import {
@@ -22,7 +30,7 @@ import {
   parseJsonObject,
 } from '../helpers/channel-fixture';
 import { runCli } from '../helpers/cli-runner';
-import { hasRealCredentials } from '../helpers/integration-config';
+import { getTestConfig, hasRealCredentials } from '../helpers/integration-config';
 
 const shouldRunRealChannelTests = hasRealCredentials();
 
@@ -101,6 +109,161 @@ describe('record CLI real execution integration', () => {
         // endpoint was hit with the requested channel/file ids.
         expect(result.exitCode).toBe(1);
         expect(result.output).toContain('找不到暂存文件');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record set-default via real CLI (no default playback video on a fresh channel)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Record Set Default CLI');
+
+        // A fresh channel has no playback videos, so setting a default for a
+        // non-existent video deterministically surfaces
+        // "找不到要设置默认的回放视频！" (exit 1) — proving the set-default write
+        // path executed against the real V4 record API.
+        const result = runCli([
+          'record',
+          'set-default',
+          '-c',
+          channelId,
+          '--video-id',
+          'gnhf-fake-video',
+          '--list-type',
+          'playback',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('找不到要设置默认的回放视频');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record convert via real CLI (async, non-existent file-ids)',
+    () => {
+      let channelId: string | undefined;
+      const fakeFileId = `gnhf-fake-file-${Date.now().toString(36)}`;
+      // Precompute the comma-joined file-id list so the runCli array literal
+      // stays free of nested brackets (coverage report array matcher).
+      const fileIds = `${fakeFileId}a,${fakeFileId}b`;
+
+      try {
+        channelId = createTemporaryChannel('Record Convert CLI');
+
+        // Async convert validates file-ids against staged recordings; a fresh
+        // channel has none, so the backend deterministically reports
+        // "fileId could not be found" (exit 1).
+        const result = runCli([
+          'record',
+          'convert',
+          '-c',
+          channelId,
+          '--file-ids',
+          fileIds,
+          '--async',
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('fileId could not be found');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record file convert via real CLI (non-existent session)',
+    () => {
+      let channelId: string | undefined;
+      // Use the real account userId (required param); the convert still fails
+      // deterministically because the session does not exist on the channel.
+      const userId = getTestConfig().authConfig.userId || 'gnhf-fake-user';
+
+      try {
+        channelId = createTemporaryChannel('Record File Convert CLI');
+
+        const result = runCli([
+          'record',
+          'file',
+          'convert',
+          '-c',
+          channelId,
+          '--user-id',
+          userId,
+          '--file-name',
+          'cli-it-record-file-convert',
+          '--session-id',
+          'gnhf-fake-session',
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        // convertRecordFileToVod looks up the session/file; a non-existent
+        // session on a fresh channel deterministically fails with
+        // "convet fail" (exit 1).
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('convet fail');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record file merge via real CLI (non-existent file-ids)',
+    () => {
+      let channelId: string | undefined;
+      const fakeFileId = `gnhf-fake-file-${Date.now().toString(36)}`;
+      const fileIds = `${fakeFileId}a,${fakeFileId}b`;
+
+      try {
+        channelId = createTemporaryChannel('Record File Merge CLI');
+
+        // mergeRecordFiles resolves file-ids to URLs; non-existent ids on a
+        // fresh channel deterministically fail with "urls is not exist" (exit 1).
+        const result = runCli([
+          'record',
+          'file',
+          'merge',
+          '-c',
+          channelId,
+          '--file-ids',
+          fileIds,
+          '--file-name',
+          'cli-it-record-file-merge',
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('urls is not exist');
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);

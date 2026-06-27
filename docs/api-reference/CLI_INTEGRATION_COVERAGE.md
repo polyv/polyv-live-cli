@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T03:40:44.505Z
+Generated at: 2026-06-27T03:53:14.057Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 543 |
-| Missing real-execution leaf subcommands | 24 |
-| Real-execution coverage | 95.77% |
-| Leaf subcommands referenced including help | 553 |
-| Missing including help | 14 |
+| Real-executed leaf subcommands | 549 |
+| Missing real-execution leaf subcommands | 18 |
+| Real-execution coverage | 96.83% |
+| Leaf subcommands referenced including help | 557 |
+| Missing including help | 10 |
 
 ## By Top-Level Command
 
@@ -42,13 +42,13 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `monitor` | 9 | 9 | 0 | 100.00% | 9 | 0 |
 | `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
 | `platform` | 22 | 21 | 1 | 95.45% | 22 | 0 |
-| `playback` | 13 | 11 | 2 | 84.62% | 12 | 1 |
+| `playback` | 13 | 13 | 0 | 100.00% | 13 | 0 |
 | `player` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `product` | 36 | 36 | 0 | 100.00% | 36 | 0 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
-| `record` | 17 | 7 | 10 | 41.18% | 9 | 8 |
+| `record` | 17 | 11 | 6 | 64.71% | 12 | 5 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `statistics` | 27 | 27 | 0 | 100.00% | 27 | 0 |
@@ -73,17 +73,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
-| `playback merge` | `packages/cli/src/commands/playback.commands.ts:405` |
-| `playback subtitle update-batch` | `packages/cli/src/commands/playback.commands.ts:597` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
-| `record convert` | `packages/cli/src/commands/record.commands.ts:323` |
 | `record merge-mp4` | `packages/cli/src/commands/record.commands.ts:503` |
 | `record merge-mp4-start` | `packages/cli/src/commands/record.commands.ts:514` |
-| `record set-default` | `packages/cli/src/commands/record.commands.ts:415` |
 | `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:581` |
-| `record file convert` | `packages/cli/src/commands/record.commands.ts:561` |
-| `record file merge` | `packages/cli/src/commands/record.commands.ts:540` |
 | `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
 | `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
