@@ -59,11 +59,13 @@ describe('web CLI integration', () => {
 
   it('shows force options for web configuration changes', () => {
     const commands = [
+      ['web', 'image-upload', '--help'],
       ['web', 'info', 'splash-set', '--help'],
       ['web', 'menu', 'add', '--help'],
       ['web', 'donate', 'cash-update', '--help'],
       ['web', 'share', 'update', '--help'],
       ['web', 'setting', 'global-enabled-update', '--help'],
+      ['web', 'setting', 'image-upload', '--help'],
       ['web', 'auth', 'external-set', '--help'],
       ['web', 'auth', 'authorized-address-set', '--help'],
       ['web', 'auth', 'whitelist', 'upload', '--help'],
@@ -481,7 +483,7 @@ describe('web CLI integration', () => {
   // rejects the part with a generic "undefined error". Account-scoped: no
   // channel needed, it only returns the uploaded image URL(s).
   (shouldRunRealChannelTests ? it : it.skip)(
-    'runs web setting image-upload and returns uploaded image URLs',
+    'runs web image-upload and returns uploaded image URLs',
     () => {
       const logoPath = createTemporaryImageFile();
 
@@ -489,7 +491,6 @@ describe('web CLI integration', () => {
         const urls = parseJsonValue(
           runCliSuccess([
             'web',
-            'setting',
             'image-upload',
             '--type',
             'logoImage',
@@ -640,7 +641,6 @@ describe('web CLI integration', () => {
           (parseJsonValue(
             runCliSuccess([
               'web',
-              'setting',
               'image-upload',
               '--type',
               'logoImage',

@@ -546,6 +546,7 @@ Manage watch page configuration
 
 - `web auth`: Watch condition and authorization APIs
 - `web donate`: Watch page donate APIs
+- `web image-upload`: Upload common image assets
 - `web info`: Watch page basic info
 - `web menu`: Watch page menu APIs
 - `web setting`: Watch page common settings

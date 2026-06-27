@@ -63,8 +63,17 @@ function addForceOutput(command: Command): Command {
   return addOutput(command.option('-f, --force', 'skip confirmation prompt'));
 }
 
+function addImageUploadCommand(parent: Command, description: string, program: Command): Command {
+  return addForceOutput(parent.command('image-upload').description(description)
+    .requiredOption('--type <type>', 'image type')
+    .requiredOption('--files <paths>', 'image file paths, comma-separated', parseStringList))
+    .action((options) => withWebHandler(program, handler => handler.uploadImage(options)));
+}
+
 export function registerWebCommands(program: Command): void {
   const webCmd = program.command('web').description('Manage watch page configuration');
+
+  addImageUploadCommand(webCmd, 'Upload common image assets', program);
 
   const infoCmd = webCmd.command('info').description('Watch page basic info');
   addOutput(infoCmd.command('splash-get').description('Get splash settings')
@@ -201,10 +210,7 @@ export function registerWebCommands(program: Command): void {
     .requiredOption('--enabled <value>', 'enabled (Y|N)', validateYn))
     .action((options) => withWebHandler(program, handler => handler.updateGlobalEnabled(options)));
 
-  addForceOutput(settingCmd.command('image-upload').description('Upload watch page image assets')
-    .requiredOption('--type <type>', 'image type')
-    .requiredOption('--files <paths>', 'image file paths, comma-separated', parseStringList))
-    .action((options) => withWebHandler(program, handler => handler.uploadImage(options)));
+  addImageUploadCommand(settingCmd, 'Upload common image assets (alias of web image-upload)', program);
 
   const authCmd = webCmd.command('auth').description('Watch condition and authorization APIs');
   addForceOutput(authCmd.command('type-set').description('Set simple watch auth type')

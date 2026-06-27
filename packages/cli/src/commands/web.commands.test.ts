@@ -25,7 +25,7 @@ describe('web commands', () => {
   it('registers web command groups', () => {
     const web = findCommand(program, ['web']);
 
-    for (const name of ['info', 'menu', 'donate', 'share', 'setting', 'auth']) {
+    for (const name of ['image-upload', 'info', 'menu', 'donate', 'share', 'setting', 'auth']) {
       expect(web.commands.some((command) => command.name() === name)).toBe(true);
     }
   });
@@ -58,7 +58,9 @@ describe('web commands', () => {
       findCommand(program, ['web', 'menu', 'delete']),
       findCommand(program, ['web', 'donate', 'cash-update']),
       findCommand(program, ['web', 'share', 'update']),
+      findCommand(program, ['web', 'image-upload']),
       findCommand(program, ['web', 'setting', 'global-enabled-update']),
+      findCommand(program, ['web', 'setting', 'image-upload']),
       findCommand(program, ['web', 'auth', 'type-set']),
       findCommand(program, ['web', 'auth', 'external-set']),
       findCommand(program, ['web', 'auth', 'auth-url-update']),
