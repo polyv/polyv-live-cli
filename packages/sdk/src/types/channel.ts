@@ -1071,22 +1071,35 @@ export interface RecordMergeResponse {
 
 /**
  * Record Add Breakpoint Request
+ *
+ * Backed by `POST /live/v3/channel/record/add-breakpoint`. Controls an
+ * in-progress recording: `type` pauses or resumes it. Only effective while the
+ * channel is live.
  */
 export interface RecordAddBreakpointRequest {
-  fileId: string;
-  time: number;
+  /** Breakpoint type: pause (暂停录制) or resume (继续录制) */
+  type: 'pause' | 'resume';
+  /** Whether to pause from the very start of the recording (Y/N, pause only) */
+  fromStartStop?: 'Y' | 'N';
 }
 
 /**
- * Record Merge MP4 Request (comma-separated fileIds)
+ * Record Merge MP4 Request
+ *
+ * Backed by `POST /live/v3/channel/record/merge-mp4` and
+ * `POST /live/v3/channel/record/merge-mp4-start`. Recordings are selected by a
+ * creation-time window (startTime/endTime, 13-digit ms timestamps, span ≤ 8h),
+ * not by file ids.
  */
 export interface RecordMergeMp4Request {
-  fileIds: string;
+  /** Recording creation-time lower bound, 13-digit ms timestamp (required) */
+  startTime: string;
+  /** Recording creation-time upper bound, 13-digit ms timestamp (required) */
+  endTime: string;
+  /** Merged file name (≤ 64 chars) */
   fileName?: string;
+  /** Completion callback URL */
   callbackUrl?: string;
-  deleteFileIds?: string;
-  startTime?: string;
-  endTime?: string;
 }
 
 /**

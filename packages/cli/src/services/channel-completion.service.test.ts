@@ -96,13 +96,13 @@ describe('channel completion service SDK wrappers', () => {
     await service.getRecordFile('1', 'f1');
     await service.mergeRecordFiles({ channelId: '1', fileIds: 'f1,f2' });
     await service.convertRecordFileToVod({ channelId: '1', userId: 'u1', fileName: 'vod', sessionId: 's1' });
-    await service.recordAddBreakpoint('1', { fileId: 'f1', time: 10 });
+    await service.recordAddBreakpoint('1', { type: 'pause' });
     await service.createRecordFileOutline({ fileId: 'f1', syncToPlaybackDotEnabled: 'Y' });
 
     expect(sdkClient.channel.getRecordFile).toHaveBeenCalledWith('1', 'f1');
     expect(sdkClient.channel.mergeRecordFiles).toHaveBeenCalledWith({ channelId: '1', fileIds: 'f1,f2' });
     expect(sdkClient.channel.convertRecordFileToVod).toHaveBeenCalledWith({ channelId: '1', userId: 'u1', fileName: 'vod', sessionId: 's1' });
-    expect(sdkClient.channel.recordAddBreakpoint).toHaveBeenCalledWith('1', { fileId: 'f1', time: 10 });
+    expect(sdkClient.channel.recordAddBreakpoint).toHaveBeenCalledWith('1', { type: 'pause' });
     expect(sdkClient.v4Channel.createRecordFileOutline).toHaveBeenCalledWith({ fileId: 'f1', syncToPlaybackDotEnabled: 'Y' });
   });
 });

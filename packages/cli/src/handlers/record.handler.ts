@@ -291,10 +291,10 @@ export class RecordHandler extends BaseHandler {
 
   async recordMergeMp4(options: any): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      const fileIds = this.normalizeStringList(options.fileIds);
-      await confirmWrite(options.force, `Merge ${fileIds.length} record file(s) to MP4 for channel ${options.channelId}?`);
+      await confirmWrite(options.force, `Merge MP4 recordings for channel ${options.channelId} between ${options.startTime} and ${options.endTime}?`);
       const result = await this.recordService.recordMergeMp4(options.channelId, this.compactOptions({
-        fileIds,
+        startTime: options.startTime,
+        endTime: options.endTime,
         fileName: options.fileName,
         callbackUrl: options.callbackUrl,
       }));
@@ -304,14 +304,14 @@ export class RecordHandler extends BaseHandler {
 
   async recordMergeMp4Start(options: any): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      const fileIds = this.normalizeStringList(options.fileIds);
-      await confirmWrite(options.force, `Start MP4 merge for ${fileIds.length} record file(s) in channel ${options.channelId}?`);
+      await confirmWrite(options.force, `Start MP4 merge for channel ${options.channelId} between ${options.startTime} and ${options.endTime}?`);
       const result = await this.recordService.recordMergeMp4Start(options.channelId, this.compactOptions({
-        fileIds,
+        startTime: options.startTime,
+        endTime: options.endTime,
         fileName: options.fileName,
         callbackUrl: options.callbackUrl,
       }));
-      this.displayResult({ channelId: options.channelId, fileIds, submitted: result }, options.output);
+      this.displayResult({ channelId: options.channelId, startTime: options.startTime, endTime: options.endTime, submitted: result }, options.output);
     }, 'record.merge-mp4-start');
   }
 
@@ -347,12 +347,13 @@ export class RecordHandler extends BaseHandler {
 
   async recordAddBreakpoint(options: any): Promise<void> {
     return this.executeWithErrorHandling(async () => {
-      await confirmWrite(options.force, `Add breakpoint to record file ${options.fileId}?`);
-      const result = await this.recordService.recordAddBreakpoint(options.channelId, {
-        fileId: options.fileId,
-        time: options.time,
-      });
-      this.displayResult({ channelId: options.channelId, fileId: options.fileId, time: options.time, success: result }, options.output);
+      const action = options.type === 'resume' ? 'Resume' : 'Pause';
+      await confirmWrite(options.force, `${action} recording (breakpoint) for channel ${options.channelId}?`);
+      const result = await this.recordService.recordAddBreakpoint(options.channelId, this.compactOptions({
+        type: options.type,
+        fromStartStop: options.fromStartStop,
+      }));
+      this.displayResult({ channelId: options.channelId, type: options.type, success: result }, options.output);
     }, 'record.breakpoint.add');
   }
 
@@ -404,15 +405,6 @@ export class RecordHandler extends BaseHandler {
     } else {
       this.displayPlaybackSettingTable(setting);
     }
-  }
-
-  private normalizeStringList(value: unknown): string[] {
-    const items = Array.isArray(value) ? value : String(value ?? '').split(',');
-    const list = items.map((item) => String(item).trim()).filter(Boolean);
-    if (list.length === 0) {
-      throw new Error('list must not be empty');
-    }
-    return list;
   }
 
   private compactOptions(options: any): any {

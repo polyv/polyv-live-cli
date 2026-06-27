@@ -1,6 +1,6 @@
 # PolyV Live CLI API Inventory
 
-生成时间：2026-06-25T18:31:00.932Z
+生成时间：2026-06-27T04:21:30.119Z
 
 ## 来源与规则
 
@@ -557,28 +557,28 @@
 | `questionnaire result-list` | `packages/cli/src/commands/questionnaire.commands.ts:165` |
 | `questionnaire results` | `packages/cli/src/commands/questionnaire.commands.ts:254` |
 | `record` | `packages/cli/src/commands/record.commands.ts:183` |
-| `record breakpoint` | `packages/cli/src/commands/record.commands.ts:577` |
+| `record breakpoint` | `packages/cli/src/commands/record.commands.ts:579` |
 | `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
 | `record convert` | `packages/cli/src/commands/record.commands.ts:323` |
-| `record file` | `packages/cli/src/commands/record.commands.ts:525` |
+| `record file` | `packages/cli/src/commands/record.commands.ts:527` |
 | `record material-list` | `packages/cli/src/commands/record.commands.ts:481` |
 | `record merge-mp4` | `packages/cli/src/commands/record.commands.ts:503` |
-| `record merge-mp4-start` | `packages/cli/src/commands/record.commands.ts:514` |
-| `record outline` | `packages/cli/src/commands/record.commands.ts:591` |
+| `record merge-mp4-start` | `packages/cli/src/commands/record.commands.ts:515` |
+| `record outline` | `packages/cli/src/commands/record.commands.ts:598` |
 | `record set-default` | `packages/cli/src/commands/record.commands.ts:415` |
 | `record setting` | `packages/cli/src/commands/record.commands.ts:187` |
-| `record subtitle` | `packages/cli/src/commands/record.commands.ts:614` |
+| `record subtitle` | `packages/cli/src/commands/record.commands.ts:621` |
 | `record temp-list` | `packages/cli/src/commands/record.commands.ts:473` |
-| `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:581` |
-| `record file convert` | `packages/cli/src/commands/record.commands.ts:561` |
-| `record file delete` | `packages/cli/src/commands/record.commands.ts:551` |
-| `record file list` | `packages/cli/src/commands/record.commands.ts:529` |
-| `record file merge` | `packages/cli/src/commands/record.commands.ts:540` |
-| `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
-| `record outline get` | `packages/cli/src/commands/record.commands.ts:606` |
+| `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:583` |
+| `record file convert` | `packages/cli/src/commands/record.commands.ts:563` |
+| `record file delete` | `packages/cli/src/commands/record.commands.ts:553` |
+| `record file list` | `packages/cli/src/commands/record.commands.ts:531` |
+| `record file merge` | `packages/cli/src/commands/record.commands.ts:542` |
+| `record outline create` | `packages/cli/src/commands/record.commands.ts:602` |
+| `record outline get` | `packages/cli/src/commands/record.commands.ts:613` |
 | `record setting get` | `packages/cli/src/commands/record.commands.ts:191` |
 | `record setting set` | `packages/cli/src/commands/record.commands.ts:242` |
-| `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
+| `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:625` |
 | `robot` | `packages/cli/src/commands/robot.commands.ts:26` |
 | `robot batch-delete` | `packages/cli/src/commands/robot.commands.ts:42` |
 | `robot batch-save` | `packages/cli/src/commands/robot.commands.ts:35` |
@@ -935,7 +935,7 @@
 | 创建任务奖励活动<br><sub>1、创建任务奖励活动</sub> | POST | `/live/v4/channel/task-reward-activity/save` | json-body | activityName, channelId, endTime, startTime, taskRule, tasks | V4ChannelService#createTaskRewardActivity (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createTaskRewardActivity (packages/cli/src/services/interaction-service.ts:180) |
 | 创建商品标签<br><sub>1、创建商品标签</sub> | POST | `/live/v4/channel/product/tag/create` | json-body | channelId, name | V4ChannelService#productTagCreate (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#productTagCreate (packages/cli/src/services/product.service.sdk.ts:555) |
 | 创建邀请者<br><sub>1、邀请海报-创建邀请者</sub> | POST | `/live/v4/channel/invite/poster/create` | query/form | channelId, nickname, openId | V4ChannelService#createInvitePoster (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createInvitePoster (packages/cli/src/services/interaction-service.ts:139) |
-| 创建暂存视频大纲<br><sub>- 用于创建暂存视频的 AI 大纲任务</sub> | POST | `/live/v4/channel/record-file/subtitle/outline/create` | query/form | fileId | V4ChannelService#createRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:352) |
+| 创建暂存视频大纲<br><sub>- 用于创建暂存视频的 AI 大纲任务</sub> | POST | `/live/v4/channel/record-file/subtitle/outline/create` | query/form | fileId | V4ChannelService#createRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:354) |
 | 创建重制课件任务<br><sub>1、创建重制课件任务，需等候任务队列执行完成，不是实时重制</sub> | POST | `/live/v3/channel/pptRecord/addRecordTask` | query/form | channelId, videoId | ChannelService#addPptRecordTask (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#addPptRecordTask (packages/cli/src/services/channel.service.sdk.ts:451) |
 | 创建MR频道<br><sub>1、创建MR频道</sub> | POST | `/live/v4/channel/mr/create` | json-body | name | V4ChannelService#createMrChannel (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createMrChannel (packages/cli/src/services/channel.service.sdk.ts:731) |
 | 导出频道场次报表（图表）<br><sub>1、导出频道场次报表（图表）</sub> | GET | `/live/v3/channel/session/stats/export` | query | channelId, sessionId | ChannelService#exportSessionStats (packages/sdk/src/services/channel.service.ts) | sdk: StatisticsService#exportSessionStats (packages/cli/src/services/statistics.service.sdk.ts:690) |
@@ -960,8 +960,8 @@
 | 观众提交任务奖励表单<br><sub>1、观众提交任务奖励表单</sub> | POST | `/live/v4/user/viewer-task-reward/submit-accept-info` | json-body | formInfo, id, viewerId | V4ChannelService#submitViewerTaskRewardAcceptInfo (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#submitViewerTaskRewardAcceptInfo (packages/cli/src/services/interaction-service.ts:247) |
 | 合并录制文件<br><sub>1、合并频道的录制文件，保存至频道号内视频库</sub> | POST | `/live/v2/channel/recordFile/{param}/merge` | query/form | - | ChannelService#mergeRecordFiles (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#mergeRecordFiles (packages/cli/src/services/record.service.sdk.ts:295) |
 | 合并直播录制<br><sub>1、合并直播录制文件，保存至频道号内视频库，接口合并过程为异步处理过程</sub> | POST | `/live/v3/channel/record/merge` | query/form | channelId, fileIds | ChannelService#recordFileMerge (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordFileMerge (packages/cli/src/services/playback.service.sdk.ts:315)<br>sdk: ChannelService#recordFileMerge (packages/cli/src/services/playback.service.sdk.ts:374) |
-| 合并直播录制文件并回调mp4下载地址<br><sub>1、合并直播录制mp4文件，接口合并过程为异步处理过程</sub> | POST | `/live/v3/channel/record/merge-mp4` | query/form | channelId, endTime, startTime | ChannelService#recordMergeMp4 (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordMergeMp4 (packages/cli/src/services/record.service.sdk.ts:304) |
-| 合并直播录制文件并回调mp4下载地址<br><sub>1、合并直播录制mp4文件，接口合并过程为异步处理过程</sub> | POST | `/live/v3/channel/record/merge-mp4-start` | query/form | channelId, endTime, startTime | ChannelService#recordMergeMp4Start (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordMergeMp4Start (packages/cli/src/services/record.service.sdk.ts:313) |
+| 合并直播录制文件并回调mp4下载地址<br><sub>1、合并直播录制mp4文件，接口合并过程为异步处理过程</sub> | POST | `/live/v3/channel/record/merge-mp4` | query/form | channelId, endTime, startTime | ChannelService#recordMergeMp4 (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordMergeMp4 (packages/cli/src/services/record.service.sdk.ts:305) |
+| 合并直播录制文件并回调mp4下载地址<br><sub>1、合并直播录制mp4文件，接口合并过程为异步处理过程</sub> | POST | `/live/v3/channel/record/merge-mp4-start` | query/form | channelId, endTime, startTime | ChannelService#recordMergeMp4Start (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordMergeMp4Start (packages/cli/src/services/record.service.sdk.ts:315) |
 | 黑名单删除观众<br><sub>1、黑名单删除观众</sub> | POST | `/live/v4/channel/lottery-viewer-list/blacklist/delete-batch` | json-body | channelId, ids | V4ChannelService#deleteLotteryBlacklistViewers (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#deleteLotteryBlacklistViewers (packages/cli/src/services/lottery-service.ts:347) |
 | 黑名单添加观众<br><sub>1、黑名单添加观众</sub> | POST | `/live/v4/channel/lottery-viewer-list/blacklist/create` | json-body | channelId, viewerIds | V4ChannelService#createLotteryBlacklistViewers (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryBlacklistViewers (packages/cli/src/services/lottery-service.ts:339) |
 | 获取观看页 SDK 授权令牌<br><sub>1、获取观众观看调用接口token</sub> | POST | `/live/v3/channel/watch/get-watch-api-token` | query/form | channelId, viewerId | ChannelService#getWatchApiToken (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getWatchApiToken (packages/cli/src/services/channel.service.sdk.ts:496) |
@@ -1031,7 +1031,7 @@
 | 频道用户分组配置接口 - 保存频道用户分组配置<br><sub>保存频道用户分组配置</sub> | POST | `/live-bg/v3/user/channel-viewer/group-setting/update` | json-body | channelId | ChannelService#updateChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#updateChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:298) |
 | 频道用户分组配置接口 - 查询频道用户分组配置<br><sub>查询频道用户分组配置</sub> | GET | `/live-bg/v3/teacher/channel-viewer/group-setting/get` | query | channelId | ChannelService#getChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:289) |
 | 频道用户分组配置接口 - 查询频道用户分组配置<br><sub>查询频道用户分组配置</sub> | GET | `/live-bg/v3/user/channel-viewer/group-setting/get` | query | channelId | ChannelService#getChannelViewerGroupSetting (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#getChannelViewerGroupSetting (packages/cli/src/services/channel.service.sdk.ts:289) |
-| 频道直播录制打点功能<br><sub>1、设置直播录制打点</sub> | POST | `/live/v3/channel/record/add-breakpoint` | query/form | channelId, type | ChannelService#recordAddBreakpoint (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordAddBreakpoint (packages/cli/src/services/record.service.sdk.ts:342) |
+| 频道直播录制打点功能<br><sub>1、设置直播录制打点</sub> | POST | `/live/v3/channel/record/add-breakpoint` | query/form | channelId, type | ChannelService#recordAddBreakpoint (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordAddBreakpoint (packages/cli/src/services/record.service.sdk.ts:344) |
 | 渠道推广列表<br><sub>1、查询渠道推广列表</sub> | GET | `/live/v4/channel/popularization/list` | query | channelId | V4ChannelService#listPopularizations (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#listPopularizations (packages/cli/src/services/promotion-service.ts:54) |
 | 取消频道的关联音视频文件<br><sub>1、取消频道的关联音视频文件</sub> | POST | `/live/v4/channel/multimedia/resource/delete-batch` | query/form | channelId, vids | ChannelService#unlinkChannelMultimediaResource (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#unlinkChannelMultimediaResource (packages/cli/src/services/document.service.sdk.ts:257) |
 | 取消推送卡片<br><sub>1、取消推送卡片，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/cancel-push` | query/form | cardPushId, channelId | V4ChannelService#cardPushCancelPush (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushCancelPush (packages/cli/src/services/card-push-service.ts:179) |
@@ -1053,7 +1053,7 @@
 | 删除伪直播视频<br><sub>1、删除伪直播中的视频，不允许删除正在伪直播中的视频</sub> | POST | `/live/v3/channel/stream/delete-disk-videos` | query/form | channelId | ChannelService#deleteDiskVideos (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteDiskVideos (packages/cli/src/services/stream.service.sdk.ts:386) |
 | 删除文档<br><sub>1、删除频道文档接口</sub> | POST | `/live/v3/channel/document/delete` | query/form | channelId, fileId, type | ChannelService#deleteDocument (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteDocument (packages/cli/src/services/document.service.sdk.ts:194) |
 | 删除音视频文件<br><sub>1、删除音视频文件</sub> | POST | `/live/v4/user/multimedia/resource/delete-batch` | query/form | vids | ChannelService#deleteUserMultimediaResource (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteUserMultimediaResource (packages/cli/src/services/document.service.sdk.ts:267) |
-| 删除直播暂存中的录制视频<br><sub>1、删除频道视频库中直播暂存的录制视频</sub> | POST | `/live/v2/channel/recordFile/{param}/delete-record` | query/form | - | ChannelService#deleteRecordFile (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteRecordFile (packages/cli/src/services/record.service.sdk.ts:322) |
+| 删除直播暂存中的录制视频<br><sub>1、删除频道视频库中直播暂存的录制视频</sub> | POST | `/live/v2/channel/recordFile/{param}/delete-record` | query/form | - | ChannelService#deleteRecordFile (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deleteRecordFile (packages/cli/src/services/record.service.sdk.ts:324) |
 | 删除重制课件任务<br><sub>1、删除重制课件任务, 可批量删除</sub> | POST | `/live/v3/channel/pptRecord/batch-delete` | query/form | channelId, taskIds | ChannelService#deletePptRecord (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#deletePptRecord (packages/cli/src/services/channel.service.sdk.ts:469) |
 | 上传伪直播互动脚本词条文本<br><sub>1、上传伪直播互动脚本精准发言文件</sub> | POST | `/live/v4/channel/interaction-script/upload-disk-video-custom-script` | query/form | channelId, diskVideoId, file | V4ChannelService#uploadDiskVideoCustomScript (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#uploadDiskVideoCustomScript (packages/cli/src/services/interaction-service.ts:158) |
 | 上传文档到某个频道<br><sub>1、上传频道文档接口</sub> | POST | `/live/v3/channel/document/upload-doc` | query/form | channelId | ChannelService#uploadDoc (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#uploadDoc (packages/cli/src/services/document.service.sdk.ts:163) |
@@ -1074,7 +1074,7 @@
 | 通过抽奖活动模板发起定时抽奖抽奖<br><sub>1、通过抽奖活动模板发起定时抽奖抽奖</sub> | POST | `/live/v4/channel/condition-lottery/create-wait-lottery` | json-body | channelId, id, lotteryTime | V4ChannelService#createConditionWaitLottery (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createConditionWaitLottery (packages/cli/src/services/lottery-service.ts:256) |
 | 通过上移下移修改频道商品库列表顺序<br><sub>1、修改商品库商品列表顺序</sub> | POST | `/live/v3/channel/product/sort` | query/form | channelId, productId, type | ChannelService#sortChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#sortChannelProduct (packages/cli/src/services/product.service.sdk.ts:369) |
 | 通过序号修改频道商品库列表顺序<br><sub>1、设置频道商品排序</sub> | POST | `/live/v4/channel/product/sort-rank` | query/form | channelId, productId, rank | V4ChannelService#sortChannelProductRank (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#sortChannelProductRank (packages/cli/src/services/product.service.sdk.ts:639) |
-| 同步转存录制文件到点播<br><sub>1、将直播录制文件转存至点播后台中</sub> | POST | `/live/v2/channel/recordFile/{param}/convert` | query/form | - | ChannelService#convertRecordFileToVod (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:159)<br>sdk: ChannelService#convertRecordFileToVod (packages/cli/src/services/record.service.sdk.ts:337) |
+| 同步转存录制文件到点播<br><sub>1、将直播录制文件转存至点播后台中</sub> | POST | `/live/v2/channel/recordFile/{param}/convert` | query/form | - | ChannelService#convertRecordFileToVod (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#recordConvert (packages/cli/src/services/record.service.sdk.ts:159)<br>sdk: ChannelService#convertRecordFileToVod (packages/cli/src/services/record.service.sdk.ts:339) |
 | 推送频道卡片<br><sub>1、推送频道卡片，对应新版后台的 营销-卡片</sub> | POST | `/live/v4/channel/card-push/push` | query/form | cardPushId, channelId | V4ChannelService#cardPushPush (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#cardPushPush (packages/cli/src/services/card-push-service.ts:160) |
 | 推送频道商品库商品<br><sub>1、推送频道商品库商品</sub> | POST | `/live/v3/channel/product/push-product` | query/form | channelId, productId | ChannelService#pushChannelProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#pushChannelProduct (packages/cli/src/services/product.service.sdk.ts:378) |
 | 新建分组<br><sub>1、新建分组</sub> | POST | `/live/v4/channel/lottery-viewer-group/whitelist/create` | json-body | channelId, title | V4ChannelService#createLotteryViewerGroup (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryViewerGroup (packages/cli/src/services/lottery-service.ts:273) |
@@ -1119,11 +1119,11 @@
 | 修改视频库的视频排序<br><sub>1、修改视频库回放列表的视频排序</sub> | POST | `/live/v3/channel/playback/sort` | json-body | - | ChannelService#sortPlaybackVideos (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#sortPlaybackVideos (packages/cli/src/services/playback.service.sdk.ts:165) |
 | 修改云分发频道总开关<br><sub>1、修改单个频道云分发总开关，该功能需要超管开通才生效</sub> | POST | `/live/v4/channel/distribute/update-master-switch` | query/form | channelId | V4ChannelService#updateMasterSwitch (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#updateMasterSwitch (packages/cli/src/services/channel.service.sdk.ts:716) |
 | 引用平台商品到频道商品<br><sub>1、将平台商品引用到指定频道（支持是否同步平台商品标签）</sub> | POST | `/live/v3/channel/product/reference` | json-body | channelId, originId, status | ChannelService#referenceProduct (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#referenceProduct (packages/cli/src/services/product.service.sdk.ts:396) |
-| 暂存视频的字幕文件批量发布<br><sub>1、用于批量设置暂存视频字幕文件的发布状态，控制字幕在观看页是否显示</sub> | POST | `/live/v4/channel/record-file/subtitle/batch-publish` | query/form | subtitles, subtitles[].id, subtitles[].status | V4ChannelService#batchPublishRecordFileSubtitles (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#batchPublishRecordFileSubtitles (packages/cli/src/services/record.service.sdk.ts:362) |
+| 暂存视频的字幕文件批量发布<br><sub>1、用于批量设置暂存视频字幕文件的发布状态，控制字幕在观看页是否显示</sub> | POST | `/live/v4/channel/record-file/subtitle/batch-publish` | query/form | subtitles, subtitles[].id, subtitles[].status | V4ChannelService#batchPublishRecordFileSubtitles (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#batchPublishRecordFileSubtitles (packages/cli/src/services/record.service.sdk.ts:364) |
 | 直播场次关联自定义ID<br><sub>1、将直播场次关联自定义的直播场次UUID，关联频道之后开播的场次、以及这些开播场次衍生出来的裁剪和合并视频</sub> | POST | `/live/v3/channel/session/relevance` | query/form | channelId, externalSessionId | ChannelService#relevanceSession (packages/sdk/src/services/channel.service.ts) | sdk: ChannelService#relevanceSession (packages/cli/src/services/session.service.sdk.ts:179) |
 | 置顶频道商品<br><sub>1、将指定频道商品置顶</sub> | POST | `/live/v4/channel/product/topping` | json-body | channelId, productId | V4ChannelService#toppingChannelProduct (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#toppingChannelProduct (packages/cli/src/services/product.service.sdk.ts:654) |
 | v4/channel/lottery_viewer/group_create_viewer_name<br><sub>1、分组添加观众支持传昵称</sub> | POST | `/live/v4/channel/lottery-viewer-list/create-viewer-name` | json-body | channelId, groupId, viewerNames | V4ChannelService#createLotteryGroupViewerNames (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#createLotteryGroupViewerNames (packages/cli/src/services/lottery-service.ts:314) |
-| v4/channel/recordfile/get_record_file_outline<br><sub>- 根据频道ID与暂存文件ID查询AI大纲与答题内容（若已生成）</sub> | GET | `/live/v4/channel/record-file/subtitle/outline/get-by-fileId` | query | channelId, fileId | V4ChannelService#getRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:357) |
+| v4/channel/recordfile/get_record_file_outline<br><sub>- 根据频道ID与暂存文件ID查询AI大纲与答题内容（若已生成）</sub> | GET | `/live/v4/channel/record-file/subtitle/outline/get-by-fileId` | query | channelId, fileId | V4ChannelService#getRecordFileOutline (packages/sdk/src/services/v4/channel.service.ts) | sdk: V4ChannelService#getRecordFileOutline (packages/cli/src/services/record.service.sdk.ts:359) |
 
 ### chat - 聊天
 

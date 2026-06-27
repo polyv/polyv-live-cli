@@ -16,7 +16,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { AuthConfig } from '../types/auth';
-import { parseJsonArray, parseNonNegativeNumber, parsePositiveInteger, parseStringList } from '../utils/api-command';
+import { parseJsonArray, parseNonNegativeNumber, parsePositiveInteger } from '../utils/api-command';
 
 /**
  * Load and prepare authentication and service configuration
@@ -502,9 +502,10 @@ Options:
 
   recordCmd
     .command('merge-mp4')
-    .description('合并直播录制文件并回调 MP4 下载地址')
+    .description('按创建时间区间合并直播录制文件并回调 MP4 下载地址')
     .requiredOption('-c, --channel-id <channelId>', '频道ID')
-    .requiredOption('--file-ids <fileIds>', '暂存文件ID，逗号分隔', parseStringList)
+    .requiredOption('--start-time <ms>', '录制文件创建时间最小值，13 位毫秒时间戳')
+    .requiredOption('--end-time <ms>', '录制文件创建时间最大值，13 位毫秒时间戳（与 start-time 间隔不超过 8 小时）')
     .option('--file-name <fileName>', '合并后文件名')
     .option('--callback-url <url>', '回调地址')
     .option('-f, --force', '跳过确认提示')
@@ -513,9 +514,10 @@ Options:
 
   recordCmd
     .command('merge-mp4-start')
-    .description('提交异步 MP4 合并任务')
+    .description('按创建时间区间提交异步 MP4 合并任务')
     .requiredOption('-c, --channel-id <channelId>', '频道ID')
-    .requiredOption('--file-ids <fileIds>', '暂存文件ID，逗号分隔', parseStringList)
+    .requiredOption('--start-time <ms>', '录制文件直播开始时间最小值，13 位毫秒时间戳')
+    .requiredOption('--end-time <ms>', '录制文件直播开始时间最大值，13 位毫秒时间戳（与 start-time 间隔不超过 8 小时）')
     .option('--file-name <fileName>', '合并后文件名')
     .option('--callback-url <url>', '回调地址')
     .option('-f, --force', '跳过确认提示')
@@ -580,10 +582,15 @@ Options:
 
   breakpointCmd
     .command('add')
-    .description('频道直播录制打点')
+    .description('频道直播录制打点（暂停/继续录制，频道需在直播中）')
     .requiredOption('-c, --channel-id <channelId>', '频道ID')
-    .requiredOption('--file-id <fileId>', '暂存文件ID')
-    .requiredOption('--time <seconds>', '打点时间，秒', parseNonNegativeNumber)
+    .requiredOption('--type <type>', '打点类型：pause 暂停录制 / resume 继续录制', (v: string) => {
+      if (v !== 'pause' && v !== 'resume') {
+        throw new Error('--type 仅支持 pause 或 resume');
+      }
+      return v as 'pause' | 'resume';
+    })
+    .option('--from-start-stop <value>', '是否从一开始就暂停录制 (Y|N)，仅在 type=pause 时生效', validateYN)
     .option('-f, --force', '跳过确认提示')
     .option('-o, --output <format>', '输出格式 (table|json)', validateOutputFormat, 'table')
     .action((options) => runRecordAction(program, (handler) => handler.recordAddBreakpoint(options)));

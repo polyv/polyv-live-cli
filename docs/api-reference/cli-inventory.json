@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T18:31:00.932Z",
+  "generatedAt": "2026-06-27T04:21:30.119Z",
   "source": {
     "apiInventory": "docs/api-reference/api-inventory.json",
     "cliSourceRoot": "packages/cli/src",
@@ -5951,7 +5951,7 @@
       "depth": 2,
       "signature": "breakpoint",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 577
+      "line": 579
     },
     {
       "command": "record clip",
@@ -5984,7 +5984,7 @@
       "depth": 2,
       "signature": "file",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 525
+      "line": 527
     },
     {
       "command": "record material-list",
@@ -6017,7 +6017,7 @@
       "depth": 2,
       "signature": "merge-mp4-start",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 514
+      "line": 515
     },
     {
       "command": "record outline",
@@ -6028,7 +6028,7 @@
       "depth": 2,
       "signature": "outline",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 591
+      "line": 598
     },
     {
       "command": "record set-default",
@@ -6061,7 +6061,7 @@
       "depth": 2,
       "signature": "subtitle",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 614
+      "line": 621
     },
     {
       "command": "record temp-list",
@@ -6084,7 +6084,7 @@
       "depth": 3,
       "signature": "add",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 581
+      "line": 583
     },
     {
       "command": "record file convert",
@@ -6096,7 +6096,7 @@
       "depth": 3,
       "signature": "convert",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 561
+      "line": 563
     },
     {
       "command": "record file delete",
@@ -6108,7 +6108,7 @@
       "depth": 3,
       "signature": "delete",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 551
+      "line": 553
     },
     {
       "command": "record file list",
@@ -6120,7 +6120,7 @@
       "depth": 3,
       "signature": "list",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 529
+      "line": 531
     },
     {
       "command": "record file merge",
@@ -6132,7 +6132,7 @@
       "depth": 3,
       "signature": "merge",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 540
+      "line": 542
     },
     {
       "command": "record outline create",
@@ -6144,7 +6144,7 @@
       "depth": 3,
       "signature": "create",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 595
+      "line": 602
     },
     {
       "command": "record outline get",
@@ -6156,7 +6156,7 @@
       "depth": 3,
       "signature": "get",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 606
+      "line": 613
     },
     {
       "command": "record setting get",
@@ -6192,7 +6192,7 @@
       "depth": 3,
       "signature": "publish",
       "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 618
+      "line": 625
     },
     {
       "command": "robot",
@@ -13474,7 +13474,7 @@
             "reference": "V4ChannelService#createRecordFileOutline",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 352,
+            "line": 354,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -14430,7 +14430,7 @@
             "reference": "ChannelService#recordMergeMp4",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 304,
+            "line": 305,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -14469,7 +14469,7 @@
             "reference": "ChannelService#recordMergeMp4Start",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 313,
+            "line": 315,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -17110,7 +17110,7 @@
             "reference": "ChannelService#recordAddBreakpoint",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 342,
+            "line": 344,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -17943,7 +17943,7 @@
             "reference": "ChannelService#deleteRecordFile",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 322,
+            "line": 324,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -18764,7 +18764,7 @@
             "reference": "ChannelService#convertRecordFileToVod",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 337,
+            "line": 339,
             "sdkFile": "packages/sdk/src/services/channel.service.ts"
           }
         ]
@@ -20493,7 +20493,7 @@
             "reference": "V4ChannelService#batchPublishRecordFileSubtitles",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 362,
+            "line": 364,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]
@@ -20646,7 +20646,7 @@
             "reference": "V4ChannelService#getRecordFileOutline",
             "cliModule": "record",
             "file": "packages/cli/src/services/record.service.sdk.ts",
-            "line": 357,
+            "line": 359,
             "sdkFile": "packages/sdk/src/services/v4/channel.service.ts"
           }
         ]

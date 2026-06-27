@@ -75,12 +75,12 @@ describe('channel completion handlers', () => {
     };
     const handler = new RecordHandler(authConfig, serviceConfig, service as any);
 
-    await handler.recordAddBreakpoint({ channelId: '1', fileId: 'f1', time: 10, force: true, output: 'json' });
+    await handler.recordAddBreakpoint({ channelId: '1', type: 'pause', force: true, output: 'json' });
     await handler.mergeRecordFiles({ channelId: '1', fileIds: 'f1,f2', force: true, output: 'json' });
     await handler.createRecordFileOutline({ fileId: 'f1', syncToPlaybackDotEnabled: 'Y', force: true, output: 'json' });
     await handler.batchPublishRecordFileSubtitles({ subtitles: [{ id: 1, status: 'publish' }], force: true, output: 'json' });
 
-    expect(service.recordAddBreakpoint).toHaveBeenCalledWith('1', { fileId: 'f1', time: 10 });
+    expect(service.recordAddBreakpoint).toHaveBeenCalledWith('1', { type: 'pause' });
     expect(service.mergeRecordFiles).toHaveBeenCalledWith({ channelId: '1', fileIds: 'f1,f2' });
     expect(service.createRecordFileOutline).toHaveBeenCalledWith({ fileId: 'f1', syncToPlaybackDotEnabled: 'Y' });
     expect(service.batchPublishRecordFileSubtitles).toHaveBeenCalledWith([{ id: 1, status: 'publish' }]);

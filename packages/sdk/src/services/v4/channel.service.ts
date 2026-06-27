@@ -3419,10 +3419,22 @@ export class V4ChannelService {
     this.validateOptionalYn(params.aiSummaryAuditEnabled, 'aiSummaryAuditEnabled');
     this.validateOptionalYn(params.syncToPlaybackDotEnabled, 'syncToPlaybackDotEnabled');
 
+    // Business params travel in the JSON body; only appId/timestamp/sign go
+    // in the query (auto-injected + signed by the request interceptor).
+    const body: Record<string, unknown> = { fileId: params.fileId };
+    if (params.aiKnowledgeQuizEnabled !== undefined) {
+      body.aiKnowledgeQuizEnabled = params.aiKnowledgeQuizEnabled;
+    }
+    if (params.aiSummaryAuditEnabled !== undefined) {
+      body.aiSummaryAuditEnabled = params.aiSummaryAuditEnabled;
+    }
+    if (params.syncToPlaybackDotEnabled !== undefined) {
+      body.syncToPlaybackDotEnabled = params.syncToPlaybackDotEnabled;
+    }
+
     const response = await this.client.httpClient.post<RecordFileOutline>(
       '/live/v4/channel/record-file/subtitle/outline/create',
-      null,
-      { params }
+      body
     );
     return response as unknown as RecordFileOutline;
   }
@@ -3451,10 +3463,11 @@ export class V4ChannelService {
       this.validateRequiredString(subtitle.status, `subtitles[${index}].status`);
     });
 
+    // The subtitles list is the JSON request body itself (an array); only
+    // appId/timestamp/sign go in the query (auto-injected + signed).
     await this.client.httpClient.post(
       '/live/v4/channel/record-file/subtitle/batch-publish',
-      null,
-      { params }
+      params.subtitles
     );
   }
 

@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T03:53:14.057Z
+Generated at: 2026-06-27T04:21:30.335Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 549 |
-| Missing real-execution leaf subcommands | 18 |
-| Real-execution coverage | 96.83% |
-| Leaf subcommands referenced including help | 557 |
-| Missing including help | 10 |
+| Real-executed leaf subcommands | 555 |
+| Missing real-execution leaf subcommands | 12 |
+| Real-execution coverage | 97.88% |
+| Leaf subcommands referenced including help | 562 |
+| Missing including help | 5 |
 
 ## By Top-Level Command
 
@@ -48,7 +48,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
-| `record` | 17 | 11 | 6 | 64.71% | 12 | 5 |
+| `record` | 17 | 17 | 0 | 100.00% | 17 | 0 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `statistics` | 27 | 27 | 0 | 100.00% | 27 | 0 |
@@ -74,12 +74,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
 | `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
-| `record clip` | `packages/cli/src/commands/record.commands.ts:490` |
-| `record merge-mp4` | `packages/cli/src/commands/record.commands.ts:503` |
-| `record merge-mp4-start` | `packages/cli/src/commands/record.commands.ts:514` |
-| `record breakpoint add` | `packages/cli/src/commands/record.commands.ts:581` |
-| `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
-| `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

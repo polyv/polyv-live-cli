@@ -296,7 +296,8 @@ export class RecordServiceSdk {
   }
 
   async recordMergeMp4(channelId: string, options: {
-    fileIds: string[];
+    startTime: string;
+    endTime: string;
     fileName?: string;
     callbackUrl?: string;
   }): Promise<any> {
@@ -305,7 +306,8 @@ export class RecordServiceSdk {
   }
 
   async recordMergeMp4Start(channelId: string, options: {
-    fileIds: string[];
+    startTime: string;
+    endTime: string;
     fileName?: string;
     callbackUrl?: string;
   }): Promise<boolean> {
@@ -337,7 +339,7 @@ export class RecordServiceSdk {
     return client.channel.convertRecordFileToVod(params);
   }
 
-  async recordAddBreakpoint(channelId: string, options: { fileId: string; time: number }): Promise<boolean> {
+  async recordAddBreakpoint(channelId: string, options: { type: 'pause' | 'resume'; fromStartStop?: 'Y' | 'N' }): Promise<boolean> {
     const client = createSdkClient(this.authConfig, this.config.baseUrl);
     return client.channel.recordAddBreakpoint(channelId, options);
   }

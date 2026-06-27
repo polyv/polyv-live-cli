@@ -898,7 +898,7 @@ describe('ChannelService Playback + Player APIs', () => {
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v3/channel/record/clip',
         null,
-        { params: { channelId: 'ch123456', fileId: 'file123', startTime: 0, endTime: 1800 } }
+        { params: { channelId: 'ch123456', fileId: 'file123', deleteTimeFrame: '[{"start":0,"end":1800}]' } }
       )
       expect(result.fileId).toBe('newFile123')
     })
@@ -1064,19 +1064,20 @@ describe('ChannelService Playback + Player APIs', () => {
       mockAxiosInstance.post.mockResolvedValueOnce({ url: 'https://example.com/merged.mp4' })
 
       const result = await channelService.recordMergeMp4('ch123456', {
-        fileIds: ['file1', 'file2'],
+        startTime: '1615452025000',
+        endTime: '1615453127000',
       })
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v3/channel/record/merge-mp4',
         null,
-        { params: { channelId: 'ch123456', fileIds: 'file1,file2' } }
+        { params: { channelId: 'ch123456', startTime: '1615452025000', endTime: '1615453127000' } }
       )
       expect(result.url).toBe('https://example.com/merged.mp4')
     })
 
     it('should validate channelId is required', async () => {
-      await expect(channelService.recordMergeMp4('', { fileIds: ['file1'] })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.recordMergeMp4('', { startTime: '1', endTime: '2' })).rejects.toThrow(PolyVValidationError)
     })
   })
 
@@ -1088,19 +1089,20 @@ describe('ChannelService Playback + Player APIs', () => {
       mockAxiosInstance.post.mockResolvedValueOnce(true)
 
       const result = await channelService.recordMergeMp4Start('ch123456', {
-        fileIds: ['file1', 'file2'],
+        startTime: '1615452025000',
+        endTime: '1615453127000',
       })
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v3/channel/record/merge-mp4-start',
         null,
-        { params: { channelId: 'ch123456', fileIds: 'file1,file2' } }
+        { params: { channelId: 'ch123456', startTime: '1615452025000', endTime: '1615453127000' } }
       )
       expect(result).toBe(true)
     })
 
     it('should validate channelId is required', async () => {
-      await expect(channelService.recordMergeMp4Start('', { fileIds: ['file1'] })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.recordMergeMp4Start('', { startTime: '1', endTime: '2' })).rejects.toThrow(PolyVValidationError)
     })
   })
 
@@ -1112,20 +1114,19 @@ describe('ChannelService Playback + Player APIs', () => {
       mockAxiosInstance.post.mockResolvedValueOnce(true)
 
       const result = await channelService.recordAddBreakpoint('ch123456', {
-        fileId: 'file123',
-        time: 1800,
+        type: 'pause',
       })
 
       expect(mockAxiosInstance.post).toHaveBeenCalledWith(
         '/live/v3/channel/record/add-breakpoint',
         null,
-        { params: { channelId: 'ch123456', fileId: 'file123', time: 1800 } }
+        { params: { channelId: 'ch123456', type: 'pause' } }
       )
       expect(result).toBe(true)
     })
 
     it('should validate channelId is required', async () => {
-      await expect(channelService.recordAddBreakpoint('', { fileId: 'file123', time: 1800 })).rejects.toThrow(PolyVValidationError)
+      await expect(channelService.recordAddBreakpoint('', { type: 'pause' })).rejects.toThrow(PolyVValidationError)
     })
   })
 

@@ -2773,11 +2773,12 @@ export class ChannelService {
     }
 
     const params: Record<string, unknown> = { channelId, fileId: options.fileId };
-    if (options.startTime !== undefined) {
-      params.startTime = options.startTime;
-    }
-    if (options.endTime !== undefined) {
-      params.endTime = options.endTime;
+    // The clip API expects the segments to REMOVE as a JSON array string,
+    // e.g. [{"start":1,"end":30}] — see POST /live/v3/channel/record/clip.
+    if (options.startTime !== undefined && options.endTime !== undefined) {
+      params.deleteTimeFrame = JSON.stringify([
+        { start: options.startTime, end: options.endTime },
+      ]);
     }
     if (options.fileName !== undefined) {
       params.fileName = options.fileName;
@@ -3048,18 +3049,25 @@ export class ChannelService {
    */
   async recordMergeMp4(
     channelId: string,
-    options: import('../types/channel.js').RecordMergeArrayRequest
+    options: import('../types/channel.js').RecordMergeMp4Request
   ): Promise<import('../types/channel.js').RecordMergeResponse> {
     if (!channelId || channelId.trim() === '') {
       throw PolyVValidationError.required('channelId');
     }
-    if (!options.fileIds || options.fileIds.length === 0) {
-      throw PolyVValidationError.required('fileIds');
+    if (!options.startTime || String(options.startTime).trim() === '') {
+      throw PolyVValidationError.required('startTime');
+    }
+    if (!options.endTime || String(options.endTime).trim() === '') {
+      throw PolyVValidationError.required('endTime');
     }
 
+    // The merge-mp4 endpoint selects recordings by a creation-time window
+    // (startTime/endTime, 13-digit ms timestamps), not by file ids — see
+    // POST /live/v3/channel/record/merge-mp4.
     const params: Record<string, unknown> = {
       channelId,
-      fileIds: options.fileIds.join(','),
+      startTime: options.startTime,
+      endTime: options.endTime,
     };
     if (options.fileName !== undefined) {
       params.fileName = options.fileName;
@@ -3096,18 +3104,24 @@ export class ChannelService {
    */
   async recordMergeMp4Start(
     channelId: string,
-    options: import('../types/channel.js').RecordMergeArrayRequest
+    options: import('../types/channel.js').RecordMergeMp4Request
   ): Promise<boolean> {
     if (!channelId || channelId.trim() === '') {
       throw PolyVValidationError.required('channelId');
     }
-    if (!options.fileIds || options.fileIds.length === 0) {
-      throw PolyVValidationError.required('fileIds');
+    if (!options.startTime || String(options.startTime).trim() === '') {
+      throw PolyVValidationError.required('startTime');
+    }
+    if (!options.endTime || String(options.endTime).trim() === '') {
+      throw PolyVValidationError.required('endTime');
     }
 
+    // Same creation-time-window contract as merge-mp4 — see
+    // POST /live/v3/channel/record/merge-mp4-start.
     const params: Record<string, unknown> = {
       channelId,
-      fileIds: options.fileIds.join(','),
+      startTime: options.startTime,
+      endTime: options.endTime,
     };
     if (options.fileName !== undefined) {
       params.fileName = options.fileName;
@@ -3150,14 +3164,22 @@ export class ChannelService {
     if (!channelId || channelId.trim() === '') {
       throw PolyVValidationError.required('channelId');
     }
-    if (!options.fileId || options.fileId.trim() === '') {
-      throw PolyVValidationError.required('fileId');
+    if (!options.type || options.type.trim() === '') {
+      throw PolyVValidationError.required('type');
+    }
+
+    // The breakpoint endpoint pauses/resumes an in-progress recording by
+    // `type` (pause|resume); it ignores fileId/time — see
+    // POST /live/v3/channel/record/add-breakpoint.
+    const params: Record<string, unknown> = { channelId, type: options.type };
+    if (options.fromStartStop !== undefined) {
+      params.fromStartStop = options.fromStartStop;
     }
 
     await this.client.httpClient.post<string>(
       '/live/v3/channel/record/add-breakpoint',
       null,
-      { params: { channelId, fileId: options.fileId, time: options.time } }
+      { params }
     );
 
     return true;

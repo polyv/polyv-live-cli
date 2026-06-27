@@ -206,14 +206,11 @@ describe('V4ChannelService marketing and content exact API paths', () => {
     });
     expect(mockHttpClient.post).toHaveBeenCalledWith(
       '/live/v4/channel/record-file/subtitle/outline/create',
-      null,
       {
-        params: {
-          fileId: 'file1',
-          aiKnowledgeQuizEnabled: 'Y',
-          aiSummaryAuditEnabled: 'N',
-          syncToPlaybackDotEnabled: 'Y',
-        },
+        fileId: 'file1',
+        aiKnowledgeQuizEnabled: 'Y',
+        aiSummaryAuditEnabled: 'N',
+        syncToPlaybackDotEnabled: 'Y',
       }
     );
     expect(mockHttpClient.get).toHaveBeenCalledWith(
@@ -222,8 +219,7 @@ describe('V4ChannelService marketing and content exact API paths', () => {
     );
     expect(mockHttpClient.post).toHaveBeenCalledWith(
       '/live/v4/channel/record-file/subtitle/batch-publish',
-      null,
-      { params: { subtitles: [{ id: '1', status: 'publish' }] } }
+      [{ id: '1', status: 'publish' }]
     );
     expect(mockHttpClient.post).toHaveBeenCalledWith(
       '/live/v4/channel/watch/viewer/logout',

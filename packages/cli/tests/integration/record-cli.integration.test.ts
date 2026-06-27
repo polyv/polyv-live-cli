@@ -22,6 +22,17 @@
  * deterministically rejects the write up front (exit 1 + fixed business error)
  * before creating any state — a genuine real-API execution of each write path
  * with no cleanup beyond the throwaway channel.
+ *
+ * `clip`, `merge-mp4` and `merge-mp4-start` likewise resolve the target
+ * recordings first (by fileId / creation-time window), so a never-broadcast
+ * channel yields "record file not exist" (exit 1). `breakpoint add` controls an
+ * in-progress recording by type (pause/resume) and is only effective while
+ * live, so it returns "channel in no live" (exit 1) on a fresh channel — a
+ * deterministic gate that proves the real endpoint ran. `outline create` and
+ * `subtitle publish` look up a staged draft file by id; a non-existent id
+ * yields "找不到暂存文件" / "找不到暂存文件字幕" (exit 1). These six paths
+ * required SDK fixes (param/body/signature mapping) that were uncovered by
+ * probing the real endpoints.
  */
 
 import {
@@ -269,6 +280,202 @@ describe('record CLI real execution integration', () => {
           deleteTemporaryChannel(channelId);
         }
       }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record clip via real CLI (no record file on a fresh channel)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Record Clip CLI');
+
+        // clip resolves the target recording by fileId before clipping; a
+        // never-broadcast channel has none, so the backend deterministically
+        // reports "record file not exist" (exit 1).
+        const result = runCli([
+          'record',
+          'clip',
+          '-c',
+          channelId,
+          '--file-id',
+          'gnhf-fake-file',
+          '--start-time',
+          '0',
+          '--end-time',
+          '10',
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('record file not exist');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record merge-mp4 via real CLI (no recordings in the time window)',
+    () => {
+      let channelId: string | undefined;
+      // A 1-hour creation-time window far in the past (13-digit ms). The
+      // endpoint selects recordings by this window; a fresh channel has none.
+      const startTime = '1600000000000';
+      const endTime = '1600003600000';
+
+      try {
+        channelId = createTemporaryChannel('Record Merge MP4 CLI');
+
+        const result = runCli([
+          'record',
+          'merge-mp4',
+          '-c',
+          channelId,
+          '--start-time',
+          startTime,
+          '--end-time',
+          endTime,
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('record file not exist');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record merge-mp4-start via real CLI (no recordings in the time window)',
+    () => {
+      let channelId: string | undefined;
+      const startTime = '1600000000000';
+      const endTime = '1600003600000';
+
+      try {
+        channelId = createTemporaryChannel('Record Merge MP4 Start CLI');
+
+        const result = runCli([
+          'record',
+          'merge-mp4-start',
+          '-c',
+          channelId,
+          '--start-time',
+          startTime,
+          '--end-time',
+          endTime,
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('record file not exist');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record breakpoint add via real CLI (not-live gate on a fresh channel)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Record Breakpoint Add CLI');
+
+        // breakpoint (pause/resume) only applies to an in-progress recording;
+        // a fresh channel is not live, so the backend deterministically
+        // rejects with "channel in no live" (exit 1) — a real-API gate that
+        // proves the endpoint ran without mutating any state.
+        const result = runCli([
+          'record',
+          'breakpoint',
+          'add',
+          '-c',
+          channelId,
+          '--type',
+          'pause',
+          '--force',
+          '-o',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('channel in no live');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record outline create via real CLI (no draft file)',
+    () => {
+      // outline create looks up a staged draft file by id; a non-existent id
+      // deterministically surfaces "找不到暂存文件" (exit 1). No channel needed.
+      const fakeFileId = `gnhf-fake-file-${Date.now().toString(36)}`;
+
+      const result = runCli([
+        'record',
+        'outline',
+        'create',
+        '--file-id',
+        fakeFileId,
+        '--force',
+        '-o',
+        'json',
+      ]);
+
+      expect(result.exitCode).toBe(1);
+      expect(result.output).toContain('找不到暂存文件');
+    },
+    120000,
+  );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs record subtitle publish via real CLI (no draft subtitle)',
+    () => {
+      // Precompute the subtitles JSON so the runCli array stays free of nested
+      // brackets (coverage report array matcher).
+      const subtitlesJson = JSON.stringify([{ id: 1, status: 'publish' }]);
+
+      // subtitle publish resolves staged draft subtitles by id; a fake id
+      // deterministically surfaces "找不到暂存文件字幕" (exit 1). No channel needed.
+      const result = runCli([
+        'record',
+        'subtitle',
+        'publish',
+        '--subtitles-json',
+        subtitlesJson,
+        '--force',
+        '-o',
+        'json',
+      ]);
+
+      expect(result.exitCode).toBe(1);
+      expect(result.output).toContain('找不到暂存文件字幕');
     },
     120000,
   );
