@@ -41,6 +41,14 @@ const transientFailurePatterns = [
   /\bETIMEDOUT\b/i,
   /\bECONNABORTED\b/i,
   /socket hang up/i,
+  // HTTP 5xx are gateway/availability errors (PolyV business errors return
+  // HTTP 200 with an error body, so a 5xx is always transient). Retrying is
+  // the standard client behavior; a deterministic business-5xx simply persists
+  // across retries and surfaces on the final attempt.
+  /Request failed with status code 5\d\d/i,
+  /\bHTTP 5\d\d\b/i,
+  /\bBad Gateway\b/i,
+  /\bService Unavailable\b/i,
 ];
 
 export function sleep(ms: number): void {

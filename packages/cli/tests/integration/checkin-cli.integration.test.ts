@@ -9,9 +9,11 @@
  * JSON result `{ channelId, limitTime, message, force, nextStep }`.
  *
  * On a non-live (fresh) channel the batch-checkin endpoint accepts the request
- * but does not surface a persisted checkin session (so `checkin session-result`,
- * which needs a real live session-id, errors with `channel session stats can not
- * be found` and is left out). `checkin result`, however, drives the V4
+ * but does not surface a persisted checkin session. `checkin session-result`
+ * therefore deterministically reports the absence for any session-id with the
+ * business error `channel session stats can not be found` (exit 1) — covered
+ * below as the genuine real-API missing-resource read path (mirroring the
+ * covered `session get`). `checkin result`, however, drives the V4
  * checkin-result GET endpoint for any checkin-id and returns the structured
  * "no result" info message with exit code 0 on a fresh channel — a genuine
  * real-CLI read in the same empty-result pattern as the covered `donate list` /
@@ -123,6 +125,53 @@ describe('checkin CLI channel-scoped reads integration', () => {
     },
     120000,
   );
+
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs checkin session-result via real CLI (no session stats on a fresh channel)',
+    () => {
+      let channelId: string | undefined;
+      // A fresh channel has never broadcast, so no live session stats exist.
+      // `session-result` queries the V4 checkin-by-session endpoint with any
+      // session-id and deterministically reports the absence with the business
+      // error "channel session stats can not be found" (exit 1) — a genuine
+      // real-API read, mirroring the covered `session get` missing-resource path.
+      const fakeSessionId = `gnhf-fake-session-${Date.now().toString(36)}`;
+
+      try {
+        channelId = createTemporaryChannel('Checkin Session Result CLI');
+
+        const result = runCli([
+          'checkin',
+          'session-result',
+          '-c',
+          channelId,
+          '--session-id',
+          fakeSessionId,
+          '-o',
+          'json',
+        ]);
+
+        // exit 1 + the deterministic business error proves the real V4 endpoint
+        // was hit with the requested channel/session ids.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('channel session stats can not be found');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
+  // Command-surface validation that runs even without real credentials so the
+  // `checkin session-result` path stays statically referenced.
+  it('checkin session-result --help documents the expected options', () => {
+    const result = runCli(['checkin', 'session-result', '--help']);
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toContain('channel-id');
+    expect(result.output).toContain('session-id');
+  });
 
   // Command-surface validation that runs even without real credentials so the
   // `checkin result` path stays statically referenced.

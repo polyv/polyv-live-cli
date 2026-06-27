@@ -217,3 +217,44 @@ describe('statistics read CLI integration', () => {
     }
   }, 120000);
 });
+
+describe('statistics export session CLI integration', () => {
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs statistics export session via real CLI (report never ready for a missing session)',
+    () => {
+      let channelId: string | undefined;
+      // `export session` generates a session-statistics report for a live
+      // session-id. A fresh channel has never broadcast, so any session-id's
+      // report is never generated and the endpoint deterministically returns
+      // "Report is not ready yet, please try again later." (exit 1) — a genuine
+      // real-API read of the missing-resource path, mirroring `session get`.
+      const fakeSessionId = `gnhf-fake-session-${Date.now().toString(36)}`;
+
+      try {
+        channelId = createTemporaryChannel('Statistics Export Session CLI');
+
+        const result = runCli([
+          'statistics',
+          'export',
+          'session',
+          '-c',
+          channelId,
+          '--session-id',
+          fakeSessionId,
+          '--output',
+          'json',
+        ]);
+
+        // exit 1 + the deterministic "report not ready" message proves the real
+        // export-session endpoint was hit with the requested channel/session ids.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('Report is not ready yet');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+});

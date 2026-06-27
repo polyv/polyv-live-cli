@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-26T20:10:31.600Z
+Generated at: 2026-06-27T03:28:17.237Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 91 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 534 |
-| Missing real-execution leaf subcommands | 33 |
-| Real-execution coverage | 94.18% |
-| Leaf subcommands referenced including help | 544 |
-| Missing including help | 23 |
+| Real-executed leaf subcommands | 537 |
+| Missing real-execution leaf subcommands | 30 |
+| Real-execution coverage | 94.71% |
+| Leaf subcommands referenced including help | 547 |
+| Missing including help | 20 |
 
 ## By Top-Level Command
 
@@ -27,7 +27,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 77 | 1 | 98.72% | 78 | 0 |
 | `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
-| `checkin` | 5 | 4 | 1 | 80.00% | 4 | 1 |
+| `checkin` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `document` | 11 | 10 | 1 | 90.91% | 10 | 1 |
@@ -48,10 +48,10 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
-| `record` | 17 | 6 | 11 | 35.29% | 8 | 9 |
+| `record` | 17 | 7 | 10 | 41.18% | 9 | 8 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `session` | 11 | 11 | 0 | 100.00% | 11 | 0 |
-| `statistics` | 27 | 26 | 1 | 96.30% | 26 | 1 |
+| `statistics` | 27 | 27 | 0 | 100.00% | 27 | 0 |
 | `stream` | 19 | 17 | 2 | 89.47% | 17 | 2 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
 | `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
@@ -68,7 +68,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
-| `checkin session-result` | `packages/cli/src/commands/checkin.commands.ts:188` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `group resource set-flow` | `packages/cli/src/commands/group.commands.ts:54` |
 | `group user create` | `packages/cli/src/commands/group.commands.ts:90` |
@@ -92,9 +91,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `record file convert` | `packages/cli/src/commands/record.commands.ts:561` |
 | `record file merge` | `packages/cli/src/commands/record.commands.ts:540` |
 | `record outline create` | `packages/cli/src/commands/record.commands.ts:595` |
-| `record outline get` | `packages/cli/src/commands/record.commands.ts:606` |
 | `record subtitle publish` | `packages/cli/src/commands/record.commands.ts:618` |
-| `statistics export session` | `packages/cli/src/commands/statistics.commands.export.ts:273` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
 | `stream disk-video end` | `packages/cli/src/commands/stream.commands.ts:506` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

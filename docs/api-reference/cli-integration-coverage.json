@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T20:10:31.600Z",
+  "generatedAt": "2026-06-27T03:28:17.237Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 583,
-    "referencedCommandPathsExcludingHelp": 540,
-    "coveredLeafTargetsIncludingHelp": 544,
-    "missingLeafTargetsIncludingHelp": 23,
-    "coveredRealExecutionLeafTargets": 534,
-    "missingRealExecutionLeafTargets": 33,
-    "realExecutionCoveragePercent": 94.18,
-    "includingHelpCoveragePercent": 95.94,
-    "integrationReferences": 1222,
-    "realExecutionReferences": 809,
-    "helpReferences": 413
+    "referencedCommandPathsIncludingHelp": 586,
+    "referencedCommandPathsExcludingHelp": 543,
+    "coveredLeafTargetsIncludingHelp": 547,
+    "missingLeafTargetsIncludingHelp": 20,
+    "coveredRealExecutionLeafTargets": 537,
+    "missingRealExecutionLeafTargets": 30,
+    "realExecutionCoveragePercent": 94.71,
+    "includingHelpCoveragePercent": 96.47,
+    "integrationReferences": 1226,
+    "realExecutionReferences": 812,
+    "helpReferences": 414
   },
   "byTopLevel": [
     {
@@ -86,12 +86,12 @@
     {
       "command": "checkin",
       "targetLeafCommands": 5,
-      "coveredRealExecutionLeafTargets": 4,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 4,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 80,
-      "includingHelpCoveragePercent": 80
+      "coveredRealExecutionLeafTargets": 5,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 5,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "coupon",
@@ -296,12 +296,12 @@
     {
       "command": "record",
       "targetLeafCommands": 17,
-      "coveredRealExecutionLeafTargets": 6,
-      "missingRealExecutionLeafTargets": 11,
-      "coveredLeafTargetsIncludingHelp": 8,
-      "missingLeafTargetsIncludingHelp": 9,
-      "realExecutionCoveragePercent": 35.29,
-      "includingHelpCoveragePercent": 47.06
+      "coveredRealExecutionLeafTargets": 7,
+      "missingRealExecutionLeafTargets": 10,
+      "coveredLeafTargetsIncludingHelp": 9,
+      "missingLeafTargetsIncludingHelp": 8,
+      "realExecutionCoveragePercent": 41.18,
+      "includingHelpCoveragePercent": 52.94
     },
     {
       "command": "robot",
@@ -326,12 +326,12 @@
     {
       "command": "statistics",
       "targetLeafCommands": 27,
-      "coveredRealExecutionLeafTargets": 26,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 26,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 96.3,
-      "includingHelpCoveragePercent": 96.3
+      "coveredRealExecutionLeafTargets": 27,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 27,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "stream",
@@ -448,16 +448,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/channel.commands.ts",
       "line": 1265
-    },
-    {
-      "command": "checkin session-result",
-      "path": [
-        "checkin",
-        "session-result"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 188
     },
     {
       "command": "document teacher-doc relation",
@@ -706,17 +696,6 @@
       "line": 595
     },
     {
-      "command": "record outline get",
-      "path": [
-        "record",
-        "outline",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 606
-    },
-    {
       "command": "record subtitle publish",
       "path": [
         "record",
@@ -726,17 +705,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 618
-    },
-    {
-      "command": "statistics export session",
-      "path": [
-        "statistics",
-        "export",
-        "session"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.export.ts",
-      "line": 273
     },
     {
       "command": "stream push",
@@ -793,16 +761,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/ai.commands.ts",
       "line": 312
-    },
-    {
-      "command": "checkin session-result",
-      "path": [
-        "checkin",
-        "session-result"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/checkin.commands.ts",
-      "line": 188
     },
     {
       "command": "document teacher-doc relation",
@@ -964,17 +922,6 @@
       "line": 540
     },
     {
-      "command": "record outline get",
-      "path": [
-        "record",
-        "outline",
-        "get"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/record.commands.ts",
-      "line": 606
-    },
-    {
       "command": "record subtitle publish",
       "path": [
         "record",
@@ -984,17 +931,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/record.commands.ts",
       "line": 618
-    },
-    {
-      "command": "statistics export session",
-      "path": [
-        "statistics",
-        "export",
-        "session"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/statistics.commands.export.ts",
-      "line": 273
     },
     {
       "command": "stream push",
@@ -2795,6 +2731,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/checkin.commands.ts",
       "line": 148
+    },
+    {
+      "command": "checkin session-result",
+      "path": [
+        "checkin",
+        "session-result"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/checkin.commands.ts",
+      "line": 188
     },
     {
       "command": "checkin sessions",
@@ -5048,6 +4994,17 @@
       "line": 529
     },
     {
+      "command": "record outline get",
+      "path": [
+        "record",
+        "outline",
+        "get"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/record.commands.ts",
+      "line": 606
+    },
+    {
       "command": "record setting get",
       "path": [
         "record",
@@ -5464,6 +5421,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/statistics.commands.ts",
       "line": 675
+    },
+    {
+      "command": "statistics export session",
+      "path": [
+        "statistics",
+        "export",
+        "session"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/statistics.commands.export.ts",
+      "line": 273
     },
     {
       "command": "statistics export viewlog",
@@ -8984,12 +8952,27 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
-        "line": 103,
+        "line": 105,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
-        "line": 130,
+        "line": 179,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "checkin session-result",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
+        "line": 143,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
+        "line": 170,
         "source": "array-literal"
       }
     },
@@ -9010,12 +8993,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
-        "line": 48,
+        "line": 50,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/checkin-cli.integration.test.ts",
-        "line": 82,
+        "line": 84,
         "source": "array-literal"
       }
     },
@@ -12033,7 +12016,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
-        "line": 31,
+        "line": 44,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -12074,6 +12057,17 @@
         "line": 31,
         "source": "array-literal"
       }
+    },
+    {
+      "command": "record outline get",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/record-cli.integration.test.ts",
+        "line": 88,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
     },
     {
       "command": "record setting get",
@@ -12402,6 +12396,17 @@
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
         "line": 46,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
+      "command": "statistics export session",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/statistics-cli-reads.integration.test.ts",
+        "line": 236,
         "source": "array-literal"
       },
       "firstHelpReference": null
