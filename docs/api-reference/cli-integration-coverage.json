@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T05:03:56.228Z",
+  "generatedAt": "2026-06-27T05:20:46.406Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,17 +20,17 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 604,
-    "referencedCommandPathsExcludingHelp": 567,
-    "coveredLeafTargetsIncludingHelp": 565,
-    "missingLeafTargetsIncludingHelp": 2,
-    "coveredRealExecutionLeafTargets": 561,
-    "missingRealExecutionLeafTargets": 6,
-    "realExecutionCoveragePercent": 98.94,
-    "includingHelpCoveragePercent": 99.65,
-    "integrationReferences": 1256,
-    "realExecutionReferences": 836,
-    "helpReferences": 420
+    "referencedCommandPathsIncludingHelp": 605,
+    "referencedCommandPathsExcludingHelp": 568,
+    "coveredLeafTargetsIncludingHelp": 566,
+    "missingLeafTargetsIncludingHelp": 1,
+    "coveredRealExecutionLeafTargets": 562,
+    "missingRealExecutionLeafTargets": 5,
+    "realExecutionCoveragePercent": 99.12,
+    "includingHelpCoveragePercent": 99.82,
+    "integrationReferences": 1259,
+    "realExecutionReferences": 838,
+    "helpReferences": 421
   },
   "byTopLevel": [
     {
@@ -116,12 +116,12 @@
     {
       "command": "document",
       "targetLeafCommands": 11,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 10,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 90.91,
-      "includingHelpCoveragePercent": 90.91
+      "coveredRealExecutionLeafTargets": 11,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 11,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "donate",
@@ -416,17 +416,6 @@
   ],
   "missingRealExecutionTargets": [
     {
-      "command": "document teacher-doc relation",
-      "path": [
-        "document",
-        "teacher-doc",
-        "relation"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 502
-    },
-    {
       "command": "interaction task-reward submit-accept-info",
       "path": [
         "interaction",
@@ -481,17 +470,6 @@
     }
   ],
   "missingIncludingHelpTargets": [
-    {
-      "command": "document teacher-doc relation",
-      "path": [
-        "document",
-        "teacher-doc",
-        "relation"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/document.commands.ts",
-      "line": 502
-    },
     {
       "command": "stream push",
       "path": [
@@ -2566,6 +2544,17 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 516
+    },
+    {
+      "command": "document teacher-doc relation",
+      "path": [
+        "document",
+        "teacher-doc",
+        "relation"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/document.commands.ts",
+      "line": 502
     },
     {
       "command": "donate likes",
@@ -9036,7 +9025,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 298,
+        "line": 317,
         "source": "array-literal"
       }
     },
@@ -9094,7 +9083,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 271,
+        "line": 283,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9105,7 +9094,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 258,
+        "line": 264,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9132,7 +9121,22 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 297,
+        "line": 316,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "document teacher-doc relation",
+      "realExecutionReferences": 2,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 367,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
+        "line": 409,
         "source": "array-literal"
       }
     },
@@ -9147,7 +9151,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/document-cli.integration.test.ts",
-        "line": 296,
+        "line": 315,
         "source": "array-literal"
       }
     },

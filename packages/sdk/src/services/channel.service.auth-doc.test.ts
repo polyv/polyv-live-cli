@@ -446,12 +446,16 @@ describe('ChannelService Auth + Doc APIs', () => {
 
       const result = await channelService.updateTeacherDocRelation('teacher123', 'file1,file2', 1)
 
-      // fileIds is in body, other params in query
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/live/v4/channel/doc/teacher/update-relation',
-        { fileIds: 'file1,file2' },
-        { params: { teacherId: 'teacher123', operation: 1 } }
-      )
+      // fileIds is a form-urlencoded body (NOT signed); teacherId/operation
+      // are query params that participate in the signature.
+      const [url, body, config] = mockAxiosInstance.post.mock.calls[0]
+      expect(url).toBe('/live/v4/channel/doc/teacher/update-relation')
+      expect(body).toBeInstanceOf(URLSearchParams)
+      expect((body as URLSearchParams).get('fileIds')).toBe('file1,file2')
+      expect(config).toEqual({
+        params: { teacherId: 'teacher123', operation: 1 },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      })
       expect(result).toBe(true)
     })
 
@@ -460,11 +464,14 @@ describe('ChannelService Auth + Doc APIs', () => {
 
       const result = await channelService.updateTeacherDocRelation('teacher123', 'file1', 2)
 
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/live/v4/channel/doc/teacher/update-relation',
-        { fileIds: 'file1' },
-        { params: { teacherId: 'teacher123', operation: 2 } }
-      )
+      const [url, body, config] = mockAxiosInstance.post.mock.calls[0]
+      expect(url).toBe('/live/v4/channel/doc/teacher/update-relation')
+      expect(body).toBeInstanceOf(URLSearchParams)
+      expect((body as URLSearchParams).get('fileIds')).toBe('file1')
+      expect(config).toEqual({
+        params: { teacherId: 'teacher123', operation: 2 },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      })
       expect(result).toBe(true)
     })
 

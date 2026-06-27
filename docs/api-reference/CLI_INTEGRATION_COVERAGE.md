@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T05:03:56.228Z
+Generated at: 2026-06-27T05:20:46.406Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,11 +12,11 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 561 |
-| Missing real-execution leaf subcommands | 6 |
-| Real-execution coverage | 98.94% |
-| Leaf subcommands referenced including help | 565 |
-| Missing including help | 2 |
+| Real-executed leaf subcommands | 562 |
+| Missing real-execution leaf subcommands | 5 |
+| Real-execution coverage | 99.12% |
+| Leaf subcommands referenced including help | 566 |
+| Missing including help | 1 |
 
 ## By Top-Level Command
 
@@ -30,7 +30,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `checkin` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `custom-field` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `document` | 11 | 10 | 1 | 90.91% | 10 | 1 |
+| `document` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
@@ -65,7 +65,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |

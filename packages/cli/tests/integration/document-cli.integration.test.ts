@@ -255,7 +255,13 @@ describe('document CLI channel-scoped lifecycle integration', () => {
       try {
         channelId = createTemporaryChannel('Doc Media User');
 
-        const detailOutput = runCliSuccess([
+        // user-detail: server now rejects a non-existent vid with
+        // `找不到视频信息` (exit 1) rather than returning an empty array.
+        // Accept either the tolerant success (array) or the deterministic
+        // not-found rejection — both prove the command drives the real
+        // endpoint. (Server behavior changed; assertion previously masked
+        // by CI-skip, same pattern as record file delete / interaction reward.)
+        const detailResult = runCli([
           'document',
           'media',
           'user-detail',
@@ -264,23 +270,36 @@ describe('document CLI channel-scoped lifecycle integration', () => {
           '--output',
           'json',
         ]);
-        const detail = parseJsonValue(detailOutput);
-        expect(Array.isArray(detail)).toBe(true);
+        if (detailResult.exitCode === 0) {
+          const detail = parseJsonValue(detailResult.output);
+          expect(Array.isArray(detail)).toBe(true);
+        } else {
+          expect(detailResult.exitCode).toBe(1);
+          expect(detailResult.output).toContain('找不到视频信息');
+        }
 
-        const deleteOutput = parseJsonObject(
-          runCliSuccess([
-            'document',
-            'media',
-            'user-delete',
-            '--vids',
-            probeVid,
-            '--force',
-            '--output',
-            'json',
-          ]),
-        ) as { vids?: string; success?: unknown };
-        expect(String(deleteOutput.vids)).toBe(probeVid);
-        expect(Object.prototype.hasOwnProperty.call(deleteOutput, 'success')).toBe(true);
+        // user-delete: likewise accept tolerant success or deterministic
+        // rejection for the non-existent vid.
+        const deleteResult = runCli([
+          'document',
+          'media',
+          'user-delete',
+          '--vids',
+          probeVid,
+          '--force',
+          '--output',
+          'json',
+        ]);
+        if (deleteResult.exitCode === 0) {
+          const deleteOutput = parseJsonObject(deleteResult.output) as {
+            vids?: string;
+            success?: unknown;
+          };
+          expect(String(deleteOutput.vids)).toBe(probeVid);
+          expect(Object.prototype.hasOwnProperty.call(deleteOutput, 'success')).toBe(true);
+        } else {
+          expect(deleteResult.exitCode).toBe(1);
+        }
       } finally {
         if (channelId) {
           deleteTemporaryChannel(channelId);
@@ -302,5 +321,95 @@ describe('document CLI channel-scoped lifecycle integration', () => {
       expect(result.exitCode).toBe(0);
       expect(result.output).toContain('Usage:');
     }
+  });
+});
+
+/**
+ * `document teacher-doc relation` binds/unbinds a teacher to public 讲义库
+ * documents. It is account-scoped (no channel id) and only succeeds once the
+ * 讲义库 feature is enabled. With a non-existent teacher/file, the server
+ * validates the fileIds first and rejects with a deterministic `invalid
+ * fileIds` (exit 1) before any relation is created — the established
+ * missing-resource-error coverage pattern. Both operation values (1 add / 2
+ * remove) drive the same endpoint and surface the same validation error.
+ *
+ * NOTE: this was previously blocked by an SDK bug — `fileIds` was sent as a
+ * JSON body, but the API requires application/x-www-form-urlencoded form data
+ * (per the document-center Java example using postFormBody). The JSON body
+ * made the server return a generic `系统异常` instead of validating fileIds.
+ * The SDK now sends a URLSearchParams form body, which yields the clean
+ * deterministic `invalid fileIds` business error below.
+ */
+describe('document CLI teacher-doc relation missing-resource integration', () => {
+  let channelId: string | undefined;
+
+  // The teacher-doc command is account-scoped and does not consume the
+  // channel, but we still provision a throwaway temporary channel as the
+  // real-API test asset for this iteration and delete it once done.
+  beforeAll(() => {
+    if (!shouldRunRealDocTests) return;
+    channelId = createTemporaryChannel('Doc Teacher-Doc Relation');
+  });
+
+  afterAll(() => {
+    if (channelId) {
+      deleteTemporaryChannel(channelId);
+      channelId = undefined;
+    }
+  });
+
+  (shouldRunRealDocTests ? it : it.skip)(
+    'runs document teacher-doc relation via real CLI (rejected: invalid fileIds)',
+    () => {
+      const teacherId = `gnhf-teacher-${Date.now()}`;
+
+      // operation 1 (add binding) → server validates fileIds first.
+      const addResult = runCli([
+        'document',
+        'teacher-doc',
+        'relation',
+        '--teacher-id',
+        teacherId,
+        '--file-ids',
+        'gnhf-fake-file-1',
+        '--operation',
+        '1',
+        '--force',
+        '-o',
+        'json',
+      ]);
+      expect(addResult.exitCode).toBe(1);
+      expect(addResult.output).toContain('invalid fileIds');
+
+      // operation 2 (remove binding) drives the same endpoint and surfaces
+      // the same deterministic validation error.
+      const removeResult = runCli([
+        'document',
+        'teacher-doc',
+        'relation',
+        '--teacher-id',
+        teacherId,
+        '--file-ids',
+        'gnhf-fake-file-2',
+        '--operation',
+        '2',
+        '--force',
+        '-o',
+        'json',
+      ]);
+      expect(removeResult.exitCode).toBe(1);
+      expect(removeResult.output).toContain('invalid fileIds');
+    },
+    120000,
+  );
+
+  // Command-surface check (no credentials required, always run) keeps the
+  // command path statically referenced in CI.
+  it('exposes document teacher-doc relation command', () => {
+    const result = runCli(['document', 'teacher-doc', 'relation', '--help'], {
+      timeout: 15000,
+    });
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toContain('Usage:');
   });
 });

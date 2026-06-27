@@ -1100,7 +1100,8 @@ export class ChannelService {
    * Update teacher document relation
    *
    * Adds or removes the binding between a teacher and documents.
-   * Note: fileIds is passed in the body, other parameters in query string.
+   * Note: fileIds is passed in the request body as application/x-www-form-urlencoded
+   * (NOT signed), while teacherId/operation are query-string parameters that ARE signed.
    *
    * @param teacherId - The teacher ID
    * @param fileIds - File IDs, comma-separated
@@ -1128,11 +1129,17 @@ export class ChannelService {
       throw PolyVValidationError.required('fileIds');
     }
 
-    // fileIds in body, other params in query
+    // Per API doc: fileIds is form-urlencoded body (NOT signed);
+    // teacherId/operation are query params that participate in the signature.
+    const form = new URLSearchParams();
+    form.set('fileIds', fileIds);
     const response = await this.client.httpClient.post<boolean>(
       '/live/v4/channel/doc/teacher/update-relation',
-      { fileIds },
-      { params: { teacherId, operation } }
+      form,
+      {
+        params: { teacherId, operation },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      }
     );
 
     return response as unknown as boolean;
