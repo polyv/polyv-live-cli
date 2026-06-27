@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T05:45:44.796Z
+Generated at: 2026-06-27T06:08:10.134Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,9 +12,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 564 |
-| Missing real-execution leaf subcommands | 3 |
-| Real-execution coverage | 99.47% |
+| Real-executed leaf subcommands | 565 |
+| Missing real-execution leaf subcommands | 2 |
+| Real-execution coverage | 99.65% |
 | Leaf subcommands referenced including help | 567 |
 | Missing including help | 0 |
 
@@ -54,7 +54,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `statistics` | 27 | 27 | 0 | 100.00% | 27 | 0 |
 | `stream` | 19 | 19 | 0 | 100.00% | 19 | 0 |
 | `transmit` | 3 | 3 | 0 | 100.00% | 3 | 0 |
-| `user` | 31 | 30 | 1 | 96.77% | 31 | 0 |
+| `user` | 31 | 31 | 0 | 100.00% | 31 | 0 |
 | `viewer` | 19 | 19 | 0 | 100.00% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
 | `web` | 34 | 34 | 0 | 100.00% | 34 | 0 |
@@ -67,4 +67,3 @@ Help-only invocations are tracked separately and do not count as real execution 
 |---------|--------|
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
-| `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |

@@ -132,4 +132,55 @@ describe('user settings CLI integration', () => {
     },
     120000,
   );
+
+  // `user sms-send` posts to the real V4 SMS endpoint through the CLI. On this
+  // account SMS is disabled entirely, so the server returns a deterministic
+  // `短信功能未启用` (SMS feature not enabled) account-feature gate before any
+  // SMS can be dispatched — the same pre-side-effect gate pattern as the group
+  // (`找不到集团账号`) and finance (`账号未开启审核功能`) families. This makes
+  // the write safe: no SMS is ever sent, regardless of the phone number. We
+  // additionally pass a structurally-illegal phone number (`12345`, only 5
+  // digits — Chinese mobile numbers are 11 digits) as belt-and-suspenders: even
+  // in the hypothetical that SMS were enabled, the documented per-phone status
+  // would be -2 (send failed: illegal number) with `serialNo: null`, i.e. still
+  // no SMS dispatched. No real SMS can be sent under any account state. Per the
+  // integration convention a throwaway temp channel is created (and deleted)
+  // even though this account-scoped command takes no channel id.
+  (shouldRunRealAccountTests ? it : it.skip)(
+    'runs user sms-send through the real CLI (account SMS-disabled gate)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('User SmsSend Gate');
+
+        const result = runCli(
+          [
+            'user',
+            'sms-send',
+            '--phone-numbers',
+            '12345',
+            '--template-param-names',
+            'code',
+            '--template-param-values',
+            '000000',
+            '--force',
+            '--output',
+            'json',
+          ],
+          { includeTestEnv: true },
+        );
+
+        // Account has SMS disabled → deterministic pre-dispatch gate; no SMS
+        // is sent (the illegal number also guarantees this even if enabled).
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('短信功能未启用');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
 });

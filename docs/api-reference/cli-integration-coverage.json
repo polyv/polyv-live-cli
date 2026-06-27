@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T05:45:44.796Z",
+  "generatedAt": "2026-06-27T06:08:10.134Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -21,15 +21,15 @@
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 606,
-    "referencedCommandPathsExcludingHelp": 570,
+    "referencedCommandPathsExcludingHelp": 571,
     "coveredLeafTargetsIncludingHelp": 567,
     "missingLeafTargetsIncludingHelp": 0,
-    "coveredRealExecutionLeafTargets": 564,
-    "missingRealExecutionLeafTargets": 3,
-    "realExecutionCoveragePercent": 99.47,
+    "coveredRealExecutionLeafTargets": 565,
+    "missingRealExecutionLeafTargets": 2,
+    "realExecutionCoveragePercent": 99.65,
     "includingHelpCoveragePercent": 100,
-    "integrationReferences": 1261,
-    "realExecutionReferences": 840,
+    "integrationReferences": 1262,
+    "realExecutionReferences": 841,
     "helpReferences": 421
   },
   "byTopLevel": [
@@ -356,11 +356,11 @@
     {
       "command": "user",
       "targetLeafCommands": 31,
-      "coveredRealExecutionLeafTargets": 30,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 31,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 31,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 96.77,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -436,16 +436,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 676
-    },
-    {
-      "command": "user sms-send",
-      "path": [
-        "user",
-        "sms-send"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/user.commands.ts",
-      "line": 124
     }
   ],
   "missingIncludingHelpTargets": [],
@@ -5443,6 +5433,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/user.commands.ts",
       "line": 130
+    },
+    {
+      "command": "user sms-send",
+      "path": [
+        "user",
+        "sms-send"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/user.commands.ts",
+      "line": 124
     },
     {
       "command": "user bill use-detail",
@@ -13331,9 +13331,13 @@
     },
     {
       "command": "user sms-send",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
+        "line": 158,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/user-settings-cli.integration.test.ts",
         "line": 47,
