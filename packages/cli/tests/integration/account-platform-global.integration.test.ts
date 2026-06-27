@@ -715,6 +715,53 @@ describe('Account, platform, and global CLI integration', () => {
     120000,
   );
 
+  // `platform anchor create` has no delete endpoint, so its success path would
+  // orphan a real anchor on the test account (confirmed in a prior iteration:
+  // even a fake avatar creates a real anchorId). It is covered instead via the
+  // deterministic **SDK client-side validation gate**: SDK `createAnchor` runs
+  // `validateNickname`, which throws `nickname cannot exceed 20 characters`
+  // (matching the API doc's "昵称，最多20个字符" constraint) BEFORE the
+  // `httpClient.post('/live/v4/channel/anchor/create', ...)` call. Supplying a
+  // 21+ char nickname therefore exits 1 at the SDK guard with no API call and
+  // no anchor created — provably no orphan. Same client-guard coverage pattern
+  // as `stream push` (fake-file guard) and `partner tencent-order create`
+  // (missing-service guard).
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs platform anchor create via real CLI (rejected: nickname too long, before any API call)',
+    () => {
+      let channelId: string | undefined;
+      try {
+        channelId = createTemporaryChannel('Platform Anchor Create Gate');
+
+        // A nickname longer than the documented 20-char max trips the SDK's
+        // validateNickname guard before the create endpoint is ever called, so
+        // no anchor (orphan) is ever persisted.
+        const result = runCli([
+          'platform',
+          'anchor',
+          'create',
+          '--nickname',
+          'gnhf-anchor-create-nickname-exceeding-twenty-chars',
+          '--sex',
+          'M',
+          '--avatar',
+          'https://example.com/gnhf-avatar.png',
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('nickname cannot exceed 20 characters');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // `platform anchor get/relation-list/unrelation-list` are account-level reads that only
   // need an existing anchor-id, discovered here via the (already covered) anchor list.
   (shouldRunRealChannelTests ? it : it.skip)(

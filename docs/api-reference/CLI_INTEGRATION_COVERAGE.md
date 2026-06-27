@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T06:08:10.134Z
+Generated at: 2026-06-27T06:26:13.770Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,12 +9,12 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 92 |
+| Integration files scanned | 93 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 565 |
-| Missing real-execution leaf subcommands | 2 |
-| Real-execution coverage | 99.65% |
+| Real-executed leaf subcommands | 567 |
+| Missing real-execution leaf subcommands | 0 |
+| Real-execution coverage | 100.00% |
 | Leaf subcommands referenced including help | 567 |
 | Missing including help | 0 |
 
@@ -40,8 +40,8 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
 | `material` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `monitor` | 9 | 9 | 0 | 100.00% | 9 | 0 |
-| `partner` | 2 | 1 | 1 | 50.00% | 2 | 0 |
-| `platform` | 22 | 21 | 1 | 95.45% | 22 | 0 |
+| `partner` | 2 | 2 | 0 | 100.00% | 2 | 0 |
+| `platform` | 22 | 22 | 0 | 100.00% | 22 | 0 |
 | `playback` | 13 | 13 | 0 | 100.00% | 13 | 0 |
 | `player` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `product` | 36 | 36 | 0 | 100.00% | 36 | 0 |
@@ -65,5 +65,4 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
-| `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
+| _None_ | _All target leaf commands have real integration execution coverage._ |

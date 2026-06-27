@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T06:08:10.134Z",
+  "generatedAt": "2026-06-27T06:26:13.770Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-27T04:21:30.119Z",
-    "integrationFiles": 92,
+    "integrationFiles": 93,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
     "referencedCommandPathsIncludingHelp": 606,
-    "referencedCommandPathsExcludingHelp": 571,
+    "referencedCommandPathsExcludingHelp": 573,
     "coveredLeafTargetsIncludingHelp": 567,
     "missingLeafTargetsIncludingHelp": 0,
-    "coveredRealExecutionLeafTargets": 565,
-    "missingRealExecutionLeafTargets": 2,
-    "realExecutionCoveragePercent": 99.65,
+    "coveredRealExecutionLeafTargets": 567,
+    "missingRealExecutionLeafTargets": 0,
+    "realExecutionCoveragePercent": 100,
     "includingHelpCoveragePercent": 100,
-    "integrationReferences": 1262,
-    "realExecutionReferences": 841,
-    "helpReferences": 421
+    "integrationReferences": 1266,
+    "realExecutionReferences": 843,
+    "helpReferences": 423
   },
   "byTopLevel": [
     {
@@ -216,21 +216,21 @@
     {
       "command": "partner",
       "targetLeafCommands": 2,
-      "coveredRealExecutionLeafTargets": 1,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 2,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 2,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 50,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
       "command": "platform",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 21,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 22,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 22,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 95.45,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -414,30 +414,7 @@
       "includingHelpCoveragePercent": 100
     }
   ],
-  "missingRealExecutionTargets": [
-    {
-      "command": "partner tencent-order create",
-      "path": [
-        "partner",
-        "tencent-order",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/partner.commands.ts",
-      "line": 39
-    },
-    {
-      "command": "platform anchor create",
-      "path": [
-        "platform",
-        "anchor",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/platform.commands.ts",
-      "line": 676
-    }
-  ],
+  "missingRealExecutionTargets": [],
   "missingIncludingHelpTargets": [],
   "coveredRealExecutionTargets": [
     {
@@ -3568,6 +3545,17 @@
       "line": 26
     },
     {
+      "command": "partner tencent-order create",
+      "path": [
+        "partner",
+        "tencent-order",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/partner.commands.ts",
+      "line": 39
+    },
+    {
       "command": "platform get",
       "path": [
         "platform",
@@ -3576,6 +3564,17 @@
       "depth": 2,
       "file": "packages/cli/src/commands/platform.commands.ts",
       "line": 225
+    },
+    {
+      "command": "platform anchor create",
+      "path": [
+        "platform",
+        "anchor",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/platform.commands.ts",
+      "line": 676
     },
     {
       "command": "platform anchor get",
@@ -10495,31 +10494,43 @@
     },
     {
       "command": "partner tencent-order create",
-      "realExecutionReferences": 0,
-      "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "realExecutionReferences": 1,
+      "helpReferences": 2,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/partner-cli.integration.test.ts",
+        "line": 66,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
-        "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
-        "line": 90,
+        "file": "packages/cli/tests/integration/partner-cli.integration.test.ts",
+        "line": 92,
         "source": "array-literal"
       }
     },
     {
       "command": "partner user-register",
       "realExecutionReferences": 1,
-      "helpReferences": 0,
+      "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/small-modules.integration.test.ts",
         "line": 668,
         "source": "array-literal"
       },
-      "firstHelpReference": null
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/partner-cli.integration.test.ts",
+        "line": 101,
+        "source": "array-literal"
+      }
     },
     {
       "command": "platform anchor create",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 739,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
         "line": 61,
@@ -10532,7 +10543,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 738,
+        "line": 785,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10558,7 +10569,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 743,
+        "line": 790,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10569,7 +10580,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 748,
+        "line": 795,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10580,7 +10591,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 879,
+        "line": 926,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10591,7 +10602,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 810,
+        "line": 857,
         "source": "array-literal"
       },
       "firstHelpReference": null
