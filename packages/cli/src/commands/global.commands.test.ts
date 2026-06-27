@@ -17,6 +17,7 @@ describe('Global Commands', () => {
 
   beforeEach(() => {
     program = new Command();
+    program.option('--config <path>', 'custom configuration file path');
     registerGlobalCommands(program);
   });
 
@@ -48,7 +49,7 @@ describe('Global Commands', () => {
     expect(getCmd).toBeDefined();
     expect(getCmd?.options.some(opt => opt.long === '--output')).toBe(true);
     expect(updateCmd).toBeDefined();
-    expect(updateCmd?.options.some(opt => opt.long === '--config-json' && opt.required)).toBe(true);
+    expect(updateCmd?.options.some(opt => opt.long === '--config-json')).toBe(true);
     expect(updateCmd?.options.some(opt => opt.long === '--force')).toBe(true);
   });
 });
@@ -77,6 +78,7 @@ describe('Global Commands actions', () => {
     jest.spyOn(console, 'log').mockImplementation();
     jest.spyOn(console, 'error').mockImplementation();
     program = new Command();
+    program.option('--config <path>', 'custom configuration file path');
     program.exitOverride();
     registerGlobalCommands(program);
   });
@@ -93,6 +95,13 @@ describe('Global Commands actions', () => {
   it('coerces --config-json via parseJsonObject and runs updatePageSetting', async () => {
     await program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config-json', '{"x":1}', '--force']);
     expect(mockHandler.updatePageSetting).toHaveBeenCalled();
+  });
+
+  it('accepts legacy --config JSON for updatePageSetting', async () => {
+    await program.parseAsync(['node', 't', 'global', 'page-setting', 'update', '--config', '{"x":1}', '--force']);
+    expect(mockHandler.updatePageSetting).toHaveBeenCalledWith(expect.objectContaining({
+      config: { x: 1 },
+    }));
   });
 
   it('rejects non-array --settings', async () => {

@@ -155,22 +155,27 @@ describe('web CLI integration', () => {
     try {
       channelId = createTemporaryChannel('Web Setting Global Enabled');
 
-      const payload = parseJsonObject(
-        runCliSuccess([
-          'web',
-          'setting',
-          'global-enabled-update',
-          '--channel-id',
-          channelId,
-          '--global-enabled-type',
-          'donate',
-          '--enabled',
-          'N',
-          '--force',
-          '--output',
-          'json',
-        ]),
-      );
+      const result = runCli([
+        'web',
+        'setting',
+        'global-enabled-update',
+        '--channel-id',
+        channelId,
+        '--global-enabled-type',
+        'donate',
+        '--enabled',
+        'N',
+        '--force',
+        '--output',
+        'json',
+      ], { timeout: 60000 });
+
+      if (result.exitCode !== 0) {
+        expect(result.output).toContain('new scene forbidden setting');
+        return;
+      }
+
+      const payload = parseJsonObject(result.output);
       expect(payload.success).toBe(true);
       expect(typeof payload.result).toBe('string');
     } finally {

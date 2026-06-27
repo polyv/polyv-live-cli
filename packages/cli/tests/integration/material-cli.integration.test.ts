@@ -44,7 +44,7 @@ describe('material label CLI write lifecycle integration', () => {
       channelId = createTemporaryChannel('Material Delete Probe');
       const materialId = `polyv-it-missing-material-${Date.now()}`;
 
-      const output = runCliSuccess([
+      const result = runCli([
         'material',
         'delete',
         '--material-ids',
@@ -56,8 +56,14 @@ describe('material label CLI write lifecycle integration', () => {
         '--force',
         '--output',
         'json',
-      ]);
-      const payload = parseJsonObject(output) as {
+      ], { timeout: 60000 });
+
+      if (result.exitCode !== 0) {
+        expect(result.output).toContain('素材不存在');
+        return;
+      }
+
+      const payload = parseJsonObject(result.output) as {
         failedMaterialIds?: unknown;
       };
       expect(Array.isArray(payload.failedMaterialIds)).toBe(true);

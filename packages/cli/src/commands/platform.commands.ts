@@ -10,6 +10,7 @@ import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
 import { confirmDeletion } from '../utils/confirmation';
+import { resolveJsonObjectOption } from '../utils/api-command';
 import { AuthConfig } from '../types/auth';
 import {
   PlatformGetOptions,
@@ -879,7 +880,7 @@ Note:
     // NOTE: --config-json (not --config) to avoid collision with the program-level
     // global --config <path> option, which greedily consumes any --config value
     // before the subcommand can read it.
-    .requiredOption('--config-json <json>', 'coupon update JSON object', parseJsonObject)
+    .option('--config-json <json>', 'coupon update JSON object', parseJsonObject)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -887,12 +888,15 @@ Note:
         const parentOptions = program.opts();
         const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(parentOptions);
         const platformHandler = new PlatformHandler(authConfig, serviceConfig);
+        const config = resolveJsonObjectOption(options.configJson, parentOptions['config']);
         const updateOptions: PlatformCouponUpdateOptions = {
           couponId: options.couponId,
-          config: options.configJson,
           force: options.force,
           output: options.output,
         };
+        if (config) {
+          updateOptions.config = config;
+        }
         await platformHandler.updateCoupon(updateOptions);
       } catch (error) {
         logError(error instanceof Error ? error : new Error(String(error)));

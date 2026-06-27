@@ -96,6 +96,28 @@ export function parseJsonObject(value: string): Record<string, unknown> {
   return parsed as Record<string, unknown>;
 }
 
+export function resolveJsonObjectOption(
+  value: unknown,
+  legacyGlobalConfigValue?: unknown
+): Record<string, unknown> | undefined {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return value as Record<string, unknown>;
+  }
+
+  if (typeof value === 'string') {
+    return parseJsonObject(value);
+  }
+
+  // Backward compatibility for commands that historically used `--config`.
+  // Commander parses the root-level `--config <path>` greedily, so old command
+  // invocations arrive here as program.opts().config rather than command opts.
+  if (typeof legacyGlobalConfigValue === 'string' && legacyGlobalConfigValue.trim().startsWith('{')) {
+    return parseJsonObject(legacyGlobalConfigValue);
+  }
+
+  return undefined;
+}
+
 export function parseJsonArray(value: string): unknown[] {
   const parsed = JSON.parse(value);
   if (!Array.isArray(parsed)) {

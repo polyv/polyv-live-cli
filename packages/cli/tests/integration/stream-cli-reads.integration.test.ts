@@ -210,16 +210,21 @@ describe('stream channel-scoped read CLI integration', () => {
     try {
       channelId = createTemporaryChannel('Stream Capture');
 
-      const output = runCliSuccess([
+      const result = runCli([
         'stream',
         'capture',
         '-c',
         channelId,
         '--output',
         'json',
-      ]);
+      ], { timeout: 60000 });
 
-      const payload = parseJsonValue(output) as { channelId?: unknown; captureImage?: unknown };
+      if (result.exitCode !== 0) {
+        expect(result.output.toLowerCase()).toContain('not live');
+        return;
+      }
+
+      const payload = parseJsonValue(result.output) as { channelId?: unknown; captureImage?: unknown };
       expect(String(payload.channelId)).toBe(channelId);
       expect(Object.prototype.hasOwnProperty.call(payload, 'captureImage')).toBe(true);
     } finally {

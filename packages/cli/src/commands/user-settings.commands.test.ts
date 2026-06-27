@@ -141,6 +141,38 @@ describe('user settings commands', () => {
     restoreExit();
   });
 
+  it('accepts legacy --config JSON for template update', async () => {
+    const restoreConsole = suppressConsole();
+    const restoreExit = mockProcessExit();
+    const MockHandler = require('../handlers/user-settings.handler').UserSettingsHandler;
+    const mockHandler = { updatePlaybackSetting: jest.fn().mockResolvedValue(undefined) };
+    MockHandler.mockImplementation(() => mockHandler);
+    mockAuthSuccess(authAdapter as jest.Mocked<typeof authAdapter>, configManager as jest.Mocked<typeof configManager>);
+
+    program.option('--config <path>', 'custom configuration file path');
+    registerUserCommands(program);
+    await program.parseAsync([
+      'node',
+      'test',
+      'user',
+      'template',
+      'playback',
+      'update',
+      '--config',
+      '{"productPlaybackEnabled":"Y"}',
+      '--force',
+    ]);
+
+    expect(mockHandler.updatePlaybackSetting).toHaveBeenCalledWith(expect.objectContaining({
+      config: { productPlaybackEnabled: 'Y' },
+      force: true,
+      output: 'table',
+    }));
+
+    restoreConsole();
+    restoreExit();
+  });
+
   it('maps SMS parameters to handler', async () => {
     const restoreConsole = suppressConsole();
     const restoreExit = mockProcessExit();

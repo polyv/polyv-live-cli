@@ -20,6 +20,6 @@ export interface GlobalAuthUpdateOptions extends GlobalBaseOptions {
 }
 
 export interface GlobalPageSettingUpdateOptions extends GlobalBaseOptions {
-  config: Record<string, unknown>;
+  config?: Record<string, unknown>;
   force?: boolean;
 }

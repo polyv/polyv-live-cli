@@ -28,6 +28,7 @@ function isDistributeCapabilityRestriction(output: string): boolean {
     /(账号|当前账号).*未开通.*云分发/,
     /未开通云分发/,
     /云分发功能.*未开通/,
+    /云分发功能未启用/,
   ].some((pattern) => pattern.test(output));
 }
 
@@ -193,45 +194,8 @@ describe('channel distribute CLI integration', () => {
       expectDistributeWriteAccepted(createResult);
 
       if (createResult.restricted) {
-        const updatePayload = JSON.stringify([{ id: 1, name: updatedName }]);
-        expectDistributeWriteAccepted(runDistributeWrite([
-          'channel',
-          'distribute',
-          'update-batch',
-          '--channel-id',
-          channelId,
-          '--distributes-json',
-          updatePayload,
-          '--force',
-          '--output',
-          'json',
-        ]));
-        expectDistributeWriteAccepted(runDistributeWrite([
-          'channel',
-          'distribute',
-          'switch',
-          '--channel-id',
-          channelId,
-          '--distribute-id',
-          '1',
-          '--enabled',
-          'N',
-          '--force',
-          '--output',
-          'json',
-        ]));
-        expectDistributeWriteAccepted(runDistributeWrite([
-          'channel',
-          'distribute',
-          'delete-batch',
-          '--channel-id',
-          channelId,
-          '--ids',
-          '1',
-          '--force',
-          '--output',
-          'json',
-        ]));
+        // No endpoint exists when create is rejected by the cloud-distribution
+        // capability gate; continuing with a fake id only validates id parsing.
         return;
       }
 

@@ -263,8 +263,9 @@ export class PlayerService {
       headAdvertType: String(params.headAdvertType).toLowerCase(),
     };
 
-    if (params.headAdvertMediaUrl !== undefined) {
-      requestParams.headAdvertMediaUrl = params.headAdvertMediaUrl;
+    const mediaUrl = params.headAdvertMediaUrl ?? params.headAdvertImage ?? params.headAdvertFlv;
+    if (mediaUrl !== undefined) {
+      requestParams.headAdvertMediaUrl = mediaUrl;
     }
     if (params.headAdvertHref !== undefined) {
       requestParams.headAdvertHref = params.headAdvertHref;

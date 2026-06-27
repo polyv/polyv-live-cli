@@ -1367,6 +1367,19 @@ describe('WebService', () => {
       expect(result).toEqual(mockResponse);
     });
 
+    it('should default rank to primary record field', async () => {
+      const mockResponse = { infoFields: [] };
+      mockClient.httpClient.get.mockResolvedValue(mockResponse);
+
+      const result = await service.getRecordField({ channelId: '123456' });
+
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+        '/live/v3/channel/auth/get-record-field',
+        { params: { channelId: '123456', rank: 1 } }
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
     it('should throw validation error when rank is invalid', async () => {
       await expect(service.getRecordField({ channelId: '123456', rank: 3 }))
         .rejects.toThrow('rank must be 1 (primary) or 2 (secondary)');
@@ -1419,6 +1432,19 @@ describe('WebService', () => {
       mockClient.httpClient.get.mockResolvedValue(mockResponse);
 
       const result = await service.downloadRecordInfo({ channelId: '123456', rank: 1 });
+
+      expect(mockClient.httpClient.get).toHaveBeenCalledWith(
+        '/live/v3/channel/auth/download-record-info',
+        { params: { channelId: '123456', rank: 1 }, responseType: 'arraybuffer' }
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should default download rank to primary record field', async () => {
+      const mockResponse = new ArrayBuffer(0);
+      mockClient.httpClient.get.mockResolvedValue(mockResponse);
+
+      const result = await service.downloadRecordInfo({ channelId: '123456' });
 
       expect(mockClient.httpClient.get).toHaveBeenCalledWith(
         '/live/v3/channel/auth/download-record-info',

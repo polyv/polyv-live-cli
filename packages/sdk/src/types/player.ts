@@ -109,6 +109,10 @@ export interface HeadAdvertParams {
   headAdvertType: HeadAdvertType;
   /** Head advert media URL (广告地址, for IMAGE/FLV type) */
   headAdvertMediaUrl?: string;
+  /** @deprecated Use headAdvertMediaUrl instead. */
+  headAdvertImage?: string;
+  /** @deprecated Use headAdvertMediaUrl instead. */
+  headAdvertFlv?: string;
   /** Head advert href (click URL) */
   headAdvertHref?: string;
   /** Head advert duration in seconds */

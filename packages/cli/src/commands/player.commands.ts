@@ -471,6 +471,8 @@ Output Formats:
     .requiredOption('-c, --channel-id <channelId>', 'channel ID')
     .requiredOption('--head-advert-type <type>', 'head advert type (NONE|IMAGE|FLV)', validateHeadAdvertType)
     .option('--head-advert-media-url <url>', 'head advert media URL (image or video address)')
+    .option('--head-advert-image <url>', 'deprecated: use --head-advert-media-url')
+    .option('--head-advert-flv <url>', 'deprecated: use --head-advert-media-url')
     .option('--head-advert-href <url>', 'head advert click URL')
     .option('--head-advert-duration <seconds>', 'duration seconds', parsePositiveInteger)
     .option('--head-advert-width <width>', 'advert width', parsePositiveInteger)
@@ -481,7 +483,10 @@ Output Formats:
     .action(async (options) => {
       try {
         const { authConfig, serviceConfig } = await loadAuthAndServiceConfig(program.opts());
-        await new PlayerHandler(authConfig, serviceConfig).updateHeadAdvert(options);
+        await new PlayerHandler(authConfig, serviceConfig).updateHeadAdvert({
+          ...options,
+          headAdvertMediaUrl: options.headAdvertMediaUrl || options.headAdvertImage || options.headAdvertFlv,
+        });
       } catch (error) {
         logError(error instanceof Error ? error : new Error(String(error)));
         process.exit(1);

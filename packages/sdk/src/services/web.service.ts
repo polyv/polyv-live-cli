@@ -1673,13 +1673,14 @@ export class WebService {
    */
   async getRecordField(params: GetRecordFieldParams): Promise<RecordFieldResponse> {
     this.validateChannelId(params.channelId);
-    if (params.rank !== 1 && params.rank !== 2) {
+    const rank = params.rank ?? 1;
+    if (rank !== 1 && rank !== 2) {
       throw new PolyVValidationError('rank must be 1 (primary) or 2 (secondary)');
     }
 
     const response = await this.client.httpClient.get<RecordFieldResponse>(
       '/live/v3/channel/auth/get-record-field',
-      { params: { channelId: params.channelId, rank: params.rank } }
+      { params: { channelId: params.channelId, rank } }
     );
     return response as unknown as RecordFieldResponse;
   }
@@ -1758,13 +1759,14 @@ export class WebService {
    */
   async downloadRecordInfo(params: DownloadRecordInfoParams): Promise<ArrayBuffer> {
     this.validateChannelId(params.channelId);
-    if (params.rank !== 1 && params.rank !== 2) {
+    const rank = params.rank ?? 1;
+    if (rank !== 1 && rank !== 2) {
       throw new PolyVValidationError('rank must be 1 (primary) or 2 (secondary)');
     }
 
     const response = await this.client.httpClient.get<ArrayBuffer>(
       '/live/v3/channel/auth/download-record-info',
-      { params: { channelId: params.channelId, rank: params.rank }, responseType: 'arraybuffer' }
+      { params: { channelId: params.channelId, rank }, responseType: 'arraybuffer' }
     );
     return response as unknown as ArrayBuffer;
   }

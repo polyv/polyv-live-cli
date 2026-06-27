@@ -439,6 +439,43 @@ describe('PlayerService', () => {
       expect(result).toBe(true);
     });
 
+    it('should map deprecated image/flv advert fields to headAdvertMediaUrl', async () => {
+      mockClient.httpClient.post.mockResolvedValue(true);
+
+      await service.updateHeadAdvert(123456, {
+        headAdvertType: 'IMAGE',
+        headAdvertImage: 'https://example.com/legacy.jpg',
+      });
+
+      expect(mockClient.httpClient.post).toHaveBeenCalledWith(
+        '/live/v2/channelAdvert/123456/updateHead',
+        null,
+        {
+          params: {
+            headAdvertType: 'image',
+            headAdvertMediaUrl: 'https://example.com/legacy.jpg',
+          },
+        }
+      );
+
+      mockClient.httpClient.post.mockClear();
+      await service.updateHeadAdvert(123456, {
+        headAdvertType: 'FLV',
+        headAdvertFlv: 'https://example.com/legacy.flv',
+      });
+
+      expect(mockClient.httpClient.post).toHaveBeenCalledWith(
+        '/live/v2/channelAdvert/123456/updateHead',
+        null,
+        {
+          params: {
+            headAdvertType: 'flv',
+            headAdvertMediaUrl: 'https://example.com/legacy.flv',
+          },
+        }
+      );
+    });
+
     it('should update head advert with enabled param', async () => {
       mockClient.httpClient.post.mockResolvedValue(true);
 

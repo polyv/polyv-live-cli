@@ -7,6 +7,7 @@ import {
   parseJsonObject,
   parsePositiveInteger,
   parseTimestamp,
+  resolveJsonObjectOption,
   validateOutputFormat,
   validateYn,
 } from '../utils/api-command';
@@ -185,15 +186,21 @@ function registerTemplateCommands(program: Command, templateCmd: Command): void 
   // greedily across the whole argv and would otherwise swallow the value
   // before it reaches this subcommand (leaving the required option unset).
   addWriteOptions(roleConfigCmd.command('update').description('Update role config template')
-    .requiredOption('--config-json <json>', 'role config JSON object', parseJsonObject))
-    .action((options) => withUserHandler(program, handler => handler.updateRoleConfigTemplate({ ...options, config: options.configJson })));
+    .option('--config-json <json>', 'role config JSON object', parseJsonObject))
+    .action((options) => withUserHandler(program, handler => handler.updateRoleConfigTemplate({
+      ...options,
+      config: resolveJsonObjectOption(options.configJson, program.opts()['config']),
+    })));
 
   const playbackCmd = templateCmd.command('playback').description('Manage playback template');
   addOutput(playbackCmd.command('get').description('Get playback template'))
     .action((options) => withUserHandler(program, handler => handler.getPlaybackSetting(options)));
   addWriteOptions(playbackCmd.command('update').description('Update playback template')
-    .requiredOption('--config-json <json>', 'playback setting JSON object', parseJsonObject))
-    .action((options) => withUserHandler(program, handler => handler.updatePlaybackSetting({ ...options, config: options.configJson })));
+    .option('--config-json <json>', 'playback setting JSON object', parseJsonObject))
+    .action((options) => withUserHandler(program, handler => handler.updatePlaybackSetting({
+      ...options,
+      config: resolveJsonObjectOption(options.configJson, program.opts()['config']),
+    })));
 
   const audioCmd = templateCmd.command('audio-moderation').description('Manage audio moderation template');
   addOutput(audioCmd.command('get').description('Get audio moderation template'))

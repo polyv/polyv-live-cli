@@ -10,6 +10,7 @@ import type { AuthConfig } from '../types/auth';
 import { validateOutputFormat } from '../types/config';
 import type { GlobalServiceConfig } from '../types/global';
 import { logError } from '../utils/errors';
+import { resolveJsonObjectOption } from '../utils/api-command';
 
 const DEFAULT_TIMEOUT_MS = 30000;
 
@@ -130,12 +131,15 @@ export function registerGlobalCommands(program: Command): void {
     // global `--config <path>` option, which Commander parses greedily across the
     // whole argv and would otherwise swallow the value before it reaches this
     // subcommand (leaving the required option unset).
-    .requiredOption('--config-json <json>', 'page setting JSON object', parseJsonObject)
+    .option('--config-json <json>', 'page setting JSON object', parseJsonObject)
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .action((options) => withGlobalHandler(program, handler => handler.updatePageSetting({
-      config: options.configJson,
-      force: options.force,
-      output: options.output,
-    })));
+    .action((options) => withGlobalHandler(program, handler => {
+      const config = resolveJsonObjectOption(options.configJson, program.opts()['config']);
+      return handler.updatePageSetting({
+        ...(config ? { config } : {}),
+        force: options.force,
+        output: options.output,
+      });
+    }));
 }

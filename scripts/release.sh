@@ -30,6 +30,17 @@ esac
 
 # 获取当前版本并计算新版本
 CURRENT_VERSION=$(node -p "require('./$PKG_DIR/package.json').version")
+CURRENT_BRANCH=$(git branch --show-current)
+if [ -z "$CURRENT_BRANCH" ]; then
+  echo "❌ 当前处于 detached HEAD，无法确定要推送的发布分支"
+  exit 1
+fi
+
+if [ -n "$(git status --porcelain)" ]; then
+  echo "❌ 工作区不干净。请先提交或清理改动，再执行发布脚本。"
+  git status --short
+  exit 1
+fi
 
 case $BUMP_TYPE in
   major) NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. '{$1++; $2=0; $3=0}1' OFS=.) ;;
@@ -56,7 +67,7 @@ rm -f $PKG_DIR/package-lock.json
 
 # 提交版本更新 (只提交 package.json)
 git add $PKG_DIR/package.json
-git commit -m "chore(release): $PKG_NAME v$NEW_VERSION" || true
+git commit -m "chore(release): $PKG_NAME v$NEW_VERSION"
 
 # 删除已存在的 tag (本地和远程)
 if git tag -l "$TAG_NAME" | grep -q "$TAG_NAME"; then
@@ -67,7 +78,7 @@ fi
 
 # 创建并推送 tag (触发 GitHub Action)
 git tag "$TAG_NAME"
-git push origin develop
+git push origin "$CURRENT_BRANCH"
 git push origin "$TAG_NAME"
 
 echo "✅ Tag $TAG_NAME 已推送，GitHub Action 将自动发布"
