@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T03:28:17.237Z
+Generated at: 2026-06-27T03:40:44.505Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -9,14 +9,14 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Metric | Value |
 |--------|-------|
-| Integration files scanned | 91 |
+| Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 537 |
-| Missing real-execution leaf subcommands | 30 |
-| Real-execution coverage | 94.71% |
-| Leaf subcommands referenced including help | 547 |
-| Missing including help | 20 |
+| Real-executed leaf subcommands | 543 |
+| Missing real-execution leaf subcommands | 24 |
+| Real-execution coverage | 95.77% |
+| Leaf subcommands referenced including help | 553 |
+| Missing including help | 14 |
 
 ## By Top-Level Command
 
@@ -34,7 +34,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `donate` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
-| `group` | 16 | 10 | 6 | 62.50% | 10 | 6 |
+| `group` | 16 | 16 | 0 | 100.00% | 16 | 0 |
 | `interaction` | 22 | 20 | 2 | 90.91% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
@@ -69,12 +69,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `ai video-produce delete` | `packages/cli/src/commands/ai.commands.ts:312` |
 | `channel ppt-record add-task` | `packages/cli/src/commands/channel.commands.ts:1265` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
-| `group resource set-flow` | `packages/cli/src/commands/group.commands.ts:54` |
-| `group user create` | `packages/cli/src/commands/group.commands.ts:90` |
-| `group user isolation-create` | `packages/cli/src/commands/group.commands.ts:148` |
-| `group user package-update` | `packages/cli/src/commands/group.commands.ts:110` |
-| `group user package-validity-update` | `packages/cli/src/commands/group.commands.ts:171` |
-| `group user secret-reset` | `packages/cli/src/commands/group.commands.ts:195` |
 | `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |

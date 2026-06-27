@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T03:28:17.237Z",
+  "generatedAt": "2026-06-27T03:40:44.505Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -16,21 +16,21 @@
   },
   "summary": {
     "inventoryGeneratedAt": "2026-06-25T18:31:00.932Z",
-    "integrationFiles": 91,
+    "integrationFiles": 92,
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 586,
-    "referencedCommandPathsExcludingHelp": 543,
-    "coveredLeafTargetsIncludingHelp": 547,
-    "missingLeafTargetsIncludingHelp": 20,
-    "coveredRealExecutionLeafTargets": 537,
-    "missingRealExecutionLeafTargets": 30,
-    "realExecutionCoveragePercent": 94.71,
-    "includingHelpCoveragePercent": 96.47,
-    "integrationReferences": 1226,
-    "realExecutionReferences": 812,
-    "helpReferences": 414
+    "referencedCommandPathsIncludingHelp": 592,
+    "referencedCommandPathsExcludingHelp": 549,
+    "coveredLeafTargetsIncludingHelp": 553,
+    "missingLeafTargetsIncludingHelp": 14,
+    "coveredRealExecutionLeafTargets": 543,
+    "missingRealExecutionLeafTargets": 24,
+    "realExecutionCoveragePercent": 95.77,
+    "includingHelpCoveragePercent": 97.53,
+    "integrationReferences": 1238,
+    "realExecutionReferences": 818,
+    "helpReferences": 420
   },
   "byTopLevel": [
     {
@@ -156,12 +156,12 @@
     {
       "command": "group",
       "targetLeafCommands": 16,
-      "coveredRealExecutionLeafTargets": 10,
-      "missingRealExecutionLeafTargets": 6,
-      "coveredLeafTargetsIncludingHelp": 10,
-      "missingLeafTargetsIncludingHelp": 6,
-      "realExecutionCoveragePercent": 62.5,
-      "includingHelpCoveragePercent": 62.5
+      "coveredRealExecutionLeafTargets": 16,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 16,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "interaction",
@@ -461,72 +461,6 @@
       "line": 502
     },
     {
-      "command": "group resource set-flow",
-      "path": [
-        "group",
-        "resource",
-        "set-flow"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "group user create",
-      "path": [
-        "group",
-        "user",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 90
-    },
-    {
-      "command": "group user isolation-create",
-      "path": [
-        "group",
-        "user",
-        "isolation-create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 148
-    },
-    {
-      "command": "group user package-update",
-      "path": [
-        "group",
-        "user",
-        "package-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 110
-    },
-    {
-      "command": "group user package-validity-update",
-      "path": [
-        "group",
-        "user",
-        "package-validity-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 171
-    },
-    {
-      "command": "group user secret-reset",
-      "path": [
-        "group",
-        "user",
-        "secret-reset"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 195
-    },
-    {
       "command": "interaction script upload",
       "path": [
         "interaction",
@@ -772,72 +706,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "group resource set-flow",
-      "path": [
-        "group",
-        "resource",
-        "set-flow"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 54
-    },
-    {
-      "command": "group user create",
-      "path": [
-        "group",
-        "user",
-        "create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 90
-    },
-    {
-      "command": "group user isolation-create",
-      "path": [
-        "group",
-        "user",
-        "isolation-create"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 148
-    },
-    {
-      "command": "group user package-update",
-      "path": [
-        "group",
-        "user",
-        "package-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 110
-    },
-    {
-      "command": "group user package-validity-update",
-      "path": [
-        "group",
-        "user",
-        "package-validity-update"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 171
-    },
-    {
-      "command": "group user secret-reset",
-      "path": [
-        "group",
-        "user",
-        "secret-reset"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/group.commands.ts",
-      "line": 195
     },
     {
       "command": "playback merge",
@@ -3188,6 +3056,17 @@
       "line": 45
     },
     {
+      "command": "group resource set-flow",
+      "path": [
+        "group",
+        "resource",
+        "set-flow"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 54
+    },
+    {
       "command": "group resource set-live-durations",
       "path": [
         "group",
@@ -3232,6 +3111,28 @@
       "line": 125
     },
     {
+      "command": "group user create",
+      "path": [
+        "group",
+        "user",
+        "create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 90
+    },
+    {
+      "command": "group user isolation-create",
+      "path": [
+        "group",
+        "user",
+        "isolation-create"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 148
+    },
+    {
       "command": "group user package-list",
       "path": [
         "group",
@@ -3243,6 +3144,17 @@
       "line": 106
     },
     {
+      "command": "group user package-update",
+      "path": [
+        "group",
+        "user",
+        "package-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 110
+    },
+    {
       "command": "group user package-validity-list",
       "path": [
         "group",
@@ -3252,6 +3164,28 @@
       "depth": 3,
       "file": "packages/cli/src/commands/group.commands.ts",
       "line": 167
+    },
+    {
+      "command": "group user package-validity-update",
+      "path": [
+        "group",
+        "user",
+        "package-validity-update"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 171
+    },
+    {
+      "command": "group user secret-reset",
+      "path": [
+        "group",
+        "user",
+        "secret-reset"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/group.commands.ts",
+      "line": 195
     },
     {
       "command": "interaction favor",
@@ -9559,6 +9493,21 @@
       "firstHelpReference": null
     },
     {
+      "command": "group resource set-flow",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 181,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 235,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "group resource set-live-durations",
       "realExecutionReferences": 2,
       "helpReferences": 0,
@@ -9607,6 +9556,36 @@
       "firstHelpReference": null
     },
     {
+      "command": "group user create",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 67,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 204,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "group user isolation-create",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 95,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 211,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "group user package-list",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9618,6 +9597,21 @@
       "firstHelpReference": null
     },
     {
+      "command": "group user package-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 117,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 217,
+        "source": "array-literal"
+      }
+    },
+    {
       "command": "group user package-validity-list",
       "realExecutionReferences": 1,
       "helpReferences": 0,
@@ -9627,6 +9621,36 @@
         "source": "array-literal"
       },
       "firstHelpReference": null
+    },
+    {
+      "command": "group user package-validity-update",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 139,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 223,
+        "source": "array-literal"
+      }
+    },
+    {
+      "command": "group user secret-reset",
+      "realExecutionReferences": 1,
+      "helpReferences": 1,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 161,
+        "source": "array-literal"
+      },
+      "firstHelpReference": {
+        "file": "packages/cli/tests/integration/group-cli.integration.test.ts",
+        "line": 229,
+        "source": "array-literal"
+      }
     },
     {
       "command": "interaction",
