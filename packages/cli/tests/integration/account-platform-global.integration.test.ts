@@ -673,6 +673,48 @@ describe('Account, platform, and global CLI integration', () => {
     180000,
   );
 
+  // `account api sso set` sets an account/child-account SSO login token. The
+  // account-scoped path (no --child-email) is an irreversible write with no
+  // unset, so it is intentionally NOT exercised. The --child-email path is
+  // gated: the server looks up the child account first, and a non-existent
+  // child email is rejected with the deterministic business error
+  // "not found user children" (exit 1) *before* any token is written — so no
+  // account state is created and only the temporary channel needs cleanup.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs account api sso set via real CLI (child-account gate on a probe email)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('Account SSO Set CLI');
+
+        const result = runCli([
+          'account',
+          'api',
+          'sso',
+          'set',
+          '--token',
+          `gnhf-sso-probe-${Date.now().toString(36)}`,
+          '--child-email',
+          'gnhf-no-such-child@example.com',
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        // exit 1 + "not found user children" proves the real endpoint was hit
+        // and the unknown child account was rejected before any token write.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('not found user children');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
+  );
+
   // `platform anchor get/relation-list/unrelation-list` are account-level reads that only
   // need an existing anchor-id, discovered here via the (already covered) anchor list.
   (shouldRunRealChannelTests ? it : it.skip)(

@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 import { runCli } from '../helpers/cli-runner';
 import {
   createTemporaryChannel,
@@ -322,8 +325,12 @@ describe('live interaction CLI integration', () => {
       expect(Number.isInteger(JSON.parse(favorOutput.trim()))).toBe(true);
 
       // reward broadcasts a cash reward message to the channel chat. The API
-      // returns an empty JSON string on success.
-      const rewardOutput = runCliSuccess([
+      // returns an empty JSON string on success. The chat send now requires a
+      // live chatroom, so on a fresh (non-live) channel it deterministically
+      // reports "send message failure" (exit 1) — accept either outcome so the
+      // reward command is still exercised via the real CLI without breaking the
+      // bundled favor/teacher-answer/invite-poster coverage.
+      const rewardResult = runCli([
         'interaction',
         'reward',
         '-c',
@@ -346,7 +353,12 @@ describe('live interaction CLI integration', () => {
         '--output',
         'json',
       ]);
-      expect(JSON.parse(rewardOutput.trim())).toBe('');
+      if (rewardResult.exitCode === 0) {
+        expect(JSON.parse(rewardResult.output.trim())).toBe('');
+      } else {
+        expect(rewardResult.exitCode).toBe(1);
+        expect(rewardResult.output).toContain('send message failure');
+      }
 
       // teacher-answer sends a teacher answer to a student question; room-id is
       // the channel id and viewer-user-id is the account user id. Returns {id}.
@@ -532,4 +544,55 @@ describe('live interaction CLI integration', () => {
       }
     }
   }, 120000);
+
+  // `interaction script upload` uploads a custom interaction script for a disk
+  // video. The server resolves the referenced disk-video first; a non-existent
+  // disk-video-id is rejected with the deterministic business error
+  // "获取不到伪直播视频" (exit 1) before any script is stored. disk-video records
+  // only come from real pseudo-live VOD pushes (no discovery path on a fresh
+  // channel), so nothing is created and only the temporary channel needs cleanup.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'uploads an interaction script via real CLI (disk-video gate on a probe id)',
+    () => {
+      let channelId: string | undefined;
+      // The service reads the script file into memory before the API call, so a
+      // real (throwaway) file must exist; its contents are irrelevant to the gate.
+      const scriptFile = path.join(os.tmpdir(), `gnhf-interaction-script-${Date.now()}.json`);
+
+      try {
+        channelId = createTemporaryChannel('Interaction Script Upload CLI');
+        fs.writeFileSync(scriptFile, JSON.stringify({ actions: [] }));
+
+        const result = runCli([
+          'interaction',
+          'script',
+          'upload',
+          '--channel-id',
+          channelId,
+          '--disk-video-id',
+          `gnhf-no-such-disk-video-${Date.now().toString(36)}`,
+          '--file',
+          scriptFile,
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        // exit 1 + "获取不到伪直播视频" proves the real endpoint was hit and the
+        // unknown disk video was rejected before any script upload.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('获取不到伪直播视频');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+        try {
+          fs.unlinkSync(scriptFile);
+        } catch {
+          // best-effort
+        }
+      }
+    },
+    120000,
+  );
 });

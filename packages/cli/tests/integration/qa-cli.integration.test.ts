@@ -17,9 +17,15 @@
  *
  * The create -> verify -> send -> stop -> delete loop runs entirely through
  * the real CLI entry and cleans up the created question (plus the temporary
- * channel) in `finally`. Note: `qa send-result` is deliberately excluded — it
- * requires a live chatroom session and fails on a non-live channel with
- * "调用聊天室接口失败:发送答题结果时找不到题目内容".
+ * channel) in `finally`.
+ *
+ * `qa send-result` publishes a question's answer statistics. Passing a real
+ * (existing) question-id on a non-live channel fails at the chatroom step
+ * ("调用聊天室接口失败:..."), but passing a *non-existent* question-id is
+ * rejected earlier — the server looks up the question first and deterministically
+ * reports "数据不存在" (exit 1) before any chatroom call. That missing-resource
+ * path is covered here as a genuine real-API read, mirroring the covered
+ * `session get` / `record outline get` pattern.
  *
  * Note: the pre-existing `qa.integration.test.ts` exercises the service SDK
  * directly (no `runCli`) and therefore does not count as real CLI coverage;
@@ -184,6 +190,45 @@ describe('qa question-card CLI write lifecycle integration', () => {
       }
     },
     180000,
+  );
+
+  // `qa send-result` publishes answer statistics for a question. On a fresh
+  // (non-live) channel a *non-existent* question-id is rejected before any
+  // chatroom call with the deterministic business error "数据不存在" (exit 1) —
+  // a real V4 read, mirroring the covered `session get` missing-resource path.
+  // Nothing is created server-side, so only the temporary channel is cleaned up.
+  (shouldRunRealChannelTests ? it : it.skip)(
+    'runs qa send-result via real CLI (question-existence check on a probe id)',
+    () => {
+      let channelId: string | undefined;
+
+      try {
+        channelId = createTemporaryChannel('QA Send Result CLI');
+        const fakeQuestionId = `gnhf-fake-question-${Date.now().toString(36)}`;
+
+        const result = runCli([
+          'qa',
+          'send-result',
+          '--channel-id',
+          channelId,
+          '--question-id',
+          fakeQuestionId,
+          '--force',
+          '--output',
+          'json',
+        ]);
+
+        // exit 1 + "数据不存在" proves the real endpoint was hit with the
+        // requested channel/question ids and rejected the unknown question.
+        expect(result.exitCode).toBe(1);
+        expect(result.output).toContain('数据不存在');
+      } finally {
+        if (channelId) {
+          deleteTemporaryChannel(channelId);
+        }
+      }
+    },
+    120000,
   );
 
   // Sanity check that the CLI surface exists even without real credentials.

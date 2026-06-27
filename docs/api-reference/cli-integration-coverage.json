@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T04:38:12.460Z",
+  "generatedAt": "2026-06-27T05:03:56.228Z",
   "source": {
     "cliInventory": "docs/api-reference/cli-inventory.json",
     "integrationTests": "packages/cli/tests/integration/**/*.test.ts",
@@ -20,28 +20,28 @@
     "cliCommandPaths": 724,
     "cliTopLevelCommands": 40,
     "targetLeafCommands": 567,
-    "referencedCommandPathsIncludingHelp": 603,
-    "referencedCommandPathsExcludingHelp": 564,
-    "coveredLeafTargetsIncludingHelp": 564,
-    "missingLeafTargetsIncludingHelp": 3,
-    "coveredRealExecutionLeafTargets": 558,
-    "missingRealExecutionLeafTargets": 9,
-    "realExecutionCoveragePercent": 98.41,
-    "includingHelpCoveragePercent": 99.47,
-    "integrationReferences": 1253,
-    "realExecutionReferences": 833,
+    "referencedCommandPathsIncludingHelp": 604,
+    "referencedCommandPathsExcludingHelp": 567,
+    "coveredLeafTargetsIncludingHelp": 565,
+    "missingLeafTargetsIncludingHelp": 2,
+    "coveredRealExecutionLeafTargets": 561,
+    "missingRealExecutionLeafTargets": 6,
+    "realExecutionCoveragePercent": 98.94,
+    "includingHelpCoveragePercent": 99.65,
+    "integrationReferences": 1256,
+    "realExecutionReferences": 836,
     "helpReferences": 420
   },
   "byTopLevel": [
     {
       "command": "account",
       "targetLeafCommands": 23,
-      "coveredRealExecutionLeafTargets": 22,
-      "missingRealExecutionLeafTargets": 1,
-      "coveredLeafTargetsIncludingHelp": 22,
-      "missingLeafTargetsIncludingHelp": 1,
-      "realExecutionCoveragePercent": 95.65,
-      "includingHelpCoveragePercent": 95.65
+      "coveredRealExecutionLeafTargets": 23,
+      "missingRealExecutionLeafTargets": 0,
+      "coveredLeafTargetsIncludingHelp": 23,
+      "missingLeafTargetsIncludingHelp": 0,
+      "realExecutionCoveragePercent": 100,
+      "includingHelpCoveragePercent": 100
     },
     {
       "command": "ai",
@@ -166,11 +166,11 @@
     {
       "command": "interaction",
       "targetLeafCommands": 22,
-      "coveredRealExecutionLeafTargets": 20,
-      "missingRealExecutionLeafTargets": 2,
+      "coveredRealExecutionLeafTargets": 21,
+      "missingRealExecutionLeafTargets": 1,
       "coveredLeafTargetsIncludingHelp": 22,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 90.91,
+      "realExecutionCoveragePercent": 95.45,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -276,11 +276,11 @@
     {
       "command": "qa",
       "targetLeafCommands": 9,
-      "coveredRealExecutionLeafTargets": 8,
-      "missingRealExecutionLeafTargets": 1,
+      "coveredRealExecutionLeafTargets": 9,
+      "missingRealExecutionLeafTargets": 0,
       "coveredLeafTargetsIncludingHelp": 9,
       "missingLeafTargetsIncludingHelp": 0,
-      "realExecutionCoveragePercent": 88.89,
+      "realExecutionCoveragePercent": 100,
       "includingHelpCoveragePercent": 100
     },
     {
@@ -416,18 +416,6 @@
   ],
   "missingRealExecutionTargets": [
     {
-      "command": "account api sso set",
-      "path": [
-        "account",
-        "api",
-        "sso",
-        "set"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 844
-    },
-    {
       "command": "document teacher-doc relation",
       "path": [
         "document",
@@ -437,17 +425,6 @@
       "depth": 3,
       "file": "packages/cli/src/commands/document.commands.ts",
       "line": 502
-    },
-    {
-      "command": "interaction script upload",
-      "path": [
-        "interaction",
-        "script",
-        "upload"
-      ],
-      "depth": 3,
-      "file": "packages/cli/src/commands/interaction.commands.ts",
-      "line": 249
     },
     {
       "command": "interaction task-reward submit-accept-info",
@@ -483,16 +460,6 @@
       "line": 676
     },
     {
-      "command": "qa send-result",
-      "path": [
-        "qa",
-        "send-result"
-      ],
-      "depth": 2,
-      "file": "packages/cli/src/commands/qa.commands.ts",
-      "line": 322
-    },
-    {
       "command": "stream push",
       "path": [
         "stream",
@@ -514,18 +481,6 @@
     }
   ],
   "missingIncludingHelpTargets": [
-    {
-      "command": "account api sso set",
-      "path": [
-        "account",
-        "api",
-        "sso",
-        "set"
-      ],
-      "depth": 4,
-      "file": "packages/cli/src/commands/account.commands.ts",
-      "line": 844
-    },
     {
       "command": "document teacher-doc relation",
       "path": [
@@ -793,6 +748,18 @@
       "depth": 4,
       "file": "packages/cli/src/commands/account.commands.ts",
       "line": 650
+    },
+    {
+      "command": "account api sso set",
+      "path": [
+        "account",
+        "api",
+        "sso",
+        "set"
+      ],
+      "depth": 4,
+      "file": "packages/cli/src/commands/account.commands.ts",
+      "line": 844
     },
     {
       "command": "ai digital-human list",
@@ -3032,6 +2999,17 @@
       "line": 237
     },
     {
+      "command": "interaction script upload",
+      "path": [
+        "interaction",
+        "script",
+        "upload"
+      ],
+      "depth": 3,
+      "file": "packages/cli/src/commands/interaction.commands.ts",
+      "line": 249
+    },
+    {
       "command": "interaction task-reward create",
       "path": [
         "interaction",
@@ -4573,6 +4551,16 @@
       "depth": 2,
       "file": "packages/cli/src/commands/qa.commands.ts",
       "line": 54
+    },
+    {
+      "command": "qa send-result",
+      "path": [
+        "qa",
+        "send-result"
+      ],
+      "depth": 2,
+      "file": "packages/cli/src/commands/qa.commands.ts",
+      "line": 322
     },
     {
       "command": "qa send-times",
@@ -6726,6 +6714,17 @@
       "firstHelpReference": null
     },
     {
+      "command": "account api sso set",
+      "realExecutionReferences": 1,
+      "helpReferences": 0,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
+        "line": 691,
+        "source": "array-literal"
+      },
+      "firstHelpReference": null
+    },
+    {
       "command": "account current",
       "realExecutionReferences": 2,
       "helpReferences": 0,
@@ -8765,7 +8764,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 15,
+        "line": 18,
         "source": "array-literal"
       }
     },
@@ -8775,7 +8774,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 60,
+        "line": 63,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -8816,7 +8815,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 61,
+        "line": 64,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9559,7 +9558,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 20,
+        "line": 23,
         "source": "array-literal"
       }
     },
@@ -9580,7 +9579,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 70,
+        "line": 73,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9610,12 +9609,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 309,
+        "line": 312,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 37,
+        "line": 40,
         "source": "array-literal"
       }
     },
@@ -9625,7 +9624,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 371,
+        "line": 383,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9640,12 +9639,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 326,
+        "line": 333,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 38,
+        "line": 41,
         "source": "array-literal"
       }
     },
@@ -9655,7 +9654,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 514,
+        "line": 526,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9666,16 +9665,20 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 479,
+        "line": 491,
         "source": "array-literal"
       },
       "firstHelpReference": null
     },
     {
       "command": "interaction script upload",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
+        "line": 566,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/v4-channel-interaction-cli.integration.test.ts",
         "line": 114,
@@ -9688,7 +9691,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 112,
+        "line": 115,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9703,7 +9706,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 198,
+        "line": 201,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9718,7 +9721,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 69,
+        "line": 72,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9740,7 +9743,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 186,
+        "line": 189,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9762,7 +9765,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 153,
+        "line": 156,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9773,7 +9776,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 137,
+        "line": 140,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9784,7 +9787,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 429,
+        "line": 441,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -9795,12 +9798,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 353,
+        "line": 365,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 41,
+        "line": 44,
         "source": "array-literal"
       }
     },
@@ -9810,12 +9813,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 271,
+        "line": 274,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 40,
+        "line": 43,
         "source": "array-literal"
       }
     },
@@ -9825,7 +9828,7 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 258,
+        "line": 261,
         "source": "array-literal"
       },
       "firstHelpReference": {
@@ -9840,12 +9843,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 243,
+        "line": 246,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 39,
+        "line": 42,
         "source": "array-literal"
       }
     },
@@ -9949,7 +9952,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 19,
+        "line": 22,
         "source": "array-literal"
       }
     },
@@ -10205,7 +10208,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 36,
+        "line": 39,
         "source": "array-literal"
       }
     },
@@ -10532,7 +10535,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 696,
+        "line": 738,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10558,7 +10561,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 701,
+        "line": 743,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10569,7 +10572,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 706,
+        "line": 748,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10580,7 +10583,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 837,
+        "line": 879,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -10591,7 +10594,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/account-platform-global.integration.test.ts",
-        "line": 768,
+        "line": 810,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11730,7 +11733,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 16,
+        "line": 19,
         "source": "array-literal"
       }
     },
@@ -11740,12 +11743,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
-        "line": 63,
+        "line": 69,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 32,
+        "line": 35,
         "source": "array-literal"
       }
     },
@@ -11755,7 +11758,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 64,
+        "line": 67,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11766,12 +11769,12 @@
       "helpReferences": 2,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
-        "line": 149,
+        "line": 155,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 33,
+        "line": 36,
         "source": "array-literal"
       }
     },
@@ -11781,7 +11784,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 62,
+        "line": 65,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11792,7 +11795,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 65,
+        "line": 68,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11803,23 +11806,27 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
-        "line": 108,
+        "line": 114,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
-        "line": 193,
+        "line": 238,
         "source": "array-literal"
       }
     },
     {
       "command": "qa send-result",
-      "realExecutionReferences": 0,
+      "realExecutionReferences": 1,
       "helpReferences": 1,
-      "firstRealExecutionReference": null,
+      "firstRealExecutionReference": {
+        "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
+        "line": 209,
+        "source": "array-literal"
+      },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 34,
+        "line": 37,
         "source": "array-literal"
       }
     },
@@ -11829,7 +11836,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 63,
+        "line": 66,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11840,12 +11847,12 @@
       "helpReferences": 1,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
-        "line": 129,
+        "line": 135,
         "source": "array-literal"
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/qa-cli.integration.test.ts",
-        "line": 194,
+        "line": 239,
         "source": "array-literal"
       }
     },
@@ -11856,7 +11863,7 @@
       "firstRealExecutionReference": null,
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 18,
+        "line": 21,
         "source": "array-literal"
       }
     },
@@ -11871,7 +11878,7 @@
       },
       "firstHelpReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 35,
+        "line": 38,
         "source": "array-literal"
       }
     },
@@ -11911,7 +11918,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 66,
+        "line": 69,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11922,7 +11929,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 67,
+        "line": 70,
         "source": "array-literal"
       },
       "firstHelpReference": null
@@ -11933,7 +11940,7 @@
       "helpReferences": 0,
       "firstRealExecutionReference": {
         "file": "packages/cli/tests/integration/live-interaction-cli.integration.test.ts",
-        "line": 68,
+        "line": 71,
         "source": "array-literal"
       },
       "firstHelpReference": null

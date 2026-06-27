@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T04:38:12.460Z
+Generated at: 2026-06-27T05:03:56.228Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -12,17 +12,17 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Integration files scanned | 92 |
 | CLI command paths | 724 |
 | Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 558 |
-| Missing real-execution leaf subcommands | 9 |
-| Real-execution coverage | 98.41% |
-| Leaf subcommands referenced including help | 564 |
-| Missing including help | 3 |
+| Real-executed leaf subcommands | 561 |
+| Missing real-execution leaf subcommands | 6 |
+| Real-execution coverage | 98.94% |
+| Leaf subcommands referenced including help | 565 |
+| Missing including help | 2 |
 
 ## By Top-Level Command
 
 | Command | Targets | Real Covered | Real Missing | Real Coverage | Covered Including Help | Missing Including Help |
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
-| `account` | 23 | 22 | 1 | 95.65% | 22 | 1 |
+| `account` | 23 | 23 | 0 | 100.00% | 23 | 0 |
 | `ai` | 12 | 12 | 0 | 100.00% | 12 | 0 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
 | `channel` | 78 | 78 | 0 | 100.00% | 78 | 0 |
@@ -35,7 +35,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `finance` | 7 | 7 | 0 | 100.00% | 7 | 0 |
 | `global` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 | `group` | 16 | 16 | 0 | 100.00% | 16 | 0 |
-| `interaction` | 22 | 20 | 2 | 90.91% | 22 | 0 |
+| `interaction` | 22 | 21 | 1 | 95.45% | 22 | 0 |
 | `invite-sales` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `lottery` | 24 | 24 | 0 | 100.00% | 24 | 0 |
 | `material` | 7 | 7 | 0 | 100.00% | 7 | 0 |
@@ -46,7 +46,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `player` | 11 | 11 | 0 | 100.00% | 11 | 0 |
 | `product` | 36 | 36 | 0 | 100.00% | 36 | 0 |
 | `promotion` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `qa` | 9 | 8 | 1 | 88.89% | 9 | 0 |
+| `qa` | 9 | 9 | 0 | 100.00% | 9 | 0 |
 | `questionnaire` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `record` | 17 | 17 | 0 | 100.00% | 17 | 0 |
 | `robot` | 3 | 3 | 0 | 100.00% | 3 | 0 |
@@ -65,12 +65,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| `account api sso set` | `packages/cli/src/commands/account.commands.ts:844` |
 | `document teacher-doc relation` | `packages/cli/src/commands/document.commands.ts:502` |
-| `interaction script upload` | `packages/cli/src/commands/interaction.commands.ts:249` |
 | `interaction task-reward submit-accept-info` | `packages/cli/src/commands/interaction.commands.ts:415` |
 | `partner tencent-order create` | `packages/cli/src/commands/partner.commands.ts:39` |
 | `platform anchor create` | `packages/cli/src/commands/platform.commands.ts:676` |
-| `qa send-result` | `packages/cli/src/commands/qa.commands.ts:322` |
 | `stream push` | `packages/cli/src/commands/stream.commands.ts:543` |
 | `user sms-send` | `packages/cli/src/commands/user.commands.ts:124` |
