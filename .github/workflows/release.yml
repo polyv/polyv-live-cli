@@ -49,6 +49,8 @@ jobs:
     name: Publish to npm
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # npm trusted publishing (OIDC)，无需 NPM_TOKEN secret
 
     steps:
       - name: Checkout code
@@ -57,7 +59,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
 
       - name: Setup pnpm
@@ -81,6 +83,24 @@ jobs:
           echo "📦 Package: $PKG_NAME"
           echo "✅ Package ready for publish"
 
+      # CLI 通过 workspace:* 引用 SDK，npm publish 无法解析 pnpm workspace 协议，
+      # 发布前把依赖改写为 SDK 的实际版本（等价于 pnpm publish 的行为）
+      - name: Resolve workspace dependency for CLI
+        if: ${{ !startsWith(github.ref, 'refs/tags/sdk-v') }}
+        run: |
+          node -e "
+            const fs = require('fs');
+            const sdkVersion = require('./packages/sdk/package.json').version;
+            const p = './packages/cli/package.json';
+            const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
+            pkg.dependencies['polyv-live-api-sdk'] = sdkVersion;
+            fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + '\n');
+          "
+
+      # Trusted Publishing 要求 npm CLI >= 11.5.1；Node 24 自带版本可能不足，显式升级
+      - name: Update npm to latest
+        run: npm install -g npm@latest
+
       - name: Publish to npm
         run: |
           if [[ $GITHUB_REF == refs/tags/sdk-v* ]]; then
@@ -90,9 +110,7 @@ jobs:
             cd packages/cli
             echo "📦 Publishing CLI..."
           fi
-          pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm publish --access public
 
   github-release:
     name: Create GitHub Release

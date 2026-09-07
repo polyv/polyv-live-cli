@@ -2,6 +2,11 @@
   "name": "polyv-live-api-sdk",
   "version": "1.1.0",
   "description": "PolyV Live API SDK for TypeScript/Node.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polyv/polyv-live-cli.git",
+    "directory": "packages/sdk"
+  },
   "type": "module",
   "exports": {
     ".": {

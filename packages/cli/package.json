@@ -52,7 +52,8 @@
   "homepage": "https://github.com/polyv/polyv-live-cli#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/polyv/polyv-live-cli.git"
+    "url": "git+https://github.com/polyv/polyv-live-cli.git",
+    "directory": "packages/cli"
   },
   "bugs": {
     "url": "https://github.com/polyv/polyv-live-cli/issues"
