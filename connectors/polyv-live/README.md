@@ -10,7 +10,7 @@ skill 驱动 CLI 完成直播频道、推流、回放、商品、优惠券、观
 polyv-live/
 ├── connector-meta.json      # 连接器元信息（type: cli, source: polyv-live）
 ├── cli.json                 # init / auth / unAuth / status 命令与 runtime 声明
-├── icon.svg                 # 市场图标
+├── icon.png                 # 市场图标（64×64，保利威官方标识）
 ├── skills/
 │   └── polyv-live/          # AI 使用说明（SKILL.md + references/）
 │       ├── SKILL.md
