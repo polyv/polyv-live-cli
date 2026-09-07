@@ -55,21 +55,32 @@
 ### 查看频道列表
 
 ```bash
-# 基本列表（第一页，20条）
+# 基本列表（第一页，20条；默认按频道创建时间降序，最新创建的在前）
 <CLI> channel list
 
 # 分页查询
 <CLI> channel list -P 2 -l 10
 
-# 按关键词筛选
+# 按关键词筛选（服务端模糊查询，跨页生效）
 <CLI> channel list --keyword "研讨会"
 
 # 按分类筛选
 <CLI> channel list --category-id "cat123"
 
+# 按观看页状态筛选（live | playback | end | waiting | unStart）
+<CLI> channel list --watch-status live
+
+# 指定排序：startTimeDesc（开播时间降序）| startTimeAsc（开播时间升序）
+#          | channelCreatedTimeDesc（频道创建时间降序，默认）
+# 注意：startTime 排序的键是实际开播记录（未开播过的频道视为最小值），
+#       与响应里的 startTime 字段（配置的开播时间，可能是未来的定时开播）不完全一致
+<CLI> channel list --order-by startTimeDesc
+
 # JSON输出
 <CLI> channel list -o json
 ```
+
+> 注意：无匹配结果时 CLI 输出提示文本（如 `ℹ️ No channels found`）而不是 JSON，脚本解析前需判空。
 
 ### 查看频道详情
 
@@ -173,7 +184,8 @@
 ```bash
 <CLI> channel list
 # 显示表格，包含以下列：
-# 频道ID | 名称 | 状态 | 场景 | 创建时间
+# Channel ID | Name | Status | Scene | Template | Start Time
+# 注意：Start Time 列显示的是开播时间（startTime），不是频道创建时间
 ```
 
 ### JSON格式
@@ -181,17 +193,22 @@
 ```bash
 <CLI> channel list -o json
 
-# 返回：
+# 返回（CLI 自身结构，不是 API 原始响应）：
 # {
-#   "code": 200,
-#   "status": "success",
-#   "data": {
-#     "contents": [...],
-#     "pageSize": 20,
-#     "pageNumber": 1,
-#     "totalItems": 50
-#   }
+#   "channels": [
+#     {
+#       "channelId": "3151318",
+#       "name": "频道名称",
+#       "status": "waiting",
+#       "scene": "topclass",
+#       "template": "ppt",
+#       "createdAt": "2026-09-07T02:53:21.888Z",
+#       "description": ""
+#     }
+#   ],
+#   "pagination": { "page": 1, "limit": 20, "total": 2 }
 # }
+# 注意：createdAt 同样取自开播时间（startTime）；total 为当前页返回的条数
 ```
 
 ## 常用工作流程
@@ -225,7 +242,7 @@
 
 ```bash
 # 列出测试频道
-<CLI> channel list --keyword "test" -o json | jq '.data.contents[].channelId'
+<CLI> channel list --keyword "test" -o json | jq '.channels[].channelId'
 
 # 批量删除
 <CLI> channel batch-delete --channelIds 123 456 789 -f
