@@ -6,7 +6,7 @@
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
-    "test:unit": "pnpm -r test:unit",
+    "test:unit": "pnpm -r --reporter=append-only test:unit",
     "test:coverage": "pnpm --filter polyv-live-cli test:coverage && pnpm --filter polyv-live-api-sdk test:coverage",
     "test:integration": "pnpm -r --if-present test:integration",
     "test:cli:coverage": "pnpm --filter polyv-live-cli test:coverage",
