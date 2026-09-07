@@ -186,6 +186,7 @@ import type {
   PopularizationInfo,
   PopularizationListParams,
   V4PaginationParams,
+  ChannelDetailListParams,
   AddChannelCouponParams,
   ChannelIdListInput,
   BatchPlaybackListParams,
@@ -586,10 +587,14 @@ export class V4ChannelService {
   /**
    * Channel detail list
    *
+   * Supports the server-side filters documented for the endpoint
+   * (categoryId/watchStatus/keyword/orderBy). When `orderBy` is omitted the
+   * API sorts by channel creation time ascending.
+   *
    * @param params - Query parameters
    * @returns Channel detail list
    */
-  async channelDetailList(params: V4PaginationParams): Promise<{ contents: ChannelDetailListItem[] }> {
+  async channelDetailList(params: ChannelDetailListParams): Promise<{ contents: ChannelDetailListItem[] }> {
     this.validatePaginationParams(params);
 
     const response = await this.client.httpClient.get<{ contents: ChannelDetailListItem[] }>(

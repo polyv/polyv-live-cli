@@ -7,7 +7,7 @@
 import { Command } from 'commander';
 import { ChannelHandler } from '../handlers/channel.handler';
 import { ChannelServiceSdk } from '../services/channel.service.sdk';
-import { ChannelCreateOptions, ChannelListOptions, ChannelGetOptions, ChannelUpdateOptions, ChannelDeleteOptions, ChannelServiceConfig } from '../types/channel';
+import { ChannelCreateOptions, ChannelListOptions, ChannelListOrderBy, ChannelListWatchStatus, ChannelGetOptions, ChannelUpdateOptions, ChannelDeleteOptions, ChannelServiceConfig } from '../types/channel';
 import { configManager } from '../config/manager';
 import { authAdapter } from '../config/auth-adapter';
 import { logError } from '../utils/errors';
@@ -264,13 +264,14 @@ Output Formats:
   // Channel list command
   const listCmd = channelCmd
     .command('list')
-    .description('List live streaming channels with pagination')
+    .description('List live streaming channels with pagination (sorted by creation time descending by default)')
     .option('-P, --page <number>', 'page number (optional, minimum 1, default 1)', parseInteger, 1)
     .option('-l, --limit <number>', 'items per page (optional, 1-100, default 20)', validateLimit, 20)
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
-    .option('--category-id <id>', 'filter by category ID (optional)')
-    .option('--keyword <keyword>', 'filter by channel name keyword (optional)')
-    .option('--label-id <id>', 'filter by label ID (optional)')
+    .option('--category-id <id>', 'filter by category ID (optional, server-side)')
+    .option('--keyword <keyword>', 'filter by channel name keyword (optional, server-side)')
+    .option('--watch-status <status>', 'filter by watch page status (live|playback|end|waiting|unStart)', validateWatchStatus)
+    .option('--order-by <order>', 'sort order (startTimeDesc|startTimeAsc|channelCreatedTimeDesc, default: channelCreatedTimeDesc)', validateOrderBy)
     .action(async (options) => {
       try {
         // Load authentication and service configuration
@@ -287,7 +288,8 @@ Output Formats:
           output: options.output,
           categoryId: options.categoryId,
           keyword: options.keyword,
-          labelId: options.labelId
+          watchStatus: options.watchStatus,
+          orderBy: options.orderBy
         };
 
         // Execute channel listing
@@ -324,6 +326,8 @@ Alternative (full parameter names):
   $ polyv-live-cli channel list --page 2 --limit 10 --output json
   $ polyv-live-cli channel list --keyword "live stream"
   $ polyv-live-cli channel list --category-id "cat123"
+  $ polyv-live-cli channel list --watch-status live
+  $ polyv-live-cli channel list --order-by channelCreatedTimeDesc
   $ polyv-live-cli channel list --page 1 --limit 5 --output table
 
 Pagination:
@@ -331,9 +335,16 @@ Pagination:
   --limit     Items per page (1-100, default 20)
 
 Filters:
-  --category-id   Filter by category ID
-  --keyword       Filter by channel name (partial match)
-  --label-id      Filter by label ID
+  --category-id    Filter by category ID (server-side)
+  --keyword        Filter by channel name (partial match, server-side)
+  --watch-status   Filter by watch page status: live, playback, end, waiting, unStart
+
+Sorting:
+  --order-by   startTimeDesc             Start time descending
+               startTimeAsc              Start time ascending
+               channelCreatedTimeDesc    Channel creation time descending (default)
+                                         Use startTimeAsc for the legacy API default
+                                         (creation time ascending)
 
 Output Formats:
   table           Formatted table output (default)
@@ -1557,6 +1568,32 @@ function validateOutputFormat(value: string): 'table' | 'json' {
   return value as 'table' | 'json';
 }
 
+/**
+ * Validates channel list sort order option values
+ * @param value Order-by value from CLI
+ * @returns Validated order-by value
+ */
+function validateOrderBy(value: string): ChannelListOrderBy {
+  const validOrders = ['startTimeDesc', 'startTimeAsc', 'channelCreatedTimeDesc'] as const;
+  if (!validOrders.includes(value as any)) {
+    throw new Error(`Invalid order-by: ${value}. Must be one of: ${validOrders.join(', ')}`);
+  }
+  return value as ChannelListOrderBy;
+}
+
+/**
+ * Validates channel list watch status option values
+ * @param value Watch status value from CLI
+ * @returns Validated watch status value
+ */
+function validateWatchStatus(value: string): ChannelListWatchStatus {
+  const validStatuses = ['live', 'playback', 'end', 'waiting', 'unStart'] as const;
+  if (!validStatuses.includes(value as any)) {
+    throw new Error(`Invalid watch status: ${value}. Must be one of: ${validStatuses.join(', ')}`);
+  }
+  return value as ChannelListWatchStatus;
+}
+
 function validateChannelViewerScope(value: string): 'user' | 'teacher' {
   const validScopes = ['user', 'teacher'] as const;
   if (!validScopes.includes(value as any)) {
@@ -1587,6 +1624,8 @@ export {
   validateTemplate,
   validateLimit,
   validateOutputFormat,
+  validateOrderBy,
+  validateWatchStatus,
   validateChannelViewerScope,
   validateYnFlag,
   validateChatTokenRole,

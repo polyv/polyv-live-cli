@@ -398,15 +398,23 @@ export interface ChannelSimpleInfo {
 }
 
 /**
- * Parameters for channel detail list
+ * Parameters for channel detail list (GET /live/v4/channel/detail/list)
+ *
+ * Without `orderBy` the API sorts by channel creation time ascending.
  */
 export interface ChannelDetailListParams {
   /** Page number (>= 1) */
   pageNumber?: number;
   /** Page size (1-1000) */
   pageSize?: number;
-  /** Category ID */
-  categoryId?: number;
+  /** Category ID filter */
+  categoryId?: string | number;
+  /** Watch page status filter */
+  watchStatus?: ChannelDetailListWatchStatus;
+  /** Channel name fuzzy search */
+  keyword?: string;
+  /** Sort order */
+  orderBy?: ChannelDetailListOrderBy;
 }
 
 /**
@@ -3800,6 +3808,12 @@ export interface V4PaginationParams {
   /** Page size */
   pageSize?: number;
 }
+
+/** Sort values supported by the channel detail list `orderBy` parameter */
+export type ChannelDetailListOrderBy = 'startTimeDesc' | 'startTimeAsc' | 'channelCreatedTimeDesc';
+
+/** Watch page status filters supported by the channel detail list */
+export type ChannelDetailListWatchStatus = 'live' | 'playback' | 'end' | 'waiting' | 'unStart';
 
 /** V4 Paginated response wrapper */
 export interface V4PaginatedResponse<T> {

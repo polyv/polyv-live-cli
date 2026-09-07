@@ -9,6 +9,8 @@ import {
   ChannelModel,
   ChannelServiceConfig,
   ChannelListRequest,
+  ChannelListOrderBy,
+  ChannelListWatchStatus,
   ChannelListItem,
   ChannelDetailRequest,
   ChannelDetailModel,
@@ -85,6 +87,11 @@ export class ChannelServiceSdk {
 
   /**
    * Lists live streaming channels with pagination
+   *
+   * Filtering (keyword/categoryId/watchStatus) and sorting are pushed down to
+   * the server. When no explicit `orderBy` is requested, channels are sorted
+   * by channel creation time descending (newest first).
+   *
    * @param request Channel list request parameters
    * @returns Promise resolving to array of channel list items
    */
@@ -97,25 +104,22 @@ export class ChannelServiceSdk {
       const pageNumber = request.page ?? 1;
       const pageSize = request.limit ?? 20;
 
-      // Use v4 channel detail list
+      // Use v4 channel detail list; filter/sort server-side (only defined
+      // filters are included in the request)
       const result = await client.v4Channel.channelDetailList({
         pageNumber,
         pageSize,
+        orderBy: request.orderBy ?? 'channelCreatedTimeDesc',
+        ...(request.keyword !== undefined && { keyword: request.keyword }),
+        ...(request.categoryId !== undefined && { categoryId: request.categoryId }),
+        ...(request.watchStatus !== undefined && { watchStatus: request.watchStatus }),
       });
 
       if (!result?.contents || result.contents.length === 0) {
         return [];
       }
 
-      // Filter by keyword if provided (client-side filtering)
-      let channels = result.contents;
-      if (request.keyword) {
-        channels = channels.filter((ch) =>
-          ch.name?.toLowerCase().includes(request.keyword!.toLowerCase())
-        );
-      }
-
-      return channels.map((channel) => ({
+      return result.contents.map((channel) => ({
         channelId: String(channel.channelId),
         name: channel.name,
         status: this.mapWatchStatus(channel.watchStatus),
@@ -803,6 +807,16 @@ export class ChannelServiceSdk {
 
     if (request.limit !== undefined && (typeof request.limit !== 'number' || request.limit < 1 || request.limit > 100)) {
       errors.push('limit must be an integer between 1 and 100');
+    }
+
+    const orderByValues: ChannelListOrderBy[] = ['startTimeDesc', 'startTimeAsc', 'channelCreatedTimeDesc'];
+    if (request.orderBy !== undefined && !orderByValues.includes(request.orderBy)) {
+      errors.push(`orderBy must be one of: ${orderByValues.join(', ')}`);
+    }
+
+    const watchStatusValues: ChannelListWatchStatus[] = ['live', 'playback', 'end', 'waiting', 'unStart'];
+    if (request.watchStatus !== undefined && !watchStatusValues.includes(request.watchStatus)) {
+      errors.push(`watchStatus must be one of: ${watchStatusValues.join(', ')}`);
     }
 
     if (errors.length > 0) {

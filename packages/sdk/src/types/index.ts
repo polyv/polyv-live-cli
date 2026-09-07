@@ -408,6 +408,8 @@ export type {
 // V4 Channel types
 export type {
   V4PaginationParams,
+  ChannelDetailListOrderBy,
+  ChannelDetailListWatchStatus,
   V4PaginatedResponse,
   ChannelIdParam,
   NewScene,

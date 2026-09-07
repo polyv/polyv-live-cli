@@ -15,6 +15,8 @@ import {
   ChannelModel,
   ChannelServiceConfig,
   ChannelListOptions,
+  ChannelListOrderBy,
+  ChannelListWatchStatus,
   ChannelListRequest,
   ChannelListItem,
   ChannelGetOptions,
@@ -811,8 +813,16 @@ export class ChannelHandler extends BaseHandler {
       errors.push('Keyword must be a non-empty string');
     }
 
-    if (options.labelId !== undefined && (typeof options.labelId !== 'string' || options.labelId.trim().length === 0)) {
-      errors.push('Label ID must be a non-empty string');
+    // Validate watch status filter
+    const validWatchStatuses: ChannelListWatchStatus[] = ['live', 'playback', 'end', 'waiting', 'unStart'];
+    if (options.watchStatus !== undefined && !validWatchStatuses.includes(options.watchStatus)) {
+      errors.push(`Watch status must be one of: ${validWatchStatuses.join(', ')}`);
+    }
+
+    // Validate sort order
+    const validOrderByValues: ChannelListOrderBy[] = ['startTimeDesc', 'startTimeAsc', 'channelCreatedTimeDesc'];
+    if (options.orderBy !== undefined && !validOrderByValues.includes(options.orderBy)) {
+      errors.push(`Order by must be one of: ${validOrderByValues.join(', ')}`);
     }
 
     if (errors.length > 0) {
@@ -1241,15 +1251,20 @@ export class ChannelHandler extends BaseHandler {
       request.limit = options.limit;
     }
 
-    // Add optional filters
+    // Add optional filters (applied server-side by the API)
     if (options.categoryId) {
       request.categoryId = options.categoryId.trim();
     }
     if (options.keyword) {
       request.keyword = options.keyword.trim();
     }
-    if (options.labelId) {
-      request.labelId = options.labelId.trim();
+    if (options.watchStatus) {
+      request.watchStatus = options.watchStatus;
+    }
+
+    // Sort order; the service defaults to channel creation time descending
+    if (options.orderBy) {
+      request.orderBy = options.orderBy;
     }
 
     return request;
@@ -1311,7 +1326,7 @@ export class ChannelHandler extends BaseHandler {
         'Status': channel.status,
         'Scene': channel.scene,
         'Template': channel.template,
-        'Created': channel.createdAt.toLocaleDateString()
+        'Start Time': channel.createdAt.toLocaleDateString()
       }));
 
       this.displaySuccess(`Found ${channels.length} channels`, tableData, 'table');

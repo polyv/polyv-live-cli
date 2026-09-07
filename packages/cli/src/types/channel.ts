@@ -132,6 +132,16 @@ export interface ChannelServiceConfig {
 }
 
 /**
+ * Sort orders supported by `channel list`
+ */
+export type ChannelListOrderBy = 'startTimeDesc' | 'startTimeAsc' | 'channelCreatedTimeDesc';
+
+/**
+ * Watch page status filters supported by `channel list`
+ */
+export type ChannelListWatchStatus = 'live' | 'playback' | 'end' | 'waiting' | 'unStart';
+
+/**
  * Channel list request interface for PolyV API
  */
 export interface ChannelListRequest {
@@ -143,8 +153,10 @@ export interface ChannelListRequest {
   categoryId?: string;
   /** Channel name keyword search (optional) */
   keyword?: string;
-  /** Label ID filter (optional) */
-  labelId?: string;
+  /** Watch page status filter (optional) */
+  watchStatus?: ChannelListWatchStatus;
+  /** Sort order (optional; defaults to channel creation time descending) */
+  orderBy?: ChannelListOrderBy;
 }
 
 /**
@@ -206,8 +218,10 @@ export interface ChannelListOptions {
   categoryId?: string;
   /** Channel name keyword search (optional) */
   keyword?: string;
-  /** Label ID filter (optional) */
-  labelId?: string;
+  /** Watch page status filter (optional) */
+  watchStatus?: ChannelListWatchStatus;
+  /** Sort order (optional; defaults to channel creation time descending) */
+  orderBy?: ChannelListOrderBy;
 }
 
 /**
