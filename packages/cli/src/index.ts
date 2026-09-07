@@ -12,6 +12,7 @@ import { registerStreamCommands } from './commands/stream.commands';
 import { registerProductCommands } from './commands/product.commands';
 import { registerMonitorCommands } from './commands/monitor.commands';
 import { registerAccountCommands } from './commands/account.commands';
+import { registerAuthCommands } from './commands/auth.commands';
 import { registerUseCommand } from './commands/use.commands';
 import { registerCouponCommands } from './commands/coupon.commands';
 import { registerSetupCommand } from './commands/setup.commands';
@@ -181,6 +182,7 @@ async function main(): Promise<void> {
 
   // Register commands
   registerAccountCommands(program);
+  registerAuthCommands(program);
   registerUseCommand(program);
   registerChannelCommands(program);
   registerStreamCommands(program);

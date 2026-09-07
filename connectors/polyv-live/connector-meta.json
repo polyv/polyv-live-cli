@@ -1,0 +1,24 @@
+{
+  "name": "polyv-live",
+  "name_zh": "保利威云直播",
+  "name_en": "PolyV Live",
+  "description": "Manage PolyV live streaming services via the polyv-live-cli: channels, stream keys and status, playbacks, products, coupons, sessions, chat, viewers, watch conditions, platform settings and live statistics.",
+  "description_zh": "通过 polyv-live-cli 管理保利威云直播：频道、推流与开播状态、回放、商品、优惠券、场次、聊天、观众、观看条件、平台设置与直播统计，支持查询与运营操作。",
+  "description_en": "Manage PolyV live streaming services via the polyv-live-cli: channels, stream keys and status, playbacks, products, coupons, sessions, chat, viewers, watch conditions, platform settings and live statistics.",
+  "source": "polyv-live",
+  "type": "cli",
+  "version": "1.0.0",
+  "examples_zh": [
+    "看看我现在的直播频道和状态",
+    "复盘一下上一场直播的观看数据",
+    "帮我创建一个电商场景的直播频道",
+    "查一下某个频道的回放列表"
+  ],
+  "examples_en": [
+    "Show my live channels and their status",
+    "Review the viewer data of my last session",
+    "Create a channel for my e-commerce live",
+    "List the replays of a channel"
+  ],
+  "minWorkbuddyVersion": "4.24.0"
+}

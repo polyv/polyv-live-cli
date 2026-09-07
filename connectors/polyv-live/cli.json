@@ -1,0 +1,28 @@
+{
+  "runtime": {
+    "type": "node",
+    "version": "20"
+  },
+  "init": {
+    "darwin": "npm install -g polyv-live-cli",
+    "linux": "npm install -g polyv-live-cli",
+    "win32": "npm install -g polyv-live-cli"
+  },
+  "auth": {
+    "darwin": "polyv-live-cli auth",
+    "linux": "polyv-live-cli auth",
+    "win32": "polyv-live-cli.cmd auth"
+  },
+  "unAuth": {
+    "darwin": "polyv-live-cli auth logout",
+    "linux": "polyv-live-cli auth logout",
+    "win32": "polyv-live-cli.cmd auth logout"
+  },
+  "status": {
+    "darwin": "polyv-live-cli auth status",
+    "linux": "polyv-live-cli auth status",
+    "win32": "polyv-live-cli.cmd auth status"
+  },
+  "statusMatch": "Logged in",
+  "versionCheck": "1.4.0"
+}
