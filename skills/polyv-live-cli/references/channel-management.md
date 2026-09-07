@@ -64,8 +64,8 @@
 # 按关键词筛选（服务端模糊查询，跨页生效）
 <CLI> channel list --keyword "研讨会"
 
-# 按分类筛选
-<CLI> channel list --category-id "cat123"
+# 按分类筛选（分类 ID 为数字，可通过账号分类列表接口查询；传非数字会被服务端拒绝）
+<CLI> channel list --category-id 340019
 
 # 按观看页状态筛选（live | playback | end | waiting | unStart）
 <CLI> channel list --watch-status live
