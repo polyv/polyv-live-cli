@@ -1,6 +1,11 @@
 ---
 name: polyv-live-cli
+version: 1.3.0
+display_name: 保利威云直播
+display_name_en: PolyV Live
 description: 保利威官方 skill。通过 npm 发布版 polyv-live-cli 管理保利威云直播服务。用于查询或管理直播频道、推流地址和状态、商品、优惠券、回放、文档、场次、聊天、签到、问答、问卷、抽奖、打赏、观众、观看条件、白名单、平台设置、播放器、卡片推送、推广渠道、转播频道、AI 数字人、监控面板、场景初始化和直播统计。
+description_zh: 保利威云直播官方技能：通过命令行管理直播频道、推流、商品、优惠券、回放、互动、观众、统计等全部能力，命令结果以 JSON 输出，适合自动化与数据提取。
+description_en: Official PolyV Live skill. Manage live channels, stream keys and status, products, coupons, replays, sessions, chat, check-in, Q&A, questionnaires, lotteries, viewers, watch conditions, platform settings and live statistics via the npm-published polyv-live-cli. JSON output preferred for automation and data extraction.
 allowed-tools: Bash(npx --yes polyv-live-cli@latest:*)
 ---
 
