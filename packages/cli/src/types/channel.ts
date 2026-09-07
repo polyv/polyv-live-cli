@@ -192,8 +192,8 @@ export interface ChannelListItem {
   name: string;
   /** Channel status */
   status: 'live' | 'waiting' | 'end' | 'unStart';
-  /** Creation time */
-  createdAt: Date;
+  /** Start time (startTime from the API); null when the channel has no configured start time. A createdAt is only exposed once the API itself returns one. */
+  startTime: Date | null;
   /** Live scene type */
   scene: string;
   /** Channel template */

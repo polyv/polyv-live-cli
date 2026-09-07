@@ -419,7 +419,7 @@ describe('ChannelHandler', () => {
         channelId: 'ch001',
         name: 'Channel 1',
         status: 'waiting' as const,
-        createdAt: new Date('2023-01-01'),
+        startTime: new Date('2023-01-01'),
         scene: 'topclass',
         template: 'ppt'
       },
@@ -427,7 +427,7 @@ describe('ChannelHandler', () => {
         channelId: 'ch002',
         name: 'Channel 2',
         status: 'live' as const,
-        createdAt: new Date('2023-01-02'),
+        startTime: new Date('2023-01-02'),
         scene: 'alone',
         template: 'portrait_alone'
       }

@@ -185,7 +185,8 @@
 <CLI> channel list
 # 显示表格，包含以下列：
 # Channel ID | Name | Status | Scene | Template | Start Time
-# 注意：Start Time 列显示的是开播时间（startTime），不是频道创建时间
+# 注意：Start Time 列显示的是开播时间（startTime），不是频道创建时间；
+#       频道未配置开播时间时显示 -
 ```
 
 ### JSON格式
@@ -202,13 +203,15 @@
 #       "status": "waiting",
 #       "scene": "topclass",
 #       "template": "ppt",
-#       "createdAt": "2026-09-07T02:53:21.888Z",
+#       "startTime": "2026-09-07T10:10:48.118Z",
 #       "description": ""
 #     }
 #   ],
 #   "pagination": { "page": 1, "limit": 20, "total": 2 }
 # }
-# 注意：createdAt 同样取自开播时间（startTime）；total 为当前页返回的条数
+# 注意：startTime 即接口的开播时间，未配置开播时间时为 null；
+#       接口不返回频道创建时间，因此输出中没有 createdAt 字段；
+#       total 为当前页返回的条数
 ```
 
 ## 常用工作流程

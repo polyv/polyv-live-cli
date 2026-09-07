@@ -123,7 +123,9 @@ export class ChannelServiceSdk {
         channelId: String(channel.channelId),
         name: channel.name,
         status: this.mapWatchStatus(channel.watchStatus),
-        createdAt: new Date(channel.startTime || Date.now()),
+        // startTime 为 null 表示频道未配置开播时间；接口不返回创建时间，
+        // 因此这里不提供 createdAt 字段（未来服务端增加创建时间后再映射）
+        startTime: channel.startTime ? new Date(channel.startTime) : null,
         scene: channel.newScene || channel.scene,
         template: channel.template,
         description: '',

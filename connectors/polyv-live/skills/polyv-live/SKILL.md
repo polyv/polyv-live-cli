@@ -1,6 +1,6 @@
 ---
 name: polyv-live
-version: 1.4.0
+version: 1.4.1
 display_name: 保利威云直播
 display_name_en: PolyV Live
 description: 保利威官方 skill。通过 polyv-live-cli 管理保利威云直播服务。用于查询或管理直播频道、推流地址和状态、商品、优惠券、回放、文档、场次、聊天、签到、问答、问卷、抽奖、打赏、观众、观看条件、白名单、平台设置、播放器、卡片推送、推广渠道、转播频道、AI 数字人、监控面板、场景初始化和直播统计。

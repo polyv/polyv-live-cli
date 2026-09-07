@@ -472,6 +472,19 @@ describe('ChannelServiceSdk', () => {
       }
     });
 
+    it('should expose startTime as null when the channel has no configured start time (no fabricated createdAt)', async () => {
+      mockSdkClient.v4Channel.channelDetailList.mockResolvedValueOnce({
+        contents: [
+          { channelId: '1', name: 'No Start Time', watchStatus: 'waiting', startTime: null },
+        ],
+      });
+
+      const result = await service.listChannels();
+
+      expect(result[0].startTime).toBeNull();
+      expect(result[0]).not.toHaveProperty('createdAt');
+    });
+
     it('should handle API errors', async () => {
       mockSdkClient.v4Channel.channelDetailList.mockRejectedValueOnce(new Error('API Error'));
 

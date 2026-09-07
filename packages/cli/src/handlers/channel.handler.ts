@@ -1307,7 +1307,7 @@ export class ChannelHandler extends BaseHandler {
           status: channel.status,
           scene: channel.scene,
           template: channel.template,
-          createdAt: channel.createdAt.toISOString(),
+          startTime: channel.startTime ? channel.startTime.toISOString() : null,
           description: channel.description,
           maxViewers: channel.maxViewers
         })),
@@ -1326,7 +1326,7 @@ export class ChannelHandler extends BaseHandler {
         'Status': channel.status,
         'Scene': channel.scene,
         'Template': channel.template,
-        'Start Time': channel.createdAt.toLocaleDateString()
+        'Start Time': channel.startTime ? channel.startTime.toLocaleDateString() : '-'
       }));
 
       this.displaySuccess(`Found ${channels.length} channels`, tableData, 'table');
