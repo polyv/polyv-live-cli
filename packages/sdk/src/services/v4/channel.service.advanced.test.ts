@@ -533,6 +533,41 @@ describe('V4ChannelService - Advanced Configuration', () => {
       expect(result.contents).toHaveLength(1);
       expect(result.contents[0].viewerCount).toBe(100);
     });
+
+    it('[P0] should pass filters and orderBy to the endpoint', async () => {
+      const mockResponse = { contents: [] };
+      mockHttpClient.get.mockResolvedValueOnce(mockResponse);
+
+      await service.channelDetailList({
+        pageNumber: 2,
+        pageSize: 20,
+        categoryId: 'cat123',
+        watchStatus: 'live',
+        keyword: 'demo',
+        orderBy: 'channelCreatedTimeDesc'
+      });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/live/v4/channel/detail/list',
+        expect.objectContaining({
+          params: {
+            pageNumber: 2,
+            pageSize: 20,
+            categoryId: 'cat123',
+            watchStatus: 'live',
+            keyword: 'demo',
+            orderBy: 'channelCreatedTimeDesc'
+          }
+        })
+      );
+    });
+
+    it('[P1] should reject out-of-range pagination params', async () => {
+      await expect(service.channelDetailList({ pageNumber: 0, pageSize: 10 }))
+        .rejects.toThrow();
+      await expect(service.channelDetailList({ pageNumber: 1, pageSize: 1001 }))
+        .rejects.toThrow();
+    });
   });
 
   describe('listChannelBasicInfo', () => {

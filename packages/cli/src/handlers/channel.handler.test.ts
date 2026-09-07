@@ -463,7 +463,8 @@ describe('ChannelHandler', () => {
         const options = {
           categoryId: 'cat123',
           keyword: 'test',
-          labelId: 'label456',
+          watchStatus: 'live' as const,
+          orderBy: 'startTimeAsc' as const,
           output: 'json' as const
         };
 
@@ -472,7 +473,8 @@ describe('ChannelHandler', () => {
         expect(mockChannelService.listChannels).toHaveBeenCalledWith({
           categoryId: 'cat123',
           keyword: 'test',
-          labelId: 'label456'
+          watchStatus: 'live',
+          orderBy: 'startTimeAsc'
         });
       });
     });
@@ -489,6 +491,24 @@ describe('ChannelHandler', () => {
 
       it('should throw validation error for invalid limit', async () => {
         const options = { limit: 101 };
+
+        await expect(channelHandler.listChannels(options))
+          .rejects.toThrow(PolyVValidationError);
+
+        expect(mockChannelService.listChannels).not.toHaveBeenCalled();
+      });
+
+      it('should throw validation error for invalid watch status', async () => {
+        const options = { watchStatus: 'bogus' as any };
+
+        await expect(channelHandler.listChannels(options))
+          .rejects.toThrow(PolyVValidationError);
+
+        expect(mockChannelService.listChannels).not.toHaveBeenCalled();
+      });
+
+      it('should throw validation error for invalid order-by', async () => {
+        const options = { orderBy: 'bogus' as any };
 
         await expect(channelHandler.listChannels(options))
           .rejects.toThrow(PolyVValidationError);

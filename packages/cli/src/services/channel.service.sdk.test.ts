@@ -312,7 +312,7 @@ describe('ChannelServiceSdk', () => {
       expect(result).toEqual([]);
     });
 
-    it('should filter by keyword', async () => {
+    it('should pass filters to the server and default to creation time descending', async () => {
       const mockResponse = {
         contents: [
           { channelId: '1', name: 'Test Channel', watchStatus: 'live', startTime: 1700000000000 },
@@ -324,22 +324,52 @@ describe('ChannelServiceSdk', () => {
 
       const result = await service.listChannels({ keyword: 'Test' });
 
-      expect(result).toHaveLength(1);
+      // Keyword filtering is pushed down to the server; results are mapped as-is
+      expect(mockSdkClient.v4Channel.channelDetailList).toHaveBeenCalledWith({
+        pageNumber: 1,
+        pageSize: 20,
+        keyword: 'Test',
+        categoryId: undefined,
+        watchStatus: undefined,
+        orderBy: 'channelCreatedTimeDesc',
+      });
+      expect(result).toHaveLength(2);
       expect(result[0].name).toBe('Test Channel');
+      expect(result[1].name).toBe('Other Channel');
     });
 
-    it('should filter by keyword case-insensitively', async () => {
-      const mockResponse = {
+    it('should pass keyword through verbatim without client-side filtering', async () => {
+      mockSdkClient.v4Channel.channelDetailList.mockResolvedValueOnce({
         contents: [
           { channelId: '1', name: 'TEST Channel', watchStatus: 'live', startTime: 1700000000000 },
         ],
-      };
-
-      mockSdkClient.v4Channel.channelDetailList.mockResolvedValueOnce(mockResponse);
+      });
 
       const result = await service.listChannels({ keyword: 'test' });
 
+      expect(mockSdkClient.v4Channel.channelDetailList).toHaveBeenCalledWith(
+        expect.objectContaining({ keyword: 'test' })
+      );
       expect(result).toHaveLength(1);
+    });
+
+    it('should pass categoryId, watchStatus and orderBy to the server', async () => {
+      mockSdkClient.v4Channel.channelDetailList.mockResolvedValueOnce({ contents: [] });
+
+      await service.listChannels({
+        categoryId: 'cat123',
+        watchStatus: 'live',
+        orderBy: 'startTimeDesc',
+      });
+
+      expect(mockSdkClient.v4Channel.channelDetailList).toHaveBeenCalledWith({
+        pageNumber: 1,
+        pageSize: 20,
+        keyword: undefined,
+        categoryId: 'cat123',
+        watchStatus: 'live',
+        orderBy: 'startTimeDesc',
+      });
     });
 
     it('should use custom page and limit', async () => {
@@ -350,6 +380,10 @@ describe('ChannelServiceSdk', () => {
       expect(mockSdkClient.v4Channel.channelDetailList).toHaveBeenCalledWith({
         pageNumber: 2,
         pageSize: 50,
+        keyword: undefined,
+        categoryId: undefined,
+        watchStatus: undefined,
+        orderBy: 'channelCreatedTimeDesc',
       });
     });
 
@@ -373,6 +407,18 @@ describe('ChannelServiceSdk', () => {
 
     it('should throw PolyVValidationError for limit below 1', async () => {
       const invalidRequest = { limit: 0 };
+
+      await expect(service.listChannels(invalidRequest)).rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should throw PolyVValidationError for invalid orderBy', async () => {
+      const invalidRequest = { orderBy: 'bogusOrder' } as any;
+
+      await expect(service.listChannels(invalidRequest)).rejects.toThrow(PolyVValidationError);
+    });
+
+    it('should throw PolyVValidationError for invalid watchStatus', async () => {
+      const invalidRequest = { watchStatus: 'bogusStatus' } as any;
 
       await expect(service.listChannels(invalidRequest)).rejects.toThrow(PolyVValidationError);
     });

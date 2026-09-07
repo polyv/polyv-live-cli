@@ -11,7 +11,9 @@ import {
   validateScene,
   validateTemplate,
   validateLimit,
-  validateOutputFormat
+  validateOutputFormat,
+  validateOrderBy,
+  validateWatchStatus
 } from './channel.commands';
 
 // Mock dependencies
@@ -563,7 +565,7 @@ describe('Channel Commands', () => {
         const listCommand = channelCommand?.commands.find(cmd => cmd.name() === 'list');
         
         expect(listCommand).toBeDefined();
-        expect(listCommand?.description()).toBe('List live streaming channels with pagination');
+        expect(listCommand?.description()).toBe('List live streaming channels with pagination (sorted by creation time descending by default)');
         
         // Check options
         const options = listCommand?.options || [];
@@ -573,7 +575,8 @@ describe('Channel Commands', () => {
           '--output',
           '--category-id',
           '--keyword',
-          '--label-id'
+          '--watch-status',
+          '--order-by'
         ];
         
         expectedOptions.forEach(optionName => {
@@ -647,7 +650,8 @@ describe('Channel Commands', () => {
           output: 'table',
           categoryId: undefined,
           keyword: undefined,
-          labelId: undefined
+          watchStatus: undefined,
+          orderBy: undefined
         });
       });
 
@@ -673,7 +677,8 @@ describe('Channel Commands', () => {
           output: 'json',
           categoryId: undefined,
           keyword: undefined,
-          labelId: undefined
+          watchStatus: undefined,
+          orderBy: undefined
         });
       });
 
@@ -687,7 +692,8 @@ describe('Channel Commands', () => {
             'node', 'test', 'channel', 'list',
             '--category-id', 'cat123',
             '--keyword', 'live stream',
-            '--label-id', 'label456'
+            '--watch-status', 'live',
+            '--order-by', 'startTimeAsc'
           ]);
         } catch (error) {
           // Expected due to possible process.exit
@@ -699,7 +705,8 @@ describe('Channel Commands', () => {
           output: 'table',
           categoryId: 'cat123',
           keyword: 'live stream',
-          labelId: 'label456'
+          watchStatus: 'live',
+          orderBy: 'startTimeAsc'
         });
       });
 
@@ -1243,6 +1250,34 @@ describe('Channel Commands', () => {
         expect(() => validateOutputFormat('invalid')).toThrow('Invalid output format: invalid. Must be one of: table, json');
         expect(() => validateOutputFormat('xml')).toThrow('Invalid output format: xml. Must be one of: table, json');
         expect(() => validateOutputFormat('csv')).toThrow('Invalid output format: csv. Must be one of: table, json');
+      });
+    });
+
+    describe('validateOrderBy', () => {
+      it('should validate valid order-by values', () => {
+        expect(validateOrderBy('startTimeDesc')).toBe('startTimeDesc');
+        expect(validateOrderBy('startTimeAsc')).toBe('startTimeAsc');
+        expect(validateOrderBy('channelCreatedTimeDesc')).toBe('channelCreatedTimeDesc');
+      });
+
+      it('should throw error for invalid order-by value', () => {
+        expect(() => validateOrderBy('invalid')).toThrow('Invalid order-by: invalid. Must be one of: startTimeDesc, startTimeAsc, channelCreatedTimeDesc');
+        expect(() => validateOrderBy('createdTimeAsc')).toThrow('Invalid order-by: createdTimeAsc. Must be one of: startTimeDesc, startTimeAsc, channelCreatedTimeDesc');
+      });
+    });
+
+    describe('validateWatchStatus', () => {
+      it('should validate valid watch status values', () => {
+        expect(validateWatchStatus('live')).toBe('live');
+        expect(validateWatchStatus('playback')).toBe('playback');
+        expect(validateWatchStatus('end')).toBe('end');
+        expect(validateWatchStatus('waiting')).toBe('waiting');
+        expect(validateWatchStatus('unStart')).toBe('unStart');
+      });
+
+      it('should throw error for invalid watch status value', () => {
+        expect(() => validateWatchStatus('invalid')).toThrow('Invalid watch status: invalid. Must be one of: live, playback, end, waiting, unStart');
+        expect(() => validateWatchStatus('banpush')).toThrow('Invalid watch status: banpush. Must be one of: live, playback, end, waiting, unStart');
       });
     });
   });
