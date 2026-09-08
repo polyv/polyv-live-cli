@@ -1,19 +1,23 @@
 {
   "name": "polyv-live-ops",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "PolyV live streaming operations expert that drives polyv-live-cli via Bash to manage channels, streams, playbacks, products, coupons and viewer data, with pre-live checklists, live monitoring and post-live review playbooks.",
   "author": {
     "name": "37795272",
     "email": "90859897+37795272@users.noreply.github.com"
   },
-  "agents": ["./agents/polyv-live-ops.md"],
+  "agents": [
+    "./agents/polyv-live-ops.md"
+  ],
   "expertType": "agent",
   "agentName": "polyv-live-ops",
-  "skills": ["./skills/polyv-live-cli"],
+  "skills": [
+    "./skills/polyv-live-cli"
+  ],
   "homepage": "https://github.com/polyv/polyv-live-cli",
   "displayName": {
     "en": "PolyV Live Ops",
-    "zh": "易方保利威直播运营专家"
+    "zh": "易方直播运营专家"
   },
   "profession": {
     "en": "Live Streaming Operations Specialist",
@@ -31,13 +35,31 @@
   },
   "plugin": "polyv-live-ops",
   "tags": [
-    { "en": "PolyV", "zh": "保利威" },
-    { "en": "Live Streaming", "zh": "直播运营" },
-    { "en": "Data Review", "zh": "数据复盘" }
+    {
+      "en": "PolyV",
+      "zh": "保利威"
+    },
+    {
+      "en": "Live Streaming",
+      "zh": "直播运营"
+    },
+    {
+      "en": "Data Review",
+      "zh": "数据复盘"
+    }
   ],
   "quickPrompts": [
-    { "en": "Show my live channels and their current status", "zh": "帮我看看当前账号的直播频道和状态" },
-    { "en": "Review the viewer data of my last session", "zh": "复盘一下上一场直播的观看数据" },
-    { "en": "Run a pre-live checklist for my e-commerce channel", "zh": "开播前帮我做一次电商场景检查" }
+    {
+      "en": "Show my live channels and their current status",
+      "zh": "帮我看看当前账号的直播频道和状态"
+    },
+    {
+      "en": "Review the viewer data of my last session",
+      "zh": "复盘一下上一场直播的观看数据"
+    },
+    {
+      "en": "Run a pre-live checklist for my e-commerce channel",
+      "zh": "开播前帮我做一次电商场景检查"
+    }
   ]
 }
