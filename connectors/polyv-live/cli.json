@@ -3,6 +3,7 @@
     "type": "node",
     "version": "20"
   },
+  "npmRegistry": "https://registry.npmmirror.com",
   "init": {
     "darwin": "npm install -g polyv-live-cli",
     "linux": "npm install -g polyv-live-cli",
