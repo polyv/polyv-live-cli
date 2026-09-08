@@ -1,6 +1,6 @@
 {
   "name": "polyv-live-ops",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "PolyV live streaming operations expert that drives polyv-live-cli via Bash to manage channels, streams, playbacks, products, coupons and viewer data, with pre-live checklists, live monitoring and post-live review playbooks.",
   "author": {
     "name": "37795272",
