@@ -1,6 +1,6 @@
 {
   "name": "polyv-live-ops",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "PolyV live streaming operations expert that drives polyv-live-cli via Bash to manage channels, streams, playbacks, products, coupons and viewer data, with pre-live checklists, live monitoring and post-live review playbooks.",
   "author": {
     "name": "37795272",
@@ -13,15 +13,15 @@
   "homepage": "https://github.com/polyv/polyv-live-cli",
   "displayName": {
     "en": "PolyV Live Ops",
-    "zh": "保利威直播运营专家"
+    "zh": "易方保利威直播运营专家"
   },
   "profession": {
     "en": "Live Streaming Operations Specialist",
     "zh": "直播运营专家"
   },
   "displayDescription": {
-    "en": "Inspects and manages PolyV live channels, streams, playbacks, products and viewer data through the polyv-live-cli, covering pre-live checklists, live monitoring and post-live data review.",
-    "zh": "基于保利威云直播命令行，实时查询频道、推流、回放与观看数据，覆盖开播检查、直播监控与播后复盘。"
+    "en": "Official PolyV live operations expert by YiFang Information Technology. Inspects and manages PolyV live channels, streams, playbacks, products and viewer data via polyv-live-cli, covering pre-live checklists, live monitoring and post-live review.",
+    "zh": "易方信息科技旗下保利威直播官方专家，实时查询频道、推流、回放与观看数据，覆盖开播检查、直播监控与播后复盘。"
   },
   "avatar": "avatars/expert.png",
   "categoryId": "09-OperationsHR",
