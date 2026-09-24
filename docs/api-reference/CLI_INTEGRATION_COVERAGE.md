@@ -1,6 +1,6 @@
 # CLI Integration Coverage
 
-Generated at: 2026-06-27T06:26:13.770Z
+Generated at: 2026-09-24T03:39:01.990Z
 
 This report measures real local CLI execution coverage in `packages/cli/tests/integration`.
 Help-only invocations are tracked separately and do not count as real execution coverage.
@@ -10,13 +10,13 @@ Help-only invocations are tracked separately and do not count as real execution 
 | Metric | Value |
 |--------|-------|
 | Integration files scanned | 93 |
-| CLI command paths | 724 |
-| Target leaf subcommands | 567 |
-| Real-executed leaf subcommands | 567 |
-| Missing real-execution leaf subcommands | 0 |
-| Real-execution coverage | 100.00% |
-| Leaf subcommands referenced including help | 567 |
-| Missing including help | 0 |
+| CLI command paths | 727 |
+| Target leaf subcommands | 568 |
+| Real-executed leaf subcommands | 565 |
+| Missing real-execution leaf subcommands | 3 |
+| Real-execution coverage | 99.47% |
+| Leaf subcommands referenced including help | 566 |
+| Missing including help | 2 |
 
 ## By Top-Level Command
 
@@ -24,8 +24,9 @@ Help-only invocations are tracked separately and do not count as real execution 
 |---------|---------|--------------|--------------|---------------|------------------------|------------------------|
 | `account` | 23 | 23 | 0 | 100.00% | 23 | 0 |
 | `ai` | 12 | 12 | 0 | 100.00% | 12 | 0 |
+| `auth` | 2 | 0 | 2 | 0.00% | 0 | 2 |
 | `card-push` | 8 | 8 | 0 | 100.00% | 8 | 0 |
-| `channel` | 78 | 78 | 0 | 100.00% | 78 | 0 |
+| `channel` | 78 | 77 | 1 | 98.72% | 78 | 0 |
 | `chat` | 44 | 44 | 0 | 100.00% | 44 | 0 |
 | `checkin` | 5 | 5 | 0 | 100.00% | 5 | 0 |
 | `coupon` | 8 | 8 | 0 | 100.00% | 8 | 0 |
@@ -57,7 +58,7 @@ Help-only invocations are tracked separately and do not count as real execution 
 | `user` | 31 | 31 | 0 | 100.00% | 31 | 0 |
 | `viewer` | 19 | 19 | 0 | 100.00% | 19 | 0 |
 | `watch-condition` | 2 | 2 | 0 | 100.00% | 2 | 0 |
-| `web` | 34 | 34 | 0 | 100.00% | 34 | 0 |
+| `web` | 33 | 33 | 0 | 100.00% | 33 | 0 |
 | `webapp` | 6 | 6 | 0 | 100.00% | 6 | 0 |
 | `whitelist` | 4 | 4 | 0 | 100.00% | 4 | 0 |
 
@@ -65,4 +66,6 @@ Help-only invocations are tracked separately and do not count as real execution 
 
 | Command | Source |
 |---------|--------|
-| _None_ | _All target leaf commands have real integration execution coverage._ |
+| `auth logout` | `packages/cli/src/commands/auth.commands.ts:73` |
+| `auth status` | `packages/cli/src/commands/auth.commands.ts:52` |
+| `channel distribute update-batch` | `packages/cli/src/commands/channel.commands.ts:1170` |

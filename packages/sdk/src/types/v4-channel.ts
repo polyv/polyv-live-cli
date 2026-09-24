@@ -172,13 +172,13 @@ export interface UpdateChannelParams {
   startTime?: number;
   /** End time */
   endTime?: number;
-  /** Cover image URL */
+  /** Cover image URL (not documented by v4 update API; server may ignore it - prefer v3 updateChannel) */
   coverImg?: string;
-  /** Splash image URL */
+  /** Live cover image URL (直播封面, shown on guide page; API doc labels it 引导页图片) */
   splashImg?: string;
-  /** Description */
+  /** Description (not documented by v4 update API; server may ignore it) */
   desc?: string;
-  /** Publishing region */
+  /** Publishing region (not documented by v4 update API; server may ignore it) */
   publishingRegion?: string;
 }
 

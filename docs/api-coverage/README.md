@@ -23,7 +23,7 @@ API 文档列中的路径均相对于本仓库根目录解析的 `../document-ce
 | `channel create` | `v4Channel.create()` | `POST /live/v4/channel/create` | `v4/channel/basic_create.md` |
 | `channel list` | `v4Channel.channelDetailList()` | `POST /live/v4/channel/detail-list` | `v4/channel/operate/channel_detail_list.md` |
 | `channel get` | `v4Channel.getChannel()` | `POST /live/v4/channel/get` | `v4/channel/operate/get_channel.md` |
-| `channel update` | `channel.updateChannel()` | `POST /live/v3/channel/basic/update` | `channel/operate/update_setting.md` |
+| `channel update` | `channel.updateChannel()` | `POST /live/v3/channel/basic/update` | `channel/operate/update_channel_detail_setting.md` |
 | `channel delete` | `channel.batchDeleteChannels()` | `POST /live/v3/channel/basic/batch-delete` | `channel/operate/batch_delete_channels.md` |
 | `channel batch-delete` | `channel.batchDeleteChannels()` | `POST /live/v3/channel/basic/batch-delete` | `channel/operate/batch_delete_channels.md` |
 
@@ -356,7 +356,7 @@ API 文档列中的路径均相对于本仓库根目录解析的 `../document-ce
 | | createChannel | POST /live/v4/channel/create | `v4/channel/basic_create.md` |
 | | listChannels | POST /live/v4/channel/detail-list | `v4/channel/operate/channel_detail_list.md` |
 | | getChannelDetail | POST /live/v4/channel/get | `v4/channel/operate/get_channel.md` |
-| | updateChannel | POST /live/v3/channel/basic/update | `channel/operate/update_setting.md` |
+| | updateChannel | POST /live/v3/channel/basic/update | `channel/operate/update_channel_detail_setting.md` |
 | | deleteChannel | POST /live/v3/channel/basic/batch-delete | `channel/operate/batch_delete_channels.md` |
 | | batchDeleteChannels | POST /live/v3/channel/basic/batch-delete | `channel/operate/batch_delete_channels.md` |
 | **chat.service.sdk.ts** | | | |

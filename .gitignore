@@ -125,3 +125,4 @@ experts/*.zip
 connectors/*.zip
 experts/**/*.zip
 connectors/**/*.zip
+.pnpm-store/

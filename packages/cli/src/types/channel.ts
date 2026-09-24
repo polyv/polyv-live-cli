@@ -348,9 +348,9 @@ export interface ChannelDetailModel {
   pageView: number;
   /** Likes count */
   likes: number;
-  /** Cover image URL */
+  /** Live room icon URL (直播间图标, NOT the live cover) */
   coverImg: string;
-  /** Splash image URL */
+  /** Live cover image URL (直播封面, shown on guide page; API doc labels it 引导页图片) */
   splashImg: string;
   /** Splash enabled */
   splashEnabled: 'Y' | 'N';
@@ -455,9 +455,9 @@ export interface BasicSetting {
   maxViewerRestrict?: 'Y' | 'N';
   /** Close danmu (optional, Y/N) */
   closeDanmu?: 'Y' | 'N';
-  /** Cover image URL (optional) */
+  /** Live room icon URL (optional, 直播间图标, NOT the live cover) */
   coverImg?: string;
-  /** Splash image URL (optional) */
+  /** Live cover image URL (optional, 直播封面, shown on guide page; API doc labels it 引导页图片) */
   splashImg?: string;
 }
 
@@ -499,9 +499,9 @@ export interface ChannelUpdateOptions {
   pageView?: number;
   /** Likes count (optional, non-negative integer) */
   likes?: number;
-  /** Cover image URL (optional) */
+  /** Live room icon URL (optional, 直播间图标, NOT the live cover) */
   coverImg?: string;
-  /** Splash image URL (optional) */
+  /** Live cover image URL (optional, 直播封面, shown on guide page; API doc labels it 引导页图片) */
   splashImg?: string;
   /** Output format (optional, default 'table') */
   output?: 'table' | 'json';

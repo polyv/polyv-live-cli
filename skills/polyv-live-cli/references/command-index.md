@@ -121,8 +121,8 @@ Manage live streaming channels
 - `channel subtitle`: Manage V4 realtime subtitle settings
 - `channel template-update`: Update V4 channel live template
 - `channel token`: Manage channel historical tokens
-- `channel update`: Update an existing live streaming channel
-- `channel v4-update`: Update V4 channel basic information
+- `channel update`: Update an existing live streaming channel (修改频道信息, v3)
+- `channel update-setting`: Update channel settings (修改频道设置, v4; 旧名 `v4-update` 仍可用)
 - `channel viewer`: Manage channel-owned viewers and viewer
 
 ### chat

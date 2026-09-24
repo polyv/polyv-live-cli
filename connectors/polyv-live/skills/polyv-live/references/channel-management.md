@@ -167,13 +167,15 @@
 <CLI> channel create -n "录制直播" --auto-record
 ```
 
-### 封面和引导图
+### 直播间图标和直播封面
 
 ```bash
-# 更新封面图
+# 更新直播间图标（coverImg 是直播间图标，不是直播封面；
+# 非保利威域名下的图片需先调用「上传频道所有装修图片素材」接口上传后再使用）
 <CLI> channel update -c <频道ID> --cover-img "https://example.com/cover.jpg"
 
-# 更新引导图
+# 更新直播封面（splashImg 就是管理后台的「直播封面」，开播前展示在引导页；
+# 官方 API 文档虽标注为「引导页图片地址」，实际修改的是直播封面）
 <CLI> channel update -c <频道ID> --splash-img "https://example.com/splash.jpg"
 ```
 

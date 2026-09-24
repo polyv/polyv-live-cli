@@ -131,7 +131,7 @@ describe('remaining channel CLI integration', () => {
       { args: ['channel', 'auth', 'api-token', '--help'], text: '--expire-seconds' },
       { args: ['channel', 'auth', 'test-mode-token', '--help'], text: '--expire-time' },
       { args: ['channel', 'batch-create', '--help'], text: '--force' },
-      { args: ['channel', 'v4-update', '--help'], text: '--force' },
+      { args: ['channel', 'update-setting', '--help'], text: '--force' },
       { args: ['stream', 'hls-pull-url', '--help'], text: '--channel-id' },
       { args: ['player', 'warmup', 'switch-update', '--help'], text: '--force' },
       { args: ['channel', 'submeeting-batch-add', '--help'], text: '--sub-channels-json' },
@@ -194,7 +194,7 @@ describe('remaining channel CLI integration', () => {
 
       runCliSuccess([
         'channel',
-        'v4-update',
+        'update-setting',
         '--channel-id',
         channelId,
         '--name',

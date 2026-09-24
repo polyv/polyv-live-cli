@@ -533,11 +533,11 @@ export interface CreateChannelV3Request {
   autoPlay?: number;
   /** Player color */
   playerColor?: string;
-  /** Cover image URL */
+  /** Live room icon URL (直播间图标, NOT the live cover) */
   coverImg?: string;
   /** Splash enabled */
   splashEnabled?: YNFlag;
-  /** Splash image URL */
+  /** Live cover image URL (直播封面, shown on guide page; API doc labels it 引导页图片) */
   splashImg?: string;
   /** Initial likes count */
   likes?: number;

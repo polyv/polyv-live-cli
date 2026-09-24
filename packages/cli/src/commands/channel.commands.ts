@@ -429,8 +429,8 @@ Note:
     .option('--end-time <timestamp>', 'live end time (timestamp)', parseInteger)
     .option('--page-views <number>', 'page view count', parseInteger)
     .option('--likes <number>', 'likes count', parseInteger)
-    .option('--cover-img <url>', 'cover image URL')
-    .option('--splash-img <url>', 'splash image URL')
+    .option('--cover-img <url>', 'live room icon URL (not player cover image)')
+    .option('--splash-img <url>', 'live cover image URL (直播封面; shown on guide page)')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
       try {
@@ -489,8 +489,8 @@ Update Parameters (at least one required):
   --end-time      Live end time (13-digit timestamp)
   --page-views    Page view count (non-negative integer)
   --likes         Likes count (non-negative integer)
-  --cover-img     Cover image URL
-  --splash-img    Splash image URL
+  --cover-img     Live room icon URL (not the live cover)
+  --splash-img    Live cover image URL (直播封面; shown on guide page)
 
 Output Formats:
   table           Formatted table output with update summary (default)
@@ -499,6 +499,12 @@ Output Formats:
 Note: 
   At least one update parameter must be provided. The password field will be 
   masked in output for security. Time parameters should be 13-digit timestamps.
+  --splash-img sets the live cover image (直播封面) shown in the admin console
+  and on the guide page before the live starts - although the official API
+  doc labels splashImg as 引导页图片, this field IS the live cover.
+  --cover-img sets the live room icon (直播间图标) in the watch page, NOT the
+  live cover. Images hosted outside PolyV domains must be uploaded via the
+  PolyV uploadimage API before use.
 `);
 
   // Register single channel delete command
@@ -874,18 +880,16 @@ Scope:
       }))
     ));
 
-  channelCmd.command('v4-update')
-    .description('Update V4 channel basic information')
+  const updateSettingCmd = channelCmd.command('update-setting')
+    .alias('v4-update')
+    .description('Update channel settings (修改频道设置; POST /live/v4/channel/update)')
     .requiredOption('--channel-id <id>', 'channel ID')
     .option('--name <name>', 'channel name')
     .option('--publisher <publisher>', 'publisher name')
     .option('--channel-passwd <password>', 'channel password')
     .option('--start-time <timestamp>', 'start timestamp', parseInteger)
     .option('--end-time <timestamp>', 'end timestamp', parseInteger)
-    .option('--cover-img <url>', 'cover image URL')
-    .option('--splash-img <url>', 'splash image URL')
-    .option('--desc <description>', 'channel description')
-    .option('--publishing-region <region>', 'publishing region')
+    .option('--splash-img <url>', 'live cover image URL (直播封面; shown on guide page)')
     .option('-f, --force', 'skip confirmation prompt')
     .option('-o, --output <format>', 'output format (table|json)', validateOutputFormat, 'table')
     .action(async (options) => {
@@ -896,10 +900,7 @@ Scope:
           'channelPasswd',
           'startTime',
           'endTime',
-          'coverImg',
           'splashImg',
-          'desc',
-          'publishingRegion',
         ]);
         await runChannelApiWriteCommand(
           options,
@@ -911,6 +912,17 @@ Scope:
         process.exit(1);
       }
     });
+
+  updateSettingCmd.addHelpText('after', `
+Examples:
+  $ polyv-live-cli channel update-setting --channel-id 3151318 --name "New Name"
+  $ polyv-live-cli channel update-setting --channel-id 3151318 --splash-img "https://example.com/splash.jpg"
+
+Note:
+  Maps to POST /live/v4/channel/update (修改频道设置).
+  To update the live room icon (coverImg) or channel description, use
+  "channel update" instead (POST /live/v3/channel/basic/update, 修改频道信息).
+`);
 
   channelCmd.command('create-init')
     .description('Create and initialize a V4 channel')

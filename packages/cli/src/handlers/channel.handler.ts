@@ -973,7 +973,7 @@ export class ChannelHandler extends BaseHandler {
     }
 
     if (options.splashImg !== undefined && typeof options.splashImg !== 'string') {
-      errors.push('Splash image URL must be a string');
+      errors.push('Live cover image URL must be a string');
     }
 
     // Validate output format
@@ -1083,8 +1083,8 @@ export class ChannelHandler extends BaseHandler {
     if (options.endTime !== undefined) updateSummary.push(`End Time: ${new Date(options.endTime).toLocaleString()}`);
     if (options.pageView !== undefined) updateSummary.push(`Page Views: ${options.pageView}`);
     if (options.likes !== undefined) updateSummary.push(`Likes: ${options.likes}`);
-    if (options.coverImg !== undefined) updateSummary.push(`Cover Image: ${options.coverImg}`);
-    if (options.splashImg !== undefined) updateSummary.push(`Splash Image: ${options.splashImg}`);
+    if (options.coverImg !== undefined) updateSummary.push(`Live Room Icon: ${options.coverImg}`);
+    if (options.splashImg !== undefined) updateSummary.push(`Live Cover Image: ${options.splashImg}`);
 
     this.displaySuccess(`Channel ${options.channelId} updated successfully`);
     
@@ -1456,8 +1456,8 @@ export class ChannelHandler extends BaseHandler {
 
       // Additional URLs (if available)
       const urls: string[] = [];
-      if (channelDetail.coverImg) urls.push(`Cover Image: ${channelDetail.coverImg}`);
-      if (channelDetail.splashImg) urls.push(`Splash Image: ${channelDetail.splashImg}`);
+      if (channelDetail.coverImg) urls.push(`Live Room Icon: ${channelDetail.coverImg}`);
+      if (channelDetail.splashImg) urls.push(`Live Cover Image: ${channelDetail.splashImg}`);
       if (channelDetail.bgImg) urls.push(`Background Image: ${channelDetail.bgImg}`);
       if (urls.length > 0) {
         this.displayInfo('Images:\n' + urls.join('\n'));
