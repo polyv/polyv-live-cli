@@ -25,5 +25,12 @@
     "win32": "polyv-live-cli.cmd auth status"
   },
   "statusMatch": "Logged in",
-  "versionCheck": "1.4.0"
+  "versionCheck": {
+    "command": {
+      "darwin": "polyv-live-cli --version",
+      "linux": "polyv-live-cli --version",
+      "win32": "polyv-live-cli.cmd --version"
+    },
+    "minVersion": "1.4.0"
+  }
 }

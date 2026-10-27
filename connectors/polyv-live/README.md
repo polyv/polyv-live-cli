@@ -39,7 +39,8 @@ zip -r ../polyv-live.zip . -x "*.DS_Store"
 ## 版本要求
 
 - `minWorkbuddyVersion: 4.24.0`（examples 双语、versionCheck、statusMatch 等字段的最低版本）。
-- `cli.json` 的 `versionCheck: 1.4.0`：要求 CLI 具备 `auth` 命令组（1.4.0 引入），版本过低时
+- `cli.json` 的 `versionCheck`（对象格式，4.24.0 起支持）：通过 `polyv-live-cli --version` 读取
+  本机版本，`minVersion: 1.4.0` 要求 CLI 具备 `auth` 命令组（1.4.0 引入），版本过低时
   WorkBuddy 会重新执行安装。
 
 ## skill 同步
