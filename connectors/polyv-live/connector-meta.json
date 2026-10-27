@@ -7,7 +7,7 @@
   "description_en": "Official PolyV live connector by YiFang Information Technology. Manage live channels, stream keys and status, playbacks, products, coupons, sessions, chat, viewers, watch conditions, platform settings and live statistics via the polyv-live-cli.",
   "source": "polyv-live",
   "type": "cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "examples_zh": [
     "看看我现在的直播频道和状态",
     "复盘一下上一场直播的观看数据",
