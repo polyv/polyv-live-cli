@@ -45,6 +45,7 @@ const mockCommand = {
   option: jest.fn().mockReturnThis(),
   addHelpText: jest.fn().mockReturnThis(),
   on: jest.fn().mockReturnThis(),
+  hook: jest.fn().mockReturnThis(),
   parse: jest.fn().mockReturnThis(),
   outputHelp: jest.fn().mockReturnThis(),
   helpInformation: jest.fn().mockReturnValue('Mock help information'),

@@ -50,6 +50,7 @@ import { registerWebCommands } from './commands/web.commands';
 import { registerInviteSalesCommands } from './commands/invite-sales.commands';
 import { registerCustomFieldCommands } from './commands/custom-field.commands';
 import { registerUserCommands } from './commands/user.commands';
+import { resolveSource, setResolvedSource, isExemptInvocation } from './utils/source-context';
 
 // Global error handlers
 process.on('uncaughtException', handleUncaughtError);
@@ -169,7 +170,11 @@ async function main(): Promise<void> {
     .option('--appSecret <secret>', 'PolyV application secret')
     .option('--userId <id>', 'PolyV user ID (optional)')
     .option('-a, --account <name>', 'use specific account configuration')
-    .option('--verbose', 'show authentication source information');
+    .option('--verbose', 'show authentication source information')
+    .option(
+      '--source <id>',
+      '调用方来源标识（API 命令必填）：官方平台连接器传平台名（如 workbuddy），其它 agent 传自身名称（如 codex）'
+    );
 
   // Global configuration options
   program
@@ -224,6 +229,28 @@ async function main(): Promise<void> {
   registerInviteSalesCommands(program);
   registerCustomFieldCommands(program);
   registerUserCommands(program);
+
+  // Surface the required global --source option in every command's help.
+  // Agents read `<command> --help` (per-command help shows only the
+  // command's own options in Commander), not just the main help.
+  const sourceHelpHint = [
+    '',
+    'Global Options:',
+    '  --source <id>  调用方来源标识（API 命令必填）：官方平台连接器传平台名（如 workbuddy），其它 agent 传自身名称（如 codex）',
+    '',
+  ].join('\n');
+  const addSourceHelpHint = (cmd: Command): void => {
+    // Cosmetic hint — never let a malformed command object break the run.
+    if (typeof cmd.addHelpText === 'function') {
+      cmd.addHelpText('after', sourceHelpHint);
+    }
+    if (Array.isArray(cmd.commands)) {
+      cmd.commands.forEach((sub: Command) => addSourceHelpHint(sub));
+    }
+  };
+  if (Array.isArray(program.commands)) {
+    program.commands.forEach((cmd: Command) => addSourceHelpHint(cmd));
+  }
 
   // Helper function to get all registered commands dynamically
   function getAllRegisteredCommands(): { topLevel: string[], subCommands: Map<string, string[]> } {
@@ -366,6 +393,25 @@ Authentication:
   // Check if this is a valid command that should execute normally
   const hasValidCommand = args.includes('channel') || args.includes('stream') || args.includes('product') || args.includes('coupon') || args.includes('setup') || args.includes('monitor') || args.includes('account') || args.includes('use') || args.includes('statistics') || args.includes('player') || args.includes('playback') || args.includes('document') || args.includes('session') || args.includes('record') || args.includes('chat') || args.includes('checkin') || args.includes('qa') || args.includes('questionnaire') || args.includes('lottery') || args.includes('donate') || args.includes('viewer') || args.includes('watch-condition') || args.includes('whitelist') || args.includes('platform') || args.includes('promotion') || args.includes('card-push') || args.includes('transmit') || args.includes('ai') || args.includes('global') || args.includes('group') || args.includes('finance') || args.includes('material') || args.includes('webapp') || args.includes('robot') || args.includes('partner') || args.includes('web');
   if (hasValidCommand) {
+    // Per-invocation source declaration: API-bound commands require --source,
+    // taught by the error message when missing. Never throws.
+    program.hook('preAction', (_thisCommand, actionCommand) => {
+      // Walk the invocation path (subcommand → ... → top-level command).
+      const names: string[] = [];
+      let cmd: Command | undefined = actionCommand;
+      while (cmd) {
+        names.push(cmd.name());
+        cmd = cmd.parent ?? undefined;
+      }
+      if (!isExemptInvocation(names)) {
+        const outcome = resolveSource(program.opts() as { source?: string });
+        if ('error' in outcome) {
+          console.error(outcome.error);
+          process.exit(1);
+        }
+        setResolvedSource(outcome);
+      }
+    });
     // Let Commander.js handle the command execution
     try {
       program.parse();
