@@ -25,7 +25,7 @@
 | 5 | `mcp_polyv_watch_condition_get` | `watch-condition get` | 5.2 观看条件 | 读 | 否 | channel-id 可选（不传=全局设置）——MCP 侧要求显式传频道或显式声明查全局，消除歧义 | — |
 | 6 | `mcp_polyv_watch_condition_set` | `watch-condition set` | 5.2 观看条件 | 写 | 是（观看条件整组语义） | **auth-type 枚举生成期裁剪至放行值 `none/code/phone/info`，`pay/external` 类生成期排除 + 运行时拒绝兜底（AD-5/AD-10）**；rank=1/2 修改必须先查后合并、保留未要求改动的另一级条件；auth-type=code 时 auth-code 必填 | R1（info 登记字段范围） |
 | 7 | `mcp_polyv_whitelist_list` | `whitelist list` | 5.2 观看条件 | 读 | 否 | rank 必填（1=主要/2=次要）；channel-id 可选→全局 | — |
-| 8 | `mcp_polyv_whitelist_add` | `whitelist add` | 5.2 观看条件 | 写 | 否（追加式） | 同会员码再次添加覆盖昵称（描述写明）；不做整表替换；批量导入不承诺逐行失败明细（整体结果+汇总口径） | — |
+| 8 | `mcp_polyv_whitelist_add` | `whitelist add` | 5.2 观看条件 | 写 | 否（追加式） | 线上实测：同会员码重复添加报 "whitelist code exist" 不覆盖（覆盖需未策展的 update-white-list）；按 create 语义上架、不做整表替换；批量导入不承诺逐行失败明细（整体结果+汇总口径） | — |
 | 9 | `mcp_polyv_web_auth_record_field_get` | `web auth record-field-get` | 5.2 观看条件 | 读 | 否 | 返回登记字段与是否必填；登记观看 ≠ 报名观看（描述写明，不扩展报名审核/短信） | R1（字段可选范围） |
 | 10 | `mcp_polyv_playback_list` | `playback list` | 5.3 回放 | 读 | 否 | list-type 区分暂存/回放视频；必须用直播系统视频 ID，点播 VID 混用报错 | R2（回放列表与配置口径） |
 | 11 | `mcp_polyv_playback_enabled_get` | `playback enabled get` | 5.3 回放 | 读 | 否 | channelId 必填 | — |
