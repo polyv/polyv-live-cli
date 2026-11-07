@@ -4,6 +4,7 @@
  */
 
 import { Command } from 'commander';
+import { applyCuration } from './curation';
 import { LoadedCliTree, collectLeaves, collectTreeStats, sourceExemptCommandNames } from './load-cli';
 import { findNameCollisions, toolNameFromPath } from './naming';
 import { buildInputSchema } from './schema';
@@ -18,7 +19,11 @@ function generatorPackageInfo(): { name: string; version: string } {
 }
 
 /** Build the full tool inventory + stats from a loaded CLI tree. */
-export function buildManifest(tree: LoadedCliTree, generatedAt: string): ToolManifest {
+export function buildManifest(
+  tree: LoadedCliTree,
+  generatedAt: string,
+  options: { curation?: boolean } = {},
+): ToolManifest {
   const warnings = [...tree.warnings];
   const exemptNames = sourceExemptCommandNames();
   const stats = collectTreeStats(tree.program);
@@ -52,7 +57,7 @@ export function buildManifest(tree: LoadedCliTree, generatedAt: string): ToolMan
     }
   }
 
-  return {
+  const manifest: ToolManifest = {
     formatVersion: FORMAT_VERSION,
     generator: generatorPackageInfo(),
     cli: {
@@ -80,6 +85,12 @@ export function buildManifest(tree: LoadedCliTree, generatedAt: string): ToolMan
     tools,
     generatedAt,
   };
+  // D3 curation is on by default (the shipped manifest is the curated one);
+  // synthetic-fixture unit tests opt out because they don't carry the 20 tools.
+  if (options.curation !== false) {
+    applyCuration(manifest);
+  }
+  return manifest;
 }
 
 function buildToolEntry(

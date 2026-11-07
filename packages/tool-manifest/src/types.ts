@@ -80,6 +80,13 @@ export interface ToolManifest {
   stats: ManifestStats;
   /** Curated whitelist (tool names). Empty until D3 selection lands; the only visibility source. */
   curatedWhitelist: string[];
+  /** D3 curation metadata: decision provenance and which tools carry generator-side overrides. */
+  curation?: {
+    version: number;
+    decidedAt: string;
+    decision: string;
+    overriddenTools: string[];
+  };
   /** Full leaf inventory, deterministically sorted by commandPath. */
   tools: ToolEntry[];
   /** ISO timestamp — the only volatile field; kept last for clean diffs. */

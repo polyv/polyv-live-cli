@@ -51,21 +51,21 @@ function fixtureTree(): LoadedCliTree {
 
 describe('manifest assembly', () => {
   it('carries formatVersion "1" and an explicit empty curatedWhitelist', () => {
-    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
+    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
     expect(manifest.formatVersion).toBe(FORMAT_VERSION);
     expect(manifest.formatVersion).toBe('1');
     expect(manifest.curatedWhitelist).toEqual([]);
   });
 
   it('records generator and cli metadata', () => {
-    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
+    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
     expect(manifest.generator.name).toBe('@polyv/tool-manifest');
     expect(manifest.cli.package).toBe('polyv-live-cli');
     expect(manifest.cli.version).toBe('0.0.0-test');
   });
 
   it('names tools after full command paths and includes 4-level paths', () => {
-    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
+    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
     const names = manifest.tools.map((tool: ToolEntry) => tool.name);
     expect(names).toContain('mcp_polyv_channel_list');
     expect(names).toContain('mcp_polyv_account_api_playback_list');
@@ -73,7 +73,7 @@ describe('manifest assembly', () => {
   });
 
   it('marks API-bound tools serverInjected=["source"] and exempt paths not', () => {
-    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
+    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
     const byName = new Map(manifest.tools.map(tool => [tool.name, tool]));
     expect(byName.get('mcp_polyv_channel_list')).toMatchObject({ serverInjected: ['source'], sourceExempt: false });
     // account/* is in the CLI's SOURCE_EXEMPT_COMMANDS
@@ -83,7 +83,7 @@ describe('manifest assembly', () => {
   });
 
   it('never exposes source as an inputSchema property, even for commands that declare their own --source', () => {
-    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
+    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
     for (const tool of manifest.tools) {
       expect(tool.inputSchema.properties.source).toBeUndefined();
       expect(tool.inputSchema.required).not.toContain('source');
@@ -93,15 +93,15 @@ describe('manifest assembly', () => {
   });
 
   it('computes verb distribution and enum coverage', () => {
-    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
+    const manifest = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
     expect(manifest.stats.leafTools).toBe(5);
     expect(manifest.stats.toolsByVerbClass).toEqual({ read: 3, write: 2, unknown: 0 });
     expect(manifest.stats.enumCoverage).toEqual({ high: 0, medium: 1, low: 0, none: 4 });
   });
 
   it('is deterministic apart from generatedAt (stable serialization)', () => {
-    const first = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z');
-    const second = buildManifest(fixtureTree(), '2026-11-08T00:00:00.000Z');
+    const first = buildManifest(fixtureTree(), '2026-11-07T00:00:00.000Z', { curation: false });
+    const second = buildManifest(fixtureTree(), '2026-11-08T00:00:00.000Z', { curation: false });
     const strip = (json: string): string => json.replace(/"generatedAt": "[^"]+"/, '"generatedAt": "X"');
     expect(strip(serializeManifest(first))).toBe(strip(serializeManifest(second)));
     expect(serializeManifest(first).endsWith('\n')).toBe(true);

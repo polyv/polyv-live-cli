@@ -42,7 +42,28 @@
       "register functions not wired into the CLI entry (dead code, excluded from the tree): registerConfigCommands"
     ]
   },
-  "curatedWhitelist": [],
+  "curatedWhitelist": [
+    "mcp_polyv_channel_list",
+    "mcp_polyv_channel_get",
+    "mcp_polyv_channel_create",
+    "mcp_polyv_channel_update",
+    "mcp_polyv_watch_condition_get",
+    "mcp_polyv_watch_condition_set",
+    "mcp_polyv_whitelist_list",
+    "mcp_polyv_whitelist_add",
+    "mcp_polyv_web_auth_record_field_get",
+    "mcp_polyv_playback_list",
+    "mcp_polyv_playback_enabled_get",
+    "mcp_polyv_playback_enabled_set",
+    "mcp_polyv_statistics_channel_summary",
+    "mcp_polyv_statistics_export_session",
+    "mcp_polyv_statistics_product_click",
+    "mcp_polyv_product_list",
+    "mcp_polyv_product_add",
+    "mcp_polyv_product_update",
+    "mcp_polyv_product_shelf",
+    "mcp_polyv_product_reference"
+  ],
   "tools": [
     {
       "name": "mcp_polyv_account_add",
@@ -18959,7 +18980,7 @@
     },
     {
       "name": "mcp_polyv_playback_enabled_set",
-      "description": "修改用户或频道回放开关",
+      "description": "修改用户或频道回放开关 （channelId 必填：不指定频道会对整个账号全局开关回放；操作以当前授权用户身份执行。）",
       "commandPath": [
         "playback",
         "enabled",
@@ -18968,7 +18989,8 @@
       "verbClass": "write",
       "sourceExempt": false,
       "serverInjected": [
-        "source"
+        "source",
+        "userId"
       ],
       "inputSchema": {
         "type": "object",
@@ -19007,17 +19029,11 @@
               "N"
             ],
             "enumConfidence": "medium"
-          },
-          "userId": {
-            "type": "string",
-            "flag": "--user-id",
-            "origin": "option",
-            "description": "用户ID"
           }
         },
         "required": [
           "playBackEnabled",
-          "userId"
+          "channelId"
         ],
         "additionalProperties": false
       }
@@ -22093,7 +22109,7 @@
     },
     {
       "name": "mcp_polyv_product_reference",
-      "description": "Reference a platform product into a channel product library",
+      "description": "Reference a platform product into a channel product library （仅引用：商品字段跟随平台商品库变化；本版本不支持复制为独立商品。）",
       "commandPath": [
         "product",
         "reference"
@@ -31436,7 +31452,7 @@
     },
     {
       "name": "mcp_polyv_watch_condition_set",
-      "description": "设置观看条件配置",
+      "description": "设置观看条件配置 （上架边界：仅支持 none/code/phone/info 四种观看条件；付费观看与外部授权不在本插件范围。）",
       "commandPath": [
         "watch-condition",
         "set"
@@ -31463,14 +31479,10 @@
             "enum": [
               "none",
               "code",
-              "pay",
               "phone",
-              "info",
-              "custom",
-              "external",
-              "direct"
+              "info"
             ],
-            "enumConfidence": "medium"
+            "enumConfidence": "high"
           },
           "channelId": {
             "type": "string",
@@ -34087,5 +34099,15 @@
       }
     }
   ],
-  "generatedAt": "2026-11-07T03:28:15.316Z"
+  "generatedAt": "2026-11-07T11:47:38.247Z",
+  "curation": {
+    "version": 1,
+    "decidedAt": "2026-11-07",
+    "decision": "D3: all 20 candidates shipped; product_reference reference-only",
+    "overriddenTools": [
+      "mcp_polyv_watch_condition_set",
+      "mcp_polyv_playback_enabled_set",
+      "mcp_polyv_product_reference"
+    ]
+  }
 }
