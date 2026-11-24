@@ -126,3 +126,7 @@ connectors/*.zip
 experts/**/*.zip
 connectors/**/*.zip
 .pnpm-store/
+
+# 本地工具状态（只含指向本机插件缓存的 plugin_root 指针）
+.v2c/
+.video_agent/
