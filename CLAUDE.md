@@ -169,8 +169,11 @@ verified against the live API and cross-checked with the official Java SDK
 | Most endpoints | every non-empty parameter sent, sorted as `k=v&k=v`, then `secretkey`; SHA1 upper-case. Values are raw, never URL-encoded |
 | A few endpoints sign a fixed key set | `cataJson` → `{userid, ptime}`; `updateCata`, `deleteCata` → `{userid, <id field>, ptime}`; `changeCata` → `{userid, vids, cataid, ptime}`; daily view log → `{userid, day, ptime}` |
 | Play token | MD5 with `secretkey` on both ends |
-| V4 endpoints (`callback get/set`) | `appId` / `timestamp` / `requestId`, MD5 with `appSecret`, as in live |
+| V4 endpoints (`callback get/set`) | `appId` / `timestamp` / `requestId`, MD5 with `appSecret`, as in live. The platform signs every parameter it receives: a `requestId` that is sent but not signed is rejected with HTTP 403 `签名错误` |
 | Direct upload | no signature; `writetoken` |
+
+The V4 pair is the account's AppID / AppSecret, the one shown in the live console under
+设置 → 开发设置 → 开发者信息 (the VOD console's API page does not show it).
 
 Before changing a signer or adding an endpoint, check `VodBaseService.commonRequestLogic` in the
 Java SDK for that endpoint, and confirm against the real API. Do not infer the signed fields from
@@ -241,6 +244,10 @@ Publish `polyv-vod-api-sdk` before a `polyv-vod-cli` version that depends on it.
 category and remove them afterwards. They upload real video files: the platform cannot delete
 records made from non-video content, and such records are left behind. They verify each removal by
 fetching the object, because a search returning nothing does not prove an object is gone.
+
+`callback.test.ts` only reads and writes the callback setting. It needs `POLYV_VOD_APP_ID` /
+`POLYV_VOD_APP_SECRET` as well and is skipped without them. The platform reports "no callback"
+as `null` for an account that never had one and as `""` after one is cleared; treat both as unset.
 
 ## Development Guidelines
 

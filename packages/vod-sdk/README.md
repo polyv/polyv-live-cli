@@ -122,6 +122,8 @@ pnpm --filter polyv-vod-api-sdk test:integration  # 真实接口测试
 
 真实接口测试需要凭证：把 `.env.example` 复制为 `.env.test` 并填入。测试会上传并删除临时视频，请用测试账号。没有凭证时测试自动跳过。
 
+回调设置的测试（`tests/integration/callback.test.ts`）另外需要 `POLYV_VOD_APP_ID` 和 `POLYV_VOD_APP_SECRET`，缺少时这个文件跳过。它会设置回调地址再恢复原状。
+
 类型定义由 `scripts/generate-types.ts` 从点播 API 文档生成，默认读取仓库旁的 `../document-center/docs/vod/api`，可用环境变量 `POLYV_VOD_API_DOCS_DIR` 指定其它位置。生成结果已提交，普通构建不需要文档库。
 
 ## 相关链接

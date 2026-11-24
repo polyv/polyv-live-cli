@@ -151,6 +151,11 @@ export interface MonthlyViewLogPage {
   data?: ViewLogEntry[];
 }
 
+/** The account's event-callback setting. */
 export interface CallbackSetting {
-  callbackUrl?: string;
+  /**
+   * `null` when the account never had a callback URL, `""` after one was cleared.
+   * Leaving it out of `updateCallbackSetting` clears the setting.
+   */
+  callbackUrl?: string | null;
 }

@@ -4,7 +4,7 @@
 
 ## 前提：回调设置需要 API 凭证
 
-`callback get` 和 `callback set` 用的是账号的 API 凭证（`appId` + `appSecret`，与直播 API 同源），不是点播的 `userId` + `secretKey`。保存账号时要一并提供：
+`callback get` 和 `callback set` 用的是账号的 API 凭证（`appId` + `appSecret`），不是点播的 `userId` + `secretKey`。这一对在保利威控制台的「云直播 → 设置 → 开发设置 → 开发者信息」里查看，直播 API 用的也是它。保存账号时要一并提供：
 
 ```bash
 <CLI> account add <账号名> --user-id <userId> --secret-key <secretKey> --write-token <writeToken> --app-id <appId> --app-secret <appSecret> --replace
@@ -19,7 +19,9 @@
 <CLI> callback get -o json --source codex
 ```
 
-没有设置时表格显示 `(not set)`。JSON 是 `{ "callbackUrl": "https://…" }`。
+没有设置时表格显示 `(not set)`。JSON 里已设置时是 `{ "callbackUrl": "https://…" }`；未设置时 `callbackUrl` 是 `null`（从未设置过）或空字符串 `""`（清空之后），两种都表示没有回调地址。
+
+报 `签名错误` 说明 `appSecret` 不对，或者填成了点播的 `secretKey`。平台先验证签名再执行，所以密钥不对时设置不会被改动。
 
 ## 设置回调地址
 
@@ -35,9 +37,7 @@
 <CLI> callback set --force --source codex
 ```
 
-不给 `--url` 即清空。
-
-## 回调事件类型
+不给 `--url` 即清空。## 回调事件类型
 
 | 事件 | 触发时机 | 关键字段 |
 |---|---|---|

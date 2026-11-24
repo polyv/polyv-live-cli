@@ -253,7 +253,7 @@ polyv-live-cli/
 | 命名 | `polyv-vod-api-sdk` / `polyv-vod-cli` / skill `polyv-vod-cli` / 连接器 `polyv-vod` / 专家包 `polyv-vod-ops` |
 | v1 范围 | 第 4 节 P0 的 9 个命令组 |
 | 大文件 | >2G 上传 v1 必须 → 分片断点续传纳入 v1（见 5.1） |
-| 尖峰凭证 | 测试账号已提供，存于仓库根 `.env.vod-spike`（`.env.*` 已 gitignore；凭证不入库、不入文档） |
+| 尖峰凭证 | 测试账号已提供。凭证只存于 `packages/vod-sdk/.env.test`（`.env.*` 已 gitignore；不入库、不入文档），供真实接口测试使用 |
 | 仓库归属 | 留在本仓库，复用 workspace / CI / 发布基建 |
 
 ---
@@ -340,7 +340,7 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 
 | 包 | 结果 |
 |---|---|
-| `polyv-vod-api-sdk` | 129 个单元测试；11 个真实账号集成测试（67 秒，上传真实视频，逐个核实清理） |
+| `polyv-vod-api-sdk` | 129 个单元测试；14 个真实账号集成测试，分两个文件（11 个上传并清理临时视频和分类，67 秒；3 个验证回调设置） |
 | `polyv-vod-cli` | 116 个单元测试，覆盖率 95% 语句 / 84% 分支 |
 | skill `polyv-vod-cli` | `pnpm skill:check` 通过；文档里 48 条只读示例原样执行成功 |
 | 现有的直播两个包 | 测试结果未变（6470 + 1608 通过） |
@@ -369,11 +369,11 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 
 | 事项 | 说明 |
 |---|---|
-| `callback get` / `callback set` 未在真实平台验证 | 需要账号的 API 凭证（`appId` / `appSecret`），测试账号只有点播密钥。SDK 单测覆盖了签名和请求构造 |
-| npm 包名未确认 | `polyv-vod-cli`、`polyv-vod-api-sdk` 查询时未被注册；发布前需要确认归属和 trusted publishing 配置 |
+| npm 发布权限未确认 | 包名已确认用 `polyv-vod-cli` 和 `polyv-vod-api-sdk`；发布前需要在 npm 上配好 trusted publishing |
 | skill 文档里的写操作示例未逐条演练 | 删除、移动、分类等是在 CLI 端到端流程里验证的，不是从文档原样抽出执行的 |
 | 连接器和专家包未提交到平台 | 清单和格式校验通过；图标和头像沿用直播的（头像是占位图） |
 | 状态码 `41` 的官方含义 | 按观察当作“不可播放”的终态，未找到官方定义 |
+| Node 的 `fetch` 在某些网络下连不上 `api.polyv.net` | 见 12.6，待决定是否在 CLI 里处理 |
 
 ### 12.5 顺带发现的现有问题（未改动）
 
@@ -381,3 +381,27 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 - **直播 skill 没有演示 `auth` 和 `use`**：`pnpm skill:check` 会提示这一点，但不阻断。
 - **直播连接器的 skill 副本与根 skill 不一致**（`command-index.md` 仍是 npx 前缀）：`pnpm skill:sync:check` 会提示，这份副本仍是手工维护的。
 - **`npx skills add polyv/polyv-live-cli` 会安装仓库里的全部 skill**：这个仓库原本就有 3 个 skill，所以这是既有行为，不是本次引入的；现在会多装一个点播 skill。README 里补了 `--skill` 和 `--list` 的用法。
+
+### 12.6 回调设置的补验记录（2026-11-25）
+
+`callback get` / `callback set` 用的是账号的 API 凭证（`appId` / `appSecret`），此前未在真实平台验证。测试账号有这一对凭证，在保利威控制台的「云直播 → 设置 → 开发设置 → 开发者信息」里，点播后台的 API 页面不显示它。现已验证：
+
+| 结论 | 依据 |
+|---|---|
+| 签名方式：`appId` + `timestamp` + `requestId`（加业务参数），MD5 首尾接 `appSecret`，参数放在 URL 里。SDK 现有实现正确 | `callback get` 和 `callback set` 都返回 HTTP 200 |
+| 平台对收到的全部参数计算签名 | `requestId` 发了但不参与签名，返回 HTTP 403「签名错误」 |
+| 密钥不对时报错明确 | CLI 输出 `签名错误`，退出码 1 |
+| 平台先验签名再执行 | 用错误的 `appSecret` 调 `callback set`，设置没有被改动 |
+| “未设置”有两种表示 | 从未设置过是 `null`，清空之后是 `""` |
+
+SDK 新增 `tests/integration/callback.test.ts`，3 个用例：读取、设置后恢复原状、错误密钥被拒；缺少 API 凭证时跳过。验证后测试账号的回调地址已恢复为未设置。
+
+**新发现，未处理，待决定：Node 的 `fetch` 在这台机器上连不上 `api.polyv.net`。** 本机的代理客户端接管了 DNS，给这个域名返回海外 CDN 节点。Node 对每个地址只给 250 毫秒的连接尝试窗口，而其中 IPv4 节点握手约需 260 毫秒、IPv6 节点无响应，所以所有地址都失败。公共 DNS 返回的国内节点 0.17 秒就能完成一次请求。
+
+临时办法是给 Node 加两个运行参数，这次验证就是这样跑的：
+
+```bash
+NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attempt-timeout=3000" polyv-vod-cli ...
+```
+
+直播 CLI 用的是 axios，同样直连，可能受同样影响，未验证。
