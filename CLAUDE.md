@@ -173,7 +173,8 @@ verified against the live API and cross-checked with the official Java SDK
 | Direct upload | no signature; `writetoken` |
 
 The V4 pair is the account's AppID / AppSecret, the one shown in the live console under
-设置 → 开发设置 → 开发者信息 (the VOD console's API page does not show it).
+设置 → 开发设置 → 开发者信息. The VOD docs do not mention it: their key page lists only the
+userId, secretKey and the two tokens.
 
 Before changing a signer or adding an endpoint, check `VodBaseService.commonRequestLogic` in the
 Java SDK for that endpoint, and confirm against the real API. Do not infer the signed fields from
