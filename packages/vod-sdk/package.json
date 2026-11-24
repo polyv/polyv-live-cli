@@ -1,0 +1,61 @@
+{
+  "name": "polyv-vod-api-sdk",
+  "version": "0.1.0",
+  "description": "PolyV VOD (video on-demand) API SDK for TypeScript/Node.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "prebuild": "tsx scripts/generate-types.ts",
+    "build": "tsup && tsc --emitDeclarationOnly --declarationMap",
+    "types:generate": "tsx scripts/generate-types.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.config.integration.ts",
+    "prepublishOnly": "pnpm test:unit && pnpm build"
+  },
+  "keywords": [
+    "polyv",
+    "vod",
+    "video",
+    "on-demand",
+    "api",
+    "sdk"
+  ],
+  "author": "PolyV",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polyv/polyv-live-cli.git",
+    "directory": "packages/vod-sdk"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^1.2.0",
+    "dotenv": "^17.3.1",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}
