@@ -14,6 +14,7 @@
     "coverage:badge": "node scripts/update-coverage-badge.mjs",
     "skill:check": "POLYV_SKILL_CHECK_CLI=local node scripts/check-skill-regression.mjs",
     "skill:check:latest": "POLYV_SKILL_CHECK_CLI=latest node scripts/check-skill-regression.mjs",
+    "skill:command-index": "node scripts/generate-skill-command-index.mjs",
     "api:inventory": "node scripts/generate-api-inventory.mjs",
     "cli:inventory": "node scripts/generate-cli-inventory.mjs",
     "cli:integration-coverage": "node scripts/report-cli-subcommand-integration-coverage.mjs",

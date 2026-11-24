@@ -62,6 +62,36 @@ npx skills add polyv/polyv-live-cli
 
 > 支持 Claude Code、OpenClaw 等所有兼容 Skill 协议的 AI Agent。
 
+本仓库提供多个 Skill。上面的命令不带 `--skill` 时，会把仓库里的 Skill **全部**安装。只需要其中一个时，用 `--skill` 指定：
+
+```bash
+# 只装直播 Skill
+npx skills add polyv/polyv-live-cli --skill polyv-live-cli
+
+# 只装点播 Skill
+npx skills add polyv/polyv-live-cli --skill polyv-vod-cli
+```
+
+先看看仓库里有哪些 Skill：
+
+```bash
+npx skills add polyv/polyv-live-cli --list
+```
+
+| Skill | 用途 |
+|---|---|
+| `polyv-live-cli` | 云直播：频道、推流、商品、优惠券、回放、互动、观众、统计等 |
+| `polyv-vod-cli` | 云点播：上传、转码等待、视频与分类管理、播放凭证、播放统计、事件回调 |
+| `polyv-e-commerce-setup` | 一键配置电商直播环境 |
+| `polyv-scenario-setup` | 按场景配置直播（电商、教育、研讨会等） |
+
+点播 Skill 对应的命令行工具是 `polyv-vod-cli`，与直播的 `polyv-live-cli` 是两个独立的包，凭证也互不通用：
+
+```bash
+npm install -g polyv-vod-cli
+polyv-vod-cli --help
+```
+
 ### 使用示例
 
 安装后，直接向 AI Agent 提问即可：
