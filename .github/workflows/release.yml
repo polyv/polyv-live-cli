@@ -3,13 +3,52 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'      # CLI: v1.2.3
-      - 'sdk-v*'  # SDK: sdk-v1.2.3
+      # '*' also matches '-', so 'v*' alone would match every tag below. Which package a tag
+      # publishes is decided by scripts/release-package.mjs in the `package` job.
+      - 'v*'          # CLI:        v1.2.3
+      - 'sdk-v*'      # Live SDK:   sdk-v1.2.3
+      - 'vod-v*'      # VOD CLI:    vod-v0.1.0
+      - 'vod-sdk-v*'  # VOD SDK:    vod-sdk-v0.1.0
+
+# Which package the pushed tag publishes. Every later job reads this instead of testing the
+# tag itself; the workflow stops here for a tag that belongs to no package.
+env:
+  RELEASE_TAG: ${{ github.ref_name }}
 
 jobs:
+  package:
+    name: Resolve the package to release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Map the tag to a package
+        id: pkg
+        run: |
+          node scripts/release-package.mjs resolve "$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Check that the tag version is the package's version
+        run: |
+          # The tag must agree with the committed package.json, or npm would be asked to
+          # publish a version the repository does not record.
+          DECLARED=$(node -p "require('./${{ steps.pkg.outputs.PACKAGE_DIR }}/package.json').version")
+          if [ "$DECLARED" != "${{ steps.pkg.outputs.PKG_VERSION }}" ]; then
+            echo "::error::tag $RELEASE_TAG says version ${{ steps.pkg.outputs.PKG_VERSION }} but ${{ steps.pkg.outputs.PACKAGE_DIR }}/package.json says $DECLARED"
+            exit 1
+          fi
+          echo "Releasing ${{ steps.pkg.outputs.PKG_NAME }} $DECLARED from ${{ steps.pkg.outputs.PACKAGE_DIR }}"
+
   test:
     name: Test before release
     runs-on: ubuntu-latest
+    needs: package
 
     steps:
       - name: Checkout code
@@ -43,11 +82,12 @@ jobs:
         run: pnpm build
 
       - name: Run tests
-        run: pnpm --filter polyv-live-cli test:unit
+        # Only the package being released is tested, as before; the others are covered by CI.
+        run: pnpm --filter "${{ needs.package.outputs.PKG_NAME }}" test:unit
 
   publish:
     name: Publish to npm
-    needs: test
+    needs: [package, test]
     runs-on: ubuntu-latest
     permissions:
       id-token: write   # npm trusted publishing (OIDC)，无需 NPM_TOKEN secret
@@ -73,27 +113,26 @@ jobs:
 
       - name: Verify package contents
         run: |
-          if [[ $GITHUB_REF == refs/tags/sdk-v* ]]; then
-            cd packages/sdk
-            PKG_NAME="polyv-live-api-sdk"
-          else
-            cd packages/cli
-            PKG_NAME="polyv-live-cli"
-          fi
-          echo "📦 Package: $PKG_NAME"
+          cd "${{ needs.package.outputs.PACKAGE_DIR }}"
+          echo "📦 Package: ${{ needs.package.outputs.PKG_NAME }}"
           echo "✅ Package ready for publish"
 
       # CLI 通过 workspace:* 引用 SDK，npm publish 无法解析 pnpm workspace 协议，
       # 发布前把依赖改写为 SDK 的实际版本（等价于 pnpm publish 的行为）
       - name: Resolve workspace dependency for CLI
-        if: ${{ !startsWith(github.ref, 'refs/tags/sdk-v') }}
+        if: needs.package.outputs.PACKAGE_KEY == 'cli' || needs.package.outputs.PACKAGE_KEY == 'vod'
         run: |
           node -e "
             const fs = require('fs');
-            const sdkVersion = require('./packages/sdk/package.json').version;
-            const p = './packages/cli/package.json';
+            const deps = {
+              cli: ['packages/cli', 'polyv-live-api-sdk', 'packages/sdk'],
+              vod: ['packages/vod-cli', 'polyv-vod-api-sdk', 'packages/vod-sdk']
+            };
+            const [cliDir, sdkName, sdkDir] = deps['${{ needs.package.outputs.PACKAGE_KEY }}'];
+            const sdkVersion = require('./' + sdkDir + '/package.json').version;
+            const p = './' + cliDir + '/package.json';
             const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
-            pkg.dependencies['polyv-live-api-sdk'] = sdkVersion;
+            pkg.dependencies[sdkName] = sdkVersion;
             fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + '\n');
           "
 
@@ -103,18 +142,13 @@ jobs:
 
       - name: Publish to npm
         run: |
-          if [[ $GITHUB_REF == refs/tags/sdk-v* ]]; then
-            cd packages/sdk
-            echo "📦 Publishing SDK..."
-          else
-            cd packages/cli
-            echo "📦 Publishing CLI..."
-          fi
+          cd "${{ needs.package.outputs.PACKAGE_DIR }}"
+          echo "📦 Publishing ${{ needs.package.outputs.PKG_NAME }} ${{ needs.package.outputs.PKG_VERSION }}..."
           npm publish --access public
 
   github-release:
     name: Create GitHub Release
-    needs: [test, publish]
+    needs: [package, test, publish]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -135,36 +169,28 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        
+
       - name: Get tag version
         id: get_version
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          # Remove sdk- prefix if present
-          CLEAN_VERSION=${VERSION#sdk-}
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-          echo "CLEAN_VERSION=$CLEAN_VERSION" >> $GITHUB_OUTPUT
-          if [[ $VERSION == sdk-v* ]]; then
-            echo "PACKAGE=SDK" >> $GITHUB_OUTPUT
-            echo "PKG_NAME=polyv-live-api-sdk" >> $GITHUB_OUTPUT
-          else
-            echo "PACKAGE=CLI" >> $GITHUB_OUTPUT
-            echo "PKG_NAME=polyv-live-cli" >> $GITHUB_OUTPUT
-          fi
+          echo "VERSION=$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+          echo "CLEAN_VERSION=${{ needs.package.outputs.PKG_VERSION }}" >> "$GITHUB_OUTPUT"
+          echo "PACKAGE=${{ needs.package.outputs.PACKAGE_LABEL }}" >> "$GITHUB_OUTPUT"
+          echo "PKG_NAME=${{ needs.package.outputs.PKG_NAME }}" >> "$GITHUB_OUTPUT"
+          echo "INSTALL=${{ needs.package.outputs.INSTALL_COMMAND }}" >> "$GITHUB_OUTPUT"
 
       - name: Generate changelog for this release
         id: changelog
         run: |
-          # Get the previous tag for the same package
-          if [[ "${{ steps.get_version.outputs.PACKAGE }}" == "SDK" ]]; then
-            PREVIOUS_TAG=$(git tag --sort=-version:refname | grep "^sdk-v" | grep -A1 "${{ steps.get_version.outputs.VERSION }}" | tail -n1)
-          else
-            PREVIOUS_TAG=$(git tag --sort=-version:refname | grep -v "^sdk-v" | grep -A1 "${{ steps.get_version.outputs.VERSION }}" | tail -n1)
-          fi
-
-          if [ -z "$PREVIOUS_TAG" ] || [ "$PREVIOUS_TAG" = "${{ steps.get_version.outputs.VERSION }}" ]; then
+          # The previous tag of the same package: the tag before this one that starts with
+          # this package's own prefix. (Other packages' tags, such as vod-v*, are skipped.)
+          PACKAGE_PREFIX="${RELEASE_TAG%${{ needs.package.outputs.PKG_VERSION }}}"
+          PREVIOUS_TAG=$(git tag --list "${PACKAGE_PREFIX}*" --sort=-v:refname --merged HEAD | grep -A1 -x "$RELEASE_TAG" | tail -n1)
+          if [ -z "$PREVIOUS_TAG" ] || [ "$PREVIOUS_TAG" = "$RELEASE_TAG" ]; then
+            # First release of this package: everything since the first commit.
             PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
           fi
+          echo "Changes since: $PREVIOUS_TAG"
 
           # Generate changelog
           echo "## 🚀 PolyV ${{ steps.get_version.outputs.PACKAGE }} ${{ steps.get_version.outputs.CLEAN_VERSION }}" > release_notes.md
@@ -177,11 +203,7 @@ jobs:
           echo "" >> release_notes.md
           echo "### 📦 Installation" >> release_notes.md
           echo '```bash' >> release_notes.md
-          if [[ "${{ steps.get_version.outputs.PACKAGE }}" == "SDK" ]]; then
-            echo 'npm install polyv-live-api-sdk' >> release_notes.md
-          else
-            echo 'npm install -g polyv-live-cli' >> release_notes.md
-          fi
+          echo '${{ steps.get_version.outputs.INSTALL }}' >> release_notes.md
           echo '```' >> release_notes.md
 
           cat release_notes.md

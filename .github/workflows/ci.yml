@@ -52,11 +52,23 @@ jobs:
       - name: Check AI Agent skill regression
         run: pnpm skill:check
 
+      - name: Check packaged skill copies are up to date
+        run: pnpm skill:sync:check
+
+      - name: Check WorkBuddy expert packages
+        run: pnpm expert:check
+
       - name: Run CLI tests with coverage
         run: pnpm --filter polyv-live-cli test:coverage
 
       - name: Run SDK tests with coverage
         run: pnpm --filter polyv-live-api-sdk test:coverage
+
+      - name: Run VOD CLI tests with coverage
+        run: pnpm --filter polyv-vod-cli test:coverage
+
+      - name: Run VOD SDK tests with coverage
+        run: pnpm --filter polyv-vod-api-sdk test:coverage
 
       - name: Update coverage badge
         run: pnpm coverage:badge
@@ -79,7 +91,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: polyv/polyv-live-cli
           directory: ./
-          files: packages/cli/coverage/lcov.info,packages/sdk/coverage/lcov.info
+          files: packages/cli/coverage/lcov.info,packages/sdk/coverage/lcov.info,packages/vod-cli/coverage/lcov.info,packages/vod-sdk/coverage/lcov.info
           flags: unittests
           fail_ci_if_error: true
 
@@ -88,7 +100,7 @@ jobs:
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: packages/cli/test-results/junit.xml,packages/sdk/test-results/junit.xml
+          files: packages/cli/test-results/junit.xml,packages/sdk/test-results/junit.xml,packages/vod-cli/test-results/junit.xml,packages/vod-sdk/test-results/junit.xml
 
       - name: Skip Codecov upload
         if: matrix.node-version == 20 && steps.codecov-token.outputs.available != 'true'
@@ -145,3 +157,10 @@ jobs:
           echo "Testing CLI executable..."
           node packages/cli/dist/index.js --version || echo "Note: CLI may require authentication for full functionality"
           echo "✅ CLI executable test completed"
+
+      - name: Test VOD CLI executable
+        run: |
+          echo "Testing VOD CLI executable..."
+          node packages/vod-cli/dist/index.js --version
+          node packages/vod-cli/dist/index.js --help > /dev/null
+          echo "✅ VOD CLI executable test completed"
