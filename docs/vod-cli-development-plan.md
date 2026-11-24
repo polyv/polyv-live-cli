@@ -1,9 +1,11 @@
 # 点播 CLI + Skill 开发方案
 
-> 状态：已评审通过，实施中（分支 `feat/vod-cli`）
-> 日期：2026-11-24（方案）/ 2026-11-25（决策与尖峰结论）
+> 状态：v1 范围已实现（分支 `feat/vod-cli`）；尚未发布到 npm
+> 日期：2026-11-24（方案）/ 2026-11-25（决策、尖峰结论与实施记录）
 > 范围：在 polyv-live-cli monorepo 中新增 PolyV 云点播（VOD）的 SDK、CLI 与 Agent Skill
 > 参考：官方 API 文档 `../document-center/docs/vod/api`（149 篇）、cuplayer 项目（`/Users/nick/projects/polyv/cuplayer`）、官方 Java SDK 源码（`/Users/nick/projects/polyv/polyv-java-sdk/polyv-java-vod-sdk`）
+>
+> **实施结果见第 12 节**：做了什么、验证了什么、还缺什么。
 
 ---
 
@@ -327,3 +329,55 @@ polyv-live-cli/
 **状态码 `41`**：不在公开文档里，本机的 SDK 源码和文档都没有记载。观察到的事实是：上传非视频内容（随机字节）后得到这个状态，时长 0、无格式、无转码结果，且不再变化。CLI 把它当作"不可播放"的终态处理，这是基于观察的判断，不是官方定义。
 
 **测试账号的清理教训**：SDK 集成测试最初用随机字节当视频，平台处理后留下 6 个不可播放的记录；而当时的"账号已清干净"结论是用标题搜索得出的，搜索结果为空并不代表对象不存在（结论是错的，残留后来已删除并逐个核实）。现在集成测试上传真实视频，清理后按 vid 逐个拉取确认，测试结束后再独立核对一次。
+
+---
+
+## 12. 实施记录（2026-11-25）
+
+v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。分支 `feat/vod-cli`，未推送、未发布。
+
+### 12.1 测试
+
+| 包 | 结果 |
+|---|---|
+| `polyv-vod-api-sdk` | 129 个单元测试；11 个真实账号集成测试（67 秒，上传真实视频，逐个核实清理） |
+| `polyv-vod-cli` | 116 个单元测试，覆盖率 95% 语句 / 84% 分支 |
+| skill `polyv-vod-cli` | `pnpm skill:check` 通过；文档里 48 条只读示例原样执行成功 |
+| 现有的直播两个包 | 测试结果未变（6470 + 1608 通过） |
+
+另外做过的验证：CLI 对真实账号跑完一遍 17 步流程（上传、等转码、改标题、移动分类、禁播解禁、播放凭证、统计、回收、恢复、彻底删除）；按发布工作流的做法本地演练了一次发布（改写依赖、打包、全新安装、真实调用）；连接器的 `auth` / `auth status` / `auth logout` 在干净环境里符合约定。
+
+### 12.2 与方案的差异
+
+| 方案里写的 | 实际 | 原因 |
+|---|---|---|
+| 分片续传只实现阿里 OSS | 华为 OBS 和阿里 OSS 都实现 | 尖峰发现测试账号的存储是华为 OBS；两条路径都实测通过 |
+| SDK 签名“默认全量 + 按接口声明白名单” | 相同，另外发现 5 个接口走固定字段集 | 尖峰逐接口对拍的结果，见 11.1 |
+| skill 的 references 手工维护 | `command-index.md` 由脚本从 CLI 命令树生成 | 手写的索引容易和 CLI 脱节 |
+| 连接器里的 skill 靠 rsync 同步 | 由 `scripts/sync-packaged-skills.mjs` 生成 | 直播连接器的那份手工副本里，`command-index.md` 仍写 npx 前缀，与同目录 SKILL.md 矛盾 |
+| CLI 分 commands / handlers / services 三层 | commands + `core/context.ts` 两层 | 点播命令少，三层是多余的 |
+
+### 12.3 发布流程里的隐患（已修）
+
+原来的 Release 工作流用“不是 `sdk-v*` 就当直播 CLI”来判断发布哪个包。GitHub Actions 的 tag 过滤 `v*` 会匹配 `vod-v0.1.0`，shell 里的 `refs/tags/v*` 也一样。所以按本方案打 `vod-v*` tag 会触发工作流，并把**直播 CLI** 当成新版本发布。
+
+现在 `scripts/release-package.mjs` 是 tag 前缀到包的唯一映射，`release.sh` 和工作流都读它；映射不到的 tag 让工作流在第一步就失败。工作流里的 tag 逻辑对着真实 git 历史用临时 tag 测过（10 项通过，临时 tag 已清理）。
+
+`release.sh` 原来会删除远程已有的同名 tag 再重推，现在对已存在的 tag 直接拒绝。
+
+### 12.4 尚未完成或未验证
+
+| 事项 | 说明 |
+|---|---|
+| `callback get` / `callback set` 未在真实平台验证 | 需要账号的 API 凭证（`appId` / `appSecret`），测试账号只有点播密钥。SDK 单测覆盖了签名和请求构造 |
+| npm 包名未确认 | `polyv-vod-cli`、`polyv-vod-api-sdk` 查询时未被注册；发布前需要确认归属和 trusted publishing 配置 |
+| skill 文档里的写操作示例未逐条演练 | 删除、移动、分类等是在 CLI 端到端流程里验证的，不是从文档原样抽出执行的 |
+| 连接器和专家包未提交到平台 | 清单和格式校验通过；图标和头像沿用直播的（头像是占位图） |
+| 状态码 `41` 的官方含义 | 按观察当作“不可播放”的终态，未找到官方定义 |
+
+### 12.5 顺带发现的现有问题（未改动）
+
+- **直播 SDK 的生成类型落后于文档**：`pnpm build` 会触发直播 SDK 的 `prebuild`，从本机的 `../document-center` 重新生成类型，结果比仓库里提交的多约 2000 行（新接口和新字段）。本次没有把这组变更带进点播的提交，已恢复原状。要不要更新直播的生成类型需要单独决定。
+- **直播 skill 没有演示 `auth` 和 `use`**：`pnpm skill:check` 会提示这一点，但不阻断。
+- **直播连接器的 skill 副本与根 skill 不一致**（`command-index.md` 仍是 npx 前缀）：`pnpm skill:sync:check` 会提示，这份副本仍是手工维护的。
+- **`npx skills add polyv/polyv-live-cli` 会安装仓库里的全部 skill**：这个仓库原本就有 3 个 skill，所以这是既有行为，不是本次引入的；现在会多装一个点播 skill。README 里补了 `--skill` 和 `--list` 的用法。

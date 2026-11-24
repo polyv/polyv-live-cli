@@ -1,0 +1,24 @@
+{
+  "name": "polyv-vod",
+  "name_zh": "保利威云点播",
+  "name_en": "PolyV VOD",
+  "description": "Official PolyV VOD connector by YiFang Information Technology. Upload videos and wait for transcoding, search and manage videos and categories, mint play tokens, read storage and playback statistics, and verify event callbacks via the polyv-vod-cli.",
+  "description_zh": "易方信息科技旗下保利威（PolyV）官方连接器：通过 polyv-vod-cli 上传视频并等待转码、搜索和管理视频与分类、生成播放凭证、查询空间流量与播放统计、校验事件回调。",
+  "description_en": "Official PolyV VOD connector by YiFang Information Technology. Upload videos and wait for transcoding, search and manage videos and categories, mint play tokens, read storage and playback statistics, and verify event callbacks via the polyv-vod-cli.",
+  "source": "polyv-vod",
+  "type": "cli",
+  "version": "0.1.0",
+  "examples_zh": [
+    "把这个视频上传到点播，转码好了告诉我",
+    "看看我点播账号的空间和流量用了多少",
+    "帮我找出播放量最高的十个视频",
+    "把这几个视频移到「课程」分类下"
+  ],
+  "examples_en": [
+    "Upload this video to VOD and tell me when it is ready",
+    "How much storage and traffic has my VOD account used",
+    "Find my ten most played videos",
+    "Move these videos into the Courses category"
+  ],
+  "minWorkbuddyVersion": "4.24.0"
+}

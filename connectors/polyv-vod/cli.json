@@ -1,0 +1,36 @@
+{
+  "runtime": {
+    "type": "node",
+    "version": "20"
+  },
+  "npmRegistry": "https://registry.npmmirror.com",
+  "init": {
+    "darwin": "npm install -g polyv-vod-cli",
+    "linux": "npm install -g polyv-vod-cli",
+    "win32": "npm install -g polyv-vod-cli"
+  },
+  "auth": {
+    "darwin": "polyv-vod-cli auth",
+    "linux": "polyv-vod-cli auth",
+    "win32": "polyv-vod-cli.cmd auth"
+  },
+  "unAuth": {
+    "darwin": "polyv-vod-cli auth logout",
+    "linux": "polyv-vod-cli auth logout",
+    "win32": "polyv-vod-cli.cmd auth logout"
+  },
+  "status": {
+    "darwin": "polyv-vod-cli auth status",
+    "linux": "polyv-vod-cli auth status",
+    "win32": "polyv-vod-cli.cmd auth status"
+  },
+  "statusMatch": "Logged in",
+  "versionCheck": {
+    "command": {
+      "darwin": "polyv-vod-cli --version",
+      "linux": "polyv-vod-cli --version",
+      "win32": "polyv-vod-cli.cmd --version"
+    },
+    "minVersion": "0.1.0"
+  }
+}
