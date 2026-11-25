@@ -226,7 +226,7 @@ polyv-live-cli/
   - 命令层 mock handler，参照 `packages/cli/src/commands/action-coverage.test.ts`。
   - handler 层注入 mock 服务，参照 `document.handler` 的 `IDocumentService` 模式。
   - service 层 mock `createSdkClient`。
-  - 集成测试参照 `tests/helpers/cli-runner.ts`（隔离 HOME + spawn dist/index.js）。
+  - 集成测试参照 `tests/helpers/cli-runner.ts`（隔离 HOME + spawn dist/index.js）。已做，见 12.7。
 - **环境**：本地按 `CLAUDE.local.md` `nvm use 23`；CI 是 Node 20。
 - 直播的扫描类测试（`low-handlers-coverage` 等）是显式 import 列表，**不会**自动覆盖新命令；点播自带等价测试。
 
@@ -299,7 +299,7 @@ polyv-live-cli/
 
 ### 11.3 其它
 
-- **删除的静默跳过**：`del-videos` 带 `ignoreInvalidVids=Y` 时，被跳过的 vid 列在响应的 `data` 里，HTTP 和 `code` 仍是 200。刚上传完（状态 `6`）的视频可能被跳过。`video delete` 必须检查 `data` 并提示未删除的 vid，不能把 200 当成功（尖峰时因此遗留过一个视频，已清理）。
+- **删除的跳过**：`del-videos` 带 `ignoreInvalidVids=Y` 时，平台不认识的 vid 列在响应的 `data` 里，HTTP 和 `code` 仍是 200。`video delete` 必须检查 `data` 并提示未删除的 vid，不能把 200 当成功（尖峰时因此遗留过一个视频，已清理）。当时在这里写的是「刚上传完（状态 `6`）的视频可能被跳过」，那是推断，后来实测不成立：`data` 的格式是 `invalidVids: [v_1, v_2]`，里面只有平台不认识的 vid，还在转码的视频照常删除。更正见 12.7。
 - **批量删除**：不带 `ignoreInvalidVids` 时，`vids` 里只要有一个不存在的 vid，整批失败（`illegal vids`）。只 `init` 未完成上传的 vid 不构成视频记录。
 - **类型生成器**：复用直播 SDK 的文档生成器，146 篇文档 146 篇解析成功，产出 13 个文件 4814 行。但类型名是 4 位哈希，同一模块内会重名并在 TypeScript 中静默合并，点播侧改为按文档文件名起名。
 - **凭证模型**：V4 接口（含 P0 的 `callback get/update`）需要账号的 API `appId/appSecret`。点播账号记录因此支持可选的 `appId/appSecret`，缺少时相关命令给出明确提示。
@@ -345,7 +345,7 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 | skill `polyv-vod-cli` | `pnpm skill:check` 通过；文档里 48 条只读示例原样执行成功 |
 | 现有的直播两个包 | 测试结果未变（6470 + 1608 通过） |
 
-另外做过的验证：CLI 对真实账号跑完一遍 17 步流程（上传、等转码、改标题、移动分类、禁播解禁、播放凭证、统计、回收、恢复、彻底删除）；按发布工作流的做法本地演练了一次发布（改写依赖、打包、全新安装、真实调用）；连接器的 `auth` / `auth status` / `auth logout` 在干净环境里符合约定。
+另外做过的验证：CLI 对真实账号跑完一遍 17 步流程（上传、等转码、改标题、移动分类、禁播解禁、播放凭证、统计、回收、恢复、彻底删除）；按发布工作流的做法本地演练了一次发布（改写依赖、打包、全新安装、真实调用）；连接器的 `auth` / `auth status` / `auth logout` 在干净环境里符合约定。其中对真实账号的流程验证后来改写成了入库的集成测试，见 12.7；那一轮也查出并修了几处问题，所以现在的数字是 SDK 131 个单元测试、CLI 127 个单元测试（覆盖率 96% 语句 / 85% 分支）加 42 个集成测试（25 个真实账号 + 17 个离线）。
 
 ### 12.2 与方案的差异
 
@@ -370,8 +370,10 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 | 事项 | 说明 |
 |---|---|
 | npm 发布权限未确认 | 包名已确认用 `polyv-vod-cli` 和 `polyv-vod-api-sdk`；发布前需要在 npm 上配好 trusted publishing |
-| skill 文档里的写操作示例未逐条演练 | 删除、移动、分类等是在 CLI 端到端流程里验证的，不是从文档原样抽出执行的 |
+| skill 文档里的写操作示例未逐条演练 | 只读示例（48 条）是从文档原样抽出执行的；删除、移动、分类等写操作只在集成测试里按等价命令验证过，没有从文档原样抽取 |
+| 类型生成器的改动没有单测 | 点播 SDK 复用并改了直播 SDK 的文档生成器（类型按文档文件名起名、字段去重、保留字模块名），只验证了「146 篇文档解析成功、产出一致」，没有针对生成器本身的测试；直播 SDK 有 5 个 |
 | 连接器和专家包未提交到平台 | 清单和格式校验通过；图标和头像沿用直播的（头像是占位图） |
+| 分支未推送、未提 PR | `feat/vod-cli` 上的提交都只在本地 |
 | 状态码 `41` 的官方含义 | 按观察当作“不可播放”的终态，未找到官方定义 |
 
 ### 12.5 顺带发现的现有问题（未改动）
@@ -410,3 +412,44 @@ NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attemp
 直播 CLI 用的是 axios，同样直连，可能受同样影响，未验证。
 
 决定（2026-11-25）：这是本机网络环境造成的个别情况，别的用户未必遇到，所以不在 CLI 里改默认值，也不写进使用文档。在这台机器上跑测试时，用上面两个参数临时处理。
+
+### 12.7 CLI 集成测试入库，以及由此查出的更正（2026-11-25）
+
+第 7 节写了 CLI 的集成测试要参照直播 CLI 的做法（隔离 HOME、直接跑 `dist/index.js`），之前没有写，对真实账号的验证是用一次性脚本做的。现在已入库，在 `packages/vod-cli/tests/integration`：
+
+| 文件 | 覆盖 | 何时运行 |
+|---|---|---|
+| `binary.integration.test.ts`，17 个 | 退出码、帮助、`--source` 拦截、离线验签、账号的保存 / 切换 / 删除（跨进程读写账号文件）、连接器的 `auth` 约定 | 不需要凭证，CI 里也跑 |
+| `vod-cli.integration.test.ts`，25 个（其中 1 个可选） | 真实账号走完整流程：从环境变量和 flags 取凭证、保存账号、分类的增改移删、直传、分片上传的中断 / 放弃 / 续传、等转码、搜索、修改、移动、禁播、播放凭证、统计、URL 上传任务、回调设置读写、回收 / 恢复 / 彻底删除 | 读 `.env.test`（本包的，没有则读 `packages/vod-sdk/.env.test`）；缺凭证时整组跳过。URL 上传抓取成功的那一条依赖平台以外的公网地址，设了 `POLYV_VOD_TEST_PUBLIC_MP4` 才跑 |
+
+运行：`pnpm --filter polyv-vod-cli test:integration`，会先构建 SDK 和 CLI。可选的那条 URL 上传用例这次用的是 MDN 的公开样例 `https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4`（1.1 MB，2026-11-25 当天可用）。
+
+做法：每个测试用独立的 `POLYV_VOD_HOME`（`tests/helpers/cli-runner.ts`），在子进程里跑构建产物。清理走 SDK 而不是被测的 CLI，每个对象删除后逐个拉取确认，有残留则整组失败并列出残留项。分片续传的状态存在系统临时目录下，不在 `POLYV_VOD_HOME` 里，所以测试显式传 `--checkpoint-dir`，免得碰到开发者自己的中断上传。
+
+**写这些测试时查出的错误。** 第一轮 24 条里 7 条失败，多数不是断言写错，而是实现和文档本身有问题。下表每一行都另外用探针脚本在真实平台上单独测过：
+
+| 当时的说法或行为 | 实测 | 改动 |
+|---|---|---|
+| `category delete` 的帮助和 skill 都写「分类必须为空」 | 平台不要求为空。删除一个分类会**连带删掉它下面所有层级的子分类**；里面的视频不被删，而是移到默认分类（ID `1`） | 帮助改写。删除前先读子树，确认提示和结果都写明会删几个子分类、移走几个视频；根分类直接拒绝。skill、README、`CLAUDE.md` 同步更正 |
+| SDK 把 `deleteVideos` 返回的 `data` 当纯列表解析 | 平台的格式是 `invalidVids: [v_1, v_2]`，被拆成 `invalidVids:` 和 `[zzz_0]` 两个「vid」，CLI 于是把不存在的 vid 算进「已删除」 | SDK 修正解析并加单测。原有单测用的是猜的格式，已换成平台真实格式 |
+| 「刚上传、仍在处理的视频可能被删除跳过，稍后重试」 | 不成立。还在转码的视频照常删除，一次成功；`skipped` 里只会有平台不认识的 vid | CLI 的警告改成「平台不认识这些 ID」，不再建议重试；11.3 的对应说法已更正 |
+| 整批 vid 都不认识时，CLI 只输出平台原话 `all vids illegal` | 平台整批拒绝，什么都不删。`--strict` 下混有不认识的 vid 时拒绝为 `illegal vids`，同样什么都不删 | 两种情况各给一句说明和下一步（核对 ID，或去掉 `--strict`） |
+| 分片续传完成后返回的 `title` 是这次调用给的 | 续传完成的是中断前已登记的那个视频，平台上的标题是上一次的 | SDK 返回平台上的标题；CLI 在续传时提示标题、简介、分类、标签沿用上一次的 |
+| `upload task-export` 输出到 stdout | 按「行」输出：空 CSV 时多一个换行，非空时末尾多一个空行 | stdout 与平台给的内容一致；导出为空时在 stderr 说明原因 |
+
+顺带确认的平台行为，已写进 `CLAUDE.md`：
+
+- URL 上传任务导出的 CSV **没有表头**，每个抓取成功的视频一行：`源地址,标题,视频ID,上传时间`。任务未结束时导出为空；任务里的地址全部抓取失败时，任务结束（`taskstatus=FINISHED`）后也为空。官方文档示例里的地址 `oss.polyv.net/uploads/2023/12/27YlLZVCM_test.mp4` 已经解析不出域名，不能用来测试。
+- `category list <不存在的 ID>` 报 `cataId不存在`；`category delete <不存在的 ID>` 报 `cataid is not belong to userid …`；根分类（`1`）不能删。
+- 分类树里每个分类的 `videos` 是整棵子树的视频数：视频只放在孙分类里时，它和它的父分类、祖父分类都显示 `1`。
+
+另外修了一处 SDK 集成测试自身的问题：`real-api.test.ts` 用 `workDir ??= …` 建临时目录，而 `workDir` 的初始值是空字符串，`??=` 对它不起作用，于是两个 248 KB 的测试视频被写进了 `packages/vod-sdk/` 目录且没有清理。已改成 `||=`，并在复跑后确认包目录和临时目录都没有残留。
+
+**验证「没有凭证时跳过」时又查出两处。** 这条路径之前在两个包里都没有实际验证过：
+
+| 问题 | 原因 | 改动 |
+|---|---|---|
+| 没有凭证时，CLI 的真实账号测试文件**失败**而不是跳过（CI 新加的那一步会直接红）；SDK 的 `real-api.test.ts` 同样如此，而且从写出来起就是这样，所以第 7 节「无凭证自动跳过」对它一直不成立 | Jest 和 Vitest 的 `describe.skip` **都会执行用例组的函数体**（为了收集里面的用例再标成跳过），函数体一进来就用到凭证，于是抛错。另外文件里一条用例都没有也算失败 | 两个文件开头加守卫：没有凭证时注册一条显式跳过的用例然后返回。把 `.env.test` 挪开后实测，两个包都正确跳过（CLI：1 条跳过 + 17 条通过；SDK：两个文件 4 条全跳过），退出码为 0 |
+| `typecheck` 实际上**没有检查任何测试文件**：两个包的 `tsconfig.test.json` 都继承了基础配置里的 `exclude`（`**/*.test.ts`、`src/__tests__`），CLI 检查到的测试文件是 0 个，SDK 也是 0 个。`CLAUDE.md` 里「typecheck 包含测试」的说法从一开始就不准确 | `tsc --listFilesOnly` 显示匹配数 | 两个 `tsconfig.test.json` 覆盖 `exclude`。第一次真正检查测试文件就暴露出 CLI 6 个、SDK 9 个类型错误（都是测试代码自己的类型问题：传了运行时会被忽略的参数、局部变量推断出的 Buffer 类型过窄、`selectStorage` 的参数类型要求了它并不读取的字段、集成测试里 `string \| undefined` 直接传给了必填项），已全部修正 |
+
+顺带补全了 SDK 的 `SyncTask` 类型：加上文档里有而类型里缺的 `status`、`createtime`，以及平台会返回但文档没有的 `taskstatus`（`SYNCHRONIZING` / `FINISHED`，表示任务是否结束）。

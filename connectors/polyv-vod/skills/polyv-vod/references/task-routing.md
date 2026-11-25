@@ -36,7 +36,7 @@
 - 新建分类、建一个子分类：`category add`
 - 分类改名：`category rename`
 - 把一个分类移到另一个分类下：`category move`
-- 删除空分类：`category delete`
+- 删除分类（连同它下面的全部子分类，视频移到默认分类）：`category delete`
 - 设置分类的加密、源文件播放、录屏优化、移动端授权：`category setting`
 
 ## 播放和统计
@@ -89,7 +89,18 @@ stdout 是一段 JSON，取其中的 `vid`。`state` 为 `published` 表示已�
 <CLI> video delete <视频ID...> --force --source codex -o json
 ```
 
-输出的 `skipped` 列出平台没能删除的视频（不存在、已删除、或仍在处理中）。`skipped` 不为空时不要当作全部成功，稍后对这些 ID 重试。
+输出的 `skipped` 列出平台不认识的 ID（写错，或早已彻底删除），其余的已删除；`skipped` 不为空时不要当作全部成功。重试没有用，先核对 ID。
+
+### 清理测试分类
+
+`category delete` 连同所有子分类一起删，里面的视频会移到默认分类。先看范围，再删：
+
+```bash
+<CLI> category list <分类ID> -o json --source codex
+<CLI> category delete <分类ID> --force --source codex
+```
+
+不想留下的视频先删掉，或用 `video move` 移走。
 
 ### 找回误删的视频
 

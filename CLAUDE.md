@@ -189,8 +189,21 @@ log or print it.
 
 **Platform behaviour that is easy to get wrong:**
 
-- `deleteVideos` answering 200 does not mean every video is gone: vids the platform skipped are
-  in `skipped`. A video uploaded moments ago may be skipped.
+- `deleteVideos` resolving does not mean every video was deleted: the vids the platform does not
+  know are in `skipped` (its raw answer is `invalidVids: [v_1, v_2]`). When it knows none of them
+  it rejects the whole request with `all vids illegal`, and with `ignoreInvalidVids: false` it
+  rejects any batch that has an unknown vid as `illegal vids`; either way nothing is deleted. A
+  video that is still transcoding is deleted like any other.
+- Deleting a category deletes every category below it, at any depth, and moves the videos in them
+  to the default category (`1`). The platform does not require the category to be empty, so
+  `category delete` reads the sub-tree first and names what the delete takes with it, both in
+  the confirmation and in the result.
+- A resumed chunked upload finishes the video the interrupted run reserved, so its title,
+  description, category and tags are those given then. The upload result reports that title.
+- `exportSyncTask` returns a CSV with no header, one line per fetched video
+  (`fileUrl,title,vid,time`). It is an empty string while the URL-upload task is still running,
+  and for a task in which every URL failed. The sample URL in the public docs
+  (`oss.polyv.net/...`) no longer resolves, so it cannot be used to test.
 - Status `6` (just uploaded), `41` (not playable) and `61` (restored from the recycle bin) are
   not in the public docs; they were observed on the platform. `41` is treated as a final failure.
 - The video record appears right after a chunked upload completes; transcoding starts about a
@@ -213,15 +226,21 @@ log or print it.
 - Tests drive `run(argv, ctx)` with the platform replaced by a stand-in
   (`src/__tests__/harness.ts`), the same path the binary takes. Add a case there for every new
   command: positional arguments, the JSON output, the failure exit code.
+- Integration tests (`tests/integration`) run the built `dist/index.js` in a child process with
+  an isolated `POLYV_VOD_HOME` (`tests/helpers/cli-runner.ts`). The offline ones need no
+  credentials and run in CI; put there what only the binary can show: exit codes, help, the
+  account file across processes.
 
 ```bash
 # VOD packages
 pnpm --filter polyv-vod-api-sdk build
 pnpm --filter polyv-vod-api-sdk test:unit          # vitest
 pnpm --filter polyv-vod-api-sdk test:integration   # real account: needs packages/vod-sdk/.env.test
+pnpm --filter polyv-vod-api-sdk typecheck            # vitest; includes the test files
 pnpm --filter polyv-vod-cli build                  # also writes dist/version.json
 pnpm --filter polyv-vod-cli test:unit              # jest
-pnpm --filter polyv-vod-cli typecheck              # includes the tests
+pnpm --filter polyv-vod-cli test:integration       # runs the built binary; the real account needs the same .env.test
+pnpm --filter polyv-vod-cli typecheck              # includes the test files
 ```
 
 The VOD SDK's types are generated from the VOD API docs (`../document-center/docs/vod/api`,
@@ -249,6 +268,25 @@ fetching the object, because a search returning nothing does not prove an object
 `callback.test.ts` only reads and writes the callback setting. It needs `POLYV_VOD_APP_ID` /
 `POLYV_VOD_APP_SECRET` as well and is skipped without them. The platform reports "no callback"
 as `null` for an account that never had one and as `""` after one is cleared; treat both as unset.
+
+The CLI's real-account tests (`packages/vod-cli/tests/integration/vod-cli.integration.test.ts`)
+follow the same rules and read the same `.env.test`: they use a test account, remove what they
+created, and check each removal through the SDK rather than through the CLI under test. The
+resumable upload keeps its resume state under the OS temp directory (`polyv-vod-upload`), not
+under `POLYV_VOD_HOME`, so those tests pass `--checkpoint-dir` to keep it apart from a developer's
+own interrupted uploads. The test of a URL upload that succeeds needs a public mp4 the platform
+can fetch and only runs with `POLYV_VOD_TEST_PUBLIC_MP4`.
+
+Jest and Vitest both run the body of a skipped `describe` (to collect its tests), so a
+real-account suite must not touch the account at the top of its body: without credentials that
+throws while collecting, and the file fails instead of being skipped. It also fails when it
+holds no test at all. `vod-cli.integration.test.ts` and `real-api.test.ts` start with a guard
+that registers one skipped test and returns; copy it for a new real-account suite. Check the
+no-credentials path by moving `.env.test` aside: it was wrong in both packages until it was
+checked.
+
+Both `tsconfig.test.json` files override the base `exclude`, which drops every `*.test.ts` and
+`src/__tests__`. Keep that override: without it `typecheck` passes while covering no test file.
 
 ## Development Guidelines
 

@@ -62,7 +62,21 @@ JSON 模式返回嵌套结构：
 <CLI> category delete <分类ID> --force --source codex
 ```
 
-分类必须为空。先把其中的视频移走（`video move`）或删除，子分类也要先处理。
+**删的是整棵子树。** 平台不要求分类为空：该分类下所有层级的子分类一起删除。其中的视频不会被删，而是移到根分类（默认分类，ID `1`）。根分类本身不能删。
+
+删除前先看清范围：
+
+```bash
+<CLI> category list <分类ID> -o json --source codex
+```
+
+不带 `--force` 时命令拒绝执行，提示里写明会删除几个子分类、移走几个视频：
+
+```
+This command will delete category 1600000000001 "旧课程" (with 2 sub-categories; 3 videos move to the default category). Re-run it with --force to confirm.
+```
+
+删除后的输出写明同样的范围。要让视频留在别的分类，删之前先用 `video move` 移走。
 
 ## 分类设置
 

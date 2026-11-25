@@ -98,17 +98,24 @@ polyv-vod-cli video delete <视频ID> --force --source codex
 
 `video delete` 默认进回收站，可以用 `video recover` 恢复。`--permanent` 彻底删除，不可恢复。
 
-**删除的退出码为 0 不代表全部删除成功。** 加 `-o json`，检查输出里的 `skipped`：这些是平台没能删除的视频（不存在、已删除或仍在处理中）。
+**删除的退出码为 0 不代表全部删除成功。** 加 `-o json`，检查输出里的 `skipped`：这些是平台不认识的 ID（写错了，或早已彻底删除），其余的已删除。重试没有用，先核对 ID。整批 ID 平台都不认识时命令直接失败，什么都不删。
 
 ```bash
 polyv-vod-cli video delete <视频ID1> <视频ID2> --force -o json --source codex
 # { "deleted": ["…_4"], "skipped": ["…_7"] }
 ```
 
+**`category delete` 删的是整棵子树。** 该分类下所有层级的子分类一起删除，里面的视频移到默认分类，不会被删。不带 `--force` 时命令拒绝执行，并在提示里写明范围：
+
+```bash
+polyv-vod-cli category delete <分类ID> --source codex
+# ❌ This command will delete category 1600000000001 "旧课程" (with 2 sub-categories; 3 videos move to the default category). Re-run it with --force to confirm.
+```
+
 ## 上传
 
 - 2 GB 以内的文件一次请求直传。更大的文件自动改用分片续传。
-- 分片续传中断后，重跑同一条命令即可从断点继续。
+- 分片续传中断后，重跑同一条命令即可从断点继续。续传完成的是中断前已登记的那个视频，标题、简介、分类、标签都用中断前那次给的；重跑时改成别的值不生效，要改就等发布后用 `video update` / `video move`。
 - 上传成功只表示文件已送达，平台随后转码。小视频约 80 秒后可播放，大视频更久。用 `--wait` 或 `video wait` 等待。
 
 ```bash
@@ -130,10 +137,20 @@ npx skills add polyv/polyv-live-cli --skill polyv-vod-cli
 ## 开发
 
 ```bash
-pnpm --filter polyv-vod-cli build     # 构建
-pnpm --filter polyv-vod-cli test:unit # 单元测试
+pnpm --filter polyv-vod-cli build            # 构建
+pnpm --filter polyv-vod-cli test:unit        # 单元测试
+pnpm --filter polyv-vod-cli test:integration # 跑构建产物，见下
+pnpm --filter polyv-vod-cli typecheck        # 含测试文件
 node packages/vod-cli/dist/index.js --help
 ```
+
+集成测试（`tests/integration`）在子进程里运行构建好的 `dist/index.js`，每个测试用各自独立的 `POLYV_VOD_HOME`，不会读写 `~/.polyv-vod`。
+
+- **离线部分**（`binary.integration.test.ts`）不需要凭证，CI 里也会跑：退出码、帮助信息、`--source` 拦截、账号的保存与切换。
+- **真实账号部分**（`vod-cli.integration.test.ts`）会上传和删除视频、增删分类、读改回调设置，需要测试账号。凭证读环境变量或 `.env.test`：本包没有的话，读 `packages/vod-sdk/.env.test`（键名见 `packages/vod-sdk/.env.example`）。缺 `POLYV_VOD_USER_ID`、`POLYV_VOD_SECRET_KEY`、`POLYV_VOD_WRITE_TOKEN` 中任何一个时整组跳过；`callback` 的两条用例另外需要 `POLYV_VOD_APP_ID` / `POLYV_VOD_APP_SECRET`。
+- URL 上传默认只测“全部抓取失败”的路径，这不依赖平台以外的地址。设了 `POLYV_VOD_TEST_PUBLIC_MP4=<一个平台能访问的公网 mp4 地址>` 会多跑一条抓取成功的用例，视频随后删除。
+
+测试创建的对象在结束时全部删除，并通过 SDK 逐个拉取确认已经不存在；有残留时测试失败并列出残留项。请用测试账号。
 
 ## License
 

@@ -113,7 +113,7 @@
 
 - 默认进回收站，可用 `video recover` 恢复。
 - `--permanent` 彻底删除，不可恢复。
-- 一次最多 500 个视频 ID。
+- 一次最多 500 个视频 ID。还在转码的视频也可以删除。
 
 **退出码 `0` 不代表全部删除成功。** JSON 输出：
 
@@ -121,9 +121,19 @@
 { "deleted": ["…_4"], "skipped": ["…_7"] }
 ```
 
-`skipped` 是平台没能删除的视频：不存在、已删除、或仍在处理中。`skipped` 不为空时，对这些 ID 稍后重试。表格模式下未删除的 ID 以 `Not deleted:` 提示输出到 stderr。
+`skipped` 是平台不认识的 ID：写错了，或早已彻底删除。其余的都已删除。表格模式下这些 ID 以 `Not deleted, the platform does not know these ids` 提示输出到 stderr。重试没有用，先核对 ID。
 
-默认会跳过无法删除的视频并继续处理其余的。加 `--strict` 则遇到任何一个无法删除的视频就整批失败、什么都不删。
+平台不认识批次里的**任何一个** ID 时，整条命令失败（退出码 `1`），什么都不会删除：
+
+```
+❌ The platform knows none of these video ids, so nothing was deleted
+```
+
+默认遇到不认识的 ID 会跳过它、删除其余的。加 `--strict` 则只要有一个不认识的 ID 就整批失败、什么都不删：
+
+```
+❌ The platform does not know some of these video ids, so with --strict nothing was deleted
+```
 
 要确认删除结果，用 `video get <视频ID>` 逐个核对，报“找不到视频信息”才是真的删掉了。
 

@@ -101,6 +101,7 @@ npx --yes polyv-vod-cli@latest
 
 - `video delete` 默认进回收站，可 `video recover` 恢复。
 - `video delete --permanent` 彻底删除，不可恢复。只在用户明确要求"彻底删除"时使用。
+- `category delete` 连同该分类下所有子分类一起删除，里面的视频移到默认分类。执行前用 `category list <分类ID>` 看清范围，并向用户说明会删掉哪些。
 
 ## 输出规则
 

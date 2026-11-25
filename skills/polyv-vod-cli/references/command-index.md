@@ -185,7 +185,7 @@ Usage: polyv-vod-cli video delete [options] <vid...>
 | 选项 | 说明 |
 |---|---|
 | `--permanent` | delete for good instead of moving to the recycle bin |
-| `--strict` | fail when any video cannot be deleted, instead of skipping it |
+| `--strict` | fail when the platform does not know one of the ids, instead of deleting the others |
 | `--force` | skip the confirmation prompt |
 | `-o, --output` | output format (table\|json)（默认：`table`） |
 
@@ -335,7 +335,7 @@ Usage: polyv-vod-cli category move [options] <id>
 
 ### category delete
 
-Delete a category; it must be empty
+Delete a category together with every category under it; the videos in them move to the default category
 
 Usage: polyv-vod-cli category delete [options] <id>
 

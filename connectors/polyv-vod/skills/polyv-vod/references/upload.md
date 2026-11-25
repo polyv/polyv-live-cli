@@ -46,6 +46,7 @@ JSON 输出：
 ```
 
 - 上传中断（网络断开、手动终止）后，**重跑同一条命令**即可从断点继续，输出里 `resumed` 为 `true`。
+- 续传完成的是中断前已经登记的那个视频，所以标题、简介、分类、标签都用**中断前那次**给的，重跑时改成别的值不会生效（stderr 会提示）。要改就等发布后用 `video update` / `video move`。
 - `--part-size <MB>` 分片大小，`--concurrency <n>` 并发分片数（默认 3），`--checkpoint-dir <dir>` 续传状态存放目录。
 - `--no-resume` 忽略已保存的进度，从头上传。
 - 放弃一次中断的上传并清理分片：
@@ -76,7 +77,13 @@ JSON 输出：
 <CLI> upload task-delete <任务ID> --force --source codex
 ```
 
-`task-export` 不带 `--out` 时把 CSV 写到 stdout。
+`task-export` 不带 `--out` 时把 CSV 写到 stdout，内容与平台给的一致。CSV **没有表头**，每个抓取成功的视频一行：`源地址,标题,视频ID,上传时间`，例如：
+
+```
+https://example.com/a.mp4,视频A,abc_123,2026-11-25 15:10:54
+```
+
+导出为空说明任务还没处理完，或里面的地址全部抓取失败，stderr 会提示。`upload tasks -o json` 里 `taskstatus` 为 `FINISHED` 表示任务已结束，`failcount` 是抓取失败的数量。
 
 ## 等待转码
 
