@@ -481,6 +481,7 @@ NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attemp
 
 **2026-11-25 核对过的事实：**
 
+- 直播两个包确实由这条 GitHub Actions 链发布，鉴权演变有据可查：最初的工作流用 `pnpm publish` + 仓库 secret `NPM_TOKEN`（2026-06-24 曾连续失败，疑为 token 失效）；2026-09-07 提交 `2571465` 切到 trusted publishing（OIDC）后，sdk-v1.1.0 重发与 v1.3.0 → v1.6.0 全部成功（工作流运行时间与 npm 发布时间逐条对上）。也就是说 OIDC 发布在本仓库、本工作流、维护者 `terryso` 账号上已验证运行一年以上，VOD 包走同一条路没有新机制风险。
 - 两个包名在 npm registry 上未被占用（404）。npm 上直播两个包的维护者是 `terryso`，与 GitHub 的登录账号一致，VOD 包预计落在同一账号下。
 - 本机 npm 未登录（`npm whoami` 401）——首发前需要 `npm login`。
 - 两个包的 tarball 内容干净：只有 `dist/` + `package.json` + `README.md`（72 / 81 个文件），无测试文件、无 `.env` 文件；`license: MIT` 有元数据，仓库里没有 LICENSE 文件（与直播包一致）。
