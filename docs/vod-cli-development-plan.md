@@ -369,7 +369,7 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 
 | 事项 | 说明 |
 |---|---|
-| npm 发布权限未确认 | 发布链路本身已验证（见 12.9）；剩下的是 npm 账号侧的一次性操作：`npm login`（2026-11-25 本机未登录）、两个包的首发、在 npm 上配置 trusted publishing。包名未被占用已确认（registry 404） |
+| npm 账号侧的事项已全部完成（2026-11-25，见 12.9 的执行记录） | 两个包已首发 0.1.0 并验证；一次性 token 已吊销；Trusted Publisher 已配置（状态 Pending validation，**须在 2 天内由一次 CI 发布验证，否则过期作废**——即推分支合 main 后尽快打 tag） |
 | 类型生成器的改动没有单测 | 点播 SDK 复用并改了直播 SDK 的文档生成器（类型按文档文件名起名、字段去重、保留字模块名），只验证了「146 篇文档解析成功、产出一致」，没有针对生成器本身的测试；直播 SDK 有 5 个 |
 | 连接器和专家包未提交到平台 | 清单和格式校验通过；图标和头像沿用直播的（头像是占位图） |
 | 分支未推送、未提 PR | `feat/vod-cli` 上的提交都只在本地 |
@@ -513,3 +513,12 @@ NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attemp
 **登录态的两个入口，互不相通（2026-11-25 踩过）：** npmjs.com 的浏览器会话和 CLI 的 `npm login` 是两回事——浏览器已登录时 `npm whoami` 仍会 401。本地首发需要的是终端里的 `npm login`。npm 的政策公告：2026-08 起收紧绕过 2FA 的 token，2027-01 起限制直接发布——长线只有 OIDC trusted publishing 一条路，与本方案一致。
 
 **顺带发现（未改动）：** SDK 的 `exports` 只暴露主入口，使用方读不到 `polyv-vod-api-sdk/package.json`（拿版本号要靠 `VERSION` 导出，SDK 已提供）。要放开的话在 `exports` 里加 `"./package.json": "./package.json"` 即可。
+
+**执行记录（2026-11-25，发布已完成）：**
+
+| 步骤 | 实际经过 |
+|---|---|
+| 首发 | 用户 `npm login` 后，本地发布仍被 EOTP 挡住（账号开了发布 2FA）。改用一次性 granular token（勾 "Bypass two-factor authentication"、Read and write、All packages）发布，全程无 OTP：`npm publish`（SDK）与 `pnpm publish`（CLI）都成功。这类 token 2027-01 会被 npm 强制吊销，用完立即手动吊销并从 CLI 侧复核（whoami 401） |
+| 新包的 0.0.0-stage 占位 | 首次发布后 registry 会先落一个 `0.0.0-stage` 占位版本（描述 "Temporary package placeholder for staged publishing"），真实版本**异步生效**（SDK 约 2 分钟、CLI 约 5 分钟），期间 `npm install` 会装到占位版本（没有 bin）。生效后 `latest` 指向真实版本，占位版本仍留在版本列表里 |
+| 安装验证 | registry 全新安装 `polyv-vod-cli` → 解析到 `polyv-vod-api-sdk@0.1.0`，二进制 `--version` 与真实 API 调用（`stats usage`、`callback get`）全部通过 |
+| Trusted Publisher | 两个包均已配置并读回确认：`polyv` / `polyv-live-cli` / `release.yml`，权限 `npm publish`（+ 默认的 `npm stage publish`），与直播包完全一致。**保存配置要求安全密钥 2FA 再验证**（每次提交表单都要）；状态 Pending validation，由第一次 CI 发布转为 Valid，2 天不验证即过期 |
