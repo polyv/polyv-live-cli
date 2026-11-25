@@ -516,6 +516,18 @@ NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attemp
 
 **执行记录（2026-11-25，发布已完成）：**
 
+**Trusted Publisher 验证闭环（当日完成）**：`vod-sdk-v0.1.1` 和 `vod-v0.1.1` 两个 tag 各触发一次工作流，四个 job 全绿，OIDC 发布成功；registry 上两个包的 `latest` 均为 0.1.1；npm 页面上两个包的 Trusted Publisher 状态都从 Pending validation 转为 **Valid**——从此所有版本由 tag 全自动发布，不再需要 token 或 OTP。从工作流「Publish to npm: success」到 registry 可安装有约 4 分钟的 CDN 延迟，属正常现象。
+
+第一次运行暴露并修复了两个 bug（都在发布任何东西之前被拦截或当场修复）：
+
+| bug | 现象 | 修复 |
+|---|---|---|
+| Release 工作流的 `package` job 把解析结果写进步骤输出但没映射成 **job 输出**，下游 `needs.package.outputs.*` 全是空串，`pnpm --filter ""` 失败。直播包的旧工作流没有此问题——它在 job 里内联判断 tag，不使用 outputs；outputs 写法是本次新加的、从未跑过 | `vod-sdk-v0.1.1` 第一次运行在测试 job 失败，发布被跳过 | `package` job 显式映射全部 6 个输出（`d24d2a1`）。失败的 tag 未产生任何发布，删掉后在修复后的提交上重打 |
+| CLI 单测把版本硬编码为 `/^0\.1\.0$/`，release.sh 升版本后必然失败；SDK 的 `VERSION` 导出也是硬编码常量，每次发布都会与 package.json 脱节（直播 SDK 的这个常量自 1.0.0 起一直没跟上，VOD SDK 照抄了它） | `vod-v0.1.1` 第一次运行在 `reports the CLI version` 失败 | 单测改为从 package.json 取版本；SDK 构建新增 `scripts/write-version.mjs`，打包前把 `src/version.ts` 从 package.json 生成（`05e4b0d`）。同样删 tag 重打 |
+
+遗留一个纯外观问题：已发布的 `polyv-vod-api-sdk@0.1.1` 内嵌的 `VERSION` 常量仍是 `0.1.0`（该版本发布于生成器修复之前，它只影响默认 User-Agent 字符串），随下一个 SDK 版本自然纠正。
+
+
 | 步骤 | 实际经过 |
 |---|---|
 | 首发 | 用户 `npm login` 后，本地发布仍被 EOTP 挡住（账号开了发布 2FA）。改用一次性 granular token（勾 "Bypass two-factor authentication"、Read and write、All packages）发布，全程无 OTP：`npm publish`（SDK）与 `pnpm publish`（CLI）都成功。这类 token 2027-01 会被 npm 强制吊销，用完立即手动吊销并从 CLI 侧复核（whoami 401） |
