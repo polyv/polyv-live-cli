@@ -13,6 +13,14 @@ const coverageReports = [
   {
     label: 'SDK',
     path: 'packages/sdk/coverage/coverage-summary.json'
+  },
+  {
+    label: 'VOD CLI',
+    path: 'packages/vod-cli/coverage/coverage-summary.json'
+  },
+  {
+    label: 'VOD SDK',
+    path: 'packages/vod-sdk/coverage/coverage-summary.json'
   }
 ];
 

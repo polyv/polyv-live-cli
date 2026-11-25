@@ -5,7 +5,7 @@
 [![Node Version](https://img.shields.io/node/v/polyv-live-cli?style=flat-square&color=brightgreen)](https://nodejs.org/)
 [![NPM Version](https://badge.fury.io/js/polyv-live-cli.svg)](https://www.npmjs.com/package/polyv-live-cli)
 [![NPM Downloads](https://img.shields.io/npm/dm/polyv-live-cli.svg)](https://www.npmjs.com/package/polyv-live-cli)
-[![Coverage](https://img.shields.io/badge/coverage-92.5%25-brightgreen?style=flat-square)](https://github.com/polyv/polyv-live-cli/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-92.8%25-brightgreen?style=flat-square)](https://github.com/polyv/polyv-live-cli/actions/workflows/ci.yml)
 [![BMAD](https://bmad-badge.vercel.app/polyv/polyv-live-cli.svg)](https://github.com/bmad-code-org/BMAD-METHOD)
 [![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/polyv/polyv-live-cli)
 [![GitHub License](https://img.shields.io/github/license/polyv/polyv-live-cli?style=flat-square)](https://github.com/polyv/polyv-live-cli/blob/main/LICENSE)
@@ -62,6 +62,36 @@ npx skills add polyv/polyv-live-cli
 
 > 支持 Claude Code、OpenClaw 等所有兼容 Skill 协议的 AI Agent。
 
+本仓库提供多个 Skill。上面的命令不带 `--skill` 时，会把仓库里的 Skill **全部**安装。只需要其中一个时，用 `--skill` 指定：
+
+```bash
+# 只装直播 Skill
+npx skills add polyv/polyv-live-cli --skill polyv-live-cli
+
+# 只装点播 Skill
+npx skills add polyv/polyv-live-cli --skill polyv-vod-cli
+```
+
+先看看仓库里有哪些 Skill：
+
+```bash
+npx skills add polyv/polyv-live-cli --list
+```
+
+| Skill | 用途 |
+|---|---|
+| `polyv-live-cli` | 云直播：频道、推流、商品、优惠券、回放、互动、观众、统计等 |
+| `polyv-vod-cli` | 云点播：上传、转码等待、视频与分类管理、播放凭证、播放统计、事件回调 |
+| `polyv-e-commerce-setup` | 一键配置电商直播环境 |
+| `polyv-scenario-setup` | 按场景配置直播（电商、教育、研讨会等） |
+
+点播 Skill 对应的命令行工具是 `polyv-vod-cli`，与直播的 `polyv-live-cli` 是两个独立的包，凭证也互不通用：
+
+```bash
+npm install -g polyv-vod-cli
+polyv-vod-cli --help
+```
+
 ### 使用示例
 
 安装后，直接向 AI Agent 提问即可：
@@ -117,6 +147,26 @@ npx --yes polyv-live-cli@latest stream status -c <channelId>
 npx --yes polyv-live-cli@latest statistics view -c <channelId> --start-day 2026-06-01 --end-day 2026-06-20
 ```
 
+### 云点播
+
+点播是另一个 CLI（`polyv-vod-cli`），与直播的凭证不通用。点播用 `userId`、`secretKey` 和 `writeToken`，在云点播后台的「设置 → API接口」获取。
+
+```bash
+# 添加账号并设为默认
+npx --yes polyv-vod-cli@latest account add myaccount --user-id <userId> --secret-key <secretKey> --write-token <writeToken> --default
+
+# 上传视频，等转码完成后输出 JSON
+npx --yes polyv-vod-cli@latest upload file ./intro.mp4 --wait -o json --source codex
+
+# 搜索视频
+npx --yes polyv-vod-cli@latest video search --title 关键词 -o json --source codex
+
+# 查看空间与流量
+npx --yes polyv-vod-cli@latest stats usage --source codex
+```
+
+每条调用平台的命令都要带 `--source <标识>`（小写字母、数字、连字符），用来标明调用方；不带时命令不执行。`polyv-vod-cli` 尚未发布到 npm，发布前请从源码运行：`pnpm --filter polyv-vod-cli build && node packages/vod-cli/dist/index.js --help`。
+
 ## 功能模块
 
 | 模块 | 命令 | 说明 |
@@ -133,12 +183,26 @@ npx --yes polyv-live-cli@latest statistics view -c <channelId> --start-day 2026-
 | 播放器与观看页 | `player` / `web` | 播放器、水印、暖场、观看页配置 |
 | 场景初始化 | `setup` | 一键配置电商场景，可先用 `--dry-run` 预览 |
 
+点播 CLI（`polyv-vod-cli`）的模块：
+
+| 模块 | 命令 | 说明 |
+|------|------|------|
+| 上传 | `upload` | 本地上传（2 GB 内直传，更大用分片续传）、按 URL 拉取、同步任务 |
+| 视频管理 | `video` | 搜索、详情、改标题描述标签、移动分类、禁播、删除与恢复、等转码完成 |
+| 分类管理 | `category` | 分类树、新建、改名、移动、删除、分类设置 |
+| 播放凭证 | `play` | 为加密视频生成播放 token |
+| 数据统计 | `stats` | 空间与流量、播放量趋势、播放排行、观看日志 |
+| 事件回调 | `callback` | 查询与设置回调地址、校验回调签名 |
+
 ## 包结构
 
 ```
 packages/
-├── sdk/    # polyv-live-api-sdk - PolyV Live API SDK
-└── cli/    # polyv-live-cli       - PolyV Live CLI 工具
+├── sdk/           # polyv-live-api-sdk   - PolyV Live API SDK
+├── cli/           # polyv-live-cli       - PolyV Live CLI 工具
+├── vod-sdk/       # polyv-vod-api-sdk    - PolyV VOD API SDK
+├── vod-cli/       # polyv-vod-cli        - PolyV VOD CLI 工具
+└── tool-manifest/ # @polyv/tool-manifest - 由直播 CLI 命令树生成 MCP 工具清单
 ```
 
 ## 开发
@@ -155,11 +219,31 @@ pnpm test
 
 # 运行 CLI（开发模式）
 pnpm --filter polyv-live-cli dev
+
+# 点播 CLI 的测试与构建
+pnpm --filter polyv-vod-api-sdk test:unit
+pnpm --filter polyv-vod-cli test:unit
+pnpm --filter polyv-vod-cli build
+
+# 校验 skill 与它的打包副本
+pnpm skill:check
+pnpm skill:sync:check
 ```
 
 ## 发布流程
 
-使用 Changesets 管理版本：
+通过打 tag 触发 GitHub Action 发布到 npm，tag 前缀决定发布哪个包：
+
+| 包 | 命令 | Tag |
+|---|---|---|
+| `polyv-live-cli` | `./scripts/release.sh cli patch` | `v1.2.3` |
+| `polyv-live-api-sdk` | `./scripts/release.sh sdk patch` | `sdk-v1.2.3` |
+| `polyv-vod-cli` | `./scripts/release.sh vod patch` | `vod-v0.1.1` |
+| `polyv-vod-api-sdk` | `./scripts/release.sh vod-sdk patch` | `vod-sdk-v0.1.1` |
+
+tag 与包的对应关系在 `scripts/release-package.mjs` 里维护。CLI 依赖同名的 SDK，发布 CLI 之前先发布它依赖的 SDK 版本。
+
+也支持用 Changesets 管理版本：
 
 ```bash
 pnpm changeset        # 创建 changeset
@@ -171,7 +255,11 @@ pnpm changeset publish # 发布
 
 - [SDK 文档](./packages/sdk/README.md)
 - [CLI 详细文档](./packages/cli/README.md)
+- [点播 SDK 文档](./packages/vod-sdk/README.md)
+- [点播 CLI 文档](./packages/vod-cli/README.md)
+- [点播 CLI 与 Skill 开发方案](./docs/vod-cli-development-plan.md)
 - [保利威直播 API 文档](https://help.polyv.net/#/live/api/)
+- [保利威点播 API 文档](https://help.polyv.net/#/vod/api/)
 - [保利威官网](https://www.polyv.net/)
 
 ## 联系方式

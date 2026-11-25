@@ -1,0 +1,59 @@
+{
+  "name": "polyv-vod-cli",
+  "version": "0.1.1",
+  "description": "CLI tool for managing PolyV VOD (video on-demand) services.",
+  "main": "dist/index.js",
+  "bin": {
+    "polyv-vod-cli": "dist/index.js"
+  },
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/write-version.mjs && chmod +x dist/index.js",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:unit": "jest",
+    "test:coverage": "jest --coverage --ci",
+    "test:integration": "pnpm --filter polyv-vod-api-sdk build && npm run build && jest --config=jest.integration.config.js",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "polyv",
+    "cli",
+    "vod",
+    "video",
+    "on-demand",
+    "typescript",
+    "command-line"
+  ],
+  "author": "PolyV Team",
+  "license": "MIT",
+  "homepage": "https://github.com/polyv/polyv-live-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polyv/polyv-live-cli.git",
+    "directory": "packages/vod-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/polyv/polyv-live-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cli-table3": "^0.6.3",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "polyv-vod-api-sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.0",
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.0"
+  }
+}

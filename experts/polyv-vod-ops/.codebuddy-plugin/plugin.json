@@ -1,0 +1,65 @@
+{
+  "name": "polyv-vod-ops",
+  "version": "0.1.0",
+  "description": "PolyV VOD operations expert that drives polyv-vod-cli via Bash to upload videos, wait for transcoding, manage videos and categories, mint play tokens, read storage and playback statistics, and verify event callbacks, with upload, library tidy-up and playback review playbooks.",
+  "author": {
+    "name": "37795272",
+    "email": "90859897+37795272@users.noreply.github.com"
+  },
+  "agents": [
+    "./agents/polyv-vod-ops.md"
+  ],
+  "expertType": "agent",
+  "agentName": "polyv-vod-ops",
+  "skills": [
+    "./skills/polyv-vod-cli"
+  ],
+  "homepage": "https://github.com/polyv/polyv-live-cli",
+  "displayName": {
+    "en": "PolyV VOD Ops",
+    "zh": "易方点播运营专家"
+  },
+  "profession": {
+    "en": "Video On-Demand Operations Specialist",
+    "zh": "点播运营专家"
+  },
+  "displayDescription": {
+    "en": "Official PolyV VOD operations expert by YiFang Information Technology. Uploads videos and waits for transcoding, organises the video library, mints play tokens, and reviews storage, traffic and playback data via polyv-vod-cli.",
+    "zh": "易方信息科技旗下保利威点播官方专家，上传视频并等待转码，整理视频库与分类，生成播放凭证，并复盘播放数据。"
+  },
+  "avatar": "avatars/expert.png",
+  "categoryId": "09-OperationsHR",
+  "defaultInitPrompt": {
+    "en": "Show my VOD storage, traffic and most played videos",
+    "zh": "帮我看看点播账号的空间流量和播放最多的视频"
+  },
+  "plugin": "polyv-vod-ops",
+  "tags": [
+    {
+      "en": "PolyV",
+      "zh": "保利威"
+    },
+    {
+      "en": "Video On-Demand",
+      "zh": "点播运营"
+    },
+    {
+      "en": "Playback Review",
+      "zh": "播放复盘"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "Show my VOD storage, traffic and most played videos",
+      "zh": "帮我看看点播账号的空间流量和播放最多的视频"
+    },
+    {
+      "en": "Upload this video and tell me when it is ready to play",
+      "zh": "把这个视频上传到点播，可以播放了告诉我"
+    },
+    {
+      "en": "Find the videos that failed to transcode and list them",
+      "zh": "帮我找出转码失败的视频并列出来"
+    }
+  ]
+}
