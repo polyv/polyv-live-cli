@@ -34,7 +34,7 @@ const okResponse = (extra: Record<string, unknown> = {}) => jsonResponse({ error
 
 describe('uploadFileDirect', () => {
   it('streams the fields and the file in one multipart request', async () => {
-    let raw = Buffer.alloc(0);
+    let raw: Buffer = Buffer.alloc(0);
     let request: RequestInit | undefined;
     const http = recordedFetch(async (call) => {
       raw = await bodyOf(call.init);
@@ -87,7 +87,7 @@ describe('uploadFileDirect', () => {
   });
 
   it('takes the title from the file name, sends fileMd5 in uppercase and skips absent options', async () => {
-    let raw = Buffer.alloc(0);
+    let raw: Buffer = Buffer.alloc(0);
     const http = recordedFetch(async (call) => {
       raw = await bodyOf(call.init);
       return okResponse({ title: undefined });

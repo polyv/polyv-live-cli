@@ -73,7 +73,8 @@ export interface StorageSelection {
   dir: string;
 }
 
-type StorageSource = ChunkedUploadInitResponse & ChunkedUploadTokenResponse;
+/** What picking the storage reads: the credentials the platform issued for either storage. */
+type StorageSource = ChunkedUploadTokenResponse & Pick<ChunkedUploadInitResponse, 'encodedCallback'>;
 
 /**
  * Picks the storage for the upload. Following the Java SDK, `auto` uses Huawei OBS whenever the
@@ -156,13 +157,16 @@ export async function uploadFileChunked(client: PolyVVodClient, options: UploadF
     saved = null;
     await removeCheckpoint(checkpointFile);
   }
+  // A resumed upload finishes the video the earlier run reserved, so it keeps that run's title,
+  // and with it the description, category and tags fixed at the time.
+  const keptTitle = saved?.title ?? title;
 
   // 1) Reserve a vid, or re-attach to the one an earlier run reserved.
   const init = await client.request<ChunkedUploadInitResponse>({
     method: 'POST',
     path: CHUNKED_INIT_PATH,
     params: saved
-      ? { title: saved.title ?? title, filesize: file.size, vid: saved.vid, autoid: 0, uploadType: CHUNKED_UPLOAD_TYPE }
+      ? { title: keptTitle, filesize: file.size, vid: saved.vid, autoid: 0, uploadType: CHUNKED_UPLOAD_TYPE }
       : {
           title,
           describ: options.description,
@@ -192,7 +196,7 @@ export async function uploadFileChunked(client: PolyVVodClient, options: UploadF
   const checkpoint: UploadCheckpoint = {
     version: 1,
     vid,
-    title,
+    title: keptTitle,
     key,
     storage: selection.credentials.kind,
     uploadId,
@@ -282,7 +286,7 @@ export async function uploadFileChunked(client: PolyVVodClient, options: UploadF
   await removeCheckpoint(checkpointFile);
   options.onProgress?.({ uploadedBytes: file.size, totalBytes: file.size, uploadedParts: partCount, totalParts: partCount });
 
-  return { vid, mode: 'chunked', title, status: 6, resumed: saved !== null, parts: partCount };
+  return { vid, mode: 'chunked', title: keptTitle, status: 6, resumed: saved !== null, parts: partCount };
 }
 
 /**

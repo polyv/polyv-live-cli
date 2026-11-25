@@ -40,7 +40,7 @@ afterEach(async () => {
 
 interface World {
   api: Recorded;
-  storage: ReturnType<typeof vi.fn>;
+  storage: ReturnType<typeof vi.fn<[input: string | URL, init?: RequestInit], Promise<Response>>>;
   state: { stored: Map<number, string>; failPart: number; expireOnPart: number; completeStatus: number };
 }
 
@@ -239,6 +239,20 @@ describe('uploadFileChunked', () => {
     // Only the two missing parts are put again; the upload is not initiated anew.
     expect(storageCalls(world).slice(-4).map((call) => call.method)).toEqual(['GET', 'PUT', 'PUT', 'POST']);
     await expect(readCheckpoint(checkpointPath(checkpointDir, filePath))).resolves.toBeNull();
+  });
+
+  it('keeps the title of the interrupted run when it resumes, and reports that one', async () => {
+    const world = fakeWorld(true);
+    const client = clientWith(world.api);
+    const options = { filePath, partSize: PART_SIZE, checkpointDir, storageFetch: asFetch(world), concurrency: 1 };
+
+    world.state.failPart = 3;
+    await expect(uploadFileChunked(client, { ...options, title: '第一课' })).rejects.toMatchObject({ kind: 'upload' });
+
+    // The second run asks for another title. The vid was reserved as "第一课" and stays so.
+    const result = await uploadFileChunked(client, { ...options, title: '改过的标题' });
+    expect(result).toMatchObject({ vid: 'V_4', title: '第一课', resumed: true });
+    expect(world.api.calls[world.api.calls.length - 1].params.get('title')).toBe('第一课');
   });
 
   it('ignores a checkpoint that describes a different version of the file', async () => {

@@ -108,6 +108,12 @@ export interface SyncTask {
   seccesscount?: number;
   totalcount?: number;
   failcount?: number;
+  /** `Y` when the task is running, `N` when it is paused. */
+  status?: string;
+  /** Whether the platform is still fetching (`SYNCHRONIZING`) or is done (`FINISHED`). Observed on the platform; not in the public docs. */
+  taskstatus?: string;
+  /** 13-digit timestamps. */
+  createtime?: number;
   endtime?: number;
 }
 

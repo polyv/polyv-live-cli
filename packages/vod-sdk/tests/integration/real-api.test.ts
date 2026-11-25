@@ -19,10 +19,11 @@ import { isPublished, isVideoNotFound, MIN_PART_SIZE, PolyVVodClient } from '../
 
 loadDotenv({ path: fileURLToPath(new URL('../../.env.test', import.meta.url)) });
 
-const userId = process.env.POLYV_VOD_USER_ID;
-const secretKey = process.env.POLYV_VOD_SECRET_KEY;
-const writeToken = process.env.POLYV_VOD_WRITE_TOKEN;
-const real = userId && secretKey && writeToken ? describe.sequential : describe.skip;
+const credentials =
+  process.env.POLYV_VOD_USER_ID && process.env.POLYV_VOD_SECRET_KEY && process.env.POLYV_VOD_WRITE_TOKEN
+    ? { userId: process.env.POLYV_VOD_USER_ID, secretKey: process.env.POLYV_VOD_SECRET_KEY, writeToken: process.env.POLYV_VOD_WRITE_TOKEN }
+    : null;
+const real = credentials ? describe.sequential : describe.skip;
 
 const TINY_MP4 = fileURLToPath(new URL('../fixtures/tiny.mp4', import.meta.url));
 const RUN = `sdk-it-${Date.now()}`;
@@ -68,10 +69,14 @@ async function deleteCategoryForGood(client: PolyVVodClient, cataid: string): Pr
 }
 
 real('polyv-vod-api-sdk against the real platform', () => {
+  if (!credentials) {
+    // Vitest runs the body of a skipped suite too, to collect its tests, so nothing in here may
+    // need the account. This is the one test it finds without one.
+    it('needs the test account (see the top of this file)', () => undefined);
+    return;
+  }
   const client = new PolyVVodClient({
-    userId,
-    secretKey,
-    writeToken,
+    ...credentials,
     appId: process.env.POLYV_VOD_APP_ID,
     appSecret: process.env.POLYV_VOD_APP_SECRET,
     rateLimit: false
@@ -119,7 +124,8 @@ real('polyv-vod-api-sdk against the real platform', () => {
    * The platform reads the first clip in the file, so the upload is a valid video.
    */
   async function multiPartVideo(name: string): Promise<string> {
-    workDir ??= await mkdtemp(join(tmpdir(), 'polyv-vod-sdk-it-'));
+    // `||`, not `??`: workDir starts as an empty string, which `??=` would leave in place.
+    workDir ||= await mkdtemp(join(tmpdir(), 'polyv-vod-sdk-it-'));
     const clip = await readFile(TINY_MP4);
     const copies = Math.ceil((MIN_PART_SIZE * 2 + 40_000) / clip.length);
     const path = join(workDir, name);
@@ -202,7 +208,7 @@ real('polyv-vod-api-sdk against the real platform', () => {
 
   it('reports statistics', async () => {
     const usage = await client.statistics.getAccountUsage();
-    expect(usage.userId).toBe(userId);
+    expect(usage.userId).toBe(credentials.userId);
     expect(await client.statistics.getVideoPlayTimes(directVid)).toEqual([{ vid: directVid, times: 0 }]);
     expect(Array.isArray(await client.statistics.getPlayTimes({ dr: '7days' }))).toBe(true);
     const rank = await client.statistics.getPlayTimesRank({ dr: '7days' });

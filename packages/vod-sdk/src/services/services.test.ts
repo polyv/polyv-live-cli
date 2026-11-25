@@ -50,9 +50,10 @@ describe('VideoService', () => {
     await expect(clientWith(http).video.updateVideoInfo({ vid: '' })).rejects.toThrow('vid is required');
   });
 
-  it('deletes to the recycle bin by default and lists the vids the platform skipped', async () => {
-    const http = recordedFetch(() => jsonResponse(envelope(['v_1', 'v_2'])));
-    await expect(clientWith(http).video.deleteVideos('v_1,v_2')).resolves.toEqual({ skipped: ['v_1', 'v_2'] });
+  it('deletes to the recycle bin by default and lists the vids the platform does not know', async () => {
+    // The answer of the real platform to a batch in which it knew v_1 but not v_2.
+    const http = recordedFetch(() => jsonResponse(envelope('invalidVids: [v_2]')));
+    await expect(clientWith(http).video.deleteVideos('v_1,v_2')).resolves.toEqual({ skipped: ['v_2'] });
     expect(http.calls[0].url.pathname).toBe('/v2/video/del-videos');
     expect(http.calls[0].params.get('deleteType')).toBe('1');
     expect(http.calls[0].params.get('ignoreInvalidVids')).toBe('Y');
@@ -104,6 +105,12 @@ describe('normalizeVids', () => {
 });
 
 describe('parseSkippedVids', () => {
+  it('reads the invalidVids list the platform answers with', () => {
+    expect(parseSkippedVids('invalidVids: [zzz_0, yyy_0]')).toEqual(['zzz_0', 'yyy_0']);
+    expect(parseSkippedVids('invalidVids:[zzz_0]')).toEqual(['zzz_0']);
+    expect(parseSkippedVids('invalidVids: []')).toEqual([]);
+  });
+
   it('reads an empty, array, string and object list', () => {
     expect(parseSkippedVids(undefined)).toEqual([]);
     expect(parseSkippedVids(null)).toEqual([]);

@@ -65,7 +65,7 @@ SDK 按接口选择签名方式，调用方不需要自己签名：
 `uploadFile` 默认按文件大小选择方式：2 GB 以内一次请求直传，更大则分片续传。想明确指定时用 `mode: 'direct'` 或 `mode: 'chunked'`。
 
 ```ts
-// 分片续传：中断后重跑同一条命令即可从断点继续
+// 分片续传：中断后重跑同一条调用即可从断点继续
 const result = await client.upload.uploadFile({
   filePath: './movie.mp4',
   mode: 'chunked',
@@ -74,6 +74,8 @@ const result = await client.upload.uploadFile({
 });
 console.log(result.vid, result.resumed ? '（续传）' : '');
 ```
+
+续传接着完成上一次保留下来的那个视频，所以标题、简介、分类和标签都用**上一次**调用的，这次调用里给的不再生效；返回值的 `title` 就是平台上的标题。要换这些信息，等视频发布后用 `updateVideoInfo` / `moveVideos` 修改，或传 `resume: false` 重新上传。
 
 平台随后转码，视频记录在转码完成后才可播放。`waitUntilPublished` 轮询到已发布或确定失败：
 
@@ -106,7 +108,7 @@ try {
 
 ## 注意
 
-- **删除的返回值**：`deleteVideos` 成功时返回 `{ skipped }`。`skipped` 里是平台没能删除的视频（不存在、已删除或仍在处理中），不为空时不能当作全部删除成功。
+- **删除的返回值**：`deleteVideos` 成功时返回 `{ skipped }`，里面是平台不认识的 vid（写错了，或早已彻底删除），其余的已删除，所以 `skipped` 不为空时不能当作全部删除成功。整批 vid 平台都不认识时，整个请求失败（`kind: 'api'`，`message: 'all vids illegal'`），不会删除任何视频。还在转码的视频可以照常删除。
 - **限流**：平台对单个 IP 限制 10 秒内 500 次请求。SDK 默认把请求节流到 10 秒 400 次，可用 `rateLimit` 调整或关闭。
 - **重试**：超时、连接失败和 HTTP 429 / 5xx 会重试，默认 2 次。会改变状态的请求（POST）默认不重试，除非标记 `idempotent`。
 - **临时凭证**：`upload` 的内部响应里含有对象存储的临时密钥，不要打印或记录它。
@@ -118,6 +120,7 @@ pnpm --filter polyv-vod-api-sdk build          # 构建（会先从 API 文档�
 pnpm --filter polyv-vod-api-sdk test:unit      # 单元测试
 pnpm --filter polyv-vod-api-sdk test:coverage  # 带覆盖率
 pnpm --filter polyv-vod-api-sdk test:integration  # 真实接口测试
+pnpm --filter polyv-vod-api-sdk typecheck      # 含测试文件
 ```
 
 真实接口测试需要凭证：把 `.env.example` 复制为 `.env.test` 并填入。测试会上传并删除临时视频，请用测试账号。没有凭证时测试自动跳过。

@@ -36,11 +36,21 @@ export function normalizeVids(vids: string | string[], max: number, what = 'vids
   return list.join(',');
 }
 
-/** Vids listed in the `data` of a delete that skipped them. */
+/**
+ * Vids listed in the `data` of a delete that the platform left alone.
+ *
+ * With `ignoreInvalidVids` the platform answers `invalidVids: [v_1, v_2]`. A plain list and a
+ * list of objects are read as well, in case another endpoint answers in either shape.
+ */
 export function parseSkippedVids(data: unknown): string[] {
   if (data === undefined || data === null || data === '') return [];
-  const items = Array.isArray(data) ? data : String(data).split(/[,\s]+/);
-  return items.map((item) => (typeof item === 'object' && item !== null ? String((item as { vid?: unknown }).vid ?? '') : String(item))).filter(Boolean);
+  const items = Array.isArray(data) ? data : listedVids(String(data));
+  return items.map((item) => (typeof item === 'object' && item !== null ? String((item as { vid?: unknown }).vid ?? '') : String(item).trim())).filter(Boolean);
+}
+
+function listedVids(text: string): string[] {
+  const bracketed = /^invalidVids\s*:\s*\[(.*)\]$/i.exec(text.trim());
+  return (bracketed ? bracketed[1] : text).split(/[,\s]+/);
 }
 
 /** Whether the platform answered that the video does not exist. */
@@ -104,8 +114,11 @@ export class VideoService {
   /**
    * Deletes up to 500 videos.
    *
-   * A `200` does not mean every video is gone: vids the platform skipped are listed in
-   * `skipped`. A video that was just uploaded may be skipped while it is still being processed.
+   * A resolved call does not mean every video is gone. `skipped` lists the vids the platform
+   * does not know; the others are deleted. When it knows none of them it rejects the whole
+   * request with `all vids illegal`, whether or not `ignoreInvalidVids` is set.
+   *
+   * A video that is still being transcoded is deleted like any other.
    */
   async deleteVideos(vids: string | string[], options: DeleteVideosOptions = {}): Promise<DeleteVideosResult> {
     const data = await this.client.request<unknown>({

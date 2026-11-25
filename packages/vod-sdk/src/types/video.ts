@@ -195,12 +195,12 @@ export interface DurationAndSizeItem {
 export interface DeleteVideosOptions {
   /** `1` moves to the recycle bin (default), `2` deletes permanently. */
   deleteType?: 1 | 2;
-  /** Skip vids that cannot be deleted instead of failing the whole batch. Default false. */
+  /** Delete the vids the platform knows and list the others in `skipped`, instead of failing the whole batch. Default true. */
   ignoreInvalidVids?: boolean;
 }
 
 export interface DeleteVideosResult {
-  /** Vids the platform skipped: unknown, already deleted, or still being processed. */
+  /** Vids the platform left alone because it does not know them: a wrong id, or one deleted for good already. */
   skipped: string[];
 }
 
