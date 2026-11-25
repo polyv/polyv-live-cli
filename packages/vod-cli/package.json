@@ -1,6 +1,6 @@
 {
   "name": "polyv-vod-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI tool for managing PolyV VOD (video on-demand) services.",
   "main": "dist/index.js",
   "bin": {
