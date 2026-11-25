@@ -494,7 +494,22 @@ NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attemp
 3. **首发不能走 CI**：工作流用 npm trusted publishing（OIDC），而 trusted publisher 要在 npm 的包页面上配置，包还不存在时配不了（以 npm 文档为准）。所以首版在本地发：
    - `npm login` 后 `cd packages/vod-sdk && npm publish --access public`；
    - CLI 本地发不能用 `npm publish`（`workspace:*` 无法解析），用 `pnpm --filter polyv-vod-cli publish --access public`（pnpm 会自动改写 workspace 协议），或先手改依赖再 `npm publish`、发完改回。
-4. 首发后，在 npmjs.com 给两个包分别配置 Trusted Publisher：Repository `polyv/polyv-live-cli`，Workflow filename `release.yml`，Environment 留空（工作流未使用 environment）。
+4. 首发后，在 npmjs.com 给两个包分别配置 Trusted Publisher（2026-11-25 在直播包的配置页上核对过表单，照抄直播包的现配置即可）：
+
+   | 表单字段 | 填什么 |
+   |---|---|
+   | Publisher | GitHub Actions |
+   | Organization or user（必填） | `polyv` |
+   | Repository（必填） | `polyv-live-cli` |
+   | Workflow filename（必填） | `release.yml`（只填文件名，须带 `.yml`，且已存在于 `.github/workflows/`） |
+   | Environment name | 留空（工作流未使用 environment） |
+   | Allowed actions | 勾 `Allow npm publish`；`npm stage publish` 永远允许；`Allow npm dist-tag` 不需要 |
+
+   直播包的现配置是 `polyv/polyv-live-cli` + `release.yml`，权限 `npm publish`（`npm stage publish` 默认含），状态 Valid——与上表一致。
+   配置的校验发生在发布时而不是保存时，且**新配置须在 2 天内完成一次成功发布，否则过期作废**：首发后立即配置、随后第一次 tag 发布即完成验证，不会触发。
+   文档另有两点与我们的工作流吻合，已确认：发布要求 `package.json` 的 `repository.url` 与 GitHub 仓库精确一致（VOD 两个包都指向 `github.com/polyv/polyv-live-cli`）；OIDC 只支持 GitHub 托管 runner（工作流用 `ubuntu-latest`），tag 直接触发 `release.yml` 本身（没有 `workflow_call`/`workflow_dispatch` 中转）。
 5. 之后的版本全自动：`./scripts/release.sh vod-sdk patch` → 等 CI 绿 → `./scripts/release.sh vod patch`。想首发就发 0.1.0 而不是 0.1.1 时，手动 `git tag vod-sdk-v0.1.0` 并推送（工作流的版本一致性校验会通过），但发布那步仍要走第 3 条的本地路径。
+
+**登录态的两个入口，互不相通（2026-11-25 踩过）：** npmjs.com 的浏览器会话和 CLI 的 `npm login` 是两回事——浏览器已登录时 `npm whoami` 仍会 401。本地首发需要的是终端里的 `npm login`。npm 的政策公告：2026-08 起收紧绕过 2FA 的 token，2027-01 起限制直接发布——长线只有 OIDC trusted publishing 一条路，与本方案一致。
 
 **顺带发现（未改动）：** SDK 的 `exports` 只暴露主入口，使用方读不到 `polyv-vod-api-sdk/package.json`（拿版本号要靠 `VERSION` 导出，SDK 已提供）。要放开的话在 `exports` 里加 `"./package.json": "./package.json"` 即可。
