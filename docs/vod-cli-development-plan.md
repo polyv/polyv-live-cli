@@ -369,7 +369,7 @@ v1 范围（第 4 节的 9 个命令组，含分片续传）已全部实现。�
 
 | 事项 | 说明 |
 |---|---|
-| npm 发布权限未确认 | 包名已确认用 `polyv-vod-cli` 和 `polyv-vod-api-sdk`；发布前需要在 npm 上配好 trusted publishing |
+| npm 发布权限未确认 | 发布链路本身已验证（见 12.9）；剩下的是 npm 账号侧的一次性操作：`npm login`（2026-11-25 本机未登录）、两个包的首发、在 npm 上配置 trusted publishing。包名未被占用已确认（registry 404） |
 | 类型生成器的改动没有单测 | 点播 SDK 复用并改了直播 SDK 的文档生成器（类型按文档文件名起名、字段去重、保留字模块名），只验证了「146 篇文档解析成功、产出一致」，没有针对生成器本身的测试；直播 SDK 有 5 个 |
 | 连接器和专家包未提交到平台 | 清单和格式校验通过；图标和头像沿用直播的（头像是占位图） |
 | 分支未推送、未提 PR | `feat/vod-cli` 上的提交都只在本地 |
@@ -468,3 +468,32 @@ NODE_OPTIONS="--dns-result-order=ipv4first --network-family-autoselection-attemp
 其余声明逐条与实际行为一致：删除的 JSON 形状与两种拒绝的提示、`video recover` / `ban` / `unban` / `move`、分类的增删改移设置、`callback set` 前后的输出与离线验签、账号的保存 / 切换 / 删除、`upload file --wait` 的 JSON、分片上传与 `upload abort`、URL 任务与导出。SKILL.md 的优先级描述（flags > `--account` > `use` > 环境变量 > 默认账号）也用环境变量与账号并存的场景验证过。
 
 前两轮的失败都是演练装置自身的 bug（异步钩子未等待导致清理阶段崩溃、成功命令的 stderr 未捕获、退出码检查漏了预期失败的步骤），与 CLI 无关，已在第三轮修正。
+
+### 12.9 部署路径（2026-11-25 核对）
+
+发布基建是现成的，和直播两个包共用一条链：
+
+| 环节 | 位置 | 状态 |
+|---|---|---|
+| tag 与包的映射 | `scripts/release-package.mjs`（`release.sh` 与工作流共用一份） | 已验：`vod-sdk-v0.1.0` / `vod-v0.1.0` 都解析到正确的包 |
+| 发布命令 | `./scripts/release.sh <vod\|vod-sdk> <patch\|minor\|major>`，打 tag 推远程触发工作流 | 脚本会拒绝已有 tag、要求工作区干净 |
+| 发布工作流 | `.github/workflows/release.yml`：解析 tag → 校验 tag 版本与 `package.json` 一致 → 单测 → 把 CLI 的 `workspace:*` 依赖改写成 SDK 的实际版本 → npm 发布（OIDC trusted publishing，无需 NPM_TOKEN）→ GitHub Release | 改写与发布方式对两个 CLI 同样适用（`vod` 走与 `cli` 相同的改写分支） |
+
+**2026-11-25 核对过的事实：**
+
+- 两个包名在 npm registry 上未被占用（404）。npm 上直播两个包的维护者是 `terryso`，与 GitHub 的登录账号一致，VOD 包预计落在同一账号下。
+- 本机 npm 未登录（`npm whoami` 401）——首发前需要 `npm login`。
+- 两个包的 tarball 内容干净：只有 `dist/` + `package.json` + `README.md`（72 / 81 个文件），无测试文件、无 `.env` 文件；`license: MIT` 有元数据，仓库里没有 LICENSE 文件（与直播包一致）。
+- **安装演练通过**：按工作流的做法把 CLI 的依赖改写成 `polyv-vod-api-sdk: "0.1.0"` → 双双 `npm pack` → 装进空项目 → CLI 解析到的 SDK 与包内文件 sha1 一致 → 用安装出的二进制跑了真实 API 调用（`stats usage`、`callback get`）成功。
+
+**发布顺序与首次发布：**
+
+1. 推送 `feat/vod-cli` 并合入 main（tag 指向的提交必须在远端）。
+2. **先发 `polyv-vod-api-sdk`，等工作流绿了再发 `polyv-vod-cli`**：CLI 的依赖是精确版本，registry 里得先有那个 SDK 版本。
+3. **首发不能走 CI**：工作流用 npm trusted publishing（OIDC），而 trusted publisher 要在 npm 的包页面上配置，包还不存在时配不了（以 npm 文档为准）。所以首版在本地发：
+   - `npm login` 后 `cd packages/vod-sdk && npm publish --access public`；
+   - CLI 本地发不能用 `npm publish`（`workspace:*` 无法解析），用 `pnpm --filter polyv-vod-cli publish --access public`（pnpm 会自动改写 workspace 协议），或先手改依赖再 `npm publish`、发完改回。
+4. 首发后，在 npmjs.com 给两个包分别配置 Trusted Publisher：Repository `polyv/polyv-live-cli`，Workflow filename `release.yml`，Environment 留空（工作流未使用 environment）。
+5. 之后的版本全自动：`./scripts/release.sh vod-sdk patch` → 等 CI 绿 → `./scripts/release.sh vod patch`。想首发就发 0.1.0 而不是 0.1.1 时，手动 `git tag vod-sdk-v0.1.0` 并推送（工作流的版本一致性校验会通过），但发布那步仍要走第 3 条的本地路径。
+
+**顺带发现（未改动）：** SDK 的 `exports` 只暴露主入口，使用方读不到 `polyv-vod-api-sdk/package.json`（拿版本号要靠 `VERSION` 导出，SDK 已提供）。要放开的话在 `exports` 里加 `"./package.json": "./package.json"` 即可。
