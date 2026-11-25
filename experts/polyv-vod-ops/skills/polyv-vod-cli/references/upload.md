@@ -55,7 +55,7 @@ JSON 输出：
 <CLI> upload abort ./movie.mp4 --force --source codex
 ```
 
-续传状态存在系统临时目录下的 `polyv-vod-upload/`，按源文件路径区分；文件内容变化（大小或修改时间不同）后旧进度自动失效。
+续传状态存在系统临时目录下的 `polyv-vod-upload/`，按源文件路径区分（以路径的实际写法为准：macOS 上 `/tmp` 与 `/private/tmp` 是同一目录，但两种写法算两个不同的进度）；文件内容变化（大小或修改时间不同）后旧进度自动失效。
 
 ## 按 URL 拉取
 

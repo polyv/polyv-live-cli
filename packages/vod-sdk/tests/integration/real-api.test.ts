@@ -232,7 +232,7 @@ real('polyv-vod-api-sdk against the real platform', () => {
     expect(recycled.skipped).toEqual([]);
     expect((await client.video.getVideo(directVid))?.basicInfo.status).toBe(-1);
     await client.video.recoverVideos(directVid);
-    // A restored video comes back published; the platform reports 61 for it.
+    // A restored video comes back published; the platform has been seen to report both 60 and 61.
     expect(isPublished((await client.video.getVideo(directVid))?.basicInfo.status ?? 0)).toBe(true);
 
     for (const vid of created) {

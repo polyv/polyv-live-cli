@@ -108,7 +108,7 @@ stdout 是一段 JSON，取其中的 `vid`。`state` 为 `published` 表示已�
 <CLI> video recover <视频ID> --force --source codex
 ```
 
-恢复后的视频状态码是 `61`，同样表示已发布。
+恢复后的视频回到已发布（状态码 `60` 或 `61`，都是可播放）。
 
 ### 按播放量出报表
 

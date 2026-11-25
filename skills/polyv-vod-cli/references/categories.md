@@ -94,6 +94,6 @@ This command will delete category 1600000000001 "旧课程" (with 2 sub-categori
 | `--edu` / `--no-edu` | 录屏视频优化 |
 | `--aac` / `--no-aac` | 同时生成音频文件 |
 | `--hls-level <级别>` | 移动端授权级别：`open`、`web`、`app`、`wxa_app` |
-| `--player-id <ID>` | 该分类视频使用的播放器 |
+| `--player-id <ID>` | 该分类视频使用的播放器；`<ID>` 要用点播后台「播放器管理」里的真实播放器 ID，不存在的 ID 平台会报 `播放器id参数有误` |
 
 `--x` 表示开启，`--no-x` 表示关闭，不给则不改动。至少给一个设置。开启了 `--keep-source` 时，加密和 `--hls-level` 不生效。
