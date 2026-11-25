@@ -102,7 +102,7 @@ describe('positional arguments reach the command', () => {
     await cli.run('video', 'delete', 'v_1', 'v_2', '--source', 'test', '--force', '-o', 'json');
     expect(cli.sdk.video.deleteVideos).toHaveBeenCalledWith(['v_1', 'v_2'], { deleteType: 1, ignoreInvalidVids: true });
     expect(json(cli.stdout)).toEqual({ deleted: ['v_1'], skipped: ['v_2'] });
-    expect(cli.stderr.join('\n')).toContain('Not deleted: v_2');
+    expect(cli.stderr.join('\n')).toContain('Not deleted, the platform does not know these ids');
 
     await cli.run('video', 'recover', 'v_1', 'v_2', '--source', 'test', '--force');
     expect(cli.sdk.video.recoverVideos).toHaveBeenCalledWith(['v_1', 'v_2']);
@@ -132,7 +132,9 @@ describe('positional arguments reach the command', () => {
     await cli.run('category', 'move', '8', '--dest-id', '1', '--source', 'test', '--force');
     expect(cli.sdk.category.moveCategory).toHaveBeenCalledWith({ cataid: '8', destCataid: '1' });
 
+    cli.sdk.category.getCategories.mockResolvedValue([{ cataname: '子分类', cataid: 8, parentid: 7, videos: 0 }]);
     await cli.run('category', 'delete', '8', '--source', 'test', '--force');
+    expect(cli.sdk.category.getCategories).toHaveBeenLastCalledWith('8');
     expect(cli.sdk.category.deleteCategory).toHaveBeenCalledWith('8');
   });
 

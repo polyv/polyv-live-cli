@@ -3,7 +3,7 @@
  */
 import { Command } from 'commander';
 
-import { describeVideoStatus, type VideoInfoItem, type VideoSort } from 'polyv-vod-api-sdk';
+import { describeVideoStatus, isPolyVVodError, type DeleteVideosResult, type VideoInfoItem, type VideoSort } from 'polyv-vod-api-sdk';
 
 import { CommandError, type CommandContext, executors } from '../core/context';
 import { confirmWrite } from '../core/confirm';
@@ -30,6 +30,25 @@ export function videoRow(item: VideoInfoItem): Record<string, unknown> {
 
 const SEARCH_COLUMNS = ['vid', 'title', 'status', 'duration', 'size', 'category', 'playTimes', 'created'];
 const DETAIL_COLUMNS = [...SEARCH_COLUMNS, 'categoryId', 'tags', 'playUrl'];
+
+const CHECK_IDS = 'Check the ids with: polyv-vod-cli video get <vid> --source <id>';
+
+/**
+ * What a refusal of a delete means, when the platform gives one of its two fixed answers.
+ *
+ * It refuses a batch in which it knows none of the vids, and, when asked not to skip unknown
+ * vids, a batch in which it knows only some. Either way nothing was deleted.
+ */
+function deleteRefusal(error: unknown, strict: boolean): CommandError | undefined {
+  if (!isPolyVVodError(error) || error.kind !== 'api') return undefined;
+  if (/all vids illegal/i.test(error.message)) {
+    return new CommandError('The platform knows none of these video ids, so nothing was deleted', CHECK_IDS);
+  }
+  if (strict && /illegal vids/i.test(error.message)) {
+    return new CommandError('The platform does not know some of these video ids, so with --strict nothing was deleted', `${CHECK_IDS}, or drop --strict to delete the ones it knows.`);
+  }
+  return undefined;
+}
 
 export function registerVideoCommands(program: Command, ctx: CommandContext): void {
   const { client } = executors(ctx);
@@ -111,7 +130,7 @@ export function registerVideoCommands(program: Command, ctx: CommandContext): vo
     .command('delete <vid...>')
     .description('Delete up to 500 videos, to the recycle bin by default')
     .option('--permanent', 'delete for good instead of moving to the recycle bin')
-    .option('--strict', 'fail when any video cannot be deleted, instead of skipping it')
+    .option('--strict', 'fail when the platform does not know one of the ids, instead of deleting the others')
     .option('--force', 'skip the confirmation prompt')
     .option(output, outputHelp, validateOutputFormat, 'table')
     .action(function (this: Command, ...args: unknown[]) {
@@ -119,8 +138,15 @@ export function registerVideoCommands(program: Command, ctx: CommandContext): vo
       return client(options, async (sdk) => {
         const vids = vidsOf(options.vid);
         const permanent = options.permanent === true;
+        const strict = options.strict === true;
         await confirmWrite(`${permanent ? 'permanently delete' : 'move to the recycle bin'} ${vids.length} video(s)`, { force: options.force === true });
-        const { skipped } = await sdk.video.deleteVideos(vids, { deleteType: permanent ? 2 : 1, ignoreInvalidVids: options.strict !== true });
+        let outcome: DeleteVideosResult;
+        try {
+          outcome = await sdk.video.deleteVideos(vids, { deleteType: permanent ? 2 : 1, ignoreInvalidVids: !strict });
+        } catch (error) {
+          throw deleteRefusal(error, strict) ?? error;
+        }
+        const { skipped } = outcome;
         const deleted = vids.filter((vid) => !skipped.includes(vid));
         if (isJson(options.output)) {
           ctx.out(formatJson({ deleted, skipped }));
@@ -128,8 +154,8 @@ export function registerVideoCommands(program: Command, ctx: CommandContext): vo
           ctx.out(`✅ ${deleted.length} video(s) ${permanent ? 'permanently deleted' : 'moved to the recycle bin'}`);
         }
         if (skipped.length > 0) {
-          // A 200 does not mean every video is gone: the platform lists the ones it skipped.
-          ctx.err(`⚠️  Not deleted: ${skipped.join(', ')} (unknown, already deleted, or still processing). Retry later with the same command.`);
+          // Only the ids the platform does not know end up here; asking again will not change that.
+          ctx.err(`⚠️  Not deleted, the platform does not know these ids (a wrong id, or one deleted for good already): ${skipped.join(', ')}`);
         }
       });
     });

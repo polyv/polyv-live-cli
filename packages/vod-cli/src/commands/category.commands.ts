@@ -3,7 +3,7 @@
  */
 import { Command } from 'commander';
 
-import type { CategoryNode } from 'polyv-vod-api-sdk';
+import { isPolyVVodError, type CategoryNode, type PolyVVodClient } from 'polyv-vod-api-sdk';
 
 import { CommandError, type CommandContext, executors } from '../core/context';
 import { confirmWrite } from '../core/confirm';
@@ -29,6 +29,43 @@ export function categoryJson(node: CategoryNode): Record<string, unknown> {
     ...(node.cataProfile ? { settings: node.cataProfile.replace(/<[^>]+>/g, '').trim() } : {}),
     ...(node.nodes?.length ? { children: node.nodes.map(categoryJson) } : {})
   };
+}
+
+/** Categories below this one, at any depth. */
+export function countSubCategories(node: CategoryNode): number {
+  return (node.nodes ?? []).reduce((count, child) => count + 1 + countSubCategories(child), 0);
+}
+
+/**
+ * What deleting this category takes with it.
+ *
+ * The platform deletes a category whatever it holds: every category below it goes with it, and
+ * the videos in them are kept but move to the default category. `node.videos` counts the videos
+ * of the whole sub-tree.
+ */
+export function deletedScope(node: CategoryNode, done: boolean): string {
+  const subCategories = countSubCategories(node);
+  const videos = node.videos ?? 0;
+  const parts: string[] = [];
+  if (subCategories > 0) parts.push(`with ${subCategories} sub-categor${subCategories === 1 ? 'y' : 'ies'}`);
+  if (videos > 0) parts.push(`${videos} video${videos === 1 ? ` ${done ? 'moved' : 'moves'}` : `s ${done ? 'moved' : 'move'}`} to the default category`);
+  return parts.join('; ');
+}
+
+/** The category an id names, to read what deleting it takes with it. */
+async function categoryToDelete(sdk: PolyVVodClient, id: string): Promise<CategoryNode> {
+  const notFound = (): CommandError => new CommandError(`Category ${id} was not found`, 'List the categories with: polyv-vod-cli category list --source <id>');
+  let nodes: CategoryNode[] | undefined;
+  try {
+    nodes = await sdk.category.getCategories(id);
+  } catch (error) {
+    // The platform's own answer to an id it has no category for ("cataId不存在").
+    if (isPolyVVodError(error) && error.kind === 'api' && /cataid/i.test(error.message)) throw notFound();
+    throw error;
+  }
+  const node = nodes?.[0];
+  if (!node) throw notFound();
+  return node;
 }
 
 export function registerCategoryCommands(program: Command, ctx: CommandContext): void {
@@ -155,15 +192,20 @@ export function registerCategoryCommands(program: Command, ctx: CommandContext):
 
   category
     .command('delete <id>')
-    .description('Delete a category; it must be empty')
+    .description('Delete a category together with every category under it; the videos in them move to the default category')
     .option('--force', 'skip the confirmation prompt')
     .action(function (this: Command, ...args: unknown[]) {
       const options = optionsOf(this, args);
       return client(options, async (sdk) => {
         const target = cataId(options.id, 'category id');
-        await confirmWrite(`delete category ${target}`, { force: options.force === true });
+        if (target === '1') throw new CommandError('Category 1 is the root category; it cannot be deleted');
+        // Read what the delete takes with it first, so the confirmation can say so.
+        const node = await categoryToDelete(sdk, target);
+        const scope = deletedScope(node, false);
+        await confirmWrite(`delete category ${target} "${node.cataname}"${scope ? ` (${scope})` : ''}`, { force: options.force === true });
         await sdk.category.deleteCategory(target);
-        ctx.out(`✅ Category ${target} deleted`);
+        const done = deletedScope(node, true);
+        ctx.out(`✅ Category ${target} deleted${done ? ` (${done})` : ''}`);
       });
     });
 }

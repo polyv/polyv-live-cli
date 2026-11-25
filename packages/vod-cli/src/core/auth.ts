@@ -102,28 +102,28 @@ export function resolveAuth(store: AccountStore, session: SessionStore, options:
     if (record) return fromAccount(record, 'session');
   }
 
-    const fromEnv = (name: (typeof AUTH_ENV_VARS)[keyof typeof AUTH_ENV_VARS]): string | undefined => {
-      const value = env[name]?.trim();
-      return value ? value : undefined;
-    };
-    const envUserId = fromEnv(AUTH_ENV_VARS.userId);
-    const envSecretKey = fromEnv(AUTH_ENV_VARS.secretKey);
-    if (envUserId !== undefined || envSecretKey !== undefined) {
-      if (!envUserId || !envSecretKey) {
-        throw new AuthError(`${AUTH_ENV_VARS.userId} and ${AUTH_ENV_VARS.secretKey} must be set together`);
-      }
-      return {
-        source: 'env',
-        credentials: credentialsOf({
-          userId: envUserId,
-          secretKey: envSecretKey,
-          writeToken: fromEnv(AUTH_ENV_VARS.writeToken),
-          readToken: fromEnv(AUTH_ENV_VARS.readToken),
-          appId: fromEnv(AUTH_ENV_VARS.appId),
-          appSecret: fromEnv(AUTH_ENV_VARS.appSecret)
-        })
-      };
+  const fromEnv = (name: (typeof AUTH_ENV_VARS)[keyof typeof AUTH_ENV_VARS]): string | undefined => {
+    const value = env[name]?.trim();
+    return value ? value : undefined;
+  };
+  const envUserId = fromEnv(AUTH_ENV_VARS.userId);
+  const envSecretKey = fromEnv(AUTH_ENV_VARS.secretKey);
+  if (envUserId !== undefined || envSecretKey !== undefined) {
+    if (!envUserId || !envSecretKey) {
+      throw new AuthError(`${AUTH_ENV_VARS.userId} and ${AUTH_ENV_VARS.secretKey} must be set together`);
     }
+    return {
+      source: 'env',
+      credentials: credentialsOf({
+        userId: envUserId,
+        secretKey: envSecretKey,
+        writeToken: fromEnv(AUTH_ENV_VARS.writeToken),
+        readToken: fromEnv(AUTH_ENV_VARS.readToken),
+        appId: fromEnv(AUTH_ENV_VARS.appId),
+        appSecret: fromEnv(AUTH_ENV_VARS.appSecret)
+      })
+    };
+  }
 
   const defaultName = store.defaultName();
   if (defaultName) {

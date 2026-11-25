@@ -70,6 +70,15 @@ export function registerUploadCommands(program: Command, ctx: CommandContext): v
           onProgress
         });
         if (process.stderr.isTTY === true) ctx.err('');
+        if (result.resumed) {
+          // The video was created when the interrupted upload reserved its vid.
+          const asked = optionalString(options.title);
+          const keeps = asked !== undefined && asked !== result.title ? `the title "${result.title ?? ''}"` : 'the title';
+          ctx.err(
+            `ℹ️  Resumed upload: the video keeps ${keeps} given when the upload was first started, and the description, category and tags given then. ` +
+              'Change them once it is published with "video update" and "video move".'
+          );
+        }
         const view = {
           vid: result.vid,
           title: result.title,
@@ -163,8 +172,14 @@ export function registerUploadCommands(program: Command, ctx: CommandContext): v
         if (target) {
           writeFileSync(target, csv);
           ctx.out(`✅ Written to ${target}`);
-        } else {
-          ctx.out(csv);
+        } else if (csv.trim() !== '') {
+          // stdout gets the CSV as the platform gave it. Output is by line, and a line ends with
+          // one newline, so the CSV's own last one is left off here and comes back with the line.
+          ctx.out(csv.replace(/\n$/, ''));
+        }
+        if (csv.trim() === '') {
+          // Seen for a task in which every upload failed, and for one still running.
+          ctx.err('ℹ️  The export is empty: nothing has finished uploading for this task yet, or every upload in it failed.');
         }
       });
     });

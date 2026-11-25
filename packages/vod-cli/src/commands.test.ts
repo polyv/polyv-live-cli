@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { Command } from 'commander';
+import { PolyVVodError } from 'polyv-vod-api-sdk';
 
 import { ACCOUNT, OTHER_ACCOUNT, createHarness, type Harness, json, videoItem } from './__tests__/harness';
 import { confirmWrite } from './core/confirm';
@@ -121,7 +122,7 @@ describe('account, use and auth', () => {
   });
 
   it('sets and unsets the default account', async () => {
-    cli.store.add(OTHER_ACCOUNT.name, OTHER_ACCOUNT, { default: false });
+    cli.store.add(OTHER_ACCOUNT.name, OTHER_ACCOUNT);
     await cli.run('account', 'set-default', OTHER_ACCOUNT.name);
     expect(cli.store.defaultName()).toBe(OTHER_ACCOUNT.name);
     await expect(cli.run('account', 'set-default', 'ghost')).resolves.toBe(1);
@@ -133,7 +134,7 @@ describe('account, use and auth', () => {
   });
 
   it('switches the session account with use', async () => {
-    cli.store.add(OTHER_ACCOUNT.name, OTHER_ACCOUNT, { default: false });
+    cli.store.add(OTHER_ACCOUNT.name, OTHER_ACCOUNT);
     await cli.run('use', OTHER_ACCOUNT.name);
     expect(cli.session.get()).toBe(OTHER_ACCOUNT.name);
     cli.stdout.length = 0;
@@ -147,7 +148,7 @@ describe('account, use and auth', () => {
   });
 
   it('answers each use option', async () => {
-    cli.store.add(OTHER_ACCOUNT.name, OTHER_ACCOUNT, { default: false });
+    cli.store.add(OTHER_ACCOUNT.name, OTHER_ACCOUNT);
     await cli.run('use', '--list');
     expect(cli.stdout.join('\n')).toContain(`${OTHER_ACCOUNT.name}  ${OTHER_ACCOUNT.userId}`);
     cli.stdout.length = 0;
@@ -191,7 +192,7 @@ describe('account, use and auth', () => {
     expect(cli.stdout[0]).toMatch(/^Logged in/);
     expect(cli.stdout[0]).not.toContain('Logged in ()');
 
-    cli.store.add('workbuddy', { userId: 'w', secretKey: 'w-secret' }, { default: false });
+    cli.store.add('workbuddy', { userId: 'w', secretKey: 'w-secret' });
     cli.session.set('workbuddy');
     cli.stdout.length = 0;
     await cli.run('auth', 'status');
@@ -305,9 +306,40 @@ describe('video', () => {
     expect(cli.stdout.join('\n')).toContain('permanently deleted');
   });
 
-  it('lets --strict turn skipped videos into a failure of the whole batch', async () => {
+  it('lets --strict turn unknown video ids into a failure of the whole batch', async () => {
     await cli.run('video', 'delete', 'v_1', '--strict', '--source', 'test', '--force');
     expect(cli.sdk.video.deleteVideos).toHaveBeenCalledWith(['v_1'], { deleteType: 1, ignoreInvalidVids: false });
+  });
+
+  it('names the ids the platform does not know, and does not suggest asking again', async () => {
+    cli.sdk.video.deleteVideos.mockResolvedValue({ skipped: ['v_2'] });
+    await cli.run('video', 'delete', 'v_1', 'v_2', '--source', 'test', '--force');
+    expect(cli.stdout.join('\n')).toBe('✅ 1 video(s) moved to the recycle bin');
+    const warning = cli.stderr.join('\n');
+    expect(warning).toContain('⚠️  Not deleted, the platform does not know these ids (a wrong id, or one deleted for good already): v_2');
+    expect(warning).not.toContain('Retry');
+  });
+
+  it('explains the two refusals of a delete, and keeps stdout empty in JSON mode', async () => {
+    cli.sdk.video.deleteVideos.mockRejectedValue(new PolyVVodError('api', 'all vids illegal', { code: 400 }));
+    await expect(cli.run('video', 'delete', 'v_1', '--source', 'test', '--force', '-o', 'json')).resolves.toBe(1);
+    expect(cli.stdout).toEqual([]);
+    expect(cli.stderr.join('\n')).toContain('❌ The platform knows none of these video ids, so nothing was deleted');
+    expect(cli.stderr.join('\n')).toContain('Check the ids with: polyv-vod-cli video get <vid> --source <id>');
+
+    cli.stderr.length = 0;
+    cli.sdk.video.deleteVideos.mockRejectedValue(new PolyVVodError('api', 'illegal vids', { code: 400 }));
+    await expect(cli.run('video', 'delete', 'v_1', 'v_2', '--strict', '--source', 'test', '--force', '-o', 'json')).resolves.toBe(1);
+    expect(cli.stdout).toEqual([]);
+    expect(cli.stderr.join('\n')).toContain('❌ The platform does not know some of these video ids, so with --strict nothing was deleted');
+    expect(cli.stderr.join('\n')).toContain('drop --strict to delete the ones it knows');
+  });
+
+  it('passes other platform failures of a delete through unchanged', async () => {
+    cli.sdk.video.deleteVideos.mockRejectedValue(new PolyVVodError('api', 'the sign is not right', { code: 400 }));
+    await expect(cli.run('video', 'delete', 'v_1', '--source', 'test', '--force')).resolves.toBe(1);
+    expect(cli.stderr.join('\n')).toContain('❌ the sign is not right');
+    expect(cli.stderr.join('\n')).not.toContain('these video ids');
   });
 
   it('moves, bans and unbans with a confirmation each', async () => {
@@ -404,6 +436,65 @@ describe('category', () => {
     expect(cli.sdk.category.updateCategorySetting).toHaveBeenLastCalledWith({ cataid: '7', encrypt: false, keepSource: undefined, isEdu: undefined, encodeAac: undefined, hlslevel: undefined, playerId: undefined });
   });
 
+  // `videos` counts the videos of the whole sub-tree; `nodes` are the categories directly below.
+  const branch = {
+    text: 'Courses (3)', cataname: '课程', catatree: '1,7', cataid: 7, parentid: 1, videos: 3,
+    nodes: [{ text: 'A (2)', cataname: '入门', catatree: '1,7,8', cataid: 8, parentid: 7, videos: 2, nodes: [{ text: 'A1 (1)', cataname: '第一课', catatree: '1,7,8,10', cataid: 10, parentid: 8, videos: 1 }] }]
+  };
+
+  it('says what deleting a category takes with it, before and after', async () => {
+    cli.sdk.category.getCategories.mockResolvedValue([branch]);
+    // No --force: the refusal names everything the delete would take with it.
+    await expect(cli.run('category', 'delete', '7', '--source', 'test')).resolves.toBe(1);
+    expect(cli.stderr.join('\n')).toContain(
+      'This command will delete category 7 "课程" (with 2 sub-categories; 3 videos move to the default category). Re-run it with --force to confirm.'
+    );
+    expect(cli.sdk.category.deleteCategory).not.toHaveBeenCalled();
+
+    await cli.run('category', 'delete', '7', '--source', 'test', '--force');
+    expect(cli.sdk.category.getCategories).toHaveBeenCalledWith('7');
+    expect(cli.sdk.category.deleteCategory).toHaveBeenCalledWith('7');
+    expect(cli.stdout).toEqual(['✅ Category 7 deleted (with 2 sub-categories; 3 videos moved to the default category)']);
+  });
+
+  it('deletes a category that holds nothing without a count', async () => {
+    cli.sdk.category.getCategories.mockResolvedValue([{ ...branch, videos: 0, nodes: [] }]);
+    await cli.run('category', 'delete', '9', '--source', 'test', '--force');
+    expect(cli.stderr).toEqual([]);
+    expect(cli.stdout).toEqual(['✅ Category 9 deleted']);
+  });
+
+  it('uses the singular for one sub-category and one video', async () => {
+    cli.sdk.category.getCategories.mockResolvedValue([{ ...branch, videos: 1, nodes: [{ ...branch.nodes[0], videos: 1, nodes: [] }] }]);
+    await cli.run('category', 'delete', '7', '--source', 'test', '--force');
+    expect(cli.stdout).toEqual(['✅ Category 7 deleted (with 1 sub-category; 1 video moved to the default category)']);
+  });
+
+  it('refuses to delete the root, and does not call the platform', async () => {
+    await expect(cli.run('category', 'delete', '1', '--source', 'test', '--force')).resolves.toBe(1);
+    expect(cli.stderr.join('\n')).toContain('Category 1 is the root category; it cannot be deleted');
+    expect(cli.sdk.category.getCategories).not.toHaveBeenCalled();
+    expect(cli.sdk.category.deleteCategory).not.toHaveBeenCalled();
+  });
+
+  it('says when the category to delete is not there, whatever the platform words it as', async () => {
+    cli.sdk.category.getCategories.mockRejectedValue(new PolyVVodError('api', 'cataId不存在', { code: 400 }));
+    await expect(cli.run('category', 'delete', '123', '--source', 'test', '--force')).resolves.toBe(1);
+    expect(cli.stderr.join('\n')).toContain('❌ Category 123 was not found');
+    expect(cli.stderr.join('\n')).toContain('List the categories with: polyv-vod-cli category list --source <id>');
+    expect(cli.sdk.category.deleteCategory).not.toHaveBeenCalled();
+
+    cli.sdk.category.getCategories.mockResolvedValue([]);
+    await expect(cli.run('category', 'delete', '123', '--source', 'test', '--force')).resolves.toBe(1);
+    expect(cli.stderr.join('\n')).toContain('❌ Category 123 was not found');
+
+    // Any other failure of the lookup is reported as it is, and nothing is deleted.
+    cli.sdk.category.getCategories.mockRejectedValue(new PolyVVodError('network', 'fetch failed'));
+    await expect(cli.run('category', 'delete', '123', '--source', 'test', '--force')).resolves.toBe(1);
+    expect(cli.stderr.join('\n')).toContain('❌ fetch failed');
+    expect(cli.sdk.category.deleteCategory).not.toHaveBeenCalled();
+  });
+
   it('validates the settings before changing anything', async () => {
     await expect(cli.run('category', 'setting', '7', '--source', 'test', '--force')).resolves.toBe(1);
     expect(cli.stderr.join('\n')).toContain('Pass at least one setting to change');
@@ -437,6 +528,24 @@ describe('upload', () => {
     await cli.run('upload', 'file', './big.mp4', '--mode', 'chunked', '--part-size', '2', '--concurrency', '2', '--no-resume', '--checkpoint-dir', './cp', '--source', 'test', '-o', 'json');
     expect(cli.sdk.upload.uploadFile.mock.calls[0][0]).toMatchObject({ mode: 'chunked', partSize: 2 * 1024 * 1024, concurrency: 2, resume: false, checkpointDir: './cp' });
     expect(json(cli.stdout)).toMatchObject({ vid: 'v_1', mode: 'chunked', resumed: true, parts: 3 });
+  });
+
+  it('says what a resumed upload keeps from the interrupted run', async () => {
+    cli.sdk.upload.uploadFile.mockResolvedValue({ vid: 'v_1', title: '课程', mode: 'chunked', resumed: true, parts: 3 });
+    await cli.run('upload', 'file', './big.mp4', '--mode', 'chunked', '--title', '课程', '--source', 'test');
+    expect(cli.stderr.join('\n')).toContain('ℹ️  Resumed upload: the video keeps the title given when the upload was first started');
+    expect(cli.stderr.join('\n')).toContain('"video update" and "video move"');
+
+    // Another title on the resumed run does not reach the video: say which one it has.
+    cli.stderr.length = 0;
+    await cli.run('upload', 'file', './big.mp4', '--mode', 'chunked', '--title', '新标题', '--source', 'test');
+    expect(cli.stderr.join('\n')).toContain('Resumed upload: the video keeps the title "课程" given when the upload was first started');
+  });
+
+  it('says nothing about resuming for an upload that started from the beginning', async () => {
+    cli.sdk.upload.uploadFile.mockResolvedValue({ vid: 'v_1', mode: 'direct', title: 'intro', resumed: false });
+    await cli.run('upload', 'file', './intro.mp4', '--source', 'test');
+    expect(cli.stderr.join('\n')).not.toContain('Resumed');
   });
 
   it('validates --mode and does not write progress to stdout', async () => {
@@ -488,13 +597,22 @@ describe('upload', () => {
 
   it('exports a task as CSV to stdout or to a file', async () => {
     cli.sdk.upload.exportSyncTask.mockResolvedValue('vid,title\nv_1,a\n');
+    // stdout gets the CSV as given: a line of output already ends with the newline.
     await cli.run('upload', 'task-export', 't1', '--source', 'test');
-    expect(cli.stdout).toEqual(['vid,title\nv_1,a\n']);
+    expect(cli.stdout).toEqual(['vid,title\nv_1,a']);
     cli.stdout.length = 0;
     const target = join(cli.store.filePath, '..', 'tasks.csv');
     await cli.run('upload', 'task-export', 't1', '--out', target, '--source', 'test');
     expect(cli.stdout.join('\n')).toContain('Written to');
     expect(await readFile(target, 'utf8')).toBe('vid,title\nv_1,a\n');
+    expect(cli.stderr).toEqual([]);
+  });
+
+  it('says why an exported task is empty, and prints nothing to stdout', async () => {
+    cli.sdk.upload.exportSyncTask.mockResolvedValue('');
+    await cli.run('upload', 'task-export', 't1', '--source', 'test');
+    expect(cli.stdout).toEqual([]);
+    expect(cli.stderr.join('\n')).toBe('ℹ️  The export is empty: nothing has finished uploading for this task yet, or every upload in it failed.');
   });
 
   it('aborts an interrupted upload', async () => {
