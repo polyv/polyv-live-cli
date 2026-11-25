@@ -1,4 +1,10 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { ACCOUNT, createHarness, type Harness, json } from './__tests__/harness';
+
+/** The version of this package, so the test survives releases. */
+const packageVersion = JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8')).version;
 
 let cli: Harness;
 beforeEach(async () => {
@@ -159,6 +165,6 @@ describe('positional arguments reach the command', () => {
 describe('source and user agent', () => {
   it('reports the CLI version', async () => {
     await cli.run('--version');
-    expect(cli.stdout.join('')).toMatch(/^0\.1\.0$/);
+    expect(cli.stdout.join('')).toMatch(new RegExp(`^${packageVersion.replace(/\./g, '\\.')}$`));
   });
 });

@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "prebuild": "tsx scripts/generate-types.ts",
+    "prebuild": "tsx scripts/generate-types.ts && node scripts/write-version.mjs",
     "build": "tsup && tsc --emitDeclarationOnly --declarationMap",
     "types:generate": "tsx scripts/generate-types.ts",
     "typecheck": "tsc --noEmit -p tsconfig.test.json",
