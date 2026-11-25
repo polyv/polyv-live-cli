@@ -15,6 +15,7 @@
     "test": "jest",
     "test:unit": "jest",
     "test:coverage": "jest --coverage --ci",
+    "test:integration": "pnpm --filter polyv-vod-api-sdk build && npm run build && jest --config=jest.integration.config.js",
     "typecheck": "tsc --noEmit -p tsconfig.test.json",
     "prepublishOnly": "npm run build && npm test"
   },

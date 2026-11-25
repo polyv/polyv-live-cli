@@ -164,3 +164,8 @@ jobs:
           node packages/vod-cli/dist/index.js --version
           node packages/vod-cli/dist/index.js --help > /dev/null
           echo "✅ VOD CLI executable test completed"
+
+      # Runs the built binary. The real-account suite needs credentials the CI does not have
+      # and is skipped; the offline one (exit codes, help, saved accounts) always runs.
+      - name: Run VOD CLI integration tests
+        run: pnpm --filter polyv-vod-cli exec jest --config=jest.integration.config.js
