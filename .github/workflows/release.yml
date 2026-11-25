@@ -20,6 +20,16 @@ jobs:
     name: Resolve the package to release
     runs-on: ubuntu-latest
 
+    # Downstream jobs read the resolve step's results through the job's outputs; without this
+    # mapping every needs.package.outputs.* is the empty string.
+    outputs:
+      PACKAGE_DIR: ${{ steps.pkg.outputs.PACKAGE_DIR }}
+      PACKAGE_KEY: ${{ steps.pkg.outputs.PACKAGE_KEY }}
+      PACKAGE_LABEL: ${{ steps.pkg.outputs.PACKAGE_LABEL }}
+      PKG_NAME: ${{ steps.pkg.outputs.PKG_NAME }}
+      PKG_VERSION: ${{ steps.pkg.outputs.PKG_VERSION }}
+      INSTALL_COMMAND: ${{ steps.pkg.outputs.INSTALL_COMMAND }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
