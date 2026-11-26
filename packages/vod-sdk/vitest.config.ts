@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
     exclude: ['tests/**', 'node_modules/**', 'dist/**'],
     reporters: ['default', ['junit', { outputFile: './test-results/junit.xml' }]],
     coverage: {
